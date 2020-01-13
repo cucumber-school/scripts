@@ -2,7 +2,7 @@
 
 This repo contains the scripts and other artefacts used to generate the Fundamenntals of BDD Courses for Java, Ruby annd JavaScript hosted at https://school.cucumber.io
 
-## License
+## License
 
 Site content is licensed under CC-BY-4.0. CC-BY-4.0 gives you permission to use the content for almost any purpose but does not grant you any trademark permissions, so long as you note the license and give credit, such as follows:
 
