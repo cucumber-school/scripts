@@ -1,308 +1,45 @@
-== Installation - Java
+=== Running the scenario with Cucumber
+==== Installation
 
-The easiest way to get started with Cucumber for Java is to use a template project with a build script that sets everything up correctly. 
+// shot()
+Before we get started make sure you have a modern version of Ruby installed,
+// shot()
+and the Bundler gem. Open a command-prompt and type:
 
-You can download this template project from GitHub. Open your web browser and go to the “Cucumber Java Skeleton” project on GitHub. 
-
-If you’re comfortable with Git you can just clone the project. 
-
-If you’re new to Git, don’t worry, we’ll download a zip file instead. Click Releases, then download the most recent zip file that starts with a “v”.
-
-If you’re on Windows, click the zip file to download it. If you’re on “OS ten” or Linux, just copy the link and download it with “wget”.
-
-On Windows, extract the zip file by double clicking on it. -Or if you’re on OS ten or Linux, extract it with the unzip command.
-
-After extracting the zip file, we’ll rename the directory to “shouty”.
-
-In your shell, cd into the shouty directory.
-
-The template project contains Maven and Ant build scripts that makes it easier to get started with Cucumber for Java.
-
-We’ll be using Maven, so if you haven’t installed that already, now is a good time to do that.
-
-Let’s take a look at what else is in this project. 
-
-There is a main directory for our application code, and a test directory for our test code. Let’s remove some of the files that come with the project.
-
-Remove Belly.java, Stepdefs.java and belly.feature.
-
-Now we have a bare bones project. We’ll be building it from the ground up so you can see what is going on.
-
-Before we open the project in our IDE we are going to modify the name of the application. We’ll use a text editor for this. I’m using the Atom editor, but you can use anything you like.
-
-Open pom.xml and change the group ID, artifact ID and name. 
-
-We are ready to start coding! We are going to use IntelliJ IDEA Community Edition because it has really nice Cucumber integration built-in. If you prefer to use a different IDE such as Eclipse, that is fine too.
-
-To open the project in InteliJ, just open the pom.xml file.
-
-Before we create any files, let’s rename the package from skeleton to shouty. In InteliJ you can rename it via the Refactor menu.
-
-The first file we are going to create is a feature file where we will write our first scenario.
-Create a file called shout.feature in the shouty directory under resources.
-Installation - Ruby
-Before we get started make sure you have a modern version of Ruby installed, and the Bundler gem. Open a command-prompt and type:
-
+[source,bash]
+----
 $ ruby -v
 $ bundle -v
-
+----
 If you see an error message when you run these commands, you’ll need to fix your Ruby installation.
 
 Go back to the command prompt and create a new directory for our project:
 
+[source,bash]
+----
 $ mkdir shouty
+----
 
+// TODO: remove reference to editor
 Go use cd to go into that directory, and open it up in your editor:
-
-$ atom
 
 First we’ll create a Gemfile that describes the Ruby gems we need for our project. We’ll add Cucumber and RSpec-Expectations.
 
 Now go back to the command-line and run `bundle install` to install those gems.
 
-Now we’re ready! If we run `cucumber` at this point, we’ll see it’s telling us to create a features directory. That’s the conventional place to store your Gherkin specifications. Let’s create one
+[source,bash]
+----
+$ bundle install
+----
 
-[creates features directory in atom]
+Now we’re ready! If we run `cucumber` at this point, we’ll see it’s telling us to create a features directory.
 
-Now we’re ready to create our first feature file. Call the file shouty.feature
-Create Feature - Common
+// TODO: add output
+[source,bash]
+----
+$ bundle exec cucumber
+----
 
-All feature files start with the keyword Feature, followed by a name.
-It’s a good convention to give it a name that matches the file name.
+Good, we've installed Cucumber.
 
-Let’s write out our first scenario.
-
-[types in scenario into editor]
-
-Scenario: Listener is within range
-  Given Lucy is located 15m from Sean
-  When Sean shouts “free bagels at Sean’s”
-  Then Lucy hears Sean’s message
-
-Run Feature - Java
-
-Now that we have a scenario it’s time to run it!
-
-Switch back to the command prompt and run:
-
-mvn clean test
-
-Maven will now download Cucumber, compile your code and tell Cucumber to run your feature file.
-
-You’ll see that Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps, one scenario - all undefined.
-
-Let’s run the scenario again from inside InteliJ. Select the feature file and choose Run from the context menu. This will give you similar output.
-
-Undefined means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some step definitions.
-
-02.2 Questions
-What does it mean when Cucumber says a step is Undefined?
-The step does not start with a recognised keyword
-There is a syntax error in the Gherkin
-There is a syntax error in the step definition
-Cucumber couldn’t find a matching step definition to run 
-
-
-02-03
-Step definitions translate from the plain language you use in Gherkin into Java code. We write a Java method, then annotate it with a pattern. 
-
-When cucumber runs a step, it looks for a step definition with a matching pattern. If it finds one, then it executes the method.
-
-If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.
-
-We’ll create a new class in the shouty package where we’ll paste those snippets. Make sure you create it under test and not main.
-
-[ pastes in snippets ]
-
-Now IntelliJ is complaining that there are some unknown symbols. We need to add some import statements! Pressing ALT-ENTER will do that for us.
-
-Let’s return to the scenario and run it again.
-
-[ runs scenario ]
-
-There is a small bug in InteliJ’s Cucumber integration. Sometimes it doesn’t tell Cucumber where to find step definitions. This is easy to work around. Just edit the run configuration and make sure the Glue field contains the value of your package.
-
-Now we can run it again.
-
-[ runs scenario ]
-Run Feature - Ruby
-
-Switch back to the command-prompt and run `cucumber`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps, one scenario - all undefined.
-
-Undefined means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some step definitions.
-
-Step definitions translate from the plain language you use in Gherkin into Ruby code.
-
-When Cucumber runs a step, it looks for a step definition that matches the text in the step. If it finds one, then it executes the code in the step definition.
-
-If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.
-
-We’ll paste them into a Ruby file under a new directory called `step_definitions` underneath the `features` directory. I’ll just call it `steps.rb`.
-
-Now run Cucumber again.
-Reflect on generated step defs - Common
-
-This time the output is a little different. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one. But that first step definition throws a PendingException, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
-
-It’s time to start work on our solution. At this point we need to do a little domain modelling. The words in the step provide us some good hints about some names that will appear in our domain model. Our scenario mentions two people, Lucy and Sean. So it looks like we need a couple of person objects at least. Each person will also need to know their own location.
-
-(Show a napkin drawing of a Person class with a location property).
-
-Cucumber is telling us to write the code we wish we had. Let’s do it!
-
-We’ll start by renaming the arg1 parameter to something that better reflects its meaning. We’ll call it distance.
-
-To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.
-
-Notice that the number 15 does not appear anywhere in our code. The value 15 is automatically passed from the gherkin step to the step definition. If you are curious, that’s the backslash-d in the pattern. We’ll explain regular expressions in detail in a future lesson.
-
-02.3 Questions
-What do step definitions do?
-Provide a glossary of domain terms for your stakeholders
-Give Cucumber a way to automate your gherkin steps
-Add extra meaning to our gherkin steps
-Generate code from gherkin documents
-What does it mean when Cucumber says a step is Pending?
-The step threw a PendingException
-The step took too long to execute and was terminated
-One or more steps have been Skipped
-Cucumber was unable to find the step definitions
-Which of the following might you want to consider when using a snippet generated by Cucumber? [multiple choice]
-Does the name of the method correctly describe the intent of the step?
-Do the parameter names correctly describe the meaning of the arguments?
-Did Cucumber generate a snippet due to a spelling inconsistency between the step and an existing step definition?
-Does the snippet correctly automate the gherkin step as described? [false]
-What’s the next step in BDD after we’ve pasted in the step definition snippet and seen it fail with a `pending` status?
-Check with our project manager about the requirement
-Implement some code that does what the Gherkin step describes [true]
-Create a test framework for modelling our application
-Run a manual test to check what the system does
-
-Implement domain model - Java
-
-Before we can run the code we just wrote we need to fix the compilation errors. Let’s create a class called Person.
-
-Then we’ll add a setter for the location.
-
-When we run the scenario again, the first step is green!
-Implement domain model - Ruby
-
-To implement this step, we need to create a couple of person objects, with the specified distance between them. We could write it like this:
-
-[writes the code]
-
-Now we have two instances of person, one representing Lucy, and one representing Sean.
-
-If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our Person class.
-
-Let’s give our solution a home by creating a `lib` directory. We’ll put our Shouty application in a Ruby file called `shouty.rb` in that directory.
-
-Create a Shouty module, then an empty Person class inside it.
-
-For now, we’ll just require the shouty application from our steps.rb file. In a later lesson we’ll talk more about how to organise this code a bit better.
-
-When we run the scenario again, the first step is green!
-Introduce second step definition - Common
-
-We’ll follow the same flow to make the remaining two steps pass:
-Do a little domain modelling
-Write the code we wish we had
-Make it compile
-Run the scenario
-
-In the second step definition, we want to tell Sean to shout something. In order to send instructions to Sean, we need to store him in an instance variable so that he’ll be accessible from all of our step definitions, like this.
-
- Our Person class needs a shout method. 
-
-[writes the method]
-
-Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.
-
-The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.
-
-Get heard messages - Java
-The second step is passing, and we have one more to go.
-
-Once again we are going to write the code we wish we had.
-
-This leads us to add a get-messages-heard method to the Person class so that we can find out what messages Lucy has been hearing. We’ll just make it return null for now.
-
-We also need to know what Sean shouted. Let’s store that in a field when the When step runs. Now we can use that in our assertion.
-
-We’ll run the scenario again. The first two steps are green, but the last one is failing! Let’s have a look at the error message.
-
-We expected Lucy to have heard a single message with “free bagels at Sean’s”, but our system reported null.
-
-Get heard messages - Ruby
-
-Once again we’re are going to write the code we wish we had.
-
-[writes the code for the assertion]
-
-So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.
-
-We can record what Sean shouts by storing it in an instance variable as the When step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check.
-
-We also need to add a messages_heard method to our Person class. Let’s do that now…
-
-[writes the code]
-
-...and watch Cucumber run the tests again.
-
-Failing test milestone - Common
-
-This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code! Never trust an automated test that you haven’t seen fail!
-
-Now all we have to do is write the code to make it pass - that’s the easy bit!
-
-In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?
-
-[ pause ]
-
-[ makes the change ]
-
-I told you it wasn’t very future proof!
-
-Still, the fact that such a poor implementation can pass our tests shows us that we need to work on our tests. A more comprehensive set of scenarios would force us to write a better implementation.
-
-This is the essence of behaviour-driven development. Examples of behaviour drive the development.
-
-Instead of writing a note on our TODO list, let’s write another failing scenario.
-
-[ writes it out, just shouting something different ]
-
-[ runs the scenario, watches it fail ]
-
-Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We’re done for today!
-
-02.4 Questions
-Why should we always make sure that we see a scenario fail before we make it pass? [multiple choice]
-Until you see a scenario fail, you can’t be sure that it can ever fail [true]
-There’s no need to always see a scenario fail [false]
-BDD practitioners use failing scenarios to drive their development [true]
-A passing scenario implies the functionality it describes has already been implemented, so it may be a duplicate of an existing scenario [true]
-BDD practitioners believe in learning from failure [false]
-Why did we change to use an instance variable for storing each Person?
-It ensures we can interact with the same object from different steps. [true]
-It’s a better way to organise the code
-It’s more efficient for performance
-Cucumber requires us to store our objects as instance variables.
-How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps?
-We duplicated the text inside our Person class
-We used an instance variable to store the text that was shouted [true]
-We called a method on the Person class to retrieve the messages heard
-We passed the message text in from our Gherkin scenarios
-Which flow should we follow when making a Scenario pass?
-Domain modelling -> Write some code -> Make it compile -> Run the scenario & watch it fail
-Write some code -> Domain modelling -> Make it compile -> Run the scenario
-Write some code -> Make it compile -> Domain modelling -> Run the scenario
-Domain modelling -> Run the scenario -> Write some code -> Make it compile
-Why is our naive implementation of Person.getMessagesHeard, with a hard-coded message OK in BDD? (multiple choice)
-It shows us that we need better examples to pin down the behaviour we really want from the code. [correct]
-We know we will iterate on our solution, when we come up with more examples of what we want it to do. [correct]
-Nobody is using our solution yet [incorrect]
-We have to do a bad implementation so we can see our test fail. [incorrect]
-Look at this diagram (1) Write a scenario, 2) Automate it and watch it fail, 3) Write just enough code to make it pass). Which stage are we at as the video ends?
-1
-2
-3
+This failed, but it did it for the right reason. Now we need to write our specification.
