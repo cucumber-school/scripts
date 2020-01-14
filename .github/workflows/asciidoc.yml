@@ -22,7 +22,8 @@ jobs:
         git config --global user.name "GitHub Action"
         git checkout master
         git pull
-        git checkout gh-pages
+        git branch -D gh-pages
+        git checkout -b gh-pages
         git rebase master
         cd ruby
         gem install bundler
