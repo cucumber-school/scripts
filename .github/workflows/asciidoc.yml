@@ -27,9 +27,8 @@ jobs:
         cd ruby
         gem install bundler
         bundle install --jobs 4 --retry 3
-    - name: Build AsciiDoc and commit to gh-pages branch
-      run: |
         bundle exec rake
+        git status
         git add index.html
         git commit -m "Building latest asciidoc"
         git push --force
