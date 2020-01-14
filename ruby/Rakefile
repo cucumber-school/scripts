@@ -19,6 +19,8 @@ task :html => :generate_index_files do
 
   Asciidoctor.convert_file 'index.adoc',
                            safe: :unsafe,
-                           to_dir: '.',
+                           to_dir: '..',
                            mkdirs: true
 end
+
+task :default => :html
