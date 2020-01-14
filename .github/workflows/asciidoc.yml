@@ -24,12 +24,12 @@ jobs:
         git pull
         git checkout gh-pages
         git pull
-        git rebase master
+        git merge master
         cd ruby
         gem install bundler
         bundle install --jobs 4 --retry 3
         bundle exec rake
         git status
-        git add index.html
+        git add ../index.html
         git commit -m "Building latest asciidoc"
         git push --force
