@@ -16,7 +16,7 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - name: Build asciidoc and commit to gh-pages
+    - name: Checkout gh-pages with latest changes
       run: |
         git config --global user.email "team@cucumber.io"
         git config --global user.name "GitHub Action"
@@ -27,7 +27,9 @@ jobs:
         cd ruby
         gem install bundler
         bundle install --jobs 4 --retry 3
+    - name: Build AsciiDoc and commit to gh-pages branch
+      run: |
         bundle exec rake
-        git add **/*.html
+        git add index.html
         git commit -m "Building latest asciidoc"
         git push --force
