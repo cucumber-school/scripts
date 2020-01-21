@@ -4,11 +4,11 @@ task :generate_index_files do
 
     File.open("./index-files.adoc", "w") do |f|
       script_files.each { |file_name|
-        f << "include::#{file_name}[]\n"
+        f << "include::#{file_name}[]\n\n"
 
         questions_file_name = file_name.gsub(/script/, "questions")
         if File.exist?(questions_file_name)
-          f << "include::#{questions_file_name}[]\n"
+          f << "include::#{questions_file_name}[]\n\n"
         end
       }
     end

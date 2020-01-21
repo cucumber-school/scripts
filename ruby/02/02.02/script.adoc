@@ -23,7 +23,17 @@ $ mkdir shouty
 // TODO: remove reference to editor
 Go use cd to go into that directory, and open it up in your editor:
 
+// shot()
 First we’ll create a Gemfile that describes the Ruby gems we need for our project. We’ll add Cucumber and RSpec-Expectations.
+
+.Gemfile
+[source,ruby]
+----
+source "https://rubygems.org"
+
+gem 'cucumber'
+gem 'rspec'
+----
 
 Now go back to the command-line and run `bundle install` to install those gems.
 
@@ -43,3 +53,5 @@ $ bundle exec cucumber
 Good, we've installed Cucumber.
 
 This failed, but it did it for the right reason. Now we need to write our specification.
+
+
