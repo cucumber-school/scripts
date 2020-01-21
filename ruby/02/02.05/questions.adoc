@@ -1,0 +1,37 @@
+==== Questions
+[qanda]
+Why should we always make sure that we see a scenario fail before we make it pass? (select multiple) ::
+  * Until you see a scenario fail, you can’t be sure that it can ever fail [true]
+  * There’s no need to always see a scenario fail [false]
+  * BDD practitioners use failing scenarios to drive their development [true]
+  * A passing scenario implies the functionality it describes has already been implemented, so it may be a duplicate of an existing scenario [true]
+  * BDD practitioners believe in learning from failure [false]
+
+Why did we change to use an instance variable for storing each Person? ::
+  * It ensures we can interact with the same object from different steps. [true]
+  * It’s a better way to organise the code
+  * It’s more efficient for performance
+  * Cucumber requires us to store our objects as instance variables.
+
+How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? ::
+  * We duplicated the text inside our Person class
+  * We used an instance variable to store the text that was shouted [true]
+  * We called a method on the Person class to retrieve the messages heard
+  * We passed the message text in from our Gherkin scenarios
+
+Which flow should we follow when making a Scenario pass? ::
+  * Domain modelling -> Write some code -> Make it compile -> Run the scenario & watch it fail
+  * Write some code -> Domain modelling -> Make it compile -> Run the scenario
+  * Write some code -> Make it compile -> Domain modelling -> Run the scenario
+  * Domain modelling -> Run the scenario -> Write some code -> Make it compile
+
+Why is our naive implementation of Person.getMessagesHeard, with a hard-coded message OK in BDD? (select multiple) ::
+  * It shows us that we need better examples to pin down the behaviour we really want from the code. [correct]
+  * We know we will iterate on our solution, when we come up with more examples of what we want it to do. [correct]
+  * Nobody is using our solution yet [incorrect]
+  * We have to do a bad implementation so we can see our test fail. [incorrect]
+
+Look at this diagram (1) Write a scenario, 2) Automate it and watch it fail, 3) Write just enough code to make it pass). Which stage are we at as the video ends? ::
+  * 1
+  * 2
+  * 3
