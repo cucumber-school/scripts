@@ -31,6 +31,14 @@ task :html, [:lang] => [:generate_index_files] do |t, args|
   end
 end
 
+task :list do
+  puts "Available languages: \n"
+
+  LANGUAGES.each do |lang|
+    puts " rake \"html[#{lang}]\""
+  end
+end
+
 task :default => :html
 
 def languages(args)
