@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.10">
-<title>Untitled</title>
+<meta name="author" content="Matt Wynne">
+<title>Fundamentals of BDD [JavaScript]</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -436,22 +437,316 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
+<h1>Fundamentals of BDD [JavaScript]</h1>
+<div class="details">
+<span id="author" class="author">Matt Wynne</span><br>
+<span id="email" class="email"><a href="mailto:matt@cucumber.io">matt@cucumber.io</a></span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_your_first_scenario">Your first Scenario</a>
+<ul class="sectlevel2">
+<li><a href="#_introduction">Introduction</a>
+<ul class="sectlevel3">
+<li><a href="#_questions">Questions</a></li>
+</ul>
+</li>
+<li><a href="#_running_the_scenario_with_cucumber">Running the scenario with Cucumber</a>
+<ul class="sectlevel3">
+<li><a href="#_installation">Installation</a></li>
+<li><a href="#_questions_2">Questions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_your_first_scenario">Your first Scenario</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_introduction">Introduction</h3>
 <div class="paragraph">
-<p>This script is in multiple languages:</p>
+<p>Last time we learned how to use conversations about concrete examples to explore your problem domain and decide what to build.</p>
 </div>
+<div class="paragraph">
+<p>In this episode you’ll learn how to describe those examples using the Gherkin specification language so that Cucumber can run them. Then we’ll drive out a solution using a failing Cucumber scenario to guide us.</p>
+</div>
+<div class="paragraph">
+<p>There is going to be a fair amount of programming in this episode, and some object-oriented design as well.</p>
+</div>
+<div class="paragraph">
+<p>We want this to feel real, so we’ll work on something fun. A social networking application!</p>
+</div>
+<div class="paragraph">
+<p>Benny the barista wants to attract more of the people who walk past his coffee shop by offering them deals. But Benny doesn’t know how to reach them.
+Claire the commuter often ends up in traffic jams she realises she could have avoided by taking a different route.</p>
+</div>
+<div class="paragraph">
+<p>Stevie the student always seems to miss his friends when he’s out. He wishes there was a better way to find out who’s nearby.</p>
+</div>
+<div class="paragraph">
+<p>Shouty is a social network that allows people who are physically close to communicate, just like people have always communicated with their voices. In the real world you can talk to someone in the same room, or across the street. Or even 100 m away from you in a park - if you shout.</p>
+</div>
+<div class="paragraph">
+<p>That’s Shouty. What you say on this social network can only be “heard” by people who are nearby.</p>
+</div>
+<div class="paragraph">
+<p>Let’s start with a very basic example of Shouty’s behaviour. Something we might have discussed in a three amigos meeting:</p>
+</div>
+<div class="paragraph">
+<p>Sean the shouter shouts "free bagels at Sean&#8217;s" and Lucy the listener who happens to be stood across the street from his store, 15 metres away, hears him. She walks into Sean’s Coffee and takes advantage of the offer.</p>
+</div>
+<div class="paragraph">
+<p>::shot[]
+We can translate this into a Gherkin scenario so that Cucumber can run it. Here&#8217;s how that would look.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+  <span class="nf">Given </span>Lucy is located 15m from Sean
+  <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+  <span class="nf">Then </span>Lucy hears Sean’s message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see there are four special keywords being used here. <code>Scenario</code> just tells Cucumber we’re about to describe an example that it can execute. Then you see the lines beginning with Given, When and Then.</p>
+</div>
+<div class="paragraph">
+<p>::shot[]
+<code>Given</code> is the context for the scenario. We’re putting the system into a specific state, ready for the scenario to unfold.</p>
+</div>
+<div class="paragraph">
+<p>::shot[]
+<code>When</code> is an action. Something that happens to the system that will cause something else to happen: an outcome.</p>
+</div>
+<div class="paragraph">
+<p>::shot[]
+<code>Then</code> is the outcome. It’s the behaviour we expect from the system when this action happens in this context.</p>
+</div>
+<div class="paragraph">
+<p>You’ll notice we’ve omitted from our outcome anything about Lucy walking into Sean’s store and making a purchase. Remember, Gherkin is supposed to describe the behaviour of the system, so it would be distracting to have it in our scenario.</p>
+</div>
+<div class="paragraph">
+<p>Each scenario has these three ingredients:
+::shot[]
+  a context,
+::shot[]
+  an action,
+::shot[]
+  and one or more outcomes.</p>
+</div>
+<div class="paragraph">
+<p>Together, they describe one single aspect of the behaviour of the system.</p>
+</div>
+<div class="paragraph">
+<p>Now that we’ve translated our example into Gherkin, we can automate it!</p>
+</div>
+<div class="sect3">
+<h4 id="_questions">Questions</h4>
+<div class="qlist qanda">
+<ol>
+<li>
+<p><em>What’s an advantage of using  Gherkin to express our examples in BDD? (choose one) </em></p>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="ruby/index.html">Ruby</a></p>
+<p>We can get Cucumber to test whether the code does what the scenario describes.</p>
 </li>
 <li>
-<p><a href="js/index.html">JavaScript</a></p>
+<p>We can easily automate tests even if we don&#8217;t know much about programming.</p>
+</li>
+<li>
+<p>We can use tools to generate the scenarios.</p>
+<div class="literalblock">
+<div class="content">
+<pre>Gherkin is just one way of expressing examples of how you want your system to behave. The advantage of using this particular format is that you can use Cucumber to test them for you, making them into Living Documentation.</pre>
+</div>
+</div>
 </li>
 </ul>
+</div>
+</li>
+<li>
+<p><em>Which of these are valid Gherkin keywords? (choose multiple)</em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Scenario</p>
+</li>
+<li>
+<p>Story</p>
+</li>
+<li>
+<p>Given</p>
+</li>
+<li>
+<p>Only</p>
+</li>
+<li>
+<p>If</p>
+</li>
+<li>
+<p>When</p>
+</li>
+<li>
+<p>Before</p>
+</li>
+<li>
+<p>Then</p>
+</li>
+<li>
+<p>While</p>
+</li>
+<li>
+<p>Check</p>
+<div class="literalblock">
+<div class="content">
+<pre>We’ve introduced four Gherkin keywords so far:
+  * `Scenario` tells Cucumber we’re about to describe an example that it can execute.
+  * `Given`, `When` and `Then` identify the steps of the scenario.
+There are a few other keywords which will be introduced later in the course.</pre>
+</div>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>The Gherkin keywords Given, When and Then, allow us to express three different components of a scenario. Which of these statements correctly describes how each of these keywords should be used? (Choose multiple)</em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Given describes something that has already happened before the interesting part of the scenario starts. (Correct)</p>
+</li>
+<li>
+<p>Then describes an action you want to take.</p>
+</li>
+<li>
+<p>When explains what should happen at the end of the sceanario.</p>
+</li>
+<li>
+<p>Then explains what should happen at the end of the sceanario. (Correct)</p>
+</li>
+<li>
+<p>When expresses an action that changes the state of the system. (Correct)</p>
+</li>
+<li>
+<p>Given describes the context in which the scenario occurs (Correct)</p>
+</li>
+<li>
+<p>Explanation:</p>
+</li>
+<li>
+<p>Given is the context for the scenario. We’re putting the system into a specific state, ready for the scenario to unfold.</p>
+</li>
+<li>
+<p>When is an action. Something that happens to the system that will cause something else to happen: an outcome.</p>
+</li>
+<li>
+<p>Then is the outcome. It’s the behaviour we expect from the system when this action happens in this context.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_the_scenario_with_cucumber">Running the scenario with Cucumber</h3>
+<div class="sect3">
+<h4 id="_installation">Installation</h4>
+<div class="paragraph">
+<p>Before we get started make sure you have a modern version of NodeJs,
+and NPM installed:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>node <span class="nt">-v</span>
+<span class="nv">$ </span>npm <span class="nt">-v</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you see an error message when you run these commands, you’ll need to fix your Node installation.</p>
+</div>
+<div class="paragraph">
+<p>Go back to the command prompt and create a new directory for our project:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>shouty</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Go use cd to go into that directory, and open it up in your editor:</p>
+</div>
+<div class="paragraph">
+<p>First we’ll create a <code>package.json</code> that describes the NPM packages we need for our project
+and add the <code>cucumber</code> package to it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm init <span class="nt">-y</span>
+<span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">-D</span> cucumber</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now run  the <code>cucumber-js</code> command to see if everything works:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>./node_modules/.bin/cucumber-js</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But this is not very user friendly. There&#8217;s a nicer way to run cucumber.</p>
+</div>
+<div class="paragraph">
+<p>Edit <code>package.json</code> and change the <code>test</code> line under the <code>scripts</code> from it&#8217;s default to <code>cucumber-js</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="p">{</span>
+  <span class="c1">// ...</span>
+  <span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">cucumber-js</span><span class="dl">"</span>
+  <span class="p">},</span>
+  <span class="c1">// ...</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we’re ready! If we run <code>npm test</code> at this point, we’ll see cucumber pass with no scenarios or steps to run:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty
+<span class="o">&gt;</span> cucumber-js
+
+
+
+0 scenarios
+0 steps
+0m00.000s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Good, we&#8217;ve installed Cucumber. Now we need to write our specification.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_questions_2">Questions</h4>
+
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
@@ -459,5 +754,216 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 Last updated 2020-01-23 14:58:06 UTC
 </div>
 </div>
+<style>
+pre.rouge table td { padding: 5px; }
+pre.rouge table pre { margin: 0; }
+pre.rouge .cm {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cp {
+  color: #999999;
+  font-weight: bold;
+}
+pre.rouge .c1 {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .cs {
+  color: #999999;
+  font-weight: bold;
+  font-style: italic;
+}
+pre.rouge .c, pre.rouge .ch, pre.rouge .cd, pre.rouge .cpf {
+  color: #999988;
+  font-style: italic;
+}
+pre.rouge .err {
+  color: #a61717;
+  background-color: #e3d2d2;
+}
+pre.rouge .gd {
+  color: #000000;
+  background-color: #ffdddd;
+}
+pre.rouge .ge {
+  color: #000000;
+  font-style: italic;
+}
+pre.rouge .gr {
+  color: #aa0000;
+}
+pre.rouge .gh {
+  color: #999999;
+}
+pre.rouge .gi {
+  color: #000000;
+  background-color: #ddffdd;
+}
+pre.rouge .go {
+  color: #888888;
+}
+pre.rouge .gp {
+  color: #555555;
+}
+pre.rouge .gs {
+  font-weight: bold;
+}
+pre.rouge .gu {
+  color: #aaaaaa;
+}
+pre.rouge .gt {
+  color: #aa0000;
+}
+pre.rouge .kc {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kd {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kn {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kp {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kr {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .kt {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .k, pre.rouge .kv {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .mf {
+  color: #009999;
+}
+pre.rouge .mh {
+  color: #009999;
+}
+pre.rouge .il {
+  color: #009999;
+}
+pre.rouge .mi {
+  color: #009999;
+}
+pre.rouge .mo {
+  color: #009999;
+}
+pre.rouge .m, pre.rouge .mb, pre.rouge .mx {
+  color: #009999;
+}
+pre.rouge .sb {
+  color: #d14;
+}
+pre.rouge .sc {
+  color: #d14;
+}
+pre.rouge .sd {
+  color: #d14;
+}
+pre.rouge .s2 {
+  color: #d14;
+}
+pre.rouge .se {
+  color: #d14;
+}
+pre.rouge .sh {
+  color: #d14;
+}
+pre.rouge .si {
+  color: #d14;
+}
+pre.rouge .sx {
+  color: #d14;
+}
+pre.rouge .sr {
+  color: #009926;
+}
+pre.rouge .s1 {
+  color: #d14;
+}
+pre.rouge .ss {
+  color: #990073;
+}
+pre.rouge .s, pre.rouge .sa, pre.rouge .dl {
+  color: #d14;
+}
+pre.rouge .na {
+  color: #008080;
+}
+pre.rouge .bp {
+  color: #999999;
+}
+pre.rouge .nb {
+  color: #0086B3;
+}
+pre.rouge .nc {
+  color: #445588;
+  font-weight: bold;
+}
+pre.rouge .no {
+  color: #008080;
+}
+pre.rouge .nd {
+  color: #3c5d5d;
+  font-weight: bold;
+}
+pre.rouge .ni {
+  color: #800080;
+}
+pre.rouge .ne {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nf, pre.rouge .fm {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nl {
+  color: #990000;
+  font-weight: bold;
+}
+pre.rouge .nn {
+  color: #555555;
+}
+pre.rouge .nt {
+  color: #000080;
+}
+pre.rouge .vc {
+  color: #008080;
+}
+pre.rouge .vg {
+  color: #008080;
+}
+pre.rouge .vi {
+  color: #008080;
+}
+pre.rouge .nv, pre.rouge .vm {
+  color: #008080;
+}
+pre.rouge .ow {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .o {
+  color: #000000;
+  font-weight: bold;
+}
+pre.rouge .w {
+  color: #bbbbbb;
+}
+pre.rouge {
+  background-color: #f8f8f8;
+}
+</style>
 </body>
 </html>
