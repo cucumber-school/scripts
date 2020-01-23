@@ -1,11 +1,14 @@
-LANGUAGES = %w[ruby js]
+LANGUAGES = {
+  ruby: "Ruby",
+  js:   "JavaScript"
+}
 
 task :generate_index_files, [:lang] => [] do |t, args|
-  languages(args).each do |lang|
+  language_codes(args).each do |code|
     Dir.chdir('content') do
-      script_files = FileList["**/script.#{lang}.adoc"]
+      script_files = FileList["**/script.#{code}.adoc"]
 
-      File.open("./index-files.#{lang}.adoc", "w") do |f|
+      File.open("./index-files.#{code}.adoc", "w") do |f|
         script_files.each { |file_name|
           f << "include::#{file_name}[]\n\n"
 
@@ -24,12 +27,21 @@ task :html, [:lang] => [:generate_index_files] do |t, args|
 
   FileUtils.rm_rf Dir.glob('public/*.html')
 
-  languages(args).each do |lang|
-    puts "Generating #{lang}"
-    Asciidoctor.convert_file "content/index.#{lang}.adoc",
+  language_codes(args).each do |code|
+    puts "Generating #{code}"
+    Asciidoctor.convert_file "content/index.#{code}.adoc",
                              safe: :unsafe,
-                             to_file: "public/#{lang}/index.html",
+                             to_file: "public/#{code}/index.html",
                              mkdirs: true
+  end
+
+  Dir.chdir('content') do
+    File.open("./languages.adoc", "w") do |f|
+      LANGUAGES.each do |lang, name|
+        f << "- link:#{lang}/index.html[#{name} Version]\n"
+
+      end
+    end
   end
 
   Asciidoctor.convert_file "content/index.adoc",
@@ -41,13 +53,13 @@ end
 task :list do
   puts "Available languages: \n"
 
-  LANGUAGES.each do |lang|
-    puts " rake \"html[#{lang}]\""
+  LANGUAGES.each do |code, name|
+    puts " rake \"html[#{lang}]\"  # Generate HTML for #{name} version."
   end
 end
 
 task :default => :html
 
-def languages(args)
-  Array(args[:lang] || LANGUAGES)
+def language_codes(args)
+  Array(args[:lang] || LANGUAGES.keys)
 end
