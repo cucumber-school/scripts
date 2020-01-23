@@ -9,13 +9,13 @@ We’ll follow the same flow to make the remaining two steps pass:
 
 In the second step definition, we want to tell Sean to shout something.
 
-// shot()
+shot::[]
 In order to send instructions to Sean, we need to store him in an instance variable, which we already have, so that he’ll be accessible from all of our step definitions.
 
-// shot()
+shot::[]
 On the `When` step, we can capture Sean's message using the `{string}` pattern like this:
 
-// shot()
+shot::[]
 And now we can now tell him to _shout_ the message:
 
 [source,ruby]
@@ -38,7 +38,7 @@ Then("Lucy hears Sean’s message") do
 end
 ----
 
-// shot()
+shot::[]
 Our Person class needs a shout method. 
 
 [source,bash]
@@ -62,7 +62,7 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 0m0.003s
 ----
 
-// shot()
+shot::[]
 Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.
 
 .shouty.rb
@@ -83,7 +83,7 @@ end
 
 ==== Get heard messages
 
-// shot()
+shot::[]
 The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.
 
 Once again we’re are going to write the code we wish we had.
@@ -158,7 +158,7 @@ This is great! Whenever we do BDD, getting to our first failing test is a milest
 
 Now all we have to do is write the code to make it pass - that’s the easy bit!
 
-// shot()
+shot::[]
 In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?
 
 [source,ruby]
@@ -182,7 +182,7 @@ end
 
 I told you it wasn’t very future proof!
 
-// shot()
+shot::[]
 [source,bash]
 ----
 bundle exec cucumber

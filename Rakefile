@@ -27,15 +27,17 @@ task :html, [:lang] => [:generate_index_files] do |t, args|
   languages(args).each do |lang|
     puts "Generating #{lang}"
     Asciidoctor.convert_file "content/index.#{lang}.adoc",
-                             safe: :unsafe,
+                             safe: :safe,
                              to_file: "public/#{lang}/index.html",
-                             mkdirs: true
+                             mkdirs: true,
+                             attributes: { 'shots' => ENV['shots'] }
   end
 
   Asciidoctor.convert_file "content/index.adoc",
-                           safe: :unsafe,
+                           safe: :safe,
                            to_file: "public/index.html",
-                           mkdirs: true
+                           mkdirs: true,
+                           attributes: { 'shots' => ENV['shots'] }
 end
 
 task :list do
@@ -50,4 +52,23 @@ task :default => :html
 
 def languages(args)
   Array(args[:lang] || LANGUAGES)
+end
+
+require 'asciidoctor'
+require 'asciidoctor/extensions'
+
+class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
+  use_dsl
+
+  named :shot
+
+  def process parent, target, attrs
+    doc = parent.document
+    return unless doc.attributes['shots']
+    %(<span style="background-color: red; padding-left: 2; padding-right: 2;">shot!</span>)
+  end
+end
+
+Asciidoctor::Extensions.register do
+  inline_macro ShotInlineMacro if document.basebackend? 'html'
 end
