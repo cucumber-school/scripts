@@ -65,7 +65,7 @@ class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
   def process parent, target, attrs
     doc = parent.document
     return unless doc.attributes['shots']
-    %(<span style="background-color: red; padding-left: 2; padding-right: 2;">shot!</span>)
+    %(<span style="color: white; font-weight: bold; background-color: red; padding-left: 2; padding-right: 2;">shot!</span>)
   end
 end
 
