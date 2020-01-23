@@ -22,6 +22,8 @@ end
 task :html, [:lang] => [:generate_index_files] do |t, args|
   require 'asciidoctor'
 
+  FileUtils.rm_rf Dir.glob('public/*.html')
+
   languages(args).each do |lang|
     puts "Generatiing #{lang}"
     Asciidoctor.convert_file "content/index.#{lang}.adoc",
