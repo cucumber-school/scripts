@@ -31,6 +31,11 @@ task :html, [:lang] => [:generate_index_files] do |t, args|
                              to_file: "public/#{lang}/index.html",
                              mkdirs: true
   end
+
+  Asciidoctor.convert_file "content/index.adoc",
+                           safe: :unsafe,
+                           to_file: "public/index.html",
+                           mkdirs: true
 end
 
 task :list do
