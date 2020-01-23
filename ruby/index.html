@@ -460,6 +460,24 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_questions_2">Questions</a></li>
 </ul>
 </li>
+<li><a href="#_creating_our_first_feature">Creating our first feature</a>
+<ul class="sectlevel3">
+<li><a href="#_run_feature">Run Feature</a></li>
+<li><a href="#_questions_3">Questions</a></li>
+</ul>
+</li>
+<li><a href="#_implement_domain_model">Implement domain model</a>
+<ul class="sectlevel3">
+<li><a href="#_questions_4">Questions</a></li>
+</ul>
+</li>
+<li><a href="#_introduce_second_step_definition">Introduce second step definition</a>
+<ul class="sectlevel3">
+<li><a href="#_get_heard_messages">Get heard messages</a></li>
+<li><a href="#_failing_test_milestone">Failing test milestone</a></li>
+<li><a href="#_questions_5">Questions</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -726,12 +744,973 @@ and the Bundler gem. Open a command-prompt and type:</p>
 
 </div>
 </div>
+<div class="sect2">
+<h3 id="_creating_our_first_feature">Creating our first feature</h3>
+<div class="paragraph">
+<p>We need to create a <code>features</code> directory. This is the conventional place to store your Gherkin specifications.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>features</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we’re ready to create our first feature file. Call the file <code>hear_shout.feature</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">touch </span>features/hear_shout.feature</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All feature files start with the keyword <code>Feature:</code>
+followed by a name.
+It’s a good convention to give it a name that matches the file name.</p>
+</div>
+<div class="paragraph">
+<p>Let’s write out our first scenario.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+  <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">When </span>Sean shouts “free bagels at Sean’s”
+    <span class="nf">Then </span>Lucy hears Sean’s message</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_run_feature">Run Feature</h4>
+<div class="paragraph">
+<p>Switch back to the command-prompt and run <code>cucumber</code>. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/listening.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/listening.feature:3</span>
+    When Sean shouts “free bagels at Sean’s” <span class="c"># features/listening.feature:4</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/listening.feature:5</span>
+
+1 scenario <span class="o">(</span>1 undefined<span class="o">)</span>
+3 steps <span class="o">(</span>3 undefined<span class="o">)</span>
+0m0.005s
+
+You can implement step definitions <span class="k">for </span>undefined steps with these snippets:
+
+Given<span class="o">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="o">)</span> <span class="k">do</span> |int|
+  pending <span class="c"># Write code here that turns the phrase above into concrete actions</span>
+end
+
+When<span class="o">(</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="o">)</span> <span class="k">do
+  </span>pending <span class="c"># Write code here that turns the phrase above into concrete actions</span>
+end
+
+Then<span class="o">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="o">)</span> <span class="k">do
+  </span>pending <span class="c"># Write code here that turns the phrase above into concrete actions</span>
+end</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>Undefined</code> means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some step definitions.</p>
+</div>
+<div class="paragraph">
+<p>Step definitions translate from the plain language you use in Gherkin into Ruby code.</p>
+</div>
+<div class="paragraph">
+<p>When Cucumber runs a step, it looks for a step definition that matches the text in the step. If it finds one, then it executes the code in the step definition.</p>
+</div>
+<div class="paragraph">
+<p>If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
+Let’s copy those.</p>
+</div>
+<div class="paragraph">
+<p>We’ll paste them into a Ruby file under a new directory called <code>step_definitions</code> underneath the <code>features</code> directory. I’ll just call it <code>steps.rb</code>.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">int</span><span class="o">|</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span>
+
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span>
+
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now run Cucumber again.</p>
+</div>
+<div class="paragraph">
+<p>This time the output is a little different. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one.
+But that first step definition throws a <code>PendingException</code>, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/listening.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:2</span>
+      TODO <span class="o">(</span>Cucumber::Pending<span class="o">)</span>
+      ./features/step_definitions/steps.rb:3:in <span class="sb">`</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="s1">'
+      features/listening.feature:3:in `Given Lucy is located 15m from Sean'</span>
+    When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.rb:6</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:10</span>
+
+1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
+3 steps <span class="o">(</span>2 skipped, 1 pending<span class="o">)</span>
+0m0.008s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It’s time to start work on our solution. At this point we need to do a little domain modelling. The words in the step provide us some good hints about some names that will appear in our domain model. Our scenario mentions two people, Lucy and Sean. So it looks like we need a couple of person objects at least. Each person will also need to know their own location.</p>
+</div>
+<div class="paragraph">
+<p>Cucumber is telling us to write the code we wish we had. Let’s do it!</p>
+</div>
+<div class="paragraph">
+<p>We’ll start by renaming the <code>int</code> parameter to something that better reflects its meaning. We’ll call it <code>distance</code>.</p>
+</div>
+<div class="paragraph">
+<p>And we can print it to the terminal to see the captured result</p>
+</div>
+<div class="paragraph">
+<p>To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
+  <span class="nb">p</span> <span class="n">distance</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span>
+
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span>
+
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we run <code>cucumber</code> again on our terminal, we can see the number 15 pop up in the output</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+15
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:2</span>
+      TODO <span class="o">(</span>Cucumber::Pending<span class="o">)</span>
+      ./features/step_definitions/steps.rb:4:in <span class="sb">`</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="s1">'
+      features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'</span>
+    When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.rb:7</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:11</span>
+
+1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
+3 steps <span class="o">(</span>2 skipped, 1 pending<span class="o">)</span>
+0m0.005s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the number 15 does not appear anywhere in our code. The value 15 is automatically passed from the gherkin step to the step definition. If you are curious, that’s the <code>{int}</code> in the step definition pattern or <em>expression</em>. We’ll explain these patterns in detail in a future lesson.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_questions_3">Questions</h4>
+<div class="qlist qanda">
+<ol>
+<li>
+<p><em>What do step definitions do? (choose one) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Provide a glossary of domain terms for your stakeholders</p>
+</li>
+<li>
+<p>Give Cucumber a way to automate your gherkin steps</p>
+</li>
+<li>
+<p>Add extra meaning to our Gherkin steps</p>
+</li>
+<li>
+<p>Generate code from gherkin documents</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>What does it mean when Cucumber says a step is Pending? (choose one) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>The step threw a <code>PendingException</code></p>
+</li>
+<li>
+<p>The step took too long to execute and was terminated</p>
+</li>
+<li>
+<p>One or more steps have been Skipped</p>
+</li>
+<li>
+<p>Cucumber was unable to find the step definitions</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Which of the following might you want to consider when using a snippet generated by Cucumber? (choose multiple) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Does the name of the method correctly describe the intent of the step?</p>
+</li>
+<li>
+<p>Do the parameter names correctly describe the meaning of the arguments?</p>
+</li>
+<li>
+<p>Did Cucumber generate a snippet due to a spelling inconsistency between the step and an existing step definition?</p>
+</li>
+<li>
+<p>Does the snippet correctly automate the gherkin step as described? [false]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>What’s the next step in BDD after we’ve pasted in the step definition snippet and seen it fail with a <code>pending</code> status? (choose one) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Check with our project manager about the requirement</p>
+</li>
+<li>
+<p>Implement some code that does what the Gherkin step describes [true]</p>
+</li>
+<li>
+<p>Create a test framework for modelling our application</p>
+</li>
+<li>
+<p>Run a manual test to check what the system does</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_implement_domain_model">Implement domain model</h3>
+<div class="paragraph">
+<p>Once we have the boilerplate in place, we can start working on the actual code for our scenario.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
+  <span class="nb">p</span> <span class="n">distance</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span>
+
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span>
+
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To implement the first step, we need to create a couple of person objects, with the specified distance between them. We could write it like this:</p>
+</div>
+<div class="paragraph">
+<p>We should also remove the <code>pending</code> status, since we are now defining our step.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
+  <span class="vi">@lucy</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@sean</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@lucy</span><span class="p">.</span><span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span>
+
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we have two instances of person, one representing Lucy, and one representing Sean.</p>
+</div>
+<div class="paragraph">
+<p>If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our Person class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:2</span>
+      uninitialized constant Person <span class="o">(</span>NameError<span class="o">)</span>
+      ./features/step_definitions/steps.rb:3:in <span class="sb">`</span><span class="s2">"{word} is located {int}m from {word}"</span><span class="s1">'
+      features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'</span>
+    When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.rb:7</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:11</span>
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:2 <span class="c"># Scenario: Listener is within range</span>
+
+1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
+3 steps <span class="o">(</span>1 failed, 2 skipped<span class="o">)</span>
+0m0.004s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s give our solution a home by creating a <code>lib</code> directory.
+We’ll put our Shouty application in a Ruby file called <code>shouty.rb</code> in that directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>lib
+<span class="nv">$ </span><span class="nb">touch </span>lib/shouty.rb</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Create a Shouty module, then an empty Person class inside it.</p>
+</div>
+<div class="listingblock">
+<div class="title">lib/shouty.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">module</span> <span class="nn">Shouty</span>
+  <span class="k">class</span> <span class="nc">Person</span>
+
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For now, we’ll just require the shouty application from our steps.rb file. In a later lesson we’ll talk more about how to organise this code a bit better.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="c1"># coding: utf-8</span>
+<span class="nb">require</span> <span class="s1">'shouty'</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
+  <span class="vi">@lucy</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@sean</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@lucy</span><span class="p">.</span><span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="c1"># ...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we run the scenario, cucumber tells us that we&#8217;re missing the <code>move_to</code> method on the <code>Person</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:4</span>
+    When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.rb:9</span>
+      TODO <span class="o">(</span>Cucumber::Pending<span class="o">)</span>
+      ./features/step_definitions/steps.rb:10:in <span class="sb">`</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="s1">'
+      features/hear_shout.feature:4:in `When Sean shouts “free bagels at Sean’s”'</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:13</span>
+
+1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
+3 steps <span class="o">(</span>1 skipped, 1 pending, 1 passed<span class="o">)</span>
+0m0.003s
+➜  shouty bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:4</span>
+      uninitialized constant Person <span class="o">(</span>NameError<span class="o">)</span>
+      ./features/step_definitions/steps.rb:5:in <span class="sb">`</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="s1">'
+      features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'</span>
+    When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.rb:10</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:14</span>
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:2 <span class="c"># Scenario: Listener is within range</span>
+
+1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
+3 steps <span class="o">(</span>1 failed, 2 skipped<span class="o">)</span>
+0m0.004s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll add the definition without implementing it yet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">module</span> <span class="nn">Shouty</span>
+  <span class="k">class</span> <span class="nc">Person</span>
+    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we run the scenario again, the first step is green!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:4</span>
+    When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.rb:9</span>
+      TODO <span class="o">(</span>Cucumber::Pending<span class="o">)</span>
+      ./features/step_definitions/steps.rb:10:in <span class="sb">`</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="s1">'
+      features/hear_shout.feature:4:in `When Sean shouts “free bagels at Sean’s”'</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:13</span>
+
+1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
+3 steps <span class="o">(</span>1 skipped, 1 pending, 1 passed<span class="o">)</span>
+0m0.006s</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_questions_4">Questions</h4>
+<div class="qlist qanda">
+<ol>
+<li>
+<p><em>Why should we always make sure that we see a scenario fail before we make it pass? (select multiple) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Until you see a scenario fail, you can’t be sure that it can ever fail [true]</p>
+</li>
+<li>
+<p>There’s no need to always see a scenario fail [false]</p>
+</li>
+<li>
+<p>BDD practitioners use failing scenarios to drive their development [true]</p>
+</li>
+<li>
+<p>A passing scenario implies the functionality it describes has already been implemented, so it may be a duplicate of an existing scenario [true]</p>
+</li>
+<li>
+<p>BDD practitioners believe in learning from failure [false]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Why did we change to use an instance variable for storing each Person? (select one) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>It ensures we can interact with the same object from different steps. [true]</p>
+</li>
+<li>
+<p>It’s a better way to organise the code</p>
+</li>
+<li>
+<p>It’s more efficient for performance</p>
+</li>
+<li>
+<p>Cucumber requires us to store our objects as instance variables.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? (select one) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>We duplicated the text inside our Person class</p>
+</li>
+<li>
+<p>We used an instance variable to store the text that was shouted [true]</p>
+</li>
+<li>
+<p>We called a method on the Person class to retrieve the messages heard</p>
+</li>
+<li>
+<p>We passed the message text in from our Gherkin scenarios</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Which flow should we follow when making a Scenario pass? (select one) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Domain modelling &#8594; Write some code &#8594; Make it compile &#8594; Run the scenario &amp; watch it fail</p>
+</li>
+<li>
+<p>Write some code &#8594; Domain modelling &#8594; Make it compile &#8594; Run the scenario</p>
+</li>
+<li>
+<p>Write some code &#8594; Make it compile &#8594; Domain modelling &#8594; Run the scenario</p>
+</li>
+<li>
+<p>Domain modelling &#8594; Run the scenario &#8594; Write some code &#8594; Make it compile</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Why is our naive implementation of Person.getMessagesHeard, with a hard-coded message OK in BDD? (select multiple) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>It shows us that we need better examples to pin down the behaviour we really want from the code. [correct]</p>
+</li>
+<li>
+<p>We know we will iterate on our solution, when we come up with more examples of what we want it to do. [correct]</p>
+</li>
+<li>
+<p>Nobody is using our solution yet [incorrect]</p>
+</li>
+<li>
+<p>We have to do a bad implementation so we can see our test fail. [incorrect]</p>
+</li>
+<li>
+<p>Look at this diagram (1) Write a scenario, 2) Automate it and watch it fail, 3) Write just enough code to make it pass). Which stage are we at as the video ends?</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_introduce_second_step_definition">Introduce second step definition</h3>
+<div class="paragraph">
+<p>We’ll follow the same flow to make the remaining two steps pass:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Do a little domain modelling</p>
+</li>
+<li>
+<p>Write the code we wish we had</p>
+</li>
+<li>
+<p>Make it compile</p>
+</li>
+<li>
+<p>Run the scenario</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the second step definition, we want to tell Sean to shout something.</p>
+</div>
+<div class="paragraph">
+<p>In order to send instructions to Sean, we need to store him in an instance variable, which we already have, so that he’ll be accessible from all of our step definitions.</p>
+</div>
+<div class="paragraph">
+<p>On the <code>When</code> step, we can capture Sean&#8217;s message using the <code>{string}</code> pattern like this:</p>
+</div>
+<div class="paragraph">
+<p>And now we can now tell him to <em>shout</em> the message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="c1"># coding: utf-8</span>
+<span class="nb">require</span> <span class="s1">'shouty'</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
+  <span class="vi">@lucy</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@sean</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@lucy</span><span class="p">.</span><span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts {string}"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+  <span class="vi">@sean</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Our Person class needs a shout method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:4</span>
+    When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.rb:10</span>
+      undefined method <span class="sb">`</span>shout<span class="s1">' for #&lt;Shouty::Person:0x0000558e1ee78428&gt; (NoMethodError)
+      ./features/step_definitions/steps.rb:11:in `"Sean shouts {string}"'</span>
+      features/hear_shout.feature:4:in <span class="sb">`</span>When Sean shouts <span class="s2">"free bagels at Sean's"</span><span class="s1">'
+    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:14
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
+
+1 scenario (1 failed)
+3 steps (1 failed, 1 skipped, 1 passed)
+0m0.003s</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.</p>
+</div>
+<div class="listingblock">
+<div class="title">shouty.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">module</span> <span class="nn">Shouty</span>
+  <span class="k">class</span> <span class="nc">Person</span>
+    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_get_heard_messages">Get heard messages</h4>
+<div class="paragraph">
+<p>The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.</p>
+</div>
+<div class="paragraph">
+<p>Once again we’re are going to write the code we wish we had.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">expect</span><span class="p">(</span><span class="vi">@lucy</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="kp">include</span> <span class="vi">@message_from_sean</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.</p>
+</div>
+<div class="paragraph">
+<p>We can record what Sean shouts by storing it in an instance variable as the When step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts {string}"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+  <span class="vi">@sean</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="vi">@message_from_sean</span> <span class="o">=</span> <span class="n">message</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We also need to add a <code>messages_heard</code> method to our Person class. Let’s do that now, we&#8217;ll just return an empty array for now</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">module</span> <span class="nn">Shouty</span>
+  <span class="k">class</span> <span class="nc">Person</span>
+    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">messages_heard</span>
+      <span class="p">[]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and watch Cucumber run the tests again.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:4</span>
+    When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.rb:10</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:15</span>
+      expected <span class="o">[]</span> to include <span class="s2">"free bagels at Sean's"</span> <span class="o">(</span>RSpec::Expectations::ExpectationNotMetError<span class="o">)</span>
+      ./features/step_definitions/steps.rb:16:in <span class="sb">`</span><span class="s2">"Lucy hears Sean’s message"</span><span class="s1">'
+      features/hear_shout.feature:5:in `Then Lucy hears Sean’s message'</span>
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:2 <span class="c"># Scenario: Listener is within range</span>
+
+1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
+3 steps <span class="o">(</span>1 failed, 2 passed<span class="o">)</span>
+0m0.032s</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_failing_test_milestone">Failing test milestone</h4>
+<div class="paragraph">
+<p>This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code! Never trust an automated test that you haven’t seen fail!</p>
+</div>
+<div class="paragraph">
+<p>Now all we have to do is write the code to make it pass - that’s the easy bit!</p>
+</div>
+<div class="paragraph">
+<p>In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">module</span> <span class="nn">Shouty</span>
+  <span class="k">class</span> <span class="nc">Person</span>
+    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">messages_heard</span>
+      <span class="p">[</span><span class="s2">"free bagels at Sean's"</span><span class="p">]</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I told you it wasn’t very future proof!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:4</span>
+    When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.rb:10</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:15</span>
+
+1 scenario <span class="o">(</span>1 passed<span class="o">)</span>
+3 steps <span class="o">(</span>3 passed<span class="o">)</span>
+0m0.028s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Still, the fact that such a poor implementation can pass our tests shows us that we need to work on our tests. A more comprehensive set of scenarios would force us to write a better implementation.</p>
+</div>
+<div class="paragraph">
+<p>This is the essence of behaviour-driven development. Examples of behaviour drive the development.</p>
+</div>
+<div class="paragraph">
+<p>Instead of writing a note on our TODO list, let’s write another failing scenario.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+  <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">When </span>Sean shouts “free bagels at Sean’s”
+    <span class="nf">Then </span>Lucy hears Sean’s message
+
+  <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+    <span class="nf">Given </span>Lucy is 15m from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+    <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We’re done for today!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">bundle <span class="nb">exec </span>cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:4</span>
+    When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.rb:10</span>
+    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:15</span>
+
+  Scenario: Listener hears a different message <span class="c"># features/hear_shout.feature:7</span>
+    Given Lucy is 15m from Sean                <span class="c"># features/hear_shout.feature:8</span>
+    When Sean shouts <span class="s2">"Free coffee!"</span>            <span class="c"># features/step_definitions/steps.rb:10</span>
+    Then Lucy hears Sean<span class="s1">'s message             # features/hear_shout.feature:10
+
+2 scenarios (1 undefined, 1 passed)
+6 steps (1 skipped, 2 undefined, 3 passed)
+0m0.018s
+
+You can implement step definitions for undefined steps with these snippets:
+
+Given("Lucy is {int}m from Sean") do |int|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("Lucy hears Sean'</span>s message<span class="s2">") do
+  pending # Write code here that turns the phrase above into concrete actions
+end</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_questions_5">Questions</h4>
+<div class="qlist qanda">
+<ol>
+<li>
+<p><em>Why should we always make sure that we see a scenario fail before we make it pass? (select multiple) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Until you see a scenario fail, you can’t be sure that it can ever fail [true]</p>
+</li>
+<li>
+<p>There’s no need to always see a scenario fail [false]</p>
+</li>
+<li>
+<p>BDD practitioners use failing scenarios to drive their development [true]</p>
+</li>
+<li>
+<p>A passing scenario implies the functionality it describes has already been implemented, so it may be a duplicate of an existing scenario [true]</p>
+</li>
+<li>
+<p>BDD practitioners believe in learning from failure [false]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Why did we change to use an instance variable for storing each Person? </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>It ensures we can interact with the same object from different steps. [true]</p>
+</li>
+<li>
+<p>It’s a better way to organise the code</p>
+</li>
+<li>
+<p>It’s more efficient for performance</p>
+</li>
+<li>
+<p>Cucumber requires us to store our objects as instance variables.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>We duplicated the text inside our Person class</p>
+</li>
+<li>
+<p>We used an instance variable to store the text that was shouted [true]</p>
+</li>
+<li>
+<p>We called a method on the Person class to retrieve the messages heard</p>
+</li>
+<li>
+<p>We passed the message text in from our Gherkin scenarios</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Which flow should we follow when making a Scenario pass? </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Domain modelling &#8594; Write some code &#8594; Make it compile &#8594; Run the scenario &amp; watch it fail</p>
+</li>
+<li>
+<p>Write some code &#8594; Domain modelling &#8594; Make it compile &#8594; Run the scenario</p>
+</li>
+<li>
+<p>Write some code &#8594; Make it compile &#8594; Domain modelling &#8594; Run the scenario</p>
+</li>
+<li>
+<p>Domain modelling &#8594; Run the scenario &#8594; Write some code &#8594; Make it compile</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Why is our naive implementation of Person.getMessagesHeard, with a hard-coded message OK in BDD? (select multiple) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>It shows us that we need better examples to pin down the behaviour we really want from the code. [correct]</p>
+</li>
+<li>
+<p>We know we will iterate on our solution, when we come up with more examples of what we want it to do. [correct]</p>
+</li>
+<li>
+<p>Nobody is using our solution yet [incorrect]</p>
+</li>
+<li>
+<p>We have to do a bad implementation so we can see our test fail. [incorrect]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Look at this diagram (1) Write a scenario, 2) Automate it and watch it fail, 3) Write just enough code to make it pass). Which stage are we at as the video ends? </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>1</p>
+</li>
+<li>
+<p>2</p>
+</li>
+<li>
+<p>3</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-01-23 15:19:03 UTC
+Last updated 2020-01-23 15:58:51 UTC
 </div>
 </div>
 <style>
