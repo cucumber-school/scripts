@@ -1,4 +1,5 @@
-require "awesome_print"
+require 'awesome_print'
+
 AwesomePrint.defaults = {
   indent: 2,
   index:  false,
@@ -36,9 +37,10 @@ task :html, [:lang] => [:generate_script_files, :generate_index_files] do |t, ar
   language_codes(args).each do |code|
     puts "Generating #{code}"
     Asciidoctor.convert_file "content/index.#{code}.adoc",
-                             safe: :unsafe,
+                             safe: :safe,
                              to_file: "public/#{code}/index.html",
-                             mkdirs: true
+                             mkdirs: true,
+                             attributes: { 'shots' => ENV['shots'] }
   end
 
   Dir.chdir('content') do
@@ -51,9 +53,10 @@ task :html, [:lang] => [:generate_script_files, :generate_index_files] do |t, ar
   end
 
   Asciidoctor.convert_file "content/index.adoc",
-                           safe: :unsafe,
+                           safe: :safe,
                            to_file: "public/index.html",
-                           mkdirs: true
+                           mkdirs: true,
+                           attributes: { 'shots' => ENV['shots'] }
 end
 
 task :list do
@@ -85,4 +88,23 @@ task :default => :html
 
 def language_codes(args)
   Array(args[:lang] || LANGUAGES.keys)
+end
+
+require 'asciidoctor'
+require 'asciidoctor/extensions'
+
+class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
+  use_dsl
+
+  named :shot
+
+  def process parent, target, attrs
+    doc = parent.document
+    return unless doc.attributes['shots']
+    %(<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>)
+  end
+end
+
+Asciidoctor::Extensions.register do
+  inline_macro ShotInlineMacro if document.basebackend? 'html'
 end

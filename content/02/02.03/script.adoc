@@ -14,13 +14,13 @@ Now we’re ready to create our first feature file. Call the file `hear_shout.fe
 $ touch features/hear_shout.feature
 ----
 
-// shot()
+shot::[]
 All feature files start with the keyword `Feature:`
-// shot()
+shot::[]
 followed by a name.
 It’s a good convention to give it a name that matches the file name.
 
-// shot()
+shot::[]
 Let’s write out our first scenario.
 
 .hear_shout.feature
@@ -35,7 +35,7 @@ Feature: Hear shout
 
 ==== Run Feature
 
-// shot()
+shot::[]
 Switch back to the command-prompt and run `cucumber`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.
 
 // TODO: show output
@@ -68,20 +68,20 @@ Then("Lucy hears Sean’s message") do
 end
 ----
 
-// shot()
+shot::[]
 `Undefined` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some step definitions.
 
-// shot()
+shot::[]
 Step definitions translate from the plain language you use in Gherkin into Ruby code.
 
-// shot()
+shot::[]
 When Cucumber runs a step, it looks for a step definition that matches the text in the step. If it finds one, then it executes the code in the step definition.
 
 If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
-// shot()
+shot::[]
 Let’s copy those.
 
-// shot()
+shot::[]
 We’ll paste them into a Ruby file under a new directory called `step_definitions` underneath the `features` directory. I’ll just call it `steps.rb`.
 
 .steps.rb
@@ -100,12 +100,12 @@ Then("Lucy hears Sean’s message") do
 end
 ----
 
-// shot()
+shot::[]
 Now run Cucumber again.
 
-// shot()
+shot::[]
 This time the output is a little different. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one.
-// shot()
+shot::[]
 But that first step definition throws a `PendingException`, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
 
 [source,bash]
@@ -132,10 +132,10 @@ It’s time to start work on our solution. At this point we need to do a little 
 
 Cucumber is telling us to write the code we wish we had. Let’s do it!
 
-// shot()
+shot::[]
 We’ll start by renaming the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
 
-// shot()
+shot::[]
 And we can print it to the terminal to see the captured result
 
 To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.
@@ -156,7 +156,7 @@ Then("Lucy hears Sean’s message") do
 end
 ----
 
-// shot()
+shot::[]
 If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output
 
 [source,bash]

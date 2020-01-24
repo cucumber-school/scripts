@@ -1,6 +1,6 @@
 === Implement domain model
 
-// shot()
+shot::[]
 Once we have the boilerplate in place, we can start working on the actual code for our scenario.
 
 .steps.rb
@@ -20,10 +20,10 @@ Then("Lucy hears Sean’s message") do
 end
 ----
 
-// shot()
+shot::[]
 To implement the first step, we need to create a couple of person objects, with the specified distance between them. We could write it like this:
 
-// shot()
+shot::[]
 We should also remove the `pending` status, since we are now defining our step.
 
 [source,ruby]
@@ -68,9 +68,9 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 0m0.004s
 ----
 
-// shot()
+shot::[]
 Let’s give our solution a home by creating a `lib` directory.
-// shot()
+shot::[]
 We’ll put our Shouty application in a Ruby file called `shouty.rb` in that directory.
 
 [source,bash]
@@ -79,7 +79,7 @@ $ mkdir lib
 $ touch lib/shouty.rb
 ----
 
-// shot()
+shot::[]
 Create a Shouty module, then an empty Person class inside it.
 
 .lib/shouty.rb
@@ -92,7 +92,7 @@ module Shouty
 end
 ----
 
-// shot()
+shot::[]
 For now, we’ll just require the shouty application from our steps.rb file. In a later lesson we’ll talk more about how to organise this code a bit better.
 
 [source,ruby]
@@ -146,7 +146,7 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 0m0.004s
 ----
 
-// shot()
+shot::[]
 We'll add the definition without implementing it yet.
 
 [source,ruby]
@@ -160,7 +160,7 @@ module Shouty
 end
 ----
 
-// shot()
+shot::[]
 When we run the scenario again, the first step is green!
 
 [source,bash]
