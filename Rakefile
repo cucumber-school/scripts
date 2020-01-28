@@ -93,6 +93,11 @@ end
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 
+def tag(text)
+  %(<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">#{text}</span>)
+end
+
+
 class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
   use_dsl
 
@@ -101,10 +106,23 @@ class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
   def process parent, target, attrs
     doc = parent.document
     return unless doc.attributes['shots']
-    %(<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>)
+    tag("Shot")
+  end
+end
+
+class AnimationInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
+  use_dsl
+
+  named :animation
+
+  def process parent, target, attrs
+    doc = parent.document
+    return unless doc.attributes['shots']
+    tag("Animation")
   end
 end
 
 Asciidoctor::Extensions.register do
   inline_macro ShotInlineMacro if document.basebackend? 'html'
+  inline_macro AnimationInlineMacro if document.basebackend? 'html'
 end
