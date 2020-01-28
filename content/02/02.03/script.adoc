@@ -1,10 +1,14 @@
 === Creating our first feature
 
-We need to create a `features` directory. This is the conventional place to store your Gherkin specifications.
+As instructed, we can use the `cucumber --init` command to create the conventional folder structure for our Gherkin specifications and the code that will let Cucumber test them:
 
 [source,bash]
 ----
-$ mkdir features
+$ cucumber --init
+  create   features
+  create   features/step_definitions
+  create   features/support
+  create   features/support/env.rb
 ----
 
 Now we’re ready to create our first feature file. Call the file `hear_shout.feature`
@@ -38,7 +42,6 @@ Feature: Hear shout
 shot::[]
 Switch back to the command-prompt and run `cucumber`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.
 
-// TODO: show output
 [source,bash]
 ----
 $ bundle exec cucumber
@@ -69,7 +72,7 @@ end
 ----
 
 shot::[]
-`Undefined` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some step definitions.
+`Undefined` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
 shot::[]
 Step definitions translate from the plain language you use in Gherkin into Ruby code.
@@ -82,7 +85,7 @@ shot::[]
 Let’s copy those.
 
 shot::[]
-We’ll paste them into a Ruby file under a new directory called `step_definitions` underneath the `features` directory. I’ll just call it `steps.rb`.
+We’ll paste them into a Ruby file under a new directory called `step_definitions` underneath the `features` directory. We'll just call it `steps.rb`.
 
 .steps.rb
 [source,ruby]
@@ -128,17 +131,15 @@ Feature: Hear shout
 
 It’s time to start work on our solution. At this point we need to do a little domain modelling. The words in the step provide us some good hints about some names that will appear in our domain model. Our scenario mentions two people, Lucy and Sean. So it looks like we need a couple of person objects at least. Each person will also need to know their own location.
 
-// (Show a napkin drawing of a Person class with a location property).
-
 Cucumber is telling us to write the code we wish we had. Let’s do it!
 
 shot::[]
 We’ll start by renaming the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
 
 shot::[]
-And we can print it to the terminal to see the captured result
+And we can print it to the terminal to see the captured result.
 
-To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.
+To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place Sean in the centre and Lucy 15 metres away from Sean.
 
 [source,ruby]
 ----
@@ -178,4 +179,4 @@ Feature: Hear shout
 0m0.005s
 ----
 
-Notice that the number 15 does not appear anywhere in our code. The value 15 is automatically passed from the gherkin step to the step definition. If you are curious, that’s the `{int}` in the step definition pattern or _expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our Ruby code. The value 15 is automatically passed from the Gherkin step to the step definition. If you are curious, that’s the `{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.

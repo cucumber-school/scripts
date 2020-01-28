@@ -1,7 +1,7 @@
 === Implement domain model
 
 shot::[]
-Once we have the boilerplate in place, we can start working on the actual code for our scenario.
+Now that we have the step definitions matching, we can start working on the actual code. We like to use our executable examples to _guide_ our development, so we'll start designing the objects we'll need in our solution, by sketching out some code that calls them from our test.
 
 .steps.rb
 [source,ruby]
@@ -21,10 +21,7 @@ end
 ----
 
 shot::[]
-To implement the first step, we need to create a couple of person objects, with the specified distance between them. We could write it like this:
-
-shot::[]
-We should also remove the `pending` status, since we are now defining our step.
+To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[] We can remove the `pending` status now, and write the implementation for the first step like this:
 
 [source,ruby]
 ----
@@ -43,9 +40,9 @@ Then("Lucy hears Sean’s message") do
 end
 ----
 
-Now we have two instances of person, one representing Lucy, and one representing Sean.
+Now we have two instances of person, one representing Lucy, and one representing Sean. Then we move Lucy to the position specified in the scenario.
 
-If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our Person class.
+If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our `Person` class.
 
 [source,bash]
 ----
@@ -109,7 +106,7 @@ end
 # ...
 ----
 
-When we run the scenario, cucumber tells us that we're missing the `move_to` method on the `Person` class.
+When we run the scenario this time, Cucumber tells us that we're missing the `move_to` method on the `Person` class.
 
 [source,bash]
 ----
@@ -147,7 +144,7 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 ----
 
 shot::[]
-We'll add the definition without implementing it yet.
+We'll add the method definition without implementing it yet.
 
 [source,ruby]
 ----
