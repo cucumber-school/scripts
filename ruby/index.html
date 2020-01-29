@@ -447,35 +447,36 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#_your_first_scenario">Your first Scenario</a>
+<li><a href="#_discovering_bdd">1. Discovering BDD</a></li>
+<li><a href="#_your_first_scenario">2. Your first Scenario</a>
 <ul class="sectlevel2">
-<li><a href="#_introduction">Introduction</a>
+<li><a href="#_introduction">2.1. Introduction</a>
 <ul class="sectlevel3">
-<li><a href="#_questions">Questions</a></li>
+<li><a href="#_questions">2.1.1. Questions</a></li>
 </ul>
 </li>
-<li><a href="#_running_the_scenario_with_cucumber">Running the scenario with Cucumber</a>
+<li><a href="#_running_the_scenario_with_cucumber">2.2. Running the scenario with Cucumber</a>
 <ul class="sectlevel3">
-<li><a href="#_installation">Installation</a></li>
-<li><a href="#_questions_2">Questions</a></li>
+<li><a href="#_installation">2.2.1. Installation</a></li>
+<li><a href="#_questions_2">2.2.2. Questions</a></li>
 </ul>
 </li>
-<li><a href="#_creating_our_first_feature">Creating our first feature</a>
+<li><a href="#_creating_our_first_feature">2.3. Creating our first feature</a>
 <ul class="sectlevel3">
-<li><a href="#_run_feature">Run Feature</a></li>
-<li><a href="#_questions_3">Questions</a></li>
+<li><a href="#_run_feature">2.3.1. Run Feature</a></li>
+<li><a href="#_questions_3">2.3.2. Questions</a></li>
 </ul>
 </li>
-<li><a href="#_implement_domain_model">Implement domain model</a>
+<li><a href="#_implement_domain_model">2.4. Implement domain model</a>
 <ul class="sectlevel3">
-<li><a href="#_questions_4">Questions</a></li>
+<li><a href="#_questions_4">2.4.1. Questions</a></li>
 </ul>
 </li>
-<li><a href="#_introduce_second_step_definition">Introduce second step definition</a>
+<li><a href="#_introduce_second_step_definition">2.5. Introduce second step definition</a>
 <ul class="sectlevel3">
-<li><a href="#_get_heard_messages">Get heard messages</a></li>
-<li><a href="#_failing_test_milestone">Failing test milestone</a></li>
-<li><a href="#_questions_5">Questions</a></li>
+<li><a href="#_get_heard_messages">2.5.1. Get heard messages</a></li>
+<li><a href="#_failing_test_milestone">2.5.2. Failing test milestone</a></li>
+<li><a href="#_questions_5">2.5.3. Questions</a></li>
 </ul>
 </li>
 </ul>
@@ -485,10 +486,18 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_your_first_scenario">Your first Scenario</h2>
+<h2 id="_discovering_bdd">1. Discovering BDD</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>The script for this chapter is currently in <a href="https://docs.google.com/document/d/1S8eX3lz8-Ys9v94id9atFcX70hpi6XUoBaE5d6jsbHs/edit">Google Docs</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_your_first_scenario">2. Your first Scenario</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_introduction">Introduction</h3>
+<h3 id="_introduction">2.1. Introduction</h3>
 <div class="paragraph">
 <p>Last time we learned how to use conversations about concrete examples to explore your problem domain and decide what to build.</p>
 </div>
@@ -566,7 +575,7 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 <p>Now that we’ve translated our example into Gherkin, we can automate it!</p>
 </div>
 <div class="sect3">
-<h4 id="_questions">Questions</h4>
+<h4 id="_questions">2.1.1. Questions</h4>
 <div class="qlist qanda">
 <ol>
 <li>
@@ -677,9 +686,9 @@ There are a few other keywords which will be introduced later in the course.</pr
 </div>
 </div>
 <div class="sect2">
-<h3 id="_running_the_scenario_with_cucumber">Running the scenario with Cucumber</h3>
+<h3 id="_running_the_scenario_with_cucumber">2.2. Running the scenario with Cucumber</h3>
 <div class="sect3">
-<h4 id="_installation">Installation</h4>
+<h4 id="_installation">2.2.1. Installation</h4>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>
 Before we get started make sure you have a modern version of Ruby installed,
@@ -743,12 +752,12 @@ First we’ll create a Gemfile that describes the Ruby gems we need for our proj
 </div>
 </div>
 <div class="sect3">
-<h4 id="_questions_2">Questions</h4>
+<h4 id="_questions_2">2.2.2. Questions</h4>
 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_creating_our_first_feature">Creating our first feature</h3>
+<h3 id="_creating_our_first_feature">2.3. Creating our first feature</h3>
 <div class="paragraph">
 <p>We need to create a <code>features</code> directory. This is the conventional place to store your Gherkin specifications.</p>
 </div>
@@ -787,7 +796,7 @@ Let’s write out our first scenario.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_run_feature">Run Feature</h4>
+<h4 id="_run_feature">2.3.1. Run Feature</h4>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>
 Switch back to the command-prompt and run <code>cucumber</code>. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.</p>
@@ -947,7 +956,7 @@ Feature: Hear shout
 </div>
 </div>
 <div class="sect3">
-<h4 id="_questions_3">Questions</h4>
+<h4 id="_questions_3">2.3.2. Questions</h4>
 <div class="qlist qanda">
 <ol>
 <li>
@@ -1031,7 +1040,7 @@ Feature: Hear shout
 </div>
 </div>
 <div class="sect2">
-<h3 id="_implement_domain_model">Implement domain model</h3>
+<h3 id="_implement_domain_model">2.4. Implement domain model</h3>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>
 Once we have the boilerplate in place, we can start working on the actual code for our scenario.</p>
@@ -1225,7 +1234,7 @@ Feature: Hear shout
 </div>
 </div>
 <div class="sect3">
-<h4 id="_questions_4">Questions</h4>
+<h4 id="_questions_4">2.4.1. Questions</h4>
 <div class="qlist qanda">
 <ol>
 <li>
@@ -1334,7 +1343,7 @@ Feature: Hear shout
 </div>
 </div>
 <div class="sect2">
-<h3 id="_introduce_second_step_definition">Introduce second step definition</h3>
+<h3 id="_introduce_second_step_definition">2.5. Introduce second step definition</h3>
 <div class="paragraph">
 <p>We’ll follow the same flow to make the remaining two steps pass:</p>
 </div>
@@ -1435,7 +1444,7 @@ Let’s not worry about the implementation yet. The most important thing right n
 </div>
 </div>
 <div class="sect3">
-<h4 id="_get_heard_messages">Get heard messages</h4>
+<h4 id="_get_heard_messages">2.5.1. Get heard messages</h4>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>
 The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.</p>
@@ -1512,7 +1521,7 @@ cucumber features/hear_shout.feature:2 <span class="c"># Scenario: Listener is w
 </div>
 </div>
 <div class="sect3">
-<h4 id="_failing_test_milestone">Failing test milestone</h4>
+<h4 id="_failing_test_milestone">2.5.2. Failing test milestone</h4>
 <div class="paragraph">
 <p>This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code! Never trust an automated test that you haven’t seen fail!</p>
 </div>
@@ -1621,7 +1630,7 @@ end</span></code></pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_questions_5">Questions</h4>
+<h4 id="_questions_5">2.5.3. Questions</h4>
 <div class="qlist qanda">
 <ol>
 <li>
@@ -1747,7 +1756,7 @@ end</span></code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-01-29 13:56:25 UTC
+Last updated 2020-01-29 14:09:07 UTC
 </div>
 </div>
 <style>
