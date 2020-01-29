@@ -1,5 +1,4 @@
-=== Running the scenario with Cucumber
-==== Installation
+=== Installing Cucumber
 
 shot::[]
 Before we get started make sure you have a modern version of Ruby installed,
@@ -51,4 +50,15 @@ No such file or directory - features. You can use `cucumber --init` to get start
 
 Good, we've installed Cucumber.
 
-This failed, but it did it for the right reason. Now we need to write our first specification.
+As instructed, we can use the `cucumber --init` command to create the conventional folder structure for our Gherkin specifications and the code that will let Cucumber test them:
+
+[source,bash]
+----
+$ cucumber --init
+  create   features
+  create   features/step_definitions
+  create   features/support
+  create   features/support/env.rb
+----
+
+Now we’re ready to create our first feature file.

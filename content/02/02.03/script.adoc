@@ -1,17 +1,6 @@
-=== Creating our first feature
+=== Creating a feature file
 
-As instructed, we can use the `cucumber --init` command to create the conventional folder structure for our Gherkin specifications and the code that will let Cucumber test them:
-
-[source,bash]
-----
-$ cucumber --init
-  create   features
-  create   features/step_definitions
-  create   features/support
-  create   features/support/env.rb
-----
-
-Now we’re ready to create our first feature file. Call the file `hear_shout.feature`
+Let's create our first feature file. Call the file `hear_shout.feature`
 
 [source,bash]
 ----
@@ -25,7 +14,7 @@ followed by a name.
 It’s a good convention to give it a name that matches the file name.
 
 shot::[]
-Let’s write out our first scenario.
+Now let’s write out our first scenario.
 
 .hear_shout.feature
 [source,gherkin]
@@ -40,7 +29,7 @@ Feature: Hear shout
 ==== Run Feature
 
 shot::[]
-Save the file, switch back to the command-prompt and run `cucumber`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.
+Save the file, switch back to the command-prompt and run `cucumber`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the test results below the scenario: one scenario, three steps - all undefined.
 
 [source,bash]
 ----
