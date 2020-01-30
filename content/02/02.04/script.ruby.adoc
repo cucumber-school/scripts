@@ -1,1 +1,180 @@
-include::script.adoc[]
+=== Implement domain model
+
+shot::[]
+Now that we have the step definitions matching, we can start working on the actual code. We like to use our executable examples to _guide_ our development, so we'll start designing the objects we'll need in our solution, by sketching out some code that calls them from our test.
+
+.steps.rb
+[source,ruby]
+----
+Given("Lucy is located {int}m from Sean") do |distance|
+  p distance
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+When("Sean shouts “free bagels at Sean’s”") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("Lucy hears Sean’s message") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+----
+
+shot::[]
+To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[] We can remove the `pending` status now, and write the implementation for the first step like this:
+
+[source,ruby]
+----
+Given("Lucy is located {int}m from Sean") do |distance|
+  @lucy = Shouty::Person.new
+  @sean = Shouty::Person.new
+  @lucy.move_to(distance)
+end
+
+When("Sean shouts “free bagels at Sean’s”") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+
+Then("Lucy hears Sean’s message") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+----
+
+Now we have two instances of person, one representing Lucy, and one representing Sean. Then we move Lucy to the position specified in the scenario.
+
+If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our `Person` class.
+
+[source,bash]
+----
+$ bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:2
+      uninitialized constant Person (NameError)
+      ./features/step_definitions/steps.rb:3:in `"{word} is located {int}m from {word}"'
+      features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'
+    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:7
+    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:11
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
+
+1 scenario (1 failed)
+3 steps (1 failed, 2 skipped)
+0m0.004s
+----
+
+shot::[]
+Let’s give our solution a home by creating a `lib` directory.
+shot::[]
+We’ll put our Shouty application in a Ruby file called `shouty.rb` in that directory.
+
+[source,bash]
+----
+$ mkdir lib
+$ touch lib/shouty.rb
+----
+
+shot::[]
+Create a Shouty module, then an empty Person class inside it.
+
+.lib/shouty.rb
+[source,ruby]
+----
+module Shouty
+  class Person
+
+  end
+end
+----
+
+shot::[]
+For now, we’ll just require the shouty application from our steps.rb file. In a later lesson we’ll talk more about how to organise this code a bit better.
+
+[source,ruby]
+----
+# coding: utf-8
+require 'shouty'
+
+Given("Lucy is located {int}m from Sean") do |distance|
+  @lucy = Shouty::Person.new
+  @sean = Shouty::Person.new
+  @lucy.move_to(distance)
+end
+
+# ...
+----
+
+When we run the scenario this time, Cucumber tells us that we're missing the `move_to` method on the `Person` class.
+
+[source,bash]
+----
+$ bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
+    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:9
+      TODO (Cucumber::Pending)
+      ./features/step_definitions/steps.rb:10:in `"Sean shouts “free bagels at Sean’s”"'
+      features/hear_shout.feature:4:in `When Sean shouts “free bagels at Sean’s”'
+    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:13
+
+1 scenario (1 pending)
+3 steps (1 skipped, 1 pending, 1 passed)
+0m0.003s
+➜  shouty bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
+      uninitialized constant Person (NameError)
+      ./features/step_definitions/steps.rb:5:in `"Lucy is located {int}m from Sean"'
+      features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'
+    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:10
+    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:14
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
+
+1 scenario (1 failed)
+3 steps (1 failed, 2 skipped)
+0m0.004s
+----
+
+shot::[]
+We'll add the method definition without implementing it yet.
+
+[source,ruby]
+----
+module Shouty
+  class Person
+    def move_to(distance)
+      
+    end
+  end
+end
+----
+
+shot::[]
+When we run the scenario again, the first step is green!
+
+[source,bash]
+----
+bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
+    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:9
+      TODO (Cucumber::Pending)
+      ./features/step_definitions/steps.rb:10:in `"Sean shouts “free bagels at Sean’s”"'
+      features/hear_shout.feature:4:in `When Sean shouts “free bagels at Sean’s”'
+    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:13
+
+1 scenario (1 pending)
+3 steps (1 skipped, 1 pending, 1 passed)
+0m0.006s
+----
+
