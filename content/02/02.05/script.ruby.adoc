@@ -73,14 +73,14 @@ It's also a good habit to look for the most simple solution. We can trust that, 
 
 This is the essence of Behaviour-Driven Development. Examples of behaviour drive the development.
 
-Instead of writing a note on our TODO list, let's write another failing scenario.
+Instead of writing a note on our TODO list, let's write another failing scenario that will guide us towards a solution that won't be able to have a hard-coded message.
 
 [source,gherkin]
 ----
 Feature: Hear shout
   Scenario: Listener is within range
     Given Lucy is located 15m from Sean
-    When Sean shouts “free bagels at Sean’s”
+    When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
 
   Scenario: Listener hears a different message
@@ -94,25 +94,5 @@ Now when we come back to this code, we can just run the tests and Cucumber will 
 [source,bash]
 ----
 bundle exec cucumber
-Feature: Hear shout
-
-  Scenario: Listener is within range         # features/hear_shout.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
-    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:10
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:15
-
-  Scenario: Listener hears a different message # features/hear_shout.feature:7
-    Given Lucy is located 15m from Sean        # features/step_definitions/steps.rb:4
-    When Sean shouts "Free coffee!"            # features/step_definitions/steps.rb:10
-    Then Lucy hears Sean's message             # features/hear_shout.feature:10
-
-2 scenarios (1 undefined, 1 passed)
-6 steps (1 skipped, 2 undefined, 3 passed)
-0m0.018s
-
-You can implement step definitions for undefined steps with these snippets:
-
-Then("Lucy hears Sean's message") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
+# TODO: add correct output
 ----
