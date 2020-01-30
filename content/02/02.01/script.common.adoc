@@ -1,0 +1,61 @@
+=== Introduction
+
+animation::[]
+
+Last time we learned how to use conversations about concrete examples to explore your problem domain and decide what to build.
+
+In this episode you’ll learn how to describe those examples using the Gherkin specification language so that Cucumber can run them. Then we’ll drive out a solution using a failing Cucumber scenario to guide us.
+
+There is going to be a fair amount of programming in this episode, and some object-oriented design as well.
+
+We want this to feel real, so we’ll work on something fun. A social networking application! 
+
+Benny the barista wants to attract more of the people who walk past his coffee shop by offering them deals. But Benny doesn’t know how to reach them.
+Claire the commuter often ends up in traffic jams she realises she could have avoided by taking a different route.
+
+Stevie the student always seems to miss his friends when he’s out. He wishes there was a better way to find out who’s nearby.
+
+Shouty is a social network that allows people who are physically close to communicate, just like people have always communicated with their voices. In the real world you can talk to someone in the same room, or across the street. Or even 100 m away from you in a park - if you shout.
+
+That’s Shouty. What you say on this social network can only be “heard” by people who are nearby.
+
+Let’s start with a very basic example of Shouty’s behaviour. Something we might have discussed in a three amigos meeting:
+
+Sean the shouter shouts "free bagels at Sean's" and Lucy the listener who happens to be stood across the street from his store, 15 metres away, hears him. She walks into Sean’s Coffee and takes advantage of the offer.
+
+shot::[]
+We can translate this into a Gherkin scenario so that Cucumber can run it. Here's how that would look.
+
+[source,gherkin]
+----
+Scenario: Listener is within range
+  Given Lucy is located 15m from Sean
+  When Sean shouts "free bagels at Sean's"
+  Then Lucy hears Sean’s message
+----
+
+You can see there are four special keywords being used here. `Scenario` just tells Cucumber we’re about to describe an example that it can execute. Then you see the lines beginning with Given, When and Then.
+
+shot::[]
+`Given` is the context for the scenario. We’re putting the system into a specific state, ready for the scenario to unfold.
+
+shot::[]
+`When` is an action. Something that happens to the system that will cause something else to happen: an outcome.
+
+shot::[]
+`Then` is the outcome. It’s the behaviour we expect from the system when this action happens in this context.
+
+You’ll notice we’ve omitted from our outcome anything about Lucy walking into Sean’s store and making a purchase. Remember, Gherkin is supposed to describe the behaviour of the system, so it would be distracting to have it in our scenario.
+
+Each scenario has these three ingredients:
+shot::[]
+  a context,
+shot::[]
+  an action,
+shot::[]
+  and one or more outcomes.
+
+Together, they describe one single aspect of the behaviour of the system.
+
+Now that we’ve translated our example into Gherkin, we can automate it!
+

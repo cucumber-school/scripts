@@ -13,17 +13,24 @@ LANGUAGES = {
 task :generate_index_files, [:lang] => [] do |t, args|
   language_codes(args).each do |code|
     Dir.chdir('content') do
-      script_files = FileList["**/script.#{code}.adoc"]
 
-      File.open("./index-files.#{code}.adoc", "w") do |f|
-        script_files.each { |file_name|
-          f << "include::#{file_name}[]\n\n"
+      chapters = Dir.glob('*').select {|f| File.directory? f}.sort
+      File.open("./scripts.#{code}.adoc", "w") do |scripts|
 
-          questions_file_name = File.join(File.dirname(file_name), "questions.adoc")
-          if File.exist?(questions_file_name)
-            f << "include::#{questions_file_name}[]\n\n"
-          end
-        }
+        chapters.each do |chapter|
+          scripts << "include::#{chapter}/index.adoc[]\n\n"
+
+          script_files = FileList["#{chapter}/*/script.#{code}.adoc"]
+
+          script_files.each { |file_name|
+            scripts << "include::#{file_name}[]\n\n"
+
+            questions_file_name = File.join(File.dirname(file_name), "questions.adoc")
+            if File.exist?(questions_file_name)
+              scripts << "include::#{questions_file_name}[]\n\n"
+            end
+          }
+        end
       end
     end
   end
