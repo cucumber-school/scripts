@@ -1,4 +1,4 @@
-include::[./title.adoc]
+include::./title.adoc[]
 
 Let's create our first feature file. Call the file `hear_shout.feature`
 
@@ -59,20 +59,20 @@ end
 ----
 
 shot::[]
-`Undefined` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
+_Undefined_ means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
 shot::[]
 Step definitions translate from the plain language you use in Gherkin into Ruby code.
 
 shot::[]
-When Cucumber runs a step, it looks for a step definition that matches the text in the step. If it finds one, then it executes the code in the step definition.
+When Cucumber runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
 
 If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
 shot::[]
-Let’s copy those.
+Let’s copy those to create our first step definitions.
 
 shot::[]
-We’ll paste them into a Ruby file under a new directory called `step_definitions` underneath the `features` directory. We'll just call it `steps.rb`.
+We’ll paste them into a Ruby file under the `step_definitions` directory, inside the `features` directory. We'll just call it `steps.rb`.
 
 .steps.rb
 [source,ruby]
@@ -94,7 +94,7 @@ shot::[]
 Now run Cucumber again.
 
 shot::[]
-This time the output is a little different. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one.
+This time the output is a little different. None of the steps are undefined anymore. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one.
 shot::[]
 But that first step definition throws a `PendingException`, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
 
@@ -116,17 +116,13 @@ Feature: Hear shout
 0m0.008s
 ----
 
-It’s time to start work on our solution. At this point we need to do a little domain modelling. The words in the step provide us some good hints about some names that will appear in our domain model. Our scenario mentions two people, Lucy and Sean. So it looks like we need a couple of person objects at least. Each person will also need to know their own location.
-
-Cucumber is telling us to write the code we wish we had. Let’s do it!
+Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
 shot::[]
-We’ll start by renaming the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
+We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
 
 shot::[]
-And we can print it to the terminal to see the captured result.
-
-To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place Sean in the centre and Lucy 15 metres away from Sean.
+We can print it to the terminal to see what's happening.
 
 [source,ruby]
 ----
@@ -145,7 +141,7 @@ end
 ----
 
 shot::[]
-If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output
+If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output:
 
 [source,bash]
 ----
@@ -166,4 +162,5 @@ Feature: Hear shout
 0m0.005s
 ----
 
-Notice that the number 15 does not appear anywhere in our Ruby code. The value 15 is automatically passed from the Gherkin step to the step definition. If you are curious, that’s the `{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our Ruby code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the `{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
+

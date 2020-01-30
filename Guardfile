@@ -19,7 +19,8 @@
 #   watch(%r{file/path}) { `command(s)` }
 #
 guard :shell do
-  watch(/.*\.adoc/) { `rake` }
+  watch(/.*\.ruby.adoc/) { `rake html[ruby]` }
+  watch(/.*\.js.adoc/) { `rake html[js]` }
 end
 
 guard :livereload do

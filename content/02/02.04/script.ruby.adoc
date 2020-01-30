@@ -1,7 +1,11 @@
-include::[./title.adoc]
+include::./title.adoc[]
 
 shot::[]
-Now that we have the step definitions matching, we can start working on the actual code. We like to use our executable examples to _guide_ our development, so we'll start designing the objects we'll need in our solution, by sketching out some code that calls them from our test.
+Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to _guide_ our development, so we'll start designing the objects we'll need by sketching out some code in our step definitions.
+
+The scenario will be failing while we do this, but we should see the error messages gradually progressing as we drive out the interface to our object model.
+
+Our next goal is for the scenario to fail because we need to implement the actual business logic.
 
 .steps.rb
 [source,ruby]
@@ -115,20 +119,6 @@ Feature: Hear shout
 
   Scenario: Listener is within range         # features/hear_shout.feature:2
     Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
-    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:9
-      TODO (Cucumber::Pending)
-      ./features/step_definitions/steps.rb:10:in `"Sean shouts “free bagels at Sean’s”"'
-      features/hear_shout.feature:4:in `When Sean shouts “free bagels at Sean’s”'
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:13
-
-1 scenario (1 pending)
-3 steps (1 skipped, 1 pending, 1 passed)
-0m0.003s
-➜  shouty bundle exec cucumber
-Feature: Hear shout
-
-  Scenario: Listener is within range         # features/hear_shout.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
       uninitialized constant Person (NameError)
       ./features/step_definitions/steps.rb:5:in `"Lucy is located {int}m from Sean"'
       features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'
@@ -178,3 +168,152 @@ Feature: Hear shout
 0m0.006s
 ----
 
+We're making progress! We'll keep working like this until we see the scenario failing for the right reasons.
+
+In the second step definition, we want to tell Sean to shout something.
+
+shot::[]
+In order to send instructions to Sean from the second step, we've stored him in an _instance variable_, so that he’ll be accessible from all of our step definitions.
+
+shot::[]
+In the `When` step, we can capture Sean's message using the `{string}` pattern like this:
+
+shot::[]
+And now we can now tell him to _shout_ the message:
+
+[source,ruby]
+----
+# coding: utf-8
+require 'shouty'
+
+Given("Lucy is located {int}m from Sean") do |distance|
+  @lucy = Shouty::Person.new
+  @sean = Shouty::Person.new
+  @lucy.move_to(distance)
+end
+
+When("Sean shouts {string}") do |message|
+  @sean.shout(message)
+end
+
+Then("Lucy hears Sean’s message") do
+  pending # Write code here that turns the phrase above into concrete actions
+end
+----
+
+shot::[]
+Our `Person` class needs a `shout` method. 
+
+[source,bash]
+----
+bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:10
+      undefined method `shout' for #<Shouty::Person:0x0000558e1ee78428> (NoMethodError)
+      ./features/step_definitions/steps.rb:11:in `"Sean shouts {string}"'
+      features/hear_shout.feature:4:in `When Sean shouts "free bagels at Sean's"'
+    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:14
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
+
+1 scenario (1 failed)
+3 steps (1 failed, 1 skipped, 1 passed)
+0m0.003s
+----
+
+shot::[]
+Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.
+
+.shouty.rb
+[source,ruby]
+----
+module Shouty
+  class Person
+    def move_to(distance)
+      
+    end
+
+    def shout(message)
+      
+    end
+  end
+end
+----
+
+==== Get heard messages
+
+shot::[]
+The last step definition is where we implement a check, or assertion. We'll verify that what Lucy has heard is exactly the same as what Sean shouted.
+
+Once again we're going to write the code we wish we had.
+
+[source,ruby]
+----
+Then("Lucy hears Sean’s message") do
+  expect(@lucy.messages_heard).to include @message_from_sean
+end
+----
+
+So we need a way to ask Lucy what messages she's heard, and we also need to know what it was that Sean shouted.
+
+We can record what Sean shouts by storing it in an instance variable as the When step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. shot::[] Now we can use that in the assertion check.
+
+[source,ruby]
+----
+When("Sean shouts {string}") do |message|
+  @sean.shout(message)
+  @message_from_sean = message
+end
+----
+
+We also need to add a `messages_heard` method to our Person class. Let’s do that now, we'll just return an empty array for now
+
+[source,ruby]
+----
+module Shouty
+  class Person
+    def move_to(distance)
+      
+    end
+
+    def shout(message)
+      
+    end
+
+    def messages_heard
+      []  
+    end
+  end
+end
+----
+
+...and watch Cucumber run the tests again.
+
+[source,bash]
+----
+bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:10
+    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:15
+      expected [] to include "free bagels at Sean's" (RSpec::Expectations::ExpectationNotMetError)
+      ./features/step_definitions/steps.rb:16:in `"Lucy hears Sean’s message"'
+      features/hear_shout.feature:5:in `Then Lucy hears Sean’s message'
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
+
+1 scenario (1 failed)
+3 steps (1 failed, 2 passed)
+0m0.032s
+----
+
+This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code! Never trust an automated test that you haven’t seen fail!
+
+Now all we have to do is write the code to make it do what it's supposed to.
