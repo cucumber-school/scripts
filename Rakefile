@@ -45,24 +45,24 @@ task :html, [:lang] => :generate_index_files do |t, args|
     puts "Generating #{code}"
     Asciidoctor.convert_file "content/index.#{code}.adoc",
                              safe: :safe,
-                             to_file: "public/#{code}/index.html",
-                             mkdirs: true,
+                             to_file: "public/index.#{code}.html",
                              attributes: { 'shots' => ENV['shots'] }
   end
 
   Dir.chdir('content') do
+    puts "Generating content/languages.adoc"
     File.open("./languages.adoc", "w") do |f|
-      LANGUAGES.each do |lang, name|
-        f << "- link:#{lang}/index.html[#{name} Version]\n"
+      LANGUAGES.each do |code, name|
+        f << "- link:./index.#{code}.html[#{name} Version]\n"
 
       end
     end
   end
 
+  puts "Generating main index page"
   Asciidoctor.convert_file "content/index.adoc",
                            safe: :safe,
                            to_file: "public/index.html",
-                           mkdirs: true,
                            attributes: { 'shots' => ENV['shots'] }
 end
 
@@ -86,7 +86,6 @@ require 'asciidoctor/extensions'
 def tag(text)
   %(<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">#{text}</span>)
 end
-
 
 class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
   use_dsl

@@ -1,3 +1,75 @@
 include::./title.adoc[]
 
-TODO
+shot::[]
+Before we get started make sure you have a modern version of NodeJs,
+shot::[]
+and NPM installed:
+
+[source,bash]
+----
+$ node -v
+$ npm -v
+----
+
+If you see an error message when you run these commands, you’ll need to fix your Node installation.
+
+Go back to the command prompt and create a new directory for our project:
+
+[source,bash]
+----
+$ mkdir shouty
+----
+
+// TODO: remove reference to editor
+Go use cd to go into that directory, and open it up in your editor:
+
+shot::[]
+First we’ll create a `package.json` that describes the NPM packages we need for our project
+shot::[]
+and add the `cucumber` package to it.
+
+[source,bash]
+----
+$ npm init -y
+$ npm install -D cucumber
+----
+
+We can now run  the `cucumber-js` command to see if everything works:
+
+[source,bash]
+----
+$ ./node_modules/.bin/cucumber-js
+----
+
+But this is not very user friendly. There's a nicer way to run cucumber.
+
+Edit `package.json` and change the `test` line under the `scripts` from it's default to `cucumber-js`
+
+[source,javascript]
+----
+{
+  // ...
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  // ...
+}
+----
+
+Now we’re ready! If we run `npm test` at this point, we’ll see cucumber pass with no scenarios or steps to run:
+
+// TODO: add output
+[source,bash]
+----
+$ npm test
+> shouty@1.0.0 test /home/fedex/cucumber/shouty
+> cucumber-js
+
+
+
+0 scenarios
+0 steps
+0m00.000s
+----
+
+Good, we've installed Cucumber. Now we need to write our specification.

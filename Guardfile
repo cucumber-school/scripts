@@ -21,6 +21,7 @@
 guard :shell do
   watch(/.*\.ruby.adoc/) { `rake html[ruby]` }
   watch(/.*\.js.adoc/) { `rake html[js]` }
+  watch(/.*\.common.adoc/) { `rake html` }
 end
 
 guard :livereload do

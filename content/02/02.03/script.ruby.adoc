@@ -1,166 +1,64 @@
 include::./title.adoc[]
 
-Let's create our first feature file. Call the file `hear_shout.feature`
+shot::[]
+Before we get started make sure you have a modern version of Ruby installed,
+shot::[]
+and the Bundler gem. Open a command-prompt and check the Ruby version, and the version of Bundler, Ruby's package manager:
 
 [source,bash]
 ----
-$ touch features/hear_shout.feature
+$ ruby -v
+$ bundle -v
+----
+If you see an error message when you run these commands, you’ll need to fix your Ruby installation.
+
+Go back to the command prompt and create a new directory for our project:
+
+[source,bash]
+----
+$ mkdir shouty
 ----
 
-shot::[]
-All feature files start with the keyword `Feature:`
-shot::[]
-followed by a name.
-It’s a good convention to give it a name that matches the file name.
+Use `cd` to go into that directory. shot::[] If you want to, you can open the directory up in your favourite text exitor at this point.
 
 shot::[]
-Now let’s write out our first scenario:
+First we’ll create a Gemfile that describes the Ruby gems we need for our project. We’ll add Cucumber and RSpec-Expectations.
 
-.hear_shout.feature
-[source,gherkin]
+.Gemfile
+[source,ruby]
 ----
-Feature: Hear shout
-  Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
-    When Sean shouts “free bagels at Sean’s”
-    Then Lucy hears Sean’s message
+source "https://rubygems.org"
+
+gem 'cucumber'
+gem 'rspec'
 ----
 
-shot::[]
-Save the file, switch back to the command-prompt and run `cucumber`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the test results below the scenario: one scenario, three steps - all undefined.
+Now go back to the command-line shot::[] and run `bundle install` to install those gems.
+
+[source,bash]
+----
+$ bundle install
+----
+
+Now we’re ready! If we run `cucumber` at this point shot::[], we’ll see it’s telling us to create a features directory.
 
 [source,bash]
 ----
 $ bundle exec cucumber
-Feature: Hear shout
-
-  Scenario: Listener is within range         # features/listening.feature:2
-    Given Lucy is located 15m from Sean      # features/listening.feature:3
-    When Sean shouts “free bagels at Sean’s” # features/listening.feature:4
-    Then Lucy hears Sean’s message           # features/listening.feature:5
-
-1 scenario (1 undefined)
-3 steps (3 undefined)
-0m0.005s
-
-You can implement step definitions for undefined steps with these snippets:
-
-Given("Lucy is located {int}m from Sean") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-When("Sean shouts “free bagels at Sean’s”") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then("Lucy hears Sean’s message") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
+No such file or directory - features. You can use `cucumber --init` to get started.
 ----
 
-shot::[]
-_Undefined_ means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
+Good, we've installed Cucumber.
 
-shot::[]
-Step definitions translate from the plain language you use in Gherkin into Ruby code.
-
-shot::[]
-When Cucumber runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
-
-If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
-shot::[]
-Let’s copy those to create our first step definitions.
-
-shot::[]
-We’ll paste them into a Ruby file under the `step_definitions` directory, inside the `features` directory. We'll just call it `steps.rb`.
-
-.steps.rb
-[source,ruby]
-----
-Given("Lucy is located {int}m from Sean") do |int|
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-When("Sean shouts “free bagels at Sean’s”") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then("Lucy hears Sean’s message") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-----
-
-shot::[]
-Now run Cucumber again.
-
-shot::[]
-This time the output is a little different. None of the steps are undefined anymore. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one.
-shot::[]
-But that first step definition throws a `PendingException`, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
+As instructed, we can use the `cucumber --init` command to create the conventional folder structure for our Gherkin specifications and the code that will let Cucumber test them:
 
 [source,bash]
 ----
-$ bundle exec cucumber
-Feature: Hear shout
-
-  Scenario: Listener is within range         # features/listening.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:2
-      TODO (Cucumber::Pending)
-      ./features/step_definitions/steps.rb:3:in `"Lucy is located {int}m from Sean"'
-      features/listening.feature:3:in `Given Lucy is located 15m from Sean'
-    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:6
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:10
-
-1 scenario (1 pending)
-3 steps (2 skipped, 1 pending)
-0m0.008s
+$ cucumber --init
+  create   features
+  create   features/step_definitions
+  create   features/support
+  create   features/support/env.rb
 ----
 
-Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
-
-shot::[]
-We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
-
-shot::[]
-We can print it to the terminal to see what's happening.
-
-[source,ruby]
-----
-Given("Lucy is located {int}m from Sean") do |distance|
-  p distance
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-When("Sean shouts “free bagels at Sean’s”") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-
-Then("Lucy hears Sean’s message") do
-  pending # Write code here that turns the phrase above into concrete actions
-end
-----
-
-shot::[]
-If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output:
-
-[source,bash]
-----
-$ bundle exec cucumber 
-Feature: Hear shout
-
-15
-  Scenario: Listener is within range         # features/hear_shout.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:2
-      TODO (Cucumber::Pending)
-      ./features/step_definitions/steps.rb:4:in `"Lucy is located {int}m from Sean"'
-      features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'
-    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:7
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:11
-
-1 scenario (1 pending)
-3 steps (2 skipped, 1 pending)
-0m0.005s
-----
-
-Notice that the number 15 does not appear anywhere in our Ruby code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the `{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
-
+Now we’re ready to create our first feature file.
