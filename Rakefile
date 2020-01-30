@@ -26,7 +26,7 @@ task :generate_index_files, [:lang] => [] do |t, args|
             scripts << "include::#{file_name}[]\n\n"
 
             questions_file_name = File.join(File.dirname(file_name), "questions.adoc")
-            if File.exist?(questions_file_name)
+            if File.exist?(questions_file_name) && ENV['questions']
               scripts << "include::#{questions_file_name}[]\n\n"
             end
           }
