@@ -36,7 +36,7 @@ task :generate_index_files, [:lang] => [] do |t, args|
   end
 end
 
-task :html, [:lang] => [:generate_script_files, :generate_index_files] do |t, args|
+task :html, [:lang] => :generate_index_files do |t, args|
   require 'asciidoctor'
 
   FileUtils.rm_rf Dir.glob('public/*.html')
@@ -71,23 +71,6 @@ task :list do
 
   LANGUAGES.each do |code, name|
     puts " rake \"html[#{lang}]\"  # Generate HTML for #{name} version."
-  end
-end
-
-task :generate_script_files do
-  FileList["content/*/*/"].each do |dir|
-    Dir.chdir(dir) do
-      FileUtils.touch("script.adoc") unless File.exist?("script.adoc")
-
-      LANGUAGES.keys.each do |lang_code|
-        file_name = "script.#{lang_code}.adoc"
-        unless File.exist?(file_name)
-          File.open(file_name, "w") do |f|
-            f << "include::script.adoc[]\n"
-          end
-        end
-      end
-    end
   end
 end
 
