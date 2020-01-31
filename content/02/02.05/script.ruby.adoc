@@ -5,27 +5,27 @@ Now that we have the step definitions matching, we can start working on our solu
 
 The scenario will be failing while we do this, but we should see the error messages gradually progressing as we drive out the interface to our object model.
 
-Our next goal is for the scenario to fail because we need to implement the actual business logic.
+Our next goal is for the scenario to fail because we need to implement the actual business logic. _Then_ we can work on changing the business logic inside our objects to make it pass.
 
 .steps.rb
 [source,ruby]
 ----
 Given("Lucy is located {int}m from Sean") do |distance|
-  p distance
+  puts distance
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-When("Sean shouts “free bagels at Sean’s”") do
+When("Sean shouts {string}") do |string|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then("Lucy hears Sean’s message") do
+Then("Lucy hears Sean's message") do
   pending # Write code here that turns the phrase above into concrete actions
 end
 ----
 
 shot::[]
-To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[] We can remove the `pending` status now, and write the implementation for the first step like this:
+To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[] We can remove the `pending` status now, and this `puts` statement, and write the implementation for the first step like this:
 
 [source,ruby]
 ----
@@ -44,9 +44,11 @@ Then("Lucy hears Sean’s message") do
 end
 ----
 
-Now we have two instances of person, one representing Lucy, and one representing Sean. Then we move Lucy to the position specified in the scenario.
+We have two instances of person, one representing Lucy, and one representing Sean. Then we call a method to move Lucy to the position specified in the scenario.
 
-If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our `Person` class.
+This might not be the design we'll end up with once this is all working, but it's a decent place to start.
+
+If we run Cucumber, we’ll see a compilation error from Ruby. we need to define our `Shouty` module.
 
 [source,bash]
 ----
@@ -54,12 +56,12 @@ $ bundle exec cucumber
 Feature: Hear shout
 
   Scenario: Listener is within range         # features/hear_shout.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:2
-      uninitialized constant Person (NameError)
-      ./features/step_definitions/steps.rb:3:in `"{word} is located {int}m from {word}"'
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:1
+      uninitialized constant Shouty (NameError)
+      ./features/step_definitions/steps.rb:2:in `"Lucy is located {int}m from Sean"'
       features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'
-    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:7
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:11
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:7
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:11
 
 Failing Scenarios:
 cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
@@ -98,32 +100,25 @@ For now, we’ll just require the shouty application from our steps.rb file. In 
 
 [source,ruby]
 ----
-# coding: utf-8
 require 'shouty'
 
 Given("Lucy is located {int}m from Sean") do |distance|
-  @lucy = Shouty::Person.new
-  @sean = Shouty::Person.new
-  @lucy.move_to(distance)
-end
-
-# ...
 ----
 
 When we run the scenario this time, Cucumber tells us that we're missing the `move_to` method on the `Person` class.
 
-[source,bash]
+[source]
 ----
 $ bundle exec cucumber
 Feature: Hear shout
 
   Scenario: Listener is within range         # features/hear_shout.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
-      uninitialized constant Person (NameError)
-      ./features/step_definitions/steps.rb:5:in `"Lucy is located {int}m from Sean"'
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:3
+      undefined method `move_to' for #<Shouty::Person:0x00007fed0da12b68> (NoMethodError)
+      ./features/step_definitions/steps.rb:6:in `"Lucy is located {int}m from Sean"'
       features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'
-    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:10
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:14
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:9
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:13
 
 Failing Scenarios:
 cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
@@ -156,12 +151,12 @@ bundle exec cucumber
 Feature: Hear shout
 
   Scenario: Listener is within range         # features/hear_shout.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:4
-    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:9
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:3
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:9
       TODO (Cucumber::Pending)
-      ./features/step_definitions/steps.rb:10:in `"Sean shouts “free bagels at Sean’s”"'
-      features/hear_shout.feature:4:in `When Sean shouts “free bagels at Sean’s”'
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:13
+      ./features/step_definitions/steps.rb:10:in `"Sean shouts {string}"'
+      features/hear_shout.feature:4:in `When Sean shouts "free bagels at Sean's"'
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:13
 
 1 scenario (1 pending)
 3 steps (1 skipped, 1 pending, 1 passed)
@@ -176,33 +171,20 @@ shot::[]
 In order to send instructions to Sean from the second step, we've stored him in an _instance variable_, so that he’ll be accessible from all of our step definitions.
 
 shot::[]
-In the `When` step, we can capture Sean's message using the `{string}` pattern like this:
+In the `When` step, we're capturing Sean's message using the `{string}` pattern, so let's give that argument a more meaningful name.
 
 shot::[]
 And now we can now tell him to _shout_ the message:
 
 [source,ruby]
 ----
-# coding: utf-8
-require 'shouty'
-
-Given("Lucy is located {int}m from Sean") do |distance|
-  @lucy = Shouty::Person.new
-  @sean = Shouty::Person.new
-  @lucy.move_to(distance)
-end
-
 When("Sean shouts {string}") do |message|
   @sean.shout(message)
-end
-
-Then("Lucy hears Sean’s message") do
-  pending # Write code here that turns the phrase above into concrete actions
 end
 ----
 
 shot::[]
-Our `Person` class needs a `shout` method. 
+If we run Cucumber, it's telling is that our `Person` class needs a `shout` method. 
 
 [source,bash]
 ----
@@ -253,14 +235,14 @@ Once again we're going to write the code we wish we had.
 
 [source,ruby]
 ----
-Then("Lucy hears Sean’s message") do
+Then("Lucy hears Sean's message") do
   expect(@lucy.messages_heard).to include @message_from_sean
 end
 ----
 
 So we need a way to ask Lucy what messages she's heard, and we also need to know what it was that Sean shouted.
 
-We can record what Sean shouts by storing it in an instance variable as the When step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. shot::[] Now we can use that in the assertion check.
+We can record what Sean shouts by storing it in an instance variable as the `When` step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. shot::[] Now we can use that in the assertion check.
 
 [source,ruby]
 ----
@@ -270,7 +252,7 @@ When("Sean shouts {string}") do |message|
 end
 ----
 
-We also need to add a `messages_heard` method to our Person class. Let’s do that now, we'll just return an empty array for now
+We also need to add a `messages_heard` method to our Person class. Let's do that now, we'll just return an empty array for now
 
 [source,ruby]
 ----
@@ -314,6 +296,8 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 0m0.032s
 ----
 
-This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code! Never trust an automated test that you haven’t seen fail!
+This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code!
+
+Never trust an automated test that you haven’t seen fail!
 
 Now all we have to do is write the code to make it do what it's supposed to.
