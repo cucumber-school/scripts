@@ -24,7 +24,7 @@ Now let’s write out our first scenario:
 Feature: Hear shout
   Scenario: Listener is within range
     Given Lucy is located 15m from Sean
-    When Sean shouts “free bagels at Sean’s”
+    When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
 ----
 
@@ -36,14 +36,14 @@ Save the file, switch back to the command-prompt and run `cucumber`. You’ll se
 $ bundle exec cucumber
 Feature: Hear shout
 
-  Scenario: Listener is within range         # features/listening.feature:2
-    Given Lucy is located 15m from Sean      # features/listening.feature:3
-    When Sean shouts “free bagels at Sean’s” # features/listening.feature:4
-    Then Lucy hears Sean’s message           # features/listening.feature:5
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/hear_shout.feature:3
+    When Sean shouts "free bagels at Sean's" # features/hear_shout.feature:4
+    Then Lucy hears Sean's message           # features/hear_shout.feature:5
 
 1 scenario (1 undefined)
 3 steps (3 undefined)
-0m0.005s
+0m0.051s
 
 You can implement step definitions for undefined steps with these snippets:
 
@@ -51,11 +51,11 @@ Given("Lucy is located {int}m from Sean") do |int|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-When("Sean shouts “free bagels at Sean’s”") do
+When("Sean shouts {string}") do |string|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then("Lucy hears Sean’s message") do
+Then("Lucy hears Sean's message") do
   pending # Write code here that turns the phrase above into concrete actions
 end
 ----
@@ -83,11 +83,11 @@ Given("Lucy is located {int}m from Sean") do |int|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-When("Sean shouts “free bagels at Sean’s”") do
+When("Sean shouts {string}") do |string|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then("Lucy hears Sean’s message") do
+Then("Lucy hears Sean's message") do
   pending # Write code here that turns the phrase above into concrete actions
 end
 ----
@@ -103,15 +103,16 @@ But that first step definition throws a `PendingException`, which causes Cucumbe
 [source,bash]
 ----
 $ bundle exec cucumber
+➤ bundle exec cucumber
 Feature: Hear shout
 
-  Scenario: Listener is within range         # features/listening.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:2
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:1
       TODO (Cucumber::Pending)
-      ./features/step_definitions/steps.rb:3:in `"Lucy is located {int}m from Sean"'
-      features/listening.feature:3:in `Given Lucy is located 15m from Sean'
-    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:6
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:10
+      ./features/step_definitions/steps.rb:2:in `"Lucy is located {int}m from Sean"'
+      features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:5
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:9
 
 1 scenario (1 pending)
 3 steps (2 skipped, 1 pending)
@@ -129,15 +130,15 @@ We can print it to the terminal to see what's happening.
 [source,ruby]
 ----
 Given("Lucy is located {int}m from Sean") do |distance|
-  p distance
+  puts distance
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-When("Sean shouts “free bagels at Sean’s”") do
+When("Sean shouts {string}") do |string|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then("Lucy hears Sean’s message") do
+Then("Lucy hears Sean's message") do
   pending # Write code here that turns the phrase above into concrete actions
 end
 ----
@@ -150,14 +151,14 @@ If we run `cucumber` again on our terminal, we can see the number 15 pop up in t
 $ bundle exec cucumber 
 Feature: Hear shout
 
-15
   Scenario: Listener is within range         # features/hear_shout.feature:2
-    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:1
+      15
       TODO (Cucumber::Pending)
-      ./features/step_definitions/steps.rb:4:in `"Lucy is located {int}m from Sean"'
+      ./features/step_definitions/steps.rb:3:in `"Lucy is located {int}m from Sean"'
       features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'
-    When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.rb:7
-    Then Lucy hears Sean’s message           # features/step_definitions/steps.rb:11
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:6
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:10
 
 1 scenario (1 pending)
 3 steps (2 skipped, 1 pending)
