@@ -679,7 +679,7 @@ Now let’s write out our first scenario:</p>
 <pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
   <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
     <span class="nf">Given </span>Lucy is located 15m from Sean
-    <span class="nf">When </span>Sean shouts “free bagels at Sean’s”
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
     <span class="nf">Then </span>Lucy hears Sean’s message</code></pre>
 </div>
 </div>
@@ -692,28 +692,28 @@ Save the file, switch back to the command-prompt and run <code>cucumber</code>. 
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
 Feature: Hear shout
 
-  Scenario: Listener is within range         <span class="c"># features/listening.feature:2</span>
-    Given Lucy is located 15m from Sean      <span class="c"># features/listening.feature:3</span>
-    When Sean shouts “free bagels at Sean’s” <span class="c"># features/listening.feature:4</span>
-    Then Lucy hears Sean’s message           <span class="c"># features/listening.feature:5</span>
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/hear_shout.feature:3</span>
+    When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/hear_shout.feature:4</span>
+    Then Lucy hears Sean<span class="s1">'s message           # features/hear_shout.feature:5
 
-1 scenario <span class="o">(</span>1 undefined<span class="o">)</span>
-3 steps <span class="o">(</span>3 undefined<span class="o">)</span>
-0m0.005s
+1 scenario (1 undefined)
+3 steps (3 undefined)
+0m0.051s
 
-You can implement step definitions <span class="k">for </span>undefined steps with these snippets:
+You can implement step definitions for undefined steps with these snippets:
 
-Given<span class="o">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="o">)</span> <span class="k">do</span> |int|
-  pending <span class="c"># Write code here that turns the phrase above into concrete actions</span>
+Given("Lucy is located {int}m from Sean") do |int|
+  pending # Write code here that turns the phrase above into concrete actions
 end
 
-When<span class="o">(</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="o">)</span> <span class="k">do
-  </span>pending <span class="c"># Write code here that turns the phrase above into concrete actions</span>
+When("Sean shouts {string}") do |string|
+  pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then<span class="o">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="o">)</span> <span class="k">do
-  </span>pending <span class="c"># Write code here that turns the phrase above into concrete actions</span>
-end</code></pre>
+Then("Lucy hears Sean'</span>s message<span class="s2">") do
+  pending # Write code here that turns the phrase above into concrete actions
+end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -744,11 +744,11 @@ We’ll paste them into a Ruby file under the <code>step_definitions</code> dire
   <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
 <span class="k">end</span>
 
-<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="p">)</span> <span class="k">do</span>
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts {string}"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">string</span><span class="o">|</span>
   <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
 <span class="k">end</span>
 
-<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="p">)</span> <span class="k">do</span>
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean's message"</span><span class="p">)</span> <span class="k">do</span>
   <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
 <span class="k">end</span></code></pre>
 </div>
@@ -766,19 +766,20 @@ But that first step definition throws a <code>PendingException</code>, which cau
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
+➤ bundle <span class="nb">exec </span>cucumber
 Feature: Hear shout
 
-  Scenario: Listener is within range         <span class="c"># features/listening.feature:2</span>
-    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:2</span>
+  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:1</span>
       TODO <span class="o">(</span>Cucumber::Pending<span class="o">)</span>
-      ./features/step_definitions/steps.rb:3:in <span class="sb">`</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="s1">'
-      features/listening.feature:3:in `Given Lucy is located 15m from Sean'</span>
-    When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.rb:6</span>
-    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:10</span>
+      ./features/step_definitions/steps.rb:2:in <span class="sb">`</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="s1">'
+      features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'</span>
+    When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.rb:5</span>
+    Then Lucy hears Sean<span class="s1">'s message           # features/step_definitions/steps.rb:9
 
-1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
-3 steps <span class="o">(</span>2 skipped, 1 pending<span class="o">)</span>
-0m0.008s</code></pre>
+1 scenario (1 pending)
+3 steps (2 skipped, 1 pending)
+0m0.008s</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -795,15 +796,15 @@ We can print it to the terminal to see what&#8217;s happening.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
-  <span class="nb">p</span> <span class="n">distance</span>
+  <span class="nb">puts</span> <span class="n">distance</span>
   <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
 <span class="k">end</span>
 
-<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts “free bagels at Sean’s”"</span><span class="p">)</span> <span class="k">do</span>
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts {string}"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">string</span><span class="o">|</span>
   <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
 <span class="k">end</span>
 
-<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="p">)</span> <span class="k">do</span>
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy hears Sean's message"</span><span class="p">)</span> <span class="k">do</span>
   <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
 <span class="k">end</span></code></pre>
 </div>
@@ -817,18 +818,18 @@ If we run <code>cucumber</code> again on our terminal, we can see the number 15 
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
 Feature: Hear shout
 
-15
   Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
-    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:2</span>
+    Given Lucy is located 15m from Sean      <span class="c"># features/step_definitions/steps.rb:1</span>
+      15
       TODO <span class="o">(</span>Cucumber::Pending<span class="o">)</span>
-      ./features/step_definitions/steps.rb:4:in <span class="sb">`</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="s1">'
+      ./features/step_definitions/steps.rb:3:in <span class="sb">`</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="s1">'
       features/hear_shout.feature:3:in `Given Lucy is located 15m from Sean'</span>
-    When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.rb:7</span>
-    Then Lucy hears Sean’s message           <span class="c"># features/step_definitions/steps.rb:11</span>
+    When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.rb:6</span>
+    Then Lucy hears Sean<span class="s1">'s message           # features/step_definitions/steps.rb:10
 
-1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
-3 steps <span class="o">(</span>2 skipped, 1 pending<span class="o">)</span>
-0m0.005s</code></pre>
+1 scenario (1 pending)
+3 steps (2 skipped, 1 pending)
+0m0.005s</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1304,7 +1305,7 @@ Feature: Hear shout
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-01-30 17:17:17 UTC
+Last updated 2020-01-31 12:31:25 UTC
 </div>
 </div>
 <style>
