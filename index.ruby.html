@@ -838,6 +838,13 @@ Feature: Hear shout
 </div>
 <div class="sect2">
 <h3 id="_sketch_out_the_solution">2.5. Sketch out the solution</h3>
+<div class="audioblock">
+<div class="content">
+<audio src="02.05.ruby.audio.mp3" controls>
+Your browser does not support the audio tag.
+</audio>
+</div>
+</div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>
 Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to <em>guide</em> our development, so we&#8217;ll start designing the objects we&#8217;ll need by sketching out some code in our step definitions.</p>
@@ -887,7 +894,7 @@ To implement the first step, we need to create a couple of <code>Person</code> o
 </div>
 </div>
 <div class="paragraph">
-<p>We have two instances of person, one representing Lucy, and one representing Sean. Then we call a method to move Lucy to the position specified in the scenario.</p>
+<p>We have two instances of person, one representing Lucy, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>and one representing Sean. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>Then we call a method to move Lucy to the position specified in the scenario.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span></p>
 </div>
 <div class="paragraph">
 <p>This might not be the design we&#8217;ll end up with once this is all working, but it&#8217;s a decent place to start.</p>
@@ -1084,8 +1091,6 @@ Let’s not worry about the implementation yet. The most important thing right n
 <span class="k">end</span></code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_get_heard_messages">2.5.1. Get heard messages</h4>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>
 The last step definition is where we implement a check, or assertion. We&#8217;ll verify that what Lucy has heard is exactly the same as what Sean shouted.</p>
@@ -1168,7 +1173,6 @@ cucumber features/hear_shout.feature:2 <span class="c"># Scenario: Listener is w
 </div>
 <div class="paragraph">
 <p>Now all we have to do is write the code to make it do what it&#8217;s supposed to.</p>
-</div>
 </div>
 </div>
 <div class="sect2">
@@ -1291,7 +1295,7 @@ Feature: Hear shout
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-01-31 13:14:57 UTC
+Last updated 2020-01-31 14:10:56 UTC
 </div>
 </div>
 <style>
