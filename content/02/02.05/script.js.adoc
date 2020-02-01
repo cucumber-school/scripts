@@ -1,3 +1,187 @@
 include::./title.adoc[]
 
-TODO
+shot::[1]
+Once we have the boilerplate in place, we can start working on the actual code for our scenario.
+
+.steps.js
+[source,js]
+----
+const { Given, When, Then } = require('cucumber');
+
+Given('Lucy is located {int}m from Sean', function (distance) {
+  console.log(distance);
+  return 'pending';
+});
+
+When('Sean shouts “free bagels at Sean’s”', function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+Then('Lucy hears Sean’s message', function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+----
+
+shot::[2]
+To implement the first step, we need to create a couple of person objects, with the specified distance between them. We could write it like this:
+
+shot::[3]
+We should also remove the `pending` status, since we are now defining our step.
+
+.steps.js
+[source,js]
+----
+const { Given, When, Then } = require('cucumber');
+
+Given('Lucy is located {int}m from Sean', function (distance) {
+  this.lucy = new Person
+  this.sean = new Person
+  this.lucy.move_to(distance)
+});
+
+When('Sean shouts “free bagels at Sean’s”', function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+
+Then('Lucy hears Sean’s message', function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+----
+
+Now we have two instances of person, one representing Lucy, and one representing Sean.
+
+shot::[4]
+If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our Person class.
+
+[source,bash]
+----
+$ npm test
+
+> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> cucumber-js
+
+F--
+
+Failures:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ✖ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:17
+       ReferenceError: Person is not defined
+           at World.<anonymous> (/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:18:19)
+   - When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.js:23
+   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:28
+
+1 scenario (1 failed)
+3 steps (1 failed, 2 skipped)
+0m00.001s
+npm ERR! Test failed.  See above for more details.
+----
+
+shot::[5]
+Let’s give our solution a home by creating a `scripts` directory.
+shot::[6]
+We’ll put our Shouty application in a Ruby file called `shouty.rb` in that directory.
+
+[source,bash]
+----
+$ mkdir scripts
+$ touch scripts/shouty.js
+----
+
+Then we create then an empty Person class. 
+
+.scripts/shouty.rb
+[source,js]
+----
+class Person {
+
+}
+----
+
+// MATT: Is this still right for the js project?
+For now, we’ll just require the `Person` class from our steps.js file. In a later lesson we’ll talk more about how to organise this code a bit better.
+
+[source,js]
+----
+const Person = require('../../scripts/shouty.js')
+
+const { Given, When, Then } = require('cucumber');
+
+Given('Lucy is located {int}m from Sean', function (distance) {
+  this.lucy = new Person
+  this.sean = new Person
+  this.lucy.move_to(distance)
+});
+
+// ...
+----
+
+shot::[7]
+When we run the scenario, cucumber tells us that we're missing the `move_to` method on the `Person` class.
+
+[source,bash]
+----
+$ npm test
+
+> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> cucumber-js
+
+F--
+
+Failures:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ✖ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:17
+       TypeError: this.lucy.move_to is not a function
+           at World.<anonymous> (/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:20:13)
+   - When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.js:23
+   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:28
+
+1 scenario (1 failed)
+3 steps (1 failed, 2 skipped)
+0m00.000s
+npm ERR! Test failed.  See above for more details.
+----
+
+shot::[8]
+We'll add the definition without implementing it yet.
+
+[source,js]
+----
+class Person {
+  move_to() {
+
+  }
+}
+----
+
+shot::[9]
+When we run the scenario again, the first step is green!
+
+[source,bash]
+----
+$ npm test
+
+> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> cucumber-js
+
+.P-
+
+Warnings:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:17
+   ? When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.js:23
+       Pending
+   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:28
+
+1 scenario (1 pending)
+3 steps (1 pending, 1 skipped, 1 passed)
+0m00.001s
+npm ERR! Test failed.  See above for more details.
+----
+

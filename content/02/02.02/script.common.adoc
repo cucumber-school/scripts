@@ -8,7 +8,7 @@ Let’s start with a very basic example of Shouty’s behaviour. Something we mi
 
 Sean the shouter shouts "free bagels at Sean's" and Lucy the listener who happens to be stood across the street from his store, 15 metres away, hears him. She walks into Sean’s Coffee and takes advantage of the offer.
 
-shot::[]
+shot::[1]
 We can translate this into a Gherkin scenario so that Cucumber can run it. Here's how that would look.
 
 [source,gherkin]
@@ -21,23 +21,23 @@ Scenario: Listener is within range
 
 You can see there are four special keywords being used here. `Scenario` just tells Cucumber we’re about to describe an example that it can execute. Then you see the lines beginning with Given, When and Then.
 
-shot::[]
+shot::[2]
 `Given` is the context for the scenario. We’re putting the system into a specific state, ready for the scenario to unfold.
 
-shot::[]
+shot::[3]
 `When` is an action. Something that happens to the system that will cause something else to happen: an outcome.
 
-shot::[]
+shot::[4]
 `Then` is the outcome. It’s the behaviour we expect from the system when this action happens in this context.
 
 You’ll notice we’ve omitted from our outcome anything about Lucy walking into Sean’s store and making a purchase. Remember, Gherkin is supposed to describe the behaviour of the system, so it would be distracting to have it in our scenario.
 
 Each scenario has these three ingredients:
-shot::[]
+shot::[5]
   a context,
-shot::[]
+shot::[6]
   an action,
-shot::[]
+shot::[7]
   and one or more outcomes.
 
 Together, they describe one single aspect of the behaviour of the system. An example.
