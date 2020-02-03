@@ -690,13 +690,13 @@ Save the file, switch back to the command-prompt and run <code>cucumber</code>. 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber
+<pre class="rouge highlight"><code>$ bundle exec cucumber
 Feature: Hear shout
 
-  Scenario: Listener is within range         <span class="c"># features/hear_shout.feature:2</span>
-    Given Lucy is located 15m from Sean      <span class="c"># features/hear_shout.feature:3</span>
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/hear_shout.feature:4</span>
-    Then Lucy hears Sean<span class="s1">'s message           # features/hear_shout.feature:5
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/hear_shout.feature:3
+    When Sean shouts "free bagels at Sean's" # features/hear_shout.feature:4
+    Then Lucy hears Sean's message           # features/hear_shout.feature:5
 
 1 scenario (1 undefined)
 3 steps (3 undefined)
@@ -712,14 +712,21 @@ When("Sean shouts {string}") do |string|
   pending # Write code here that turns the phrase above into concrete actions
 end
 
-Then("Lucy hears Sean'</span>s message<span class="s2">") do
+Then("Lucy hears Sean's message") do
   pending # Write code here that turns the phrase above into concrete actions
-end</span></code></pre>
+end</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>
 <em>Undefined</em> means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some <em>step definitions</em>.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="02.04.animation.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot</span>
@@ -1303,7 +1310,7 @@ Feature: Hear shout
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-03 13:56:02 UTC
+Last updated 2020-02-03 14:58:23 UTC
 </div>
 </div>
 <style>
