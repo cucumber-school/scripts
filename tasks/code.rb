@@ -34,6 +34,7 @@ task :code do
               `git checkout #{commit}`
               `git clean -fd`
               `cp -R . #{dir}`
+              `rm -rf #{dir}/.git`
             end
           end
         end
