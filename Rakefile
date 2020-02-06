@@ -99,19 +99,6 @@ class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
   end
 end
 
-class AnimationInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
-  use_dsl
-
-  named :animation
-
-  def process parent, target, attrs
-    doc = parent.document
-    return unless doc.attributes['shots']
-    tag("Animation")
-  end
-end
-
 Asciidoctor::Extensions.register do
   inline_macro ShotInlineMacro if document.basebackend? 'html'
-  inline_macro AnimationInlineMacro if document.basebackend? 'html'
 end
