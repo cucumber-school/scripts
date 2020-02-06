@@ -1,0 +1,85 @@
+=== Flexibility
+
+Although it’s important to try to use consistent terminology in our Gherkin scenarios, to help develop the ubiquitous language of your domain, we also want scenarios to read naturally, which means allowing a bit of flexibility.
+
+Ideally, the language used in scenarios should never be constrained by your step definitions. Otherwise they’ll end up sounding like they were written by robots.
+
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart. This step would not match:
+
+[source, gherkin]
+----
+Given Lucy is 1 metre from Sean
+----
+
+Because we’ve used the singular `metre` instead of the plural `metres` we don’t have a match. What a pain!
+Fear not. We can just surround the `s` in parentheses to make it optional, like this:
+
+[source, ruby]
+----
+Given 'Lucy is {int} metre(s) from Sean' do |distance|
+----
+
+This is one way to smooth off some of the rough edges in your cucumber expressions.
+
+Another is to allow alternates - different ways of saying the same thing. For example, to accept this step:
+
+[source, gherkin]
+----
+Given Lucy stands 15 metres from Sean
+----
+
+We can use this Cucumber Expression:
+[source, ruby]
+----
+Given 'Lucy is/stands {int} metre(s) from Sean' do |distance|
+----
+
+
+<ruby>
+Transforms
+When Cucumber captures an argument from your step, it’s always a string by default, even if you’ve used a digit character class in the regular expression. This can cause headaches. In the case of the distance we’ve been using in our example, we’d like it to be an integer, but we’ll have to convert it manually, like this:
+
+[types distance.to_i in step defs code]
+
+This is OK in one or two places, but when you need to do it all over your step definition code, it becomes repetitive and error prone. Luckily, Cucumber has a feature, called transforms that’s designed to tackle this problem.
+
+We define a Transform in much the same way as a step definition, but this time our pattern will be matched against any captured argument. If the transform matches, then the raw captured string is passed in, and the result of the transform block is then passed on to the step definition.
+
+[writes out a transform for digits to ints]
+
+This very simple Transform will match any number and convert it into an integer. Having a few of these Transforms can be very handy indeed.
+
+
+</ruby>
+
+03.8 Questions
+Which of the following statements will match the regular expression “Lucy is (\\d+) metres? from Sean$”?
+“Lucy is 1 metre from Sean”
+“My cousin Lucy is 42 metres from Sean”
+“Lucy is 100 metres from Sean’s dog”
+“Lucy is 99 metres? from Sean”
+Which of the following combinations will work?
+Given statement: “Lucy is 42 metres from Sean”
+Regular expression: “(\\w+) is (\\d+) metres from (\\w+)”
+Step definition signature: public void setup(String name1, int distance, String name2);
+Given statement: “Lucy is 42 metres from Sean”
+Regular expression: “(\\w+) is (\\w+) metres from (\\w+)”
+Step definition signature: public void setup(String name1, int distance, String name2);
+Given statement: “Lucy is 42 metres from Sean”
+Regular expression: “(\\d+) is (\\d+) metres from (\\d+)”
+Step definition signature: public void setup(String name1, int distance, String name2);
+Given statement: “Lucy is 42 metres from Sean”
+Regular expression: “(\\w+) is (\\d+) metres from (\\w+)”
+Step definition signature: public void setup(int name1, int distance, int name2);
+Given statement: “Lucy is 42 metres from Sean”
+Regular expression: “(\\w+) is (\\d+) metres from (\\w+)”
+Step definition signature: public void setup(String name1, String name2, int distance);
+
+
+Well that was a pretty deep dive into regular expressions! With what you’ve learned in this lesson you’ll be able to match any phrase you see in a Gherkin step without fear. This will help you keep your scenarios readable, and keep your business stakeholders engaged in the BDD process.
+
+MATT: should we add a statement about Cucumber expressions & that we’ll be posting information about them sometime?
+Feedback
+
+We’d love to hear your feedback about Cucumber School. If you love it, feel free to tweet about us, and mention @cucumberbdd in your tweet if you like. If there’s anything you’d like us to improve on, or any specific things you want to tell us, please email hello@cucumber.pro to start the conversation.
+
