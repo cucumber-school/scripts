@@ -1,6 +1,6 @@
 require 'shouty'
 
-Given("Lucy is located {int}m from Sean") do |distance|
+Given("Lucy is located {int} metres from Sean") do |distance|
   @lucy = Shouty::Person.new
   @sean = Shouty::Person.new
   @lucy.move_to(distance)
