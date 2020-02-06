@@ -1,8 +1,7 @@
 require 'shouty'
 
-Given("Lucy is located/standing {int} metre(s) from Sean") do |distance|
-  # TODO: automation code to place Lucy and Sean goes here
-  pending "Lucy is #{distance * 100} centimetres from Sean"
+Given("{person} is located/standing {int} metre(s) from Sean") do |person, distance|
+  person.move_to(distance)
 end
 
 When("Sean shouts {string}") do |message|
