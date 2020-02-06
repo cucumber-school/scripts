@@ -83,8 +83,8 @@ end
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 
-def tag(text)
-  %(<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">#{text}</span>)
+def tag(text, args={})
+  %(<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">#{text} #{args.values.first}</span>)
 end
 
 class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
@@ -95,7 +95,7 @@ class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
   def process parent, target, attrs
     doc = parent.document
     return unless doc.attributes['shots']
-    tag("Shot")
+    tag("Shot", attrs)
   end
 end
 
