@@ -567,9 +567,9 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 <div class="sect2">
 <h3 id="_install_cucumber">2.3. Install Cucumber</h3>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
 Before we get started make sure you have a modern version of NodeJs,
-<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
 and NPM installed:</p>
 </div>
 <div class="listingblock">
@@ -593,9 +593,9 @@ and NPM installed:</p>
 <p>Go use cd to go into that directory, and open it up in your editor:</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
 First we’ll create a <code>package.json</code> that describes the NPM packages we need for our project
-<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
 and add the <code>cucumber</code> package to it.</p>
 </div>
 <div class="listingblock">
@@ -652,19 +652,779 @@ and add the <code>cucumber</code> package to it.</p>
 <div class="sect2">
 <h3 id="_add_a_scenario_wire_it_up">2.4. Add a scenario, wire it up</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+We need to create a <code>features</code> directory. This is the conventional place to store your Gherkin specifications.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>features</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+Now we’re ready to create our first feature file. Call the file <code>hear_shout.feature</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">touch </span>features/hear_shout.feature</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+All feature files start with the keyword <code>Feature:</code>
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+followed by a name.
+It’s a good convention to give it a name that matches the file name.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
+Let’s write out our first scenario.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+  <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy hears Sean’s message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
+Switch back to the command-prompt and run <code>npm test</code>. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+UUU
+
+Warnings:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ? Given Lucy is located 15m from Sean
+       Undefined. Implement with the following snippet:
+
+         Given<span class="o">(</span><span class="s1">'Lucy is located 15m from Sean'</span>, <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+           // Write code here that turns the phrase above into concrete actions
+           <span class="k">return</span> <span class="s1">'pending'</span><span class="p">;</span>
+         <span class="o">})</span><span class="p">;</span>
+
+   ? When Sean shouts “free bagels at Sean’s”
+       Undefined. Implement with the following snippet:
+
+         When<span class="o">(</span><span class="s1">'Sean shouts “free bagels at Sean’s”'</span>, <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+           // Write code here that turns the phrase above into concrete actions
+           <span class="k">return</span> <span class="s1">'pending'</span><span class="p">;</span>
+         <span class="o">})</span><span class="p">;</span>
+
+   ? Then Lucy hears Sean’s message
+       Undefined. Implement with the following snippet:
+
+         Then<span class="o">(</span><span class="s1">'Lucy hears Sean’s message'</span>, <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+           // Write code here that turns the phrase above into concrete actions
+           <span class="k">return</span> <span class="s1">'pending'</span><span class="p">;</span>
+         <span class="o">})</span><span class="p">;</span>
+
+
+1 scenario <span class="o">(</span>1 undefined<span class="o">)</span>
+3 steps <span class="o">(</span>3 undefined<span class="o">)</span>
+0m00.000s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+<code>Undefined</code> means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some step definitions.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span>
+Step definitions translate from the plain language you use in Gherkin into Ruby code.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
+When Cucumber runs a step, it looks for a step definition that matches the text in the step. If it finds one, then it executes the code in the step definition.</p>
+</div>
+<div class="paragraph">
+<p>If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span>
+Let’s copy those.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
+We’ll paste them into a JavaScript file under a new directory called <code>step_definitions</code> underneath the <code>features</code> directory. I’ll just call it <code>steps.rb</code>.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span>
+Before running our process again, we need to import the <code>Given</code>,
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
+<code>When</code>
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span>
+and <code>Then</code> keywords from the <code>cucumber</code> package.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located 15m from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts “free bagels at Sean’s”</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span>
+Now we run Cucumber again.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span>
+This time the output is a little different. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one.
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span>
+But that first step definition returns <code>'pending'</code>, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+P--
+
+Warnings:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ? Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:5</span>
+       Pending
+   - When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.js:10</span>
+   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:15</span>
+
+1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
+3 steps <span class="o">(</span>1 pending, 2 skipped<span class="o">)</span>
+0m00.000s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It’s time to start work on our solution. At this point we need to do a little domain modelling. The words in the step provide us some good hints about some names that will appear in our domain model. Our scenario mentions two people, Lucy and Sean. So it looks like we need a couple of person objects at least. Each person will also need to know their own location.</p>
+</div>
+<div class="paragraph">
+<p>Cucumber is telling us to write the code we wish we had. Let’s do it!</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span>
+We’ll start by changing the <code>15</code> into the <code>{int}</code> Cucumber pattern and pass a parameter into the function, we&#8217;ll call it <code>distance</code>.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span>
+And we can print it to the terminal to see the captured result</p>
+</div>
+<div class="paragraph">
+<p>To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int}m from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">distance</span><span class="p">);</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts “free bagels at Sean’s”</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span>
+If we run <code>cucumber</code> again on our terminal, we can see the number 15 pop up in the output</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+15
+P--
+
+Warnings:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ? Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:15</span>
+       Pending
+   - When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.js:20</span>
+   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:25</span>
+
+1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
+3 steps <span class="o">(</span>1 pending, 2 skipped<span class="o">)</span>
+0m00.002s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice that the number 15 does not appear anywhere in our code anymore. The value 15 is automatically passed from the gherkin step to the step definition. If you are curious, that’s why we changed it into <code>{int}</code> in the step definition pattern or <em>expression</em>. We’ll explain these patterns in detail in a future lesson.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_sketch_out_the_solution">2.5. Sketch out the solution</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+Once we have the boilerplate in place, we can start working on the actual code for our scenario.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int}m from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">distance</span><span class="p">);</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts “free bagels at Sean’s”</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+To implement the first step, we need to create a couple of person objects, with the specified distance between them. We could write it like this:</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+We should also remove the <code>pending</code> status, since we are now defining our step.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int}m from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">move_to</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts “free bagels at Sean’s”</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we have two instances of person, one representing Lucy, and one representing Sean.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our Person class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+F--
+
+Failures:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ✖ Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:17</span>
+       ReferenceError: Person is not defined
+           at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:18:19<span class="o">)</span>
+   - When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.js:23</span>
+   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:28</span>
+
+1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
+3 steps <span class="o">(</span>1 failed, 2 skipped<span class="o">)</span>
+0m00.001s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
+Let’s give our solution a home by creating a <code>scripts</code> directory.
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
+We’ll put our Shouty application in a Ruby file called <code>shouty.rb</code> in that directory.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>scripts
+<span class="nv">$ </span><span class="nb">touch </span>scripts/shouty.js</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we create then an empty Person class.</p>
+</div>
+<div class="listingblock">
+<div class="title">scripts/shouty.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For now, we’ll just require the <code>Person</code> class from our steps.js file. In a later lesson we’ll talk more about how to organise this code a bit better.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../scripts/shouty.js</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int}m from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">move_to</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span>
+<span class="p">});</span>
+
+<span class="c1">// ...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+When we run the scenario, cucumber tells us that we&#8217;re missing the <code>move_to</code> method on the <code>Person</code> class.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+F--
+
+Failures:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ✖ Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:17</span>
+       TypeError: this.lucy.move_to is not a <span class="k">function
+           </span>at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:20:13<span class="o">)</span>
+   - When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.js:23</span>
+   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:28</span>
+
+1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
+3 steps <span class="o">(</span>1 failed, 2 skipped<span class="o">)</span>
+0m00.000s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span>
+We&#8217;ll add the definition without implementing it yet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">move_to</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
+When we run the scenario again, the first step is green!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+.P-
+
+Warnings:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ✔ Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:17</span>
+   ? When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.js:23</span>
+       Pending
+   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:28</span>
+
+1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
+3 steps <span class="o">(</span>1 pending, 1 skipped, 1 passed<span class="o">)</span>
+0m00.001s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_make_the_scenario_pass">2.6. Make the scenario pass</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>We’ll follow the same flow to make the remaining two steps pass:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Do a little domain modelling</p>
+</li>
+<li>
+<p>Write the code we wish we had</p>
+</li>
+<li>
+<p>Make it compile</p>
+</li>
+<li>
+<p>Run the scenario</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>In the second step definition, we want to tell Sean to shout something.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+In order to send instructions to Sean, we need to store him in an instance variable, which we already have, so that he’ll be accessible from all of our step definitions.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+On the <code>When</code> step, we can capture Sean&#8217;s message using the <code>{string}</code> pattern like this:</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+And now we can now tell him to <em>shout</em> the message:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int}m from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">move_to</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span>
+<span class="p">});</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">});</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
+<span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+Our Person class needs a <code>shout</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+.F-
+
+Failures:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ✔ Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:17</span>
+   ✖ When Sean shouts <span class="s2">"free bagels at Sean’s"</span> <span class="c"># features/step_definitions/steps.js:23</span>
+       TypeError: this.sean.shout is not a <span class="k">function
+           </span>at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:24:13<span class="o">)</span>
+   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:27</span>
+
+1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
+3 steps <span class="o">(</span>1 failed, 1 skipped, 1 passed<span class="o">)</span>
+0m00.000s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
+Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.</p>
+</div>
+<div class="listingblock">
+<div class="title">shouty.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">move_to</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+
+  <span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And now the second step is green:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+..P
+
+Warnings:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ✔ Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:21</span>
+   ✔ When Sean shouts <span class="s2">"free bagels at Sean’s"</span> <span class="c"># features/step_definitions/steps.js:27</span>
+   ? Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:31</span>
+       Pending
+
+1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
+3 steps <span class="o">(</span>1 pending, 2 passed<span class="o">)</span>
+0m00.001s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_get_heard_messages">2.6.1. Get heard messages</h4>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
+The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+Once again we’re are going to write the code we wish we had.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">(),</span> <span class="p">[</span><span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">])</span>
+<span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span>
+We can record what Sean shouts by storing it in the <code>this.message</code> variable as the When step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">message</span>
+<span class="p">});</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
+We also need to add a <code>messages_heard</code> method to our Person class. Let’s do that now, we&#8217;ll just return an empty array for now</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">move_to</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+
+  <span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+
+  <span class="nx">messagesHeard</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[]</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span>
+&#8230;&#8203;and watch Cucumber run the tests again.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+..F
+
+Failures:
+
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ✔ Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:25</span>
+   ✔ When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:31</span>
+   ✖ Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:36</span>
+       AssertionError <span class="o">[</span>ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+       <span class="o">[]</span>
+
+       should loosely deep-equal
+
+       <span class="o">[</span>
+         <span class="s2">"free bagels at Sean's"</span>
+       <span class="o">]</span>
+           + expected - actual
+
+           -[]
+           +[
+           +  <span class="s2">"free bagels at Sean's"</span>
+           +]
+
+           at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:37:10<span class="o">)</span>
+
+1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
+3 steps <span class="o">(</span>1 failed, 2 passed<span class="o">)</span>
+0m00.003s
+npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_failing_test_milestone">2.6.2. Failing test milestone</h4>
+<div class="paragraph">
+<p>This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code! Never trust an automated test that you haven’t seen fail!</p>
+</div>
+<div class="paragraph">
+<p>Now all we have to do is write the code to make it pass - that’s the easy bit!</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
+In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
+  <span class="nx">move_to</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+
+  <span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="p">}</span>
+
+  <span class="nx">messagesHeard</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">[</span><span class="dl">"</span><span class="s2">free bagels at Sean's</span><span class="dl">"</span><span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I told you it wasn’t very future proof!</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+...
+
+1 scenario <span class="o">(</span>1 passed<span class="o">)</span>
+3 steps <span class="o">(</span>3 passed<span class="o">)</span>
+0m00.001s</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Still, the fact that such a poor implementation can pass our tests shows us that we need to work on our tests. A more comprehensive set of scenarios would force us to write a better implementation.</p>
+</div>
+<div class="paragraph">
+<p>This is the essence of behaviour-driven development. Examples of behaviour drive the development.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
+Instead of writing a note on our TODO list, let’s write another failing scenario.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+  <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy hears Sean’s message
+
+  <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+    <span class="nf">Given </span>Lucy is 15m from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+    <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span>
+Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We’re done for today!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js
+
+...U-U
+
+Warnings:
+
+1<span class="o">)</span> Scenario: Listener hears a different message <span class="c"># features/hear_shout.feature:7</span>
+   ? Given Lucy is 15m from Sean
+       Undefined. Implement with the following snippet:
+
+         Given<span class="o">(</span><span class="s1">'Lucy is 15m from Sean'</span>, <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+           // Write code here that turns the phrase above into concrete actions
+           <span class="k">return</span> <span class="s1">'pending'</span><span class="p">;</span>
+         <span class="o">})</span><span class="p">;</span>
+
+   - When Sean shouts <span class="s2">"Free coffee!"</span> <span class="c"># features/step_definitions/steps.js:31</span>
+   ? Then Lucy hears Sean<span class="s1">'s message
+       Undefined. Implement with the following snippet:
+
+         Then('</span>Lucy hears Sean<span class="se">\'</span>s message<span class="s1">', function () {
+           // Write code here that turns the phrase above into concrete actions
+           return '</span>pending<span class="s1">';
+         });
+
+
+2 scenarios (1 undefined, 1 passed)
+6 steps (2 undefined, 1 skipped, 3 passed)
+0m00.002s
+npm ERR! Test failed.  See above for more details.</span></code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -672,7 +1432,7 @@ and add the <code>cucumber</code> package to it.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-06 13:23:17 UTC
+Last updated 2020-02-06 14:55:40 UTC
 </div>
 </div>
 <style>
