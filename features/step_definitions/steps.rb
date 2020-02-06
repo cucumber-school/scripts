@@ -1,8 +1,8 @@
 require 'shouty'
 
-Given("Lucy is located 15 metres from Sean") do
+Given("Lucy is located {int} metres from Sean") do |distance|
   # TODO: automation code to place Lucy and Sean goes here
-  pending "matched!"
+  pending "Lucy is #{distance * 100} centimetres from Sean"
 end
 
 When("Sean shouts {string}") do |message|
