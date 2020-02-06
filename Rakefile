@@ -1,13 +1,10 @@
 require 'awesome_print'
+require_relative './tasks/code'
+require_relative './tasks/languages'
 
 AwesomePrint.defaults = {
   indent: 2,
   index:  false,
-}
-
-LANGUAGES = {
-  ruby: "Ruby",
-  js:   "JavaScript"
 }
 
 task :generate_index_files, [:lang] => [] do |t, args|
@@ -66,19 +63,7 @@ task :html, [:lang] => :generate_index_files do |t, args|
                            attributes: { 'shots' => ENV['shots'] }
 end
 
-task :list do
-  puts "Available languages: \n"
-
-  LANGUAGES.each do |code, name|
-    puts " rake \"html[#{lang}]\"  # Generate HTML for #{name} version."
-  end
-end
-
 task :default => :html
-
-def language_codes(args)
-  Array(args[:lang] || LANGUAGES.keys)
-end
 
 require 'asciidoctor'
 require 'asciidoctor/extensions'
