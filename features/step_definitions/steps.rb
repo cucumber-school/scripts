@@ -1,9 +1,8 @@
 require 'shouty'
 
-Given("Lucy is located {int} metres from Sean") do |distance|
-  @lucy = Shouty::Person.new
-  @sean = Shouty::Person.new
-  @lucy.move_to(distance)
+Given("Lucy is located 15 metres from Sean") do
+  # TODO: automation code to place Lucy and Sean goes here
+  pending "matched!"
 end
 
 When("Sean shouts {string}") do |message|
