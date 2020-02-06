@@ -19,9 +19,14 @@
 #   watch(%r{file/path}) { `command(s)` }
 #
 guard :shell do
-  watch(/.*\.ruby.adoc/) { `rake html[ruby]` }
-  watch(/.*\.js.adoc/) { `rake html[js]` }
-  watch(/.*\.common.adoc/) { `rake html` }
+  watch(/script\.(\w+)\.adoc/) { |m|
+    lang = m[1]
+    if lang == 'common'
+      `rake html`
+    else
+      `rake html[#{lang}]`
+    end
+  }
 end
 
 guard :livereload do
