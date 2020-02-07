@@ -4,10 +4,10 @@ require_relative './languages'
 pwd = Dir.pwd
 
 task :code do
+  puts "Unrolling code branches..."
   Dir.chdir(Dir.tmpdir) do
     `rm -rf code`
-    `git clone #{pwd} code`
-    puts "Cloned into #{Dir.pwd}"
+    `git clone --quiet #{pwd} code`
     Dir.chdir("code") do
       `git fetch origin`
       `git config advice.detachedHead false`
@@ -18,23 +18,27 @@ task :code do
           branch = chapter.code_branch(lang)
           cmd = "git ls-remote --exit-code origin #{branch}"
           unless system(cmd)
-            puts "No code branch found for #{branch}"
+            puts "No code branch #{branch.red}"
           else
-            puts "Found code!"
+            puts "Unrolling code branch #{branch.green}"
             dir = "#{chapter.dir}/code/#{lang}"
+            `rm -rf #{dir}`
             `mkdir -p #{dir}`
             `git reset --hard origin/#{branch}`
             `git checkout -b #{branch}`
             commits = `git rev-list #{branch}`.split.reverse
             puts "Found #{commits.count} commits on #{branch}"
             commits.each_with_index do |commit, i|
-              puts "fetching code for commit #{commit}"
+              puts "Fetching code for commit #{commit}"
               dir = "#{chapter.dir}/code/#{lang}/%02d" % i
               `mkdir #{dir}`
               `git checkout #{commit}`
               `git clean -fd`
               `cp -R . #{dir}`
               `rm -rf #{dir}/.git`
+              File.open("#{dir}.commit-message") do |file|
+                file << `git show -s --format=%s #{commit}`
+              end
             end
           end
         end
