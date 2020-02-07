@@ -4,13 +4,7 @@ Let’s look at the Shouty scenario from the last chapter.
 
 .hear_shout.feature
 [source,gherkin]
-----
-Feature: Hear shout
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts "free bagels at Sean's"
-    Then Lucy hears Sean’s message
-----
+include::../code/ruby/02/features/hear_shout.feature[]
 
 As Cucumber starts to execute this feature, it will come to the first step of the scenario `Given Lucy is 15 metres from Sean` and say to itself "now - do I have any step definitions that match the phrase "Lucy is 15 metres from Sean`?”"
 
@@ -25,12 +19,7 @@ That’s pretty simple isn’t it? Cucumber expressions are just string patterns
 In Ruby, we can use this pattern to make a step definition like this:
 
 [source, ruby]
-----
-Given 'Lucy is 15 metres from Sean' do
-  # TODO: automation code to place Lucy and Sean goes here
-  puts "matched!"
-end
-----
+include::../code/ruby/02/features/step_definitions/steps.rb[lines=3..6]
 
 We use a normal Ruby string to pass the cucumber expression to Cucumnber.
 
