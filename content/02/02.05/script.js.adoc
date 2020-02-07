@@ -55,7 +55,7 @@ Then('Lucy hears Sean’s message', function () {
 Now we have two instances of person, one representing Lucy, and one representing Sean.
 
 shot::[4]
-If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our Person class.
+If we run Cucumber, we’ll see a compilation error from JavaScript: we need to define our Person class.
 
 [source,bash]
 ----
@@ -84,7 +84,7 @@ npm ERR! Test failed.  See above for more details.
 shot::[5]
 Let’s give our solution a home by creating a `scripts` directory.
 shot::[6]
-We’ll put our Shouty application in a Ruby file called `shouty.rb` in that directory.
+We’ll put our Shouty application in a JavaScript file called `shouty.js` in that directory.
 
 [source,bash]
 ----
@@ -92,14 +92,16 @@ $ mkdir scripts
 $ touch scripts/shouty.js
 ----
 
-Then we create then an empty Person class. 
+Then we can  create an empty Person class, shot::[7] and export it.
 
-.scripts/shouty.rb
+.scripts/shouty.js
 [source,js]
 ----
 class Person {
 
 }
+
+module.exports = Person
 ----
 
 // MATT: Is this still right for the js project?
@@ -120,7 +122,7 @@ Given('Lucy is located {int}m from Sean', function (distance) {
 // ...
 ----
 
-shot::[7]
+shot::[8]
 When we run the scenario, cucumber tells us that we're missing the `move_to` method on the `Person` class.
 
 [source,bash]
@@ -147,8 +149,8 @@ Failures:
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[8]
-We'll add the definition without implementing it yet.
+shot::[9]
+We'll add the method definition without implementing it yet.
 
 [source,js]
 ----
@@ -159,7 +161,7 @@ class Person {
 }
 ----
 
-shot::[9]
+shot::[10]
 When we run the scenario again, the first step is green!
 
 [source,bash]
