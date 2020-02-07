@@ -2,7 +2,7 @@ include::./title.adoc[]
 
 audio::02.05.ruby.audio.mp3[]
 
-shot::[]
+shot::[1]
 Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to _guide_ our development, so we'll start designing the objects we'll need by sketching out some code in our step definitions.
 
 The scenario will be failing while we do this, but we should see the error messages gradually progressing as we drive out the interface to our object model.
@@ -26,8 +26,8 @@ Then("Lucy hears Sean's message") do
 end
 ----
 
-shot::[]
-To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[] We can remove the `pending` status now, and this `puts` statement, and write the implementation for the first step like this:
+shot::[2]
+To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[3] We can remove the `pending` status now, and this `puts` statement, and write the implementation for the first step like this:
 
 [source,ruby]
 ----
@@ -46,7 +46,7 @@ Then("Lucy hears Sean’s message") do
 end
 ----
 
-We have two instances of person, one representing Lucy, shot::[]and one representing Sean. shot::[]Then we call a method to move Lucy to the position specified in the scenario.shot::[]
+We have two instances of person, one representing Lucy, shot::[4]and one representing Sean. shot::[5]Then we call a method to move Lucy to the position specified in the scenario.shot::[6]
 
 video::02.05.animation.mp4[]
 
@@ -77,9 +77,9 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 0m0.004s
 ----
 
-shot::[]
+shot::[7]
 Let’s give our solution a home by creating a `lib` directory.
-shot::[]
+shot::[8]
 We’ll put our Shouty application in a Ruby file called `shouty.rb` in that directory.
 
 [source,bash]
@@ -88,8 +88,8 @@ $ mkdir lib
 $ touch lib/shouty.rb
 ----
 
-shot::[]
-Create a Shouty module, then an empty Person class inside it.
+shot::[9]
+Create a `Shouty` module, then an empty `Person` class inside it.
 
 .lib/shouty.rb
 [source,ruby]
@@ -101,16 +101,19 @@ module Shouty
 end
 ----
 
-shot::[]
-For now, we’ll just require the shouty application from our steps.rb file. In a later lesson we’ll talk more about how to organise this code a bit better.
+shot::[10]
+For now, we’ll just require the shouty application from our `steps.rb` file. In a later lesson we’ll talk more about how to organise this code a bit better.
 
 [source,ruby]
 ----
 require 'shouty'
 
 Given("Lucy is located {int}m from Sean") do |distance|
+ # ...
+end
 ----
 
+shot::[11]
 When we run the scenario this time, Cucumber tells us that we're missing the `move_to` method on the `Person` class.
 
 [source]
@@ -134,7 +137,7 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 0m0.004s
 ----
 
-shot::[]
+shot::[12]
 We'll add the method definition without implementing it yet.
 
 [source,ruby]
@@ -148,7 +151,7 @@ module Shouty
 end
 ----
 
-shot::[]
+shot::[13]
 When we run the scenario again, the first step is green!
 
 [source,bash]
@@ -169,17 +172,24 @@ Feature: Hear shout
 0m0.006s
 ----
 
-We're making progress! We'll keep working like this until we see the scenario failing for the right reasons.
+We're making progress! We’ll follow the same flow to make the remaining two steps pass:
+
+- Do a little domain modelling
+- Write the code we wish we had
+- Make it compile
+- Run the scenario
+
+We'll keep working like this until we see the scenario failing for the right reasons.
 
 In the second step definition, we want to tell Sean to shout something.
 
-shot::[]
+shot::[14]
 In order to send instructions to Sean from the second step, we've stored him in an _instance variable_, so that he’ll be accessible from all of our step definitions.
 
-shot::[]
+shot::[15]
 In the `When` step, we're capturing Sean's message using the `{string}` pattern, so let's give that argument a more meaningful name.
 
-shot::[]
+shot::[16]
 And now we can now tell him to _shout_ the message:
 
 [source,ruby]
@@ -189,7 +199,7 @@ When("Sean shouts {string}") do |message|
 end
 ----
 
-shot::[]
+shot::[17]
 If we run Cucumber, it's telling is that our `Person` class needs a `shout` method. 
 
 [source,bash]
@@ -213,7 +223,7 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 0m0.003s
 ----
 
-shot::[]
+shot::[18]
 Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.
 
 .shouty.rb
@@ -232,9 +242,10 @@ module Shouty
 end
 ----
 
-shot::[]
+shot::[19]
 The last step definition is where we implement a check, or assertion. We'll verify that what Lucy has heard is exactly the same as what Sean shouted.
 
+shot::[20]
 Once again we're going to write the code we wish we had.
 
 [source,ruby]
@@ -246,7 +257,7 @@ end
 
 So we need a way to ask Lucy what messages she's heard, and we also need to know what it was that Sean shouted.
 
-We can record what Sean shouts by storing it in an instance variable as the `When` step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. shot::[] Now we can use that in the assertion check.
+We can record what Sean shouts by storing it in an instance variable as the `When` step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. shot::[21] Now we can use that in the assertion check.
 
 [source,ruby]
 ----

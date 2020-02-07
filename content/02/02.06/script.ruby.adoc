@@ -75,7 +75,7 @@ It's also a good habit to look for the most simple solution. We can trust that, 
 
 This is the essence of Behaviour-Driven Development. Examples of behaviour drive the development. We do just enough to make the next scenario pass, and no more.
 
-Instead of writing a note on our TODO list, let's write another scenario that shouts a different message. It will fail, reminding us we need to find a solution that doesn't rely on hard-coding the message.
+Instead of writing a note on our TODO list, let's write another scenario that shouts a different message. 
 
 [source,gherkin]
 ----
@@ -91,6 +91,7 @@ Feature: Hear shout
     Then Lucy hears Sean's message
 ----
 
+It fails, reminding us we need to find a solution that doesn't rely on hard-coding the message.
 Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We're done for today!
 
 [source,bash]

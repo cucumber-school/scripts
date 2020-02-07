@@ -1,162 +1,8 @@
 include::./title.adoc[]
 
-We’ll follow the same flow to make the remaining two steps pass:
+audio::02.06.audio.mp3[]
 
-- Do a little domain modelling
-- Write the code we wish we had
-- Make it compile
-- Run the scenario
-
-In the second step definition, we want to tell Sean to shout something.
-
-shot::[1]
-In order to send instructions to Sean, we need to store him in an instance variable, which we already have, so that he’ll be accessible from all of our step definitions.
-
-shot::[2]
-On the `When` step, we can capture Sean's message using the `{string}` pattern like this:
-
-shot::[3]
-And now we can now tell him to _shout_ the message:
-
-[source,js]
-----
-const { Given, When, Then } = require('cucumber');
-
-Given('Lucy is located {int}m from Sean', function (distance) {
-  this.lucy = new Person
-  this.sean = new Person
-  this.lucy.move_to(distance)
-});
-
-When('Sean shouts {string}', function (message) {
-  this.sean.shout(message)
-});
-
-Then('Lucy hears Sean’s message', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
-});
-----
-
-shot::[4]
-Our Person class needs a `shout` method. 
-
-[source,bash]
-----
-$ npm test
-
-> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
-> cucumber-js
-
-.F-
-
-Failures:
-
-1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:17
-   ✖ When Sean shouts "free bagels at Sean’s" # features/step_definitions/steps.js:23
-       TypeError: this.sean.shout is not a function
-           at World.<anonymous> (/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:24:13)
-   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:27
-
-1 scenario (1 failed)
-3 steps (1 failed, 1 skipped, 1 passed)
-0m00.000s
-npm ERR! Test failed.  See above for more details.
-----
-
-shot::[5]
-Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.
-
-.shouty.rb
-[source,js]
-----
-class Person {
-  move_to() {
-    
-  }
-
-  shout(message) {
-    
-  }
-}
-----
-
-And now the second step is green:
-
-[source,bash]
-----
-$ npm test
-
-> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
-> cucumber-js
-
-..P
-
-Warnings:
-
-1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:21
-   ✔ When Sean shouts "free bagels at Sean’s" # features/step_definitions/steps.js:27
-   ? Then Lucy hears Sean’s message # features/step_definitions/steps.js:31
-       Pending
-
-1 scenario (1 pending)
-3 steps (1 pending, 2 passed)
-0m00.001s
-npm ERR! Test failed.  See above for more details.
-----
-
-==== Get heard messages
-
-shot::[6]
-The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.
-
-shot::[7]
-Once again we’re are going to write the code we wish we had.
-
-[source,js]
-----
-Then('Lucy hears Sean’s message', function () {
-  assert.deepEqual(this.lucy.messagesHeard(), [this.message])
-});
-----
-
-So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.
-
-shot::[8]
-We can record what Sean shouts by storing it in the `this.message` variable as the When step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check.
-
-[source,js]
-----
-When('Sean shouts {string}', function (message) {
-  this.sean.shout(message)
-  this.message = message
-});
-----
-
-shot::[9]
-We also need to add a `messages_heard` method to our Person class. Let’s do that now, we'll just return an empty array for now
-
-[source,js]
-----
-class Person {
-  move_to() {
-    
-  }
-
-  shout(message) {
-    
-  }
-
-  messagesHeard() {
-    return []
-  }
-}
-----
-
-shot::[10]
-...and watch Cucumber run the tests again.
+So we have our failing scenario:
 
 [source,bash]
 ----
@@ -197,13 +43,9 @@ Failures:
 npm ERR! Test failed.  See above for more details.
 ----
 
-==== Failing test milestone
+Lucy is expected to hear Sean's message, but she hasn't heard anything: we got an empty Array back from the `messagesHeard` method.
 
-This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code! Never trust an automated test that you haven’t seen fail!
-
-Now all we have to do is write the code to make it pass - that’s the easy bit!
-
-shot::[11]
+shot::[1]
 In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?
 
 [source,js]
@@ -225,7 +67,7 @@ class Person {
 
 I told you it wasn’t very future proof!
 
-shot::[12]
+shot::[2]
 [source,bash]
 ----
 $ npm test
@@ -240,12 +82,16 @@ $ npm test
 0m00.001s
 ----
 
-Still, the fact that such a poor implementation can pass our tests shows us that we need to work on our tests. A more comprehensive set of scenarios would force us to write a better implementation.
+Woohoo! Our scenario is passing for the first time. As long as this is the only message anyone ever shouts, we're good to ship this thing!
 
-This is the essence of behaviour-driven development. Examples of behaviour drive the development.
+Now, the fact that such a poor implementation can pass our tests shows us that we need to work on our tests. A more comprehensive set of scenarios would force us to write a better implementation.
 
-shot::[13]
-Instead of writing a note on our TODO list, let’s write another failing scenario.
+It's also a good habit to look for the most simple solution. We can trust that, as our scenarios evolve, so will our solution.
+
+This is the essence of Behaviour-Driven Development. Examples of behaviour drive the development. We do just enough to make the next scenario pass, and no more.
+
+shot::[3]
+Instead of writing a note on our TODO list, let's write another scenario that shouts a different message. 
 
 [source,gherkin]
 ----
@@ -261,7 +107,8 @@ Feature: Hear shout
     Then Lucy hears Sean's message
 ----
 
-shot::[14]
+shot::[4]
+It fails, reminding us we need to find a solution that doesn't rely on hard-coding the message.
 Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We’re done for today!
 
 [source,bash]
