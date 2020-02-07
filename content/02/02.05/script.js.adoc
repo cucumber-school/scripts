@@ -1,7 +1,11 @@
 include::./title.adoc[]
 
 shot::[1]
-Once we have the boilerplate in place, we can start working on the actual code for our scenario.
+Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to _guide_ our development, so we'll start designing the objects we'll need by sketching out some code in our step definitions.
+
+The scenario will be failing while we do this, but we should see the error messages gradually progressing as we drive out the interface to our object model.
+
+Our next goal is for the scenario to fail because we need to implement the actual business logic. _Then_ we can work on changing the business logic inside our objects to make it pass.
 
 .steps.js
 [source,js]
@@ -25,10 +29,10 @@ Then('Lucy hears Sean’s message', function () {
 ----
 
 shot::[2]
-To implement the first step, we need to create a couple of person objects, with the specified distance between them. We could write it like this:
+To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them.shot::[3] We could write it like this:
 
-shot::[3]
-We should also remove the `pending` status, since we are now defining our step.
+shot::[4]
+To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[5] We can remove the `pending` status now, and this `console.log` statement, and write the implementation for the first step like this:
 
 .steps.js
 [source,js]
@@ -52,10 +56,16 @@ Then('Lucy hears Sean’s message', function () {
 });
 ----
 
-Now we have two instances of person, one representing Lucy, and one representing Sean.
+We have two instances of person, one representing Lucy, shot::[6]and one representing Sean. shot::[7]Then we call a method to move Lucy to the position specified in the scenario.shot::[8]
 
-shot::[4]
-If we run Cucumber, we’ll see a compilation error from Ruby: we need to define our Person class.
+video::02.05.animation.mp4[]
+
+To keep things simple, we're going to assume all people are situated on a line: a one-dimensional co-ordinate system. We can always introduce proper geo-locations later. We'll place Sean in the centre, and Lucy 15 metres away from Sean.
+
+This might not be the design we'll end up with once this is all working, but it's a decent place to start.
+
+shot::[9]
+If we run Cucumber, we’ll see a compilation error from JavaScript: we need to define our `Person` class.
 
 [source,bash]
 ----
@@ -81,10 +91,10 @@ Failures:
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[5]
+shot::[10]
 Let’s give our solution a home by creating a `scripts` directory.
-shot::[6]
-We’ll put our Shouty application in a Ruby file called `shouty.rb` in that directory.
+shot::[11]
+We’ll put our Shouty application in a JavaScript file called `shouty.js` in that directory.
 
 [source,bash]
 ----
@@ -92,18 +102,20 @@ $ mkdir scripts
 $ touch scripts/shouty.js
 ----
 
-Then we create then an empty Person class. 
+Then we can  create an empty `Person` class, shot::[12] and export it.
 
-.scripts/shouty.rb
+.scripts/shouty.js
 [source,js]
 ----
 class Person {
 
 }
+
+module.exports = Person
 ----
 
-// MATT: Is this still right for the js project?
-For now, we’ll just require the `Person` class from our steps.js file. In a later lesson we’ll talk more about how to organise this code a bit better.
+shot::[13]
+For now, we’ll just require the `Person` class from our `steps.js` file. In a later lesson we’ll talk more about how to organise this code a bit better.
 
 [source,js]
 ----
@@ -120,7 +132,7 @@ Given('Lucy is located {int}m from Sean', function (distance) {
 // ...
 ----
 
-shot::[7]
+shot::[14]
 When we run the scenario, cucumber tells us that we're missing the `move_to` method on the `Person` class.
 
 [source,bash]
@@ -147,8 +159,8 @@ Failures:
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[8]
-We'll add the definition without implementing it yet.
+shot::[15]
+We'll add the method definition without implementing it yet.
 
 [source,js]
 ----
@@ -159,7 +171,7 @@ class Person {
 }
 ----
 
-shot::[9]
+shot::[16]
 When we run the scenario again, the first step is green!
 
 [source,bash]
@@ -185,3 +197,205 @@ Warnings:
 npm ERR! Test failed.  See above for more details.
 ----
 
+We're making progress! We’ll follow the same flow to make the remaining two steps pass:
+
+- Do a little domain modelling
+- Write the code we wish we had
+- Make it compile
+- Run the scenario
+
+We'll keep working like this until we see the scenario failing for the right reasons.
+
+In the second step definition, we want to tell Sean to shout something.
+
+shot::[17]
+In order to send instructions to Sean, we need to store him in an property, which we already have, so that he’ll be accessible from all of our step definitions.
+
+shot::[18]
+In the `When` step, we're capturing Sean's message using the `{string}` pattern, so let's give that argument a more meaningful name.
+
+shot::[19]
+And now we can now tell him to _shout_ the message:
+
+[source,js]
+----
+const { Given, When, Then } = require('cucumber');
+
+Given('Lucy is located {int}m from Sean', function (distance) {
+  this.lucy = new Person
+  this.sean = new Person
+  this.lucy.move_to(distance)
+});
+
+When('Sean shouts {string}', function (message) {
+  this.sean.shout(message)
+});
+
+Then('Lucy hears Sean’s message', function () {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending';
+});
+----
+
+shot::[20]
+If we run Cucumber, it's telling is that our `Person` class needs a `shout` method. 
+
+[source,bash]
+----
+$ npm test
+
+> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> cucumber-js
+
+.F-
+
+Failures:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:17
+   ✖ When Sean shouts "free bagels at Sean’s" # features/step_definitions/steps.js:23
+       TypeError: this.sean.shout is not a function
+           at World.<anonymous> (/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:24:13)
+   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:27
+
+1 scenario (1 failed)
+3 steps (1 failed, 1 skipped, 1 passed)
+0m00.000s
+npm ERR! Test failed.  See above for more details.
+----
+
+shot::[21]
+Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.
+
+.shouty.rb
+[source,js]
+----
+class Person {
+  move_to() {
+    
+  }
+
+  shout(message) {
+    
+  }
+}
+----
+
+And now the second step is green:
+
+[source,bash]
+----
+$ npm test
+
+> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> cucumber-js
+
+..P
+
+Warnings:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:21
+   ✔ When Sean shouts "free bagels at Sean’s" # features/step_definitions/steps.js:27
+   ? Then Lucy hears Sean’s message # features/step_definitions/steps.js:31
+       Pending
+
+1 scenario (1 pending)
+3 steps (1 pending, 2 passed)
+0m00.001s
+npm ERR! Test failed.  See above for more details.
+----
+
+shot::[22]
+The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.
+
+shot::[23]
+Once again we’re are going to write the code we wish we had.
+
+[source,js]
+----
+Then('Lucy hears Sean’s message', function () {
+  assert.deepEqual(this.lucy.messagesHeard(), [this.message])
+});
+----
+
+So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.
+
+shot::[24]
+We can record what Sean shouts by storing it in the `this.message` property as the `When` step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check.
+
+[source,js]
+----
+When('Sean shouts {string}', function (message) {
+  this.sean.shout(message)
+  this.message = message
+});
+----
+
+shot::[25]
+We also need to add a `messages_heard` method to our Person class. Let’s do that now, we'll just return an empty array for now
+
+[source,js]
+----
+class Person {
+  move_to() {
+    
+  }
+
+  shout(message) {
+    
+  }
+
+  messagesHeard() {
+    return []
+  }
+}
+----
+
+shot::[26]
+...and watch Cucumber run the tests again.
+
+[source,bash]
+----
+$ npm test
+
+> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> cucumber-js
+
+..F
+
+Failures:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:25
+   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:31
+   ✖ Then Lucy hears Sean’s message # features/step_definitions/steps.js:36
+       AssertionError [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+       []
+
+       should loosely deep-equal
+
+       [
+         "free bagels at Sean's"
+       ]
+           + expected - actual
+
+           -[]
+           +[
+           +  "free bagels at Sean's"
+           +]
+       
+           at World.<anonymous> (/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:37:10)
+
+1 scenario (1 failed)
+3 steps (1 failed, 2 passed)
+0m00.003s
+npm ERR! Test failed.  See above for more details.
+----
+
+This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code!
+
+Never trust an automated test that you haven’t seen fail!
+
+Now all we have to do is write the code to make it do what it's supposed to.

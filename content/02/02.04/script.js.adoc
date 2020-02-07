@@ -23,7 +23,7 @@ followed by a name.
 It’s a good convention to give it a name that matches the file name.
 
 shot::[5]
-Let’s write out our first scenario.
+Now let’s write out our first scenario.
 
 .hear_shout.feature
 [source,gherkin]
@@ -36,9 +36,8 @@ Feature: Hear shout
 ----
 
 shot::[6]
-Switch back to the command-prompt and run `npm test`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.
+Save the file, switch back to the command-prompt and run `npm test`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.
 
-// TODO: show output
 [source,bash]
 ----
 $ npm test
@@ -83,27 +82,23 @@ npm ERR! Test failed.  See above for more details.
 ----
 
 shot::[7]
-`Undefined` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some step definitions.
+_Undefined_` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
 shot::[8]
-Step definitions translate from the plain language you use in Gherkin into Ruby code.
+Step definitions translate from the plain language you use in Gherkin into JavaScript code.
 
 shot::[9]
 When Cucumber runs a step, it looks for a step definition that matches the text in the step. If it finds one, then it executes the code in the step definition.
 
 If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
 shot::[10]
-Let’s copy those.
+Let’s copy those to create our first step definitions.
 
 shot::[11]
-We’ll paste them into a JavaScript file under a new directory called `step_definitions` underneath the `features` directory. I’ll just call it `steps.rb`.
+We’ll paste them into a JavaScript file under a new directory called `step_definitions` underneath the `features` directory. I’ll just call it `steps.js`.
 
 shot::[12]
-Before running our process again, we need to import the `Given`,
-shot::[13]
-`When`
-shot::[14]
-and `Then` keywords from the `cucumber` package.
+We need to import the `Given`, shot::[13] `When` shot::[14] and `Then` keywords from the `cucumber` package.
 
 .steps.js
 [source,js]
@@ -155,22 +150,17 @@ Warnings:
 3 steps (1 pending, 2 skipped)
 0m00.000s
 npm ERR! Test failed.  See above for more details.
-
 ----
-
-It’s time to start work on our solution. At this point we need to do a little domain modelling. The words in the step provide us some good hints about some names that will appear in our domain model. Our scenario mentions two people, Lucy and Sean. So it looks like we need a couple of person objects at least. Each person will also need to know their own location.
 
 // (Show a napkin drawing of a Person class with a location property).
 
-Cucumber is telling us to write the code we wish we had. Let’s do it!
+Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
 shot::[18]
 We’ll start by changing the `15` into the `{int}` Cucumber pattern and pass a parameter into the function, we'll call it `distance`.
 
 shot::[19]
 And we can print it to the terminal to see the captured result
-
-To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.
 
 [source,js]
 ----
@@ -193,7 +183,7 @@ Then('Lucy hears Sean’s message', function () {
 ----
 
 shot::[20]
-If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output
+If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output.
 
 [source,bash]
 ----

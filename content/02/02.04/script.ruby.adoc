@@ -9,14 +9,14 @@ Let's create our first feature file. Call the file `hear_shout.feature`
 $ touch features/hear_shout.feature
 ----
 
-shot::[]
+shot::[1]
 All feature files start with the keyword `Feature:`
-shot::[]
+shot::[2]
 followed by a name.
 It’s a good convention to give it a name that matches the file name.
 
-shot::[]
-Now let’s write out our first scenario:
+shot::[3]
+Now let’s write out our first scenario.
 
 .hear_shout.feature
 [source,gherkin]
@@ -28,7 +28,7 @@ Feature: Hear shout
     Then Lucy hears Sean’s message
 ----
 
-shot::[]
+shot::[4]
 Save the file, switch back to the command-prompt and run `cucumber`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the test results below the scenario: one scenario, three steps - all undefined.
 
 [source]
@@ -60,22 +60,22 @@ Then("Lucy hears Sean's message") do
 end
 ----
 
-shot::[]
+shot::[5]
 _Undefined_ means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
 video::02.04.animation.mp4[]
 
-shot::[]
+shot::[6]
 Step definitions translate from the plain language you use in Gherkin into Ruby code.
 
-shot::[]
+shot::[7]
 When Cucumber runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
 
 If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
-shot::[]
+shot::[8]
 Let’s copy those to create our first step definitions.
 
-shot::[]
+shot::[9]
 We’ll paste them into a Ruby file under the `step_definitions` directory, inside the `features` directory. We'll just call it `steps.rb`.
 
 .steps.rb
@@ -94,12 +94,12 @@ Then("Lucy hears Sean's message") do
 end
 ----
 
-shot::[]
+shot::[10]
 Now run Cucumber again.
 
-shot::[]
+shot::[11]
 This time the output is a little different. None of the steps are undefined anymore. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one.
-shot::[]
+shot::[12]
 But that first step definition throws a `PendingException`, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
 
 [source,bash]
@@ -123,10 +123,10 @@ Feature: Hear shout
 
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
-shot::[]
+shot::[13]
 We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
 
-shot::[]
+shot::[14]
 We can print it to the terminal to see what's happening.
 
 [source,ruby]
@@ -145,8 +145,8 @@ Then("Lucy hears Sean's message") do
 end
 ----
 
-shot::[]
-If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output:
+shot::[15]
+If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output.
 
 [source,bash]
 ----
@@ -167,5 +167,5 @@ Feature: Hear shout
 0m0.005s
 ----
 
-Notice that the number 15 does not appear anywhere in our Ruby code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our Ruby code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[16]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
 
