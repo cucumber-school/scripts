@@ -1,1 +1,32 @@
-include::./script.common.adoc[]
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart. This step would not match:
+
+[source, gherkin]
+----
+include::../code/ruby/04-allow-for-singular-or-plural-metres/features/hear_shout.feature[lines=3..3]
+----
+
+Because we’ve used the singular `metre` instead of the plural `metres` we don’t have a match. What a pain!
+
+Fear not. We can just surround the `s` in parentheses to make it optional, like this:
+
+[source, ruby]
+----
+include::../code/ruby/04-allow-for-singular-or-plural-metres/features/step_definitions/steps.rb[lines=3..3]
+----
+
+This is one way to smooth off some of the rough edges in your cucumber expressions.
+
+Another is to allow _alternates_ - different ways of saying the same thing. For example, to accept this step:
+
+[source, gherkin]
+----
+include::../code/ruby/05-allow-standing-or-located-as-alternates/features/hear_shout.feature[lines=3..3]
+----
+
+...we can use this Cucumber Expression:
+[source, ruby]
+----
+include::../code/ruby/05-allow-standing-or-located-as-alternates/features/step_definitions/steps.rb[lines=3..3]
+----
+
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine.
