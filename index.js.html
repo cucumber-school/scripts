@@ -678,7 +678,7 @@ It’s a good convention to give it a name that matches the file name.</p>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
-Let’s write out our first scenario.</p>
+Now let’s write out our first scenario.</p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -692,7 +692,7 @@ Let’s write out our first scenario.</p>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
-Switch back to the command-prompt and run <code>npm test</code>. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.</p>
+Save the file, switch back to the command-prompt and run <code>npm test</code>. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -739,7 +739,7 @@ npm ERR! Test failed.  See above <span class="k">for </span>more details.</code>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
-<code>Undefined</code> means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some step definitions.</p>
+<em>Undefined</em>` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some <em>step definitions</em>.</p>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span>
@@ -752,7 +752,7 @@ When Cucumber runs a step, it looks for a step definition that matches the text 
 <div class="paragraph">
 <p>If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
 <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span>
-Let’s copy those.</p>
+Let’s copy those to create our first step definitions.</p>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
@@ -760,11 +760,7 @@ We’ll paste them into a JavaScript file under a new directory called <code>ste
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span>
-We need to import the <code>Given</code>,
-<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
-<code>When</code>
-<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span>
-and <code>Then</code> keywords from the <code>cucumber</code> package.</p>
+We need to import the <code>Given</code>, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span> <code>When</code> <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span> and <code>Then</code> keywords from the <code>cucumber</code> package.</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.js</div>
@@ -821,15 +817,15 @@ npm ERR! Test failed.  See above <span class="k">for </span>more details.</code>
 </div>
 </div>
 <div class="paragraph">
+<p>Now that we&#8217;ve wired up our step definitions to the Gherkin steps, it&#8217;s almost time to start working on our solution. First though, let&#8217;s tidy up the generated code.</p>
+</div>
+<div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span>
 We’ll start by changing the <code>15</code> into the <code>{int}</code> Cucumber pattern and pass a parameter into the function, we&#8217;ll call it <code>distance</code>.</p>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span>
 And we can print it to the terminal to see the captured result</p>
-</div>
-<div class="paragraph">
-<p>To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -853,7 +849,7 @@ And we can print it to the terminal to see the captured result</p>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span>
-If we run <code>cucumber</code> again on our terminal, we can see the number 15 pop up in the output</p>
+If we run <code>cucumber</code> again on our terminal, we can see the number 15 pop up in the output.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1507,7 +1503,7 @@ npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-07 13:43:13 UTC
+Last updated 2020-02-07 14:19:14 UTC
 </div>
 </div>
 <style>
