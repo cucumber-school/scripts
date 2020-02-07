@@ -30,15 +30,13 @@ task :code do
             puts "Found #{commits.count} commits on #{branch}"
             commits.each_with_index do |commit, i|
               puts "Fetching code for commit #{commit}"
-              dir = "#{chapter.dir}/code/#{lang}/%02d" % i
+              commit_message = `git show -s --format=%s #{commit}`.split("\n").first
+              dir = "#{chapter.dir}/code/#{lang}/%02d-#{commit_message.downcase.gsub(/\W+/, "-")}" % i
               `mkdir #{dir}`
               `git checkout #{commit}`
               `git clean -fd`
               `cp -R . #{dir}`
               `rm -rf #{dir}/.git`
-              File.open("#{dir}.commit-message", "w") do |file|
-                file << `git show -s --format=%s #{commit}`
-              end
             end
           end
         end
