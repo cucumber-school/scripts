@@ -12,3 +12,7 @@ end
 Then("Lucy hears Sean's message") do
   expect(@lucy.messages_heard).to eq [@message_from_sean]
 end
+
+Then("Lucy does not hear Sean's message") do
+  expect(@lucy.messages_heard).not.to include [@message_from_sean]
+end

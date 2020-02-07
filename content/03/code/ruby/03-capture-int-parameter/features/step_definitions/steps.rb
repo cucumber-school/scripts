@@ -2,7 +2,7 @@ require 'shouty'
 
 Given("Lucy is located {int} metres from Sean") do |distance|
   # TODO: automation code to place Lucy and Sean goes here
-  pending "Lucy is #{15 * 100} centimetres from Sean"
+  pending "Lucy is #{distance * 100} centimetres from Sean"
 end
 
 When("Sean shouts {string}") do |message|
@@ -12,4 +12,8 @@ end
 
 Then("Lucy hears Sean's message") do
   expect(@lucy.messages_heard).to eq [@message_from_sean]
+end
+
+Then("Lucy does not hear Sean's message") do
+  expect(@lucy.messages_heard).not.to include [@message_from_sean]
 end
