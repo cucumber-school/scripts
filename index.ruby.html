@@ -865,7 +865,7 @@ Your browser does not support the audio tag.
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
 Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to <em>guide</em> our development, so we&#8217;ll start designing the objects we&#8217;ll need by sketching out some code in our step definitions.</p>
 </div>
 <div class="paragraph">
@@ -892,8 +892,8 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
-To implement the first step, we need to create a couple of <code>Person</code> objects, with the specified distance between them. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span> We can remove the <code>pending</code> status now, and this <code>puts</code> statement, and write the implementation for the first step like this:</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+To implement the first step, we need to create a couple of <code>Person</code> objects, with the specified distance between them. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> We can remove the <code>pending</code> status now, and this <code>puts</code> statement, and write the implementation for the first step like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -913,7 +913,7 @@ To implement the first step, we need to create a couple of <code>Person</code> o
 </div>
 </div>
 <div class="paragraph">
-<p>We have two instances of person, one representing Lucy, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>and one representing Sean. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>Then we call a method to move Lucy to the position specified in the scenario.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span></p>
+<p>We have two instances of person, one representing Lucy, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>and one representing Sean. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>Then we call a method to move Lucy to the position specified in the scenario.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
 </div>
 <div class="videoblock">
 <div class="content">
@@ -953,9 +953,9 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
 Let’s give our solution a home by creating a <code>lib</code> directory.
-<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span>
 We’ll put our Shouty application in a Ruby file called <code>shouty.rb</code> in that directory.</p>
 </div>
 <div class="listingblock">
@@ -965,8 +965,8 @@ We’ll put our Shouty application in a Ruby file called <code>shouty.rb</code> 
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
-Create a Shouty module, then an empty Person class inside it.</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
+Create a <code>Shouty</code> module, then an empty <code>Person</code> class inside it.</p>
 </div>
 <div class="listingblock">
 <div class="title">lib/shouty.rb</div>
@@ -979,18 +979,21 @@ Create a Shouty module, then an empty Person class inside it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
-For now, we’ll just require the shouty application from our steps.rb file. In a later lesson we’ll talk more about how to organise this code a bit better.</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span>
+For now, we’ll just require the shouty application from our <code>steps.rb</code> file. In a later lesson we’ll talk more about how to organise this code a bit better.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby"><span class="nb">require</span> <span class="s1">'shouty'</span>
 
-<span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span></code></pre>
+<span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is located {int}m from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
+ <span class="c1"># ...</span>
+<span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>When we run the scenario this time, Cucumber tells us that we&#8217;re missing the <code>move_to</code> method on the <code>Person</code> class.</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
+When we run the scenario this time, Cucumber tells us that we&#8217;re missing the <code>move_to</code> method on the <code>Person</code> class.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1014,7 +1017,7 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span>
 We&#8217;ll add the method definition without implementing it yet.</p>
 </div>
 <div class="listingblock">
@@ -1029,7 +1032,7 @@ We&#8217;ll add the method definition without implementing it yet.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
 When we run the scenario again, the first step is green!</p>
 </div>
 <div class="listingblock">
@@ -1051,21 +1054,40 @@ Feature: Hear shout
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;re making progress! We&#8217;ll keep working like this until we see the scenario failing for the right reasons.</p>
+<p>We&#8217;re making progress! We’ll follow the same flow to make the remaining two steps pass:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Do a little domain modelling</p>
+</li>
+<li>
+<p>Write the code we wish we had</p>
+</li>
+<li>
+<p>Make it compile</p>
+</li>
+<li>
+<p>Run the scenario</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll keep working like this until we see the scenario failing for the right reasons.</p>
 </div>
 <div class="paragraph">
 <p>In the second step definition, we want to tell Sean to shout something.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span>
 In order to send instructions to Sean from the second step, we&#8217;ve stored him in an <em>instance variable</em>, so that he’ll be accessible from all of our step definitions.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span>
 In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using the <code>{string}</code> pattern, so let&#8217;s give that argument a more meaningful name.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span>
 And now we can now tell him to <em>shout</em> the message:</p>
 </div>
 <div class="listingblock">
@@ -1076,7 +1098,7 @@ And now we can now tell him to <em>shout</em> the message:</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span>
 If we run Cucumber, it&#8217;s telling is that our <code>Person</code> class needs a <code>shout</code> method.</p>
 </div>
 <div class="listingblock">
@@ -1101,7 +1123,7 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span>
 Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.</p>
 </div>
 <div class="listingblock">
@@ -1121,11 +1143,12 @@ Let’s not worry about the implementation yet. The most important thing right n
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span>
 The last step definition is where we implement a check, or assertion. We&#8217;ll verify that what Lucy has heard is exactly the same as what Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p>Once again we&#8217;re going to write the code we wish we had.</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span>
+Once again we&#8217;re going to write the code we wish we had.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1138,7 +1161,7 @@ The last step definition is where we implement a check, or assertion. We&#8217;l
 <p>So we need a way to ask Lucy what messages she&#8217;s heard, and we also need to know what it was that Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p>We can record what Sean shouts by storing it in an instance variable as the <code>When</code> step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span> Now we can use that in the assertion check.</p>
+<p>We can record what Sean shouts by storing it in an instance variable as the <code>When</code> step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span> Now we can use that in the assertion check.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1297,7 +1320,7 @@ Feature: Hear shout
 <p>This is the essence of Behaviour-Driven Development. Examples of behaviour drive the development. We do just enough to make the next scenario pass, and no more.</p>
 </div>
 <div class="paragraph">
-<p>Instead of writing a note on our TODO list, let&#8217;s write another scenario that shouts a different message. It will fail, reminding us we need to find a solution that doesn&#8217;t rely on hard-coding the message.</p>
+<p>Instead of writing a note on our TODO list, let&#8217;s write another scenario that shouts a different message.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1314,7 +1337,8 @@ Feature: Hear shout
 </div>
 </div>
 <div class="paragraph">
-<p>Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We&#8217;re done for today!</p>
+<p>It fails, reminding us we need to find a solution that doesn&#8217;t rely on hard-coding the message.
+Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We&#8217;re done for today!</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1331,7 +1355,7 @@ Feature: Hear shout
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-07 13:30:19 UTC
+Last updated 2020-02-07 13:43:13 UTC
 </div>
 </div>
 <style>
