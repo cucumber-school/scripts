@@ -20,7 +20,7 @@ task :code do
           unless system(cmd)
             puts "No code branch #{branch.red}"
           else
-            puts "Unrolling code branch #{branch.green}"
+            puts "Unrolling code branch #{branch.yellow}"
             dir = "#{chapter.dir}/code/#{lang}"
             `rm -rf #{dir}`
             `mkdir -p #{dir}`
@@ -36,7 +36,7 @@ task :code do
               `git clean -fd`
               `cp -R . #{dir}`
               `rm -rf #{dir}/.git`
-              File.open("#{dir}.commit-message") do |file|
+              File.open("#{dir}.commit-message", "w") do |file|
                 file << `git show -s --format=%s #{commit}`
               end
             end
