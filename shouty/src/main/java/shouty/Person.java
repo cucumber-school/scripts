@@ -6,4 +6,8 @@ public class Person {
     public void setLocation(Integer location) {
         this.location = location;
     }
+
+    public void shout(String message) {
+
+    }
 }
