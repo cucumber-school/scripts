@@ -4,9 +4,13 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
+
 public class StepDefinitions {
     Person lucy = new Person();
     Person sean = new Person();
+    private String messageFromSean;
 
     @Given("Lucy is {int} metres from Sean")
     public void lucy_is_metres_from_Sean(Integer distance) {
@@ -17,12 +21,12 @@ public class StepDefinitions {
 
     @When("Sean shouts {string}")
     public void sean_shouts(String message) {
-        sean.shout(message):
+        sean.shout(message);
+        messageFromSean = message;
      }
 
     @Then("Lucy should hear Sean's message")
     public void lucy_should_hear_Sean_s_message() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        assertEquals(asList(messageFromSean), lucy.getMessagesHeard());
     }
 }
