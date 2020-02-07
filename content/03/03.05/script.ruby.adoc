@@ -1,1 +1,42 @@
-include::./script.common.adoc[]
+include::./title.adoc[]
+
+We can start with the step definition, which would look like this:
+
+[source, ruby]
+----
+include::../code/ruby/06-sketch-out-parameter-type/features/step_definitions/steps.rb[lines=3..6]
+----
+
+If we run Cucumber at this point we'll see an error, because we haven't defined the `{person}` parameter type yet.
+
+----
+$ bundle exec cucumber
+Undefined parameter type {person} (Cucumber::CucumberExpressions::UndefinedParameterTypeError)
+----
+
+Here's how we define one.
+
+Let's create a new Ruby file in `features/support` called `person_parameter.rb`:
+
+.person_parameter.rb
+[source, ruby]
+----
+include::../code/ruby/07-add-person-parameter/features/support/person_parameter.rb[[]
+----
+
+We use the `ParameterType` DSL method from Cucumber to define our new parameter type. shot::[]
+
+We need to give it a `name` which is the name we'll use in our step definition expressions. shot::[]
+
+We also need to define -- gasp! -- a regular expression. shot::[] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video.
+
+Finally, there's a transformer block, shot::[] which takes the text captured from the Gherkin step that matched the regular expression pattern, then runs some code. The return value of this block is what will be passed to the step definition. In this case, we're passed the name of the person, though we don't use it at the moment when constructing a `Person`.
+
+All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
+
+[source, ruby]
+----
+include::../code/ruby/07-add-person-parameter/features/step_definitions/steps.rb[lines=3..7]
+----
+
+Custom parameters allow you to bring your domain _model_ - the classes and methods in your solution - and your domain _language_ - the words you use in your scenarios and step defintions - closer together.
