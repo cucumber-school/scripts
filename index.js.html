@@ -988,21 +988,21 @@ npm ERR! Test failed.  See above <span class="k">for </span>more details.</code>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span>
-Let’s give our solution a home by creating a <code>scripts</code> directory.
+Let’s give our solution a home by creating a <code>src</code> directory.
 <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
 We’ll put our Shouty application in a JavaScript file called <code>shouty.js</code> in that directory.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>scripts
-<span class="nv">$ </span><span class="nb">touch </span>scripts/shouty.js</code></pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">mkdir </span>src
+<span class="nv">$ </span><span class="nb">touch </span>src/shouty.js</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Then we can  create an empty <code>Person</code> class, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span> and export it.</p>
 </div>
 <div class="listingblock">
-<div class="title">scripts/shouty.js</div>
+<div class="title">src/shouty.js</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
 
@@ -1017,7 +1017,7 @@ For now, we’ll just require the <code>Person</code> class from our <code>steps
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../scripts/shouty.js</span><span class="dl">'</span><span class="p">)</span>
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../src/shouty.js</span><span class="dl">'</span><span class="p">)</span>
 
 <span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">);</span>
 
@@ -1487,7 +1487,7 @@ npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-07 15:25:58 UTC
+Last updated 2020-02-10 12:25:34 UTC
 </div>
 </div>
 <style>
