@@ -92,19 +92,19 @@ npm ERR! Test failed.  See above for more details.
 ----
 
 shot::[10]
-Let’s give our solution a home by creating a `scripts` directory.
+Let’s give our solution a home by creating a `src` directory.
 shot::[11]
 We’ll put our Shouty application in a JavaScript file called `shouty.js` in that directory.
 
 [source,bash]
 ----
-$ mkdir scripts
-$ touch scripts/shouty.js
+$ mkdir src
+$ touch src/shouty.js
 ----
 
 Then we can  create an empty `Person` class, shot::[12] and export it.
 
-.scripts/shouty.js
+.src/shouty.js
 [source,js]
 ----
 class Person {
@@ -119,7 +119,7 @@ For now, we’ll just require the `Person` class from our `steps.js` file. In a 
 
 [source,js]
 ----
-const Person = require('../../scripts/shouty.js')
+const Person = require('../../src/shouty.js')
 
 const { Given, When, Then } = require('cucumber');
 
