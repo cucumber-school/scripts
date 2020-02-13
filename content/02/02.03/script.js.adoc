@@ -34,11 +34,19 @@ $ npm init -y
 $ npm install -D cucumber
 ----
 
-We can now run  the `cucumber-js` command to see if everything works:
+shot::[]
+We'll  also add `cucumber-pretty`, which will prettify our output.
+
+----
+$ npm install -D cucumber-pretty
+----
+
+
+We can now run  the `cucumber-js -f node_modules/cucumber-pretty` command to see if everything works:
 
 [source,bash]
 ----
-$ ./node_modules/.bin/cucumber-js
+$ ./node_modules/.bin/cucumber-js -f node_modules/cucumber-pretty
 ----
 
 But this is not very user friendly. There's a nicer way to run cucumber.
@@ -50,7 +58,7 @@ Edit `package.json` and change the `test` line under the `scripts` from it's def
 {
   // ...
   "scripts": {
-    "test": "cucumber-js"
+    "test": "cucumber-js -f node_modules/cucumber-pretty"
   },
   // ...
 }
@@ -62,14 +70,23 @@ Now we’re ready! If we run `npm test` at this point, we’ll see cucumber pass
 [source,bash]
 ----
 $ npm test
-> shouty@1.0.0 test /home/fedex/cucumber/shouty
-> cucumber-js
 
-
+> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> cucumber-js -f node_modules/cucumber-pretty
 
 0 scenarios
 0 steps
 0m00.000s
+
+
+   ╭────────────────────────────────────────────────────────────────╮
+   │                                                                │
+   │      New patch version of npm available! 6.13.6 → 6.13.7       │
+   │   Changelog: https://github.com/npm/cli/releases/tag/v6.13.7   │
+   │               Run npm install -g npm to update!                │
+   │                                                                │
+   ╰────────────────────────────────────────────────────────────────╯
+
 ----
 
 Good, we've installed Cucumber. Now we need to write our specification.
