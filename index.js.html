@@ -605,11 +605,20 @@ and add the <code>cucumber</code> package to it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We can now run  the <code>cucumber-js</code> command to see if everything works:</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span>
+We&#8217;ll  also add <code>cucumber-pretty</code>, which will prettify our output.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>./node_modules/.bin/cucumber-js</code></pre>
+<pre>$ npm install -D cucumber-pretty</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can now run  the <code>cucumber-js -f node_modules/cucumber-pretty</code> command to see if everything works:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>./node_modules/.bin/cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -623,7 +632,7 @@ and add the <code>cucumber</code> package to it.</p>
 <pre class="rouge highlight"><code data-lang="javascript"><span class="p">{</span>
   <span class="c1">// ...</span>
   <span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">cucumber-js</span><span class="dl">"</span>
+    <span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">cucumber-js -f node_modules/cucumber-pretty</span><span class="dl">"</span>
   <span class="p">},</span>
   <span class="c1">// ...</span>
 <span class="p">}</span></code></pre>
@@ -635,14 +644,22 @@ and add the <code>cucumber</code> package to it.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty
-<span class="o">&gt;</span> cucumber-js
 
-
+<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
 
 0 scenarios
 0 steps
-0m00.000s</code></pre>
+0m00.000s
+
+
+   ╭────────────────────────────────────────────────────────────────╮
+   │                                                                │
+   │      New patch version of npm available! 6.13.6 → 6.13.7       │
+   │   Changelog: https://github.com/npm/cli/releases/tag/v6.13.7   │
+   │               Run npm <span class="nb">install</span> <span class="nt">-g</span> npm to update!                │
+   │                                                                │
+   ╰────────────────────────────────────────────────────────────────╯</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -914,11 +931,7 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
-To implement the first step, we need to create a couple of <code>Person</code> objects, with the specified distance between them.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> We could write it like this:</p>
-</div>
-<div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
-To implement the first step, we need to create a couple of <code>Person</code> objects, with the specified distance between them. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span> We can remove the <code>pending</code> status now, and this <code>console.log</code> statement, and write the implementation for the first step like this:</p>
+To implement the first step, we need to create a couple of <code>Person</code> objects, with the specified distance between them. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> We can remove the <code>pending</code> status now, and this <code>console.log</code> statement, and write the implementation for the first step like this:</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.js</div>
@@ -943,7 +956,7 @@ To implement the first step, we need to create a couple of <code>Person</code> o
 </div>
 </div>
 <div class="paragraph">
-<p>We have two instances of person, one representing Lucy, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>and one representing Sean. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>Then we call a method to move Lucy to the position specified in the scenario.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
+<p>We have two instances of person, one representing Lucy, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>and one representing Sean. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>Then we call a method to move Lucy to the position specified in the scenario.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
 </div>
 <div class="videoblock">
 <div class="content">
@@ -959,7 +972,7 @@ Your browser does not support the video tag.
 <p>This might not be the design we&#8217;ll end up with once this is all working, but it&#8217;s a decent place to start.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
 If we run Cucumber, we’ll see a compilation error from JavaScript: we need to define our <code>Person</code> class.</p>
 </div>
 <div class="listingblock">
@@ -987,9 +1000,9 @@ npm ERR! Test failed.  See above <span class="k">for </span>more details.</code>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span>
 Let’s give our solution a home by creating a <code>src</code> directory.
-<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
 We’ll put our Shouty application in a JavaScript file called <code>shouty.js</code> in that directory.</p>
 </div>
 <div class="listingblock">
@@ -999,7 +1012,7 @@ We’ll put our Shouty application in a JavaScript file called <code>shouty.js</
 </div>
 </div>
 <div class="paragraph">
-<p>Then we can  create an empty <code>Person</code> class, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span> and export it.</p>
+<p>Then we can  create an empty <code>Person</code> class, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span> and export it.</p>
 </div>
 <div class="listingblock">
 <div class="title">src/shouty.js</div>
@@ -1012,7 +1025,7 @@ We’ll put our Shouty application in a JavaScript file called <code>shouty.js</
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
 For now, we’ll just require the <code>Person</code> class from our <code>steps.js</code> file. In a later lesson we’ll talk more about how to organise this code a bit better.</p>
 </div>
 <div class="listingblock">
@@ -1031,7 +1044,7 @@ For now, we’ll just require the <code>Person</code> class from our <code>steps
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span>
 When we run the scenario, cucumber tells us that we&#8217;re missing the <code>move_to</code> method on the <code>Person</code> class.</p>
 </div>
 <div class="listingblock">
@@ -1059,7 +1072,7 @@ npm ERR! Test failed.  See above <span class="k">for </span>more details.</code>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
 We&#8217;ll add the method definition without implementing it yet.</p>
 </div>
 <div class="listingblock">
@@ -1072,7 +1085,7 @@ We&#8217;ll add the method definition without implementing it yet.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span>
 When we run the scenario again, the first step is green!</p>
 </div>
 <div class="listingblock">
@@ -1108,15 +1121,15 @@ npm ERR! Test failed.  See above <span class="k">for </span>more details.</code>
 <p>In the second step definition, we want to tell Sean to shout something.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span>
 In order to send instructions to Sean, we need to store him in an property, which we already have, so that he’ll be accessible from all of our step definitions.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span>
 In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using the <code>{string}</code> pattern, so let&#8217;s give that argument a more meaningful name.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span>
 And now we can now tell him to <em>shout</em> the message:</p>
 </div>
 <div class="listingblock">
@@ -1140,7 +1153,7 @@ And now we can now tell him to <em>shout</em> the message:</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span>
 If we run Cucumber, it&#8217;s telling is that our <code>Person</code> class needs a <code>shout</code> method.</p>
 </div>
 <div class="listingblock">
@@ -1168,7 +1181,7 @@ npm ERR! Test failed.  See above <span class="k">for </span>more details.</code>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span>
 Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.</p>
 </div>
 <div class="listingblock">
@@ -1212,11 +1225,11 @@ npm ERR! Test failed.  See above <span class="k">for </span>more details.</code>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 22</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span>
 The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 23</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span>
 Once again we’re are going to write the code we wish we had.</p>
 </div>
 <div class="listingblock">
@@ -1230,7 +1243,7 @@ Once again we’re are going to write the code we wish we had.</p>
 <p>So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 22</span>
 We can record what Sean shouts by storing it in the <code>this.message</code> property as the <code>When</code> step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check.</p>
 </div>
 <div class="listingblock">
@@ -1242,7 +1255,7 @@ We can record what Sean shouts by storing it in the <code>this.message</code> pr
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 25</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 23</span>
 We also need to add a <code>messages_heard</code> method to our Person class. Let’s do that now, we&#8217;ll just return an empty array for now</p>
 </div>
 <div class="listingblock">
@@ -1263,7 +1276,7 @@ We also need to add a <code>messages_heard</code> method to our Person class. Le
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 26</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span>
 &#8230;&#8203;and watch Cucumber run the tests again.</p>
 </div>
 <div class="listingblock">
@@ -1487,7 +1500,7 @@ npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-10 12:25:34 UTC
+Last updated 2020-02-13 12:46:50 UTC
 </div>
 </div>
 <style>
