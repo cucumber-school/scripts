@@ -29,10 +29,7 @@ Then('Lucy hears Sean’s message', function () {
 ----
 
 shot::[2]
-To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them.shot::[3] We could write it like this:
-
-shot::[4]
-To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[5] We can remove the `pending` status now, and this `console.log` statement, and write the implementation for the first step like this:
+To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[3] We can remove the `pending` status now, and this `console.log` statement, and write the implementation for the first step like this:
 
 .steps.js
 [source,js]
@@ -56,7 +53,7 @@ Then('Lucy hears Sean’s message', function () {
 });
 ----
 
-We have two instances of person, one representing Lucy, shot::[6]and one representing Sean. shot::[7]Then we call a method to move Lucy to the position specified in the scenario.shot::[8]
+We have two instances of person, one representing Lucy, shot::[4]and one representing Sean. shot::[5]Then we call a method to move Lucy to the position specified in the scenario.shot::[6]
 
 video::02.05.animation.mp4[]
 
@@ -64,7 +61,7 @@ To keep things simple, we're going to assume all people are situated on a line: 
 
 This might not be the design we'll end up with once this is all working, but it's a decent place to start.
 
-shot::[9]
+shot::[7]
 If we run Cucumber, we’ll see a compilation error from JavaScript: we need to define our `Person` class.
 
 [source,bash]
@@ -91,9 +88,9 @@ Failures:
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[10]
+shot::[8]
 Let’s give our solution a home by creating a `src` directory.
-shot::[11]
+shot::[9]
 We’ll put our Shouty application in a JavaScript file called `shouty.js` in that directory.
 
 [source,bash]
@@ -102,7 +99,7 @@ $ mkdir src
 $ touch src/shouty.js
 ----
 
-Then we can  create an empty `Person` class, shot::[12] and export it.
+Then we can  create an empty `Person` class, shot::[10] and export it.
 
 .src/shouty.js
 [source,js]
@@ -114,7 +111,7 @@ class Person {
 module.exports = Person
 ----
 
-shot::[13]
+shot::[11]
 For now, we’ll just require the `Person` class from our `steps.js` file. In a later lesson we’ll talk more about how to organise this code a bit better.
 
 [source,js]
@@ -132,7 +129,7 @@ Given('Lucy is located {int}m from Sean', function (distance) {
 // ...
 ----
 
-shot::[14]
+shot::[12]
 When we run the scenario, cucumber tells us that we're missing the `move_to` method on the `Person` class.
 
 [source,bash]
@@ -159,7 +156,7 @@ Failures:
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[15]
+shot::[13]
 We'll add the method definition without implementing it yet.
 
 [source,js]
@@ -171,7 +168,7 @@ class Person {
 }
 ----
 
-shot::[16]
+shot::[14]
 When we run the scenario again, the first step is green!
 
 [source,bash]
@@ -203,13 +200,13 @@ We'll keep working like this until we see the scenario failing for the right rea
 
 In the second step definition, we want to tell Sean to shout something.
 
-shot::[17]
+shot::[15]
 In order to send instructions to Sean, we need to store him in an property, which we already have, so that he’ll be accessible from all of our step definitions.
 
-shot::[18]
+shot::[16]
 In the `When` step, we're capturing Sean's message using the `{string}` pattern, so let's give that argument a more meaningful name.
 
-shot::[19]
+shot::[17]
 And now we can now tell him to _shout_ the message:
 
 [source,js]
@@ -232,7 +229,7 @@ Then('Lucy hears Sean’s message', function () {
 });
 ----
 
-shot::[20]
+shot::[18]
 If we run Cucumber, it's telling is that our `Person` class needs a `shout` method. 
 
 [source,bash]
@@ -259,7 +256,7 @@ Failures:
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[21]
+shot::[19]
 Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.
 
 .shouty.rb
@@ -301,10 +298,10 @@ Warnings:
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[22]
+shot::[20]
 The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.
 
-shot::[23]
+shot::[21]
 Once again we’re are going to write the code we wish we had.
 
 [source,js]
@@ -316,7 +313,7 @@ Then('Lucy hears Sean’s message', function () {
 
 So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.
 
-shot::[24]
+shot::[22]
 We can record what Sean shouts by storing it in the `this.message` property as the `When` step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check.
 
 [source,js]
@@ -327,7 +324,7 @@ When('Sean shouts {string}', function (message) {
 });
 ----
 
-shot::[25]
+shot::[23]
 We also need to add a `messages_heard` method to our Person class. Let’s do that now, we'll just return an empty array for now
 
 [source,js]
@@ -347,7 +344,7 @@ class Person {
 }
 ----
 
-shot::[26]
+shot::[24]
 ...and watch Cucumber run the tests again.
 
 [source,bash]
