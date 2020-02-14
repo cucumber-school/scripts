@@ -2,7 +2,7 @@ include::./title.adoc[]
 
 audio::02.06.audio.mp3[]
 
-So we have our failing scenario:
+So we have our failing scenario: shot::[1]
 
 [source,bash]
 ----
@@ -25,10 +25,10 @@ cucumber features/hear_shout.feature:2 # Scenario: Listener is within range
 0m0.032s
 ----
 
-Lucy is expected to hear Sean's message, but she hasn't heard anything: we got an empty Array back from the `messages_heard` method.
+Lucy is expected to hear Sean's message, but she hasn't heard anything: we got an empty Array back from the `messages_heard` method.shot::[2]
 
-shot::[]
-In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?
+shot::[3]
+In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?shot::[4]
 
 [source,ruby]
 ----
@@ -51,10 +51,10 @@ end
 
 I told you it wasn’t very future proof!
 
-shot::[]
+shot::[5]
 [source,bash]
 ----
-bundle exec cucumber
+$ bundle e xec cucumber
 Feature: Hear shout
 
   Scenario: Listener is within range         # features/hear_shout.feature:2
@@ -75,7 +75,7 @@ It's also a good habit to look for the most simple solution. We can trust that, 
 
 This is the essence of Behaviour-Driven Development. Examples of behaviour drive the development. We do just enough to make the next scenario pass, and no more.
 
-Instead of writing a note on our TODO list, let's write another scenario that shouts a different message. 
+Instead of writing a note on our TODO list, let's write another scenario that shouts a different message. shot::[6]
 
 [source,gherkin]
 ----
@@ -91,13 +91,33 @@ Feature: Hear shout
     Then Lucy hears Sean's message
 ----
 
-It fails, reminding us we need to find a solution that doesn't rely on hard-coding the message.
+It fails, reminding us we need to find a solution that doesn't rely on hard-coding the message. shot::[7]
 Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We're done for today!
 
 [source,bash]
 ----
-bundle exec cucumber
-# TODO: add correct output
+$ bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 15m from Sean      # features/step_definitions/steps.rb:3
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:9
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:14
+
+  Scenario: Listener hears a different message # features/hear_shout.feature:7
+    Given Lucy is located 15m from Sean        # features/step_definitions/steps.rb:3
+    When Sean shouts "Free coffee!"            # features/step_definitions/steps.rb:9
+    Then Lucy hears Sean's message             # features/step_definitions/steps.rb:14
+      expected ["free bagels at Sean's"] to include "Free coffee!" (RSpec::Expectations::ExpectationNotMetError)
+      ./features/step_definitions/steps.rb:15:in `"Lucy hears Sean's message"'
+      features/hear_shout.feature:10:in `Then Lucy hears Sean's message'
+
+Failing Scenarios:
+cucumber features/hear_shout.feature:7 # Scenario: Listener hears a different message
+
+2 scenarios (1 failed, 1 passed)
+6 steps (1 failed, 5 passed)
+0m0.039s
 ----
 
 Of course, if you're in the mood, you can always try to implement a solution yourself that makes both scenarios pass. Have fun!
