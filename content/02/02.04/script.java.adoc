@@ -1,0 +1,84 @@
+Let's create our first feature file. Call the file `hear_shout.feature` shot::[1]
+
+// The first file we are going to create is a feature file where we will write our
+// first scenario.  Create a file called shout.feature in the shouty directory
+// under resources.
+
+shot::[2]
+All feature files start with the keyword `Feature:`
+shot::[3]
+followed by a name.
+It’s a good convention to give it a name that matches the file name.
+
+shot::[4]
+Now let’s write out our first scenario.
+
+.hear_shout.feature
+[source,gherkin]
+----
+Feature: Hear shout
+  Scenario: Listener is within range
+    Given Lucy is located 15m from Sean
+    When Sean shouts "free bagels at Sean's"
+    Then Lucy hears Sean’s message
+----
+
+Now that we have a scenario it’s time to run it!
+
+Switch back to the command prompt and run:
+
+[source,bash]
+----
+$ mvn clean test
+----
+
+shot::[5]
+Maven will now download Cucumber, compile your code and tell Cucumber to run your feature file.
+
+You’ll see that Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps,shot::[6] one scenario shot::[7] - all undefined.shot::[8]
+
+Let’s run the scenario again from inside InteliJ.shot::[9]
+Select the feature file shot::[10] and choose Run from the context menu.shot::[11]
+This will give you similar output.shot::[12]
+
+shot::[13]
+_Undefined_ means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario.
+It needs us to provide some _step definitions_.
+
+video::02.04.animation.mp4[]
+
+Step definitions translate from the plain language you use in Gherkin into Java code. We write a Java method, then annotate it with a pattern. 
+
+When cucumber runs a step, it looks for a step definition with a matching pattern. If it finds one, then it executes the method.
+
+If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.
+
+We’ll create a new class in the shouty package where we’ll paste those snippets. Make sure you create it under test and not main.
+
+[ pastes in snippets ]
+
+Now InteliJ is complaining that there are some unknown symbols. We need to add some import statements! Pressing ALT-ENTER will do that for us.
+
+Let’s return to the scenario and run it again.
+
+[ runs scenario ]
+
+There is a small bug in InteliJ’s Cucumber integration. Sometimes it doesn’t tell Cucumber where to find step definitions. This is easy to work around. Just edit the run configuration and make sure the Glue field contains the value of your package.
+
+Now we can run it again.
+
+[ runs scenario ]
+
+This time the output is a little different. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one. But that first step definition throws a PendingException, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
+
+It’s time to start work on our solution. At this point we need to do a little domain modelling. The words in the step provide us some good hints about some names that will appear in our domain model. Our scenario mentions two people, Lucy and Sean. So it looks like we need a couple of person objects at least. Each person will also need to know their own location.
+
+(Show a napkin drawing of a Person class with a location property).
+
+Cucumber is telling us to write the code we wish we had. Let’s do it!
+
+We’ll start by renaming the arg1 parameter to something that better reflects its meaning. We’ll call it distance.
+
+To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.
+
+Notice that the number 15 does not appear anywhere in our code. The value 15 is automatically passed from the gherkin step to the step definition. If you are curious, that’s the backslash-d in the pattern. We’ll explain regular expressions in detail in a future lesson.

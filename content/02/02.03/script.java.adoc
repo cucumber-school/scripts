@@ -1,0 +1,150 @@
+The easiest way to get started with Cucumber for Java is to use a template
+project with a build script that sets everything up correctly.
+
+shot::[1]
+You can download this template project from GitHub. Open your web browser and go
+to the “Cucumber Java Skeleton” project on GitHub.
+
+If you’re comfortable with Git you can just clone the project. 
+
+If you’re new to Git, don’t worry, we’ll download a zip file instead. Click
+Releases,shot::[2] then download the most recent zip file that starts with a “v”.shot::[3]
+
+// If you’re on Windows, click the zip file to download it. If you’re on “OS ten”
+// or Linux, just copy the link and download it with “wget”.
+
+shot::[4]
+On Windows, extract the zip file by double clicking on it. -Or if you’re on OS
+ten or Linux, extract it with the unzip command.
+
+shot::[5]
+After extracting the zip file, we’ll rename the directory to “shouty”.
+
+shot::[6]
+In your shell, cd into the shouty directory.
+
+shot::[7]
+The template project contains Maven and Ant build scripts that makes it easier
+to get started with Cucumber for Java.
+
+We’ll be using Maven, so if you haven’t installed that already, now is a good time to do that.
+
+shot::[8]
+Let’s take a look at what else is in this project. 
+
+[source,bash]
+----
+$ tree
+.
+├── build.gradle
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── LICENCE
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── README.md
+└── src
+    ├── main
+    │   └── java
+    │       └── io
+    │           └── cucumber
+    │               └── skeleton
+    │                   └── Belly.java
+    └── test
+        ├── java
+        │   └── io
+        │       └── cucumber
+        │           └── skeleton
+        │               ├── RunCucumberTest.java
+        │               └── StepDefinitions.java
+        └── resources
+            └── io
+                └── cucumber
+                    └── skeleton
+                        └── belly.feature
+
+17 directories, 14 files
+----
+
+There is a main directory for our application code,shot::[9] and a test directory for our test code.shot::[10]
+Let’s remove some of the files that come with the project.
+
+Remove `Belly.java`,shot::[11] `StepDefinitions.java` shot::[12] and `belly.feature`.shot::[13]
+
+[source,bash]
+----
+$ rm src/main/java/io/cucumber/skeleton/Belly.java
+$ rm src/test/java/io/cucumber/skeleton/StepDefinitions.java
+$ rm src/test/resources/io/cucumber/skeleton/belly.feature
+----
+
+shot::[14]
+Now we have a bare bones project. We’ll be building it from the ground up so you can see what is going on.
+
+[source,bash]
+----
+$ tree
+.
+├── build.gradle
+├── gradle
+│   └── wrapper
+│       ├── gradle-wrapper.jar
+│       └── gradle-wrapper.properties
+├── gradlew
+├── gradlew.bat
+├── LICENCE
+├── mvnw
+├── mvnw.cmd
+├── pom.xml
+├── README.md
+└── src
+    ├── main
+    │   └── java
+    │       └── io
+    │           └── cucumber
+    │               └── skeleton
+    └── test
+        ├── java
+        │   └── io
+        │       └── cucumber
+        │           └── skeleton
+        │               └── RunCucumberTest.java
+        └── resources
+            └── io
+                └── cucumber
+                    └── skeleton
+
+17 directories, 11 files
+----
+
+Before we open the project in our IDE we are going to modify the name of the
+application.
+
+shot::[15]
+Open pom.xml and change the group ID,shot::[16] artifact ID shot::[17] and name. shot::[18]
+
+We are ready to start coding! We are going to use IntelliJ IDEA Community
+Edition because it has really nice Cucumber integration built-in.shot::[19] If you prefer
+to use a different IDE such as Eclipse, that is fine too.
+
+// To open the project in InteliJ, just open the pom.xml file.
+
+// Before we create any files, let’s rename the package from skeleton to shouty. In
+// InteliJ you can rename it via the Refactor menu.
+
+Now we’re ready to create our first feature file.
+
+
+shot::[21]
+[source,ruby]
+----
+$ bundle exec cucumber
+0 scenarios
+0 steps
+0m0.000s
+----
