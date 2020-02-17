@@ -1,16 +1,19 @@
+include::./title.adoc[]
+
 Let's create our first feature file. Call the file `hear_shout.feature` shot::[1]
 
-// The first file we are going to create is a feature file where we will write our
-// first scenario.  Create a file called shout.feature in the shouty directory
-// under resources.
-
 shot::[2]
-All feature files start with the keyword `Feature:`
+The first file we are going to create is a feature file where we will write our
+first scenario. Create a file called `hear_shout.feature` in the `shouty` directory
+under `resources`.
+
 shot::[3]
+All feature files start with the keyword `Feature:`
+shot::[4]
 followed by a name.
 It’s a good convention to give it a name that matches the file name.
 
-shot::[4]
+shot::[5]
 Now let’s write out our first scenario.
 
 .hear_shout.feature
@@ -25,6 +28,7 @@ Feature: Hear shout
 
 Now that we have a scenario it’s time to run it!
 
+shot::[6]
 Switch back to the command prompt and run:
 
 [source,bash]
@@ -32,16 +36,79 @@ Switch back to the command prompt and run:
 $ mvn clean test
 ----
 
-shot::[5]
+shot::[7]
 Maven will now download Cucumber, compile your code and tell Cucumber to run your feature file.
 
-You’ll see that Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps,shot::[6] one scenario shot::[7] - all undefined.shot::[8]
+You’ll see that Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps,shot::[8] one scenario shot::[9] - all undefined.shot::[10]
 
-Let’s run the scenario again from inside InteliJ.shot::[9]
-Select the feature file shot::[10] and choose Run from the context menu.shot::[11]
-This will give you similar output.shot::[12]
+Let’s run the scenario again from inside InteliJ.shot::[11]
+Select the feature file shot::[12] and choose Run from the context menu.shot::[13]
+This will give you similar output.shot::[14]
 
-shot::[13]
+[source,bash]
+----
+$ mvn clean test
+Step undefined
+You can implement missing steps with the snippets below:
+@Given("Lucy is {int} metres from Sean")
+public void lucy_is_metres_from_Sean(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Step undefined
+You can implement missing steps with the snippets below:
+@When("Sean shouts {string}")
+public void sean_shouts(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Step undefined
+You can implement missing steps with the snippets below:
+@Then("Lucy should hear Sean's message")
+public void lucy_should_hear_Sean_s_message() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Undefined scenarios:
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 undefined)
+3 Steps (3 undefined)
+0m0.418s
+
+
+You can implement missing steps with the snippets below:
+
+@Given("Lucy is {int} metres from Sean")
+public void lucy_is_metres_from_Sean(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@When("Sean shouts {string}")
+public void sean_shouts(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@Then("Lucy should hear Sean's message")
+public void lucy_should_hear_Sean_s_message() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+
+Process finished with exit code 0
+----
+
+shot::[15]
 _Undefined_ means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario.
 It needs us to provide some _step definitions_.
 
@@ -55,30 +122,125 @@ If it doesn’t find one… well, you’ve just seen what happens. Cucumber help
 
 We’ll create a new class in the shouty package where we’ll paste those snippets. Make sure you create it under test and not main.
 
-[ pastes in snippets ]
+[source,java]
+----
+package shouty;
 
-Now InteliJ is complaining that there are some unknown symbols. We need to add some import statements! Pressing ALT-ENTER will do that for us.
+public class StepDefinitions {
+    @Given("Lucy is {int} metres from Sean")
+    public void lucy_is_metres_from_Sean(Integer int1) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
 
+
+    Step undefined
+    You can implement missing steps with the snippets below:
+    @When("Sean shouts {string}")
+    public void sean_shouts(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+
+    Step undefined
+    You can implement missing steps with the snippets below:
+    @Then("Lucy should hear Sean's message")
+    public void lucy_should_hear_Sean_s_message() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+}
+----
+
+shot::[16]
+Now InteliJ is complaining that there are some unknown symbols. We need to add
+some import statements! Pressing ALT-ENTER will do that for us.
+
+shot::[17]
 Let’s return to the scenario and run it again.
 
-[ runs scenario ]
+// TODO: Add empty run
 
+shot::[18]
+// Menu -> Run -> Edit Configurations -> Feature or folder path: -> /home/fedex/code/shouty-java/src/test/resources/shouty/
 There is a small bug in InteliJ’s Cucumber integration. Sometimes it doesn’t tell Cucumber where to find step definitions. This is easy to work around. Just edit the run configuration and make sure the Glue field contains the value of your package.
 
+shot::[19]
 Now we can run it again.
 
-[ runs scenario ]
+This time the output is a little different.
 
-This time the output is a little different. We now have a pending step and two skipped ones. This means Cucumber found all our step definitions, and executed the first one. But that first step definition throws a PendingException, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
+We now have a pending step shot::[20] and two skipped ones.shot::[21]
 
-It’s time to start work on our solution. At this point we need to do a little domain modelling. The words in the step provide us some good hints about some names that will appear in our domain model. Our scenario mentions two people, Lucy and Sean. So it looks like we need a couple of person objects at least. Each person will also need to know their own location.
+This means Cucumber found all our step definitions, and executed the
+first one. But that first step definition throws a `PendingException`,shot::[22] which
+causes Cucumber to stop, skip the rest of the steps, and mark the scenario as
+pending.
 
-(Show a napkin drawing of a Person class with a location property).
+[source,bash]
+----
+TODO: implement me
 
-Cucumber is telling us to write the code we wish we had. Let’s do it!
+Step skipped
 
-We’ll start by renaming the arg1 parameter to something that better reflects its meaning. We’ll call it distance.
+Step skipped
 
-To keep things simple we’re going to assume all people are situated on a line - in a one-dimensional coordinate system. We can always introduce proper geo locations later. We’ll place sean in the centre and lucy 15 metres away from sean.
+Pending scenarios:
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
 
-Notice that the number 15 does not appear anywhere in our code. The value 15 is automatically passed from the gherkin step to the step definition. If you are curious, that’s the backslash-d in the pattern. We’ll explain regular expressions in detail in a future lesson.
+1 Scenarios (1 pending)
+3 Steps (2 skipped, 1 pending)
+0m0.403s
+
+
+io.cucumber.java.PendingException: TODO: implement me
+	at shouty.StepDefinitions.lucy_is_metres_from_Sean(StepDefinitions.java:11)
+	at ✽.Lucy is 15 metres from Sean(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:4)
+
+
+
+Process finished with exit code 0
+----
+
+Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
+
+shot::[23]
+We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
+
+shot::[24]
+We can print it to the terminal to see what's happening.
+
+[source,java]
+----
+    @Given("Lucy is {int} metres from Sean")
+    public void lucy_is_metres_from_Sean(Integer distance) {
+        System.out.println(distance);
+        throw new io.cucumber.java.PendingException();
+    }
+
+----
+
+If we run it again, shot::[25] we can see the number 15 pop up in the output. shot::[26]
+
+[source,bash]
+----
+15
+
+TODO: implement me
+
+Step skipped
+
+Step skipped
+
+Pending scenarios:
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 pending)
+3 Steps (2 skipped, 1 pending)
+0m0.417s
+
+# ...
+----
+
+Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[23]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.

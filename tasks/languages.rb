@@ -1,6 +1,7 @@
 LANGUAGES = {
-  ruby: "Ruby",
-  js:   "JavaScript"
+  ruby:   "Ruby",
+  js:     "JavaScript",
+  java:   "Java",
 }
 
 task :list do
