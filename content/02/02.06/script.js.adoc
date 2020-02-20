@@ -2,32 +2,43 @@ include::./title.adoc[]
 
 audio::02.06.audio.mp3[]
 
-So we have our failing scenario:
+So we have our failing scenario: shot::[1]
 
 [source,bash]
 ----
 $ npm test
 
-> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
-> cucumber-js
+> shouty@1.0.0 test /home/fedex/code/shouty
+> cucumber-js -f node_modules/cucumber-pretty
 
-..F
+Feature: Hear shout
+
+  Scenario: Listener is within range
+    Given Lucy is located 15m from Sean
+    When Sean shouts "free bagels at Sean's"
+    Then Lucy hears Sean’s message
+    ✖ failed
+      AssertionError: 
+      Expected: is ["free bagels at Sean's"]
+           but: was []
+          + expected - actual
+      
+          -[]
+          +[
+          +  "free bagels at Sean's"
+          +]
+      
+          at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:19:3)
 
 Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:25
-   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:31
-   ✖ Then Lucy hears Sean’s message # features/step_definitions/steps.js:36
-       AssertionError [ERR_ASSERTION]: Expected values to be loosely deep-equal:
-
-       []
-
-       should loosely deep-equal
-
-       [
-         "free bagels at Sean's"
-       ]
+   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:7
+   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:13
+   ✖ Then Lucy hears Sean’s message # features/step_definitions/steps.js:18
+       AssertionError: 
+       Expected: is ["free bagels at Sean's"]
+            but: was []
            + expected - actual
 
            -[]
@@ -35,17 +46,17 @@ Failures:
            +  "free bagels at Sean's"
            +]
        
-           at World.<anonymous> (/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:37:10)
+           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:19:3)
 
 1 scenario (1 failed)
 3 steps (1 failed, 2 passed)
-0m00.003s
+0m00.002s
 npm ERR! Test failed.  See above for more details.
 ----
 
 Lucy is expected to hear Sean's message, but she hasn't heard anything: we got an empty Array back from the `messagesHeard` method.
 
-shot::[1]
+shot::[2]
 In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?
 
 [source,js]
@@ -67,19 +78,24 @@ class Person {
 
 I told you it wasn’t very future proof!
 
-shot::[2]
+shot::[3]
 [source,bash]
 ----
 $ npm test
 
-> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
-> cucumber-js
+> shouty@1.0.0 test /home/fedex/code/shouty
+> cucumber-js -f node_modules/cucumber-pretty
 
-...
+Feature: Hear shout
+
+  Scenario: Listener is within range
+    Given Lucy is located 15m from Sean
+    When Sean shouts "free bagels at Sean's"
+    Then Lucy hears Sean’s message
 
 1 scenario (1 passed)
 3 steps (3 passed)
-0m00.001s
+0m00.002s
 ----
 
 Woohoo! Our scenario is passing for the first time. As long as this is the only message anyone ever shouts, we're good to ship this thing!
@@ -90,7 +106,7 @@ It's also a good habit to look for the most simple solution. We can trust that, 
 
 This is the essence of Behaviour-Driven Development. Examples of behaviour drive the development. We do just enough to make the next scenario pass, and no more.
 
-shot::[3]
+shot::[4]
 Instead of writing a note on our TODO list, let's write another scenario that shouts a different message. 
 
 [source,gherkin]
@@ -107,7 +123,7 @@ Feature: Hear shout
     Then Lucy hears Sean's message
 ----
 
-shot::[4]
+shot::[5]
 It fails, reminding us we need to find a solution that doesn't rely on hard-coding the message.
 Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We’re done for today!
 
@@ -115,10 +131,23 @@ Now when we come back to this code, we can just run the tests and Cucumber will 
 ----
 $ npm test
 
-> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
-> cucumber-js
+> shouty@1.0.0 test /home/fedex/code/shouty
+> cucumber-js -f node_modules/cucumber-pretty
 
-...U-U
+Feature: Hear shout
+
+  Scenario: Listener is within range
+    Given Lucy is located 15m from Sean
+    When Sean shouts "free bagels at Sean's"
+    Then Lucy hears Sean’s message
+
+  Scenario: Listener hears a different message
+    Given Lucy is 15m from Sean
+    ? undefined
+    When Sean shouts "Free coffee!"
+    - skipped
+    Then Lucy hears Sean's message
+    ? undefined
 
 Warnings:
 
@@ -131,7 +160,7 @@ Warnings:
            return 'pending';
          });
 
-   - When Sean shouts "Free coffee!" # features/step_definitions/steps.js:31
+   - When Sean shouts "Free coffee!" # features/step_definitions/steps.js:13
    ? Then Lucy hears Sean's message
        Undefined. Implement with the following snippet:
 

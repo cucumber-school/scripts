@@ -1,0 +1,160 @@
+include::./title.adoc[]
+
+audio::02.06.audio.mp3[]
+
+So we have our failing scenario: shot::[1]
+
+[source,bash]
+----
+Step failed
+java.lang.AssertionError: expected:<[null]> but was:<null>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:27)
+	at ✽.Lucy should hear Sean's message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+
+
+Failed scenarios:
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 failed)
+3 Steps (1 failed, 2 passed)
+0m0.431s
+
+
+java.lang.AssertionError: expected:<[null]> but was:<null>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:27)
+	at ✽.Lucy should hear Sean's message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+
+
+
+Process finished with exit code 1
+----
+
+Lucy is expected to hear Sean's message, but she hasn't heard anything: we got an empty Array back from the `messages_heard` method.shot::[2]
+
+shot::[3]
+In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?shot::[4]
+
+[source,java]
+----
+package shouty;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Person {
+
+    public void moveTo(Integer distance) {
+
+    }
+
+    public void shout(String message) {
+
+    }
+
+    public List<String> getMessagesHeard() {
+        List<String> result = new ArrayList<String>();
+        result.add("free bagels at Sean's");
+        return result;
+    }
+}
+----
+
+I told you it wasn’t very future proof!
+
+shot::[5]
+[source,bash]
+----
+1 Scenarios (1 passed)
+3 Steps (3 passed)
+0m0.366s
+
+
+
+Process finished with exit code 0
+----
+
+Woohoo! Our scenario is passing for the first time. As long as this is the only message anyone ever shouts, we're good to ship this thing!
+
+Now, the fact that such a poor implementation can pass our tests shows us that we need to work on our tests. A more comprehensive set of scenarios would guide us towards a better implementation.
+
+It's also a good habit to look for the most simple solution. We can trust that, as our scenarios evolve, so will our solution.
+
+This is the essence of Behaviour-Driven Development. Examples of behaviour drive the development. We do just enough to make the next scenario pass, and no more.
+
+Instead of writing a note on our TODO list, let's write another scenario that shouts a different message. shot::[6]
+
+[source,gherkin]
+----
+Feature: Hear shout
+  Scenario: Listener is within range
+    Given Lucy is located 15m from Sean
+    When Sean shouts "free bagels at Sean's"
+    Then Lucy hears Sean’s message
+
+  Scenario: Listener hears a different message
+    Given Lucy is located 15m from Sean
+    When Sean shouts "Free coffee!"
+    Then Lucy hears Sean's message
+----
+
+It fails, reminding us we need to find a solution that doesn't rely on hard-coding the message. shot::[7]
+Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We're done for today!
+
+[source,bash]
+----
+Step undefined
+You can implement missing steps with the snippets below:
+@Given("Lucy is located 15m from Sean")
+public void lucy_is_located_15m_from_Sean() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Step skipped
+
+Step undefined
+You can implement missing steps with the snippets below:
+@Then("Lucy hears Sean's message")
+public void lucy_hears_Sean_s_message() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Undefined scenarios:
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:8# Listener hears a different message
+
+2 Scenarios (1 undefined, 1 passed)
+6 Steps (1 skipped, 2 undefined, 3 passed)
+0m0.711s
+
+
+You can implement missing steps with the snippets below:
+
+@Given("Lucy is located 15m from Sean")
+public void lucy_is_located_15m_from_Sean() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@Then("Lucy hears Sean's message")
+public void lucy_hears_Sean_s_message() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+
+Process finished with exit code 0
+----
+
+Of course, if you're in the mood, you can always try to implement a solution yourself that makes both scenarios pass. Have fun!

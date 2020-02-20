@@ -1,0 +1,287 @@
+include::./title.adoc[]
+
+audio::02.05.ruby.audio.mp3[]
+
+shot::[1]
+Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to _guide_ our development, so we'll start designing the objects we'll need by sketching out some code in our step definitions.
+
+The scenario will be failing while we do this, but we should see the error messages gradually progressing as we drive out the interface to our object model.
+
+Our next goal is for the scenario to fail because we need to implement the actual business logic. _Then_ we can work on changing the business logic inside our objects to make it pass.
+
+.StepDefinitions.java
+[source,java]
+----
+public class StepDefinitions {
+    @Given("Lucy is {int} metres from Sean")
+    public void lucy_is_metres_from_Sean(Integer distance) {
+        System.out.println(distance);
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @When("Sean shouts {string}")
+    public void sean_shouts(String string) {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @Then("Lucy should hear Sean's message")
+    public void lucy_should_hear_Sean_s_message() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+}
+----
+
+To implement the first step, we need to create a couple of `Person` objects, one for Lucy shot::[2] and one for Sean.shot::[3]
+
+[source,java]
+----
+public class StepDefinitions {
+    Person lucy = new Person();
+    Person sean = new Person();
+
+    // ...
+}
+----
+
+
+Then we create the `Person` class to remove the errors.shot::[4]
+
+[source,java]
+----
+package shouty;
+
+public class Person {
+}
+----
+
+And specify the distance between them.
+
+
+We can remove the `pending` status now, and this print statement,shot::[5] and write the implementation for the first step like this:
+
+[source,java]
+----
+public class StepDefinitions {
+    Person lucy = new Person();
+    Person sean = new Person();
+
+    @Given("Lucy is {int} metres from Sean")
+    public void lucy_is_metres_from_Sean(Integer distance) {
+        lucy.moveTo(distance);
+    }
+
+    // ...
+}
+----
+
+And create the `moveTo` method in the `Person` class. shot::[6]
+
+[source,java]
+----
+package shouty;
+
+public class Person {
+    public void moveTo(Integer distance) {
+        
+    }
+}
+----
+
+We have two instances of person, one representing Lucy, shot::[7]and one representing Sean. shot::[8]Then we call a method to move Lucy to the position specified in the scenario.shot::[9]
+
+video::02.05.animation.mp4[]
+
+shot::[10]
+When we run the scenario, the first step is green!
+
+[source,bash]
+----
+TODO: implement me
+
+Step skipped
+
+Pending scenarios:
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 pending)
+3 Steps (1 skipped, 1 pending, 1 passed)
+0m0.337s
+
+
+io.cucumber.java.PendingException: TODO: implement me
+	at shouty.StepDefinitions.sean_shouts(StepDefinitions.java:19)
+	at ✽.Sean shouts "free bagels at Sean's"(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:5)
+
+
+
+Process finished with exit code 0
+----
+
+We're making progress!
+
+We'll keep working like this until we see the scenario failing for the right reasons.
+
+In the second step definition, we want to tell Sean to shout something.
+
+shot::[11]
+In order to send instructions to Sean from the second step, we've stored him in an _instance variable_, so that he’ll be accessible from all of our step definitions.
+
+shot::[12]
+In the `When` step, we're capturing Sean's message using the `{string}` pattern, so let's give that argument a more meaningful name.shot::[13]
+
+shot::[14]
+And now we can now tell him to _shout_ the message:
+
+[source,java]
+----
+public class StepDefinitions {
+    Person lucy = new Person();
+    Person sean = new Person();
+
+    // ...
+
+    @When("Sean shouts {string}")
+    public void sean_shouts(String message) {
+        sean.shout(message);
+    }
+
+    // ...
+}
+----
+
+And we eliminate the compilation error by implementing the `shout` message in the `Person` class.
+
+[source,java]
+----
+package shouty;
+
+public class Person {
+
+    public void moveTo(Integer distance) {
+
+    }
+
+    public void shout(String message) {
+        
+    }
+}
+----
+
+When we run the scenarion again, now the second step is green!. shot::[15]
+
+[source,bash]
+----
+TODO: implement me
+
+Pending scenarios:
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 pending)
+3 Steps (1 pending, 2 passed)
+0m0.465s
+
+
+io.cucumber.java.PendingException: TODO: implement me
+	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:25)
+	at ✽.Lucy should hear Sean's message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+
+
+
+Process finished with exit code 0
+----
+
+shot::[16]
+The last step definition is where we implement a check, or assertion. We'll verify that what Lucy has heard is exactly the same as what Sean shouted.
+
+shot::[17]
+Once again we're going to write the code we wish we had.
+
+[source,java]
+----
+@Then("Lucy should hear Sean's message")
+public void lucy_should_hear_Sean_s_message() {
+    assertEquals(asList(messageFromSean), lucy.getMessagesHeard());
+}
+----
+
+In order for this to be able to compile, we need to import the `assertEquals` static method from `JUnit` shot::[18]  and the `Array.asList` method. shot::[19]
+
+So we need a way to ask Lucy what messages she's heard, and we also need to know what it was that Sean shouted.
+
+We can record what Sean shouts by storing it in an instance variable as the `When` step runs, shot::[21] and import it.shot::[22] This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. shot::[23]
+
+[source,java]
+----
+@When("Sean shouts {string}")
+public void sean_shouts(String message) {
+    sean.shout(message);
+    messageFromSean = message;
+ }
+----
+
+We also need to add a `messagesHeard` method to our Person class.shot::[24] Let's do that now, we'll just return an empty array for now.shot::[25]
+
+[source,java]
+----
+package shouty;
+
+import java.util.List;
+
+public class Person {
+
+    public void moveTo(Integer distance) {
+
+    }
+
+    public void shout(String message) {
+
+    }
+
+    public List<String> getMessagesHeard() {
+        return null;
+    }
+}
+----
+
+...and watch Cucumber run the tests again.shot::[26]
+
+[source,bash]
+----
+Step failed
+java.lang.AssertionError: expected:<[null]> but was:<null>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:27)
+	at ✽.Lucy should hear Sean's message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+
+
+Failed scenarios:
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 failed)
+3 Steps (1 failed, 2 passed)
+0m0.431s
+
+
+java.lang.AssertionError: expected:<[null]> but was:<null>
+	at org.junit.Assert.fail(Assert.java:89)
+	at org.junit.Assert.failNotEquals(Assert.java:835)
+	at org.junit.Assert.assertEquals(Assert.java:120)
+	at org.junit.Assert.assertEquals(Assert.java:146)
+	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:27)
+	at ✽.Lucy should hear Sean's message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+
+
+
+Process finished with exit code 1
+----
+
+This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code!
+
+Never trust an automated test that you haven’t seen fail!
+
+Now all we have to do is write the code to make it do what it's supposed to.
