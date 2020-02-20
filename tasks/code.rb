@@ -1,42 +1,58 @@
 require 'tmpdir'
 require_relative './languages'
+require 'awesome_print'
 
 pwd = Dir.pwd
 
 task :code do
   puts "Unrolling code branches..."
   Dir.chdir(Dir.tmpdir) do
-    `rm -rf code`
     `git clone --quiet #{pwd} code`
     Dir.chdir("code") do
       `git fetch origin`
       `git config advice.detachedHead false`
       chapters(pwd).each do |chapter|
-        `rm -rf #{chapter.dir}/code`
-        `mkdir #{chapter.dir}/code`
+        `mkdir -p #{chapter.dir}/code`
+
+        puts
+        puts "Chapter #{chapter.num}"
+        puts 
         language_codes.each do |lang|
           branch = chapter.code_branch(lang)
           cmd = "git ls-remote --exit-code origin #{branch}"
           unless system(cmd)
             puts "No code branch #{branch.red}"
           else
-            puts "Unrolling code branch #{branch.yellow}"
+            puts "Preparing to unroll code branch #{branch.yellow}"
             dir = "#{chapter.dir}/code/#{lang}"
-            `rm -rf #{dir}`
             `mkdir -p #{dir}`
             `git reset --hard origin/#{branch}`
             `git checkout -b #{branch}`
-            commits = `git rev-list #{branch}`.split.reverse
-            puts "Found #{commits.count} commits on #{branch}"
-            commits.each_with_index do |commit, i|
-              puts "Fetching code for commit #{commit}"
-              commit_message = `git show -s --format=%s #{commit}`.split("\n").first
-              dir = "#{chapter.dir}/code/#{lang}/%02d-#{commit_message.downcase.gsub(/\W+/, "-")}" % i
-              `mkdir #{dir}`
-              `git checkout #{commit}`
-              `git clean -fd`
-              `cp -R . #{dir}`
-              `rm -rf #{dir}/.git`
+            commits_raw = `git rev-list #{branch}`
+            commits_cache = "#{dir}/.commits"
+            existing_commits = File.exists?(commits_cache) && File.read(commits_cache)
+            if existing_commits
+              puts "Existing commits cached"
+            else
+              puts "No existing commits cached at #{commits_cache}"
+            end
+            if existing_commits == commits_raw
+              puts "Current branch commits match existing ones. Skipping."
+            else
+              `rm -rf #{dir}/*`
+              commits = commits_raw.split.reverse
+              puts "Found #{commits.count} commits on #{branch}"
+              commits.each_with_index do |commit, i|
+                puts "Fetching code for commit #{commit}"
+                commit_message = `git show -s --format=%s #{commit}`.split("\n").first
+                dir = "#{chapter.dir}/code/#{lang}/%02d-#{commit_message.downcase.gsub(/\W+/, "-")}" % i
+                `mkdir #{dir}`
+                `git checkout #{commit}`
+                `git clean -fd`
+                `cp -R . #{dir}`
+                `rm -rf #{dir}/.git`
+              end
+              File.open(commits_cache, "w") { |stream| stream << commits_raw }
             end
           end
         end
