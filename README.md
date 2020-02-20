@@ -1,6 +1,6 @@
-# Fundamentals of BDD
+# BDD with Cucumber - Video Scripts
 
-This repo contains the scripts and other artefacts used to generate the Fundamentals of BDD Courses for Java, Ruby annd JavaScript hosted at https://school.cucumber.io
+This repo contains the scripts and other artefacts used to generate the *BDD with Cucumber* Courses for Java, Ruby annd JavaScript hosted at https://school.cucumber.io
 
 ## License
 
