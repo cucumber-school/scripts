@@ -17,11 +17,23 @@ jobs:
       uses: actions/setup-ruby@v1
       with:
         ruby-version: 2.6.x
-    - name: Build asciidoc
+    - name: Install Ruby Gems
       run: |
         gem install bundler
         bundle install --jobs 4 --retry 3
-        shots=1 bundle exec rake
+    - name: Check unrolled code is up to date
+      run: |
+        bundle exec rake code
+        if [ -z "$(git status --porcelain)" ]; then 
+          # Working directory clean
+        else 
+          >&2 echo "One or more code branches are not in sync with unrolled commits."
+          git status
+          >&2 echo "Either you need to run `rake code` and commit the changes, or you've forgotten to push a code branch"
+        fi
+    - name: Generate HTML pages using asciidoc
+      run: 
+      shots=1 bundle exec rake html
     - name: Create GH Pages
       uses: peaceiris/actions-gh-pages@v2
       env:
