@@ -66,7 +66,7 @@ namespace :code do
   end
 
   task :clean do
-    Dir.glob('content/**/.commits').each { |file| FileUtils.rm_rf file }
+    Dir.glob('content/**/code').each { |file| FileUtils.rm_rf file }
   end
 end
 
