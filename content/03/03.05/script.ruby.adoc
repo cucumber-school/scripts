@@ -28,7 +28,7 @@ We use the `ParameterType` DSL method from Cucumber to define our new parameter 
 
 We need to give it a `name` which is the name we'll use inside the curly brackets in our step definition expressions. shot::[]
 
-We also need to define -- gasp! -- a regular expression. shot::[] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video.
+We also need to define -- gasp! -- a regular expression. shot::[] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario.
 
 Finally, there's a transformer block, shot::[] which takes the text captured from the Gherkin step that matched the regular expression pattern, then runs some code. The return value of this block is what will be passed to the step definition. In this case, we're passed the name of the person, though we don't use it at the moment when constructing a `Person`.
 
