@@ -2,10 +2,12 @@ require 'shouty'
 
 Given("{person} is located/standing {int} metre(s) from Sean") do |person, distance|
   person.move_to(distance)
+  @lucy = person
 end
 
 When("Sean shouts {string}") do |message|
-  @sean.shout(message)
+  sean = Shouty::Person.new('Sean')
+  sean.shout(message)
   @message_from_sean = message
 end
 
