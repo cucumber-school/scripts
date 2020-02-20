@@ -7,7 +7,7 @@ pwd = Dir.pwd
 task :code do
   puts "Unrolling code branches..."
   Dir.chdir(Dir.tmpdir) do
-    `git clone --quiet #{pwd} code`
+    `git clone --quiet #{pwd} code` unless Dir.exists?('code') && Dir.exists?('code/.git')
     Dir.chdir("code") do
       `git fetch origin`
       `git config advice.detachedHead false`
@@ -16,23 +16,25 @@ task :code do
 
         puts
         puts "Chapter #{chapter.num}"
+        puts "=========="
         puts 
         language_codes.each do |lang|
           branch = chapter.code_branch(lang)
-          cmd = "git ls-remote --exit-code origin #{branch}"
+          cmd = "git ls-remote --exit-code origin #{branch} > /dev/null"
           unless system(cmd)
-            puts "No code branch #{branch.red}"
+            puts "#{branch.red} \t- No branch exists. Skipping."
           else
-            puts "Preparing to unroll code branch #{branch.yellow}"
+            puts "#{branch.red} \t- Branch exists. Preparing to unroll commits..."
             dir = "#{chapter.dir}/code/#{lang}"
             `mkdir -p #{dir}`
             `git reset --hard origin/#{branch}`
-            `git checkout -b #{branch}`
+            `git branch -D #{branch}`
+            `git checkout -b #{branch} &> /dev/null`
             commits_raw = `git rev-list #{branch}`
             commits_cache = "#{dir}/.commits"
             existing_commits = File.exists?(commits_cache) && File.read(commits_cache)
             if existing_commits
-              puts "Existing commits cached"
+              print "Existing commits cached. "
             else
               puts "No existing commits cached at #{commits_cache}"
             end
