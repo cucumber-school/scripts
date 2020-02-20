@@ -1,0 +1,93 @@
+include::./title.adoc[]
+
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:
+
+[source, gherkin]
+----
+include::../code/ruby/05-use-singular-metre/features/hear_shout.feature[lines=3..3]
+----
+
+Because we’ve used the singular `metre` instead of the plural `metres` we don't get a match:
+
+[source]
+----
+$ bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 1 metre from Sean  # features/hear_shout.feature:3
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:8
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:13
+
+1 scenario (1 undefined)
+3 steps (2 skipped, 1 undefined)
+0m0.017s
+
+You can implement step definitions for undefined steps with these snippets:
+
+Given("Lucy is located {int} metre from Sean") do |int|
+  pending # Write code here that turns the phrase above into concrete actions
+end
+----
+
+What a pain!
+
+Fear not. We can just surround the `s` in parentheses to make it optional, like this:
+
+[source, ruby]
+----
+include::../code/ruby/06-allow-for-singular-or-plural-metres/features/step_definitions/steps.rb[lines=3..3]
+----
+
+Now our step matches:
+
+[source]
+----
+$ bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is located 1 metre from Sean  # features/step_definitions/steps.rb:3
+      Lucy is 100 centimetres from Sean (Cucumber::Pending)
+      ./features/step_definitions/steps.rb:5:in `"Lucy is located {int} metre(s) from Sean"'
+      features/hear_shout.feature:3:in `Given Lucy is located 1 metre from Sean'
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:8
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:13
+
+1 scenario (1 pending)
+3 steps (2 skipped, 1 pending)
+----
+
+This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.
+
+Another is to allow _alternates_ - different ways of saying the same thing. For example, to accept this step:
+
+[source, gherkin]
+----
+include::../code/ruby/07-allow-standing-or-located-as-alternates/features/hear_shout.feature[lines=3..3]
+----
+
+...we can use this Cucumber Expression:
+[source, ruby]
+----
+include::../code/ruby/07-allow-standing-or-located-as-alternates/features/step_definitions/steps.rb[lines=3..3]
+----
+
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine:
+
+[source]
+----
+$ bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is standing 1 metre from Sean # features/step_definitions/steps.rb:3
+      Lucy is 100 centimetres from Sean (Cucumber::Pending)
+      ./features/step_definitions/steps.rb:5:in `"Lucy is located/standing {int} metre(s) from Sean"'
+      features/hear_shout.feature:3:in `Given Lucy is standing 1 metre from Sean'
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:8
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:13
+
+1 scenario (1 pending)
+3 steps (2 skipped, 1 pending)
+----
