@@ -1,3 +1,5 @@
+[![Build Status](https://github.com/cucumber-school/bdd-with-cucumber/workflows/html/badge.svg)](https://github.com/cucumber-school/bdd-with-cucumber/actions)
+
 # BDD with Cucumber - Video Scripts
 
 This repo contains the scripts and other artefacts used to generate the *BDD with Cucumber* Courses for Java, Ruby annd JavaScript hosted at https://school.cucumber.io
