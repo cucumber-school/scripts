@@ -12,7 +12,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Set up Ruby 2.6
       uses: actions/setup-ruby@v1
       with:
@@ -24,8 +26,8 @@ jobs:
     - name: Check unrolled code is up to date
       run: |
         bundle exec rake code
-        if [ -z "$(git status --porcelain)" ]; then 
-          # Working directory clean
+        if [ -z "$(git status --porcelain)" ]; then
+          echo "Unrolled code is in sync with code branches"
         else 
           >&2 echo "One or more code branches are not in sync with unrolled commits."
           git status
