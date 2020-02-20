@@ -4,7 +4,7 @@ Sometimes, we want to write step defintions that allow us to use different value
 
 .hear_shout.feature
 [source,gherkin]
-include::../code/ruby/03-capture-int-parameter/features/hear_shout.feature[]
+include::../code/ruby/04-capture-int-parameter/features/hear_shout.feature[]
 
 To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called _parameters_.
 
@@ -13,7 +13,7 @@ For example, to capture the number of metres, we can use the `{int}` parameter: 
 .steps.rb
 [source,ruby]
 ----
-include::../code/ruby/03-capture-int-parameter/features/step_definitions/steps.rb[lines=3..3]
+include::../code/ruby/04-capture-int-parameter/features/step_definitions/steps.rb[lines=3..3]
 ----
 
 Now we’re capturing that value as an argument. The value `1000` will be passed to our code automatically by Cucumber.
@@ -23,7 +23,7 @@ Because we've used Cucumber Expressions' built-in `{int}` parameter type, the va
 .steps.rb
 [source,ruby]
 ----
-include::../code/ruby/03-capture-int-parameter/features/step_definitions/steps.rb[lines=3..6]
+include::../code/ruby/04-capture-int-parameter/features/step_definitions/steps.rb[lines=3..6]
 ----
 
 Cucumber has a bunch of built-in parameter types: `{int}`, `{float}`, `{word}` and `{string}`. You can also define your own, as we'll see later.

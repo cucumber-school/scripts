@@ -1,10 +1,10 @@
 include::./title.adoc[]
 
-We can start with the step definition, which would look like this:
+We can start with the step definition, which would look something like this:
 
 [source, ruby]
 ----
-include::../code/ruby/06-sketch-out-parameter-type/features/step_definitions/steps.rb[lines=3..6]
+include::../code/ruby/08-sketch-out-parameter-type/features/step_definitions/steps.rb[lines=3..6]
 ----
 
 If we run Cucumber at this point we'll see an error, because we haven't defined the `{person}` parameter type yet.
@@ -21,12 +21,12 @@ Let's create a new Ruby file in `features/support` called `person_parameter.rb`:
 .person_parameter.rb
 [source, ruby]
 ----
-include::../code/ruby/07-add-person-parameter/features/support/person_parameter.rb[[]
+include::../code/ruby/09-use-person-parameter-in-first-step/features/support/person_parameter.rb[[]
 ----
 
 We use the `ParameterType` DSL method from Cucumber to define our new parameter type. shot::[]
 
-We need to give it a `name` which is the name we'll use in our step definition expressions. shot::[]
+We need to give it a `name` which is the name we'll use inside the curly brackets in our step definition expressions. shot::[]
 
 We also need to define -- gasp! -- a regular expression. shot::[] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video.
 
@@ -34,9 +34,19 @@ Finally, there's a transformer block, shot::[] which takes the text captured fro
 
 All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
 
-[source, ruby]
+[source]
 ----
-include::../code/ruby/07-add-person-parameter/features/step_definitions/steps.rb[lines=3..7]
+$ bundle exec cucumber
+Feature: Hear shout
+
+  Scenario: Listener is within range         # features/hear_shout.feature:2
+    Given Lucy is standing 1 metre from Sean # features/step_definitions/steps.rb:3
+    When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.rb:8
+    Then Lucy hears Sean's message           # features/step_definitions/steps.rb:14
+
+1 scenario (1 passed)
+3 steps (3 passed)
 ----
 
 Custom parameters allow you to bring your domain _model_ - the classes and methods in your solution - and your domain _language_ - the words you use in your scenarios and step defintions - closer together.
+
