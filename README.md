@@ -42,7 +42,7 @@ You can use Guard together with a [LiveReload](http://livereload.com/) plugin fo
 
 ### Working on code storyboard branches
 
-The source code for most of the chapters is kept in on [orphan branches](https://git-scm.com/docs/git-checkout/1.7.3.1#git-checkout---orphan) named after the chapter and language, e.g. `chapter-03-code-ruby`
+The source code for most of the chapters is kept in on [orphan branches](https://git-scm.com/docs/git-checkout/1.7.3.1#git-checkout---orphan) named after the chapter and language, e.g. [`chapter-03-code-ruby`](https://github.com/cucumber-school/bdd-with-cucumber/commits/chapter-03-code-ruby)
 
 The idea is to create a storyboard for the code in the chapter in the branch, with one commit each time something happens. To create a new chapter code branch, use these commands:
 
