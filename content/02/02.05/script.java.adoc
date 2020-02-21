@@ -84,7 +84,7 @@ package shouty;
 
 public class Person {
     public void moveTo(Integer distance) {
-        
+
     }
 }
 ----
@@ -126,7 +126,7 @@ We'll keep working like this until we see the scenario failing for the right rea
 In the second step definition, we want to tell Sean to shout something.
 
 shot::[11]
-In order to send instructions to Sean from the second step, we've stored him in an _instance variable_, so that he’ll be accessible from all of our step definitions.
+In order to send instructions to Sean from the second step, we need to store him in an _instance variable_, so that he’ll be accessible from all of our step definitions. In IntelliJ we can do this by using the _Introduce Field_ refactoring.
 
 shot::[12]
 In the `When` step, we're capturing Sean's message using the `{string}` pattern, so let's give that argument a more meaningful name.shot::[13]
@@ -164,7 +164,7 @@ public class Person {
     }
 
     public void shout(String message) {
-        
+
     }
 }
 ----
