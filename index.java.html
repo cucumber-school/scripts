@@ -450,9 +450,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_discovering_bdd">1. Discovering BDD</a></li>
 <li><a href="#_your_first_scenario">2. Your first Scenario</a>
 <ul class="sectlevel2">
-<li><a href="#_add_a_scenario_wire_it_up">2.1. Add a scenario, wire it up</a></li>
-<li><a href="#_sketch_out_the_solution">2.2. Sketch out the solution</a></li>
-<li><a href="#_make_the_scenario_pass">2.3. Make the scenario pass</a></li>
+<li><a href="#_an_introduction_to_shouty">2.1. An introduction to Shouty</a></li>
+<li><a href="#_choose_the_first_scenario">2.2. Choose the first scenario</a></li>
+<li><a href="#_install_cucumber">2.3. Install Cucumber</a></li>
+<li><a href="#_add_a_scenario_wire_it_up">2.4. Add a scenario, wire it up</a></li>
+<li><a href="#_sketch_out_the_solution">2.5. Sketch out the solution</a></li>
+<li><a href="#_make_the_scenario_pass">2.6. Make the scenario pass</a></li>
 </ul>
 </li>
 <li><a href="#_expressing_yourself">3. Expressing yourself</a></li>
@@ -472,6 +475,99 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="paragraph">
 <p>The video and audio assets for this chapter are <a href="https://drive.google.com/drive/u/2/folders/1He7stdn0S-zIlNmWF-d1ISuyhfC7tMwO">here</a>.</p>
 </div>
+<div class="sect2">
+<h3 id="_an_introduction_to_shouty">2.1. An introduction to Shouty</h3>
+<div class="audioblock">
+<div class="content">
+<audio src="02.01.audio.mp3" controls>
+Your browser does not support the audio tag.
+</audio>
+</div>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="https://drive.google.com/uc?id=1coTuZC_HcN3RXfduRqnZMfzlYJStQ2hq" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>Shouty is a social network that allows people who are physically close to communicate, just like people have always communicated with their voices. In the real world you can talk to someone in the same room, or across the street. Or even 100 m away from you in a park - if you shout.</p>
+</div>
+<div class="paragraph">
+<p>That’s Shouty. What you say on this social network can only be “heard” by people who are nearby.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_choose_the_first_scenario">2.2. Choose the first scenario</h3>
+<div class="audioblock">
+<div class="content">
+<audio src="02.02.audio.mp3" controls>
+Your browser does not support the audio tag.
+</audio>
+</div>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="02.02.animation.mp4" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s start with a very basic example of Shouty’s behaviour. Something we might have discussed in a three amigos meeting:</p>
+</div>
+<div class="paragraph">
+<p>Sean the shouter shouts "free bagels at Sean&#8217;s" and Lucy the listener who happens to be stood across the street from his store, 15 metres away, hears him. She walks into Sean’s Coffee and takes advantage of the offer.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+We can translate this into a Gherkin scenario so that Cucumber can run it. Here&#8217;s how that would look.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+  <span class="nf">Given </span>Lucy is located 15m from Sean
+  <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+  <span class="nf">Then </span>Lucy hears Sean’s message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can see there are four special keywords being used here. <code>Scenario</code> just tells Cucumber we’re about to describe an example that it can execute. Then you see the lines beginning with Given, When and Then.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+<code>Given</code> is the context for the scenario. We’re putting the system into a specific state, ready for the scenario to unfold.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+<code>When</code> is an action. Something that happens to the system that will cause something else to happen: an outcome.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+<code>Then</code> is the outcome. It’s the behaviour we expect from the system when this action happens in this context.</p>
+</div>
+<div class="paragraph">
+<p>You’ll notice we’ve omitted from our outcome anything about Lucy walking into Sean’s store and making a purchase. Remember, Gherkin is supposed to describe the behaviour of the system, so it would be distracting to have it in our scenario.</p>
+</div>
+<div class="paragraph">
+<p>Each scenario has these three ingredients:
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
+  a context,
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
+  an action,
+<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+  and one or more outcomes.</p>
+</div>
+<div class="paragraph">
+<p>Together, they describe one single aspect of the behaviour of the system. An example.</p>
+</div>
+<div class="paragraph">
+<p>Now that we’ve translated our example into Gherkin, we can automate it!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_install_cucumber">2.3. Install Cucumber</h3>
 <div class="paragraph">
 <p>The easiest way to get started with Cucumber for Java is to use a template
 project with a build script that sets everything up correctly.</p>
@@ -630,8 +726,9 @@ InteliJ you can rename it via the Refactor menu.</p>
 <div class="paragraph">
 <p>Now we’re ready to create our first feature file.</p>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_add_a_scenario_wire_it_up">2.1. Add a scenario, wire it up</h3>
+<h3 id="_add_a_scenario_wire_it_up">2.4. Add a scenario, wire it up</h3>
 <div class="paragraph">
 <p>Let&#8217;s create our first feature file. Call the file <code>hear_shout.feature</code> <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
 </div>
@@ -900,7 +997,7 @@ file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# L
 </div>
 </div>
 <div class="sect2">
-<h3 id="_sketch_out_the_solution">2.2. Sketch out the solution</h3>
+<h3 id="_sketch_out_the_solution">2.5. Sketch out the solution</h3>
 <div class="audioblock">
 <div class="content">
 <audio src="02.05.ruby.audio.mp3" controls>
@@ -1225,7 +1322,7 @@ Process finished with <span class="nb">exit </span>code 1</code></pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_make_the_scenario_pass">2.3. Make the scenario pass</h3>
+<h3 id="_make_the_scenario_pass">2.6. Make the scenario pass</h3>
 <div class="audioblock">
 <div class="content">
 <audio src="02.06.audio.mp3" controls>
@@ -1415,7 +1512,7 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-25 14:36:07 UTC
+Last updated 2020-02-25 14:43:34 UTC
 </div>
 </div>
 <style>
