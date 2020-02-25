@@ -12,6 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Slack Notification
+      uses: homoluctus/slatify@master
+      if: failure()
+      with:
+        type: ${{ job.status }}
+        job_name: '*GitHub Actions HTML build*'
+        channel: '#school-devs'
+        url: ${{ secrets.SLACK_WEBHOOK }}
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
