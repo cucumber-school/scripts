@@ -67,6 +67,9 @@ namespace :code do
 
   task :clean do
     Dir.glob('content/**/code').each { |file| FileUtils.rm_rf file }
+    Dir.chdir(Dir.tmpdir) do
+      `rm -rf code`
+    end
   end
 end
 
