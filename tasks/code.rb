@@ -7,6 +7,7 @@ pwd = Dir.pwd
 task code: 'code:unroll'
 namespace :code do
   task :unroll do
+    branches_unrolled = 0
     puts "Unrolling code branches..."
     Dir.chdir(Dir.tmpdir) do
       `git clone --quiet #{pwd} code` unless Dir.exists?('code') && Dir.exists?('code/.git')
@@ -43,6 +44,7 @@ namespace :code do
               if existing_commits == commits_raw
                 puts "Current branch commits match existing ones. Skipping."
               else
+                branches_unrolled += 1
                 `rm -rf #{dir}/*`
                 commits = commits_raw.split.reverse
                 puts "Found #{commits.count} commits on #{branch}"
@@ -63,6 +65,7 @@ namespace :code do
         end
       end
     end
+    exit branches_unrolled
   end
 
   task :clean do

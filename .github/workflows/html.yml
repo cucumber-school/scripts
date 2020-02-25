@@ -26,15 +26,6 @@ jobs:
     - name: Check unrolled code is up to date
       run: |
         bundle exec rake code
-        if [ -z "$(git status --porcelain)" ]; then
-          echo ""
-          echo "Unrolled code is in sync with code branches"
-        else 
-          echo "One or more code branches are not in sync with unrolled commits."
-          echo "Either you need to run `rake code` and commit the changes, or you've forgotten to push a code branch"
-          echo ""
-          exit 1
-        fi
     - name: Generate HTML pages using asciidoc
       run: 
         shots=1 bundle exec rake html
