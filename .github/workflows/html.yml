@@ -32,6 +32,7 @@ jobs:
           >&2 echo "One or more code branches are not in sync with unrolled commits."
           git status
           >&2 echo "Either you need to run `rake code` and commit the changes, or you've forgotten to push a code branch"
+          exit 1
         fi
     - name: Generate HTML pages using asciidoc
       run: 
