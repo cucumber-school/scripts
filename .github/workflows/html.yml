@@ -19,7 +19,7 @@ jobs:
         type: ${{ job.status }}
         job_name: '*GitHub Actions HTML build*'
         channel: '#school-devs'
-        url: ${{ secrets.SLACK_WEBHOOK }}
+        url: ${{ secrets.SLACK_WEBHOOK_URL }}
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
