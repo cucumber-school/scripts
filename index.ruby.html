@@ -1662,7 +1662,7 @@ Undefined parameter type {person} (Cucumber::CucumberExpressions::UndefinedParam
 <span class="no">ParameterType</span><span class="p">(</span>
   <span class="ss">name:        </span><span class="s1">'person'</span><span class="p">,</span>
   <span class="ss">regexp:      </span><span class="sr">/Lucy|Sean/</span><span class="p">,</span>
-  <span class="ss">transformer: </span><span class="o">-&gt;</span> <span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span> <span class="p">}</span>
+  <span class="ss">transformer: </span><span class="o">-&gt;</span> <span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="p">{</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="nb">name</span><span class="p">)</span> <span class="p">}</span>
 <span class="p">)</span></code></pre>
 </div>
 </div>
@@ -1676,7 +1676,7 @@ Undefined parameter type {person} (Cucumber::CucumberExpressions::UndefinedParam
 <p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span> This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario.</p>
 </div>
 <div class="paragraph">
-<p>Finally, there&#8217;s a transformer block, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span> which takes the text captured from the Gherkin step that matched the regular expression pattern, then runs some code. The return value of this block is what will be passed to the step definition. In this case, we&#8217;re passed the name of the person, though we don&#8217;t use it at the moment when constructing a <code>Person</code>.</p>
+<p>Finally, there&#8217;s a transformer block, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span> which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) which we can then pass to the <code>Person</code> class&#8217;s constructor.</p>
 </div>
 <div class="paragraph">
 <p>All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
@@ -1696,7 +1696,7 @@ Feature: Hear shout
 </div>
 </div>
 <div class="paragraph">
-<p>Custom parameters allow you to bring your domain <em>model</em> - the classes and methods in your solution - and your domain <em>language</em> - the words you use in your scenarios and step defintions - closer together.</p>
+<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step defintions - closer together.</p>
 </div>
 </div>
 </div>
@@ -1704,7 +1704,7 @@ Feature: Hear shout
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-26 09:56:53 UTC
+Last updated 2020-02-26 10:11:30 UTC
 </div>
 </div>
 <style>
