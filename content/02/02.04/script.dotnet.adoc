@@ -6,7 +6,7 @@ TODO:
 [x] Show undefined and explain step definitions
 [x] Add step definition snippets
 [x] Explain pending
-[ ] Rename param, print disctance
+[x] Rename param, debug disctance
 ////
 
 
@@ -57,6 +57,8 @@ _Undefined_ means SpecFlow doesn’t know what to do for any of the three steps 
 // animation start
 video::02.04.animation.mp4[]
 
+Step definitions translate from the plain language you use in Gherkin into C# code. We write a C# method, then annotate it with a pattern using the Given, When or Then attributes provided by SpecFlow.
+
 Step definitions translate from the plain language you use in Gherkin into Ruby code.
 
 When Cucumber runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
@@ -86,4 +88,17 @@ Now our scenario and our steps are pending, meaning that we have to implement th
 You can think of the `PendingStepException` as a reminder for that.
 
 
-// *** Rename param, print disctance ***
+// *** Rename param, debug disctance ***
+
+Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
+
+shot::[19]
+We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
+
+shot::[20] We can put a breakpoint into the method and shot::[21] debug the scenario to see what's happening.
+
+shot::[22] When the breakpoint hits, the value of the `distance` parameter is 15. 
+
+Notice that the number 15 does not appear anywhere in our C# code. The value is automatically passed from the scenario step to the step definition. 
+
+If you're curious, that was caused by the shot::[23]`(.*)` expression in the parameter of the `Given` attribute. We’ll explain these expressions in detail in a future lesson.
