@@ -2,9 +2,37 @@ include::./title.adoc[]
 
 ////
 TODO: 
-[ ] Add scenario
+[x] Add new scenario
 [ ] Show undefined + animation
 [ ] Add step definition snippets
 [ ] Explain pending
 [ ] Rename param, print disctance
 ////
+
+// Add new scenario
+
+Let's create our first feature file shot::[1] using the "Add / New Item..." command. Call the file `HearShout.feature` 
+
+shot::[2]
+All feature files start with the keyword `Feature:`
+shot::[3]
+followed by a name.
+It’s a good convention to give it a name that matches the file name. shot::[4]
+
+.HearShout.feature
+[source,gherkin]
+----
+Feature: Hear shout
+----
+
+shot::[5]
+Now let’s write out our first scenario.
+
+.HearShout.feature
+[source,gherkin]
+----
+Scenario: Listener is within range
+	Given Lucy is located 15m from Sean
+	When Sean shouts "free bagels at Sean's"
+	Then Lucy hears Sean’s message
+----
