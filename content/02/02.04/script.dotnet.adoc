@@ -4,12 +4,13 @@ include::./title.adoc[]
 TODO: 
 [x] Add new scenario
 [x] Show undefined and explain step definitions
-[ ] Add step definition snippets
-[ ] Explain pending
+[x] Add step definition snippets
+[x] Explain pending
 [ ] Rename param, print disctance
 ////
 
-// Add new scenario
+
+// *** Add new scenario ***
 
 Let's create our first feature file shot::[1] using the "Add / New Item..." command. Call the file `HearShout.feature` 
 
@@ -37,7 +38,8 @@ Scenario: Listener is within range
 	Then Lucy hears Sean’s message
 ----
 
-// Show undefined and explain step definitions
+
+// *** Show undefined and explain step definitions ***
 
 Build the solution. shot::[6]
 
@@ -60,5 +62,28 @@ Step definitions translate from the plain language you use in Gherkin into Ruby 
 When Cucumber runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
 // animation end
 
-If it doesn’t find one… well, you’ve just seen what happens. SpecFlow prints out some code snippets that we can use as a basis for new step definitions, 
-but you can get the same snippets from Visual Studio, using the "Define steps..." command in the editor. 
+If it doesn’t find one… well, you’ve just seen what happens. shot::[12] SpecFlow prints out some code snippets that we can use as a basis for new step definitions, 
+but you can get the same snippets from Visual Studio, shot::[13] using the "Define steps..." command in the editor. 
+
+
+// *** Add step definition snippets ***
+
+The dialog can help us to create a new class in the `Shouty.Specs` project and paste the selected snippets. shot::[13] We'll just call the class `Steps`. shot::[14]
+
+shot::[15] The wizard detected that we had a `StepDefinitions` folder and saved the new class there. SpecFlow would find it anywhere within the same project, but it is better this way.
+
+Now run the tests again.
+shot::[16]
+
+
+// *** Explain pending ***
+
+This time we've got another error message. shot::[17] It says "One or more step definitions are not implemented yet". 
+
+The step definition snippets we have copied into the project shot::[18] have thrown a `PendingStepException` that at the end caused this error.
+
+Now our scenario and our steps are pending, meaning that we have to implement the automation code to have an automated scenario. 
+You can think of the `PendingStepException` as a reminder for that.
+
+
+// *** Rename param, print disctance ***
