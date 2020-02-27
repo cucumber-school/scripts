@@ -7,7 +7,7 @@ namespace Shouty.Specs.StepDefinitions
     public class StepDefinitions
     {
         [Given("Lucy is located {int}m from Sean")]
-        public void GivenLucyIsLocatedMFromSean(int p0)
+        public void GivenLucyIsLocatedMFromSean(int distance)
         {
             throw new PendingStepException();
         }
