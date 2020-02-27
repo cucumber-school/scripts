@@ -3,7 +3,7 @@ include::./title.adoc[]
 ////
 TODO: 
 [x] Add new scenario
-[ ] Show undefined + animation
+[x] Show undefined and explain step definitions
 [ ] Add step definition snippets
 [ ] Explain pending
 [ ] Rename param, print disctance
@@ -36,3 +36,29 @@ Scenario: Listener is within range
 	When Sean shouts "free bagels at Sean's"
 	Then Lucy hears Sean’s message
 ----
+
+// Show undefined and explain step definitions
+
+Build the solution. shot::[6]
+
+As you can see shot::[7] our new scenario has appeared in the "Test Explorer" window. 
+
+If you don't have a "Test Explorer" in your Visual Studio, you can open it shot::[8] using the "Test Explorer" command from the "Build" manu.
+
+Run the tests. shot::[9]
+
+The test execution failed with the error message shot::[10] that says "No matching step definition found for one or more steps". This is because some of our steps are _undefined_. 
+shot::[11] Undefined steps are also higlighted in Visual Studio with an orange color.
+
+_Undefined_ means SpecFlow doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
+
+// animation start
+video::02.04.animation.mp4[]
+
+Step definitions translate from the plain language you use in Gherkin into Ruby code.
+
+When Cucumber runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
+// animation end
+
+If it doesn’t find one… well, you’ve just seen what happens. SpecFlow prints out some code snippets that we can use as a basis for new step definitions, 
+but you can get the same snippets from Visual Studio, using the "Define steps..." command in the editor. 
