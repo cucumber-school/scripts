@@ -45,11 +45,11 @@ Build the solution. shot::[6]
 
 As you can see shot::[7] our new scenario has appeared in the "Test Explorer" window. 
 
-If you don't have a "Test Explorer" in your Visual Studio, you can open it shot::[8] using the "Test Explorer" command from the "Build" manu.
+If you don't have a "Test Explorer" in your Visual Studio, you can open it shot::[8] using the "Test Explorer" command from the "Build" menu.
 
 Run the tests. shot::[9]
 
-The test execution failed with the error message shot::[10] that says "No matching step definition found for one or more steps". This is because some of our steps are _undefined_. 
+The test execution failed with an error message shot::[10] that says "No matching step definition found for one or more steps". This is because some of our steps are _undefined_. 
 shot::[11] Undefined steps are also higlighted in Visual Studio with an orange color.
 
 _Undefined_ means SpecFlow doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
@@ -59,9 +59,7 @@ video::02.04.animation.mp4[]
 
 Step definitions translate from the plain language you use in Gherkin into C# code. We write a C# method, then annotate it with a pattern using the Given, When or Then attributes provided by SpecFlow.
 
-Step definitions translate from the plain language you use in Gherkin into Ruby code.
-
-When Cucumber runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
+When SpecFlow runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
 // animation end
 
 If it doesn’t find one… well, you’ve just seen what happens. shot::[12] SpecFlow prints out some code snippets that we can use as a basis for new step definitions, 
@@ -70,35 +68,35 @@ but you can get the same snippets from Visual Studio, shot::[13] using the "Defi
 
 // *** Add step definition snippets ***
 
-The dialog can help us to create a new class in the `Shouty.Specs` project and paste the selected snippets. shot::[13] We'll just call the class `Steps`. shot::[14]
+The dialog can help us to create a new class and paste the selected snippets. shot::[14] We'll just call the class `Steps`. shot::[15]
 
-shot::[15] The wizard detected that we had a `StepDefinitions` folder and saved the new class there. SpecFlow would find it anywhere within the same project, but it is better this way.
+shot::[16] The wizard detected that we had a `StepDefinitions` folder and saved the new class there. SpecFlow would find it anywhere within the same project, but it is better this way.
 
 Now run the tests again.
-shot::[16]
+shot::[17]
 
 
 // *** Explain pending ***
 
-This time we've got another error message. shot::[17] It says "One or more step definitions are not implemented yet". 
+This time we've got another error message. shot::[18] It says "One or more step definitions are not implemented yet". 
 
-The step definition snippets we have copied into the project shot::[18] have thrown a `PendingStepException` that at the end caused this error.
+The step definition snippets we have copied into the project shot::[19] have thrown a `PendingStepException` that at the end caused this error.
 
-Now our scenario and our steps are pending, meaning that we have to implement the automation code to have an automated scenario. 
-You can think of the `PendingStepException` as a reminder for that.
+Now our scenario and our steps are _pending_, meaning that we have to implement the automation code to have a fully automated scenario. 
+You can think of the `PendingStepException` as a reminder of that.
 
 
 // *** Rename param, debug disctance ***
 
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
-shot::[19]
+shot::[20]
 We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
 
-shot::[20] We can put a breakpoint into the method and shot::[21] debug the scenario to see what's happening.
+shot::[21] We can put a breakpoint into the method and shot::[22] debug the scenario to see what's happening.
 
-shot::[22] When the breakpoint hits, the value of the `distance` parameter is 15. 
+shot::[23] When the breakpoint hits, the value of the `distance` parameter is 15. 
 
 Notice that the number 15 does not appear anywhere in our C# code. The value is automatically passed from the scenario step to the step definition. 
 
-If you're curious, that was caused by the shot::[23]`(.*)` expression in the parameter of the `Given` attribute. We’ll explain these expressions in detail in a future lesson.
+If you're interested, that was caused by the shot::[24]`(.*)` expression in the parameter of the `Given` attribute. We’ll explain these expressions in detail in a future lesson.
