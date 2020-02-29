@@ -30,38 +30,47 @@ Now let’s write out our first scenario.
 ----
 Feature: Hear shout
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
 ----
 
 shot::[6]
-Save the file, switch back to the command-prompt and run `npm test`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario,shot::[7] three steps shot::[8] - all undefined.shot::[9]
+Save the file, switch back to the command-prompt and run `npm test`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario,shot::[7] three steps - all undefined.shot::[8]
 
 [source,bash]
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/cucumber/shouty-js
-> cucumber-js
+> shouty@1.0.0 test /home/fedex/code/shouty
+> cucumber-js -f node_modules/cucumber-pretty
 
-UUU
+Feature: Hear shout
+
+  Scenario: Listener is within range
+    Given Lucy is located 15 metres from Sean
+    ? undefined
+    When Sean shouts "free bagels at Sean's"
+    ? undefined
+    Then Lucy hears Sean’s message
+    ? undefined
 
 Warnings:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ? Given Lucy is located 15m from Sean
+   ? Given Lucy is located 15 metres from Sean
        Undefined. Implement with the following snippet:
 
-         Given('Lucy is located 15m from Sean', function () {
+         Given('Lucy is located {int} metres from Sean', function (int) {
+         // Given('Lucy is located {float} metres from Sean', function (float) {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
 
-   ? When Sean shouts “free bagels at Sean’s”
+   ? When Sean shouts "free bagels at Sean's"
        Undefined. Implement with the following snippet:
 
-         When('Sean shouts “free bagels at Sean’s”', function () {
+         When('Sean shouts {string}', function (string) {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
@@ -81,7 +90,6 @@ Warnings:
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[10]
 _Undefined_` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
 video::02.04.animation.mp4[]
@@ -94,22 +102,22 @@ If it doesn’t find one… well, you’ve just seen what happens. Cucumber help
 
 Let’s copy those to create our first step definitions.
 
-shot::[11]
+shot::[9]
 We’ll paste them into a JavaScript file under a new directory called `step_definitions` underneath the `features` directory. I’ll just call it `steps.js`.
 
-We need to import the `Given`, shot::[12] `When` shot::[13] and `Then` shot::[14] keywords from the `cucumber` package.shot::[15]
+We need to import the `Given`, shot::[10] `When` shot::[11] and `Then` shot::[12] keywords from the `cucumber` package.shot::[13]
 
 .steps.js
 [source,js]
 ----
 const { Given, When, Then } = require('cucumber')
 
-Given('Lucy is located 15m from Sean', function () {
+Given('Lucy is located {int} metres from Sean', function (int) {
   // Write code here that turns the phrase above into concrete actions
   return 'pending'
 })
 
-When('Sean shouts “free bagels at Sean’s”', function () {
+When('Sean shouts {string}', function (string) {
   // Write code here that turns the phrase above into concrete actions
   return 'pending'
 })
@@ -118,15 +126,15 @@ Then('Lucy hears Sean’s message', function () {
   // Write code here that turns the phrase above into concrete actions
   return 'pending'
 })
+
 ----
 
-shot::[16]
+shot::[14]
 Now we run Cucumber again.
 
-shot::[17]
-This time the output is a little different. We now have a pending step shot::[18] and two skipped ones.shot::[19] This means Cucumber found all our step definitions, and executed the first one.
+This time the output is a little different. We now have a pending step shot::[15] and two skipped ones.shot::[16] This means Cucumber found all our step definitions, and executed the first one.
 
-shot::[20]
+shot::[17]
 But that first step definition returns `'pending'`, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
 
 [source,bash]
@@ -154,32 +162,22 @@ npm ERR! Test failed.  See above for more details.
 
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
-We'll rename the `int` parameter to something that better reflects its meaning. Let's call it `distance`.shot::[21]
+We'll rename the `int` parameter to something that better reflects its meaning. Let's call it `distance`.shot::[18]
 
-shot::[22]
+shot::[19]
 And we can print it to the terminal to see the captured result
 
 [source,js]
 ----
-const { Given, When, Then } = require('cucumber');
+const { Given, When, Then } = require('cucumber')
 
-Given('Lucy is located {int}m from Sean', function (distance) {
+Given('Lucy is located {int} metres from Sean', function (distance) {
   console.log(distance);
-  return 'pending';
-});
-
-When('Sean shouts “free bagels at Sean’s”', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
-});
-
-Then('Lucy hears Sean’s message', function () {
-  // Write code here that turns the phrase above into concrete actions
   return 'pending';
 });
 ----
 
-shot::[23]
+shot::[20]
 If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output.
 
 [source,bash]
@@ -214,4 +212,4 @@ Warnings:
 npm ERR! Test failed.  See above for more details.
 ----
 
-Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[24]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[21]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
