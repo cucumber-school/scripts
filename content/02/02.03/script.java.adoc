@@ -7,7 +7,7 @@ shot::[1]
 You can download this template project from GitHub. Open your web browser and go
 to the “Cucumber Java Skeleton” project on GitHub.
 
-If you’re comfortable with Git you can just clone the project. 
+If you’re comfortable with Git you can just clone the project.
 
 If you’re new to Git, don’t worry, we’ll download a zip file instead. Click
 Releases,shot::[2] then download the most recent zip file that starts with a “v”.shot::[3]
@@ -19,8 +19,18 @@ shot::[4]
 On Windows, extract the zip file by double clicking on it. -Or if you’re on OS
 ten or Linux, extract it with the unzip command.
 
+[source,bash]
+----
+$ unzip cucumber-java-skeleton-<VERSION>.zip
+----
+
 shot::[5]
 After extracting the zip file, we’ll rename the directory to “shouty”.
+
+[source,bash]
+----
+$ mv cucumber-java-skeleton-<VERSION> shouty
+----
 
 shot::[6]
 In your shell, cd into the shouty directory.
@@ -32,7 +42,7 @@ to get started with Cucumber for Java.
 We’ll be using Maven, so if you haven’t installed that already, now is a good time to do that.
 
 shot::[8]
-Let’s take a look at what else is in this project. 
+Let’s take a look at what else is in this project.
 
 [source,bash]
 ----
@@ -51,24 +61,24 @@ $ tree
 ├── pom.xml
 ├── README.md
 └── src
-    ├── main
-    │   └── java
-    │       └── io
-    │           └── cucumber
-    │               └── skeleton
-    │                   └── Belly.java
-    └── test
-        ├── java
-        │   └── io
-        │       └── cucumber
-        │           └── skeleton
-        │               ├── RunCucumberTest.java
-        │               └── StepDefinitions.java
-        └── resources
-            └── io
-                └── cucumber
-                    └── skeleton
-                        └── belly.feature
+├── main
+│   └── java
+│       └── io
+│           └── cucumber
+│               └── skeleton
+│                   └── Belly.java
+└── test
+├── java
+│   └── io
+│       └── cucumber
+│           └── skeleton
+│               ├── RunCucumberTest.java
+│               └── StepDefinitions.java
+└── resources
+└── io
+└── cucumber
+└── skeleton
+└── belly.feature
 
 17 directories, 14 files
 ----
@@ -105,21 +115,21 @@ $ tree
 ├── pom.xml
 ├── README.md
 └── src
-    ├── main
-    │   └── java
-    │       └── io
-    │           └── cucumber
-    │               └── skeleton
-    └── test
-        ├── java
-        │   └── io
-        │       └── cucumber
-        │           └── skeleton
-        │               └── RunCucumberTest.java
-        └── resources
-            └── io
-                └── cucumber
-                    └── skeleton
+├── main
+│   └── java
+│       └── io
+│           └── cucumber
+│               └── skeleton
+└── test
+├── java
+│   └── io
+│       └── cucumber
+│           └── skeleton
+│               └── RunCucumberTest.java
+└── resources
+└── io
+└── cucumber
+└── skeleton
 
 17 directories, 11 files
 ----
@@ -128,15 +138,34 @@ Before we open the project in our IDE we are going to modify the name of the
 application.
 
 shot::[15]
-Open pom.xml and change the group ID,shot::[16] artifact ID shot::[17] and name. shot::[18]
+Open pom.xml and change the group ID, shot::[16] artifact ID shot::[17] and name. shot::[18]
+
+[source,xml]
+----
+<project ...>
+    ...
+    
+    <groupId>cucumber-school</groupId>
+    <artifactId>shouty</artifactId>
+    <version>0.0.1</version>
+    <packaging>jar</packaging>
+    <name>Shouty</name>
+    
+    ...
+</project>
+----
+
+shot::[19]
+// NOTE: You can see a bar on the lower part of the screen in this shot, maybe ARTHUR can remove it while editing. I also left a screenshot of IntelliJ's splashscreen in case we want to show that
 
 We are ready to start coding! We are going to use IntelliJ IDEA Community
-Edition because it has really nice Cucumber integration built-in.shot::[19] If you prefer
+Edition because it has really nice Cucumber integration built-in. If you prefer
 to use a different IDE such as Eclipse, that is fine too.
 
+shot::[20]
 To open the project in InteliJ, just open the pom.xml file.
 
-shot::[20]
+shot::[21]
 Before we create any files, let’s rename the package from skeleton to shouty. In
 InteliJ you can rename it via the Refactor menu.
 
