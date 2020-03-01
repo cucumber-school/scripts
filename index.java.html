@@ -589,9 +589,19 @@ Releases,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: whit
 On Windows, extract the zip file by double clicking on it. -Or if you’re on OS
 ten or Linux, extract it with the unzip command.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>unzip cucumber-java-skeleton-&lt;VERSION&gt;.zip</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
 After extracting the zip file, we’ll rename the directory to “shouty”.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span><span class="nb">mv </span>cucumber-java-skeleton-&lt;VERSION&gt; shouty</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
@@ -626,24 +636,24 @@ Let’s take a look at what else is in this project.</p>
 ├── pom.xml
 ├── README.md
 └── src
-    ├── main
-    │   └── java
-    │       └── io
-    │           └── cucumber
-    │               └── skeleton
-    │                   └── Belly.java
-    └── <span class="nb">test</span>
-        ├── java
-        │   └── io
-        │       └── cucumber
-        │           └── skeleton
-        │               ├── RunCucumberTest.java
-        │               └── StepDefinitions.java
-        └── resources
-            └── io
-                └── cucumber
-                    └── skeleton
-                        └── belly.feature
+├── main
+│   └── java
+│       └── io
+│           └── cucumber
+│               └── skeleton
+│                   └── Belly.java
+└── <span class="nb">test</span>
+├── java
+│   └── io
+│       └── cucumber
+│           └── skeleton
+│               ├── RunCucumberTest.java
+│               └── StepDefinitions.java
+└── resources
+└── io
+└── cucumber
+└── skeleton
+└── belly.feature
 
 17 directories, 14 files</code></pre>
 </div>
@@ -683,21 +693,21 @@ Now we have a bare bones project. We’ll be building it from the ground up so y
 ├── pom.xml
 ├── README.md
 └── src
-    ├── main
-    │   └── java
-    │       └── io
-    │           └── cucumber
-    │               └── skeleton
-    └── <span class="nb">test</span>
-        ├── java
-        │   └── io
-        │       └── cucumber
-        │           └── skeleton
-        │               └── RunCucumberTest.java
-        └── resources
-            └── io
-                └── cucumber
-                    └── skeleton
+├── main
+│   └── java
+│       └── io
+│           └── cucumber
+│               └── skeleton
+└── <span class="nb">test</span>
+├── java
+│   └── io
+│       └── cucumber
+│           └── skeleton
+│               └── RunCucumberTest.java
+└── resources
+└── io
+└── cucumber
+└── skeleton
 
 17 directories, 11 files</code></pre>
 </div>
@@ -708,18 +718,37 @@ application.</p>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span>
-Open pom.xml and change the group ID,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span> artifact ID <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span> and name. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span></p>
+Open pom.xml and change the group ID, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span> artifact ID <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span> and name. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml"><span class="nt">&lt;project</span> <span class="err">...</span><span class="nt">&gt;</span>
+    ...
+
+    <span class="nt">&lt;groupId&gt;</span>cucumber-school<span class="nt">&lt;/groupId&gt;</span>
+    <span class="nt">&lt;artifactId&gt;</span>shouty<span class="nt">&lt;/artifactId&gt;</span>
+    <span class="nt">&lt;version&gt;</span>0.0.1<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;packaging&gt;</span>jar<span class="nt">&lt;/packaging&gt;</span>
+    <span class="nt">&lt;name&gt;</span>Shouty<span class="nt">&lt;/name&gt;</span>
+
+    ...
+<span class="nt">&lt;/project&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span></p>
 </div>
 <div class="paragraph">
 <p>We are ready to start coding! We are going to use IntelliJ IDEA Community
-Edition because it has really nice Cucumber integration built-in.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span> If you prefer
+Edition because it has really nice Cucumber integration built-in. If you prefer
 to use a different IDE such as Eclipse, that is fine too.</p>
 </div>
 <div class="paragraph">
-<p>To open the project in InteliJ, just open the pom.xml file.</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span>
+To open the project in InteliJ, just open the pom.xml file.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span>
 Before we create any files, let’s rename the package from skeleton to shouty. In
 InteliJ you can rename it via the Refactor menu.</p>
 </div>
@@ -748,7 +777,7 @@ Now let’s write out our first scenario.</p>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
   <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
-    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">Given </span>Lucy is located 15 metres from Sean
     <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
     <span class="nf">Then </span>Lucy hears Sean’s message</code></pre>
 </div>
@@ -770,55 +799,74 @@ Switch back to the command prompt and run:</p>
 Maven will now download Cucumber, compile your code and tell Cucumber to run your feature file.</p>
 </div>
 <div class="paragraph">
-<p>You’ll see that Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span> one scenario <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span> - all undefined.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span></p>
+<p>You’ll see that Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span> one scenario <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span> - all undefined.</p>
 </div>
 <div class="paragraph">
-<p>Let’s run the scenario again from inside InteliJ.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span>
-Select the feature file <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span> and choose Run from the context menu.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span>
-This will give you similar output.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span></p>
+<p>Let’s run the scenario again from inside InteliJ.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
+Select the feature file <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span> and choose Run from the context menu.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
+This will give you similar output.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>mvn clean <span class="nb">test
-</span>Step undefined
-You can implement missing steps with the snippets below:
-@Given<span class="o">(</span><span class="s2">"Lucy is {int} metres from Sean"</span><span class="o">)</span>
-public void lucy_is_metres_from_Sean<span class="o">(</span>Integer int1<span class="o">)</span> <span class="o">{</span>
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
-<span class="o">}</span>
+</span>WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by com.google.inject.internal.cglib.core.<span class="nv">$ReflectUtils$1</span> <span class="o">(</span>file:/usr/share/maven/lib/guice.jar<span class="o">)</span> to method java.lang.ClassLoader.defineClass<span class="o">(</span>java.lang.String,byte[],int,int,java.security.ProtectionDomain<span class="o">)</span>
+WARNING: Please consider reporting this to the maintainers of com.google.inject.internal.cglib.core.<span class="nv">$ReflectUtils$1</span>
+WARNING: Use <span class="nt">--illegal-access</span><span class="o">=</span>warn to <span class="nb">enable </span>warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied <span class="k">in </span>a future release
+<span class="o">[</span>INFO] Scanning <span class="k">for </span>projects...
+<span class="o">[</span>INFO]
+<span class="o">[</span>INFO] <span class="nt">-----------------------</span>&lt; cucumber-school:shouty <span class="o">&gt;</span><span class="nt">-----------------------</span>
+<span class="o">[</span>INFO] Building Shouty 0.0.1
+<span class="o">[</span>INFO] <span class="nt">--------------------------------</span><span class="o">[</span> jar <span class="o">]</span><span class="nt">---------------------------------</span>
+<span class="o">[</span>INFO]
+<span class="o">[</span>INFO] <span class="nt">---</span> maven-clean-plugin:2.5:clean <span class="o">(</span>default-clean<span class="o">)</span> @ shouty <span class="nt">---</span>
+<span class="o">[</span>INFO] Deleting /home/fedex/code/java/shouty/target
+<span class="o">[</span>INFO]
+<span class="o">[</span>INFO] <span class="nt">---</span> maven-resources-plugin:2.6:resources <span class="o">(</span>default-resources<span class="o">)</span> @ shouty <span class="nt">---</span>
+<span class="o">[</span>INFO] Using <span class="s1">'UTF-8'</span> encoding to copy filtered resources.
+<span class="o">[</span>INFO] skip non existing resourceDirectory /home/fedex/code/java/shouty/src/main/resources
+<span class="o">[</span>INFO]
+<span class="o">[</span>INFO] <span class="nt">---</span> maven-compiler-plugin:3.3:compile <span class="o">(</span>default-compile<span class="o">)</span> @ shouty <span class="nt">---</span>
+<span class="o">[</span>INFO] Nothing to compile - all classes are up to <span class="nb">date</span>
+<span class="o">[</span>INFO]
+<span class="o">[</span>INFO] <span class="nt">---</span> maven-resources-plugin:2.6:testResources <span class="o">(</span>default-testResources<span class="o">)</span> @ shouty <span class="nt">---</span>
+<span class="o">[</span>INFO] Using <span class="s1">'UTF-8'</span> encoding to copy filtered resources.
+<span class="o">[</span>INFO] Copying 1 resource
+<span class="o">[</span>INFO]
+<span class="o">[</span>INFO] <span class="nt">---</span> maven-compiler-plugin:3.3:testCompile <span class="o">(</span>default-testCompile<span class="o">)</span> @ shouty <span class="nt">---</span>
+<span class="o">[</span>INFO] Changes detected - recompiling the module!
+<span class="o">[</span>INFO] Compiling 1 <span class="nb">source </span>file to /home/fedex/code/java/shouty/target/test-classes
+<span class="o">[</span>INFO]
+<span class="o">[</span>INFO] <span class="nt">---</span> maven-surefire-plugin:2.12.4:test <span class="o">(</span>default-test<span class="o">)</span> @ shouty <span class="nt">---</span>
+<span class="o">[</span>INFO] Surefire report directory: /home/fedex/code/java/shouty/target/surefire-reports
 
+<span class="nt">-------------------------------------------------------</span>
+ T E S T S
+<span class="nt">-------------------------------------------------------</span>
+Running io.cucumber.shouty.RunCucumberTest
+Feb 29, 2020 12:24:33 PM io.cucumber.junit.Cucumber &lt;init&gt;
+WARNING: By default Cucumber is running <span class="k">in</span> <span class="nt">--non-strict</span> mode.
+This default will change to <span class="nt">--strict</span> and <span class="nt">--non-strict</span> will be removed.
+You can use <span class="nt">--strict</span> or @CucumberOptions<span class="o">(</span>strict <span class="o">=</span> <span class="nb">true</span><span class="o">)</span> to suppress this warning
 
-Step undefined
-You can implement missing steps with the snippets below:
-@When<span class="o">(</span><span class="s2">"Sean shouts {string}"</span><span class="o">)</span>
-public void sean_shouts<span class="o">(</span>String string<span class="o">)</span> <span class="o">{</span>
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
-<span class="o">}</span>
-
-
-Step undefined
-You can implement missing steps with the snippets below:
-@Then<span class="o">(</span><span class="s2">"Lucy should hear Sean's message"</span><span class="o">)</span>
-public void lucy_should_hear_Sean_s_message<span class="o">()</span> <span class="o">{</span>
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
-<span class="o">}</span>
-
+Scenario: Listener is within range          <span class="c"># io/cucumber/shouty/hear_shout.feature:2</span>
+  Given Lucy is located 15 metres from Sean <span class="c"># null</span>
+  When Sean shouts <span class="s2">"free bagels at Sean's"</span>  <span class="c"># null</span>
+  Then Lucy hears Sean’s message            <span class="c"># null</span>
 
 Undefined scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+classpath:io/cucumber/shouty/hear_shout.feature:2# Listener is within range
 
 1 Scenarios <span class="o">(</span>1 undefined<span class="o">)</span>
 3 Steps <span class="o">(</span>3 undefined<span class="o">)</span>
-0m0.418s
+0m0.200s
 
 
 You can implement missing steps with the snippets below:
 
-@Given<span class="o">(</span><span class="s2">"Lucy is {int} metres from Sean"</span><span class="o">)</span>
-public void lucy_is_metres_from_Sean<span class="o">(</span>Integer int1<span class="o">)</span> <span class="o">{</span>
+@Given<span class="o">(</span><span class="s2">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+public void lucy_is_located_metres_from_Sean<span class="o">(</span>Integer int1<span class="o">)</span> <span class="o">{</span>
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
 <span class="o">}</span>
@@ -829,20 +877,29 @@ public void sean_shouts<span class="o">(</span>String string<span class="o">)</s
     throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
 <span class="o">}</span>
 
-@Then<span class="o">(</span><span class="s2">"Lucy should hear Sean's message"</span><span class="o">)</span>
-public void lucy_should_hear_Sean_s_message<span class="o">()</span> <span class="o">{</span>
+@Then<span class="o">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="o">)</span>
+public void lucy_hears_Sean_s_message<span class="o">()</span> <span class="o">{</span>
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
 <span class="o">}</span>
 
 
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.879 sec
 
-Process finished with <span class="nb">exit </span>code 0</code></pre>
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
+
+<span class="o">[</span>INFO] <span class="nt">------------------------------------------------------------------------</span>
+<span class="o">[</span>INFO] BUILD SUCCESS
+<span class="o">[</span>INFO] <span class="nt">------------------------------------------------------------------------</span>
+<span class="o">[</span>INFO] Total <span class="nb">time</span>:  4.147 s
+<span class="o">[</span>INFO] Finished at: 2020-02-29T12:24:34-03:00
+<span class="o">[</span>INFO] <span class="nt">------------------------------------------------------------------------</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span>
-<em>Undefined</em> means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario.
+<p><em>Undefined</em> means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario.
 It needs us to provide some <em>step definitions</em>.</p>
 </div>
 <div class="videoblock">
@@ -859,10 +916,11 @@ Your browser does not support the video tag.
 <p>When cucumber runs a step, it looks for a step definition with a matching pattern. If it finds one, then it executes the method.</p>
 </div>
 <div class="paragraph">
-<p>If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
+If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.</p>
 </div>
 <div class="paragraph">
-<p>We’ll create a new class in the shouty package where we’ll paste those snippets. Make sure you create it under test and not main.</p>
+<p>We’ll create a new class in the shouty package <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span> where we’ll paste those snippets. Make sure you create it under test and not main. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -896,31 +954,100 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span>
 Now InteliJ is complaining that there are some unknown symbols. We need to add
 some import statements! Pressing ALT-ENTER will do that for us.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span>
 Let’s return to the scenario and run it again.</p>
 </div>
-<div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span>
-There is a small bug in InteliJ’s Cucumber integration. Sometimes it doesn’t tell Cucumber where to find step definitions. This is easy to work around. Just edit the run configuration and make sure the Glue field contains the value of your package.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">Testing started at 12:28 PM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java <span class="nt">-Dorg</span>.jetbrains.run.directory<span class="o">=</span>/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty <span class="nt">-javaagent</span>:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar<span class="o">=</span>40217:/home/fedex/Downloads/idea-IC-193.5662.53/bin <span class="nt">-Dfile</span>.encoding<span class="o">=</span>UTF-8 <span class="nt">-classpath</span> /home/fedex/code/java/shouty/target/test-classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main <span class="nt">--plugin</span> org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature
+Feb 29, 2020 12:28:30 PM io.cucumber.core.cli.Main run
+WARNING: By default Cucumber is running <span class="k">in</span> <span class="nt">--non-strict</span> mode.
+This default will change to <span class="nt">--strict</span> and <span class="nt">--non-strict</span> will be removed.
+You can use <span class="nt">--strict</span> to suppress this warning
+
+Step undefined
+You can implement missing steps with the snippets below:
+@Given<span class="o">(</span><span class="s2">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+public void lucy_is_located_metres_from_Sean<span class="o">(</span>Integer int1<span class="o">)</span> <span class="o">{</span>
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
+<span class="o">}</span>
+
+
+Step undefined
+You can implement missing steps with the snippets below:
+@When<span class="o">(</span><span class="s2">"Sean shouts {string}"</span><span class="o">)</span>
+public void sean_shouts<span class="o">(</span>String string<span class="o">)</span> <span class="o">{</span>
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
+<span class="o">}</span>
+
+
+Step undefined
+You can implement missing steps with the snippets below:
+@Then<span class="o">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="o">)</span>
+public void lucy_hears_Sean_s_message<span class="o">()</span> <span class="o">{</span>
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
+<span class="o">}</span>
+
+
+Undefined scenarios:
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
+
+1 Scenarios <span class="o">(</span>1 undefined<span class="o">)</span>
+3 Steps <span class="o">(</span>3 undefined<span class="o">)</span>
+0m0.365s
+
+
+You can implement missing steps with the snippets below:
+
+@Given<span class="o">(</span><span class="s2">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+public void lucy_is_located_metres_from_Sean<span class="o">(</span>Integer int1<span class="o">)</span> <span class="o">{</span>
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
+<span class="o">}</span>
+
+@When<span class="o">(</span><span class="s2">"Sean shouts {string}"</span><span class="o">)</span>
+public void sean_shouts<span class="o">(</span>String string<span class="o">)</span> <span class="o">{</span>
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
+<span class="o">}</span>
+
+@Then<span class="o">(</span><span class="s2">"Lucy hears Sean’s message"</span><span class="o">)</span>
+public void lucy_hears_Sean_s_message<span class="o">()</span> <span class="o">{</span>
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
+<span class="o">}</span>
+
+
+
+Process finished with <span class="nb">exit </span>code 0</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span>
+There is a small bug in InteliJ’s Cucumber integration. Sometimes it doesn’t tell Cucumber where to find step definitions. This is easy to work around. Just edit the run configuration and make sure the Glue field contains the value of your package.</p>
+</div>
+<div class="paragraph">
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span>
 Now we can run it again.</p>
 </div>
 <div class="paragraph">
 <p>This time the output is a little different.</p>
 </div>
 <div class="paragraph">
-<p>We now have a pending step <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span> and two skipped ones.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span></p>
+<p>We now have a pending step <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span> and two skipped ones.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span></p>
 </div>
 <div class="paragraph">
 <p>This means Cucumber found all our step definitions, and executed the
-first one. But that first step definition throws a <code>PendingException</code>,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span> which
+first one. But that first step definition throws a <code>PendingException</code>,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 22</span> which
 causes Cucumber to stop, skip the rest of the steps, and mark the scenario as
 pending.</p>
 </div>
@@ -953,11 +1080,11 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 <p>Now that we&#8217;ve wired up our step definitions to the Gherkin steps, it&#8217;s almost time to start working on our solution. First though, let&#8217;s tidy up the generated code.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 22</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 23</span>
 We&#8217;ll rename the <code>int</code> parameter to something that better reflects its meaning. We’ll call it <code>distance</code>.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 23</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span>
 We can print it to the terminal to see what&#8217;s happening.</p>
 </div>
 <div class="listingblock">
@@ -970,7 +1097,7 @@ We can print it to the terminal to see what&#8217;s happening.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If we run it again, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span> we can see the number 15 pop up in the output. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 25</span></p>
+<p>If we run it again, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 25</span> we can see the number 15 pop up in the output. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 26</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -993,7 +1120,7 @@ file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# L
 </div>
 </div>
 <div class="paragraph">
-<p>Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you&#8217;re curious, that’s the <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 26</span><code>{int}</code> in the step definition pattern or <em>cucumber expression</em>. We’ll explain these patterns in detail in a future lesson.</p>
+<p>Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you&#8217;re curious, that’s the <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 27</span><code>{int}</code> in the step definition pattern or <em>cucumber expression</em>. We’ll explain these patterns in detail in a future lesson.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1018,9 +1145,15 @@ Now that we have the step definitions matching, we can start working on our solu
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
-    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is {int} metres from Sean"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="n">io</span><span class="o">.</span><span class="na">cucumber</span><span class="o">.</span><span class="na">shouty</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.cucumber.java.en.Given</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.cucumber.java.en.Then</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.cucumber.java.en.When</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_located_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
         <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="n">io</span><span class="o">.</span><span class="na">cucumber</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">PendingException</span><span class="o">();</span>
     <span class="o">}</span>
@@ -1031,8 +1164,8 @@ Now that we have the step definitions matching, we can start working on our solu
         <span class="k">throw</span> <span class="k">new</span> <span class="n">io</span><span class="o">.</span><span class="na">cucumber</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">PendingException</span><span class="o">();</span>
     <span class="o">}</span>
 
-    <span class="nd">@Then</span><span class="o">(</span><span class="s">"Lucy should hear Sean's message"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_should_hear_Sean_s_message</span><span class="o">()</span> <span class="o">{</span>
+    <span class="nd">@Then</span><span class="o">(</span><span class="s">"Lucy hears Sean’s message"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_hears_Sean_s_message</span><span class="o">()</span> <span class="o">{</span>
         <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="n">io</span><span class="o">.</span><span class="na">cucumber</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">PendingException</span><span class="o">();</span>
     <span class="o">}</span>
@@ -1044,10 +1177,10 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is {int} metres from Sean"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
     <span class="nc">Person</span> <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
     <span class="nc">Person</span> <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
-
     <span class="c1">// ...</span>
 <span class="o">}</span></code></pre>
 </div>
@@ -1064,19 +1197,19 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 </div>
 <div class="paragraph">
-<p>And specify the distance between them.</p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
+And specify the distance between them.</p>
 </div>
 <div class="paragraph">
-<p>We can remove the <code>pending</code> status now, and this print statement,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span> and write the implementation for the first step like this:</p>
+<p>We can remove the <code>pending</code> status now, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span> and this print statement,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span> and write the implementation for the first step like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
-    <span class="nc">Person</span> <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
-    <span class="nc">Person</span> <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
-
     <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is {int} metres from Sean"</span><span class="o">)</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
+        <span class="nc">Person</span> <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
         <span class="n">lucy</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
     <span class="o">}</span>
 
@@ -1085,7 +1218,7 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 </div>
 <div class="paragraph">
-<p>And create the <code>moveTo</code> method in the <code>Person</code> class. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
+<p>And create the <code>moveTo</code> method in the <code>Person</code> class. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1099,7 +1232,7 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 </div>
 <div class="paragraph">
-<p>We have two instances of person, one representing Lucy, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>and one representing Sean. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span>Then we call a method to move Lucy to the position specified in the scenario.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span></p>
+<p>We have two instances of person, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span> one representing Lucy, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span> and one representing Sean. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span> Then we call a method to move Lucy to the position specified in the scenario.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span></p>
 </div>
 <div class="videoblock">
 <div class="content">
@@ -1109,30 +1242,32 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span>
-When we run the scenario, the first step is green!</p>
+<p>When we run the scenario, <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span> the first step is green! <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">TODO: implement me
+<pre class="rouge highlight"><code data-lang="bash">Testing started at 11:53 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java <span class="nt">-Dorg</span>.jetbrains.run.directory<span class="o">=</span>/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty <span class="nt">-javaagent</span>:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar<span class="o">=</span>44551:/home/fedex/Downloads/idea-IC-193.5662.53/bin <span class="nt">-Dfile</span>.encoding<span class="o">=</span>UTF-8 <span class="nt">-classpath</span> /home/fedex/code/java/shouty/target/test-classes:/home/fedex/code/java/shouty/target/classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main <span class="nt">--plugin</span> org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter <span class="nt">--strict</span> <span class="nt">--glue</span> io.cucumber.shouty /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty
+
+TODO: implement me
 
 Step skipped
 
 Pending scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
 
 1 Scenarios <span class="o">(</span>1 pending<span class="o">)</span>
 3 Steps <span class="o">(</span>1 skipped, 1 pending, 1 passed<span class="o">)</span>
-0m0.337s
+0m0.553s
 
 
 io.cucumber.java.PendingException: TODO: implement me
-	at shouty.StepDefinitions.sean_shouts<span class="o">(</span>StepDefinitions.java:19<span class="o">)</span>
-	at ✽.Sean shouts <span class="s2">"free bagels at Sean's"</span><span class="o">(</span>file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:5<span class="o">)</span>
+	at io.cucumber.shouty.StepDefinitions.sean_shouts<span class="o">(</span>StepDefinitions.java:18<span class="o">)</span>
+	at ✽.Sean shouts <span class="s2">"free bagels at Sean's"</span><span class="o">(</span>file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:4<span class="o">)</span>
 
 
 
-Process finished with <span class="nb">exit </span>code 0</code></pre>
+Process finished with <span class="nb">exit </span>code 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1145,24 +1280,29 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 <p>In the second step definition, we want to tell Sean to shout something.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span>
 In order to send instructions to Sean from the second step, we need to store him in an <em>instance variable</em>, so that he’ll be accessible from all of our step definitions. In IntelliJ we can do this by using the <em>Introduce Field</em> refactoring.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span>
-In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using the <code>{string}</code> pattern, so let&#8217;s give that argument a more meaningful name.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span></p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span>
+In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using the <code>{string}</code> pattern, so let&#8217;s give that argument a more meaningful name.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span></p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span>
 And now we can now tell him to <em>shout</em> the message:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
-    <span class="nc">Person</span> <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
-    <span class="nc">Person</span> <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
+    <span class="kd">private</span> <span class="nc">Person</span> <span class="n">sean</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Person</span> <span class="n">lucy</span><span class="o">;</span>
 
-    <span class="c1">// ...</span>
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_located_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
+        <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">();</span>
+        <span class="n">lucy</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
+    <span class="o">}</span>
 
     <span class="nd">@When</span><span class="o">(</span><span class="s">"Sean shouts {string}"</span><span class="o">)</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sean_shouts</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
@@ -1174,7 +1314,7 @@ And now we can now tell him to <em>shout</em> the message:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>And we eliminate the compilation error by implementing the <code>shout</code> message in the <code>Person</code> class.</p>
+<p>And we eliminate the compilation error by implementing the <code>shout</code> message in the <code>Person</code> class. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1193,35 +1333,38 @@ And now we can now tell him to <em>shout</em> the message:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When we run the scenarion again, now the second step is green!. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span></p>
+<p>When we run the scenarion again,<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span> now the second step is green!. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">TODO: implement me
+<pre class="rouge highlight"><code data-lang="bash">Testing started at 12:00 PM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java <span class="nt">-Dorg</span>.jetbrains.run.directory<span class="o">=</span>/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty <span class="nt">-javaagent</span>:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar<span class="o">=</span>39079:/home/fedex/Downloads/idea-IC-193.5662.53/bin <span class="nt">-Dfile</span>.encoding<span class="o">=</span>UTF-8 <span class="nt">-classpath</span> /home/fedex/code/java/shouty/target/test-classes:/home/fedex/code/java/shouty/target/classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main <span class="nt">--plugin</span> org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter <span class="nt">--strict</span> <span class="nt">--glue</span> io.cucumber.shouty /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty
+
+TODO: implement me
 
 Pending scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
 
 1 Scenarios <span class="o">(</span>1 pending<span class="o">)</span>
 3 Steps <span class="o">(</span>1 pending, 2 passed<span class="o">)</span>
-0m0.465s
+0m0.410s
 
 
 io.cucumber.java.PendingException: TODO: implement me
-	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message<span class="o">(</span>StepDefinitions.java:25<span class="o">)</span>
-	at ✽.Lucy should hear Sean<span class="s1">'s message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+	at io.cucumber.shouty.StepDefinitions.lucy_hears_Sean_s_message<span class="o">(</span>StepDefinitions.java:27<span class="o">)</span>
+	at ✽.Lucy hears Sean’s message<span class="o">(</span>file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:5<span class="o">)</span>
 
 
 
-Process finished with exit code 0</span></code></pre>
+Process finished with <span class="nb">exit </span>code 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 22</span>
 The last step definition is where we implement a check, or assertion. We&#8217;ll verify that what Lucy has heard is exactly the same as what Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 23</span>
 Once again we&#8217;re going to write the code we wish we had.</p>
 </div>
 <div class="listingblock">
@@ -1233,13 +1376,13 @@ Once again we&#8217;re going to write the code we wish we had.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In order for this to be able to compile, we need to import the <code>assertEquals</code> static method from <code>JUnit</code> <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span>  and the <code>Array.asList</code> method. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span></p>
+<p>In order for this to be able to compile, we need to import the <code>assertEquals</code> static method from <code>JUnit</code> <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span>  and the <code>Array.asList</code> method. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 25</span></p>
 </div>
 <div class="paragraph">
 <p>So we need a way to ask Lucy what messages she&#8217;s heard, and we also need to know what it was that Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p>We can record what Sean shouts by storing it in an instance variable as the <code>When</code> step runs. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span> <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 22</span> This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 23</span></p>
+<p>We can record what Sean shouts by storing it in an instance variable as the <code>When</code> step runs. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 26</span> This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 27</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1251,7 +1394,7 @@ Once again we&#8217;re going to write the code we wish we had.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We also need to add a <code>messagesHeard</code> method to our Person class.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span> Let&#8217;s do that now, we&#8217;ll just return null for now.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 25</span></p>
+<p>We also need to add a <code>messagesHeard</code> method to our Person class. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 28</span> Let&#8217;s do that now, we&#8217;ll just return null for now.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 29</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1276,35 +1419,38 @@ Once again we&#8217;re going to write the code we wish we had.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;and watch Cucumber run the tests again.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 26</span></p>
+<p>&#8230;&#8203;and watch Cucumber run the tests again. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 30</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">Step failed
-java.lang.AssertionError: expected:&lt;<span class="o">[</span>null]&gt; but was:&lt;null&gt;
-	at org.junit.Assert.fail<span class="o">(</span>Assert.java:89<span class="o">)</span>
-	at org.junit.Assert.failNotEquals<span class="o">(</span>Assert.java:835<span class="o">)</span>
-	at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:120<span class="o">)</span>
-	at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:146<span class="o">)</span>
-	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message<span class="o">(</span>StepDefinitions.java:27<span class="o">)</span>
-	at ✽.Lucy should hear Sean<span class="s1">'s message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+<pre class="rouge highlight"><code data-lang="bash">Testing started at 12:05 PM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java <span class="nt">-Dorg</span>.jetbrains.run.directory<span class="o">=</span>/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty <span class="nt">-javaagent</span>:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar<span class="o">=</span>41983:/home/fedex/Downloads/idea-IC-193.5662.53/bin <span class="nt">-Dfile</span>.encoding<span class="o">=</span>UTF-8 <span class="nt">-classpath</span> /home/fedex/code/java/shouty/target/test-classes:/home/fedex/code/java/shouty/target/classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main <span class="nt">--plugin</span> org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter <span class="nt">--strict</span> <span class="nt">--glue</span> io.cucumber.shouty /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty
 
-
-Failed scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
-
-1 Scenarios (1 failed)
-3 Steps (1 failed, 2 passed)
-0m0.431s
-
-
-java.lang.AssertionError: expected:&lt;[null]&gt; but was:&lt;null&gt;
+Step failed
+java.lang.AssertionError: expected:&lt;<span class="o">[</span>free bagels at Sean<span class="s1">'s]&gt; but was:&lt;null&gt;
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:120)
 	at org.junit.Assert.assertEquals(Assert.java:146)
-	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:27)
-	at ✽.Lucy should hear Sean'</span>s message<span class="o">(</span>file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6<span class="o">)</span>
+	at io.cucumber.shouty.StepDefinitions.lucy_hears_Sean_s_message(StepDefinitions.java:31)
+	at ✽.Lucy hears Sean’s message(file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:5)
+
+
+Failed scenarios:
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
+
+1 Scenarios (1 failed)
+3 Steps (1 failed, 2 passed)
+0m0.454s
+
+
+java.lang.AssertionError: expected:&lt;[free bagels at Sean'</span>s]&gt; but was:&lt;null&gt;
+	at org.junit.Assert.fail<span class="o">(</span>Assert.java:89<span class="o">)</span>
+	at org.junit.Assert.failNotEquals<span class="o">(</span>Assert.java:835<span class="o">)</span>
+	at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:120<span class="o">)</span>
+	at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:146<span class="o">)</span>
+	at io.cucumber.shouty.StepDefinitions.lucy_hears_Sean_s_message<span class="o">(</span>StepDefinitions.java:31<span class="o">)</span>
+	at ✽.Lucy hears Sean’s message<span class="o">(</span>file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:5<span class="o">)</span>
 
 
 
@@ -1335,31 +1481,34 @@ Your browser does not support the audio tag.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="bash">Step failed
-java.lang.AssertionError: expected:&lt;<span class="o">[</span>null]&gt; but was:&lt;null&gt;
-	at org.junit.Assert.fail<span class="o">(</span>Assert.java:89<span class="o">)</span>
-	at org.junit.Assert.failNotEquals<span class="o">(</span>Assert.java:835<span class="o">)</span>
-	at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:120<span class="o">)</span>
-	at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:146<span class="o">)</span>
-	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message<span class="o">(</span>StepDefinitions.java:27<span class="o">)</span>
-	at ✽.Lucy should hear Sean<span class="s1">'s message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+<pre class="rouge highlight"><code data-lang="bash">Testing started at 12:05 PM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java <span class="nt">-Dorg</span>.jetbrains.run.directory<span class="o">=</span>/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty <span class="nt">-javaagent</span>:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar<span class="o">=</span>41983:/home/fedex/Downloads/idea-IC-193.5662.53/bin <span class="nt">-Dfile</span>.encoding<span class="o">=</span>UTF-8 <span class="nt">-classpath</span> /home/fedex/code/java/shouty/target/test-classes:/home/fedex/code/java/shouty/target/classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main <span class="nt">--plugin</span> org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter <span class="nt">--strict</span> <span class="nt">--glue</span> io.cucumber.shouty /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty
 
-
-Failed scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
-
-1 Scenarios (1 failed)
-3 Steps (1 failed, 2 passed)
-0m0.431s
-
-
-java.lang.AssertionError: expected:&lt;[null]&gt; but was:&lt;null&gt;
+Step failed
+java.lang.AssertionError: expected:&lt;<span class="o">[</span>free bagels at Sean<span class="s1">'s]&gt; but was:&lt;null&gt;
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:120)
 	at org.junit.Assert.assertEquals(Assert.java:146)
-	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:27)
-	at ✽.Lucy should hear Sean'</span>s message<span class="o">(</span>file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6<span class="o">)</span>
+	at io.cucumber.shouty.StepDefinitions.lucy_hears_Sean_s_message(StepDefinitions.java:31)
+	at ✽.Lucy hears Sean’s message(file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:5)
+
+
+Failed scenarios:
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
+
+1 Scenarios (1 failed)
+3 Steps (1 failed, 2 passed)
+0m0.454s
+
+
+java.lang.AssertionError: expected:&lt;[free bagels at Sean'</span>s]&gt; but was:&lt;null&gt;
+	at org.junit.Assert.fail<span class="o">(</span>Assert.java:89<span class="o">)</span>
+	at org.junit.Assert.failNotEquals<span class="o">(</span>Assert.java:835<span class="o">)</span>
+	at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:120<span class="o">)</span>
+	at org.junit.Assert.assertEquals<span class="o">(</span>Assert.java:146<span class="o">)</span>
+	at io.cucumber.shouty.StepDefinitions.lucy_hears_Sean_s_message<span class="o">(</span>StepDefinitions.java:31<span class="o">)</span>
+	at ✽.Lucy hears Sean’s message<span class="o">(</span>file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:5<span class="o">)</span>
 
 
 
@@ -1367,11 +1516,10 @@ Process finished with <span class="nb">exit </span>code 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Lucy is expected to hear Sean&#8217;s message, but she hasn&#8217;t heard anything: we got <code>null</code> back from the <code>messages_heard</code> method.<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
+<p>Lucy is expected to hear Sean&#8217;s message, but she hasn&#8217;t heard anything: we got <code>null</code> back from the <code>messages_heard</code> method. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
-In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+<p>In this case, we’re going to cheat. We have a one-line fix that will make this scenario pass, but it’s not a particularly future-proof implementation. Can you guess what it is?<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1402,7 +1550,7 @@ In this case, we’re going to cheat. We have a one-line fix that will make this
 <p>I told you it wasn’t very future proof!</p>
 </div>
 <div class="paragraph">
-<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+<p><span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1428,7 +1576,7 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 <p>This is the essence of Behaviour-Driven Development. Examples of behaviour drive the development. We do just enough to make the next scenario pass, and no more.</p>
 </div>
 <div class="paragraph">
-<p>Instead of writing a note on our TODO list, let&#8217;s write another scenario that shouts a different message. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
+<p>Instead of writing a note on our TODO list, let&#8217;s write another scenario that shouts a different message. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1445,7 +1593,7 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>It fails, reminding us we need to find a solution that doesn&#8217;t rely on hard-coding the message. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+<p>It fails, reminding us we need to find a solution that doesn&#8217;t rely on hard-coding the message. <span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
 Now when we come back to this code, we can just run the tests and Cucumber will remind us what we need to do next. We&#8217;re done for today!</p>
 </div>
 <div class="listingblock">
@@ -1512,7 +1660,7 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-02-29 14:44:09 UTC
+Last updated 2020-03-01 15:11:39 UTC
 </div>
 </div>
 <style>
