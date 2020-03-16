@@ -1,0 +1,42 @@
+include::./title.adoc[]
+
+The first problem we’ll need to tackle is these hard-coded instance variable names.
+
+We can use a Map to store all the people involved in the scenario.
+
+Let’s try replacing Lucy first.
+
+shot::[???]
+
+We’ll start by creating a new hash/map in the before hook, like this.
+
+Now we can story Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.
+
+Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map.
+
+[runs cucumber. green]
+shot::[???]
+
+With that little refactoring done, we can now try and make this first step generic for any name.
+
+Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a String expression, we’ll have the name passed into our step definition as an argument, here.
+
+[change expression to "a person named {String}""]
+shot::[???]
+
+Now we can use that as the key in the hash/map.
+
+[use name arg as the key in the hash: @people[name] = new Person]
+
+[run Cucumber]
+shot::[???]
+
+If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.
+
+shot::[???]
+
+Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.
+
+shot::[???]
+
+Great, we’re green again.
