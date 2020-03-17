@@ -39,14 +39,18 @@ public class StepDefinitions {
 }
 ----
 
-To implement the first step, we need to create a couple of `Person` objects, one for Lucy shot::[2] and one for Sean.shot::[3]
+To implement the first step, we need to create a couple of `Person` objects, one
+for Lucy shot::[2] and one for Sean.shot::[3]
 
 [source,java]
 ----
 @Given("Lucy is {int} metres from Sean")
 public void lucy_is_metres_from_Sean(Integer distance) {
-    Person lucy = new Person();
-    Person sean = new Person();
+    @Given("Lucy is located {int} metres from Sean")
+    public void lucy_is_located_metres_from_Sean(Integer distance) {
+        Person lucy = new Person();
+        Person sean = new Person();
+    }
     // ...
 }
 ----
@@ -64,7 +68,6 @@ public class Person {
 
 shot::[5]
 And specify the distance between them.
-
 
 We can remove the `pending` status now, shot::[6] and this print statement,shot::[7] and write the implementation for the first step like this:
 

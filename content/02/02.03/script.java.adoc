@@ -35,13 +35,12 @@ $ mv cucumber-java-skeleton-<VERSION> shouty
 shot::[6]
 In your shell, cd into the shouty directory.
 
-shot::[7]
 The template project contains Maven and Ant build scripts that makes it easier
 to get started with Cucumber for Java.
 
 We’ll be using Maven, so if you haven’t installed that already, now is a good time to do that.
 
-shot::[8]
+shot::[7]
 Let’s take a look at what else is in this project.
 
 [source,bash]
@@ -83,10 +82,10 @@ $ tree
 17 directories, 14 files
 ----
 
-There is a main directory for our application code,shot::[9] and a test directory for our test code.shot::[10]
+There is a main directory for our application code,shot::[8] and a test directory for our test code.shot::[9]
 Let’s remove some of the files that come with the project.
 
-Remove `Belly.java`,shot::[11] `StepDefinitions.java` shot::[12] and `belly.feature`.shot::[13]
+Remove `Belly.java`,shot::[10] `StepDefinitions.java` shot::[11] and `belly.feature`.shot::[12]
 
 [source,bash]
 ----
@@ -95,7 +94,7 @@ $ rm src/test/java/io/cucumber/skeleton/StepDefinitions.java
 $ rm src/test/resources/io/cucumber/skeleton/belly.feature
 ----
 
-shot::[14]
+shot::[13]
 Now we have a bare bones project. We’ll be building it from the ground up so you can see what is going on.
 
 [source,bash]
@@ -137,8 +136,8 @@ $ tree
 Before we open the project in our IDE we are going to modify the name of the
 application.
 
-shot::[15]
-Open pom.xml and change the group ID, shot::[16] artifact ID shot::[17] and name. shot::[18]
+shot::[14]
+Open pom.xml and change the group ID, shot::[15] artifact ID shot::[16] and name. shot::[17]
 
 [source,xml]
 ----
@@ -155,17 +154,17 @@ Open pom.xml and change the group ID, shot::[16] artifact ID shot::[17] and name
 </project>
 ----
 
-shot::[19]
+shot::[18]
 // NOTE: You can see a bar on the lower part of the screen in this shot, maybe ARTHUR can remove it while editing. I also left a screenshot of IntelliJ's splashscreen in case we want to show that
 
 We are ready to start coding! We are going to use IntelliJ IDEA Community
 Edition because it has really nice Cucumber integration built-in. If you prefer
 to use a different IDE such as Eclipse, that is fine too.
 
-shot::[20]
+shot::[19]
 To open the project in InteliJ, just open the pom.xml file.
 
-shot::[21]
+shot::[20]
 Before we create any files, let’s rename the package from skeleton to shouty. In
 InteliJ you can rename it via the Refactor menu.
 
