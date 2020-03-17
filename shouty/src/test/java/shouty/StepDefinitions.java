@@ -23,14 +23,12 @@ public class StepDefinitions {
 
     @Given("a person named Lucy")
     public void a_person_named_Lucy() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+        lucy = new Person(network);
     }
 
     @Given("a person named Sean")
     public void a_person_named_Sean() {
-        // Write code here that turns the phrase above into concrete actions
-        throw new io.cucumber.java.PendingException();
+      sean = new Person(network);
     }
 
     @When("Sean shouts {string}")
