@@ -21,6 +21,18 @@ public class StepDefinitions {
         lucy.moveTo(distance);
     }
 
+    @Given("a person named Lucy")
+    public void a_person_named_Lucy() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
+    @Given("a person named Sean")
+    public void a_person_named_Sean() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }
+
     @When("Sean shouts {string}")
     public void sean_shouts(String message) throws Throwable {
         sean.shout(message);
