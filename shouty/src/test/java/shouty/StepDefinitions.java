@@ -20,14 +20,6 @@ public class StepDefinitions {
         network = new Network();
     }
 
-    @Given("Lucy is {int} metres from Sean")
-    public void lucy_is_located_m_from_Sean(int distance) throws Throwable {
-        Network network = new Network();
-        sean = new Person(network);
-        lucy = new Person(network);
-        lucy.moveTo(distance);
-    }
-
     @Given("a person named Lucy")
     public void a_person_named_Lucy() {
         lucy = new Person(network);
