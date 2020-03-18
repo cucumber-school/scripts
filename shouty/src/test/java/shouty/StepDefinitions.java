@@ -12,6 +12,7 @@ public class StepDefinitions {
     private Person sean;
     private Person lucy;
     private String messageFromSean;
+    private Network network = new Network();
 
     @Given("Lucy is {int} metres from Sean")
     public void lucy_is_located_m_from_Sean(int distance) throws Throwable {
