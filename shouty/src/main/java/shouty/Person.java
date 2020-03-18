@@ -16,9 +16,6 @@ public class Person {
         return messagesHeard;
     }
 
-    public void moveTo(int location) {
-    }
-
     public void shout(String message) {
         network.broadcast(message);
     }
