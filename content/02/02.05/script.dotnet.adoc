@@ -1,0 +1,271 @@
+include::./title.adoc[]
+
+////
+Overview: 
+* Automate: Given Lucy is located 15m from Sean (create Person class)
+* Automate: When Sean shouts "free bagels at Sean's" (move declarations to instance field)
+* Automate: Then Lucy hears Sean’s message (add assertion)
+////
+
+// *** Automate: Given Lucy is located 15m from Sean (create Person class) ***
+
+shot::[1]
+Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to _guide_ our development, so we'll start designing the objects we'll need by sketching out some code in our step definitions.
+
+The scenario will be failing while we do this, but we should see the error messages gradually progressing as we drive out the interface to our object model.
+
+Our next goal is for the scenario to fail because we need to implement the actual business logic. _Then_ we can work on changing the business logic inside our objects to make it pass.
+
+.StepDefinitions.cs
+[source,csharp]
+----
+[Binding]
+public class StepDefinitions
+{
+    [Given(@"Lucy is located (.*)m from Sean")]
+    public void GivenLucyIsLocatedMFromSean(int distance)
+    {
+        throw new PendingStepException();
+    }
+
+    [When(@"Sean shouts ""([^""]*)""")]
+    public void WhenSeanShouts(string p0)
+    {
+        throw new PendingStepException();
+    }
+
+    [Then(@"Lucy hears Sean’s message")]
+    public void ThenLucyHearsSeanSMessage()
+    {
+        throw new PendingStepException();
+    }
+}
+----
+
+To implement the first step, we need to create a couple of `Person` objects, one for Lucy shot::[2] and one for Sean.shot::[3]
+
+[source,csharp]
+----
+[Given(@"Lucy is located (.*)m from Sean")]
+public void GivenLucyIsLocatedMFromSean(int distance)
+{
+    var lucy = new Person();
+    var sean = new Person();
+
+    // ...
+}
+----
+
+
+Then we create the `Person` class into our production project to remove the errors.shot::[4] To make it visible for the SpecFlow project, shot::[5] we need to make it _public_.
+
+[source,csharp]
+----
+namespace Shouty
+{
+    public class Person
+    {
+    }
+}
+----
+
+shot::[6] In order to complete the step defintion for the _Given_ step, we need to specify the distance between Lucy and Sean.
+
+video::02.05.animation.mp4[]
+
+To keep things simple, we're going to assume all people are situated on a line: a one-dimensional co-ordinate system. We can always introduce proper geo-locations later. We'll place Sean in the centre, and Lucy 15 metres away from Sean.
+
+This might not be the design we'll end up with once this is all working, but it's a decent place to start.
+
+shot::[7]We can implement our simple distance concept by introducing a `MoveTo` method like this:shot::[8]
+
+[source,csharp]
+----
+[Given(@"Lucy is located (.*)m from Sean")]
+public void GivenLucyIsLocatedMFromSean(int distance)
+{
+    var lucy = new Person();
+    var sean = new Person();
+    lucy.MoveTo(distance);
+
+    throw new PendingStepException();
+}
+----
+
+We have two instances of person, one representing Lucy, shot::[9]and one representing Sean. shot::[10]Then we call a method to move Lucy to the position specified in the scenario.shot::[11]
+
+As this seems to be complete like this, we can remove the pending exception.shot::[12]
+
+There is no `MoveTo` method yet, shot::[13] so Visual Studio reports a compilation error. To fix it, we can create the method on the `Person` class, shot::[14] but at this stage we don't bother with the correct implementation. shot::[15] It is enough if it compiles, so an empty method is just fine for now.
+
+[source,csharp]
+----
+namespace Shouty
+{
+    public class Person
+    {
+        public void MoveTo(int distance)
+        {
+        }
+    }
+}
+----
+
+
+shot::[16]
+When we run the scenario, the first step should be passing! The easiest way to see this is to open the test output by clicking on the "Open additional output for this result" link shot::[17] and check the "Standard Output" section. Here you can see all steps executed by SpecFlow with their results. The first step is "done" shot::[18] and the two others are still pending shot::[19].
+
+[source,bash]
+----
+Given Lucy is located 15m from Sean
+-> done: StepDefinitions.GivenLucyIsLocatedMFromSean(15) (0.0s)
+When Sean shouts "free bagels at Sean's"
+-> pending: StepDefinitions.WhenSeanShouts("free bagels at Se...")
+Then Lucy hears Sean’s message
+-> skipped because of previous errors
+----
+
+We're making progress!
+
+We'll keep working like this until we see the scenario failing for the right reasons.
+
+
+
+// *** Automate: When Sean shouts "free bagels at Sean's" (move declarations to instance field) ***
+
+shot::[20]
+In the second step definition, we want to tell Sean to shout something.
+
+shot::[21]
+In order to send instructions to Sean from the second step, we need to store him in an _instance field_, so that he'll be accessible from all of our step definitions. 
+Let's move both declarations up to class level together with the initializations. shot::[22] 
+
+shot::[23]
+In the `When` step, we're capturing Sean's message using shot::[24] _this_ regular expression pattern that is mapped to the parameter shot::[25] `p0`. Let's give it a more meaningful name.shot::[26]
+Don't worry if the regular expression pattern sounds unfamiliar to you, we will look at that in detail in the next chapter.
+
+And now we can now tell Sean to _shout_ the message: shot::[27]
+
+[source,csharp]
+----
+[Binding]
+public class StepDefinitions
+{
+    private Person lucy = new Person();
+    private Person sean = new Person();
+
+    //...
+
+    [When(@"Sean shouts ""([^""]*)""")]
+    public void WhenSeanShouts(string message)
+    {
+        sean.Shout(message);
+    }
+
+    //...
+}
+----
+
+We eliminate the compilation error by implementing the `Shout` method in the `Person` class. shot::[28]
+
+[source,csharp]
+----
+namespace Shouty
+{
+    public class Person
+    {
+        public void MoveTo(int distance)
+        {
+        }
+
+        public void Shout(string message)
+        {
+        }
+    }
+}
+----
+
+When we run the scenarion again, shot::[29] the second step shot::[30] is also passing!.
+
+[source,bash]
+----
+Given Lucy is located 15m from Sean
+-> done: StepDefinitions.GivenLucyIsLocatedMFromSean(15) (0.0s)
+When Sean shouts "free bagels at Sean's"
+-> done: StepDefinitions.WhenSeanShouts("free bagels at Se...") (0.0s)
+Then Lucy hears Sean’s message
+-> pending: StepDefinitions.ThenLucyHearsSeanSMessage()
+----
+
+
+
+// *** Automate: Then Lucy hears Sean’s message (add assertion) ***
+
+shot::[31]
+The last step definition is where we implement a check, or assertion. We'll verify that what Lucy has heard is exactly the same as what Sean shouted.
+
+Once again we're going to write the code we wish we had. shot::[32] In that we are going to use an assertion from the `Xunit` library, so we need to add the neccessary namespace usages.
+
+shot::[33]
+
+[source,csharp]
+----
+[Then(@"Lucy hears Sean's message")]
+public void ThenLucyHearsSeanSMessage()
+{
+    Assert.Contains(messageFromSean, lucy.GetMessagesHeard());
+}
+----
+
+So we need a way to ask Lucy what messages she has heard, and we also need to know what it was that Sean shouted.
+
+We can record what Sean shouts by storing it in an instance field as the `When` step runs. shot::[34] shot::[35] This is a common pattern to use in SpecFlow step definitions when you don't want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. shot::[36]
+
+[source,csharp]
+----
+[When(@"Sean shouts ""([^""]*)""")]
+public void WhenSeanShouts(string message)
+{
+    sean.Shout(message);
+    messageFromSean = message;
+}
+----
+
+We also need to add a `GetMessagesHeard` method to our Person class.shot::[37] Let's do that now, we'll just return null for now.shot::[38]
+
+[source,csharp]
+----
+public class Person
+{
+    public void MoveTo(int distance)
+    {
+    }
+
+    public void Shout(string message)
+    {
+    }
+
+    public IList<string> GetMessagesHeard()
+    {
+        return null;
+    }
+}
+----
+
+...and watch SpecFlow run the tests again.shot::[39]
+
+[source,bash]
+----
+Given Lucy is located 15m from Sean
+-> done: StepDefinitions.GivenLucyIsLocatedMFromSean(15) (0.0s)
+When Sean shouts "free bagels at Sean's"
+-> done: StepDefinitions.WhenSeanShouts("free bagels at Se...") (0.0s)
+Then Lucy hears Sean's message
+-> error: Value cannot be null. (Parameter 'collection')
+----
+
+This is great! Whenever we do BDD, getting to our first failing test is a milestone. Seeing the test fail proves that it is capable of detecting errors in our code!
+
+Never trust an automated test that you haven't seen fail!
+
+Now all we have to do is write the code to make it do what it's supposed to.
