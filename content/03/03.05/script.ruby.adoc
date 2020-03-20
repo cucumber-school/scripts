@@ -30,7 +30,7 @@ We need to give it a `name` which is the name we'll use inside the curly bracket
 
 We also need to define -- gasp! -- a regular expression. shot::[] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario.
 
-Finally, there's a transformer block, shot::[] which takes the text captured from the Gherkin step that matched the regular expression pattern, then runs some code. The return value of this block is what will be passed to the step definition. In this case, we're passed the name of the person, though we don't use it at the moment when constructing a `Person`.
+Finally, there's a transformer block, shot::[] which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) which we can then pass to the `Person` class's constructor.
 
 All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
 
@@ -48,5 +48,5 @@ Feature: Hear shout
 3 steps (3 passed)
 ----
 
-Custom parameters allow you to bring your domain _model_ - the classes and methods in your solution - and your domain _language_ - the words you use in your scenarios and step defintions - closer together.
+Custom parameters allow you to bring your domain _model_ - the names of the classes and objects in your solution - and your domain _language_ - the words you use in your scenarios and step defintions - closer together.
 

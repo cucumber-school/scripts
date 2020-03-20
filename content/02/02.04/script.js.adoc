@@ -152,13 +152,11 @@ Warnings:
 npm ERR! Test failed.  See above for more details.
 ----
 
-// (Show a napkin drawing of a Person class with a location property).
-
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
-We’ll start by changing the `15` into the `{int}` Cucumber pattern shot::[21] and pass a parameter into the function, we'll call it `distance`.shot::[22]
+We'll rename the `int` parameter to something that better reflects its meaning. Let's call it `distance`.shot::[21]
 
-shot::[23]
+shot::[22]
 And we can print it to the terminal to see the captured result
 
 [source,js]
@@ -181,7 +179,7 @@ Then('Lucy hears Sean’s message', function () {
 });
 ----
 
-shot::[24]
+shot::[23]
 If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output.
 
 [source,bash]
@@ -216,4 +214,4 @@ Warnings:
 npm ERR! Test failed.  See above for more details.
 ----
 
-Notice that the number 15 does not appear anywhere in our code anymore. The value 15 is automatically passed from the gherkin step to the step definition. If you are curious, that’s why we changed it into `{int}` in the step definition pattern or _expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[24]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
