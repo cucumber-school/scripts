@@ -15,7 +15,7 @@ namespace Shouty
 
         public IList<string> GetMessagesHeard()
         {
-            return null;
+            return new List<string> { "free bagels at Sean's" };
         }
     }
 }
