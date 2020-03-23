@@ -9,6 +9,9 @@ namespace Shouty.Specs.StepDefinitions
         [Given("Lucy is located {int}m from Sean")]
         public void GivenLucyIsLocatedMFromSean(int distance)
         {
+            var lucy = new Person();
+            var sean = new Person();
+            
             throw new PendingStepException();
         }
 
