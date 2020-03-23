@@ -4,7 +4,7 @@ include::./title.adoc[]
 Overview: 
 * Automate: Given Lucy is located 15m from Sean (create Person class)
 * Automate: When Sean shouts "free bagels at Sean's" (move declarations to instance field)
-* Automate: Then Lucy hears Sean’s message (add assertion)
+* Automate: Then Lucy hears Sean's message (add assertion)
 ////
 
 // *** Automate: Given Lucy is located 15m from Sean (create Person class) ***
@@ -34,7 +34,7 @@ public class StepDefinitions
         throw new PendingStepException();
     }
 
-    [Then(@"Lucy hears Sean’s message")]
+    [Then(@"Lucy hears Sean's message")]
     public void ThenLucyHearsSeanSMessage()
     {
         throw new PendingStepException();
@@ -121,7 +121,7 @@ Given Lucy is located 15m from Sean
 -> done: StepDefinitions.GivenLucyIsLocatedMFromSean(15) (0.0s)
 When Sean shouts "free bagels at Sean's"
 -> pending: StepDefinitions.WhenSeanShouts("free bagels at Se...")
-Then Lucy hears Sean’s message
+Then Lucy hears Sean's message
 -> skipped because of previous errors
 ----
 
@@ -193,13 +193,13 @@ Given Lucy is located 15m from Sean
 -> done: StepDefinitions.GivenLucyIsLocatedMFromSean(15) (0.0s)
 When Sean shouts "free bagels at Sean's"
 -> done: StepDefinitions.WhenSeanShouts("free bagels at Se...") (0.0s)
-Then Lucy hears Sean’s message
+Then Lucy hears Sean's message
 -> pending: StepDefinitions.ThenLucyHearsSeanSMessage()
 ----
 
 
 
-// *** Automate: Then Lucy hears Sean’s message (add assertion) ***
+// *** Automate: Then Lucy hears Sean's message (add assertion) ***
 
 shot::[31]
 The last step definition is where we implement a check, or assertion. We'll verify that what Lucy has heard is exactly the same as what Sean shouted.

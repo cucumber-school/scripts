@@ -18,7 +18,7 @@ shot::[2]
 All feature files start with the keyword `Feature:`
 shot::[3]
 followed by a name.
-It’s a good convention to give it a name that matches the file name. shot::[4]
+It's a good convention to give it a name that matches the file name. shot::[4]
 
 .HearShout.feature
 [source,gherkin]
@@ -27,7 +27,7 @@ Feature: Hear shout
 ----
 
 shot::[5]
-Now let’s write out our first scenario.
+Now let's write out our first scenario.
 
 .HearShout.feature
 [source,gherkin]
@@ -35,7 +35,7 @@ Now let’s write out our first scenario.
 Scenario: Listener is within range
 	Given Lucy is located 15m from Sean
 	When Sean shouts "free bagels at Sean's"
-	Then Lucy hears Sean’s message
+	Then Lucy hears Sean's message
 ----
 
 
@@ -52,7 +52,7 @@ Run the tests. shot::[9]
 The test execution failed with an error message shot::[10] that says "No matching step definition found for one or more steps". This is because some of our steps are _undefined_. 
 shot::[11] Undefined steps are also higlighted in Visual Studio with an orange color.
 
-_Undefined_ means SpecFlow doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
+_Undefined_ means SpecFlow doesn't know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
 // animation start
 video::02.04.animation.mp4[]
@@ -62,13 +62,13 @@ Step definitions translate from the plain language you use in Gherkin into C# co
 When SpecFlow runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.
 // animation end
 
-If it doesn’t find one… well, you’ve just seen what happens. shot::[12] SpecFlow prints out some code snippets that we can use as a basis for new step definitions, 
+If it doesn't find one… well, you've just seen what happens. shot::[12] SpecFlow prints out some code snippets that we can use as a basis for new step definitions, 
 but you can get the same snippets from Visual Studio, shot::[13] using the "Define steps..." command in the editor. 
 
 
 // *** Add step definition snippets ***
 
-The dialog can help us to create a new class and paste the selected snippets. shot::[14] We'll just call the class `Steps`. shot::[15]
+The dialog can help us to create a new class and paste the selected snippets. shot::[14] We'll just call the class `StepDefinitions`. shot::[15]
 
 shot::[16] The wizard detected that we had a `StepDefinitions` folder and saved the new class there. SpecFlow would find it anywhere within the same project, but it is better this way.
 
@@ -91,7 +91,7 @@ You can think of the `PendingStepException` as a reminder of that.
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
 shot::[20]
-We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
+We'll rename the `int` parameter to something that better reflects its meaning. We'll call it `distance`.
 
 shot::[21] We can put a breakpoint into the method and shot::[22] debug the scenario to see what's happening.
 
@@ -99,4 +99,4 @@ shot::[23] When the breakpoint hits, the value of the `distance` parameter is 15
 
 Notice that the number 15 does not appear anywhere in our C# code. The value is automatically passed from the scenario step to the step definition. 
 
-If you're interested, that was caused by the shot::[24]`(.*)` expression in the parameter of the `Given` attribute. We’ll explain these expressions in detail in a future lesson.
+If you're interested, that was caused by the shot::[24]`(.*)` expression in the parameter of the `Given` attribute. We'll explain these expressions in detail in a future lesson.
