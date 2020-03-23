@@ -6,18 +6,19 @@ namespace Shouty.Specs.StepDefinitions
     [Binding]
     public class StepDefinitions
     {
+        private Person lucy = new Person();
+        private Person sean = new Person();
+
         [Given("Lucy is located {int}m from Sean")]
         public void GivenLucyIsLocatedMFromSean(int distance)
         {
-            var lucy = new Person();
-            var sean = new Person();
             lucy.MoveTo(distance);
         }
 
         [When("Sean shouts {string}")]
-        public void WhenSeanShouts(string p0)
+        public void WhenSeanShouts(string message)
         {
-            throw new PendingStepException();
+            sean.Shout(message);
         }
 
         [Then("Lucy hears Sean's message")]
