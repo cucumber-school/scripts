@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Shouty
 {
@@ -10,6 +11,11 @@ namespace Shouty
 
         public void Shout(string message)
         {
+        }
+
+        public IList<string> GetMessagesHeard()
+        {
+            return null;
         }
     }
 }
