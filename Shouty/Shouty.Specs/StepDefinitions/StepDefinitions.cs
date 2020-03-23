@@ -11,7 +11,8 @@ namespace Shouty.Specs.StepDefinitions
         {
             var lucy = new Person();
             var sean = new Person();
-            
+            lucy.MoveTo(distance);
+
             throw new PendingStepException();
         }
 
