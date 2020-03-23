@@ -1,11 +1,61 @@
 === Install SpecFlow
 
 ////
-TODO: 
-[ ] Explain that SpecFlow is a NuGet package and can be used without IDE, but easier with Visual Studio, we use Visual Studio 2019 Community Edition
-[ ] Install Visual Studio extension for SpecFlow
-[ ] Create a new VS project and setup SpecFlow dependencies (using xUnit, .NET Core, including Features, Support and StepDefinitions folder)
-[ ] Build ('Now we’re ready to create our first feature file.')
+Overview: 
+* Explain that SpecFlow is a NuGet package and can be used without IDE, but easier with Visual Studio, we use Visual Studio 2019 Community Edition
+* Install Visual Studio extension for SpecFlow
+* Create a new VS project and setup SpecFlow dependencies (using xUnit, .NET Core)
+* Setup common conventions: Features, Support and StepDefinitions folder 
+* Build ('Now we're ready to create our first feature file.')
 ////
 
-Now we’re ready to create our first feature file.
+
+// *** Explain that SpecFlow is a NuGet package and can be used without IDE, but easier with Visual Studio, we use Visual Studio 2019 Community Edition ***
+
+SpecFlow is an open-source tool that is available as a NuGet package that you need to configure for your project. Although SpecFlow works fine even without Visual Studio, in Cucumber School we are going to use Visual Studio 2019, because SpecFlow nicely integrates with that. If you don't have Visual Studio, you can download the Visual Studio Community edition that is free for education purposes and small teams. 
+
+In order to use the Visual Studio integration of SpecFlow, you need to install a Visual Studio extension. This is something you would only need to do once. The Visual Studio extensions can be managed by opening the *Manage Extensions* command from the *Extensions* menu. shot::[1]
+
+There are plenty of useful extensions in the Visual Studio marketplace shot::[2] and for SpecFlow there are two extensions that you can choose from. You will find these if you type *SpecFlow* into the search box. shot::[3] Both the *SpecFlow for Visual Studio 2019* shot::[4] and the *Deveroom for SpecFlow* shot::[5] extensions work well with SpecFlow and both of them are free and open-source. In this course I will use the Deveroom extension, but you can follow the exercises with the other one as well. 
+
+// *** Install Visual Studio extension for SpecFlow ***
+
+In order to install the extension you just need to click on the *Download* button next to the name of the extension you selected.shot::[6] The extension is downloaded, but it only gets installed once you close your Visual Studio. So we need to close all instances of Visual Studio 2019 and wait for the install dialog to pop up. shot::[7]
+
+shot::[8] Here it is. Accept the installation of the extension by clicking on the *Modify* button shot::[9], that completes the setup process. shot::[10] Our Visual Studio is now ready to work with SpecFlow. So we are.
+
+// *** Create a new VS project and setup SpecFlow dependencies (using xUnit, .NET Core, including Features, Support and StepDefinitions folder) ***
+
+Now we are going to create a Visual Studio solution for the Shouty application. shot::[11] As we will focus on the business logic of the application in this course, I create a .NET Standard class library project to for the production code. shot::[12] I also remove the class that comes with the template. shot::[13] 
+
+We also need to add a project for the scenarios and the automation code. SpecFlow works with test execution frameworks in order to make the scenarios executable. It supports all well known test execution frameworks like MsTest, NUnit or xUnit. There is also a free dedicated runner developed by Tricentis called SpecFlow+ Runner. For the sake of simplicity in this course we are going to use xUnit, so I add a .NET Core *xUnit Test Project* into my solution. shot::[14] 
+
+shot::[15] I call our test project as *Shouty.Specs*. Calling the project as *Specs* emphasizes that we are not only testing our project but we would like to create an executable specification. As we won't have coded unit test in this project I remove the `UnitTest1.cs` file added by the template.shot::[16]
+
+To make this project a *SpecFlow project*, we need to add a two NuGet package references. 
+
+The first is *SpecFlow.xUnit*. shot::[17] This is going to install SpecFlow for the project and configure it to work with xUnit. 
+
+shot::[18] At the time of the recording this leads to an error as the xUnit version used by the *xUnit Test Project* template is not recent enough for the latest SpecFlow version. This is something we can easily fix by updating the xUnit related packages of the specs project. shot::[19] In fact we can upgrade all packages in this case. shot::[20]
+
+shot::[21] Installing the *SpecFlow.xUnit* package is successful now.
+
+The second package we need to add is the *SpecFlow.Tools.MsBuild.Generation* package. shot::[22] This will instruct SpecFlow to turn our scenarios into executable tests every time we build the project. shot::[23]
+
+As we automate the scenarios, we will need to create classes and call methods from the application project. To make this possible we need to add a reference to the SpecFlow project shot::[24] pointing to the `Shouty` project. shot::[25]
+
+Let's have a quick look at the project file of the `Specs` project. shot::[26] If we did everything well, our project file should look like this. As this is a .NET Core project, we could actually achieve the same outcome just by adding these lines to the project file manually. Probably would have been easier. Maybe next time. 
+
+// *** Setup common conventions: Features, Support and StepDefinitions folder ***
+
+The SpecFlow project will contain the feature file the automation code and some other files necessary for the automation infrastructure. Adding all these into the root folder of the project would be quite messy. The teams who work with SpecFlow usually follow some conventions in order to structure the SpecFlow projects. If you have used any Cucumber-family tools before, these conventions will be familiar for you.
+
+To achieve that, let's create three folders. One, called `Features` shot::[27] where we will store... well the feature files, I guess. The second folder that we usually have is called `StepDefinitions`. shot::[28] This will be the container for our automation code. And finally we also create a third folder called `Support` shot::[29] where we can store any files related to the supporting infrastructure.
+
+Nice!
+
+// *** Build ('Now we're ready to create our first feature file.') ***
+
+Let's verify out setup by building the solution. shot::[30]
+
+The build succeeded so now we're ready to create our first feature file.
