@@ -6,7 +6,7 @@ Given("{person} is located/standing {int} metre(s) from Sean") do |person, dista
 end
 
 When("Sean shouts {string}") do |message|
-  sean = Shouty::Person.new
+  sean = Shouty::Person.new('Sean')
   sean.shout(message)
   @message_from_sean = message
 end

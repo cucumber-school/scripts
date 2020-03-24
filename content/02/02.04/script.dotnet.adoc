@@ -38,7 +38,7 @@ Scenario: Listener is within range
 	Then Lucy hears Sean’s message
 ----
 
-shot::[] This is the one where the listener is within range. shot::[] Given Lucy is located 15 metres for Sean, shot::[] When Sean shouts "free bagels at Sean's", shot::[], Then Lucy hears Sean's message.
+shot::[5.1] This is the one where the listener is within range. shot::[5.2] Given Lucy is located 15 metres for Sean, shot::[5.3] When Sean shouts "free bagels at Sean's", shot::[5.4], Then Lucy hears Sean's message.
 
 // *** Show undefined and explain step definitions ***
 
@@ -56,7 +56,7 @@ shot::[11] Undefined steps are also higlighted in Visual Studio with an orange c
 _Undefined_ means SpecFlow doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
 // animation start
-video::02.04.animation.mp4[]
+shot::[11.1, "02.04.animation.mp4"]
 
 Step definitions translate from the plain language you use in Gherkin into C# code. We write a C# method, then annotate it with a pattern using the Given, When or Then attributes provided by SpecFlow.
 

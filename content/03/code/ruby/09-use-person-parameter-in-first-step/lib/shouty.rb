@@ -1,5 +1,8 @@
 module Shouty
   class Person
+    def initialize(name)
+    end
+
     def move_to(distance)
 
     end

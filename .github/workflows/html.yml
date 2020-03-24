@@ -12,6 +12,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Slack Notification
+      uses: homoluctus/slatify@master
+      if: failure()
+      with:
+        type: ${{ job.status }}
+        job_name: '*GitHub Actions HTML build*'
+        channel: '#school-devs'
+        url: ${{ secrets.SLACK_WEBHOOK_URL }}
     - uses: actions/checkout@v2
       with:
         fetch-depth: 0
@@ -26,13 +34,6 @@ jobs:
     - name: Check unrolled code is up to date
       run: |
         bundle exec rake code
-        if [ -z "$(git status --porcelain)" ]; then
-          echo "Unrolled code is in sync with code branches"
-        else 
-          >&2 echo "One or more code branches are not in sync with unrolled commits."
-          git status
-          >&2 echo "Either you need to run `rake code` and commit the changes, or you've forgotten to push a code branch"
-        fi
     - name: Generate HTML pages using asciidoc
       run: 
         shots=1 bundle exec rake html

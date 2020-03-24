@@ -16,7 +16,7 @@ Now let’s write out our first scenario.
 ----
 Feature: Hear shout
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
 ----
@@ -34,54 +34,73 @@ $ mvn clean test
 shot::[6]
 Maven will now download Cucumber, compile your code and tell Cucumber to run your feature file.
 
-You’ll see that Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps,shot::[7] one scenario shot::[8] - all undefined.shot::[9]
+You’ll see that Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom - 3 steps,shot::[7] one scenario shot::[8] - all undefined.
 
-Let’s run the scenario again from inside InteliJ.shot::[10]
-Select the feature file shot::[11] and choose Run from the context menu.shot::[12]
-This will give you similar output.shot::[13]
+Let’s run the scenario again from inside InteliJ.shot::[9]
+Select the feature file shot::[10] and choose Run from the context menu.shot::[11]
+This will give you similar output.shot::[12]
 
 [source,bash]
 ----
 $ mvn clean test
-Step undefined
-You can implement missing steps with the snippets below:
-@Given("Lucy is {int} metres from Sean")
-public void lucy_is_metres_from_Sean(Integer int1) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
+WARNING: An illegal reflective access operation has occurred
+WARNING: Illegal reflective access by com.google.inject.internal.cglib.core.$ReflectUtils$1 (file:/usr/share/maven/lib/guice.jar) to method java.lang.ClassLoader.defineClass(java.lang.String,byte[],int,int,java.security.ProtectionDomain)
+WARNING: Please consider reporting this to the maintainers of com.google.inject.internal.cglib.core.$ReflectUtils$1
+WARNING: Use --illegal-access=warn to enable warnings of further illegal reflective access operations
+WARNING: All illegal access operations will be denied in a future release
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] -----------------------< cucumber-school:shouty >-----------------------
+[INFO] Building Shouty 0.0.1
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ shouty ---
+[INFO] Deleting /home/fedex/code/java/shouty/target
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ shouty ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory /home/fedex/code/java/shouty/src/main/resources
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.3:compile (default-compile) @ shouty ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ shouty ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 1 resource
+[INFO] 
+[INFO] --- maven-compiler-plugin:3.3:testCompile (default-testCompile) @ shouty ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 1 source file to /home/fedex/code/java/shouty/target/test-classes
+[INFO] 
+[INFO] --- maven-surefire-plugin:2.12.4:test (default-test) @ shouty ---
+[INFO] Surefire report directory: /home/fedex/code/java/shouty/target/surefire-reports
 
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running io.cucumber.shouty.RunCucumberTest
+Feb 29, 2020 12:24:33 PM io.cucumber.junit.Cucumber <init>
+WARNING: By default Cucumber is running in --non-strict mode.
+This default will change to --strict and --non-strict will be removed.
+You can use --strict or @CucumberOptions(strict = true) to suppress this warning
 
-Step undefined
-You can implement missing steps with the snippets below:
-@When("Sean shouts {string}")
-public void sean_shouts(String string) {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
-
-Step undefined
-You can implement missing steps with the snippets below:
-@Then("Lucy should hear Sean's message")
-public void lucy_should_hear_Sean_s_message() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}
-
+Scenario: Listener is within range          # io/cucumber/shouty/hear_shout.feature:2
+  Given Lucy is located 15 metres from Sean # null
+  When Sean shouts "free bagels at Sean's"  # null
+  Then Lucy hears Sean’s message            # null
 
 Undefined scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+classpath:io/cucumber/shouty/hear_shout.feature:2# Listener is within range
 
 1 Scenarios (1 undefined)
 3 Steps (3 undefined)
-0m0.418s
+0m0.200s
 
 
 You can implement missing steps with the snippets below:
 
-@Given("Lucy is {int} metres from Sean")
-public void lucy_is_metres_from_Sean(Integer int1) {
+@Given("Lucy is located {int} metres from Sean")
+public void lucy_is_located_metres_from_Sean(Integer int1) {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
@@ -92,30 +111,41 @@ public void sean_shouts(String string) {
     throw new io.cucumber.java.PendingException();
 }
 
-@Then("Lucy should hear Sean's message")
-public void lucy_should_hear_Sean_s_message() {
+@Then("Lucy hears Sean’s message")
+public void lucy_hears_Sean_s_message() {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
 
 
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1, Time elapsed: 0.879 sec
 
-Process finished with exit code 0
+Results :
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  4.147 s
+[INFO] Finished at: 2020-02-29T12:24:34-03:00
+[INFO] ------------------------------------------------------------------------
 ----
 
-shot::[14]
 _Undefined_ means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario.
 It needs us to provide some _step definitions_.
 
-video::02.04.animation.mp4[]
+shot::[12.1, "02.04.animation.mp4"]
 
 Step definitions translate from the plain language you use in Gherkin into Java code. We write a Java method, then annotate it with a pattern. 
 
 When cucumber runs a step, it looks for a step definition with a matching pattern. If it finds one, then it executes the method.
 
-If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.
+shot::[13]
+If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.shot::[14]
 
-We’ll create a new class in the shouty package where we’ll paste those snippets. Make sure you create it under test and not main.
+
+We’ll create a new class in the shouty package shot::[15] where we’ll paste those snippets. Make sure you create it under test and not main. shot::[16]
 
 [source,java]
 ----
@@ -148,28 +178,97 @@ public class StepDefinitions {
 }
 ----
 
-shot::[15]
+shot::[17]
 Now InteliJ is complaining that there are some unknown symbols. We need to add
 some import statements! Pressing ALT-ENTER will do that for us.
 
-shot::[16]
+shot::[18]
+// ARTHUR: I let this run longer than it should've ... you can cut it shorter if needed.
 Let’s return to the scenario and run it again.
 
-// TODO: Add empty run
+[source,bash]
+----
+Testing started at 12:28 PM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java -Dorg.jetbrains.run.directory=/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty -javaagent:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar=40217:/home/fedex/Downloads/idea-IC-193.5662.53/bin -Dfile.encoding=UTF-8 -classpath /home/fedex/code/java/shouty/target/test-classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature
+Feb 29, 2020 12:28:30 PM io.cucumber.core.cli.Main run
+WARNING: By default Cucumber is running in --non-strict mode.
+This default will change to --strict and --non-strict will be removed.
+You can use --strict to suppress this warning
 
-shot::[17]
+Step undefined
+You can implement missing steps with the snippets below:
+@Given("Lucy is located {int} metres from Sean")
+public void lucy_is_located_metres_from_Sean(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Step undefined
+You can implement missing steps with the snippets below:
+@When("Sean shouts {string}")
+public void sean_shouts(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Step undefined
+You can implement missing steps with the snippets below:
+@Then("Lucy hears Sean’s message")
+public void lucy_hears_Sean_s_message() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Undefined scenarios:
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
+
+1 Scenarios (1 undefined)
+3 Steps (3 undefined)
+0m0.365s
+
+
+You can implement missing steps with the snippets below:
+
+@Given("Lucy is located {int} metres from Sean")
+public void lucy_is_located_metres_from_Sean(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@When("Sean shouts {string}")
+public void sean_shouts(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+@Then("Lucy hears Sean’s message")
+public void lucy_hears_Sean_s_message() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+
+Process finished with exit code 0
+----
+
+shot::[19]
 // Menu -> Run -> Edit Configurations -> Feature or folder path: -> /home/fedex/code/shouty-java/src/test/resources/shouty/
+// io.cucumber.shouty
 There is a small bug in InteliJ’s Cucumber integration. Sometimes it doesn’t tell Cucumber where to find step definitions. This is easy to work around. Just edit the run configuration and make sure the Glue field contains the value of your package.
 
-shot::[18]
+shot::[20]
 Now we can run it again.
 
 This time the output is a little different.
 
-We now have a pending step shot::[19] and two skipped ones.shot::[20]
+We now have a pending step shot::[21] and two skipped ones.shot::[22]
 
 This means Cucumber found all our step definitions, and executed the
-first one. But that first step definition throws a `PendingException`,shot::[21] which
+first one. But that first step definition throws a `PendingException`,shot::[23] which
 causes Cucumber to stop, skip the rest of the steps, and mark the scenario as
 pending.
 
@@ -200,10 +299,10 @@ Process finished with exit code 0
 
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
-shot::[22]
+shot::[24]
 We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
 
-shot::[23]
+shot::[25]
 We can print it to the terminal to see what's happening.
 
 [source,java]
@@ -216,7 +315,7 @@ We can print it to the terminal to see what's happening.
 
 ----
 
-If we run it again, shot::[24] we can see the number 15 pop up in the output. shot::[25]
+If we run it again, shot::[26] we can see the number 15 pop up in the output. shot::[27]
 
 [source,bash]
 ----
@@ -238,4 +337,4 @@ file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# L
 # ...
 ----
 
-Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[26]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[28]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.

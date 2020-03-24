@@ -1,7 +1,5 @@
 include::./title.adoc[]
 
-audio::02.06.audio.mp3[]
-
 So we have our failing scenario: shot::[1]
 
 [source,bash]
@@ -14,7 +12,7 @@ $ npm test
 Feature: Hear shout
 
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
     ✖ failed
@@ -28,14 +26,14 @@ Feature: Hear shout
           +  "free bagels at Sean's"
           +]
       
-          at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:19:3)
+          at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:17:3)
 
 Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:7
-   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:13
-   ✖ Then Lucy hears Sean’s message # features/step_definitions/steps.js:18
+   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:5
+   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:11
+   ✖ Then Lucy hears Sean’s message # features/step_definitions/steps.js:16
        AssertionError: 
        Expected: is ["free bagels at Sean's"]
             but: was []
@@ -46,11 +44,11 @@ Failures:
            +  "free bagels at Sean's"
            +]
        
-           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:19:3)
+           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:17:3)
 
 1 scenario (1 failed)
 3 steps (1 failed, 2 passed)
-0m00.002s
+0m00.003s
 npm ERR! Test failed.  See above for more details.
 ----
 
@@ -89,13 +87,13 @@ $ npm test
 Feature: Hear shout
 
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
 
 1 scenario (1 passed)
 3 steps (3 passed)
-0m00.002s
+0m00.001s
 ----
 
 Woohoo! Our scenario is passing for the first time. As long as this is the only message anyone ever shouts, we're good to ship this thing!
@@ -118,7 +116,7 @@ Feature: Hear shout
     Then Lucy hears Sean’s message
 
   Scenario: Listener hears a different message
-    Given Lucy is 15m from Sean
+    Given Lucy is 15 metres from Sean
     When Sean shouts "Free coffee!"
     Then Lucy hears Sean's message
 ----
@@ -137,12 +135,12 @@ $ npm test
 Feature: Hear shout
 
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
 
   Scenario: Listener hears a different message
-    Given Lucy is 15m from Sean
+    Given Lucy is 15 metres from Sean
     ? undefined
     When Sean shouts "Free coffee!"
     - skipped
@@ -152,15 +150,16 @@ Feature: Hear shout
 Warnings:
 
 1) Scenario: Listener hears a different message # features/hear_shout.feature:7
-   ? Given Lucy is 15m from Sean
+   ? Given Lucy is 15 metres from Sean
        Undefined. Implement with the following snippet:
 
-         Given('Lucy is 15m from Sean', function () {
+         Given('Lucy is {int} metres from Sean', function (int) {
+         // Given('Lucy is {float} metres from Sean', function (float) {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
 
-   - When Sean shouts "Free coffee!" # features/step_definitions/steps.js:13
+   - When Sean shouts "Free coffee!" # features/step_definitions/steps.js:11
    ? Then Lucy hears Sean's message
        Undefined. Implement with the following snippet:
 
@@ -172,6 +171,6 @@ Warnings:
 
 2 scenarios (1 undefined, 1 passed)
 6 steps (2 undefined, 1 skipped, 3 passed)
-0m00.002s
+0m00.001s
 npm ERR! Test failed.  See above for more details.
 ----

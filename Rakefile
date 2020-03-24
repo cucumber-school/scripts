@@ -43,15 +43,18 @@ task :html, [:lang] => :generate_index_files do |t, args|
     Asciidoctor.convert_file "content/index.#{code}.adoc",
                              safe: :safe,
                              to_file: "public/index.#{code}.html",
-                             attributes: { 'shots' => ENV['shots'] }
+                             attributes: { 'shots' => false }
+    Asciidoctor.convert_file "content/index.#{code}.adoc",
+                             safe: :safe,
+                             to_file: "public/index.#{code}.shots.html",
+                             attributes: { 'shots' => true }
   end
 
   Dir.chdir('content') do
     puts "Generating content/languages.adoc"
     File.open("./languages.adoc", "w") do |f|
       LANGUAGES.each do |code, name|
-        f << "- link:./index.#{code}.html[#{name} Version]\n"
-
+        f << "- link:./index.#{code}.html[#{name} Version] (link:./index.#{code}.shots.html[Shots])\n"
       end
     end
   end
@@ -59,8 +62,7 @@ task :html, [:lang] => :generate_index_files do |t, args|
   puts "Generating main index page"
   Asciidoctor.convert_file "content/index.adoc",
                            safe: :safe,
-                           to_file: "public/index.html",
-                           attributes: { 'shots' => ENV['shots'] }
+                           to_file: "public/index.html"
 end
 
 task :default => :html
@@ -68,8 +70,8 @@ task :default => :html
 require 'asciidoctor'
 require 'asciidoctor/extensions'
 
-def tag(text, args={})
-  %(<span style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">#{text} #{args.values.first}</span>)
+def shot(number, title="Shot #{number}")
+  %(<span title="#{title}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot #{number}</span>)
 end
 
 class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
@@ -80,7 +82,7 @@ class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
   def process parent, target, attrs
     doc = parent.document
     return unless doc.attributes['shots']
-    tag("Shot", attrs)
+    shot(attrs.values.first, attrs.values[1])
   end
 end
 

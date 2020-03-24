@@ -12,12 +12,12 @@ Our next goal is for the scenario to fail because we need to implement the actua
 ----
 const { Given, When, Then } = require('cucumber')
 
-Given('Lucy is located {int}m from Sean', function (distance) {
+Given('Lucy is located {int} metres from Sean', function (distance) {
   console.log(distance)
   return 'pending'
 })
 
-When('Sean shouts “free bagels at Sean’s”', function () {
+When('Sean shouts {string}', function (string) {
   // Write code here that turns the phrase above into concrete actions
   return 'pending'
 })
@@ -28,34 +28,21 @@ Then('Lucy hears Sean’s message', function () {
 })
 ----
 
-shot::[2]
-To implement the first step, we need to create a couple of `Person` objects, with the specified distance between them. shot::[3] We can remove the `pending` status now,shot::[4] and this `console.log` statement,shot::[5] and write the implementation for the first step like this:
+To implement the first step, we need to create a couple of `Person` objects,shot::[2] with the specified distance between them. shot::[3] We can remove the `pending` status now,shot::[4] and this `console.log` statement,shot::[5] and write the implementation for the first step like this:
 
 .steps.js
 [source,js]
 ----
-const { Given, When, Then } = require('cucumber');
-
-Given('Lucy is located {int}m from Sean', function (distance) {
+Given('Lucy is located {int} metres from Sean', function (distance) {
   this.lucy = new Person
   this.sean = new Person
   this.lucy.moveTo(distance)
-});
-
-When('Sean shouts “free bagels at Sean’s”', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
-});
-
-Then('Lucy hears Sean’s message', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
-});
+})
 ----
 
 We have two instances of person, one representing Lucy, shot::[6]and one representing Sean. shot::[7]Then we call a method to move Lucy to the position specified in the scenario.shot::[8]
 
-video::02.05.animation.mp4[]
+shot::[8.1, "02.05.animation.mp4"]
 
 To keep things simple, we're going to assume all people are situated on a line: a one-dimensional co-ordinate system. We can always introduce proper geo-locations later. We'll place Sean in the centre, and Lucy 15 metres away from Sean.
 
@@ -141,7 +128,7 @@ $ npm test
 Feature: Hear shout
 
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     ✖ failed
       TypeError: this.lucy.moveTo is not a function
           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:7:13)
@@ -153,7 +140,7 @@ Feature: Hear shout
 Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✖ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:4
+   ✖ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
        TypeError: this.lucy.moveTo is not a function
            at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:7:13)
    - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
@@ -161,7 +148,7 @@ Failures:
 
 1 scenario (1 failed)
 3 steps (1 failed, 2 skipped)
-0m00.001s
+0m00.000s
 npm ERR! Test failed.  See above for more details.
 ----
 
@@ -171,14 +158,13 @@ We'll add the method definition without implementing it yet.
 [source,js]
 ----
 class Person {
-  moveTo() {
+  moveTo(distance) {
 
   }
 }
 ----
 
-shot::[19]
-When we run the scenario again, the first step is green!
+When we run the scenario again,shot::[19] the first step is green!shot::[20]
 
 [source,bash]
 ----
@@ -190,7 +176,7 @@ $ npm test
 Feature: Hear shout
 
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     ? pending
     Then Lucy hears Sean’s message
@@ -199,7 +185,7 @@ Feature: Hear shout
 Warnings:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:4
+   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
    ? When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
        Pending
    - Then Lucy hears Sean’s message # features/step_definitions/steps.js:15
@@ -216,36 +202,29 @@ We'll keep working like this until we see the scenario failing for the right rea
 
 In the second step definition, we want to tell Sean to shout something.
 
-shot::[20]
+shot::[21]
 In order to send instructions to Sean, we need to store him in an property, which we already have, so that he’ll be accessible from all of our step definitions.
 
-shot::[21]
-In the `When` step, we're capturing Sean's message using the `{string}` pattern, and pass an argument to the function. We'll call it `message`.shot::[22]
+shot::[22]
+In the `When` step, we're capturing Sean's message using the `{string}` pattern, and pass an argument to the function. We'll call it `message`.shot::[23]
 
-shot::[23]
+shot::[24]
 And now we can now tell him to _shout_ the message:
 
 [source,js]
 ----
-const { Given, When, Then } = require('cucumber');
-
-Given('Lucy is located {int}m from Sean', function (distance) {
+Given('Lucy is located {int} metres from Sean', function (distance) {
   this.lucy = new Person
   this.sean = new Person
   this.lucy.moveTo(distance)
-});
+})
 
 When('Sean shouts {string}', function (message) {
   this.sean.shout(message)
 });
-
-Then('Lucy hears Sean’s message', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending';
-});
 ----
 
-shot::[24]
+shot::[25]
 If we run Cucumber, it's telling is that our `Person` class needs a `shout` method. 
 
 [source,bash]
@@ -258,7 +237,7 @@ $ npm test
 Feature: Hear shout
 
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     ✖ failed
       TypeError: this.sean.shout is not a function
@@ -269,7 +248,7 @@ Feature: Hear shout
 Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:4
+   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
    ✖ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
        TypeError: this.sean.shout is not a function
            at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:11:13)
@@ -278,16 +257,17 @@ Failures:
 1 scenario (1 failed)
 3 steps (1 failed, 1 skipped, 1 passed)
 0m00.000s
+npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[25]
+shot::[26]
 Let’s not worry about the implementation yet. The most important thing right now is to discover the shape of our domain model.
 
 .shouty.rb
 [source,js]
 ----
 class Person {
-  moveTo() {
+  moveTo(distance) {
     
   }
 
@@ -297,7 +277,7 @@ class Person {
 }
 ----
 
-And now the second step is green: shot::[26]
+And now the second step is green: shot::[27]
 
 [source,bash]
 ----
@@ -309,7 +289,7 @@ $ npm test
 Feature: Hear shout
 
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
     ? pending
@@ -317,29 +297,28 @@ Feature: Hear shout
 Warnings:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:4
+   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
    ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
    ? Then Lucy hears Sean’s message # features/step_definitions/steps.js:14
        Pending
 
 1 scenario (1 pending)
 3 steps (1 pending, 2 passed)
-0m00.002s
+0m00.000s
 npm ERR! Test failed.  See above for more details.
 ----
 
-shot::[27]
+shot::[28]
 The last step definition is where we implement a check, or assertion. We’ll verify that what Lucy has heard is exactly the same as what Sean shouted.
 
-shot::[28]
+shot::[29]
 Once again we’re are going to write the code we wish we had.
 
-But before, we need to import `assertThat` shot::[29] and `is` shot::[30] from `hamjest`
+But before, we need to import `assertThat` shot::[30] and `is` shot::[31] from `hamjest`shot::[32]
 
 [source,js]
 ----
-const { assertThat } = require('hamjest')
-const { is } = require('hamjest')
+const { assertThat, is } = require('hamjest')
 
 // ...
 
@@ -348,10 +327,9 @@ Then('Lucy hears Sean’s message', function () {
 });
 ----
 
-
 So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.
 
-shot::[31]
+shot::[33]
 We can record what Sean shouts by storing it in the `this.message` property as the `When` step runs. This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check.
 
 [source,js]
@@ -362,8 +340,8 @@ When('Sean shouts {string}', function (message) {
 });
 ----
 
-shot::[32]
-We also need to add a `messagesHeard` method to our Person class. Let’s do that now, we'll just return an empty array for now shot::[33]
+shot::[34]
+We also need to add a `messagesHeard` method to our Person class. Let’s do that now, we'll just return an empty array for now shot::[35]
 
 [source,js]
 ----
@@ -382,7 +360,7 @@ class Person {
 }
 ----
 
-shot::[34]
+shot::[36]
 ...and watch Cucumber run the tests again.
 
 [source,bash]
@@ -395,7 +373,7 @@ $ npm test
 Feature: Hear shout
 
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
     ✖ failed
@@ -409,14 +387,14 @@ Feature: Hear shout
           +  "free bagels at Sean's"
           +]
       
-          at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:19:3)
+          at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:17:3)
 
 Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:7
-   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:13
-   ✖ Then Lucy hears Sean’s message # features/step_definitions/steps.js:18
+   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:5
+   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:11
+   ✖ Then Lucy hears Sean’s message # features/step_definitions/steps.js:16
        AssertionError: 
        Expected: is ["free bagels at Sean's"]
             but: was []
@@ -427,11 +405,11 @@ Failures:
            +  "free bagels at Sean's"
            +]
        
-           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:19:3)
+           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:17:3)
 
 1 scenario (1 failed)
 3 steps (1 failed, 2 passed)
-0m00.002s
+0m00.003s
 npm ERR! Test failed.  See above for more details.
 ----
 

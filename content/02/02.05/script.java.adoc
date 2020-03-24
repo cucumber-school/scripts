@@ -1,7 +1,5 @@
 include::./title.adoc[]
 
-audio::02.05.ruby.audio.mp3[]
-
 shot::[1]
 Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to _guide_ our development, so we'll start designing the objects we'll need by sketching out some code in our step definitions.
 
@@ -12,9 +10,15 @@ Our next goal is for the scenario to fail because we need to implement the actua
 .StepDefinitions.java
 [source,java]
 ----
+package io.cucumber.shouty;
+
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import io.cucumber.java.en.When;
+
 public class StepDefinitions {
-    @Given("Lucy is {int} metres from Sean")
-    public void lucy_is_metres_from_Sean(Integer distance) {
+    @Given("Lucy is located {int} metres from Sean")
+    public void lucy_is_located_metres_from_Sean(Integer distance) {
         System.out.println(distance);
         throw new io.cucumber.java.PendingException();
     }
@@ -25,22 +29,26 @@ public class StepDefinitions {
         throw new io.cucumber.java.PendingException();
     }
 
-    @Then("Lucy should hear Sean's message")
-    public void lucy_should_hear_Sean_s_message() {
+    @Then("Lucy hears Sean’s message")
+    public void lucy_hears_Sean_s_message() {
         // Write code here that turns the phrase above into concrete actions
         throw new io.cucumber.java.PendingException();
     }
 }
 ----
 
-To implement the first step, we need to create a couple of `Person` objects, one for Lucy shot::[2] and one for Sean.shot::[3]
+To implement the first step, we need to create a couple of `Person` objects, one
+for Lucy shot::[2] and one for Sean.shot::[3]
 
 [source,java]
 ----
-public class StepDefinitions {
-    Person lucy = new Person();
-    Person sean = new Person();
-
+@Given("Lucy is {int} metres from Sean")
+public void lucy_is_metres_from_Sean(Integer distance) {
+    @Given("Lucy is located {int} metres from Sean")
+    public void lucy_is_located_metres_from_Sean(Integer distance) {
+        Person lucy = new Person();
+        Person sean = new Person();
+    }
     // ...
 }
 ----
@@ -56,19 +64,18 @@ public class Person {
 }
 ----
 
+shot::[5]
 And specify the distance between them.
 
-
-We can remove the `pending` status now, and this print statement,shot::[5] and write the implementation for the first step like this:
+We can remove the `pending` status now, shot::[6] and this print statement,shot::[7] and write the implementation for the first step like this:
 
 [source,java]
 ----
 public class StepDefinitions {
-    Person lucy = new Person();
-    Person sean = new Person();
-
     @Given("Lucy is {int} metres from Sean")
     public void lucy_is_metres_from_Sean(Integer distance) {
+        Person lucy = new Person();
+        Person sean = new Person();
         lucy.moveTo(distance);
     }
 
@@ -76,7 +83,7 @@ public class StepDefinitions {
 }
 ----
 
-And create the `moveTo` method in the `Person` class. shot::[6]
+And create the `moveTo` method in the `Person` class. shot::[8]
 
 [source,java]
 ----
@@ -89,34 +96,36 @@ public class Person {
 }
 ----
 
-We have two instances of person, one representing Lucy, shot::[7]and one representing Sean. shot::[8]Then we call a method to move Lucy to the position specified in the scenario.shot::[9]
+We have two instances of person, shot::[9] one representing Lucy, shot::[10] and one representing Sean. shot::[11] Then we call a method to move Lucy to the position specified in the scenario.shot::[12]
 
-video::02.05.animation.mp4[]
+shot::[12.1, "02.05.animation.mp4"]
 
-shot::[10]
-When we run the scenario, the first step is green!
+When we run the scenario, shot::[13] the first step is green! shot::[14]
 
 [source,bash]
 ----
+Testing started at 11:53 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java -Dorg.jetbrains.run.directory=/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty -javaagent:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar=44551:/home/fedex/Downloads/idea-IC-193.5662.53/bin -Dfile.encoding=UTF-8 -classpath /home/fedex/code/java/shouty/target/test-classes:/home/fedex/code/java/shouty/target/classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --strict --glue io.cucumber.shouty /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty
+
 TODO: implement me
 
 Step skipped
 
 Pending scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
 
 1 Scenarios (1 pending)
 3 Steps (1 skipped, 1 pending, 1 passed)
-0m0.337s
+0m0.553s
 
 
 io.cucumber.java.PendingException: TODO: implement me
-	at shouty.StepDefinitions.sean_shouts(StepDefinitions.java:19)
-	at ✽.Sean shouts "free bagels at Sean's"(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:5)
+	at io.cucumber.shouty.StepDefinitions.sean_shouts(StepDefinitions.java:18)
+	at ✽.Sean shouts "free bagels at Sean's"(file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:4)
 
 
 
-Process finished with exit code 0
+Process finished with exit code 1
 ----
 
 We're making progress!
@@ -125,22 +134,27 @@ We'll keep working like this until we see the scenario failing for the right rea
 
 In the second step definition, we want to tell Sean to shout something.
 
-shot::[11]
+shot::[15]
 In order to send instructions to Sean from the second step, we need to store him in an _instance variable_, so that he’ll be accessible from all of our step definitions. In IntelliJ we can do this by using the _Introduce Field_ refactoring.
 
-shot::[12]
-In the `When` step, we're capturing Sean's message using the `{string}` pattern, so let's give that argument a more meaningful name.shot::[13]
+shot::[16]
+In the `When` step, we're capturing Sean's message using the `{string}` pattern, so let's give that argument a more meaningful name.shot::[17]
 
-shot::[14]
+shot::[18]
 And now we can now tell him to _shout_ the message:
 
 [source,java]
 ----
 public class StepDefinitions {
-    Person lucy = new Person();
-    Person sean = new Person();
+    private Person sean;
+    private Person lucy;
 
-    // ...
+    @Given("Lucy is located {int} metres from Sean")
+    public void lucy_is_located_metres_from_Sean(Integer distance) {
+        lucy = new Person();
+        sean = new Person();
+        lucy.moveTo(distance);
+    }
 
     @When("Sean shouts {string}")
     public void sean_shouts(String message) {
@@ -151,7 +165,7 @@ public class StepDefinitions {
 }
 ----
 
-And we eliminate the compilation error by implementing the `shout` message in the `Person` class.
+And we eliminate the compilation error by implementing the `shout` message in the `Person` class. shot::[19]
 
 [source,java]
 ----
@@ -169,33 +183,36 @@ public class Person {
 }
 ----
 
-When we run the scenarion again, now the second step is green!. shot::[15]
+When we run the scenarion again,shot::[20] now the second step is green!. shot::[21]
 
 [source,bash]
 ----
+Testing started at 12:00 PM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java -Dorg.jetbrains.run.directory=/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty -javaagent:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar=39079:/home/fedex/Downloads/idea-IC-193.5662.53/bin -Dfile.encoding=UTF-8 -classpath /home/fedex/code/java/shouty/target/test-classes:/home/fedex/code/java/shouty/target/classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --strict --glue io.cucumber.shouty /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty
+
 TODO: implement me
 
 Pending scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
 
 1 Scenarios (1 pending)
 3 Steps (1 pending, 2 passed)
-0m0.465s
+0m0.410s
 
 
 io.cucumber.java.PendingException: TODO: implement me
-	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:25)
-	at ✽.Lucy should hear Sean's message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+	at io.cucumber.shouty.StepDefinitions.lucy_hears_Sean_s_message(StepDefinitions.java:27)
+	at ✽.Lucy hears Sean’s message(file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:5)
 
 
 
-Process finished with exit code 0
+Process finished with exit code 1
 ----
 
-shot::[16]
+shot::[22]
 The last step definition is where we implement a check, or assertion. We'll verify that what Lucy has heard is exactly the same as what Sean shouted.
 
-shot::[17]
+shot::[23]
 Once again we're going to write the code we wish we had.
 
 [source,java]
@@ -206,11 +223,11 @@ public void lucy_should_hear_Sean_s_message() {
 }
 ----
 
-In order for this to be able to compile, we need to import the `assertEquals` static method from `JUnit` shot::[18]  and the `Array.asList` method. shot::[19]
+In order for this to be able to compile, we need to import the `assertEquals` static method from `JUnit` shot::[24]  and the `Array.asList` method. shot::[25]
 
 So we need a way to ask Lucy what messages she's heard, and we also need to know what it was that Sean shouted.
 
-We can record what Sean shouts by storing it in an instance variable as the `When` step runs, shot::[21] and import it.shot::[22] This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. shot::[23]
+We can record what Sean shouts by storing it in an instance variable as the `When` step runs. shot::[26] This is a common pattern to use in Cucumber step definitions when you don’t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. shot::[27]
 
 [source,java]
 ----
@@ -221,7 +238,7 @@ public void sean_shouts(String message) {
  }
 ----
 
-We also need to add a `messagesHeard` method to our Person class.shot::[24] Let's do that now, we'll just return an empty array for now.shot::[25]
+We also need to add a `messagesHeard` method to our Person class. shot::[28] Let's do that now, we'll just return null for now.shot::[29]
 
 [source,java]
 ----
@@ -245,35 +262,38 @@ public class Person {
 }
 ----
 
-...and watch Cucumber run the tests again.shot::[26]
+...and watch Cucumber run the tests again. shot::[30]
 
 [source,bash]
 ----
+Testing started at 12:05 PM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java -Dorg.jetbrains.run.directory=/home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty -javaagent:/home/fedex/Downloads/idea-IC-193.5662.53/lib/idea_rt.jar=41983:/home/fedex/Downloads/idea-IC-193.5662.53/bin -Dfile.encoding=UTF-8 -classpath /home/fedex/code/java/shouty/target/test-classes:/home/fedex/code/java/shouty/target/classes:/home/fedex/.m2/repository/io/cucumber/cucumber-java/5.1.1/cucumber-java-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-core/5.1.1/cucumber-core-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin/5.1.1/cucumber-gherkin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-gherkin-vintage/5.1.1/cucumber-gherkin-vintage-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/tag-expressions/2.0.4/tag-expressions-2.0.4.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-expressions/8.3.1/cucumber-expressions-8.3.1.jar:/home/fedex/.m2/repository/io/cucumber/datatable/3.2.1/datatable-3.2.1.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-plugin/5.1.1/cucumber-plugin-5.1.1.jar:/home/fedex/.m2/repository/io/cucumber/docstring/5.1.1/docstring-5.1.1.jar:/home/fedex/.m2/repository/org/apiguardian/apiguardian-api/1.1.0/apiguardian-api-1.1.0.jar:/home/fedex/.m2/repository/io/cucumber/cucumber-junit/5.1.1/cucumber-junit-5.1.1.jar:/home/fedex/.m2/repository/junit/junit/4.13/junit-4.13.jar:/home/fedex/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/fedex/Downloads/idea-IC-193.5662.53/plugins/junit/lib/junit-rt.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter5.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter4.jar:/home/fedex/.IdeaIC2019.3/config/plugins/cucumber-java/lib/cucumber-jvmFormatter3.jar io.cucumber.core.cli.Main --plugin org.jetbrains.plugins.cucumber.java.run.CucumberJvm5SMFormatter --strict --glue io.cucumber.shouty /home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty
+
 Step failed
-java.lang.AssertionError: expected:<[null]> but was:<null>
+java.lang.AssertionError: expected:<[free bagels at Sean's]> but was:<null>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:120)
 	at org.junit.Assert.assertEquals(Assert.java:146)
-	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:27)
-	at ✽.Lucy should hear Sean's message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+	at io.cucumber.shouty.StepDefinitions.lucy_hears_Sean_s_message(StepDefinitions.java:31)
+	at ✽.Lucy hears Sean’s message(file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:5)
 
 
 Failed scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:2# Listener is within range
 
 1 Scenarios (1 failed)
 3 Steps (1 failed, 2 passed)
-0m0.431s
+0m0.454s
 
 
-java.lang.AssertionError: expected:<[null]> but was:<null>
+java.lang.AssertionError: expected:<[free bagels at Sean's]> but was:<null>
 	at org.junit.Assert.fail(Assert.java:89)
 	at org.junit.Assert.failNotEquals(Assert.java:835)
 	at org.junit.Assert.assertEquals(Assert.java:120)
 	at org.junit.Assert.assertEquals(Assert.java:146)
-	at shouty.StepDefinitions.lucy_should_hear_Sean_s_message(StepDefinitions.java:27)
-	at ✽.Lucy should hear Sean's message(file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:6)
+	at io.cucumber.shouty.StepDefinitions.lucy_hears_Sean_s_message(StepDefinitions.java:31)
+	at ✽.Lucy hears Sean’s message(file:///home/fedex/code/java/shouty/src/test/resources/io/cucumber/shouty/hear_shout.feature:5)
 
 
 

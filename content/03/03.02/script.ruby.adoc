@@ -6,7 +6,7 @@ Let's look at the Shouty scenario from the last chapter.
 [source,gherkin]
 include::../code/ruby/03-simple-literal-expression/features/hear_shout.feature[]
 
-As Cucumber starts to execute this feature, it will come to the first step of the scenario `Given Lucy is 15 metres from Sean` and say to itself "now - do I have any step definitions that match the phrase "Lucy is 15 metres from Sean`?”"
+As Cucumber starts to execute this feature, it will come to the first step of the scenario `Given Lucy is 15 metres from Sean` and say to itself "now - do I have any step definitions that match the phrase `Lucy is 15 metres from Sean`?”"
 
 The most simple cucumber expression that would match that step is this one:
 
@@ -21,5 +21,5 @@ In Ruby, we can use this pattern to make a step definition like this:
 [source, ruby]
 include::../code/ruby/03-simple-literal-expression/features/step_definitions/steps.rb[lines=3..6]
 
-We use a normal Ruby string to pass the cucumber expression to Cucumnber.
+We use a normal Ruby string to pass the cucumber expression to Cucumber.
 

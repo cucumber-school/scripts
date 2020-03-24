@@ -1,0 +1,45 @@
+include::./title.adoc[]
+
+shot::[???]
+
+There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration. Every time Cucumber runs a scenario it creates a new instance of your steps class, so we’ll get a fresh instance of the Network for each scenario.
+
+As an alternative, that can be useful if you have more complex setup to do, you can use a hook.
+
+We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:
+
+.StepDefinitions.java
+[source,java]
+----
+private Network network;
+
+@Before
+public void createNetwork() {
+    network = new Network();
+}
+----
+
+Now we can use that Network instance as we create Lucy and Sean in these two new steps.
+
+It should be working again now. Let’s run cucumber to check.
+
+[runs cucumber. green.]
+shot::[???]
+
+Good. Let’s do the same with the other scenario.
+
+image::04.04.animation.mp4[]
+
+shot::[???]
+
+Now we can remove this old step definition.
+
+We know we’ll need something like this in the future when we implement the proximity rule,
+
+but we don’t want to second-guess what that code will look like, so let’s clean it out for now.
+
+shot::[???]
+
+Now we have one last bit of dead code left, the move to method on Person. Let’s clean that up too.
+
+image::
