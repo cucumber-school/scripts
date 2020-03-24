@@ -4,15 +4,15 @@ While we were away, the developers of Shouty have been busy working on the code.
 
 We’ll start out by running Cucumber.
 
-[runs cucumber, both scenarios pass]
-shot::[???]
+shot::[1]
+// run mvn
 
 Great! It looks like both these scenarios are working now - both the different messages that Sean shouts are being heard by Lucy.
 
 Let’s dig into the code and see how these steps have been automated.
 
-[opens the step definitions]
-shot::[???]
+shot::[2]
+// open stepdef file
 
 In the step definition layer, we can see that a new class has been defined, the Network. We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here. So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.
 
@@ -22,8 +22,8 @@ Unit tests are fine-grained tests that define the precise behaviour of each of t
 
 The familiar `mvn test` command will run those unit tests as well as Cucumber.
 
-[opens the feature file]
-shot::[???]
+shot::[3]
+// opens the feature file
 
 The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean, but we haven’t actually implemented any behaviour around that yet.
 
@@ -31,4 +31,4 @@ This happens to us all the time - we have an idea for a new feature, but then we
 
 We’re definitely going to develop this behaviour, but we’ve decided to defer it to our next iteration. Our current solution is just focussed on broadcasting messages between the people on the network.
 
-In the next lesson, we'll clean up the feature to reflect that current understanding.
+Let's clean up the feature to reflect that current understanding.
