@@ -1,7 +1,5 @@
 include::./title.adoc[]
 
-audio::02.05.ruby.audio.mp3[]
-
 shot::[1]
 Now that we have the step definitions matching, we can start working on our solution. We like to use our scenarios to _guide_ our development, so we'll start designing the objects we'll need by sketching out some code in our step definitions.
 
@@ -39,14 +37,18 @@ public class StepDefinitions {
 }
 ----
 
-To implement the first step, we need to create a couple of `Person` objects, one for Lucy shot::[2] and one for Sean.shot::[3]
+To implement the first step, we need to create a couple of `Person` objects, one
+for Lucy shot::[2] and one for Sean.shot::[3]
 
 [source,java]
 ----
 @Given("Lucy is {int} metres from Sean")
 public void lucy_is_metres_from_Sean(Integer distance) {
-    Person lucy = new Person();
-    Person sean = new Person();
+    @Given("Lucy is located {int} metres from Sean")
+    public void lucy_is_located_metres_from_Sean(Integer distance) {
+        Person lucy = new Person();
+        Person sean = new Person();
+    }
     // ...
 }
 ----
@@ -64,7 +66,6 @@ public class Person {
 
 shot::[5]
 And specify the distance between them.
-
 
 We can remove the `pending` status now, shot::[6] and this print statement,shot::[7] and write the implementation for the first step like this:
 
@@ -97,7 +98,7 @@ public class Person {
 
 We have two instances of person, shot::[9] one representing Lucy, shot::[10] and one representing Sean. shot::[11] Then we call a method to move Lucy to the position specified in the scenario.shot::[12]
 
-video::02.05.animation.mp4[]
+shot::[12.1, "02.05.animation.mp4"]
 
 When we run the scenario, shot::[13] the first step is green! shot::[14]
 

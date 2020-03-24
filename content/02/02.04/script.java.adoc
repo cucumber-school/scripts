@@ -135,17 +135,17 @@ Tests run: 1, Failures: 0, Errors: 0, Skipped: 1
 _Undefined_ means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario.
 It needs us to provide some _step definitions_.
 
-video::02.04.animation.mp4[]
+shot::[12.1, "02.04.animation.mp4"]
 
 Step definitions translate from the plain language you use in Gherkin into Java code. We write a Java method, then annotate it with a pattern. 
 
 When cucumber runs a step, it looks for a step definition with a matching pattern. If it finds one, then it executes the method.
 
 shot::[13]
-If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.
+If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions. Let’s copy those.shot::[14]
 
 
-We’ll create a new class in the shouty package shot::[14] where we’ll paste those snippets. Make sure you create it under test and not main. shot::[15]
+We’ll create a new class in the shouty package shot::[15] where we’ll paste those snippets. Make sure you create it under test and not main. shot::[16]
 
 [source,java]
 ----
@@ -178,11 +178,11 @@ public class StepDefinitions {
 }
 ----
 
-shot::[16]
+shot::[17]
 Now InteliJ is complaining that there are some unknown symbols. We need to add
 some import statements! Pressing ALT-ENTER will do that for us.
 
-shot::[17]
+shot::[18]
 // ARTHUR: I let this run longer than it should've ... you can cut it shorter if needed.
 Let’s return to the scenario and run it again.
 
@@ -255,19 +255,20 @@ public void lucy_hears_Sean_s_message() {
 Process finished with exit code 0
 ----
 
-shot::[18]
+shot::[19]
 // Menu -> Run -> Edit Configurations -> Feature or folder path: -> /home/fedex/code/shouty-java/src/test/resources/shouty/
+// io.cucumber.shouty
 There is a small bug in InteliJ’s Cucumber integration. Sometimes it doesn’t tell Cucumber where to find step definitions. This is easy to work around. Just edit the run configuration and make sure the Glue field contains the value of your package.
 
-shot::[19]
+shot::[20]
 Now we can run it again.
 
 This time the output is a little different.
 
-We now have a pending step shot::[20] and two skipped ones.shot::[21]
+We now have a pending step shot::[21] and two skipped ones.shot::[22]
 
 This means Cucumber found all our step definitions, and executed the
-first one. But that first step definition throws a `PendingException`,shot::[22] which
+first one. But that first step definition throws a `PendingException`,shot::[23] which
 causes Cucumber to stop, skip the rest of the steps, and mark the scenario as
 pending.
 
@@ -298,10 +299,10 @@ Process finished with exit code 0
 
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
-shot::[23]
+shot::[24]
 We'll rename the `int` parameter to something that better reflects its meaning. We’ll call it `distance`.
 
-shot::[24]
+shot::[25]
 We can print it to the terminal to see what's happening.
 
 [source,java]
@@ -314,7 +315,7 @@ We can print it to the terminal to see what's happening.
 
 ----
 
-If we run it again, shot::[25] we can see the number 15 pop up in the output. shot::[26]
+If we run it again, shot::[26] we can see the number 15 pop up in the output. shot::[27]
 
 [source,bash]
 ----
@@ -336,4 +337,4 @@ file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# L
 # ...
 ----
 
-Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[27]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[28]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.

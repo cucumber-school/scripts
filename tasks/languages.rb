@@ -2,6 +2,7 @@ LANGUAGES = {
   ruby:   "Ruby",
   js:     "JavaScript",
   java:   "Java",
+  dotnet: "SpecFlow",
 }
 
 task :list do

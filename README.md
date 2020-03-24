@@ -74,6 +74,21 @@ Don't forget to push your storyboard branch too!
 
 There is a [check](https://github.com/cucumber-school/bdd-with-cucumber/blob/master/.github/workflows/html.yml#L26) in the GitHub actions build script which should warn you if you forgot to push your storyboard branch and the unrolled commits are out of step with the branch.
 
+### Workflow tip: iterating between storyboard and script
+
+Sometimes you want to work on the code and the script at the same time. It's a hassle to keep switching
+branches in this situation. A good tip is to have two clones of the repo, like this:
+
+````
+mkdir bdd-with-cucumber && cd bdd-with-cucumber
+git clone git@github.com:cucumber-school/bdd-with-cucumber.git script
+git clone script code
+````
+
+Now you have two clones of the repo. You can work on the code branch in the `code` directory, and the script in the `script` directory. When you've made changes to the code, use `git push --force` to push them to the `scripts` directory. Then you can run `rake code` ro unroll the latest commits and make them available to your script.
+
+When everything is done, push *both branches* (master and your code branch) to GitHub from the `script` directory.
+
 ## License
 
 Site content is licensed under CC-BY-4.0. CC-BY-4.0 gives you permission to use the content for almost any purpose but does not grant you any trademark permissions, so long as you note the license and give credit, such as follows:
