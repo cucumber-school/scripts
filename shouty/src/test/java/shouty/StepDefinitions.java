@@ -29,14 +29,9 @@ public class StepDefinitions {
         people.put(name, new Person(network));
     }
 
-    @Given("a person named Sean")
-    public void a_person_named_Sean() {
-      sean = new Person(network);
-    }
-
     @When("Sean shouts {string}")
     public void sean_shouts(String message) throws Throwable {
-        sean.shout(message);
+        people.get("Sean").shout(message);
         messageFromSean = message;
     }
 
