@@ -1,55 +1,51 @@
 include::./title.adoc[]
 
-shot::[1]
-// unchanged feature file
-
+shot::[1, "feature file"]
 After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s description. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t mention the magic word scenario.
 
+shot::[2, "writes out description and todo list"]
 In this case, we can add a high level description of the Shouty application. Because Shouty doesn't yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.
 
-shot::[2]
-// writes out description and todo list
+include::../code/java/01-description-added/shouty/src/test/resources/shouty/shout.feature[lines=1..7]
 
 Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more of what you understand about the system you’re building.
 
+shot::[3, "add Rules keyword and indent scenarios"]
 Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword. We'll learn more about this in a later chapter.
 
-shot::[3]
-// add Rules keyword and indent scenarios
+include::../code/java/02-rule-keyword-added/shouty/src/test/resources/shouty/shout.feature[lines=8..17]
 
-
+shot::[4, "shows 'Lucy is 15 metres from Sean' step definition"]
 The step “Given Lucy is 15 metres from Sean” is misleading, since the distance between the two people is not yet relevant in our current model.
+
+include::../code/java/02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..16]
 
 The step definition calls the move_to method on Person,
 
-shot::[4]
-// shows "Lucy is 15 metres from Sean" step definition
+include::../code/java/02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=21..21]
 
+shot::[5, "shows move_to method in Person class"]
 but the move_to method doesn’t actually do anything.
 
-shot::[5]
-// shows move_to method in Person class
+include::../code/java/02-rule-keyword-added/shouty/src/main/java/shouty/Person.java[lines=19..20]
 
+shot::[6, "modify first scenario in feature file"]
 Let’s simplify this code to do just what it needs to do right now, and no more. We can start from the scenario by changing this single step to express what’s actually going on. We’ll work on one scenario at a time, and update the other one once we’re happy with this one.
 
-shot::[6]
-// modify first scenario in feature file
+include::../code/java/03-first-scenario-rewritten/shouty/src/test/resources/shouty/shout.feature[lines=8..19]
 
 Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words Person and name. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.
 
-One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were in the three amigos meeting with us when the example was written. In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.
+One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were in the three amigos meeting with us when the example was written.
 
-shot::[7]
-// create new Rule and writes out two new empty scenarios for in / out of range
+shot::[7, "create new Rule and writes out two new empty scenarios for in / out of range"]
+In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.
 
-Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps:
+include::../code/java/04-empty-scenarios-added/shouty/src/test/resources/shouty/shout.feature[lines=21..25]
 
-shot::[8]
-// mvn clean test
+shot::[8, "mvn clean test"]
+Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps and paste them into our steps file.
 
-and paste them into our steps file.
+include::../code/java/05-snippets-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..34]
 
-Now to implement these two separate steps we have a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile. If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.
-
-shot::[9]
-// broken implementation
+In the next lesson we'll look at a couple of ways that we can implement these new step definitions.
