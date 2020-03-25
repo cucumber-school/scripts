@@ -459,9 +459,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_expressing_yourself">3. Expressing yourself</a></li>
-<li><a href="#_todo">4. TODO</a>
+<li><a href="#_cleaning_up">4. Cleaning up</a>
 <ul class="sectlevel2">
-<li><a href="#_cleaning_up">4.1. Cleaning up</a></li>
+<li><a href="#_the_importance_of_readability">4.1. The importance of readability</a></li>
+<li><a href="#_review_changes_that_happened_while_we_were_away">4.2. Review changes that happened while we were away</a></li>
+<li><a href="#_description_field">4.3. Description field</a></li>
+<li><a href="#_the_before_hook">4.4. The "Before" hook</a></li>
+<li><a href="#_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</a></li>
+<li><a href="#_backgrounds">4.6. Backgrounds</a></li>
 </ul>
 </li>
 </ul>
@@ -1630,10 +1635,10 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_todo">4. TODO</h2>
+<h2 id="_cleaning_up">4. Cleaning up</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_cleaning_up">4.1. Cleaning up</h3>
+<h3 id="_the_importance_of_readability">4.1. The importance of readability</h3>
 <div class="videoblock">
 <div class="content">
 <video src="https://drive.google.com/uc?id=1arEP_-0Fi5CK7EC8IYCJWrc67I_XF34Z" controls>
@@ -1641,8 +1646,6 @@ Your browser does not support the video tag.
 </video>
 </div>
 </div>
-<div class="exampleblock">
-<div class="content">
 <div class="paragraph">
 <p><span title="04.01.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 0.1</span></p>
 </div>
@@ -1664,29 +1667,61 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>First, let’s catch up with what’s been happening on the Shouty project.</p>
 </div>
-<div class="paragraph">
-<p>TODO</p>
 </div>
-<div class="paragraph">
-<p>=== Review changes that happened while we were away</p>
-</div>
+<div class="sect2">
+<h3 id="_review_changes_that_happened_while_we_were_away">4.2. Review changes that happened while we were away</h3>
 <div class="paragraph">
 <p>While we were away, the developers of Shouty have been busy working on the code. Let’s have a look at what they’ve been up to.</p>
 </div>
 <div class="paragraph">
-<p>We’ll start out by running Cucumber.</p>
-</div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
+<p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+We’ll start out by running Cucumber.</p>
 </div>
 <div class="paragraph">
 <p>Great! It looks like both these scenarios are working now - both the different messages that Sean shouts are being heard by Lucy.</p>
 </div>
 <div class="paragraph">
-<p>Let’s dig into the code and see how these steps have been automated.</p>
+<p><span title="open stepdef file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+Let’s dig into the code and see how these steps have been automated.</p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
+<p>public class StepDefinitions {</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>private Person sean;
+private Person lucy;
+private String messageFromSean;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("Lucy is {int} metres from Sean")
+public void lucy_is_located_m_from_Sean(int distance) throws Throwable {
+    Network network = new Network();
+    sean = new Person(network);
+    lucy = new Person(network);
+    lucy.moveTo(distance);
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@When("Sean shouts {string}")
+public void sean_shouts(String message) throws Throwable {
+    sean.shout(message);
+    messageFromSean = message;
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>    @Then("Lucy should hear Sean's message")
+    public void lucy_hears_Sean_s_message() throws Throwable {
+        assertEquals(asList(messageFromSean), lucy.getMessagesHeard());
+    }
+}</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>In the step definition layer, we can see that a new class has been defined, the Network. We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here. So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.</p>
@@ -1701,10 +1736,29 @@ Your browser does not support the video tag.
 <p>The familiar <code>mvn test</code> command will run those unit tests as well as Cucumber.</p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
+<p><span title="open the feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
 </div>
 <div class="paragraph">
 <p>The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean, but we haven’t actually implemented any behaviour around that yet.</p>
+</div>
+<div class="paragraph">
+<p>Feature: Shout</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener within range
+  Given Lucy is 15 metres from Sean
+  When Sean shouts "free bagels at Sean's"
+  Then Lucy should hear Sean's message</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener hears a different mesage
+  Given Lucy is 15 metres from Sean
+  When Sean shouts "Free coffee!"
+  Then Lucy should hear Sean's message</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>This happens to us all the time - we have an idea for a new feature, but then we find the problem is too complex to solve all at once, so we break it down into simpler steps. If we’re not careful, little bits of that original idea can be left around like clutter, in the scenarios and in the code. That clutter can get in the way, especially if plans change.</p>
@@ -1715,132 +1769,269 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>Let&#8217;s clean up the feature to reflect that current understanding.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_description_field">4.3. Description field</h3>
 <div class="paragraph">
-<p>=== Description field</p>
+<p><span title="feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s description. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t mention the magic word scenario.</p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
+<p><span title="writes out description and todo list" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+In this case, we can add a high level description of the Shouty application. Because Shouty doesn&#8217;t yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.</p>
 </div>
 <div class="paragraph">
-<p>After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s description. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t mention the magic word scenario.</p>
+<p>Feature: Shout</p>
 </div>
-<div class="paragraph">
-<p>In this case, we can add a high level description of the Shouty application. Because Shouty doesn&#8217;t yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.</p>
+<div class="literalblock">
+<div class="content">
+<pre>Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.</pre>
 </div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>To do:
+  - only shout to people within a certain distance</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more of what you understand about the system you’re building.</p>
 </div>
 <div class="paragraph">
-<p>Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword. We&#8217;ll learn more about this in a later chapter.</p>
+<p><span title="add Rules keyword and indent scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword. We&#8217;ll learn more about this in a later chapter.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Rule: Shouts can be heard by other users
+  Scenario: Listener within range
+    Given Lucy is 15 metres from Sean
+    When Sean shouts "free bagels at Sean's"
+    Then Lucy should hear Sean's message</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener hears a different mesage
+  Given Lucy is 15 metres from Sean
+  When Sean shouts "Free coffee!"
+  Then Lucy should hear Sean's message</pre>
+</div>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
+<p><span title="shows 'Lucy is 15 metres from Sean' step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+The step “Given Lucy is 15 metres from Sean” is misleading, since the distance between the two people is not yet relevant in our current model.</p>
 </div>
-<div class="paragraph">
-<p>The step “Given Lucy is 15 metres from Sean” is misleading, since the distance between the two people is not yet relevant in our current model.</p>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("Lucy is {int} metres from Sean")</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>The step definition calls the move_to method on Person,</p>
 </div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+<div class="literalblock">
+<div class="content">
+<pre>lucy.moveTo(distance);</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>but the move_to method doesn’t actually do anything.</p>
+<p><span title="shows move_to method in Person class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
+but the move_to method doesn’t actually do anything.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>public void moveTo(int location) {
+}</pre>
+</div>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+<p><span title="modify first scenario in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
+Let’s simplify this code to do just what it needs to do right now, and no more. We can start from the scenario by changing this single step to express what’s actually going on. We’ll work on one scenario at a time, and update the other one once we’re happy with this one.</p>
 </div>
-<div class="paragraph">
-<p>Let’s simplify this code to do just what it needs to do right now, and no more. We can start from the scenario by changing this single step to express what’s actually going on. We’ll work on one scenario at a time, and update the other one once we’re happy with this one.</p>
+<div class="literalblock">
+<div class="content">
+<pre>Rule: Shouts can be heard by other users</pre>
 </div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener hears a message
+  Given a person named Lucy
+  And a person named Sean
+  When Sean shouts "free bagels at Sean's"
+  Then Lucy should hear Sean's message</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener hears a different mesage
+  Given Lucy is 15 metres from Sean
+  When Sean shouts "Free coffee!"
+  Then Lucy should hear Sean's message</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words Person and name. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
 </div>
 <div class="paragraph">
-<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were in the three amigos meeting with us when the example was written. In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.</p>
+<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were in the three amigos meeting with us when the example was written.</p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span></p>
+<p><span title="create new Rule and writes out two new empty scenarios for in / out of range" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Rule: Shouts should only be heard if listener is within range</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener is within range</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener is out of range</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps:</p>
+<p><span title="mvn clean test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span>
+Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps and paste them into our steps file.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("a person named Lucy")
+public void a_person_named_Lucy() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("a person named Sean")
+public void a_person_named_Sean() {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}</pre>
+</div>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
+<p>In the next lesson we&#8217;ll look at a couple of ways that we can implement these new step definitions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_before_hook">4.4. The "Before" hook</h3>
+<div class="paragraph">
+<p><span title="broken implementation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+We now have two step definitions to implement, and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile. If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("a person named Lucy")
+public void a_person_named_Lucy() {
+    lucy = new Person(network);
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("a person named Sean")
+public void a_person_named_Sean() {
+  sean = new Person(network);
+}</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>and paste them into our steps file.</p>
+<p><span title="Network as instance field" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration. Every time Cucumber runs a scenario it creates a new instance of your steps class, so we’ll get a fresh instance of the Network for each scenario.</p>
 </div>
 <div class="paragraph">
-<p>Now to implement these two separate steps we have a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile. If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.</p>
+<p>public class StepDefinitions {</p>
 </div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span></p>
+<div class="literalblock">
+<div class="content">
+<pre>private Person sean;
+private Person lucy;
+private String messageFromSean;
+private Network network = new Network();</pre>
 </div>
-<div class="paragraph">
-<p>=== The "Before" hook</p>
-</div>
-<div class="paragraph">
-<p>There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration. Every time Cucumber runs a scenario it creates a new instance of your steps class, so we’ll get a fresh instance of the Network for each scenario.</p>
-</div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
 </div>
 <div class="paragraph">
 <p>As an alternative, that can be useful if you have more complex setup to do, you can use a hook.</p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
+<p><span title="Using a Before hook" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:
+Now we can use that Network instance as we create Lucy and Sean in these two new steps.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Before
+public void createNetwork() {
+    network = new Network();
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("a person named Lucy")
+public void a_person_named_Lucy() {
+    lucy = new Person(network);
+}</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("a person named Sean")
+public void a_person_named_Sean() {
+  sean = new Person(network);
+}</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:</p>
+<p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+It should be working again now. Let’s run cucumber to check.</p>
 </div>
 <div class="paragraph">
-<p>Now we can use that Network instance as we create Lucy and Sean in these two new steps.</p>
+<p><span title="Copy and paste in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
+Good. Let’s do the same with the other scenario.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener hears a different mesage
+  Given a person named Lucy
+  And a person named Sean
+  When Sean shouts "Free coffee!"
+  Then Lucy should hear Sean's message</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>It should be working again now. Let’s run cucumber to check.</p>
+<p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
+<p><span title="Delete lucy_is_located_m_from_Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+Now we can remove this old step definition. We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.</p>
 </div>
 <div class="paragraph">
-<p>Good. Let’s do the same with the other scenario.</p>
+<div class="title">include::../code/java/10-delete-unused-stepdef/shouty/src/test/java/shouty/StepDefinitions.java</div>
+<p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
+<p><span title="delete moveTo" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
+Now we have one last bit of dead code left, the move_to method on Person. Let&#8217;s clean that up too.</p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
+<p>include::../code/java/11-delete-move_to/shouty/src/main/java/shouty/Person.java</p>
 </div>
 <div class="paragraph">
-<p>Now we can remove this old step definition. We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.</p>
+<p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span></p>
 </div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
 </div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
-</div>
-<div class="paragraph">
-<p>Now we have one last bit of dead code left, the move_to method on Person. Let&#8217;s clean that up too.</p>
-</div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
-</div>
-<div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
-</div>
-<div class="paragraph">
-<p>=== Create Person in a generic stepdef</p>
-</div>
+<div class="sect2">
+<h3 id="_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</h3>
 <div class="paragraph">
 <p>shot[1, "Freeze of code from end of lesson 4"]</p>
 </div>
@@ -1866,16 +2057,44 @@ Your browser does not support the video tag.
 <p>Let’s try replacing Lucy first.</p>
 </div>
 <div class="paragraph">
-<p><span title="Edit Stepdefs.java, adding private instance field <strong>people</strong>, creating in @Before hook, and using for Lucy throughout" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
+<p><span title="Edit Stepdefs.java, adding private instance field <strong>people</strong>, creating in @Before hook, and using for Lucy throughout" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+We’ll start by creating a new hash/map in the before hook, like this.</p>
 </div>
-<div class="paragraph">
-<p>We’ll start by creating a new hash/map in the before hook, like this.</p>
+<div class="literalblock">
+<div class="content">
+<pre>private HashMap&lt;String, Person&gt; people;</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Before
+public void createNetwork() {
+    network = new Network();
+    people = new HashMap&lt;&gt;();
+}</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Now we can store Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.</p>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("a person named Lucy")
+public void a_person_named_Lucy() {
+    people.put("Lucy", new Person(network));
+}</pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Then("Lucy should hear Sean's message")
+public void lucy_hears_Sean_s_message() throws Throwable {
+    assertEquals(asList(messageFromSean), people.get("Lucy").getMessagesHeard());
+}</pre>
+</div>
 </div>
 <div class="paragraph">
 <p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
@@ -1884,25 +2103,33 @@ Your browser does not support the video tag.
 <p>With that little refactoring done, we can now try and make this first step generic for any name.</p>
 </div>
 <div class="paragraph">
-<p>Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here.</p>
+<p><span title="change expression to 'a person named {word}', edit parameters, change HashMap access" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the hash/map.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@Given("a person named {word}")
+public void a_person_named(String name) {
+    people.put(name, new Person(network));
+}</pre>
+</div>
 </div>
 <div class="paragraph">
-<p><span title="change expression to 'a person named {word}', edit parameters, change HashMap access" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+<p><span title="mvn test FAILS" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
+If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.</p>
 </div>
 <div class="paragraph">
-<p>Now we can use that as the key in the hash/map.</p>
+<p><span title="Delete a_person_named_Sean() and replace Sean instance with HashMap element" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
+Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.</p>
 </div>
-<div class="paragraph">
-<p><span title="mvn test FAILS" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+<div class="literalblock">
+<div class="content">
+<pre>@When("Sean shouts {string}")
+public void sean_shouts(String message) throws Throwable {
+    people.get("Sean").shout(message);
+    messageFromSean = message;
+}</pre>
 </div>
-<div class="paragraph">
-<p>If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.</p>
-</div>
-<div class="paragraph">
-<p><span title="Replace Sean insance with HashMap element" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
-</div>
-<div class="paragraph">
-<p>Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.</p>
 </div>
 <div class="paragraph">
 <p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span></p>
@@ -1910,12 +2137,15 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>Great, we’re green again.</p>
 </div>
-<div class="paragraph">
-<p>=== Backgrounds</p>
 </div>
+<div class="sect2">
+<h3 id="_backgrounds">4.6. Backgrounds</h3>
 <div class="paragraph">
 <p><span title="Feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
 Let’s switch back to the feature to show you one more technique for improving the readability of your scenarios.</p>
+</div>
+<div class="paragraph">
+<p>include::../code/java/14-replace-hardcoded-sean-instance/shouty/src/test/resources/shouty/shout.feature</p>
 </div>
 <div class="paragraph">
 <p>When we have common context steps - the givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way.</p>
@@ -1924,6 +2154,13 @@ Let’s switch back to the feature to show you one more technique for improving 
 <p><span title="move Given steps into background" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
 We can literally move them into the background, using a background keyword, like this:</p>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>Background:
+  Given a person named Lucy
+  And a person named Sean</pre>
+</div>
+</div>
 <div class="paragraph">
 <p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
 As far as Cucumber is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.</p>
@@ -1931,6 +2168,25 @@ As far as Cucumber is concerned, these scenarios haven’t changed. It will stil
 <div class="paragraph">
 <p><span title="Feature file, showing Background and shortened scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
 But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Rule: Shouts can be heard by other users</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener hears a message
+  When Sean shouts "free bagels at Sean's"
+  Then Lucy should hear Sean's message</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Scenario: Listener hears a different mesage
+  When Sean shouts "Free coffee!"
+  Then Lucy should hear Sean's message</pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Notice we just went straight into When steps in our scenarios. That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.</p>
@@ -1958,11 +2214,9 @@ Your browser does not support the video tag.
 </div>
 </div>
 </div>
-</div>
-</div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-25 13:53:48 UTC
+Last updated 2020-03-25 15:00:01 UTC
 </div>
 </div>
 <style>
