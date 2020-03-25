@@ -1686,43 +1686,31 @@ Let’s dig into the code and see how these steps have been automated.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>private Person sean;
-private Person lucy;
-private String messageFromSean;</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>@Given("Lucy is {int} metres from Sean")
-public void lucy_is_located_m_from_Sean(int distance) throws Throwable {
-    Network network = new Network();
-    sean = new Person(network);
-    lucy = new Person(network);
-    lucy.moveTo(distance);
-}</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>@When("Sean shouts {string}")
-public void sean_shouts(String message) throws Throwable {
-    sean.shout(message);
-    messageFromSean = message;
-}</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>    @Then("Lucy should hear Sean's message")
-    public void lucy_hears_Sean_s_message() throws Throwable {
-        assertEquals(asList(messageFromSean), lucy.getMessagesHeard());
-    }
-}</pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Person</span> <span class="n">sean</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Person</span> <span class="n">lucy</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">messageFromSean</span><span class="o">;</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is {int} metres from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_located_m_from_Sean</span><span class="o">(</span><span class="kt">int</span> <span class="n">distance</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">();</span>
+        <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
+        <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
+        <span class="n">lucy</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"Sean shouts {string}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sean_shouts</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">sean</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="n">messageFromSean</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Then</span><span class="o">(</span><span class="s">"Lucy should hear Sean's message"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_hears_Sean_s_message</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">messageFromSean</span><span class="o">),</span> <span class="n">lucy</span><span class="o">.</span><span class="na">getMessagesHeard</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1745,23 +1733,17 @@ public void sean_shouts(String message) throws Throwable {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nl">Feature:</span> <span class="nc">Shout</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener within range
-  Given Lucy is 15 metres from Sean
-  When Sean shouts "free bagels at Sean's"
-  Then Lucy should hear Sean's message</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener hears a different mesage
-  Given Lucy is 15 metres from Sean
-  When Sean shouts "Free coffee!"
-  Then Lucy should hear Sean's message</pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="nl">Feature:</span> <span class="nc">Shout</span>
+
+  <span class="nl">Scenario:</span> <span class="nc">Listener</span> <span class="n">within</span> <span class="n">range</span>
+    <span class="nc">Given</span> <span class="nc">Lucy</span> <span class="n">is</span> <span class="mi">15</span> <span class="n">metres</span> <span class="n">from</span> <span class="nc">Sean</span>
+    <span class="nc">When</span> <span class="nc">Sean</span> <span class="n">shouts</span> <span class="s">"free bagels at Sean's"</span>
+    <span class="nc">Then</span> <span class="nc">Lucy</span> <span class="n">should</span> <span class="n">hear</span> <span class="nc">Sean</span><span class="err">'</span><span class="n">s</span> <span class="n">message</span>
+
+  <span class="nl">Scenario:</span> <span class="nc">Listener</span> <span class="n">hears</span> <span class="n">a</span> <span class="n">different</span> <span class="n">mesage</span>
+    <span class="nc">Given</span> <span class="nc">Lucy</span> <span class="n">is</span> <span class="mi">15</span> <span class="n">metres</span> <span class="n">from</span> <span class="nc">Sean</span>
+    <span class="nc">When</span> <span class="nc">Sean</span> <span class="n">shouts</span> <span class="s">"Free coffee!"</span>
+    <span class="nc">Then</span> <span class="nc">Lucy</span> <span class="n">should</span> <span class="n">hear</span> <span class="nc">Sean</span><span class="err">'</span><span class="n">s</span> <span class="n">message</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1786,18 +1768,12 @@ In this case, we can add a high level description of the Shouty application. Bec
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> <span class="err">Shout</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>To do:
-  - only shout to people within a certain distance</pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Shout
+
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  <span class="err">To do</span><span class="p">:</span>
+    <span class="err">-</span> <span class="err">only</span> <span class="err">shout</span> <span class="err">to</span> <span class="err">people</span> <span class="err">within</span> <span class="nf">a </span>certain distance</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1813,15 +1789,12 @@ Our two scenarios are examples of how Shouty can broadcast a shout to other user
     <span class="kn">Scenario</span><span class="p">:</span> Listener within range
       <span class="nf">Given </span>Lucy is 15 metres from Sean
       <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>Lucy is 15 metres from Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener hears a different mesage
-  Given Lucy is 15 metres from Sean
-  When Sean shouts "Free coffee!"
-  Then Lucy should hear Sean's message</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1857,24 +1830,18 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users</code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener hears a message
-  Given a person named Lucy
-  And a person named Sean
-  When Sean shouts "free bagels at Sean's"
-  Then Lucy should hear Sean's message</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener hears a different mesage
-  Given Lucy is 15 metres from Sean
-  When Sean shouts "Free coffee!"
-  Then Lucy should hear Sean's message</pre>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>Lucy is 15 metres from Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1889,17 +1856,11 @@ In this case, as well as adding it to the TODO list above, we’ve decided to do
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener is within range</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener is out of range</pre>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+
+    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">is</span> <span class="err">out</span> <span class="err">of</span> <span class="err">range</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1912,16 +1873,13 @@ Let’s press on. We can run Cucumber to generate new step definition snippets f
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named_Lucy</span><span class="o">()</span> <span class="o">{</span>
         <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="n">io</span><span class="o">.</span><span class="na">cucumber</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">PendingException</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a person named Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named_Sean</span><span class="o">()</span> <span class="o">{</span>
+        <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="n">io</span><span class="o">.</span><span class="na">cucumber</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">PendingException</span><span class="o">();</span>
     <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>@Given("a person named Sean")
-public void a_person_named_Sean() {
-    // Write code here that turns the phrase above into concrete actions
-    throw new io.cucumber.java.PendingException();
-}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1956,15 +1914,12 @@ There are a couple of different ways to create this network instance in Java. Th
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>private Person sean;
-private Person lucy;
-private String messageFromSean;
-private Network network = new Network();</pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Person</span> <span class="n">sean</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Person</span> <span class="n">lucy</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">messageFromSean</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">();</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1988,15 +1943,12 @@ Now we can use that Network instance as we create Lucy and Sean in these two new
 <pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a person named Lucy"</span><span class="o">)</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named_Lucy</span><span class="o">()</span> <span class="o">{</span>
         <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a person named Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named_Sean</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>@Given("a person named Sean")
-public void a_person_named_Sean() {
-  sean = new Person(network);
-}</pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2007,13 +1959,13 @@ It should be working again now. Let’s run cucumber to check.</p>
 <p><span title="Copy and paste in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
 Good. Let’s do the same with the other scenario.</p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
 <div class="content">
-<pre>Scenario: Listener hears a different mesage
-  Given a person named Lucy
-  And a person named Sean
-  When Sean shouts "Free coffee!"
-  Then Lucy should hear Sean's message</pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2024,10 +1976,54 @@ Good. Let’s do the same with the other scenario.</p>
 Now we can remove this old step definition. We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.</p>
 </div>
 <div class="listingblock">
-<div class="title">include::../code/java/10-delete-unused-stepdef/shouty/src/test/java/shouty/StepDefinitions.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nl">shot:</span><span class="o">:[</span><span class="mi">8</span><span class="o">,</span> <span class="s">"mvn test"</span><span class="o">]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="n">shouty</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.cucumber.java.Before</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.cucumber.java.en.Given</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.cucumber.java.en.Then</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.cucumber.java.en.When</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">java</span><span class="o">.</span><span class="na">util</span><span class="o">.</span><span class="na">Arrays</span><span class="o">.</span><span class="na">asList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="nc">Person</span> <span class="n">sean</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Person</span> <span class="n">lucy</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">messageFromSean</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Network</span> <span class="n">network</span><span class="o">;</span>
+
+    <span class="nd">@Before</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">createNetwork</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a person named Lucy"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named_Lucy</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a person named Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named_Sean</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"Sean shouts {string}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sean_shouts</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">sean</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="n">messageFromSean</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Then</span><span class="o">(</span><span class="s">"Lucy should hear Sean's message"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_hears_Sean_s_message</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="n">asList</span><span class="o">(</span><span class="n">messageFromSean</span><span class="o">),</span> <span class="n">lucy</span><span class="o">.</span><span class="na">getMessagesHeard</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p><span title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
 </div>
 <div class="paragraph">
 <p><span title="delete moveTo" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>
@@ -2035,7 +2031,32 @@ Now we have one last bit of dead code left, the move_to method on Person. Let&#8
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nl">include:</span><span class="o">:../</span><span class="n">code</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="mi">11</span><span class="o">-</span><span class="n">delete</span><span class="o">-</span><span class="n">move_to</span><span class="o">/</span><span class="n">shouty</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">main</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">shouty</span><span class="o">/</span><span class="nc">Person</span><span class="o">.</span><span class="na">java</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="n">shouty</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.ArrayList</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">java.util.List</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">messagesHeard</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;();</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">Network</span> <span class="n">network</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">Network</span> <span class="n">network</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">network</span> <span class="o">=</span> <span class="n">network</span><span class="o">;</span>
+        <span class="n">network</span><span class="o">.</span><span class="na">subscribe</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="nf">getMessagesHeard</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">messagesHeard</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shout</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">network</span><span class="o">.</span><span class="na">broadcast</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">hear</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">messagesHeard</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2045,7 +2066,7 @@ Now we have one last bit of dead code left, the move_to method on Person. Let&#8
 <div class="sect2">
 <h3 id="_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</h3>
 <div class="paragraph">
-<p>shot[1, "Freeze of code from end of lesson 4"]</p>
+<p><span title="Freeze of code from end of lesson 4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
 </div>
 <div class="paragraph">
 <p>OK, so we’ve cleaned things up a bit, to bring the scenarios, the code and our current understanding of the problem all into sync. What’s nice to see is how well those new steps that create Lucy and Sean match the code inside the step definition.</p>
@@ -2074,16 +2095,13 @@ We’ll start by creating a new hash/map in the before hook, like this.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Person</span><span class="o">&gt;</span> <span class="n">people</span><span class="o">;</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>@Before
-public void createNetwork() {
-    network = new Network();
-    people = new HashMap&lt;&gt;();
-}</pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">HashMap</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Person</span><span class="o">&gt;</span> <span class="n">people</span><span class="o">;</span>
+
+    <span class="nd">@Before</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">createNetwork</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">();</span>
+        <span class="n">people</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2158,7 +2176,32 @@ Let’s switch back to the feature to show you one more technique for improving 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">include</span><span class="p">::</span><span class="err">../code/java/14-replace-hardcoded-sean-instance/shouty/src/test/resources/shouty/shout.feature</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Shout
+
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  <span class="err">To do</span><span class="p">:</span>
+    <span class="err">-</span> <span class="err">only</span> <span class="err">shout</span> <span class="err">to</span> <span class="err">people</span> <span class="err">within</span> <span class="nf">a </span>certain distance
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+
+    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">is</span> <span class="err">out</span> <span class="err">of</span> <span class="err">range</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2185,21 +2228,15 @@ But from a readability point of view, we can now see  more clearly what’s impo
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users</code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener hears a message
-  When Sean shouts "free bagels at Sean's"
-  Then Lucy should hear Sean's message</pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>Scenario: Listener hears a different mesage
-  When Sean shouts "Free coffee!"
-  Then Lucy should hear Sean's message</pre>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2230,7 +2267,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-25 15:33:06 UTC
+Last updated 2020-03-25 15:51:12 UTC
 </div>
 </div>
 <style>
