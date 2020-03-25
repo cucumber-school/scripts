@@ -1,42 +1,49 @@
 include::./title.adoc[]
 
+shot[1, "Freeze of code from end of lesson 4"]
+
+OK, so we’ve cleaned things up a bit, to bring the scenarios, the code and our current understanding of the problem all into sync. What’s nice to see is how well those new steps that create Lucy and Sean match the code inside the step definition.
+
+When step definitions have to make a big leap to translate between our plain-language description of the domain in the Gherkin scenario, and the code, that’s usually a sign that something is wrong. We like to see step definitions that are only one or two lines long, because that usually indicates our scenarios are doing a good job of reflecting the domain model in the code, and vice-versa.
+
+One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two steps for creating Lucy and Sean are almost identical, apart from those instance variables.
+
+On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned last week to make a single step definition that can create Lucy or Sean.
+
+
 The first problem we’ll need to tackle is these hard-coded instance variable names.
 
 We can use a Map to store all the people involved in the scenario.
 
 Let’s try replacing Lucy first.
 
-shot::[???]
+shot::[2, "Edit Stepdefs.java, adding private instance field *people*, creating in @Before hook, and using for Lucy throughout"]
 
 We’ll start by creating a new hash/map in the before hook, like this.
 
-Now we can story Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.
+Now we can store Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.
 
 Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map.
 
 [runs cucumber. green]
-shot::[???]
+shot::[3, "mvn test"]
 
 With that little refactoring done, we can now try and make this first step generic for any name.
 
-Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a String expression, we’ll have the name passed into our step definition as an argument, here.
+Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here.
 
-[change expression to "a person named {String}""]
-shot::[???]
+shot::[4, "change expression to 'a person named {word}', edit parameters, change HashMap access"]
 
 Now we can use that as the key in the hash/map.
 
-[use name arg as the key in the hash: @people[name] = new Person]
-
-[run Cucumber]
-shot::[???]
+shot::[5, "mvn test FAILS"]
 
 If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.
 
-shot::[???]
+shot::[6, "Replace Sean insance with HashMap element"]
 
 Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.
 
-shot::[???]
+shot::[7, "mvn test"]
 
 Great, we’re green again.

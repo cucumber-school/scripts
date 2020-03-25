@@ -1,18 +1,22 @@
 include::./title.adoc[]
 
+shot::[1, "Feature file"]
 Let’s switch back to the feature to show you one more technique for improving the readability of your scenarios.
 
-When we have common context steps - the givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way. We can literally move them into the background, using a background keyword, like this:
+When we have common context steps - the givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way.
 
-[moves Given steps into background]
-shot::[???]
+shot::[2, "move Given steps into background"]
+We can literally move them into the background, using a background keyword, like this:
 
-As far as Cucumber is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios. But from a readability point of view, we can now see more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.
+shot::[3, "mvn test"]
+As far as Cucumber is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.
+
+shot::[4, "Feature file, showing Background and shortened scenarios"]
+But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.
 
 Notice we just went straight into When steps in our scenarios. That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.
 
 Again, it’s debatable whether we’d bother to use a Background yet on a real project, but this at least illustrates the technique. Hopefully you’re already thinking about how you can use it on your own code.
-Sum up and close
 
 video::https://drive.google.com/uc?id=19VLE9qKbVN4bpMxsIVvPtPqc3RGw4bSW[]
 
