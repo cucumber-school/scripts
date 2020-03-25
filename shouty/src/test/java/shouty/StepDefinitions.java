@@ -24,9 +24,9 @@ public class StepDefinitions {
         people = new HashMap<>();
     }
 
-    @Given("a person named Lucy")
-    public void a_person_named_Lucy() {
-        people.put("Lucy", new Person(network));
+    @Given("a person named {word}")
+    public void a_person_named(String name) {
+        people.put(name, new Person(network));
     }
 
     @Given("a person named Sean")
