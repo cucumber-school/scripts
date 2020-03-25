@@ -11,7 +11,9 @@ shot::[2, "open stepdef file"]
 Let’s dig into the code and see how these steps have been automated.
 
 [source,java]
+----
 include::../code/java/00-initial-commit/shouty/src/test/java/shouty/StepDefinitions.java[lines=10..34]
+----
 
 In the step definition layer, we can see that a new class has been defined, the Network. We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here. So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.
 
@@ -26,7 +28,9 @@ shot::[3, "open the feature file"]
 The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean, but we haven’t actually implemented any behaviour around that yet.
 
 [source,java]
+----
 include::../code/java/00-initial-commit/shouty/src/test/resources/shouty/shout.feature[]
+----
 
 This happens to us all the time - we have an idea for a new feature, but then we find the problem is too complex to solve all at once, so we break it down into simpler steps. If we’re not careful, little bits of that original idea can be left around like clutter, in the scenarios and in the code. That clutter can get in the way, especially if plans change.
 

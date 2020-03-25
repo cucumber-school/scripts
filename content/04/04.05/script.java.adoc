@@ -1,6 +1,6 @@
 include::./title.adoc[]
 
-shot[1, "Freeze of code from end of lesson 4"]
+shot::[1, "Freeze of code from end of lesson 4"]
 
 OK, so we’ve cleaned things up a bit, to bring the scenarios, the code and our current understanding of the problem all into sync. What’s nice to see is how well those new steps that create Lucy and Sean match the code inside the step definition.
 
@@ -21,17 +21,23 @@ shot::[2, "Edit Stepdefs.java, adding private instance field *people*, creating 
 We’ll start by creating a new hash/map in the before hook, like this.
 
 [source,java]
+----
 include::../code/java/12-replace-hardcoded-lucy-instance/shouty/src/test/java/shouty/StepDefinitions.java[lines=19..25]
+----
 
 Now we can store Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.
 
 [source,java]
+----
 include::../code/java/12-replace-hardcoded-lucy-instance/shouty/src/test/java/shouty/StepDefinitions.java[lines=27..30]
+----
 
 Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map.
 
 [source,java]
+----
 include::../code/java/12-replace-hardcoded-lucy-instance/shouty/src/test/java/shouty/StepDefinitions.java[lines=43..46]
+----
 
 shot::[3, "mvn test"]
 
@@ -41,7 +47,9 @@ shot::[4, "change expression to 'a person named {word}', edit parameters, change
 Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the hash/map.
 
 [source,java]
+----
 include::../code/java/13-ambiguous-step-definition/shouty/src/test/java/shouty/StepDefinitions.java[lines=27..30]
+----
 
 shot::[5, "mvn test FAILS"]
 If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.
@@ -50,7 +58,9 @@ shot::[6, "Delete a_person_named_Sean() and replace Sean instance with HashMap e
 Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.
 
 [source,java]
+----
 include::../code/java/14-replace-hardcoded-sean-instance/shouty/src/test/java/shouty/StepDefinitions.java[lines=32..36]
+----
 
 shot::[7, "mvn test"]
 
