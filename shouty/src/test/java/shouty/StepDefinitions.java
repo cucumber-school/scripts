@@ -5,6 +5,8 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 
+import java.util.HashMap;
+
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
@@ -14,15 +16,17 @@ public class StepDefinitions {
     private Person lucy;
     private String messageFromSean;
     private Network network;
+    private HashMap<String, Person> people;
 
     @Before
     public void createNetwork() {
         network = new Network();
+        people = new HashMap<>();
     }
 
     @Given("a person named Lucy")
     public void a_person_named_Lucy() {
-        lucy = new Person(network);
+        people.put("Lucy", new Person(network));
     }
 
     @Given("a person named Sean")
@@ -38,6 +42,6 @@ public class StepDefinitions {
 
     @Then("Lucy should hear Sean's message")
     public void lucy_hears_Sean_s_message() throws Throwable {
-        assertEquals(asList(messageFromSean), lucy.getMessagesHeard());
+        assertEquals(asList(messageFromSean), people.get("Lucy").getMessagesHeard());
     }
 }
