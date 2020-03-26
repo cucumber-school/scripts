@@ -1,0 +1,208 @@
+1
+0:00:00,000 --> 0:00:04,372
+Let's imagine we're building a
+point-of-sale system for an electronics retailer
+
+2
+0:00:04,372 --> 0:00:05,976
+Dixies
+
+3
+0:00:06,192 --> 0:00:08,192
+Here's our next user story!
+
+4
+0:00:08,192 --> 0:00:09,592
+Process Refunds
+
+5
+0:00:09,592 --> 0:00:12,272
+In order to satisfy
+customers statutory rights
+
+6
+0:00:12,272 --> 0:00:16,383
+As a sales assistant
+I need to be able to process refunds
+
+7
+0:00:17,663 --> 0:00:21,522
+In order to prepare this story for
+development we have what we call
+
+8
+0:00:21,522 --> 0:00:23,807
+a three amigos meeting
+
+9
+0:00:24,319 --> 0:00:26,922
+We call it the three amigos
+because it involves
+
+10
+0:00:26,922 --> 0:00:29,183
+three different disciplines from the team
+
+11
+0:00:29,812 --> 0:00:31,312
+Test
+
+12
+0:00:31,312 --> 0:00:32,672
+Development
+
+13
+0:00:32,672 --> 0:00:34,447
+and Product
+
+14
+0:00:34,927 --> 0:00:36,863
+Let's watch one in action
+
+15
+0:00:37,572 --> 0:00:40,252
+The business rules to this story
+are really simple
+
+16
+0:00:40,252 --> 0:00:45,092
+Any item can be returned within 14 days
+as long as the customer has a receipt
+
+17
+0:00:45,092 --> 0:00:46,732
+Can you give me an example?
+
+18
+0:00:46,732 --> 0:00:47,552
+Okay
+
+19
+0:00:47,552 --> 0:00:51,052
+Collin the customer bought
+a kettle last week from us
+
+20
+0:00:51,052 --> 0:00:54,252
+When he got home he realised the colour
+didn't match his kitchen cabinets
+
+21
+0:00:54,252 --> 0:00:56,292
+and he really didn't like it
+
+22
+0:00:56,292 --> 0:00:59,992
+Um, he's brought it back to
+the store for refund
+
+23
+0:00:59,992 --> 0:01:02,722
+He walks up to Sally
+a junior sales assistant
+
+24
+0:01:02,722 --> 0:01:06,172
+and he asks her to process the refund
+
+25
+0:01:06,172 --> 0:01:09,312
+What's the outcome here?
+What are we supposed to test?
+
+26
+0:01:09,312 --> 0:01:14,272
+Well we need to increment the
+stock quantity for that item
+
+27
+0:01:14,272 --> 0:01:17,012
+so we know it's back in our inventory
+
+28
+0:01:17,012 --> 0:01:18,472
+Ah right, anything else?
+
+29
+0:01:18,472 --> 0:01:21,452
+No, no, I think that's all
+
+30
+0:01:21,452 --> 0:01:24,072
+What if Collin doesn't have his receipt?
+
+31
+0:01:24,072 --> 0:01:26,092
+Does Sally have to send him home?
+
+32
+0:01:26,092 --> 0:01:30,972
+Well, a manager can process a refund
+with any proof of purchase
+
+33
+0:01:30,972 --> 0:01:34,152
+Collin could use a bank statement
+for example?
+
+34
+0:01:34,152 --> 0:01:38,432
+But Sally can't do that so
+she would have to ask her boss
+
+35
+0:01:38,432 --> 0:01:40,472
+Right, so there are two rules here:
+
+36
+0:01:40,472 --> 0:01:43,932
+The customer must have
+proof of purchase, not just a receipt
+
+37
+0:01:43,932 --> 0:01:45,812
+and if they don't have their receipt
+
+38
+0:01:45,812 --> 0:01:48,332
+then it must be authorized
+by a manager, right?
+
+39
+0:01:48,332 --> 0:01:50,492
+Oh, oh right! Exactly!
+
+40
+0:01:50,492 --> 0:01:53,012
+Aren't we forgetting something here?
+
+41
+0:01:53,592 --> 0:01:55,712
+Isn't Collin supposed to get his money back?
+
+42
+0:01:56,292 --> 0:01:59,112
+Oh! Uh, oh yes of course!
+
+43
+0:01:59,112 --> 0:02:02,592
+And does the system need to notify
+anyone in the warehouse to
+
+44
+0:02:02,592 --> 0:02:04,072
+come pick up the kettle?
+
+45
+0:02:04,072 --> 0:02:05,192
+Good idea, Tammy.
+
+46
+0:02:05,192 --> 0:02:09,532
+Yes, I think that's out of our scope
+for this version of the story
+
+47
+0:02:09,532 --> 0:02:12,412
+but I'll put it on the
+backlog for future iteration
