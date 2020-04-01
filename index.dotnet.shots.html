@@ -456,6 +456,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_install_specflow">2.3. Install SpecFlow</a></li>
 <li><a href="#_add_a_scenario_wire_it_up">2.4. Add a scenario, wire it up</a></li>
 <li><a href="#_sketch_out_the_solution">2.5. Sketch out the solution</a></li>
+<li><a href="#_make_the_scenario_pass">2.6. Make the scenario pass</a></li>
 </ul>
 </li>
 <li><a href="#_expressing_yourself">3. Expressing yourself</a></li>
@@ -556,7 +557,64 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 <div class="sect2">
 <h3 id="_install_specflow">2.3. Install SpecFlow</h3>
 <div class="paragraph">
-<p>Now we’re ready to create our first feature file.</p>
+<p>SpecFlow is an open-source tool that is available as a NuGet package that you need to configure for your project. Although SpecFlow works fine even without Visual Studio, in Cucumber School we are going to use Visual Studio 2019, because it integrates nicely with SpecFlow. If you don&#8217;t have Visual Studio, you can download the Visual Studio Community edition that is free for education purposes and small teams.</p>
+</div>
+<div class="paragraph">
+<p>In order to use the Visual Studio integration of SpecFlow, you need to install a Visual Studio extension. This is something you need to do only once. The Visual Studio extensions can be managed by opening the <strong>Manage Extensions</strong> command from the <strong>Extensions</strong> menu. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
+</div>
+<div class="paragraph">
+<p>There are plenty of useful extensions in the Visual Studio marketplace <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span> and for SpecFlow there are two extensions that you can choose from. You will find these if you type <strong>SpecFlow</strong> into the search box. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> Both the <strong>SpecFlow for Visual Studio 2019</strong> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span> and the <strong>Deveroom for SpecFlow</strong> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span> extensions work well with SpecFlow and both of them are free and open-source. In this course I will use the Deveroom extension, but you can follow the exercises with the other one as well.</p>
+</div>
+<div class="paragraph">
+<p>In order to install the extension you just need to click on the <strong>Download</strong> button next to the name of the extension you selected.<span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span> The extension is downloaded, but it only gets installed once you close your Visual Studio. So we need to close all instances of Visual Studio 2019 and wait for the install dialog to pop up. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span></p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span> Here it is. Accept the installation of the extension by clicking on the <strong>Modify</strong> button <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>, that completes the setup process. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span> Our Visual Studio is now ready to work with SpecFlow. So are we.</p>
+</div>
+<div class="paragraph">
+<p>Now we are going to create a Visual Studio solution for the Shouty application. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span> As we will focus on the business logic of the application in this course, I create a .NET Standard class library project for the production code. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span> I also remove the class that comes with the template. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span></p>
+</div>
+<div class="paragraph">
+<p>We also need to add a project for the scenarios and the automation code. SpecFlow works with test execution frameworks in order to make the scenarios executable. It supports all well known test execution frameworks like MsTest, NUnit or xUnit. There is also a free dedicated runner developed by Tricentis called SpecFlow+ Runner. For the sake of simplicity in this course we are going to use xUnit, so I add a .NET Core <strong>xUnit Test Project</strong> to my solution. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span></p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span> I call our test project <strong>Shouty.Specs</strong>. Including <strong>Specs</strong> in the project name emphasizes that we are creating an executable specification. As we won&#8217;t have coded unit test in this project I remove the <code>UnitTest1.cs</code> file added by the template. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span></p>
+</div>
+<div class="paragraph">
+<p>To make this project a <strong>SpecFlow project</strong>, we need to add two NuGet package references.</p>
+</div>
+<div class="paragraph">
+<p>The first is <strong>SpecFlow.xUnit</strong>. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 17</span> This is going to install SpecFlow for the project and configure it to work with xUnit.</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 18</span> At the time of the recording this leads to an error as the xUnit version used by the <strong>xUnit Test Project</strong> template is not recent enough for the latest SpecFlow version. This is something we can easily fix by updating the xUnit related packages of the specs project. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 19</span> In fact we can upgrade all packages in this case. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span></p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span> Installing the <strong>SpecFlow.xUnit</strong> package is now successful.</p>
+</div>
+<div class="paragraph">
+<p>The second package we need to add is the <strong>SpecFlow.Tools.MsBuild.Generation</strong> package. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 22</span> This will instruct SpecFlow to turn our scenarios into executable tests every time we build the project. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 23</span></p>
+</div>
+<div class="paragraph">
+<p>As we automate the scenarios, we will need to create classes and call methods from the application project. To make this possible we need to add a reference to the SpecFlow project <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span> pointing to the <code>Shouty</code> project. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 25</span></p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s have a quick look at the project file of the <code>Specs</code> project. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 26</span> If we did everything well, our project file should look like this. As this is a .NET Core project, we could actually achieve the same outcome just by adding these lines to the project file manually. That probably would have been easier. Maybe next time.</p>
+</div>
+<div class="paragraph">
+<p>The SpecFlow project will contain the feature file, the automation code, and some other files necessary for the automation infrastructure. Adding all these into the root folder of the project would be quite messy. Teams that work with SpecFlow usually follow some conventions in order to structure their SpecFlow projects. If you have used any Cucumber-family tools before, these conventions will be familiar for you.</p>
+</div>
+<div class="paragraph">
+<p>To achieve that, let&#8217;s create three folders. One, called <code>Features</code> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 27</span> where we will store&#8230;&#8203; well the feature files, I guess. The second folder that we usually have is called <code>StepDefinitions</code>. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 28</span> This will be the container for our automation code. And finally we also create a third folder called <code>Support</code> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 29</span> where we can store any files related to the supporting infrastructure.</p>
+</div>
+<div class="paragraph">
+<p>Nice!</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s verify out setup by building the solution. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 30</span></p>
+</div>
+<div class="paragraph">
+<p>The build succeeded so now we&#8217;re ready to create our first feature file.</p>
 </div>
 </div>
 <div class="sect2">
@@ -569,7 +627,7 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 All feature files start with the keyword <code>Feature:</code>
 <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
 followed by a name.
-It’s a good convention to give it a name that matches the file name. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+It&#8217;s a good convention to give it a name that matches the file name. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
 </div>
 <div class="listingblock">
 <div class="title">HearShout.feature</div>
@@ -579,7 +637,7 @@ It’s a good convention to give it a name that matches the file name. <span tit
 </div>
 <div class="paragraph">
 <p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span>
-Now let’s write out our first scenario.</p>
+Now let&#8217;s write out our first scenario.</p>
 </div>
 <div class="listingblock">
 <div class="title">HearShout.feature</div>
@@ -587,7 +645,7 @@ Now let’s write out our first scenario.</p>
 <pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener is within range
 	<span class="nf">Given </span>Lucy is located 15m from Sean
 	<span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
-	<span class="nf">Then </span>Lucy hears Sean’s message</code></pre>
+	<span class="nf">Then </span>Lucy hears Sean's message</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -610,7 +668,7 @@ Now let’s write out our first scenario.</p>
 <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span> Undefined steps are also higlighted in Visual Studio with an orange color.</p>
 </div>
 <div class="paragraph">
-<p><em>Undefined</em> means SpecFlow doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some <em>step definitions</em>.</p>
+<p><em>Undefined</em> means SpecFlow doesn&#8217;t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some <em>step definitions</em>.</p>
 </div>
 <div class="paragraph">
 <p><span title="02.04.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11.1</span></p>
@@ -622,11 +680,11 @@ Now let’s write out our first scenario.</p>
 <p>When SpecFlow runs a step, it looks for a step definition that matches the text in the Gherkin step. If it finds one, then it executes the code in the step definition.</p>
 </div>
 <div class="paragraph">
-<p>If it doesn’t find one… well, you’ve just seen what happens. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span> SpecFlow prints out some code snippets that we can use as a basis for new step definitions,
+<p>If it doesn&#8217;t find one… well, you&#8217;ve just seen what happens. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span> SpecFlow prints out some code snippets that we can use as a basis for new step definitions,
 but you can get the same snippets from Visual Studio, <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span> using the "Define steps&#8230;&#8203;" command in the editor.</p>
 </div>
 <div class="paragraph">
-<p>The dialog can help us to create a new class and paste the selected snippets. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span> We&#8217;ll just call the class <code>Steps</code>. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span></p>
+<p>The dialog can help us to create a new class and paste the selected snippets. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 14</span> We&#8217;ll just call the class <code>StepDefinitions</code>. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 15</span></p>
 </div>
 <div class="paragraph">
 <p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 16</span> The wizard detected that we had a <code>StepDefinitions</code> folder and saved the new class there. SpecFlow would find it anywhere within the same project, but it is better this way.</p>
@@ -650,7 +708,7 @@ You can think of the <code>PendingStepException</code> as a reminder of that.</p
 </div>
 <div class="paragraph">
 <p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 20</span>
-We&#8217;ll rename the <code>int</code> parameter to something that better reflects its meaning. We’ll call it <code>distance</code>.</p>
+We&#8217;ll rename the <code>int</code> parameter to something that better reflects its meaning. We&#8217;ll call it <code>distance</code>.</p>
 </div>
 <div class="paragraph">
 <p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 21</span> We can put a breakpoint into the method and <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 22</span> debug the scenario to see what&#8217;s happening.</p>
@@ -662,7 +720,7 @@ We&#8217;ll rename the <code>int</code> parameter to something that better refle
 <p>Notice that the number 15 does not appear anywhere in our C# code. The value is automatically passed from the scenario step to the step definition.</p>
 </div>
 <div class="paragraph">
-<p>If you&#8217;re interested, that was caused by the <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span><code>(.*)</code> expression in the parameter of the <code>Given</code> attribute. We’ll explain these expressions in detail in a future lesson.</p>
+<p>If you&#8217;re interested, that was caused by the <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 24</span><code>(.*)</code> expression in the parameter of the <code>Given</code> attribute. We&#8217;ll explain these expressions in detail in a future lesson.</p>
 </div>
 </div>
 <div class="sect2">
@@ -695,7 +753,7 @@ Now that we have the step definitions matching, we can start working on our solu
         <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingStepException</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">@"Lucy hears Sean’s message"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">@"Lucy hears Sean's message"</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyHearsSeanSMessage</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingStepException</span><span class="p">();</span>
@@ -791,8 +849,8 @@ When we run the scenario, the first step should be passing! The easiest way to s
 -&gt; <span class="k">done</span>: StepDefinitions.GivenLucyIsLocatedMFromSean<span class="o">(</span>15<span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
 When Sean shouts <span class="s2">"free bagels at Sean's"</span>
 -&gt; pending: StepDefinitions.WhenSeanShouts<span class="o">(</span><span class="s2">"free bagels at Se..."</span><span class="o">)</span>
-Then Lucy hears Sean’s message
--&gt; skipped because of previous errors</code></pre>
+Then Lucy hears Sean<span class="s1">'s message
+-&gt; skipped because of previous errors</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -867,8 +925,8 @@ Don&#8217;t worry if the regular expression pattern sounds unfamiliar to you, we
 -&gt; <span class="k">done</span>: StepDefinitions.GivenLucyIsLocatedMFromSean<span class="o">(</span>15<span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
 When Sean shouts <span class="s2">"free bagels at Sean's"</span>
 -&gt; <span class="k">done</span>: StepDefinitions.WhenSeanShouts<span class="o">(</span><span class="s2">"free bagels at Se..."</span><span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
-Then Lucy hears Sean’s message
--&gt; pending: StepDefinitions.ThenLucyHearsSeanSMessage<span class="o">()</span></code></pre>
+Then Lucy hears Sean<span class="s1">'s message
+-&gt; pending: StepDefinitions.ThenLucyHearsSeanSMessage()</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -951,6 +1009,97 @@ Then Lucy hears Sean<span class="s1">'s message
 <p>Now all we have to do is write the code to make it do what it&#8217;s supposed to.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_make_the_scenario_pass">2.6. Make the scenario pass</h3>
+<div class="paragraph">
+<p>So we have our failing scenario: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">Given Lucy is located 15m from Sean
+-&gt; <span class="k">done</span>: StepDefinitions.GivenLucyIsLocatedMFromSean<span class="o">(</span>15<span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
+When Sean shouts <span class="s2">"free bagels at Sean's"</span>
+-&gt; <span class="k">done</span>: StepDefinitions.WhenSeanShouts<span class="o">(</span><span class="s2">"free bagels at Se..."</span><span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
+Then Lucy hears Sean<span class="s1">'s message
+-&gt; error: Value cannot be null. (Parameter '</span>collection<span class="s1">')</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lucy is expected to hear Sean&#8217;s message, but she hasn&#8217;t heard anything: we got <code>null</code> back from the <code>GetMessagesHeard</code> method. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
+</div>
+<div class="paragraph">
+<p>In this case, we&#8217;re going to cheat. We have a one-line fix that will make this scenario pass, but it&#8217;s not a particularly future-proof implementation. Can you guess what it is? <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="csharp"><span class="k">public</span> <span class="n">IList</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">GetMessagesHeard</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="p">{</span> <span class="s">"free bagels at Sean's"</span> <span class="p">};</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>I told you it wasn&#8217;t very future proof! But let&#8217;s see what SpecFlow says to that.</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+</div>
+<div class="paragraph">
+<p>Fantastic! Our scenario is passing for the first time. As long as this is the <em>only</em> message anyone ever shouts, we&#8217;re good to ship this thing! But I&#8217;m afraid this is not going to be the case so let&#8217;s work a bit more on it.</p>
+</div>
+<div class="paragraph">
+<p>Now, the fact that such a poor implementation can pass <em>all</em> our tests shows us that we need to work on our tests. A more comprehensive set of tests would guide us towards a better implementation.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s also a good habit to look for the most simple solution. We can trust that, as our tests evolve, so will our solution.</p>
+</div>
+<div class="paragraph">
+<p>Instead of writing a note on our TODO list, let&#8217;s write another test that shouts a different message. Usually we&#8217;d expect a developer to do this using a unit test, but to keep things simple in this lesson, we&#8217;re going to write another scenario. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve worked hard. It&#8217;s time for a coffee, so let&#8217;s come up with an example that has Sean offering free coffee. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+  <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy hears Sean's message
+
+  <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+    <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It fails, reminding us we need to find a solution that doesn&#8217;t rely on hard-coding the message. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span>
+Now when we come back to this code, we can just run the tests and SpecFlow will remind us what we need to do next. We&#8217;re done for today!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">Test Name:	Listener hears a different message
+<span class="o">[</span>...]
+Result Message:
+Assert.Contains<span class="o">()</span> Failure
+Not found: Free coffee!
+In value:  List&lt;String&gt; <span class="o">[</span><span class="s2">"free bagels at Sean's"</span><span class="o">]</span>
+Result StandardOutput:
+Given Lucy is located 15m from Sean
+-&gt; <span class="k">done</span>: StepDefinitions.GivenLucyIsLocatedMFromSean<span class="o">(</span>15<span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
+When Sean shouts <span class="s2">"Free coffee!"</span>
+-&gt; <span class="k">done</span>: StepDefinitions.WhenSeanShouts<span class="o">(</span><span class="s2">"Free coffee!"</span><span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
+Then Lucy hears Sean<span class="s1">'s message
+-&gt; error: Assert.Contains() Failure
+Not found: Free coffee!
+In value:  List&lt;String&gt; ["free bagels at Sean'</span>s<span class="s2">"]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Of course, if you&#8217;re in the mood, you can always try to implement a solution yourself that makes both scenarios pass. Have fun!</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -968,7 +1117,7 @@ Then Lucy hears Sean<span class="s1">'s message
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-03-26 17:36:09 UTC
+Last updated 2020-04-01 08:33:49 UTC
 </div>
 </div>
 <style>
