@@ -95,12 +95,12 @@ Instead of writing a note on our TODO list, let's write another scenario that sh
 ----
 Feature: Hear shout
   Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "free bagels at Sean's"
     Then Lucy hears Sean’s message
 
   Scenario: Listener hears a different message
-    Given Lucy is located 15m from Sean
+    Given Lucy is located 15 metres from Sean
     When Sean shouts "Free coffee!"
     Then Lucy hears Sean's message
 ----
@@ -112,8 +112,8 @@ Now when we come back to this code, we can just run the tests and Cucumber will 
 ----
 Step undefined
 You can implement missing steps with the snippets below:
-@Given("Lucy is located 15m from Sean")
-public void lucy_is_located_15m_from_Sean() {
+@Given("Lucy is located 15 metres from Sean")
+public void lucy_is_located_15 metres_from_Sean() {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
@@ -140,8 +140,8 @@ file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:8# L
 
 You can implement missing steps with the snippets below:
 
-@Given("Lucy is located 15m from Sean")
-public void lucy_is_located_15m_from_Sean() {
+@Given("Lucy is located 15 metres from Sean")
+public void lucy_is_located_15 metres_from_Sean() {
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException();
 }
