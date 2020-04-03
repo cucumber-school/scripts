@@ -1559,12 +1559,12 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
   <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
-    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">Given </span>Lucy is located 15 metres from Sean
     <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
     <span class="nf">Then </span>Lucy hears Sean’s message
 
   <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
-    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">Given </span>Lucy is located 15 metres from Sean
     <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
     <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
 </div>
@@ -1577,8 +1577,8 @@ Now when we come back to this code, we can just run the tests and Cucumber will 
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">Step undefined
 You can implement missing steps with the snippets below:
-@Given<span class="o">(</span><span class="s2">"Lucy is located 15m from Sean"</span><span class="o">)</span>
-public void lucy_is_located_15m_from_Sean<span class="o">()</span> <span class="o">{</span>
+@Given<span class="o">(</span><span class="s2">"Lucy is located 15 metres from Sean"</span><span class="o">)</span>
+public void lucy_is_located_15 metres_from_Sean<span class="o">()</span> <span class="o">{</span>
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
 <span class="o">}</span>
@@ -1605,8 +1605,8 @@ file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:8# L
 
 You can implement missing steps with the snippets below:
 
-@Given<span class="o">(</span><span class="s2">"Lucy is located 15m from Sean"</span><span class="o">)</span>
-public void lucy_is_located_15m_from_Sean<span class="o">()</span> <span class="o">{</span>
+@Given<span class="o">(</span><span class="s2">"Lucy is located 15 metres from Sean"</span><span class="o">)</span>
+public void lucy_is_located_15 metres_from_Sean<span class="o">()</span> <span class="o">{</span>
     // Write code here that turns the phrase above into concrete actions
     throw new io.cucumber.java.PendingException<span class="o">()</span><span class="p">;</span>
 <span class="o">}</span>
@@ -2267,7 +2267,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-01 08:33:49 UTC
+Last updated 2020-04-03 10:42:16 UTC
 </div>
 </div>
 <style>
