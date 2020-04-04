@@ -1,12 +1,13 @@
 include::./title.adoc[]
 
+shot::[1]
 We can start with the step definition, which would look something like this:
 
 [source, ruby]
 ----
 include::../code/ruby/08-sketch-out-parameter-type/features/step_definitions/steps.rb[lines=3..6]
 ----
-
+shot::[2]
 If we run Cucumber at this point we'll see an error, because we haven't defined the `{person}` parameter type yet.
 
 ----
@@ -16,7 +17,22 @@ Undefined parameter type {person} (Cucumber::CucumberExpressions::UndefinedParam
 
 Here's how we define one.
 
+shot::[3] shot::[4]
 Let's create a new Ruby file in `features/support` called `person_parameter.rb`:
+
+.person_parameter.rb
+[source, ruby]
+----
+include::../code/ruby/09-use-person-parameter-in-first-step/features/support/person_parameter.rb[lines=1]
+----
+
+We use the `ParameterType` DSL method from Cucumber to define our new parameter type. shot::[5]
+
+We need to give it a `name` which is the name we'll use inside the curly brackets in our step definition expressions. shot::[6]
+
+We also need to define -- gasp! -- a regular expression. shot::[7] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario. shot::[8]
+
+Finally, there's a transformer block, shot::[9] which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) shot::[10] which we can then pass to the `Person` class's constructor. shot::[11]
 
 .person_parameter.rb
 [source, ruby]
@@ -24,14 +40,7 @@ Let's create a new Ruby file in `features/support` called `person_parameter.rb`:
 include::../code/ruby/09-use-person-parameter-in-first-step/features/support/person_parameter.rb[[]
 ----
 
-We use the `ParameterType` DSL method from Cucumber to define our new parameter type. shot::[]
-
-We need to give it a `name` which is the name we'll use inside the curly brackets in our step definition expressions. shot::[]
-
-We also need to define -- gasp! -- a regular expression. shot::[] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario.
-
-Finally, there's a transformer block, shot::[] which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) which we can then pass to the `Person` class's constructor.
-
+shot::[12]
 All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
 
 [source]
