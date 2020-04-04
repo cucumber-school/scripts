@@ -1374,7 +1374,8 @@ Good step definitions are important because they enable the <em>readability</em>
 <div class="sect2">
 <h3 id="_literal_expressions">3.2. Literal expressions</h3>
 <div class="paragraph">
-<p>Let&#8217;s look at the Shouty scenario from the last chapter.</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+Let&#8217;s look at the Shouty scenario from the last chapter.</p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -1387,10 +1388,11 @@ Good step definitions are important because they enable the <em>readability</em>
 </div>
 </div>
 <div class="paragraph">
-<p>As Cucumber starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is 15 metres from Sean</code> and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is 15 metres from Sean</code>?”"</p>
+<p>As Cucumber starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is 15 metres from Sean</code> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span> and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is 15 metres from Sean</code>?”"</p>
 </div>
 <div class="paragraph">
-<p>The most simple cucumber expression that would match that step is this one:</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+The most simple cucumber expression that would match that step is this one:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1401,7 +1403,7 @@ Good step definitions are important because they enable the <em>readability</em>
 <p>That’s pretty simple isn&#8217;t it? Cucumber expressions are just string patterns, and the most simple pattern you can use is a perfect match.</p>
 </div>
 <div class="paragraph">
-<p>In Ruby, we can use this pattern to make a step definition like this:</p>
+<p>In Ruby, we can use this pattern to make a step definition like this: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1418,7 +1420,8 @@ Good step definitions are important because they enable the <em>readability</em>
 <div class="sect2">
 <h3 id="_capturing_parameters">3.3. Capturing parameters</h3>
 <div class="paragraph">
-<p>Sometimes, we want to write step defintions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean.</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+Sometimes, we want to write step defintions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -1434,7 +1437,7 @@ Good step definitions are important because they enable the <em>readability</em>
 <p>To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called <em>parameters</em>.</p>
 </div>
 <div class="paragraph">
-<p>For example, to capture the number of metres, we can use the <code>{int}</code> parameter: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span> which is passed as an argument to our step definition: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span></p>
+<p>For example, to capture the number of metres, we can use the <code>{int}</code> parameter: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> which is passed as an argument to our step definition: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -1446,7 +1449,7 @@ Good step definitions are important because they enable the <em>readability</em>
 <p>Now we’re capturing that value as an argument. The value <code>100</code> will be passed to our code automatically by Cucumber.</p>
 </div>
 <div class="paragraph">
-<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to an <code>Integer</code> data type for us automatically, so we can do maths with it if we want.<span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span></p>
+<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to an <code>Integer</code> data type for us automatically, so we can do maths with it if we want.<span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -1470,7 +1473,8 @@ Good step definitions are important because they enable the <em>readability</em>
 <p>Ideally, the language used in scenarios should never be constrained by your step definitions. Otherwise they&#8217;ll end up sounding like they were written by robots. Or worse, they read like code.</p>
 </div>
 <div class="paragraph">
-<p>One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1478,7 +1482,8 @@ Good step definitions are important because they enable the <em>readability</em>
 </div>
 </div>
 <div class="paragraph">
-<p>Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match:</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1505,7 +1510,7 @@ end</code></pre>
 <p>What a pain!</p>
 </div>
 <div class="paragraph">
-<p>Fear not. We can just surround the <code>s</code> in parentheses to make it optional, like this:</p>
+<p>Fear not. We can just surround the <code>s</code> in parentheses to make it optional, like this: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1513,7 +1518,8 @@ end</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now our step matches:</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+Now our step matches:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1536,7 +1542,7 @@ Feature: Hear shout
 <p>This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.</p>
 </div>
 <div class="paragraph">
-<p>Another is to allow <em>alternates</em> - different ways of saying the same thing. For example, to accept this step:</p>
+<p>Another is to allow <em>alternates</em> - different ways of saying the same thing. For example, to accept this step: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1544,7 +1550,7 @@ Feature: Hear shout
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;we can use this Cucumber Expression:</p>
+<p>&#8230;&#8203;we can use this Cucumber Expression: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1552,7 +1558,8 @@ Feature: Hear shout
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine:</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1581,7 +1588,8 @@ Feature: Hear shout
 <p>For example, let&#8217;s define our own <code>{person}</code> custom parameter type that will convert the string <code>Lucy</code> into an instance of <code>Person</code> automatically.</p>
 </div>
 <div class="paragraph">
-<p>We can start with the step definition, which would look something like this:</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+We can start with the step definition, which would look something like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1591,7 +1599,8 @@ Feature: Hear shout
 </div>
 </div>
 <div class="paragraph">
-<p>If we run Cucumber at this point we&#8217;ll see an error, because we haven&#8217;t defined the <code>{person}</code> parameter type yet.</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+If we run Cucumber at this point we&#8217;ll see an error, because we haven&#8217;t defined the <code>{person}</code> parameter type yet.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1603,7 +1612,26 @@ Undefined parameter type {person} (Cucumber::CucumberExpressions::UndefinedParam
 <p>Here&#8217;s how we define one.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s create a new Ruby file in <code>features/support</code> called <code>person_parameter.rb</code>:</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+Let&#8217;s create a new Ruby file in <code>features/support</code> called <code>person_parameter.rb</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">person_parameter.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="nb">require</span> <span class="s1">'shouty'</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We use the <code>ParameterType</code> DSL method from Cucumber to define our new parameter type. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="paragraph">
+<p>We need to give it a <code>name</code> which is the name we&#8217;ll use inside the curly brackets in our step definition expressions. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
+</div>
+<div class="paragraph">
+<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span> This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
+</div>
+<div class="paragraph">
+<p>Finally, there&#8217;s a transformer block, <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span> which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span> which we can then pass to the <code>Person</code> class&#8217;s constructor. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span></p>
 </div>
 <div class="listingblock">
 <div class="title">person_parameter.rb</div>
@@ -1618,19 +1646,8 @@ Undefined parameter type {person} (Cucumber::CucumberExpressions::UndefinedParam
 </div>
 </div>
 <div class="paragraph">
-<p>We use the <code>ParameterType</code> DSL method from Cucumber to define our new parameter type. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span></p>
-</div>
-<div class="paragraph">
-<p>We need to give it a <code>name</code> which is the name we&#8217;ll use inside the curly brackets in our step definition expressions. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span></p>
-</div>
-<div class="paragraph">
-<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span> This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario.</p>
-</div>
-<div class="paragraph">
-<p>Finally, there&#8217;s a transformer block, <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot </span> which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) which we can then pass to the <code>Person</code> class&#8217;s constructor.</p>
-</div>
-<div class="paragraph">
-<p>All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span>
+All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1694,7 +1711,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-03 10:42:16 UTC
+Last updated 2020-04-04 21:24:54 UTC
 </div>
 </div>
 <style>
