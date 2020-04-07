@@ -1760,7 +1760,7 @@ Let’s dig into the code and see how these steps have been automated.</p>
 <h3 id="_description_field">4.3. Description field</h3>
 <div class="paragraph">
 <p>
-After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s description. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t mention the magic word scenario.</p>
+After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s <em>description</em>. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t mention the magic word &#8220;Scenario&#8221;.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -1845,10 +1845,10 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words Person and name. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
+<p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words <code>Person</code> and <code>name</code>. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
 </div>
 <div class="paragraph">
-<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were in the three amigos meeting with us when the example was written.</p>
+<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were involved in writing and reviewing this scenario.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -1897,20 +1897,17 @@ We now have two step definitions to implement, and that presents us with a bit o
 <pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a person named Lucy"</span><span class="o">)</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named_Lucy</span><span class="o">()</span> <span class="o">{</span>
         <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a person named Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named_Sean</span><span class="o">()</span> <span class="o">{</span>
+      <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>@Given("a person named Sean")
-public void a_person_named_Sean() {
-  sean = new Person(network);
-}</pre>
 </div>
 </div>
 <div class="paragraph">
 <p>
-There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration. Every time Cucumber runs a scenario it creates a new instance of your steps class, so we’ll get a fresh instance of the Network for each scenario.</p>
+There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration of the <code>StepDefinitions</code> class. Every time Cucumber runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2176,14 +2173,7 @@ Let’s switch back to the feature to show you one more technique for improving 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Shout
-
-  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
-
-  <span class="err">To do</span><span class="p">:</span>
-    <span class="err">-</span> <span class="err">only</span> <span class="err">shout</span> <span class="err">to</span> <span class="err">people</span> <span class="err">within</span> <span class="nf">a </span>certain distance
-
-  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
 
     <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
       <span class="nf">Given </span>a person named Lucy
@@ -2195,13 +2185,7 @@ Let’s switch back to the feature to show you one more technique for improving 
       <span class="nf">Given </span>a person named Lucy
       <span class="nf">And </span>a person named Sean
       <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
-      <span class="nf">Then </span>Lucy should hear Sean's message
-
-  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
-
-    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
-
-    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">is</span> <span class="err">out</span> <span class="err">of</span> <span class="err">range</span></code></pre>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2267,7 +2251,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-07 14:11:20 UTC
+Last updated 2020-04-07 15:20:40 UTC
 </div>
 </div>
 <style>
