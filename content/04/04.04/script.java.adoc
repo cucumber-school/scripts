@@ -4,10 +4,12 @@ shot::[1, "broken implementation"]
 We now have two step definitions to implement, and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile. If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.
 
 [source,java]
+----
 include::../code/java/06-broken-stepdef-implmentation/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..32]
+----
 
 shot::[2, "Network as instance field"]
-There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration. Every time Cucumber runs a scenario it creates a new instance of your steps class, so we’ll get a fresh instance of the Network for each scenario.
+There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration of the `StepDefinitions` class. Every time Cucumber runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.
 
 [source,java]
 ----
