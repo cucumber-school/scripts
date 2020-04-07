@@ -1,7 +1,7 @@
 include::./title.adoc[]
 
 shot::[1, "feature file"]
-After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s description. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t mention the magic word scenario.
+After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s _description_. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t mention the magic word "`Scenario`".
 
 shot::[2, "writes out description and todo list"]
 In this case, we can add a high level description of the Shouty application. Because Shouty doesn't yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.
@@ -52,9 +52,9 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 include::../code/java/03-first-scenario-rewritten/shouty/src/test/resources/shouty/shout.feature[lines=8..19]
 ----
 
-Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words Person and name. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.
+Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words `Person` and `name`. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.
 
-One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were in the three amigos meeting with us when the example was written.
+One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were involved in writing and reviewing this scenario.
 
 shot::[7, "create new Rule and writes out two new empty scenarios for in / out of range"]
 In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.
