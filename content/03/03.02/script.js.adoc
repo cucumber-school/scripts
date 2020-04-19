@@ -1,3 +1,44 @@
 include::./title.adoc[]
 
-TODO
+shot::[1]
+Let's look at the Shouty scenario from the last chapter.
+Let's look at the Shouty scenario from the last chapter.
+Let's look at the Shouty scenario from the last chapter.
+Let's look at the Shouty scenario from the last chapter.
+Let's look at the Shouty scenario from the last chapter.
+
+.hear_shout.feature
+[source,gherkin]
+----
+Feature: Hear shout
+  Scenario: Listener is within range
+    Given Lucy is located 15 metres from Sean
+    When Sean shouts "free bagels at Sean's"
+    Then Lucy hears Sean's message
+----
+
+As Cucumber starts to execute this feature, it will come to the first step of the scenario `Given Lucy is 15 metres from Sean` shot::[2] and say to itself "now - do I have any step definitions that match the phrase `Lucy is 15 metres from Sean`?”"
+
+shot::[3]
+The most simple cucumber expression that would match that step is this one:
+
+----
+Lucy is located 15 metres from Sean
+----
+
+That’s pretty simple isn't it? Cucumber expressions are just string patterns, and the most simple pattern you can use is a perfect match.
+
+In Ruby, we can use this pattern to make a step definition like this: shot::[4]
+
+[source,js]
+----
+Given('Lucy is located 15 metres from Sean', function () {
+  // Write code here that turns the phrase above into concrete actions
+  console.log("matched!");
+
+  return 'pending'
+})
+----
+
+We use a normal Ruby string to pass the cucumber expression to Cucumber.
+

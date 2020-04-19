@@ -1,4 +1,45 @@
 include::./title.adoc[]
 
-TODO
+shot::[1]
+Sometimes, we want to write step defintions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. shot::[2]
+
+.hear_shout.feature
+[source,gherkin]
+----
+Feature: Hear shout
+  Scenario: Listener is within range
+    Given Lucy is located 100 metres from Sean
+    When Sean shouts "free bagels at Sean's"
+    Then Lucy hears Sean's message
+----
+
+To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called _parameters_.
+
+For example, to capture the number of metres, we can use the `{int}` parameter: shot::[3] which is passed as an argument to our step definition: shot::[4]
+
+.steps.js
+[source,js]
+----
+Given('Lucy is located {int} metres from Sean', function (distance) {
+  // ...
+})
+----
+
+Now we’re capturing that value as an argument. The value `100` will be passed to our code automatically by Cucumber.
+
+Because we've used Cucumber Expressions' built-in `{int}` parameter type, the value has been cast to an `Integer` data type for us automatically, so we can do maths with it if we want.shot::[5]
+
+.steps.js
+[source,js]
+----
+Given('Lucy is located {int} metres from Sean', function (distance) {
+  // Write code here that turns the phrase above into concrete actions
+  console.log(`Lucy is ${distance * 100} centimetres from Sean`);
+
+  return 'pending'
+})
+----
+
+Cucumber has a bunch of built-in parameter types: `{int}`, `{float}`, `{word}` and `{string}`. You can also define your own, as we'll see later.
+
 
