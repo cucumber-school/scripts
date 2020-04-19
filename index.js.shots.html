@@ -1605,13 +1605,104 @@ Good step definitions are important because they enable the <em>readability</em>
 <div class="sect2">
 <h3 id="_literal_expressions">3.2. Literal expressions</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+Let&#8217;s look at the Shouty scenario from the last chapter.
+Let&#8217;s look at the Shouty scenario from the last chapter.
+Let&#8217;s look at the Shouty scenario from the last chapter.
+Let&#8217;s look at the Shouty scenario from the last chapter.
+Let&#8217;s look at the Shouty scenario from the last chapter.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+  <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>Lucy is located 15 metres from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As Cucumber starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is 15 metres from Sean</code> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span> and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is 15 metres from Sean</code>?”"</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+The most simple cucumber expression that would match that step is this one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Lucy is located 15 metres from Sean</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s pretty simple isn&#8217;t it? Cucumber expressions are just string patterns, and the most simple pattern you can use is a perfect match.</p>
+</div>
+<div class="paragraph">
+<p>In Ruby, we can use this pattern to make a step definition like this: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located 15 metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="dl">"</span><span class="s2">matched!</span><span class="dl">"</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We use a normal Ruby string to pass the cucumber expression to Cucumber.</p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_capturing_parameters">3.3. Capturing parameters</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+Sometimes, we want to write step defintions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+  <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>Lucy is located 100 metres from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called <em>parameters</em>.</p>
+</div>
+<div class="paragraph">
+<p>For example, to capture the number of metres, we can use the <code>{int}</code> parameter: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> which is passed as an argument to our step definition: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+</div>
+<div class="listingblock">
+<div class="title">steps.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// ...</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we’re capturing that value as an argument. The value <code>100</code> will be passed to our code automatically by Cucumber.</p>
+</div>
+<div class="paragraph">
+<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to an <code>Integer</code> data type for us automatically, so we can do maths with it if we want.<span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="listingblock">
+<div class="title">steps.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
+  <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s2">`Lucy is </span><span class="p">${</span><span class="nx">distance</span> <span class="o">*</span> <span class="mi">100</span><span class="p">}</span><span class="s2"> centimetres from Sean`</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cucumber has a bunch of built-in parameter types: <code>{int}</code>, <code>{float}</code>, <code>{word}</code> and <code>{string}</code>. You can also define your own, as we&#8217;ll see later.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1623,7 +1714,184 @@ Good step definitions are important because they enable the <em>readability</em>
 <p>Ideally, the language used in scenarios should never be constrained by your step definitions. Otherwise they&#8217;ll end up sounding like they were written by robots. Or worse, they read like code.</p>
 </div>
 <div class="paragraph">
-<p>TODO</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="err">​</span><span class="nf">Given </span>Lucy is located 1 metre from Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ npm test
+
+&gt; shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
+&gt; cucumber-js -f node_modules/cucumber-pretty
+
+Feature: Hear shout
+
+  Scenario: Listener is within range
+    Given Lucy is located 1 metre from Sean
+    ? undefined
+    When Sean shouts "free bagels at Sean's"
+    - skipped
+    Then Lucy hears Sean's message
+    ? undefined
+
+Warnings:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ? Given Lucy is located 1 metre from Sean
+       Undefined. Implement with the following snippet:
+
+         Given('Lucy is located {int} metre from Sean', function (int) {
+         // Given('Lucy is located {float} metre from Sean', function (float) {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
+   ? Then Lucy hears Sean's message
+       Undefined. Implement with the following snippet:
+
+         Then('Lucy hears Sean\'s message', function () {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+
+1 scenario (1 undefined)
+3 steps (2 undefined, 1 skipped)
+0m00.000s
+npm ERR! Test failed.  See above for more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What a pain!</p>
+</div>
+<div class="paragraph">
+<p>Fear not. We can just surround the <code>s</code> in parentheses to make it optional, like this: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metre(s) from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+Now our step matches:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ npm test
+
+&gt; shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
+&gt; cucumber-js -f node_modules/cucumber-pretty
+
+Feature: Hear shout
+
+  Scenario: Listener is within range
+    Given Lucy is standing 1 metre from Sean
+    ? undefined
+    When Sean shouts "free bagels at Sean's"
+    - skipped
+    Then Lucy hears Sean's message
+    ? undefined
+
+Warnings:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ? Given Lucy is standing 1 metre from Sean
+       Undefined. Implement with the following snippet:
+
+         Given('Lucy is standing {int} metre from Sean', function (int) {
+         // Given('Lucy is standing {float} metre from Sean', function (float) {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
+   ? Then Lucy hears Sean's message
+       Undefined. Implement with the following snippet:
+
+         Then('Lucy hears Sean\'s message', function () {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+
+1 scenario (1 undefined)
+3 steps (2 undefined, 1 skipped)
+0m00.000s
+npm ERR! Test failed.  See above for more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.</p>
+</div>
+<div class="paragraph">
+<p>Another is to allow <em>alternates</em> - different ways of saying the same thing. For example, to accept this step: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="err">​</span><span class="nf">Given </span>Lucy is standing 1 metre from Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;we can use this Cucumber Expression: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located/standing {int} metre(s) from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ npm test
+
+&gt; shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
+&gt; cucumber-js -f node_modules/cucumber-pretty
+
+Feature: Hear shout
+
+  Scenario: Listener is within range
+    Given Lucy is standing 1 metre from Sean
+Lucy is 100 centimetres from Sean
+    ? pending
+    When Sean shouts "free bagels at Sean's"
+    - skipped
+    Then Lucy hears Sean's message
+    ? undefined
+
+Warnings:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ? Given Lucy is standing 1 metre from Sean # features/step_definitions/steps.js:3
+       Pending
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
+   ? Then Lucy hears Sean's message
+       Undefined. Implement with the following snippet:
+
+         Then('Lucy hears Sean\'s message', function () {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+
+1 scenario (1 undefined)
+3 steps (1 undefined, 1 pending, 1 skipped)
+0m00.001s
+npm ERR! Test failed.  See above for more details.</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1682,7 +1950,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-19 19:40:07 UTC
+Last updated 2020-04-19 21:59:26 UTC
 </div>
 </div>
 <style>
