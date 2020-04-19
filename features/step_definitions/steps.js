@@ -1,8 +1,8 @@
 const { Given, When, Then } = require('@cucumber/cucumber')
 
-Given('Lucy is located 15 metres from Sean', function () {
+Given('Lucy is located {int} metres from Sean', function (distance) {
   // Write code here that turns the phrase above into concrete actions
-  console.log("matched!");
+  console.log(`Lucy is ${distance * 100} centimetres from Sean`);
 
   return 'pending'
 })
