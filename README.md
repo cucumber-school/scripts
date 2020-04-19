@@ -48,9 +48,10 @@ The source code for most of the chapters is kept in on [orphan branches](https:/
 
 The idea is to create a storyboard for the code in the chapter in the branch, with one commit each time something happens. To create a new chapter code branch, use these commands:
 
-    git checkout -b --orphan chapter-0n-code-<lang> # where n is the chapter number and <lang> is the language
+    git checkout --orphan chapter-0n-code-<lang> # where n is the chapter number and <lang> is the language
     rm -rf . # because otherwise all the files you just had in HEAD will get checked in!
     echo "content\npublic\n" > .gitignore
+    git add --all
     git commit -m "Initial commit"
 
 Now you can work on the storyboard. If you mess somethign up, use `git rebase` to fix it:
