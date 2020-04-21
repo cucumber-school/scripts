@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- the following package enables Cucumber Expressions with SpecFlow v3.1 -->
+    <PackageReference Include="CucumberExpressions.SpecFlow.3-1" Version="1.0.0" />
+    <!-- the explicit SpecFlow package declaration is needed to avoid NuGet warning -->
+    <PackageReference Include="SpecFlow" Version="3.1.89" />
+
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="SpecFlow.Tools.MsBuild.Generation" Version="3.1.89" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.1.89" />
