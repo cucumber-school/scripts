@@ -557,10 +557,13 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 <div class="sect2">
 <h3 id="_install_specflow">2.3. Install SpecFlow</h3>
 <div class="paragraph">
-<p>SpecFlow is an open-source tool that is available as a NuGet package that you need to configure for your project. Although SpecFlow works fine even without Visual Studio, in Cucumber School we are going to use Visual Studio 2019, because it integrates nicely with SpecFlow. If you don&#8217;t have Visual Studio, you can download the Visual Studio Community edition that is free for education purposes and small teams.</p>
+<p> Hello! I&#8217;m Gaspar Nagy, the creator of SpecFlow and a BDD trainer nowadays. I will guide you through the SpecFlow automation topics in Cucumber School. First, let&#8217;s install SpecFlow!</p>
 </div>
 <div class="paragraph">
-<p>In order to use the Visual Studio integration of SpecFlow, you need to install a Visual Studio extension. This is something you need to do only once. The Visual Studio extensions can be managed by opening the <strong>Manage Extensions</strong> command from the <strong>Extensions</strong> menu. </p>
+<p> SpecFlow is an open-source tool that is available as a  NuGet package that you need to configure for your project. Although SpecFlow works fine even without Visual Studio, in Cucumber School we are going to use Visual Studio 2019, because it integrates nicely with SpecFlow. If you don&#8217;t have Visual Studio, you can download the  Visual Studio Community edition that is free for education purposes and small teams.</p>
+</div>
+<div class="paragraph">
+<p> In order to use the Visual Studio integration of SpecFlow, you need to install a Visual Studio extension. This is something you need to do only once. The Visual Studio extensions can be managed by opening the <strong>Manage Extensions</strong> command from the <strong>Extensions</strong> menu. </p>
 </div>
 <div class="paragraph">
 <p>There are plenty of useful extensions in the Visual Studio marketplace  and for SpecFlow there are two extensions that you can choose from. You will find these if you type <strong>SpecFlow</strong> into the search box.  Both the <strong>SpecFlow for Visual Studio 2019</strong>  and the <strong>Deveroom for SpecFlow</strong>  extensions work well with SpecFlow and both of them are free and open-source. In this course I will use the Deveroom extension, but you can follow the exercises with the other one as well.</p>
@@ -578,7 +581,7 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 <p>We also need to add a project for the scenarios and the automation code. SpecFlow works with test execution frameworks in order to make the scenarios executable. It supports all well known test execution frameworks like MsTest, NUnit or xUnit. There is also a free dedicated runner developed by Tricentis called SpecFlow+ Runner. For the sake of simplicity in this course we are going to use xUnit, so I add a .NET Core <strong>xUnit Test Project</strong> to my solution. </p>
 </div>
 <div class="paragraph">
-<p> I call our test project <strong>Shouty.Specs</strong>. Including <strong>Specs</strong> in the project name emphasizes that we are creating an executable specification. As we won&#8217;t have coded unit test in this project I remove the <code>UnitTest1.cs</code> file added by the template. </p>
+<p>I call our test project <strong>Shouty.Specs</strong> . Including <strong>Specs</strong> in the project name emphasizes that we are creating an executable specification. As we won&#8217;t have coded unit test in this project I remove the <code>UnitTest1.cs</code> file added by the template. </p>
 </div>
 <div class="paragraph">
 <p>To make this project a <strong>SpecFlow project</strong>, we need to add two NuGet package references.</p>
@@ -590,7 +593,7 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 <p> At the time of the recording this leads to an error as the xUnit version used by the <strong>xUnit Test Project</strong> template is not recent enough for the latest SpecFlow version. This is something we can easily fix by updating the xUnit related packages of the specs project.  In fact we can upgrade all packages in this case. </p>
 </div>
 <div class="paragraph">
-<p> Installing the <strong>SpecFlow.xUnit</strong> package is now successful.</p>
+<p>Let&#8217;s retry.  Installing the <strong>SpecFlow.xUnit</strong> package is now successful.</p>
 </div>
 <div class="paragraph">
 <p>The second package we need to add is the <strong>SpecFlow.Tools.MsBuild.Generation</strong> package.  This will instruct SpecFlow to turn our scenarios into executable tests every time we build the project. </p>
@@ -615,6 +618,12 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 </div>
 <div class="paragraph">
 <p>The build succeeded so now we&#8217;re ready to create our first feature file.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>In this course we are going to use Cucumber Expressions that are explained in detail in Chapter 3. In SpecFlow version 3.1 that we use Cucumber Expressions are not supported by default. You can enable this feature by adding the <code>CucumberExpressions.SpecFlow.3-1</code> NuGet package to the project, like you can see in the project file. We also specified the exact SpecFlow package version explicitly to avoid the version compatibility warning. With later SpecFlow versions, these additions won&#8217;t be needed.</p>
 </div>
 </div>
 <div class="sect2">
@@ -658,14 +667,16 @@ Now let&#8217;s write out our first scenario.</p>
 <p>As you can see  our new scenario has appeared in the "Test Explorer" window.</p>
 </div>
 <div class="paragraph">
-<p>If you don&#8217;t have a "Test Explorer" in your Visual Studio, you can open it  using the "Test Explorer" command from the "Build" menu.</p>
+<p>If you don&#8217;t have a "Test Explorer" in your Visual Studio, you can open it  using the "Test Explorer" command from the "Test" menu.</p>
 </div>
 <div class="paragraph">
 <p>Run the tests. </p>
 </div>
 <div class="paragraph">
-<p>The test execution failed with an error message  that says "No matching step definition found for one or more steps". This is because some of our steps are <em>undefined</em>.
- Undefined steps are also higlighted in Visual Studio with an orange color.</p>
+<p>The test execution failed with an error message  that says "No matching step definition found for one or more steps". This is because some of our steps are <em>undefined</em>.</p>
+</div>
+<div class="paragraph">
+<p> Undefined steps are also higlighted in Visual Studio with an orange color.</p>
 </div>
 <div class="paragraph">
 <p><em>Undefined</em> means SpecFlow doesn&#8217;t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some <em>step definitions</em>.</p>
@@ -741,19 +752,19 @@ Now that we have the step definitions matching, we can start working on our solu
 <pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="n">Binding</span><span class="p">]</span>
 <span class="k">public</span> <span class="k">class</span> <span class="nc">StepDefinitions</span>
 <span class="p">{</span>
-    <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">@"Lucy is located (.*)m from Sean"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is located {int}m from Sean"</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsLocatedMFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingStepException</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">@"Sean shouts ""([^""]*)"""</span><span class="p">)]</span>
+    <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts {string}"</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShouts</span><span class="p">(</span><span class="kt">string</span> <span class="n">p0</span><span class="p">)</span>
     <span class="p">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingStepException</span><span class="p">();</span>
     <span class="p">}</span>
 
-    <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">@"Lucy hears Sean's message"</span><span class="p">)]</span>
+    <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucy hears Sean's message"</span><span class="p">)]</span>
     <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyHearsSeanSMessage</span><span class="p">()</span>
     <span class="p">{</span>
         <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingStepException</span><span class="p">();</span>
@@ -766,7 +777,7 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">@"Lucy is located (.*)m from Sean"</span><span class="p">)]</span>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">@"Lucy is located {int}m from Sean"</span><span class="p">)]</span>
 <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsLocatedMFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="kt">var</span> <span class="n">lucy</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">();</span>
@@ -790,7 +801,7 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 </div>
 <div class="paragraph">
-<p> In order to complete the step defintion for the <em>Given</em> step, we need to specify the distance between Lucy and Sean.</p>
+<p> In order to complete the step definition for the <em>Given</em> step, we need to specify the distance between Lucy and Sean.</p>
 </div>
 <div class="paragraph">
 <p></p>
@@ -806,7 +817,7 @@ Now that we have the step definitions matching, we can start working on our solu
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">@"Lucy is located (.*)m from Sean"</span><span class="p">)]</span>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">@"Lucy is located {int}m from Sean"</span><span class="p">)]</span>
 <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsLocatedMFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="kt">var</span> <span class="n">lucy</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">();</span>
@@ -849,8 +860,8 @@ When we run the scenario, the first step should be passing! The easiest way to s
 -&gt; <span class="k">done</span>: StepDefinitions.GivenLucyIsLocatedMFromSean<span class="o">(</span>15<span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
 When Sean shouts <span class="s2">"free bagels at Sean's"</span>
 -&gt; pending: StepDefinitions.WhenSeanShouts<span class="o">(</span><span class="s2">"free bagels at Se..."</span><span class="o">)</span>
-Then Lucy hears Sean<span class="s1">'s message
--&gt; skipped because of previous errors</span></code></pre>
+Then Lucy hears Sean<span class="s1">''</span>s message
+-&gt; skipped because of previous errors</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -864,14 +875,12 @@ Then Lucy hears Sean<span class="s1">'s message
 In the second step definition, we want to tell Sean to shout something.</p>
 </div>
 <div class="paragraph">
-<p>
-In order to send instructions to Sean from the second step, we need to store him in an <em>instance field</em>, so that he&#8217;ll be accessible from all of our step definitions.
-Let&#8217;s move both declarations up to class level together with the initializations. </p>
+<p>In order to send instructions to Sean from the second step, we need to store him  in an <em>instance field</em>, so that he&#8217;ll be accessible from all of our step definitions. Let&#8217;s move both declarations up to class level together with the initializations. </p>
 </div>
 <div class="paragraph">
 <p>
-In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using  <em>this</em> regular expression pattern that is mapped to the parameter  <code>p0</code>. Let&#8217;s give it a more meaningful name.
-Don&#8217;t worry if the regular expression pattern sounds unfamiliar to you, we will look at that in detail in the next chapter.</p>
+In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using  <em>this</em> expression pattern that is mapped to the parameter  <code>p0</code>. Let&#8217;s give it a more meaningful name.
+Don&#8217;t worry if the expression pattern sounds unfamiliar to you, we will look at that in detail in the next chapter.</p>
 </div>
 <div class="paragraph">
 <p>And now we can now tell Sean to <em>shout</em> the message: </p>
@@ -897,7 +906,7 @@ Don&#8217;t worry if the regular expression pattern sounds unfamiliar to you, we
 </div>
 </div>
 <div class="paragraph">
-<p>We eliminate the compilation error by implementing the <code>Shout</code> method in the <code>Person</code> class. </p>
+<p>We eliminate the compilation error by implementing the <code>Shout</code> method in the <code>Person</code> class.  </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -917,7 +926,7 @@ Don&#8217;t worry if the regular expression pattern sounds unfamiliar to you, we
 </div>
 </div>
 <div class="paragraph">
-<p>When we run the scenarion again,  the second step  is also passing!.</p>
+<p>When we run the scenario again,  the second step  is also passing!.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -925,8 +934,8 @@ Don&#8217;t worry if the regular expression pattern sounds unfamiliar to you, we
 -&gt; <span class="k">done</span>: StepDefinitions.GivenLucyIsLocatedMFromSean<span class="o">(</span>15<span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
 When Sean shouts <span class="s2">"free bagels at Sean's"</span>
 -&gt; <span class="k">done</span>: StepDefinitions.WhenSeanShouts<span class="o">(</span><span class="s2">"free bagels at Se..."</span><span class="o">)</span> <span class="o">(</span>0.0s<span class="o">)</span>
-Then Lucy hears Sean<span class="s1">'s message
--&gt; pending: StepDefinitions.ThenLucyHearsSeanSMessage()</span></code></pre>
+Then Lucy hears Sean<span class="s1">''</span>s message
+-&gt; pending: StepDefinitions.ThenLucyHearsSeanSMessage<span class="o">()</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -934,7 +943,7 @@ Then Lucy hears Sean<span class="s1">'s message
 The last step definition is where we implement a check, or assertion. We&#8217;ll verify that what Lucy has heard is exactly the same as what Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p>Once again we&#8217;re going to write the code we wish we had.  In that we are going to use an assertion from the <code>Xunit</code> library, so we need to add the neccessary namespace usages.</p>
+<p>Once again we&#8217;re going to write the code we wish we had.  In that we are going to use an assertion from the <code>Xunit</code> library, so we need to add the necessary namespace usages.</p>
 </div>
 <div class="paragraph">
 <p></p>
@@ -952,11 +961,11 @@ The last step definition is where we implement a check, or assertion. We&#8217;l
 <p>So we need a way to ask Lucy what messages she has heard, and we also need to know what it was that Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p>We can record what Sean shouts by storing it in an instance field as the <code>When</code> step runs.   This is a common pattern to use in SpecFlow step definitions when you don&#8217;t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. </p>
+<p>We can record what Sean shouts by  storing it in an instance field as the <code>When</code> step runs.  This is a common pattern to use in SpecFlow step definitions when you don&#8217;t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">@"Sean shouts ""([^""]*)"""</span><span class="p">)]</span>
+<pre class="rouge highlight"><code data-lang="csharp"><span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">@"Sean shouts {string}"</span><span class="p">)]</span>
 <span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShouts</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
 <span class="p">{</span>
     <span class="n">sean</span><span class="p">.</span><span class="nf">Shout</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
@@ -1048,16 +1057,19 @@ Then Lucy hears Sean<span class="s1">'s message
 <p>Fantastic! Our scenario is passing for the first time. As long as this is the <em>only</em> message anyone ever shouts, we&#8217;re good to ship this thing! But I&#8217;m afraid this is not going to be the case so let&#8217;s work a bit more on it.</p>
 </div>
 <div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
 <p>Now, the fact that such a poor implementation can pass <em>all</em> our tests shows us that we need to work on our tests. A more comprehensive set of tests would guide us towards a better implementation.</p>
 </div>
 <div class="paragraph">
 <p>It&#8217;s also a good habit to look for the most simple solution. We can trust that, as our tests evolve, so will our solution.</p>
 </div>
 <div class="paragraph">
-<p>Instead of writing a note on our TODO list, let&#8217;s write another test that shouts a different message. Usually we&#8217;d expect a developer to do this using a unit test, but to keep things simple in this lesson, we&#8217;re going to write another scenario. </p>
+<p>Instead of writing a note on our TODO list, let&#8217;s write another test that shouts a different message. Usually we&#8217;d expect a developer to do this using a unit test, but to keep things simple in this lesson, we&#8217;re going to write another scenario.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ve worked hard. It&#8217;s time for a coffee, so let&#8217;s come up with an example that has Sean offering free coffee. </p>
+<p>We&#8217;ve worked hard. It&#8217;s time for a coffee, so let&#8217;s come up with an example that has Sean offering free coffee.  </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1074,7 +1086,7 @@ Then Lucy hears Sean<span class="s1">'s message
 </div>
 </div>
 <div class="paragraph">
-<p>It fails, reminding us we need to find a solution that doesn&#8217;t rely on hard-coding the message. 
+<p> It fails, reminding us we need to find a solution that doesn&#8217;t rely on hard-coding the message.
 Now when we come back to this code, we can just run the tests and SpecFlow will remind us what we need to do next. We&#8217;re done for today!</p>
 </div>
 <div class="listingblock">
@@ -1117,7 +1129,7 @@ In value:  List&lt;String&gt; ["free bagels at Sean'</span>s<span class="s2">"]<
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-21 11:11:13 UTC
+Last updated 2020-04-21 14:03:16 UTC
 </div>
 </div>
 <style>
