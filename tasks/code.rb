@@ -6,7 +6,7 @@ pwd = Dir.pwd
 
 task code: 'code:unroll'
 namespace :code do
-  task :unroll do
+  task :unroll => :branches do
     branches_unrolled = 0
     puts "Unrolling code branches..."
     Dir.chdir(Dir.tmpdir) do
@@ -87,6 +87,8 @@ namespace :code do
     remote_code_branches = code_branches.select(&:remote?)
     local_code_branches = code_branches.reject(&:remote?)
 
+    problems = 0
+    puts "Comparing local code branches with origin repo..."
     for remote_branch in remote_code_branches
       local_branch = local_code_branches.find { |b| b.name === remote_branch.name }
       if local_branch
@@ -94,10 +96,16 @@ namespace :code do
           puts remote_branch.name.green
         else
           puts remote_branch.name.red + ' exists but has a different revision to origin'
+          problems +=1
         end
       else
         puts remote_branch.name.red + ' does not exist locally'
+        problems +=1
       end
+    end
+
+    if problems > 0
+      fail "You have #{problems} branches that need attention."
     end
   end
 end
