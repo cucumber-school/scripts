@@ -74,11 +74,54 @@ namespace :code do
       `rm -rf code`
     end
   end
+
+  task :branches do
+    code_branches = `git for-each-ref`.
+      split("\n").
+      select { |line| line.match? /chapter-\d\d-code/ }.
+      map { |line|
+        rev, _, ref = line.split
+        Branch.new(rev, ref)
+      }
+
+    remote_code_branches = code_branches.select(&:remote?)
+    local_code_branches = code_branches.reject(&:remote?)
+
+    for remote_branch in remote_code_branches
+      local_branch = local_code_branches.find { |b| b.name === remote_branch.name }
+      if local_branch
+        if local_branch.rev === remote_branch.rev
+          puts remote_branch.name.green
+        else
+          puts remote_branch.name.red + ' exists but has a different revision to origin'
+        end
+      else
+        puts remote_branch.name.red + ' does not exist locally'
+      end
+    end
+  end
 end
 
 def chapters(pwd)
   chapters = Dir.glob("#{pwd}/content/*").select {|f| File.directory? f}.sort.map do |path|
     Chapter.new(path)
+  end
+end
+
+class Branch
+  attr_reader :rev
+  attr_reader :ref
+
+  def initialize(rev, ref)
+    @rev, @ref = rev, ref
+  end
+
+  def name
+    @ref.split("/").last
+  end
+
+  def remote?
+    @ref.match?(/refs\/remotes\/origin/)
   end
 end
 
