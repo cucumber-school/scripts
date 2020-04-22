@@ -566,7 +566,7 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 <p> In order to use the Visual Studio integration of SpecFlow, you need to install a Visual Studio extension. This is something you need to do only once. The Visual Studio extensions can be managed by opening the <strong>Manage Extensions</strong> command from the <strong>Extensions</strong> menu. </p>
 </div>
 <div class="paragraph">
-<p>There are plenty of useful extensions in the Visual Studio marketplace  and for SpecFlow there are two extensions that you can choose from. You will find these if you type <strong>SpecFlow</strong> into the search box.  Both the <strong>SpecFlow for Visual Studio 2019</strong>  and the <strong>Deveroom for SpecFlow</strong>  extensions work well with SpecFlow and both of them are free and open-source. In this course I will use the Deveroom extension, but you can follow the exercises with the other one as well.</p>
+<p>There are plenty of useful extensions in the Visual Studio marketplace  and for SpecFlow there are two that you can choose from. You will find these if you type <strong>SpecFlow</strong> into the search box.  Both the <strong>SpecFlow for Visual Studio 2019</strong>  and the <strong>Deveroom for SpecFlow</strong>  extensions work well with SpecFlow and both of them are free and open-source. In this course I will use the Deveroom extension, but you can follow the exercises with the other one as well.</p>
 </div>
 <div class="paragraph">
 <p>In order to install the extension you just need to click on the <strong>Download</strong> button next to the name of the extension you selected. The extension is downloaded, but it only gets installed once you close your Visual Studio. So we need to close all instances of Visual Studio 2019 and wait for the install dialog to pop up. </p>
@@ -599,7 +599,7 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 <p>The second package we need to add is the <strong>SpecFlow.Tools.MsBuild.Generation</strong> package.  This will instruct SpecFlow to turn our scenarios into executable tests every time we build the project. </p>
 </div>
 <div class="paragraph">
-<p>As we automate the scenarios, we will need to create classes and call methods from the application project. To make this possible we need to add a reference to the SpecFlow project  pointing to the <code>Shouty</code> project. </p>
+<p>As we automate the scenarios, we will need to create class instances and call methods from the application project. To make this possible we need to add a reference to the SpecFlow project  pointing to the <code>Shouty</code> project. </p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s have a quick look at the project file of the <code>Specs</code> project.  If we did everything well, our project file should look like this. As this is a .NET Core project, we could actually achieve the same outcome just by adding these lines to the project file manually. That probably would have been easier. Maybe next time.</p>
@@ -731,7 +731,7 @@ We&#8217;ll rename the <code>int</code> parameter to something that better refle
 <p>Notice that the number 15 does not appear anywhere in our C# code. The value is automatically passed from the scenario step to the step definition.</p>
 </div>
 <div class="paragraph">
-<p>If you&#8217;re interested, that was caused by the <code>(.*)</code> expression in the parameter of the <code>Given</code> attribute. We&#8217;ll explain these expressions in detail in a future lesson.</p>
+<p>If you&#8217;re interested, that was caused by the  <code>{int}</code> in the step definition pattern or <em>cucumber expression</em>. We’ll explain these patterns in detail in a future lesson.</p>
 </div>
 </div>
 <div class="sect2">
@@ -875,15 +875,15 @@ Then Lucy hears Sean<span class="s1">''</span>s message
 In the second step definition, we want to tell Sean to shout something.</p>
 </div>
 <div class="paragraph">
-<p>In order to send instructions to Sean from the second step, we need to store him  in an <em>instance field</em>, so that he&#8217;ll be accessible from all of our step definitions. Let&#8217;s move both declarations up to class level together with the initializations. </p>
+<p>In order to send instructions to Sean from the "When" step, we need to store him  in an <em>instance field</em>, so that he&#8217;ll be accessible from all of our step definitions. Let&#8217;s move both declarations up to class level together with the initializations. </p>
 </div>
 <div class="paragraph">
 <p>
-In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using  <em>this</em> expression pattern that is mapped to the parameter  <code>p0</code>. Let&#8217;s give it a more meaningful name.
-Don&#8217;t worry if the expression pattern sounds unfamiliar to you, we will look at that in detail in the next chapter.</p>
+In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using  <em>this</em> pattern that is mapped to the parameter  <code>p0</code>. Let&#8217;s give it a more meaningful name.
+Don&#8217;t worry if the pattern sounds unfamiliar to you, we will look at that in detail in the next chapter.</p>
 </div>
 <div class="paragraph">
-<p>And now we can now tell Sean to <em>shout</em> the message: </p>
+<p>And now we can tell Sean to <em>shout</em> the message: </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -906,7 +906,7 @@ Don&#8217;t worry if the expression pattern sounds unfamiliar to you, we will lo
 </div>
 </div>
 <div class="paragraph">
-<p>We eliminate the compilation error by implementing the <code>Shout</code> method in the <code>Person</code> class.  </p>
+<p>We eliminate the compilation error by declaring the <code>Shout</code> method in the <code>Person</code> class.  </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -961,7 +961,7 @@ The last step definition is where we implement a check, or assertion. We&#8217;l
 <p>So we need a way to ask Lucy what messages she has heard, and we also need to know what it was that Sean shouted.</p>
 </div>
 <div class="paragraph">
-<p>We can record what Sean shouts by  storing it in an instance field as the <code>When</code> step runs.  This is a common pattern to use in SpecFlow step definitions when you don&#8217;t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. </p>
+<p>We can record what Sean shouts  by storing it in an instance field as the <code>When</code> step runs.  This is a common pattern to use in SpecFlow step definitions when you don&#8217;t want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -974,7 +974,7 @@ The last step definition is where we implement a check, or assertion. We&#8217;l
 </div>
 </div>
 <div class="paragraph">
-<p>We also need to add a <code>GetMessagesHeard</code> method to our Person class. Let&#8217;s do that now, we&#8217;ll just return null for now.</p>
+<p>We also need to add a <code>GetMessagesHeard</code> method to our Person class. Let&#8217;s just return null for now.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1063,7 +1063,7 @@ Then Lucy hears Sean<span class="s1">'s message
 <p>Now, the fact that such a poor implementation can pass <em>all</em> our tests shows us that we need to work on our tests. A more comprehensive set of tests would guide us towards a better implementation.</p>
 </div>
 <div class="paragraph">
-<p>It&#8217;s also a good habit to look for the most simple solution. We can trust that, as our tests evolve, so will our solution.</p>
+<p>It&#8217;s a good habit to look for the most simple solution though. We can trust that, as our tests evolve, so will our solution.</p>
 </div>
 <div class="paragraph">
 <p>Instead of writing a note on our TODO list, let&#8217;s write another test that shouts a different message. Usually we&#8217;d expect a developer to do this using a unit test, but to keep things simple in this lesson, we&#8217;re going to write another scenario.</p>
@@ -1087,7 +1087,7 @@ Then Lucy hears Sean<span class="s1">'s message
 </div>
 <div class="paragraph">
 <p> It fails, reminding us we need to find a solution that doesn&#8217;t rely on hard-coding the message.
-Now when we come back to this code, we can just run the tests and SpecFlow will remind us what we need to do next. We&#8217;re done for today!</p>
+Now when we come back to this code, we can just run the tests and SpecFlow will tell us what we need to do next. We&#8217;re done for today!</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1129,7 +1129,7 @@ In value:  List&lt;String&gt; ["free bagels at Sean'</span>s<span class="s2">"]<
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-04-21 17:43:07 UTC
+Last updated 2020-04-22 13:18:53 UTC
 </div>
 </div>
 <style>
