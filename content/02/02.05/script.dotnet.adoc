@@ -136,13 +136,13 @@ We'll keep working like this until we see the scenario failing for the right rea
 shot::[20, "back to stepdefs"]
 In the second step definition, we want to tell Sean to shout something.
 
-In order to send instructions to Sean from the second step, we need to store him shot::[21, "select var decl"] in an _instance field_, so that he'll be accessible from all of our step definitions. Let's move both declarations up to class level together with the initializations. shot::[22, "move lines up, fix var, private"] 
+In order to send instructions to Sean from the "When" step, we need to store him shot::[21, "select var decl"] in an _instance field_, so that he'll be accessible from all of our step definitions. Let's move both declarations up to class level together with the initializations. shot::[22, "move lines up, fix var, private"] 
 
 shot::[23, "scroll to When"]
-In the `When` step, we're capturing Sean's message using shot::[24, "select {string}"] _this_ expression pattern that is mapped to the parameter shot::[25, "select p0"] `p0`. Let's give it a more meaningful name.shot::[26, "rename to 'message'"]
-Don't worry if the expression pattern sounds unfamiliar to you, we will look at that in detail in the next chapter.
+In the `When` step, we're capturing Sean's message using shot::[24, "select {string}"] _this_ pattern that is mapped to the parameter shot::[25, "select p0"] `p0`. Let's give it a more meaningful name.shot::[26, "rename to 'message'"]
+Don't worry if the pattern sounds unfamiliar to you, we will look at that in detail in the next chapter.
 
-And now we can now tell Sean to _shout_ the message: shot::[27, "add sean.Shout(message) and remove throw"]
+And now we can tell Sean to _shout_ the message: shot::[27, "add sean.Shout(message) and remove throw"]
 
 [source,csharp]
 ----
@@ -164,7 +164,7 @@ public class StepDefinitions
 }
 ----
 
-We eliminate the compilation error by implementing the `Shout` method in the `Person` class. shot::[28, "use lightbulb"] shot::[28.1, "remove throw"]
+We eliminate the compilation error by declaring the `Shout` method in the `Person` class. shot::[28, "use lightbulb"] shot::[28.1, "remove throw"]
 
 [source,csharp]
 ----
@@ -217,7 +217,7 @@ public void ThenLucyHearsSeanSMessage()
 
 So we need a way to ask Lucy what messages she has heard, and we also need to know what it was that Sean shouted.
 
-We can record what Sean shouts by shot::[34, "select message in when"] storing it in an instance field as the `When` step runs. shot::[35, "declare a field and update"] This is a common pattern to use in SpecFlow step definitions when you don't want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. shot::[36, "select messageFromSean in Then"]
+We can record what Sean shouts shot::[34, "select message in when"] by storing it in an instance field as the `When` step runs. shot::[35, "declare a field and update"] This is a common pattern to use in SpecFlow step definitions when you don't want to repeat the same test data in different parts of a scenario. Now we can use that in the assertion check. shot::[36, "select messageFromSean in Then"]
 
 [source,csharp]
 ----
@@ -229,7 +229,7 @@ public void WhenSeanShouts(string message)
 }
 ----
 
-We also need to add a `GetMessagesHeard` method to our Person class.shot::[37, "use lightbulb"] Let's do that now, we'll just return null for now.shot::[38, "add return null"]
+We also need to add a `GetMessagesHeard` method to our Person class.shot::[37, "use lightbulb"] Let's just return null for now.shot::[38, "add return null"]
 
 [source,csharp]
 ----

@@ -18,7 +18,7 @@ shot::[1.2, "still"] SpecFlow is an open-source tool that is available as a shot
 
 shot::[1.5, "start VS, go under the text"] In order to use the Visual Studio integration of SpecFlow, you need to install a Visual Studio extension. This is something you need to do only once. The Visual Studio extensions can be managed by opening the *Manage Extensions* command from the *Extensions* menu. shot::[1.6]
 
-There are plenty of useful extensions in the Visual Studio marketplace shot::[2] and for SpecFlow there are two extensions that you can choose from. You will find these if you type *SpecFlow* into the search box. shot::[3] Both the *SpecFlow for Visual Studio 2019* shot::[4] and the *Deveroom for SpecFlow* shot::[5] extensions work well with SpecFlow and both of them are free and open-source. In this course I will use the Deveroom extension, but you can follow the exercises with the other one as well.
+There are plenty of useful extensions in the Visual Studio marketplace shot::[2] and for SpecFlow there are two that you can choose from. You will find these if you type *SpecFlow* into the search box. shot::[3] Both the *SpecFlow for Visual Studio 2019* shot::[4] and the *Deveroom for SpecFlow* shot::[5] extensions work well with SpecFlow and both of them are free and open-source. In this course I will use the Deveroom extension, but you can follow the exercises with the other one as well.
 
 // *** Install Visual Studio extension for SpecFlow ***
 
@@ -44,7 +44,7 @@ Let's retry. shot::[21] Installing the *SpecFlow.xUnit* package is now successfu
 
 The second package we need to add is the *SpecFlow.Tools.MsBuild.Generation* package. shot::[22] This will instruct SpecFlow to turn our scenarios into executable tests every time we build the project. shot::[23]
 
-As we automate the scenarios, we will need to create classes and call methods from the application project. To make this possible we need to add a reference to the SpecFlow project shot::[24] pointing to the `Shouty` project. shot::[25]
+As we automate the scenarios, we will need to create class instances and call methods from the application project. To make this possible we need to add a reference to the SpecFlow project shot::[24] pointing to the `Shouty` project. shot::[25]
 
 Let's have a quick look at the project file of the `Specs` project. shot::[26, "show project file"] If we did everything well, our project file should look like this. As this is a .NET Core project, we could actually achieve the same outcome just by adding these lines to the project file manually. That probably would have been easier. Maybe next time.
 
