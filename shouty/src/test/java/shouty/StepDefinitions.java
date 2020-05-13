@@ -13,9 +13,9 @@ public class StepDefinitions {
     Person sean = new Person();
     private String messageFromSean;
 
-    @Given("Lucy is located 15 metres from Sean")
-    public void lucy_is_metres_from_Sean() {
-        throw new PendingException("Matched!");
+    @Given("Lucy is located {int} metres from Sean")
+    public void lucy_is_metres_from_Sean(Integer distance) {
+        throw new PendingException(String.format("Lucy is %d centimetres from Sean", distance * 100));
     }
 
     @When("Sean shouts {string}")
