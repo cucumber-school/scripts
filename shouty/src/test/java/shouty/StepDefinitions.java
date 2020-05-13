@@ -13,7 +13,7 @@ public class StepDefinitions {
     Person sean = new Person();
     private String messageFromSean;
 
-    @Given("Lucy is located {int} metre(s) from Sean")
+    @Given("Lucy is located/standing {int} metre(s) from Sean")
     public void lucy_is_metres_from_Sean(Integer distance) {
         throw new PendingException(String.format("Lucy is %d centimetres from Sean", distance * 100));
     }
