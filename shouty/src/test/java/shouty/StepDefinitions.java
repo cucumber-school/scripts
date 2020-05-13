@@ -1,5 +1,6 @@
 package shouty;
 
+import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -12,11 +13,9 @@ public class StepDefinitions {
     Person sean = new Person();
     private String messageFromSean;
 
-    @Given("Lucy is {int} metres from Sean")
-    public void lucy_is_metres_from_Sean(Integer distance) {
-
-        lucy.setLocation(distance);
-        sean.setLocation(0);
+    @Given("Lucy is located 15 metres from Sean")
+    public void lucy_is_metres_from_Sean() {
+        throw new PendingException("Matched!");
     }
 
     @When("Sean shouts {string}")
