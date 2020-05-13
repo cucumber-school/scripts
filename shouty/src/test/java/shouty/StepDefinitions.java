@@ -1,5 +1,6 @@
 package shouty;
 
+import io.cucumber.java.ParameterType;
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -9,13 +10,13 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 
 public class StepDefinitions {
-    Person lucy = new Person();
-    Person sean = new Person();
+    Person lucy = new Person("Lucy");
+    Person sean = new Person("Sean");
     private String messageFromSean;
 
-    @Given("Lucy is located/standing {int} metre(s) from Sean")
-    public void lucy_is_metres_from_Sean(Integer distance) {
-        throw new PendingException(String.format("Lucy is %d centimetres from Sean", distance * 100));
+    @Given("{person} is located/standing {int} metre(s) from Sean")
+    public void person_is_metres_from_Sean(Person person, Integer distance) {
+        person.moveTo(distance);
     }
 
     @When("Sean shouts {string}")
