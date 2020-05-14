@@ -6,7 +6,7 @@ Overview:
 * Show undefined and explain step definitions
 * Add step definition snippets
 * Explain pending
-* Rename param, debug disctance
+* Rename param, debug distance
 ////
 
 
@@ -46,11 +46,12 @@ Build the solution. shot::[6]
 
 As you can see shot::[7] our new scenario has appeared in the "Test Explorer" window. 
 
-If you don't have a "Test Explorer" in your Visual Studio, you can open it shot::[8] using the "Test Explorer" command from the "Build" menu.
+If you don't have a "Test Explorer" in your Visual Studio, you can open it shot::[8] using the "Test Explorer" command from the "Test" menu.
 
 Run the tests. shot::[9]
 
 The test execution failed with an error message shot::[10] that says "No matching step definition found for one or more steps". This is because some of our steps are _undefined_. 
+
 shot::[11] Undefined steps are also higlighted in Visual Studio with an orange color.
 
 _Undefined_ means SpecFlow doesn't know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
@@ -69,7 +70,7 @@ but you can get the same snippets from Visual Studio, shot::[13] using the "Defi
 
 // *** Add step definition snippets ***
 
-The dialog can help us to create a new class and paste the selected snippets. shot::[14] We'll just call the class `StepDefinitions`. shot::[15]
+The dialog can help us to create a new class and paste the selected snippets. shot::[14, "disable and re-enable checkbox"] We'll just call the class `StepDefinitions`. shot::[15, "change name and go ahead with 'Create'"]
 
 shot::[16] The wizard detected that we had a `StepDefinitions` folder and saved the new class there. SpecFlow would find it anywhere within the same project, but it is better this way.
 
@@ -87,7 +88,7 @@ Now our scenario and our steps are _pending_, meaning that we have to implement 
 You can think of the `PendingStepException` as a reminder of that.
 
 
-// *** Rename param, debug disctance ***
+// *** Rename param, debug distance ***
 
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
@@ -100,4 +101,4 @@ shot::[23] When the breakpoint hits, the value of the `distance` parameter is 15
 
 Notice that the number 15 does not appear anywhere in our C# code. The value is automatically passed from the scenario step to the step definition. 
 
-If you're interested, that was caused by the shot::[24]`(.*)` expression in the parameter of the `Given` attribute. We'll explain these expressions in detail in a future lesson.
+If you're interested, that was caused by the shot::[24] `{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.

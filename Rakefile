@@ -71,7 +71,8 @@ require 'asciidoctor'
 require 'asciidoctor/extensions'
 
 def shot(number, title="Shot #{number}")
-  %(<span title="#{title}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot #{number}</span>)
+  suffix = ': ' + title if title
+  %(<span title="#{title}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot #{number}#{suffix}</span>)
 end
 
 class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
