@@ -1,6 +1,11 @@
 const { Given, When, Then } = require('@cucumber/cucumber')
+const Person = require('../../src/shouty')
+require('../support/person_parameter')
 
-Given('Lucy is located/standing {int} metre(s) from Sean', function (distance) {
+Given('{person} is located/standing {int} metre(s) from Sean', function (lucy, distance) {
+
+  console.log(lucy);
+
   // Write code here that turns the phrase above into concrete actions
   console.log(`Lucy is ${distance * 100} centimetres from Sean`);
 
