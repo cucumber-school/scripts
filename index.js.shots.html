@@ -1903,7 +1903,127 @@ npm ERR! Test failed.  See above for more details.</code></pre>
 <p>For example, let&#8217;s define our own <code>{person}</code> custom parameter type that will convert the string <code>Lucy</code> into an instance of <code>Person</code> automatically.</p>
 </div>
 <div class="paragraph">
-<p>TODO</p>
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+We can start with the step definition, which would look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">{person} is located/standing {int} metre(s) from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+If we run Cucumber at this point we&#8217;ll see an error, because we haven&#8217;t defined the <code>{person}</code> parameter type yet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ npm test
+
+&gt; shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
+&gt; cucumber-js -f node_modules/cucumber-pretty
+
+Error: Undefined parameter type {person}
+    at UndefinedParameterTypeError.CucumberExpressionError [as constructor] (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/Errors.js:19:42)
+    at new UndefinedParameterTypeError (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/Errors.js:47:23)
+    at /home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:101:23
+    at String.replace (&lt;anonymous&gt;)
+    at CucumberExpression.processParameters (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:93:27)
+    at new CucumberExpression (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:46:21)
+    at buildStepDefinitionFromConfig (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/build_helpers.js:158:22)
+    at /home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/index.js:83:134
+    at Array.map (&lt;anonymous&gt;)
+    at SupportCodeLibraryBuilder.finalize (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/index.js:83:71)
+    at Cli.getSupportCodeLibrary (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/index.js:120:50)
+    at Cli.run (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/index.js:141:37)
+    at async Object.run [as default] (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/run.js:30:14)
+npm ERR! Test failed.  See above for more details.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s how we define one.</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+Let&#8217;s create a new JS file in <code>features/support</code> called <code>person_parameter.js</code>:</p>
+</div>
+<div class="listingblock">
+<div class="title">person_parameter.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../src/shouty</span><span class="dl">'</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We use the <code>defineParameterType</code> DSL function from Cucumber to define our new parameter type. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="paragraph">
+<p>We need to give it a <code>name</code> which is the name we&#8217;ll use inside the curly brackets in our step definition expressions. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
+</div>
+<div class="paragraph">
+<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span> This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
+</div>
+<div class="paragraph">
+<p>Finally, there&#8217;s a transformer block, <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span> which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span> which we can then pass to the <code>Person</code> class&#8217;s constructor. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span></p>
+</div>
+<div class="listingblock">
+<div class="title">person_parameter.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">defineParameterType</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../src/shouty</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">defineParameterType</span><span class="p">({</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">person</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">regexp</span><span class="p">:</span> <span class="sr">/Lucy|Sean/</span><span class="p">,</span>
+  <span class="na">transformer</span><span class="p">:</span> <span class="nx">s</span> <span class="o">=&gt;</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">()</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span>
+All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ npm test
+
+&gt; shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
+&gt; cucumber-js -f node_modules/cucumber-pretty
+
+Feature: Hear shout
+
+  Scenario: Listener is within range
+    Given Lucy is located 1 metres from Sean
+Person {}
+Lucy is 100 centimetres from Sean
+    ? pending
+    When Sean shouts "free bagels at Sean's"
+    - skipped
+    Then Lucy hears Sean's message
+    ? undefined
+
+Warnings:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ? Given Lucy is located 1 metres from Sean # features/step_definitions/steps.js:5
+       Pending
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:16
+   ? Then Lucy hears Sean's message
+       Undefined. Implement with the following snippet:
+
+         Then('{person} hears {person}\'s message', function (person, person2) {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+
+1 scenario (1 undefined)
+3 steps (1 undefined, 1 pending, 1 skipped)
+0m00.002s
+npm ERR! Test failed.  See above for more details.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step defintions - closer together.</p>
 </div>
 </div>
 </div>
@@ -1950,7 +2070,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-13 13:53:35 UTC
+Last updated 2020-05-14 23:58:26 UTC
 </div>
 </div>
 <style>
