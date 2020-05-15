@@ -1634,7 +1634,7 @@ The most simple cucumber expression that would match that step is this one:</p>
 <p>That’s pretty simple isn&#8217;t it? Cucumber expressions are just string patterns, and the most simple pattern you can use is a perfect match.</p>
 </div>
 <div class="paragraph">
-<p>In Ruby, we can use this pattern to make a step definition like this: </p>
+<p>In Javscript, we can use this pattern to make a step definition like this: </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1647,7 +1647,7 @@ The most simple cucumber expression that would match that step is this one:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We use a normal Ruby string to pass the cucumber expression to Cucumber.</p>
+<p>We use a normal Javascript string to pass the cucumber expression to Cucumber.</p>
 </div>
 </div>
 <div class="sect2">
@@ -1682,7 +1682,7 @@ Sometimes, we want to write step defintions that allow us to use different value
 <p>Now we’re capturing that value as an argument. The value <code>100</code> will be passed to our code automatically by Cucumber.</p>
 </div>
 <div class="paragraph">
-<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to an <code>Integer</code> data type for us automatically, so we can do maths with it if we want.</p>
+<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to a Number for us automatically, so we can do maths with it if we want.</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.js</div>
@@ -1947,13 +1947,13 @@ Let&#8217;s create a new JS file in <code>features/support</code> called <code>p
 </div>
 </div>
 <div class="paragraph">
-<p>We use the <code>defineParameterType</code> DSL function from Cucumber to define our new parameter type. </p>
+<p>We use the <code>defineParameterType</code> function from Cucumber to define our new parameter type. </p>
 </div>
 <div class="paragraph">
 <p>We need to give it a <code>name</code> which is the name we&#8217;ll use inside the curly brackets in our step definition expressions. </p>
 </div>
 <div class="paragraph">
-<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression.  This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. </p>
+<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression.  This is necessary to tell Cucumber Expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. </p>
 </div>
 <div class="paragraph">
 <p>Finally, there&#8217;s a transformer block,  which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string)  which we can then pass to the <code>Person</code> class&#8217;s constructor. </p>
@@ -1974,7 +1974,7 @@ Let&#8217;s create a new JS file in <code>features/support</code> called <code>p
 </div>
 <div class="paragraph">
 <p>
-All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
+All of this means that when we run our step, an instance of <code>Person</code> will be passed into our step definition automatically.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2017,7 +2017,7 @@ npm ERR! Test failed.  See above for more details.</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step defintions - closer together.</p>
+<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step definitions - closer together.</p>
 </div>
 </div>
 </div>
@@ -2064,7 +2064,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-15 00:57:12 UTC
+Last updated 2020-05-15 13:44:17 UTC
 </div>
 </div>
 <style>
