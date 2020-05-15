@@ -6,11 +6,7 @@ Sometimes, we want to write step defintions that allow us to use different value
 .hear_shout.feature
 [source,gherkin]
 ----
-Feature: Hear shout
-  Scenario: Listener is within range
-    Given Lucy is located 100 metres from Sean
-    When Sean shouts "free bagels at Sean's"
-    Then Lucy hears Sean's message
+include::../code/js/03-matching-an-integer-value/features/hear_shout.feature[]
 ----
 
 To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called _parameters_.
@@ -20,9 +16,7 @@ For example, to capture the number of metres, we can use the `{int}` parameter: 
 .steps.js
 [source,js]
 ----
-Given('Lucy is located {int} metres from Sean', function (distance) {
-  // ...
-})
+include::../code/js/03-matching-an-integer-value/features/step_definitions/steps.js[lines=3..3]
 ----
 
 Now we’re capturing that value as an argument. The value `100` will be passed to our code automatically by Cucumber.
@@ -32,12 +26,7 @@ Because we've used Cucumber Expressions' built-in `{int}` parameter type, the va
 .steps.js
 [source,js]
 ----
-Given('Lucy is located {int} metres from Sean', function (distance) {
-  // Write code here that turns the phrase above into concrete actions
-  console.log(`Lucy is ${distance * 100} centimetres from Sean`);
-
-  return 'pending'
-})
+include::../code/js/03-matching-an-integer-value/features/step_definitions/steps.js[lines=3..8]
 ----
 
 Cucumber has a bunch of built-in parameter types: `{int}`, `{float}`, `{word}` and `{string}`. You can also define your own, as we'll see later.

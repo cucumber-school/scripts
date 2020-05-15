@@ -2,19 +2,11 @@ include::./title.adoc[]
 
 shot::[1]
 Let's look at the Shouty scenario from the last chapter.
-Let's look at the Shouty scenario from the last chapter.
-Let's look at the Shouty scenario from the last chapter.
-Let's look at the Shouty scenario from the last chapter.
-Let's look at the Shouty scenario from the last chapter.
 
 .hear_shout.feature
 [source,gherkin]
 ----
-Feature: Hear shout
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts "free bagels at Sean's"
-    Then Lucy hears Sean's message
+include::../code/js/02-matching-with-a-plain-old-string/features/hear_shout.feature[]
 ----
 
 As Cucumber starts to execute this feature, it will come to the first step of the scenario `Given Lucy is 15 metres from Sean` shot::[2] and say to itself "now - do I have any step definitions that match the phrase `Lucy is 15 metres from Sean`?”"
@@ -32,12 +24,7 @@ In Ruby, we can use this pattern to make a step definition like this: shot::[4]
 
 [source,js]
 ----
-Given('Lucy is located 15 metres from Sean', function () {
-  // Write code here that turns the phrase above into concrete actions
-  console.log("matched!");
-
-  return 'pending'
-})
+include::../code/js/02-matching-with-a-plain-old-string/features/step_definitions/steps.js[lines=3..8]
 ----
 
 We use a normal Ruby string to pass the cucumber expression to Cucumber.

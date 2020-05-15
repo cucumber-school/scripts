@@ -5,7 +5,7 @@ We can start with the step definition, which would look something like this:
 
 [source, js]
 ----
-Given('{person} is located/standing {int} metre(s) from Sean', function (distance) {
+include::../code/js/06-added-person-parameter/features/step_definitions/steps.js[lines=5..5]
 ----
 shot::[2]
 If we run Cucumber at this point we'll see an error, because we haven't defined the `{person}` parameter type yet.
@@ -41,7 +41,7 @@ Let's create a new JS file in `features/support` called `person_parameter.js`:
 .person_parameter.js
 [source, js]
 ----
-const Person = require('../../src/shouty')
+include::../code/js/06-added-person-parameter/features/support/person_parameter.js[lines=3..3]
 ----
 
 We use the `defineParameterType` DSL function from Cucumber to define our new parameter type. shot::[5]
@@ -55,15 +55,7 @@ Finally, there's a transformer block, shot::[9] which takes the text captured fr
 .person_parameter.rb
 [source, js]
 ----
-const { defineParameterType } = require('cucumber')
-
-const Person = require('../../src/shouty')
-
-defineParameterType({
-  name: 'person',
-  regexp: /Lucy|Sean/,
-  transformer: s => new Person()
-})
+include::../code/js/06-added-person-parameter/features/support/person_parameter.js[]
 ----
 
 shot::[12]
