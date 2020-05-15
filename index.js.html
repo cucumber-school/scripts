@@ -1606,10 +1606,6 @@ Good step definitions are important because they enable the <em>readability</em>
 <h3 id="_literal_expressions">3.2. Literal expressions</h3>
 <div class="paragraph">
 <p>
-Let&#8217;s look at the Shouty scenario from the last chapter.
-Let&#8217;s look at the Shouty scenario from the last chapter.
-Let&#8217;s look at the Shouty scenario from the last chapter.
-Let&#8217;s look at the Shouty scenario from the last chapter.
 Let&#8217;s look at the Shouty scenario from the last chapter.</p>
 </div>
 <div class="listingblock">
@@ -1665,7 +1661,7 @@ Sometimes, we want to write step defintions that allow us to use different value
 <div class="content">
 <pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
   <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
-    <span class="nf">Given </span>Lucy is located 100 metres from Sean
+    <span class="nf">Given </span>Lucy is located 15 metres from Sean
     <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
     <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
 </div>
@@ -1679,9 +1675,7 @@ Sometimes, we want to write step defintions that allow us to use different value
 <div class="listingblock">
 <div class="title">steps.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
-  <span class="c1">// ...</span>
-<span class="p">})</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1908,7 +1902,7 @@ We can start with the step definition, which would look something like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">{person} is located/standing {int} metre(s) from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">{person} is located/standing {int} metre(s) from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">lucy</span><span class="p">,</span> <span class="nx">distance</span><span class="p">)</span> <span class="p">{</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2070,7 +2064,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-14 23:58:26 UTC
+Last updated 2020-05-15 00:57:12 UTC
 </div>
 </div>
 <style>
