@@ -44,11 +44,11 @@ Let's create a new JS file in `features/support` called `person_parameter.js`:
 include::../code/js/06-added-person-parameter/features/support/person_parameter.js[lines=3..3]
 ----
 
-We use the `defineParameterType` DSL function from Cucumber to define our new parameter type. shot::[5]
+We use the `defineParameterType` function from Cucumber to define our new parameter type. shot::[5]
 
 We need to give it a `name` which is the name we'll use inside the curly brackets in our step definition expressions. shot::[6]
 
-We also need to define -- gasp! -- a regular expression. shot::[7] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario. shot::[8]
+We also need to define -- gasp! -- a regular expression. shot::[7] This is necessary to tell Cucumber Expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario. shot::[8]
 
 Finally, there's a transformer block, shot::[9] which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) shot::[10] which we can then pass to the `Person` class's constructor. shot::[11]
 
@@ -59,7 +59,7 @@ include::../code/js/06-added-person-parameter/features/support/person_parameter.
 ----
 
 shot::[12]
-All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
+All of this means that when we run our step, an instance of `Person` will be passed into our step definition automatically.
 
 [source]
 ----
@@ -101,5 +101,4 @@ Warnings:
 npm ERR! Test failed.  See above for more details.
 ----
 
-Custom parameters allow you to bring your domain _model_ - the names of the classes and objects in your solution - and your domain _language_ - the words you use in your scenarios and step defintions - closer together.
-
+Custom parameters allow you to bring your domain _model_ - the names of the classes and objects in your solution - and your domain _language_ - the words you use in your scenarios and step definitions - closer together.
