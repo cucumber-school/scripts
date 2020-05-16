@@ -458,7 +458,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_make_the_scenario_pass">2.6. Make the scenario pass</a></li>
 </ul>
 </li>
-<li><a href="#_expressing_yourself">3. Expressing yourself</a></li>
+<li><a href="#_expressing_yourself">3. Expressing yourself</a>
+<ul class="sectlevel2">
+<li><a href="#_cucumber_expressions_not_regular_expressions">3.1. Cucumber expressions not regular expressions</a></li>
+<li><a href="#_literal_expressions">3.2. Literal expressions</a></li>
+<li><a href="#_capturing_parameters">3.3. Capturing parameters</a></li>
+<li><a href="#_flexibility">3.4. Flexibility</a></li>
+<li><a href="#_custom_parameters">3.5. Custom parameters</a></li>
+</ul>
+</li>
 <li><a href="#_cleaning_up">4. Cleaning up</a>
 <ul class="sectlevel2">
 <li><a href="#_the_importance_of_readability">4.1. The importance of readability</a></li>
@@ -1631,7 +1639,287 @@ Process finished with <span class="nb">exit </span>code 0</code></pre>
 <div class="sect1">
 <h2 id="_expressing_yourself">3. Expressing yourself</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_cucumber_expressions_not_regular_expressions">3.1. Cucumber expressions not regular expressions</h3>
+<div class="paragraph">
+<p><span title="03.01.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 0.1: 03.01.animation.mp4</span></p>
+</div>
+<div class="paragraph">
+<p>In the previous chapter we explored the fundamental components of a Cucumber test suite, and how we use Cucumber to drive out a solution, test-first.</p>
+</div>
+<div class="paragraph">
+<p>First we specified the behaviour we wanted, using a Gherkin scenario in a feature file. Then we wrote step definitions to translate the plain english from our scenario into concrete actions in code. Finally, we used the step definitions to guide us in building out our very basic domain model for the Shouty application.</p>
+</div>
+<div class="paragraph">
+<p>We tend to think of the code that actually pokes around with the system as distinct from the step definitions, so we’ve drawn an extra box labelled "automation code" for this.</p>
+</div>
+<div class="paragraph">
+<p>Automation code can do almost anything to your application: it can drive a web browser around your site, make HTTP requests to a REST API, or&#8201;&#8212;&#8201;as you’ve already seen&#8201;&#8212;&#8201;drive a domain model directly.</p>
+</div>
+<div class="paragraph">
+<p>Automation code is a big topic that we’ll come back to. First, we want to concentrate on step definitions.
+Good step definitions are important because they enable the <em>readability</em> of your scenarios. The better you are at matching plain language phrases from Gherkin, the more expressive you can be when writing scenarios. Teams who do this well refer to their features as <em>living documentation</em> - a specification document that never goes out of date.</p>
+</div>
+<div class="paragraph">
+<p>When Cucumber first started, we used to use <em>regular expressions</em> to match plain language phrases from Gherkin steps.</p>
+</div>
+<div class="paragraph">
+<p>Regular expressions have quite an intimidating reputation.</p>
+</div>
+<div class="paragraph">
+<p>So we replaced them with something simpler, something we call <em>Cucumber expressions</em>. Cucumber is backwards compatible so you can still use the power of regular expressions if that&#8217;s your thing.</p>
+</div>
+<div class="paragraph">
+<p>This chapter is all about Cucumber Expressions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_literal_expressions">3.2. Literal expressions</h3>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+Let&#8217;s look at the Shouty scenario from the last chapter.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Shout
 
+  <span class="kn">Scenario</span><span class="p">:</span> Listener within range
+    <span class="nf">Given </span>Lucy is located 15 metres from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As Cucumber starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is 15 metres from Sean</code> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span> and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is 15 metres from Sean</code>?”"</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span>
+The most simple cucumber expression that would match that step is this one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Lucy is located 15 metres from Sean</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s pretty simple isn&#8217;t it? Cucumber expressions are just string patterns, and the most simple pattern you can use is a perfect match.</p>
+</div>
+<div class="paragraph">
+<p>In Java, we can use this pattern to make a step definition like this: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located 15 metres from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingException</span><span class="o">(</span><span class="s">"Matched!"</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We use a normal Java string to pass the cucumber expression to Cucumber.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_capturing_parameters">3.3. Capturing parameters</h3>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+Sometimes, we want to write step defintions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span></p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Shout
+
+  <span class="kn">Scenario</span><span class="p">:</span> Listener within range
+    <span class="nf">Given </span>Lucy is located 100 metres from Sean
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called <em>parameters</em>.</p>
+</div>
+<div class="paragraph">
+<p>For example, to capture the number of metres, we can use the <code>{int}</code> parameter: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> which is passed as an argument to our step definition: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we’re capturing that value as an argument. The value <code>100</code> will be passed to our code automatically by Cucumber.</p>
+</div>
+<div class="paragraph">
+<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to a <code>Integer</code> data type for us automatically, so we can do maths with it if we want.<span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingException</span><span class="o">(</span><span class="nc">String</span><span class="o">.</span><span class="na">format</span><span class="o">(</span><span class="s">"Lucy is %d centimetres from Sean"</span><span class="o">,</span> <span class="n">distance</span> <span class="o">*</span> <span class="mi">100</span><span class="o">));</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cucumber has a bunch of built-in parameter types: <code>{int}</code>, <code>{float}</code>, <code>{word}</code> and <code>{string}</code>. You can also define your own, as we&#8217;ll see later.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_flexibility">3.4. Flexibility</h3>
+<div class="paragraph">
+<p>Although it&#8217;s important to try to use consistent terminology in our Gherkin scenarios to help develop the ubiquitous language of your domain, we also want scenarios to read naturally, which sometimes means allowing a bit of flexibility.</p>
+</div>
+<div class="paragraph">
+<p>Ideally, the language used in scenarios should never be constrained by your step definitions. Otherwise they&#8217;ll end up sounding like they were written by robots. Or worse, they read like code.</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">Given </span>Lucy is located 1 metre from Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>TODO</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What a pain!</p>
+</div>
+<div class="paragraph">
+<p>Fear not. We can just surround the <code>s</code> in parentheses to make it optional, like this: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+Now our step matches:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>TODO</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.</p>
+</div>
+<div class="paragraph">
+<p>Another is to allow <em>alternates</em> - different ways of saying the same thing. For example, to accept this step: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">Given </span>Lucy is standing 1 metre from Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;we can use this Cucumber Expression: <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located/standing {int} metre(s) from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>TODO</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_parameters">3.5. Custom parameters</h3>
+<div class="paragraph">
+<p>Although you can get a long way with Cucumber Expressions' built-in parameter types, you get real power when you define your own <em>custom parameter types</em>. This allows you to transform the text captured from the Gherkin into any object you like before it&#8217;s passed into your step definition.</p>
+</div>
+<div class="paragraph">
+<p>For example, let&#8217;s define our own <code>{person}</code> custom parameter type that will convert the string <code>Lucy</code> into an instance of <code>Person</code> automatically.</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 1</span>
+We can start with the step definition, which would look something like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} is located/standing {int} metre(s) from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 2</span>
+If we run Cucumber at this point we&#8217;ll see an error, because we haven&#8217;t defined the <code>{person}</code> parameter type yet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>TODO</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s how we define one.</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
+Let&#8217;s import <code>io.cucumber.java.ParameterType</code>:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">import</span> <span class="nn">io.cucumber.java.ParameterType</span><span class="o">;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We use the <code>ParameterType</code> annotation from Cucumber to define our new parameter type. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+</div>
+<div class="paragraph">
+<p>We need to give it a <code>name</code> which is the name we&#8217;ll use inside the curly brackets in our step definition expressions. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
+</div>
+<div class="paragraph">
+<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span> This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
+</div>
+<div class="paragraph">
+<p>Finally, we write our method code. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span> It takes the text captured from the Gherkin step that matched the regular expression pattern. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span> The return value is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span> which we can then pass to the <code>Person</code> class&#8217;s constructor. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@ParameterType</span><span class="o">(</span><span class="s">"Lucy|Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
+All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>TODO</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step defintions - closer together.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -2251,7 +2539,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-15 13:44:17 UTC
+Last updated 2020-05-16 16:44:49 UTC
 </div>
 </div>
 <style>
