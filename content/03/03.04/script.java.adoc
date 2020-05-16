@@ -1,0 +1,58 @@
+include::./title.adoc[]
+
+shot::[1]
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:
+
+[source, gherkin]
+----
+include::../code/java/03--step03-use-singular-metre/shouty/src/test/resources/shouty/shout.feature[lines=4]
+----
+
+shot::[2]
+Because we’ve used the singular `metre` instead of the plural `metres` we don't get a match:
+
+[source]
+----
+TODO
+----
+
+What a pain!
+
+Fear not. We can just surround the `s` in parentheses to make it optional, like this: shot::[3]
+
+[source, java]
+----
+include::../code/java/03--step03-use-singular-metre/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..17]
+----
+
+shot::[4]
+Now our step matches:
+
+[source]
+----
+TODO
+----
+
+This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.
+
+Another is to allow _alternates_ - different ways of saying the same thing. For example, to accept this step: shot::[5]
+
+[source, gherkin]
+----
+include::../code/java/05--step05-allow-standing-or-located-as-alternates/shouty/src/test/resources/shouty/shout.feature[lines=4]
+----
+
+...we can use this Cucumber Expression: shot::[6]
+
+[source, java]
+----
+include::../code/java/05--step05-allow-standing-or-located-as-alternates/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..17]
+----
+
+shot::[7]
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine:
+
+[source]
+----
+TODO
+----
