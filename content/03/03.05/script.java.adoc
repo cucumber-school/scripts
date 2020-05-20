@@ -33,7 +33,9 @@ We need to give it a `name` which is the name we'll use inside the curly bracket
 
 We also need to define -- gasp! -- a regular expression. shot::[7] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario. shot::[8]
 
-Finally, we write our method code. shot::[9] It takes the text captured from the Gherkin step that matched the regular expression pattern. shot::[10] The return value is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) shot::[11] which we can then pass to the `Person` class's constructor. shot::[12]
+Finally, we write a method, shot::[9], which, takes the text captured from the Gherkin step that matched the regular expression pattern as its argument. shot::[10] The return value is what will be passed to the step definition. In this case, we'll receive the name of the person (as a string) shot::[11] and return a new instance of the `Person` class. shot::[12]
+
+If we wanted to, we could be more sophisticated here, and insert a record into our database for example.
 
 [source, java]
 ----
