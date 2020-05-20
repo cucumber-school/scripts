@@ -1897,7 +1897,10 @@ Let&#8217;s import <code>io.cucumber.java.ParameterType</code>:</p>
 <p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression.  This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. </p>
 </div>
 <div class="paragraph">
-<p>Finally, we write our method code.  It takes the text captured from the Gherkin step that matched the regular expression pattern.  The return value is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string)  which we can then pass to the <code>Person</code> class&#8217;s constructor. </p>
+<p>Finally, we write a method, , which, takes the text captured from the Gherkin step that matched the regular expression pattern as its argument.  The return value is what will be passed to the step definition. In this case, we&#8217;ll receive the name of the person (as a string)  and return a new instance of the <code>Person</code> class. </p>
+</div>
+<div class="paragraph">
+<p>If we wanted to, we could be more sophisticated here, and insert a record into our database for example.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2539,7 +2542,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-16 16:44:49 UTC
+Last updated 2020-05-20 13:42:17 UTC
 </div>
 </div>
 <style>
