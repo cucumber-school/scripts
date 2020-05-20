@@ -1879,28 +1879,20 @@ If we run Cucumber at this point we&#8217;ll see an error, because we haven&#821
 <p>Here&#8217;s how we define one.</p>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3</span> <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4</span>
-Let&#8217;s import <code>io.cucumber.java.ParameterType</code>:</p>
+<p>We&#8217;re going to create a <code>person</code> method, which takes the name of a person as a string, and returns an instance of our <code>Person</code> class with that name. <span title="Create bare method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 3: Create bare method</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">import</span> <span class="nn">io.cucumber.java.ParameterType</span><span class="o">;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We use the <code>ParameterType</code> annotation from Cucumber to define our new parameter type. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5</span></p>
+<p>Cucumber will use the method name - <code>person</code> - as the parameter name we use inside the curly brackets in our step definition expressions, as soon as we&#8217;ve wired it up.</p>
 </div>
 <div class="paragraph">
-<p>We need to give it a <code>name</code> which is the name we&#8217;ll use inside the curly brackets in our step definition expressions. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6</span></p>
-</div>
-<div class="paragraph">
-<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span> This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 8</span></p>
-</div>
-<div class="paragraph">
-<p>Finally, we write a method, <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 9</span>, which, takes the text captured from the Gherkin step that matched the regular expression pattern as its argument. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 10</span> The return value is what will be passed to the step definition. In this case, we&#8217;ll receive the name of the person (as a string) <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 11</span> and return a new instance of the <code>Person</code> class. <span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 12</span></p>
-</div>
-<div class="paragraph">
-<p>If we wanted to, we could be more sophisticated here, and insert a record into our database for example.</p>
+<p>To do that, we add the ParameterType annotation <span title="Add empty ParameterType annotation to method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 4: Add empty ParameterType annotation to method</span>, import it, <span title="Add import" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 5: Add import</span> and pass it&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression. <span title="Add regex pattern to annotation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 6: Add regex pattern to annotation</span></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1911,7 +1903,10 @@ Let&#8217;s import <code>io.cucumber.java.ParameterType</code>:</p>
 </div>
 </div>
 <div class="paragraph">
-<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 13</span>
+<p>This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario.</p>
+</div>
+<div class="paragraph">
+<p><span title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif;">Shot 7</span>
 All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
 </div>
 <div class="listingblock">
@@ -2542,7 +2537,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-20 13:42:17 UTC
+Last updated 2020-05-20 13:58:08 UTC
 </div>
 </div>
 <style>

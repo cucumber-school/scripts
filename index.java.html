@@ -1879,28 +1879,20 @@ If we run Cucumber at this point we&#8217;ll see an error, because we haven&#821
 <p>Here&#8217;s how we define one.</p>
 </div>
 <div class="paragraph">
-<p> 
-Let&#8217;s import <code>io.cucumber.java.ParameterType</code>:</p>
+<p>We&#8217;re going to create a <code>person</code> method, which takes the name of a person as a string, and returns an instance of our <code>Person</code> class with that name. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kn">import</span> <span class="nn">io.cucumber.java.ParameterType</span><span class="o">;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We use the <code>ParameterType</code> annotation from Cucumber to define our new parameter type. </p>
+<p>Cucumber will use the method name - <code>person</code> - as the parameter name we use inside the curly brackets in our step definition expressions, as soon as we&#8217;ve wired it up.</p>
 </div>
 <div class="paragraph">
-<p>We need to give it a <code>name</code> which is the name we&#8217;ll use inside the curly brackets in our step definition expressions. </p>
-</div>
-<div class="paragraph">
-<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression.  This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. </p>
-</div>
-<div class="paragraph">
-<p>Finally, we write a method, , which, takes the text captured from the Gherkin step that matched the regular expression pattern as its argument.  The return value is what will be passed to the step definition. In this case, we&#8217;ll receive the name of the person (as a string)  and return a new instance of the <code>Person</code> class. </p>
-</div>
-<div class="paragraph">
-<p>If we wanted to, we could be more sophisticated here, and insert a record into our database for example.</p>
+<p>To do that, we add the ParameterType annotation , import it,  and pass it&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1909,6 +1901,9 @@ Let&#8217;s import <code>io.cucumber.java.ParameterType</code>:</p>
         <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -2542,7 +2537,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-20 13:42:17 UTC
+Last updated 2020-05-20 13:58:08 UTC
 </div>
 </div>
 <style>
