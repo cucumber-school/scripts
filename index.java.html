@@ -1860,10 +1860,10 @@ We can start with the step definition, which would look something like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} is located/standing {int} metre(s) from Sean"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@When</span><span class="o">(</span><span class="s">"Sean shouts {string}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sean_shouts</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">sean</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="n">messageFromSean</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1879,12 +1879,15 @@ If we run Cucumber at this point we&#8217;ll see an error, because we haven&#821
 <p>Here&#8217;s how we define one.</p>
 </div>
 <div class="paragraph">
+<p>Let&#8217;s create a new Java class called <code>ParameterTypes</code> in the <code>shouty.support</code> package: [shot::]</p>
+</div>
+<div class="paragraph">
 <p>We&#8217;re going to create a <code>person</code> method, which takes the name of a person as a string, and returns an instance of our <code>Person</code> class with that name. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -1896,14 +1899,14 @@ If we run Cucumber at this point we&#8217;ll see an error, because we haven&#821
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@ParameterType</span><span class="o">(</span><span class="s">"Lucy|Sean"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} is located/standing {int} metre(s) from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario.</p>
+<p>This is necessary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -2537,7 +2540,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-20 13:58:08 UTC
+Last updated 2020-05-20 15:52:34 UTC
 </div>
 </div>
 <style>
