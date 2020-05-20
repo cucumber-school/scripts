@@ -19,9 +19,9 @@ public class StepDefinitions {
         person.moveTo(distance);
     }
 
-    @When("Sean shouts {string}")
-    public void sean_shouts(String message) {
-        sean.shout(message);
+    @When("{person} shouts {string}")
+    public void sean_shouts(Person shouter, String message) {
+        shouter.shout(message);
         messageFromSean = message;
      }
 
