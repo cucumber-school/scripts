@@ -18,6 +18,8 @@ TODO
 
 Here's how we define one.
 
+Let's create a new Java class called `ParameterTypes` in the `shouty.support` package: [shot::]
+
 We're going to create a `person` method, which takes the name of a person as a string, and returns an instance of our `Person` class with that name. shot::[3, Create bare method]
 
 [source, java]
@@ -34,7 +36,7 @@ To do that, we add the ParameterType annotation shot::[4, Add empty ParameterTyp
 include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=17..20]
 ----
 
-This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario.
+This is necessary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario.
 
 shot::[7]
 All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
@@ -45,4 +47,3 @@ TODO
 ----
 
 Custom parameters allow you to bring your domain _model_ - the names of the classes and objects in your solution - and your domain _language_ - the words you use in your scenarios and step defintions - closer together.
-
