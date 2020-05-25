@@ -18,29 +18,27 @@ TODO
 
 Here's how we define one.
 
-shot::[3] shot::[4]
-Let's import `io.cucumber.java.ParameterType`:
+Let's create a new Java class called `ParameterTypes` in the `shouty.support` package: [shot::]
 
+We're going to create a `person` method, which takes the name of a person as a string, and returns an instance of our `Person` class with that name. shot::[3, Create bare method]
 
 [source, java]
 ----
-include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=3]
+include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=18..20]
 ----
 
-We use the `ParameterType` annotation from Cucumber to define our new parameter type. shot::[5]
+Cucumber will use the method name - `person` - as the parameter name we use inside the curly brackets in our step definition expressions, as soon as we've wired it up.
 
-We need to give it a `name` which is the name we'll use inside the curly brackets in our step definition expressions. shot::[6]
-
-We also need to define -- gasp! -- a regular expression. shot::[7] This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario. shot::[8]
-
-Finally, we write our method code. shot::[9] It takes the text captured from the Gherkin step that matched the regular expression pattern. shot::[10] The return value is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) shot::[11] which we can then pass to the `Person` class's constructor. shot::[12]
+To do that, we add the ParameterType annotation shot::[4, Add empty ParameterType annotation to method], import it, shot::[5, Add import] and pass it -- gasp! -- a regular expression. shot::[6, Add regex pattern to annotation]
 
 [source, java]
 ----
 include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=17..20]
 ----
 
-shot::[13]
+This is necessary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario.
+
+shot::[7]
 All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
 
 [source]
@@ -49,4 +47,3 @@ TODO
 ----
 
 Custom parameters allow you to bring your domain _model_ - the names of the classes and objects in your solution - and your domain _language_ - the words you use in your scenarios and step defintions - closer together.
-
