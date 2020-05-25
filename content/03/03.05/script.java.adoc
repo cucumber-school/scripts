@@ -1,15 +1,13 @@
 include::./title.adoc[]
 
-shot::[1]
-We can start with the step definition, which would look something like this:
+We can start with the step definition, which would look something like this:  shot::[1]
 
 [source, java]
 ----
-include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=22..25]
+include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=17..20]
 ----
 
-shot::[2]
-If we run Cucumber at this point we'll see an error, because we haven't defined the `{person}` parameter type yet.
+If we run Cucumber at this point we'll see an error, because we haven't defined the `{person}` parameter type yet. shot::[2]
 
 [source]
 ----
@@ -18,27 +16,27 @@ TODO
 
 Here's how we define one.
 
-Let's create a new Java class called `ParameterTypes` in the `shouty.support` package: [shot::]
+Let's create a new Java class called `ParameterTypes` in the `shouty.support` package: shot::[3]
 
-We're going to create a `person` method, which takes the name of a person as a string, and returns an instance of our `Person` class with that name. shot::[3, Create bare method]
+We're going to create a `person` method, which takes the name of a person as a string, and returns an instance of our `Person` class with that name. shot::[4, Create bare method]
 
 [source, java]
 ----
-include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=18..20]
+include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/support/ParameterTypes.java[lines=9..11]
 ----
 
 Cucumber will use the method name - `person` - as the parameter name we use inside the curly brackets in our step definition expressions, as soon as we've wired it up.
 
-To do that, we add the ParameterType annotation shot::[4, Add empty ParameterType annotation to method], import it, shot::[5, Add import] and pass it -- gasp! -- a regular expression. shot::[6, Add regex pattern to annotation]
+To do that, we add the ParameterType annotation shot::[5, Add empty ParameterType annotation to method], import it, shot::[6, Add import] and pass it -- gasp! -- a regular expression. shot::[7, Add regex pattern to annotation]
 
 [source, java]
 ----
-include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=17..20]
+include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/support/ParameterTypes.java[]
 ----
 
 This is necessary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario.
 
-shot::[7]
+shot::[8]
 All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
 
 [source]
