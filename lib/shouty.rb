@@ -10,7 +10,6 @@ module Shouty
     end
 
     def move_to(distance)
-
     end
 
     def shout(message)
