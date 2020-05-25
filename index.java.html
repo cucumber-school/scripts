@@ -1676,8 +1676,7 @@ Good step definitions are important because they enable the <em>readability</em>
 <div class="sect2">
 <h3 id="_literal_expressions">3.2. Literal expressions</h3>
 <div class="paragraph">
-<p>
-Let&#8217;s look at the Shouty scenario from the last chapter.</p>
+<p>Let&#8217;s look at the Shouty scenario from the last chapter. </p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -1792,7 +1791,40 @@ Because we’ve used the singular <code>metre</code> instead of the plural <code
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>TODO</code></pre>
+<pre class="rouge highlight"><code>Testing started at 11:36 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+Step undefined
+You can implement missing steps with the snippets below:
+@Given("Lucy is located {int} metre from Sean")
+public void lucy_is_located_metre_from_Sean(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Step skipped
+
+Step skipped
+
+Undefined scenarios:
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 undefined)
+3 Steps (2 skipped, 1 undefined)
+0m0.751s
+
+
+You can implement missing steps with the snippets below:
+
+@Given("Lucy is located {int} metre from Sean")
+public void lucy_is_located_metre_from_Sean(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+
+Process finished with exit code 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1803,7 +1835,7 @@ Because we’ve used the singular <code>metre</code> instead of the plural <code
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located {int} metres from Sean"</span><span class="o">)</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is located {int} metre(s) from Sean"</span><span class="o">)</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span></code></pre>
 </div>
 </div>
@@ -1813,7 +1845,30 @@ Now our step matches:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>TODO</code></pre>
+<pre class="rouge highlight"><code>Testing started at 11:37 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+
+Lucy is 100 centimetres from Sean
+
+Step skipped
+
+Step skipped
+
+Pending scenarios:
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 pending)
+3 Steps (2 skipped, 1 pending)
+0m0.523s
+
+
+io.cucumber.java.PendingException: Lucy is 100 centimetres from Sean
+	at shouty.StepDefinitions.lucy_is_metres_from_Sean(StepDefinitions.java:18)
+	at ✽.Lucy is located 1 metre from Sean(file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:4)
+
+
+
+Process finished with exit code 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1842,7 +1897,30 @@ Now we can use either 'standing' or 'located' in our scenarios, and both will ma
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>TODO</code></pre>
+<pre class="rouge highlight"><code>Testing started at 11:39 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+
+Lucy is 100 centimetres from Sean
+
+Step skipped
+
+Step skipped
+
+Pending scenarios:
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:3# Listener within range
+
+1 Scenarios (1 pending)
+3 Steps (2 skipped, 1 pending)
+0m0.499s
+
+
+io.cucumber.java.PendingException: Lucy is 100 centimetres from Sean
+	at shouty.StepDefinitions.lucy_is_metres_from_Sean(StepDefinitions.java:18)
+	at ✽.Lucy is standing 1 metre from Sean(file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:4)
+
+
+
+Process finished with exit code 1</code></pre>
 </div>
 </div>
 </div>
@@ -1855,20 +1933,18 @@ Now we can use either 'standing' or 'located' in our scenarios, and both will ma
 <p>For example, let&#8217;s define our own <code>{person}</code> custom parameter type that will convert the string <code>Lucy</code> into an instance of <code>Person</code> automatically.</p>
 </div>
 <div class="paragraph">
-<p>
-We can start with the step definition, which would look something like this:</p>
+<p>We can start with the step definition, which would look something like this:  </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@When</span><span class="o">(</span><span class="s">"Sean shouts {string}"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sean_shouts</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">sean</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
-        <span class="n">messageFromSean</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} is located/standing {int} metre(s) from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>
-If we run Cucumber at this point we&#8217;ll see an error, because we haven&#8217;t defined the <code>{person}</code> parameter type yet.</p>
+<p>If we run Cucumber at this point we&#8217;ll see an error, because we haven&#8217;t defined the <code>{person}</code> parameter type yet. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1879,15 +1955,15 @@ If we run Cucumber at this point we&#8217;ll see an error, because we haven&#821
 <p>Here&#8217;s how we define one.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s create a new Java class called <code>ParameterTypes</code> in the <code>shouty.support</code> package: [shot::]</p>
+<p>Let&#8217;s create a new Java class called <code>ParameterTypes</code> in the <code>shouty.support</code> package: </p>
 </div>
 <div class="paragraph">
 <p>We&#8217;re going to create a <code>person</code> method, which takes the name of a person as a string, and returns an instance of our <code>Person</code> class with that name. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -1899,10 +1975,18 @@ If we run Cucumber at this point we&#8217;ll see an error, because we haven&#821
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} is located/standing {int} metre(s) from Sean"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_metres_from_Sean</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">distance</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="n">shouty</span><span class="o">.</span><span class="na">support</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.cucumber.java.ParameterType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">shouty.Person</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ParameterTypes</span> <span class="o">{</span>
+
+    <span class="nd">@ParameterType</span><span class="o">(</span><span class="s">"Lucy|Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2540,7 +2624,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-20 15:52:34 UTC
+Last updated 2020-05-25 13:08:11 UTC
 </div>
 </div>
 <style>
