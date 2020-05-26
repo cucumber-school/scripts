@@ -1,5 +1,9 @@
 require 'shouty'
 
+Before do
+  @network = Shouty::Network.new
+end
+
 Given("Lucy is {int} metres from Sean") do |distance|
   @network = Shouty::Network.new
   @lucy    = Shouty::Person.new(@network)
