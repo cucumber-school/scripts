@@ -5,8 +5,8 @@ Before do
   @people  = {}
 end
 
-Given('a person named Lucy') do
-  @people['Lucy'] = Shouty::Person.new(@network)
+Given('a person named {word}') do |name|
+  @people[name] = Shouty::Person.new(@network)
 end
 
 Given('a person named Sean') do
