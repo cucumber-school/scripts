@@ -9,12 +9,8 @@ Given('a person named {word}') do |name|
   @people[name] = Shouty::Person.new(@network)
 end
 
-Given('a person named Sean') do
-  @sean = Shouty::Person.new(@network)
-end
-
 When("Sean shouts {string}") do |message|
-  @sean.shout(message)
+  @people['Sean'].shout(message)
   @message_from_sean = message
 end
 
