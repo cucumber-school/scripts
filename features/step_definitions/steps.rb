@@ -9,11 +9,11 @@ Given("Lucy is {int} metres from Sean") do |distance|
 end
 
 Given('a person named Lucy') do
-  pending # Write code here that turns the phrase above into concrete actions
+  @lucy = Shouty::Person.new(@network)
 end
 
 Given('a person named Sean') do
-  pending # Write code here that turns the phrase above into concrete actions
+  @sean = Shouty::Person.new(@network)
 end
 
 When("Sean shouts {string}") do |message|
