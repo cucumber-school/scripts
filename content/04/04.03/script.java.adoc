@@ -1,7 +1,7 @@
 include::./title.adoc[]
 
 shot::[1, "feature file"]
-After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s _description_. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t mention the magic word "`Scenario`".
+After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s _description_. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t use a Gherkin keyword, like "`Rule`" or "`Scenario`".
 
 shot::[2, "writes out description and todo list"]
 In this case, we can add a high level description of the Shouty application. Because Shouty doesn't yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.
@@ -11,7 +11,7 @@ In this case, we can add a high level description of the Shouty application. Bec
 include::../code/java/01-description-added/shouty/src/test/resources/shouty/shout.feature[lines=1..7]
 ----
 
-Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more of what you understand about the system you’re building.
+Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.
 
 shot::[3, "add Rules keyword and indent scenarios"]
 Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword. We'll learn more about this in a later chapter.
@@ -29,7 +29,7 @@ The step “Given Lucy is 15 metres from Sean” is misleading, since the distan
 include::../code/java/02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..16]
 ----
 
-The step definition calls the move_to method on Person,
+The step definition calls the moveTo method on Person,
 
 [source,java]
 ----
@@ -37,7 +37,7 @@ include::../code/java/02-rule-keyword-added/shouty/src/test/java/shouty/StepDefi
 ----
 
 shot::[5, "shows move_to method in Person class"]
-but the move_to method doesn’t actually do anything.
+but the moveTo method doesn’t actually do anything.
 
 [source,java]
 ----
