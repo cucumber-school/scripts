@@ -9,9 +9,6 @@ module Shouty
       @network.subscribe(self)
     end
 
-    def move_to(distance)
-    end
-
     def shout(message)
       @network.broadcast(message);
     end
