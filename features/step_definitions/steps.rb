@@ -4,14 +4,6 @@ Before do
   @network = Shouty::Network.new
 end
 
-Given("Lucy is {int} metres from Sean") do |distance|
-  @network = Shouty::Network.new
-  @lucy    = Shouty::Person.new(@network)
-  @sean    = Shouty::Person.new(@network)
-  
-  @lucy.move_to(distance)
-end
-
 Given('a person named Lucy') do
   @lucy = Shouty::Person.new(@network)
 end
