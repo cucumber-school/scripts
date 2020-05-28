@@ -1,0 +1,102 @@
+= Questions for chapter 4
+
+== Lesson 1
+
+=== Which of the following statements are true?
+
+* Gherkin scenarios should be thought of as automated tests - FALSE
+* Readability is a key consideration when writing scenarios - TRUE
+* The words used in the scenarios have no impact on the solution code - FALSE
+* Once a feature file is approved, it should never be changed - FALSE
+* Feature files contribute to meaningful collaboration between domain experts, developers, and testers - TRUE
+
+Answer: BDD is a collaborative activity, so the feature files and scenarios need to be readable to facilitate that collaboration. As the software is developed, the whole team will learn more about the domain, and the scenarios may need to change to reflect this new knowledge. The domain knowledge captured in the scenarios should be reflected in the solution, so the words used will have an impact on the code. Once automated, the scenarios become living documentation that automatically checks that it is sync with the solution - but the focus is on documentation, not automated tests.
+
+== Lesson 2
+
+=== Why doesn't the current implementation do anything with the distance between Sean and Lucy?
+
+* The developers are lazy
+* A decision was made to start by implementing communication over the Network - TRUE
+* There is no requirement for Shouty to take account of the distance between users
+
+Answer: When we start defining a new feature, we often find that the problem is too complex to solve all at once. By breaking it down into simpler steps, we can focus on implementing the feature incrementally. Shouty definitely behaves differently depending on the distance between users, but the team has decide to implement that functionality after implementing the basic ability to shout and hear messages.
+
+== Lesson 3
+
+=== What does Cucumber do with an empty scenario?
+
+* It reports each empty scenario as a failed scenario
+* It reports each empty scenario as a passing scenario
+* It reports each empty scenario as a pending scenario
+* It reports each empty scenario as an undefined scenario - JAVA
+
+Answer: Since there are no steps in an empty Scenario, there is nothing that Cucumber can do - so it reports them as `undefined`, but does not fail the build.
+
+=== Which of the feature files are valid?
+
+*
+Feature: Shout
+
+  This is a new feature.
+
+  Scenario: Listener within range
+
+*
+Feature: Shout
+
+  We need to add another Scenario.
+
+  Scenario: Listener within range
+
+*
+Feature: Shout
+
+  Rule needed for these Scenarios
+
+  Scenario: Listener within range
+
+*
+Feature: Shout
+
+  There are several Rules that need to be discussed/illustrated:
+  - shouts should only be heard within the fixed range
+  - leading and trailing whitespace should be removed (discuss with PO)
+
+  Question:
+  - is there a maximum length for a shout?
+
+  Scenario: Listener within range
+
+Answer: Any text between the `Feature:` line and the next line that starts with a Gherkin keyword that must be followed by a colon (e.g. `Background:`, `Scenario:`, `Scenario Outline:`) is treated as documentation and is ignored by Cucumber. In practice, that means you can write anything you like in the description area.
+
+== Lesson 4
+
+=== When does a Before hook run?
+
+* Before every run of Cucumber
+* Before every Scenario - TRUE
+* Before every step in a Scenario
+
+Answer: The Before hook runs before each Scenario is run. There's a matching After hook that runs after each scenario, too. You kind find more documentation about using hooks in Cucumber at https://cucumber.io/docs/cucumber/api/#hooks
+
+== Lesson 5
+
+=== What does an `ambiguous step` error signify?  - MAY NEED TO BE LANGUAGE SPECIFIC QUESTION
+
+* More than one step definition matched the text in the scenario - TRUE
+* Cucumber doesn't know the difference between Lucy and Sean
+* There was an error encountered while running one of the steps in a scenario
+
+Answer: For each step in a scenario, Cucumber tries to find a step definition to run. If Cucumber finds more than one step definition whose Cucumber Expression matches the text in the step, it doesn't know what to do. Rather than choose which step definition to run, it fails the scenario with an Ambiguous Step exception, forcing the team to clean up their step definitions.
+
+== Lesson 6
+
+=== Why might you decide not to use a Background?
+
+* The Background needs to be read in conjunction with each Scenario, which means reading from two places in the Feature file
+* The Background needs to be considered when adding a new Scenario to the Feature file
+* The Background needs to be considered when modifying an existing Scenario
+* The Background reduces duplication my moving shared steps into a single location - FALSE
+
+Answer: Although Backgrounds can improve readability by reducing duplication, they also impose a burden on readers and maintainers of the Feature file. Since a Background applies to every Scenario in the Feature file, it needs to be considered whenever you read or modify the Feature file.

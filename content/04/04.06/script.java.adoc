@@ -8,7 +8,7 @@ Let’s switch back to the feature to show you one more technique for improving 
 include::../code/java/14-replace-hardcoded-sean-instance/shouty/src/test/resources/shouty/shout.feature[lines=8..20]
 ----
 
-When we have common context steps - the givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way.
+When we have common context steps - the Givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way.
 
 shot::[2, "move Given steps into background"]
 We can literally move them into the background, using a background keyword, like this:
@@ -31,7 +31,7 @@ include::../code/java/15-move-givens-into-background/shouty/src/test/resources/s
 
 Notice we just went straight into When steps in our scenarios. That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.
 
-Again, it’s debatable whether we’d bother to use a Background yet on a real project, but this at least illustrates the technique. Hopefully you’re already thinking about how you can use it on your own code.
+Again, it’s debatable whether we’d bother to use a Background to do this on a real project, but this at least illustrates the technique. We rarely use Backgrounds in our projects, because although they can improve readability by removing the duplication of repeated contexts, they also harm readability by requiring people to read the Background in conjunction with each Scenario.
 
 video::https://drive.google.com/uc?id=19VLE9qKbVN4bpMxsIVvPtPqc3RGw4bSW[]
 
