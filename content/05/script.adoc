@@ -1,0 +1,337 @@
+Intro (1:17)
+Welcome back to Cucumber School.
+
+Last time we worked on cleaning up the Shouty features to keep them in sync with the current status of the project. We stripped the scenarios back to only specify the behaviour of passing messages between people. We made it clear that the proximity rule had not yet been implemented.
+
+You’ll already remember from the Cucumber expressions lesson how important it is to be expressive in your scenarios, and keep them readable. In this episode we’re going to learn some new tricks with Gherkin that will give you even more flexibility about how you write scenarios.
+
+Once again the Shouty pixies -- ah... I mean the Shouty developers -- have been hard at work implementing that proximity rule. Let’s have a look at how they got on.
+
+Runs cucumber
+
+Right, so those two scenarios we just left as just placeholders: the one where the listener is within range, and the one where the listener is out of range have been fleshed out, and are passing. Fantastic!
+
+Let’s review the changes to the feature file in more detail.
+Remove dead scenarios (1:09)
+We now have four scenarios: our original two from the last time we looked at the code, and the two new ones. With the two new ones fleshed out we can see that the first scenario we wrote - the one where the listener hears a message - is identical to the third one - the one where the listener is within range.
+
+Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where the listener is within range is a perfectly good way of checking that the message has been sent correctly. Let’s remove the other one.
+
+removes first scenario: Listener hears a message
+
+Similarly, we no longer really need to be testing multiple messages. We used this test to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there's an insignificant chance of this behaviour regressing, so we can safely remove the test.
+
+removes first scenario: Listener hears a different message
+Refactor to Data Table (1:30)
+
+So now we’re down to two scenarios that illustrate this rule about proximity: the one where the listener is within range and the one where the listener is out of range. We’re using two different listeners, Lucy, who’s always within range, and Larry, who’s not. It’s always Sean who’s doing the shouting.
+
+We create all three people here, in the background. Notice that we also specify the range here. We could have just hard-coded it within the system, but having it documented here in the scenario helps to make the behaviour we’ve specified much easier to understand.
+
+A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
+
+Notice how the steps that create the three people are very similar.
+
+When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:
+
+ And the following people:
+      | name  | location |
+      | Lucy  |      100 |
+      | Sean  |        0 |
+      | Larry |      150 |
+
+Well, we’re in luck. You can!
+
+Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.
+Explore Data Table API (0:57)
+
+As you can see, the step definition implicitly takes a single argument, which as this comment explains is a <ruby>Cucumber::Ast::DataTable</ruby> <java>cucumber.api.DataTable</java>. This object has a rich API for using the tabular data.
+
+At its most basic, the table is just a two-dimensional array of arrays.
+
+puts table.raw | System.out.println(table.raw());
+run cucumber
+
+<ruby>
+You don’t have to use a column header row in a data table, but when you do, you can ask for just the data:
+
+puts table.rows
+run cucumber
+
+When you do use column headers, it can be useful to fetch each data row as a hash, with the column names as keys, and the values from the cells in that row.
+
+puts table.hashes
+</ruby>
+
+<java>
+You can also turn the table into a List of Map, where the first row is used for the map keys, and each following row is used for the map values.
+
+System.out.println(table.asMaps(String.class, String.class));;
+</java>
+
+run cucumber
+
+Now we can easily iterate over these <ruby>hashes</ruby><java>maps</java> and turn them into instances of Person:
+
+# Java code obviously different, but same overall shape
+table.hashes.each do |row|
+  name = row['name']
+  location = row['location'].to_i
+  @people[name] = Person.new(@network, location)
+end
+
+run cucumber
+
+With that done, we can delete our old step definition, which is now unused.
+
+delete unused step def
+
+Cucumber strips all the white space surrounding each cell, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
+
+<ruby>
+Map Columns (0:19)
+
+Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table. You can also use the map_column method for this:
+
+table = table.map_column('location') { |raw_location| raw_location.to_i }
+
+The new table’s location column will now contain integers rather than the raw strings.
+</ruby>
+
+<java>
+Table conversions (1:08)
+
+Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table.
+
+If you have a class that has the same field names as the header row in the table, you can have Cucumber automatically convert the table into a list of that class. If our Person object had name and location fields, and didn’t take an instance of Network in its constructor, we could automatically create instances of Person from this table.
+
+But things aren’t always that simple.
+
+Instead, we’ll define a simple Whereabouts class to represent the data in the table.
+
+creates the class
+
+We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
+
+Now we can use the asList method on the DataTable to convert the table into a list of Whereabouts.
+
+changes the code
+
+In fact, you don’t have to explicitly convert the table to a list. If you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you.
+
+changes the code again.
+</java>
+Transpose (0:54)
+
+open feature file
+
+Now the way we’ve specified this data is OK, but it’s quite hard to visualise where each of the people is stood. It might be better to express it like this instead:
+
+| name     | Sean | Lucy | Larry |
+| location | 0    | 100  | 150   |
+
+Do you like that better? You do, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.
+
+<ruby>
+The Data Table has a transpose method which returns a new DataTable where each row is turned into a column.
+
+add call to transpose
+
+Now we can use the transposed table object as we did before.
+
+Let’s tidy up this code so as not to keep using all these temporary variables.
+
+removes all the `table =` bits and uses dots instead.
+</ruby>
+
+<java>
+If you annotate the method parameter with the @Transpose annotation, Cucumber will turn each row into a column before passing it to the step definition. You can also call the transpose method on a DataTable to explicitly create a new transposed DataTable.
+</java>
+Introduce Data Table for Outcome Step
+
+Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.
+
+One rule that we’ve been implying but have never actually explored with an example is that people remember everything they’ve heard. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once:
+
+Scenario: Two shouts
+  When Sean shouts "Free bagels!"
+  And Sean shouts "Free toast!"
+  Then Lucy hears the following messages:
+    | Free bagels |
+    | Free toast  |
+
+See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.
+
+So how do we implement this step definition? Well, the DataTable has a really handy method called diff! that we can use to compare two Data Tables. diff! will pass if the tables are the same, and fail if they’re different.
+
+So we need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.
+
+<ruby>
+A two-dimensional Array will do, so we can just map over Lucy’s messages and create a new single-item Array for each row.
+
+Now we can pass that two-dimensional Array to the diff method on the table of expected messages passed in from the Gherkin.
+
+Then(/^Lucy hears the following messages:$/) do |expected_messages|
+  lucy = @people['Lucy']
+  actual_messages = lucy.messages_heard.map { |message| [ message ] }
+  expected_messages.diff!(actual_messages)
+end
+
+</ruby>
+
+<java>
+A List of List of String will do, so we can just iterate over Lucy’s messages and create a new single-item List for each row.
+
+Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin.
+</java>
+
+runs cucumber
+
+<ruby>
+Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values in orange, and the actual values in white.
+
+Let’s fix just one of these so you can see how the diff output changes.
+
+changes bagels to bagels! in the feature.
+
+The matching bagels! line is green, and for the mismatched row, the actual output is white, and the expected output is orange.
+
+Let’s fix this last typo, and we should be green again.
+
+Great.
+</ruby>
+<java>
+Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.
+
+Let’s fix just one of these so you can see how the diff output changes.
+
+changes bagels to bagels! in the feature.
+
+The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.
+
+Let’s fix this last typo, and we should be green again.
+
+Great.
+</java>
+
+Implement long message rule (1:37)
+
+When writing scenarios, occasionally we want to use a really long piece of data.
+
+For example, let’s introduce a new rule about the maximum length of a message
+
+rule:  max length of message is 180 characters
+
+...and add a scenario to illustrate it, making the string just over the boundary of the rule:
+
+Scenario: Message is too long
+  When Sean shouts "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890x"
+  Then nobody hears Sean's message
+
+That’s pretty ugly isn’t it!
+
+Still, we’ll press on and get it to green, then we’ll show you how to clean it up.
+
+Our existing step definition handles that ugly step with the long message just fine, but we need a new step definition for this last outcome step.
+
+We’ll iterate over all the people in the scenario and check they haven’t heard this message.
+
+Then(/^nobody hears Sean's message$/) do
+  @people.values.each do |person|
+    expect(person.messages_heard).to_not include @message_from_sean
+  end
+end
+
+runs cucumber
+
+OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests and add a new example to specify this extra responsibility:
+
+it "does not broadcast messages over 180 characters, even when the listener is within range" do
+  sean_location = 0
+  long_message = "x" * 181
+  lucy = double(location: 100)
+  network.subscribe(lucy)
+  expect(lucy).not_to receive(:hear)
+  network.broadcast long_message, sean_location
+end
+
+We’ll create a 181-character message like this, place Lucy and Sean in their usual positions, subscribe Lucy on the network, and then assert that Lucy should not hear the message when it’s broadcast.
+
+Let’s run that test. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?
+
+It looks like we’re already implementing the proximity rule here in the broadcast method. Let’s add another if statement here about the message length.
+
+if (message.length <= 180)
+  listener.hear message
+end
+
+Run the unit test again… and it’s passing. Great.
+
+The code here has got a little bit messy and hard to read. One very basic move we could make to improve it would be to just extract a couple of temporary variables.
+
+within_range = (listener.location - shouter_location).abs <= @range
+short_enough = message.length <= 180
+if within_range && short_enough
+  listener.hear message
+end
+
+That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.
+
+Run cucumber && rspec
+
+Let’s just run the tests to check. Great - everything’s still green.
+Doc Strings (0:37)
+
+Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString.
+
+DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead:
+
+When Sean shouts:
+  """
+  This is a really long message
+  so long in fact that I am not going to
+  be allowed to send it, at least if I keep
+  typing like this until the length is over
+  the limit of 180 characters.
+  """
+
+Now the scenario is much more readable.
+
+We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it's useful to know about.
+Close: TDD Loops (3:37)
+You might have noticed that we’ve followed a pattern when we added behaviour to the system during this episode.
+
+animation gradually drawing something like:
+
+
+First we expressed the behaviour we wanted in a Gherkin scenario, wired up the step definitions, then ran Cucumber to watch it fail.
+
+Then, we found the first class in our domain model that needed to change in order to support that new behaviour. In this case, the Network class. We used a unit test to describe how we wanted instances of that class to behave. Then we ran the unit test and watched it fail.
+
+We focused in and made changes to the class until its unit tests were passing. When the unit tests were passing, we then made some minor changes to clean up the code and make it more readable. This is the basic test-driven-development cycle: red, green, clean.
+
+zoom in to inner TDD loop
+
+The technical name for this last clean-up step is refactoring. Refactoring is an ugly name for an extremely valuable activity: improving the design of existing code without changing its behaviour. You can think about it like cleaning up and washing the dishes after you’ve prepared a meal: basic housekeeping. But imagine the state of your kitchen if you never made time to do the dishes.
+
+picture of kitchen, becoming increasingly unhygienic
+
+Go on, imagine it for a second.
+
+Yuck!
+
+animate kitchen back to gleaming state
+
+Well, that’s how many, many codebase end up. The good thing about taking this course is that we’re teaching you how to write solid automated tests, and the good thing about having solid automated tests is you can refactor with confidence, knowing that if you accidentally change the system’s behaviour, your tests will tell you.
+
+show TDD loops again. blink / highlight the bits of the cycle as we talk about them.
+
+Once we’re done refactoring, what do we do next? Run Cucumber, of course! In this case, our scenario was passing with a single trip round the inner TDD loop, but sometimes you can spend several hours working through all the unit tests you need to get a single scenario to green.
+
+Once the acceptance test is passing, we figure out the next most valuable scenario on our todo list, and start the whole thing all over again!
+
+Together, these two loops make the BDD cycle. The outer loop, which starts with an acceptance test, keeps us focussed on what the business needs us to do next. The inner loop, where we continuously test, implement then refactor small units of code, is where decide how we’ll implement that behaviour.
+
+Both of these levels of feedback are important. It’s sometimes said that your acceptance tests ensure you’re building the right thing, and your unit tests ensure you’re building the thing right.
+
+That’s all for this lesson of Cucumber School. See you next time!
