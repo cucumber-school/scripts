@@ -15,7 +15,7 @@ Our two scenarios are examples of how Shouty can broadcast a shout to other user
 
 [source,gherkin]
 ----
-include::../code/java/03--step02-rule-keyword-added/shouty/src/test/resources/shouty/shout.feature[lines=8..17]
+include::../code/java/02--step02-rule-keyword-added/shouty/src/test/resources/shouty/shout.feature[lines=8..17]
 ----
 
 shot::[5, "shows 'Lucy is 15 metres from Sean' step definition"]
@@ -23,14 +23,14 @@ The step “Given Lucy is 15 metres from Sean” is misleading, since the distan
 
 [source,java]
 ----
-include::../code/java/03--step02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..16]
+include::../code/java/02--step02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..16]
 ----
 
 The step definition calls the moveTo method on Person, shot::[6]
 
 [source,java]
 ----
-include::../code/java/03--step02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=21..21]
+include::../code/java/02--step02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=21..21]
 ----
 
 shot::[7, "shows move_to method in Person class"]
@@ -38,7 +38,7 @@ but the moveTo method doesn’t actually do anything.
 
 [source,java]
 ----
-include::../code/java/03--step02-rule-keyword-added/shouty/src/main/java/shouty/Person.java[lines=19..20]
+include::../code/java/02--step02-rule-keyword-added/shouty/src/main/java/shouty/Person.java[lines=19..20]
 ----
 
 shot::[8]
@@ -46,7 +46,7 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 
 [source,gherkin]
 ----
-include::../code/java/04--step03-first-scenario-rewritten/shouty/src/test/resources/shouty/shout.feature[lines=8..19]
+include::../code/java/03--step03-first-scenario-rewritten/shouty/src/test/resources/shouty/shout.feature[lines=8..19]
 ----
 
 Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words `Person` and `name`. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.
@@ -58,7 +58,7 @@ In this case, as well as adding it to the TODO list above, we’ve decided to do
 
 [source,gherkin]
 ----
-include::../code/java/05--step04-empty-scenarios-added/shouty/src/test/resources/shouty/shout.feature[lines=21..25]
+include::../code/java/04--step04-empty-scenarios-added/shouty/src/test/resources/shouty/shout.feature[lines=21..25]
 ----
 
 shot::[11, "mvn clean test"]
@@ -66,7 +66,7 @@ Let’s press on. We can run Cucumber to generate new step definition snippets f
 
 [source,java]
 ----
-include::../code/java/06--step05-snippets-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..34]
+include::../code/java/05--step05-snippets-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..34]
 ----
 
 In the next lesson we'll look at a couple of ways that we can implement these new step definitions.
