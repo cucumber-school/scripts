@@ -1,0 +1,65 @@
+include::./title.adoc[]
+
+shot::[1, "Freeze of code from end of lesson 4"]
+
+OK, so we’ve cleaned things up a bit, to bring the scenarios, the code and our current understanding of the problem all into sync. What’s nice to see is how well those new steps that create Lucy and Sean match the code inside the step definition.
+
+When step definitions have to make a big leap to translate between our plain-language description of the domain in the Gherkin scenario, and the code, that’s usually a sign that something is wrong. We like to see step definitions that are only one or two lines long, because that usually indicates our scenarios are doing a good job of reflecting the domain model in the code, and vice-versa.
+
+One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two steps for creating Lucy and Sean are almost identical, apart from those instance variables.
+
+On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned last week to make a single step definition that can create Lucy or Sean.
+
+
+The first problem we’ll need to tackle is these hard-coded instance variable names.shot::[2]
+
+We can use a Map to store all the people involved in the scenario.
+
+Let’s try replacing Lucy first.shot::[3]
+
+shot::[4, "Edit Stepdefs.java, adding private instance field *people*, creating in @Before hook, and using for Lucy throughout"]
+We’ll start by creating a new hash/map in the before hook, like this.
+
+[source,ruby]
+----
+include::../code/ruby/11-replace-hardcoded-lucy-instance/features/step_definitions/steps.rb[lines=3..6]
+----
+
+Now we can store Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.shot::[5]
+
+[source,ruby]
+----
+include::../code/ruby/11-replace-hardcoded-lucy-instance/features/step_definitions/steps.rb[lines=8..10]
+----
+
+Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map. shot::[6]
+
+[source,ruby]
+----
+include::../code/ruby/11-replace-hardcoded-lucy-instance/features/step_definitions/steps.rb[lines=22..24]
+----
+
+shot::[7, "bundle exec cucumber"]
+
+With that little refactoring done, we can now try and make this first step generic for any name.
+
+Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression,shot::[8] we’ll have the name passed into our step definition as an argument, here.shot::[9] Now we can use that as the key in the hash/map.shot::[10]
+
+[source,ruby]
+----
+include::../code/ruby/12-ambiguous-step-definition/features/step_definitions/steps.rb[lines=8..10]
+----
+
+shot::[11, "bundle exec cucumber FAILS"]
+If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.
+
+Let’s remove the old step definition,shot::[12] and fetch Sean from the hash/map here where he shouts his message.shot::[13]
+
+[source,ruby]
+----
+include::../code/ruby/13-replace-hardcoded-sean-instance/features/step_definitions/steps.rb[lines=12..15]
+----
+
+shot::[14, "bundle exec cucumber"]
+
+Great, we’re green again.
