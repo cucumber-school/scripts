@@ -11,13 +11,13 @@ One problem that we still have with these scenarios is that we’re very fixed t
 On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned last week to make a single step definition that can create Lucy or Sean.
 
 
-The first problem we’ll need to tackle is these hard-coded instance variable names.
+The first problem we’ll need to tackle is these hard-coded instance variable names.shot::[2]
 
 We can use a Map to store all the people involved in the scenario.
 
-Let’s try replacing Lucy first.
+Let’s try replacing Lucy first.shot::[3]
 
-shot::[2, "Edit Stepdefs.java, adding private instance field *people*, creating in @Before hook, and using for Lucy throughout"]
+shot::[4, "Edit Stepdefs.java, adding private instance field *people*, creating in @Before hook, and using for Lucy throughout"]
 We’ll start by creating a new hash/map in the before hook, like this.
 
 [source,java]
@@ -25,43 +25,41 @@ We’ll start by creating a new hash/map in the before hook, like this.
 include::../code/java/12--step12-replace-hardcoded-lucy-instance/shouty/src/test/java/shouty/StepDefinitions.java[lines=19..25]
 ----
 
-Now we can store Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.
+Now we can store Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.shot::[5]
 
 [source,java]
 ----
 include::../code/java/12--step12-replace-hardcoded-lucy-instance/shouty/src/test/java/shouty/StepDefinitions.java[lines=27..30]
 ----
 
-Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map.
+Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map. shot::[6]
 
 [source,java]
 ----
 include::../code/java/12--step12-replace-hardcoded-lucy-instance/shouty/src/test/java/shouty/StepDefinitions.java[lines=43..46]
 ----
 
-shot::[3, "mvn test"]
+shot::[7, "mvn test"]
 
 With that little refactoring done, we can now try and make this first step generic for any name.
 
-shot::[4, "change expression to 'a person named {word}', edit parameters, change HashMap access"]
-Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the hash/map.
+Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression,shot::[8] we’ll have the name passed into our step definition as an argument, here.shot::[9] Now we can use that as the key in the hash/map.shot::[10]
 
 [source,java]
 ----
 include::../code/java/13--step13-ambiguous-step-definition/shouty/src/test/java/shouty/StepDefinitions.java[lines=27..30]
 ----
 
-shot::[5, "mvn test FAILS"]
+shot::[11, "mvn test FAILS"]
 If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.
 
-shot::[6, "Delete a_person_named_Sean() and replace Sean instance with HashMap element"]
-Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.
+Let’s remove the old step definition,shot::[12] and fetch Sean from the hash/map here where he shouts his message.shot::[13]
 
 [source,java]
 ----
 include::../code/java/14--step14-replace-hardcoded-sean-instance/shouty/src/test/java/shouty/StepDefinitions.java[lines=32..36]
 ----
 
-shot::[7, "mvn test"]
+shot::[14, "mvn test"]
 
 Great, we’re green again.
