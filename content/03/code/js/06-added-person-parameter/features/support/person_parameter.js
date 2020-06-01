@@ -5,5 +5,5 @@ const Person = require('../../src/shouty')
 defineParameterType({
   name: 'person',
   regexp: /Lucy|Sean/,
-  transformer: s => new Person()
+  transformer: name => new Person(name)
 })
