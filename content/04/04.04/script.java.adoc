@@ -5,7 +5,7 @@ We now have two step definitions to implement, and that presents us with a bit o
 
 [source,java]
 ----
-include::../code/java/06-broken-stepdef-implmentation/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..32]
+include::../code/java/07--step06-broken-stepdef-implmentation/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..32]
 ----
 
 shot::[2, "Network as instance field"]
@@ -13,7 +13,7 @@ There are a couple of different ways to create this network instance in Java. Th
 
 [source,java]
 ----
-include::../code/java/07-network-as-an-instance-field/shouty/src/test/java/shouty/StepDefinitions.java[lines=10..15]
+include::../code/java/08--step07-network-as-an-instance-field/shouty/src/test/java/shouty/StepDefinitions.java[lines=10..15]
 ----
 
 As an alternative, that can be useful if you have more complex setup to do, you can use a hook.
@@ -24,12 +24,12 @@ Now we can use that Network instance as we create Lucy and Sean in these two new
 
 [source,java]
 ----
-include::../code/java/08-using-a-before-hook/shouty/src/test/java/shouty/StepDefinitions.java[lines=18..21]
+include::../code/java/09--step08-using-a-before-hook/shouty/src/test/java/shouty/StepDefinitions.java[lines=18..21]
 ----
 
 [source,java]
 ----
-include::../code/java/08-using-a-before-hook/shouty/src/test/java/shouty/StepDefinitions.java[lines=31..39]
+include::../code/java/09--step08-using-a-before-hook/shouty/src/test/java/shouty/StepDefinitions.java[lines=31..39]
 ----
 
 shot::[4, "mvn test"]
@@ -40,7 +40,7 @@ Good. Let’s do the same with the other scenario.
 
 [source,gherkin]
 ----
-include::../code/java/09-change-second-scenario/shouty/src/test/resources/shouty/shout.feature[lines=16..20]
+include::../code/java/10--step09-change-second-scenario/shouty/src/test/resources/shouty/shout.feature[lines=16..20]
 ----
 
 shot::[6, "mvn test"]
@@ -50,7 +50,7 @@ Now we can remove this old step definition. We know we'll need something like th
 
 [source,java]
 ----
-include::../code/java/10-delete-unused-stepdef/shouty/src/test/java/shouty/StepDefinitions.java[]
+include::../code/java/11--step10-delete-unused-stepdef/shouty/src/test/java/shouty/StepDefinitions.java[]
 ----
 
 shot::[8, "mvn test"]
@@ -60,7 +60,7 @@ Now we have one last bit of dead code left, the move_to method on Person. Let's 
 
 [source,java]
 ----
-include::../code/java/11-delete-move_to/shouty/src/main/java/shouty/Person.java[]
+include::../code/java/12--step11-delete-move_to/shouty/src/main/java/shouty/Person.java[]
 ----
 
 shot::[10, "mvn test"]

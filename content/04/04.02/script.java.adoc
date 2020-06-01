@@ -15,15 +15,15 @@ Let’s dig into the code and see how these steps have been automated.
 include::../code/java/00-initial-commit/shouty/src/test/java/shouty/StepDefinitions.java[lines=10..34]
 ----
 
-In the step definition layer, we can see that a new class has been defined, the Network. We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here. So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.
+In the step definition layer, we can see that a new class has been defined, the Network.shot::[3] We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here.shot::[4] So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.
 
-There are also a couple of new unit test classes in the Shouty package, one for the Network class, and another one for the Person class.
+There are also a couple of new unit test classes in the Shouty package, one for the Network class,shot::[5] and another one for the Person class.shot::[6]
 
 Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.
 
 The familiar `mvn test` command will run those unit tests as well as Cucumber.
 
-shot::[3, "open the feature file"]
+shot::[7, "open the feature file"]
 
 The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean, but we haven’t actually implemented any behaviour around that yet.
 
