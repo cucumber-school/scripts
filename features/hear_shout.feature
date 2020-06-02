@@ -17,3 +17,9 @@ Feature: Shout
       Given Lucy is 15 metres from Sean
       When Sean shouts "Free coffee!"
       Then Lucy should hear Sean's message
+
+  Rule: Shouts should only be heard if listener is within range
+
+    Scenario: Listener is within range
+
+    Scenario: Listener is out of range
