@@ -42,8 +42,13 @@ public class StepDefinitions {
         people.put(name, new Person(network, location));
     }
 
+    @When("Sean shouts")
+    public void sean_shouts() throws Throwable {
+        people.get("Sean").shout("Hello, world");
+    }
+
     @When("Sean shouts {string}")
-    public void sean_shouts(String message) throws Throwable {
+    public void sean_shouts_message(String message) throws Throwable {
         people.get("Sean").shout(message);
         messageFromSean = message;
     }
@@ -53,9 +58,13 @@ public class StepDefinitions {
         assertEquals(Collections.singletonList(messageFromSean), people.get("Lucy").getMessagesHeard());
     }
 
-    @Then("Larry should not hear Sean's message")
-    public void larry_does_not_hear_Sean_s_message() throws Throwable {
-        List<String> heardByLarry = people.get("Larry").getMessagesHeard();
-        assertThat(heardByLarry, not(hasItem(messageFromSean)));
+    @Then("Lucy should hear a shout")
+    public void lucy_should_hear_a_shout() throws Throwable {
+        assertEquals(1, people.get("Lucy").getMessagesHeard().size());
+    }
+
+    @Then("Larry should not hear a shout")
+    public void larry_should_not_hear_a_shout() throws Throwable {
+        assertEquals(0, people.get("Larry").getMessagesHeard().size());
     }
 }
