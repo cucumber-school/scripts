@@ -12,13 +12,11 @@ Given('Lucy is {int} metres from Sean', function (distance) {
 })
 
 Given('a person named Lucy', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending'
+  this.lucy = new Person(this.network)
 })
 
 Given('a person named Sean', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending'
+  this.sean = new Person(this.network)
 })
 
 When('Sean shouts {string}', function (message) {
