@@ -17,8 +17,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StepDefinitions {
 
+    private static final int DEFAULT_RANGE = 100;
     private String messageFromSean;
-    private Network network;
+    private Network network = new Network(DEFAULT_RANGE);
     private Map<String, Person> people;
 
     @Before
@@ -29,6 +30,11 @@ public class StepDefinitions {
     @Given("the range is {int}")
     public void the_range_is(int range) throws Throwable {
         network = new Network(range);
+    }
+
+    @Given("a person named {word}")
+    public void a_person_named(String name) throws Throwable {
+        people.put(name, new Person(network, 0));
     }
 
     @Given("a person named {word} is located at {int}")

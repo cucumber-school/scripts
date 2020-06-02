@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Network {
-     private final List<Person> listeners = new ArrayList<Person>();
+    private final List<Person> listeners = new ArrayList<Person>();
     private final int range;
 
     public Network(int range) {
