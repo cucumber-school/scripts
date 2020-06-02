@@ -13,26 +13,26 @@ On a real project we wouldn’t bother about such a tiny amount of duplication a
 
 The first problem we’ll need to tackle is these hard-coded instance variable names.shot::[2]
 
-We can use a Map to store all the people involved in the scenario.
+We can use a Hash to store all the people involved in the scenario.
 
 Let’s try replacing Lucy first.shot::[3]
 
 shot::[4, "Edit Stepdefs.java, adding private instance field *people*, creating in @Before hook, and using for Lucy throughout"]
-We’ll start by creating a new hash/map in the before hook, like this.
+We’ll start by creating a new Hash in the before hook, like this.
 
 [source,ruby]
 ----
 include::../code/ruby/11-replace-hardcoded-lucy-instance/features/step_definitions/steps.rb[lines=3..6]
 ----
 
-Now we can store Lucy in a key in that hash/map. We’ll use her name as the key, hard-coding it for now.shot::[5]
+Now we can store Lucy in the hash. We’ll use her name as the key, hard-coding it for now.shot::[5]
 
 [source,ruby]
 ----
 include::../code/ruby/11-replace-hardcoded-lucy-instance/features/step_definitions/steps.rb[lines=8..10]
 ----
 
-Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map. shot::[6]
+Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash. shot::[6]
 
 [source,ruby]
 ----
@@ -43,7 +43,7 @@ shot::[7, "bundle exec cucumber"]
 
 With that little refactoring done, we can now try and make this first step generic for any name.
 
-Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression,shot::[8] we’ll have the name passed into our step definition as an argument, here.shot::[9] Now we can use that as the key in the hash/map.shot::[10]
+Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression,shot::[8] we’ll have the name passed into our step definition as an argument, here.shot::[9] Now we can use that as the key in the hash.shot::[10]
 
 [source,ruby]
 ----
@@ -53,7 +53,7 @@ include::../code/ruby/12-ambiguous-step-definition/features/step_definitions/ste
 shot::[11, "bundle exec cucumber FAILS"]
 If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.
 
-Let’s remove the old step definition,shot::[12] and fetch Sean from the hash/map here where he shouts his message.shot::[13]
+Let’s remove the old step definition,shot::[12] and fetch Sean from the hash here where he shouts his message.shot::[13]
 
 [source,ruby]
 ----
