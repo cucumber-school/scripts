@@ -1,7 +1,11 @@
-const { Given, When, Then } = require('@cucumber/cucumber')
+const { Given, When, Then, Before } = require('@cucumber/cucumber')
 const { assertThat, is } = require('hamjest')
 
 const { Person, Network } = require('../../src/shouty')
+
+Before(function () {
+  this.network = new Network()
+})
 
 Given('Lucy is {int} metres from Sean', function (distance) {
   this.network = new Network()
