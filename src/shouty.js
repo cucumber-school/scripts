@@ -6,10 +6,6 @@ class Person {
     this.network.subscribe(this)
   }
   
-  moveTo(distance) {
-    
-  }
-
   shout(message) {
     this.network.broadcast(message)
   }
