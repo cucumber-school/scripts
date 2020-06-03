@@ -5,10 +5,11 @@ const { Person, Network } = require('../../src/shouty')
 
 Before(function () {
   this.network = new Network()
+  this.people = {}
 })
 
 Given('a person named Lucy', function () {
-  this.lucy = new Person(this.network)
+  this.people['Lucy'] = new Person(this.network)
 })
 
 Given('a person named Sean', function () {
@@ -21,5 +22,5 @@ When('Sean shouts {string}', function (message) {
 })
 
 Then('Lucy should hear Sean\'s message', function () {
-  assertThat(this.lucy.messagesHeard(), is([this.messageFromSean]))
+  assertThat(this.people['Lucy'].messagesHeard(), is([this.messageFromSean]))
 })
