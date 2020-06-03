@@ -1,0 +1,57 @@
+include::./title.adoc[]
+
+shot::[1, "broken implementation"]
+We now have two step definitions to implement, and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile. If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.
+
+[source,js]
+----
+include::../code/js/06-broken-step-definition-implementation/features/step_definitions/steps.js[lines=13..19]
+----
+
+There are a couple of different ways to create this network instance in JavaScript. The most straightforward is to use a hook.
+
+We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:shot::[2]
+Now we can use that Network instance as we create Lucy and Sean in these two new steps.shot::[3]
+
+[source,js]
+----
+include::../code/js/07-using-a-before-hook/features/step_definitions/steps.js[lines=6..8]
+----
+
+[source,js]
+----
+include::../code/js/07-using-a-before-hook/features/step_definitions/steps.js[lines=17..23]
+----
+
+shot::[4, "npm test"]
+It should be working again now. Let’s run Cucumber to check.
+
+shot::[5, "Copy and paste in feature file"]
+Good. Let’s do the same with the other scenario.
+
+[source,gherkin]
+----
+include::../code/js/08-change-second-scenario/features/hear_shout.feature[lines=16..20]
+----
+
+shot::[6, "npm test"]
+
+shot::[7, "Delete lucy_is_located_m_from_Sean"]
+Now we can remove this old step definition. We know we'll need something like this in the future when we implement the proximity rule, but we don't want to second-guess what that code will look like, so let's clean it out for now.
+
+[source,js]
+----
+include::../code/js/07-using-a-before-hook/features/step_definitions/steps.js[]
+----
+
+shot::[8, "npm test"]
+
+shot::[9, "delete moveTo"]
+Now we have one last bit of dead code left, the move_to method on Person. Let's clean that up too.
+
+[source,js]
+----
+include::../code/js/07-using-a-before-hook/src/shouty.js[lines=1..24]
+----
+
+shot::[10, "npm test"]
