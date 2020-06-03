@@ -8,8 +8,8 @@ Before(function () {
   this.people = {}
 })
 
-Given('a person named Lucy', function () {
-  this.people['Lucy'] = new Person(this.network)
+Given('a person named {word}', function (name) {
+  this.people[name] = new Person(this.network)
 })
 
 Given('a person named Sean', function () {
