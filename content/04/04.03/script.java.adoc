@@ -6,7 +6,7 @@ In this case, we can add a high level description of the Shouty application.shot
 
 [source,gherkin]
 ----
-include::../code/java/01--step01-description-added/shouty/src/test/resources/shouty/shout.feature[lines=1..7]
+include::../code/java/01--step01-description-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=1..7]
 ----
 
 Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.
@@ -15,7 +15,7 @@ Our two scenarios are examples of how Shouty can broadcast a shout to other user
 
 [source,gherkin]
 ----
-include::../code/java/02--step02-rule-keyword-added/shouty/src/test/resources/shouty/shout.feature[lines=8..17]
+include::../code/java/02--step02-rule-keyword-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..17]
 ----
 
 shot::[5, "shows 'Lucy is 15 metres from Sean' step definition"]
@@ -46,7 +46,7 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 
 [source,gherkin]
 ----
-include::../code/java/03--step03-first-scenario-rewritten/shouty/src/test/resources/shouty/shout.feature[lines=8..19]
+include::../code/java/03--step03-first-scenario-rewritten/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..19]
 ----
 
 Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words `Person` and `name`. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.
@@ -58,7 +58,7 @@ In this case, as well as adding it to the TODO list above, we’ve decided to do
 
 [source,gherkin]
 ----
-include::../code/java/04--step04-empty-scenarios-added/shouty/src/test/resources/shouty/shout.feature[lines=21..25]
+include::../code/java/04--step04-empty-scenarios-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=21..25]
 ----
 
 shot::[11, "mvn clean test"]
