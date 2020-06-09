@@ -8,7 +8,7 @@ We now have two step definitions to implement, and that presents us with a bit o
 include::../code/ruby/06-broken-step-definition-implementation/features/step_definitions/steps.rb[lines=10..16]
 ----
 
-There are a couple of different ways to create this network instance in Ruby. The most straightforward is to use a hook.
+The most straightforward way to create this network instance in Ruby is to use a hook.
 
 We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:shot::[2]
 Now we can use that Network instance as we create Lucy and Sean in these two new steps.shot::[3]

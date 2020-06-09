@@ -8,7 +8,7 @@ When step definitions have to make a big leap to translate between our plain-lan
 
 One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two steps for creating Lucy and Sean are almost identical, apart from those instance variables.
 
-On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned last week to make a single step definition that can create Lucy or Sean.
+On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.
 
 
 The first problem we’ll need to tackle is these hard-coded instance variable names.shot::[2]
@@ -43,7 +43,7 @@ shot::[6, "npm test"]
 
 With that little refactoring done, we can now try and make this first step generic for any name.
 
-Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression,shot::[7] we’ll have the name passed into our step definition as an argument, here.shot::[8] Now we can use that as the key in the people object.shot::[9]
+Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a 'word' expression,shot::[7] we’ll have the name passed into our step definition as an argument, here.shot::[8] Now we can use that as the key in the people object.shot::[9]
 
 [source,js]
 ----
