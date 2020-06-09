@@ -7,7 +7,7 @@ Feature: Shout
 
   Rule: Shouts can be heard by other users
 
-    Scenario: Listener within range
+    Scenario: Listener hears a message
       Given a person named Lucy
       And a person named Sean
       When Sean shouts "free bagels at Sean's"

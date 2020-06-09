@@ -1,7 +1,7 @@
 class Person {
   constructor(network) {
     this.messages = []
-    this.network      = network
+    this.network  = network
 
     this.network.subscribe(this)
   }

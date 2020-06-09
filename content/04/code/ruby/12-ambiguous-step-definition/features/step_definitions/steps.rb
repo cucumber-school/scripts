@@ -14,8 +14,7 @@ Given('a person named Sean') do
 end
 
 When("Sean shouts {string}") do |message|
-  sean = Shouty::Person.new(@network)
-  sean.shout(message)
+  @sean.shout(message)
   @message_from_sean = message
 end
 
