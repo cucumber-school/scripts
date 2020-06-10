@@ -1,35 +1,58 @@
-==== Questions
+= Chapter 2
 
-[qanda]
+== Lesson 5
 
-Why should we always make sure that we see a scenario fail before we make it pass? (select multiple) ::
-  * Until you see a scenario fail, you can’t be sure that it can ever fail [true]
-  * There’s no need to always see a scenario fail [false]
-  * BDD practitioners use failing scenarios to drive their development [true]
-  * A passing scenario implies the functionality it describes has already been implemented, so it may be a duplicate of an existing scenario [true]
-  * BDD practitioners believe in learning from failure [false]
+=== How does the practice writing a failing test before implementing the solution help us?
 
-Why did we change to use an instance variable for storing each Person? (select one) ::
-  * It ensures we can interact with the same object from different steps. [true]
-  * It’s a better way to organise the code
-  * It’s more efficient for performance
-  * Cucumber requires us to store our objects as instance variables.
+* Until you see a scenario fail, you can’t be sure that it can ever fail [true]
+* There’s no need to always see a scenario fail [false]
+* BDD practitioners use failing scenarios to guide their development [true]
+* A passing scenario implies the functionality it describes has already been implemented, so it may be a duplicate of an existing scenario [true]
+* BDD practitioners believe in learning from failure [false]
 
-How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? (select one) ::
-  * We duplicated the text inside our Person class
-  * We used an instance variable to store the text that was shouted [true]
-  * We called a method on the Person class to retrieve the messages heard
-  * We passed the message text in from our Gherkin scenarios
+Explanation:
+Behaviour-Driven Development comes from Test-Driven Development, where we always start with a failing test, then use that to guide our development. This sometimes described as red-green-refactor.
 
-Which flow should we follow when making a Scenario pass? (select one) ::
-  * Domain modelling -> Write some code -> Make it compile -> Run the scenario & watch it fail
-  * Write some code -> Domain modelling -> Make it compile -> Run the scenario
-  * Write some code -> Make it compile -> Domain modelling -> Run the scenario
-  * Domain modelling -> Run the scenario -> Write some code -> Make it compile
+    red - write a scenario/test and see it fail
+    green - make it pass (as simply as possible)
+    refactor - improve your code, while keeping all the tests/scenarios green
 
-Why is our naive implementation of Person.getMessagesHeard, with a hard-coded message OK in BDD? (select multiple) ::
-  * It shows us that we need better examples to pin down the behaviour we really want from the code. [correct]
-  * We know we will iterate on our solution, when we come up with more examples of what we want it to do. [correct]
-  * Nobody is using our solution yet [incorrect]
-  * We have to do a bad implementation so we can see our test fail. [incorrect]
-  * Look at this diagram (1) Write a scenario, 2) Automate it and watch it fail, 3) Write just enough code to make it pass). Which stage are we at as the video ends?
+It's surprisingly easy to write scenarios and step definitions that don't do anything. It's the transition from red to green that gives us confidence that the scenario and the implementation actually do what we expect.
+
+If a scenario passes as soon as we write it, that means that either it's not doing what we think it should or the behaviour that it describes has already been implemented. In that case, we're not developing using behaviour-driven development.
+
+=== Why did we change to use an instance variable for storing each Person? (select one) ::
+
+* It ensures we can interact with the same object from different steps. [true]
+* It’s a better way to organise the code
+* It’s more efficient for performance
+* Cucumber/SpecFlow requires us to store our objects as instance variables.
+
+Explanation:
+In Cucumber/SpecFlow, one of the ways to access the same instance of an object from different step definition methods, is to store it on an instance variable.
+
+=== How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? (select one) ::
+
+* We duplicated the text inside our Person class
+* We used an instance variable to store the text that was shouted [true]
+* We called a method on the Person class to retrieve the messages heard
+* We passed the message text in from our Gherkin scenarios
+
+Explanation:
+When you need to assert for a specific value coming out of your system in a Then step, you can use an instance variable to store it where it goes into the system (in a Given or When) step. This means you can avoid duplicating the value in multiple places in your code.
+
+=== Which flow should we follow when making a Scenario pass? (select one) ::
+
+* Domain modelling -> Write some code -> Make it compile -> Run the scenario & watch it fail
+* Write some code -> Domain modelling -> Make it compile -> Run the scenario
+* Write some code -> Make it compile -> Domain modelling -> Run the scenario - TRUE
+* Domain modelling -> Run the scenario -> Write some code -> Make it compile
+
+Explanation:
+Our goal at this stage is to get to a failing test, where the only thing left to do to make it pass is make changes to the implementation of the app itself.
+
+On an existing system, we might not need to create so much new code to get to this goal, but we might need to make some changes to how we call the system. This gives us an opportunity to do some lightweight domain modelling.
+
+It may not compile first-time, so we implement the bare-bones of our solution until it does.
+
+We use the scenarios to guide us in our implementation.
