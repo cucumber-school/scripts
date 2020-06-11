@@ -44,7 +44,7 @@ public class StepDefinitions {
 
     @Given("people are located at")
     public void people_are_located_at(io.cucumber.datatable.DataTable dataTable) {
-        System.out.println("Lucy's location: " + dataTable.cell(2 ,1));
+        System.out.println(dataTable.asMaps());
     }
 
 
