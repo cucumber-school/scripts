@@ -1,0 +1,84 @@
+include::./title.adoc[]
+
+When writing scenarios, occasionally we want to use a really long piece of data.
+
+For example, let’s introduce a new rule about the maximum length of a message
+
+rule:  max length of message is 180 characters
+
+...and add a scenario to illustrate it, making the string just over the boundary of the rule:
+
+Scenario: Message is too long
+  When Sean shouts "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890x"
+  Then nobody hears Sean's message
+
+That’s pretty ugly isn’t it!
+
+Still, we’ll press on and get it to green, then we’ll show you how to clean it up.
+
+Our existing step definition handles that ugly step with the long message just fine, but we need a new step definition for this last outcome step.
+
+We’ll iterate over all the people in the scenario and check they haven’t heard this message.
+
+Then(/^nobody hears Sean's message$/) do
+  @people.values.each do |person|
+    expect(person.messages_heard).to_not include @message_from_sean
+  end
+end
+
+runs cucumber
+
+OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests and add a new example to specify this extra responsibility:
+
+it "does not broadcast messages over 180 characters, even when the listener is within range" do
+  sean_location = 0
+  long_message = "x" * 181
+  lucy = double(location: 100)
+  network.subscribe(lucy)
+  expect(lucy).not_to receive(:hear)
+  network.broadcast long_message, sean_location
+end
+
+We’ll create a 181-character message like this, place Lucy and Sean in their usual positions, subscribe Lucy on the network, and then assert that Lucy should not hear the message when it’s broadcast.
+
+Let’s run that test. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?
+
+It looks like we’re already implementing the proximity rule here in the broadcast method. Let’s add another if statement here about the message length.
+
+if (message.length <= 180)
+  listener.hear message
+end
+
+Run the unit test again… and it’s passing. Great.
+
+The code here has got a little bit messy and hard to read. One very basic move we could make to improve it would be to just extract a couple of temporary variables.
+
+within_range = (listener.location - shouter_location).abs <= @range
+short_enough = message.length <= 180
+if within_range && short_enough
+  listener.hear message
+end
+
+That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.
+
+Run cucumber && rspec
+
+Let’s just run the tests to check. Great - everything’s still green.
+Doc Strings (0:37)
+
+Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString.
+
+DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead:
+
+When Sean shouts:
+  """
+  This is a really long message
+  so long in fact that I am not going to
+  be allowed to send it, at least if I keep
+  typing like this until the length is over
+  the limit of 180 characters.
+  """
+
+Now the scenario is much more readable.
+
+We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it's useful to know about.

@@ -1,66 +1,80 @@
 include::./title.adoc[]
 
-Let's look at the two scenarios that illustrate the rule about range again. We’re using two different listeners, Lucy, who’s within range, and Larry, who’s not. It’s always Sean who’s doing the shouting.
+Let's look at the two scenarios that illustrate the rule about range again shot::[show the range rule & scenarios]. We’re using two different listeners, Lucy, shot::[highlight Lucy] who’s within range, and Larry, shot::[highlight Larry] who’s not. It’s always Sean shot::[highlight Sean] who’s doing the shouting.
 
-Notice that we also specify the range in each scenario. We could have just hard-coded it within the system, but having it documented here helps to make the behaviour we’ve specified much easier to understand.
+Notice that we also specify the range in each scenario shot::[highlight range]. We could have just hard-coded it within the system, but having it documented here helps to make the behaviour we’ve specified much easier to understand.
 
-A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
+A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system shot::[highlight Network constructor]. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
 
-Notice how the steps that create the Sean, Lucy, and Larry are very similar.
+Notice how the steps shot::[compare the two scenarios] that create the Sean, Lucy, and Larry are very similar.
 
 When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:
 
- And the following people:
-      | name  | location |
-      | Lucy  |      100 |
-      | Sean  |        0 |
+shot::[feature file]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/05-location specified in data table/shouty/src/test/resources/shouty/hear_shout.feature[lines=17..19]
+----
 
 Well, we’re in luck. You can!
 
 Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.
 
-As you can see, the step definition implicitly takes a single argument, which as this comment explains is a <ruby>Cucumber::Ast::DataTable</ruby> <java>cucumber.api.DataTable</java>. This object has a rich API for using the tabular data.
+shot::[mvn test, copy snippet, paste into StepDefinition.java]
 
-At its most basic, the table is just a two-dimensional array of arrays:
+As you can see, the step definition implicitly takes a single argument shot::[new step def], which as this comment explains is a io.cucumber.datatable.DataTable. This object has a rich API for using the tabular data.
 
-shot::["System.out.println(table.raw());"]
+At its most basic, the table is just a two-dimensional array of arrays. So, Lucy's location can be accessed by getting the value from array cell 1, 2
+
+shot::["System.out.println(dataTable.cell(1, 2));"]
 
 shot::[run Cucumber]
 
-You can also turn the table into a List of Map, where the first row is used for the map keys, and each following row is used for the map values.
+You can also turn the table into a List of Maps, where the first row is used for the map keys, and each following row is used for the map values.
 
-shot::[System.out.println(table.asMaps(String.class, String.class));]
+shot::[System.out.println(dataTable.asMaps());]
 
-shot::[run cucumber]
+shot::[run Cucumber]
 
-shot::[]
-Now we can easily iterate over these maps and turn them into instances of Person:
+Now we can easily iterate shot::[write the loop] over these maps and turn them into instances of Person:
 
 shot::[run cucumber]
 
 shot::[delete unused step def]
-With that done, we can delete our old step definition, which is now unused.
+With that done, we can update the other scenario shot::[] and delete our old step definition shot::[], which is now unused.
 
-
+shot::[run cucumber]
 
 Cucumber strips all the white space surrounding each cell, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
 
-Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table.
+Notice we’ve still had to convert the location from a string to an integer shot::[Integer.parseInt], because Cucumber can’t know that’s the type of value in our table.
 
-If you have a class that has the same field names as the header row in the table, you can have Cucumber automatically convert the table into a list of that class. If our Person object had name and location fields, and didn’t take an instance of Network in its constructor, we could automatically create instances of Person from this table.
+To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class we want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
 
-But things aren’t always that simple.
+Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::[creates the class]
 
-Instead, we’ll define a simple Whereabouts class to represent the data in the table.
-
-shot::[creates the class]
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/11-use Whereabouts class/shouty/src/test/java/shouty/StepDefinitions.java[lines=27..35]
+----
 
 We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
 
-Now we can use the asList method on the DataTable to convert the table into a list of Whereabouts.
+Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. shot::[changes the code]
 
-shot::[changes the code]
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/11-use Whereabouts class/shouty/src/test/java/shouty/StepDefinitions.java[lines=37..40]
+----
 
-In fact, you don’t have to explicitly convert the table to a list. If you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you.
+Now, if you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you. shot::[changes the code again]
 
-shot::[changes the code again]
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/11-use Whereabouts class/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
+----

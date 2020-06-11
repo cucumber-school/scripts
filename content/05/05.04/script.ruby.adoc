@@ -1,0 +1,94 @@
+include::./title.adoc[]
+
+
+open feature file
+
+Now the way we’ve specified this data is OK, but it’s quite hard to visualise where each of the people is stood. It might be better to express it like this instead:
+
+| name     | Sean | Lucy | Larry |
+| location | 0    | 100  | 150   |
+
+Do you like that better? You do, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.
+
+<ruby>
+The Data Table has a transpose method which returns a new DataTable where each row is turned into a column.
+
+add call to transpose
+
+Now we can use the transposed table object as we did before.
+
+Let’s tidy up this code so as not to keep using all these temporary variables.
+
+removes all the `table =` bits and uses dots instead.
+</ruby>
+
+<java>
+If you annotate the method parameter with the @Transpose annotation, Cucumber will turn each row into a column before passing it to the step definition. You can also call the transpose method on a DataTable to explicitly create a new transposed DataTable.
+</java>
+
+Introduce Data Table for Outcome Step
+
+Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.
+
+One rule that we’ve been implying but have never actually explored with an example is that people remember everything they’ve heard. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once:
+
+Scenario: Two shouts
+  When Sean shouts "Free bagels!"
+  And Sean shouts "Free toast!"
+  Then Lucy hears the following messages:
+    | Free bagels |
+    | Free toast  |
+
+See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.
+
+So how do we implement this step definition? Well, the DataTable has a really handy method called diff! that we can use to compare two Data Tables. diff! will pass if the tables are the same, and fail if they’re different.
+
+So we need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.
+
+<ruby>
+A two-dimensional Array will do, so we can just map over Lucy’s messages and create a new single-item Array for each row.
+
+Now we can pass that two-dimensional Array to the diff method on the table of expected messages passed in from the Gherkin.
+
+Then(/^Lucy hears the following messages:$/) do |expected_messages|
+  lucy = @people['Lucy']
+  actual_messages = lucy.messages_heard.map { |message| [ message ] }
+  expected_messages.diff!(actual_messages)
+end
+
+</ruby>
+
+<java>
+A List of List of String will do, so we can just iterate over Lucy’s messages and create a new single-item List for each row.
+
+Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin.
+</java>
+
+runs cucumber
+
+<ruby>
+Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values in orange, and the actual values in white.
+
+Let’s fix just one of these so you can see how the diff output changes.
+
+changes bagels to bagels! in the feature.
+
+The matching bagels! line is green, and for the mismatched row, the actual output is white, and the expected output is orange.
+
+Let’s fix this last typo, and we should be green again.
+
+Great.
+</ruby>
+<java>
+Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.
+
+Let’s fix just one of these so you can see how the diff output changes.
+
+changes bagels to bagels! in the feature.
+
+The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.
+
+Let’s fix this last typo, and we should be green again.
+
+Great.
+</java>
