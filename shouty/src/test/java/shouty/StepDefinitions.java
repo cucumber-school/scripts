@@ -6,6 +6,7 @@ import io.cucumber.java.Transpose;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import io.cucumber.datatable.DataTable;
 
 import java.util.*;
 
@@ -89,14 +90,12 @@ public class StepDefinitions {
     }
 
     @Then("Lucy hears the following messages:")
-    public void lucy_hears_the_following_messages(io.cucumber.datatable.DataTable dataTable) {
-        // Write code here that turns the phrase above into concrete actions
-        // For automatic transformation, change DataTable to one of
-        // E, List<E>, List<List<E>>, List<Map<K,V>>, Map<K,V> or
-        // Map<K, List<V>>. E,K,V must be a String, Integer, Float,
-        // Double, Byte, Short, Long, BigInteger or BigDecimal.
-        //
-        // For other transformations you can register a DataTableType.
-        throw new io.cucumber.java.PendingException();
+    public void lucy_hears_the_following_messages(DataTable expectedMessages) {
+        List<List<String>> actualMessages = new ArrayList<List<String>>();
+        List<String> heard = people.get("Lucy").getMessagesHeard();
+        for (String message : heard) {
+            actualMessages.add(Collections.singletonList(message));
+        }
+        expectedMessages.diff(DataTable.create(actualMessages));
     }
 }
