@@ -37,19 +37,13 @@ public class StepDefinitions {
         people.put(name, new Person(network, 0));
     }
 
-    @Given("a person named {word} is located at {int}")
-    public void a_person_named_is_located(String name, int location) throws Throwable {
-        people.put(name, new Person(network, location));
-    }
-
     @Given("people are located at")
     public void people_are_located_at(io.cucumber.datatable.DataTable dataTable) {
         for (Map<String, String> personData : dataTable.asMaps()) {
             people.put(personData.get("name"), new Person(network, Integer.parseInt(personData.get("location"))));
         }
     }
-
-
+    
     @When("Sean shouts")
     public void sean_shouts() throws Throwable {
         people.get("Sean").shout("Hello, world");
