@@ -1,9 +1,8 @@
 === TDD Loops
 
+shot::[BDD TDD loop animation]
+
 You might have noticed that we’ve followed a pattern when we added behaviour to the system during this episode.
-
-animation gradually drawing something like:
-
 
 First we expressed the behaviour we wanted in a Gherkin scenario, wired up the step definitions, then ran Cucumber to watch it fail.
 
@@ -11,21 +10,13 @@ Then, we found the first class in our domain model that needed to change in orde
 
 We focused in and made changes to the class until its unit tests were passing. When the unit tests were passing, we then made some minor changes to clean up the code and make it more readable. This is the basic test-driven-development cycle: red, green, clean.
 
-zoom in to inner TDD loop
-
 The technical name for this last clean-up step is refactoring. Refactoring is an ugly name for an extremely valuable activity: improving the design of existing code without changing its behaviour. You can think about it like cleaning up and washing the dishes after you’ve prepared a meal: basic housekeeping. But imagine the state of your kitchen if you never made time to do the dishes.
-
-picture of kitchen, becoming increasingly unhygienic
 
 Go on, imagine it for a second.
 
 Yuck!
 
-animate kitchen back to gleaming state
-
 Well, that’s how many, many codebase end up. The good thing about taking this course is that we’re teaching you how to write solid automated tests, and the good thing about having solid automated tests is you can refactor with confidence, knowing that if you accidentally change the system’s behaviour, your tests will tell you.
-
-show TDD loops again. blink / highlight the bits of the cycle as we talk about them.
 
 Once we’re done refactoring, what do we do next? Run Cucumber, of course! In this case, our scenario was passing with a single trip round the inner TDD loop, but sometimes you can spend several hours working through all the unit tests you need to get a single scenario to green.
 
@@ -35,4 +26,4 @@ Together, these two loops make the BDD cycle. The outer loop, which starts with 
 
 Both of these levels of feedback are important. It’s sometimes said that your acceptance tests ensure you’re building the right thing, and your unit tests ensure you’re building the thing right.
 
-That’s all for this lesson of Cucumber School. See you next time!
+That’s all for this chapter of Cucumber School. See you next time!
