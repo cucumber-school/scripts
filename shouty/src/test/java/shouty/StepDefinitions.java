@@ -74,6 +74,13 @@ public class StepDefinitions {
         messageFromSean = message;
     }
 
+    @When("Sean shouts the following message")
+    public void sean_shouts_the_following_message(String message) throws Throwable {
+        people.get("Sean").shout(message);
+        messageFromSean = message;
+        System.out.println(message);
+    }
+
     @Then("Lucy should hear Sean's message")
     public void lucy_hears_Sean_s_message() throws Throwable {
         assertEquals(Collections.singletonList(messageFromSean), people.get("Lucy").getMessagesHeard());
