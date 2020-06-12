@@ -7,7 +7,7 @@ The way that we’ve specified this data is OK, but your product owner would pre
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/java/12-Transpose annotation/shouty/src/test/resources/shouty/hear_shout.feature[lines=15..27]
+include::../code/java/12--step12-transpose-annotation/shouty/src/test/resources/shouty/hear_shout.feature[lines=15..27]
 ----
 
 It's always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.
@@ -17,7 +17,7 @@ If you annotate the method parameter with the @Transpose annotation shot::[], Cu
 .StepDefinitions.java
 [source,java]
 ----
-include::../code/java/12-Transpose annotation/shouty/src/test/java/shouty/StepDefinitions.java[lines=59..59]
+include::../code/java/12--step12-transpose-annotation/shouty/src/test/java/shouty/StepDefinitions.java[lines=59..59]
 ----
 
 shot::[mvn test]
@@ -29,7 +29,7 @@ One rule that we’ve been implying but have never actually explored with an exa
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/java/13-Outcome data tables/shouty/src/test/resources/shouty/hear_shout.feature[lines=31..40]
+include::../code/java/13--step13-outcome-data-tables/shouty/src/test/resources/shouty/hear_shout.feature[lines=31..40]
 ----
 
 See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.
@@ -45,7 +45,7 @@ A List of List of String will do shot::[], so we can just iterate over Lucy’s 
 .StepDefinitions.java
 [source,java]
 ----
-include::../code/java/14-Diff/shouty/src/test/java/shouty/StepDefinitions.java[lines=94..98]
+include::../code/java/14--step14-diff/shouty/src/test/java/shouty/StepDefinitions.java[lines=94..98]
 ----
 
 Now we can pass that list to the diff method shot::[] on the table of expected messages passed in from the Gherkin.
@@ -53,7 +53,7 @@ Now we can pass that list to the diff method shot::[] on the table of expected m
 .StepDefinitions.java
 [source,java]
 ----
-include::../code/java/14-Diff/shouty/src/test/java/shouty/StepDefinitions.java[lines=99..99]
+include::../code/java/14--step14-diff/shouty/src/test/java/shouty/StepDefinitions.java[lines=99..99]
 ----
 
 shot::[runs cucumber]
@@ -65,7 +65,7 @@ Let’s fix just one of these shot::[] so you can see how the diff output change
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/java/15-Fix first typo/shouty/src/test/resources/shouty/hear_shout.feature[lines=39..39]
+include::../code/java/15--step15-fix-first-typo/shouty/src/test/resources/shouty/hear_shout.feature[lines=39..39]
 ----
 
 shot::[mvn test]
@@ -76,7 +76,7 @@ Let’s fix this last typo shot::[], and we should be green again.
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/java/16-Fix second typo/shouty/src/test/resources/shouty/hear_shout.feature[lines=40..40]
+include::../code/java/16--step16-fix-second-typo/shouty/src/test/resources/shouty/hear_shout.feature[lines=40..40]
 ----
 
 shot::[mvn test]

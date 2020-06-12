@@ -15,7 +15,7 @@ shot::[feature file]
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/java/05-location specified in data table/shouty/src/test/resources/shouty/hear_shout.feature[lines=17..19]
+include::../code/java/05--step05-location-specified-in-data-table/shouty/src/test/resources/shouty/hear_shout.feature[lines=17..19]
 ----
 
 Well, we’re in luck. You can!
@@ -58,7 +58,7 @@ Instead, we’ll define a simple Whereabouts class to represent the data in the 
 .StepDefinitions.java
 [source,java]
 ----
-include::../code/java/11-use Whereabouts class/shouty/src/test/java/shouty/StepDefinitions.java[lines=27..35]
+include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=27..35]
 ----
 
 We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
@@ -68,7 +68,7 @@ Then we can create a method annotated with @DataTableType so that Cucumber knows
 .StepDefinitions.java
 [source,java]
 ----
-include::../code/java/11-use Whereabouts class/shouty/src/test/java/shouty/StepDefinitions.java[lines=37..40]
+include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=37..40]
 ----
 
 Now, if you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you. shot::[changes the code again]
@@ -76,5 +76,5 @@ Now, if you declare your table parameter as a generic list, Cucumber will automa
 .StepDefinitions.java
 [source,java]
 ----
-include::../code/java/11-use Whereabouts class/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
+include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
 ----
