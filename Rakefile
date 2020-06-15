@@ -20,11 +20,11 @@ task :generate_index_files, [:lang] => [] do |t, args|
 
           script_files = FileList["#{chapter}/*/script.#{code}.adoc"]
 
-          script_files.each { |file_name|
-            scripts << "include::#{file_name}[]\n\n"
+          script_files.each { |lesson_script|
+            scripts << "include::#{lesson_script}[]\n\n"
 
-            questions_file_name = File.join(File.dirname(file_name), "questions.adoc")
-            if File.exist?(questions_file_name) && ENV['questions']
+            questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
+            if File.exist?(questions_file_name)
               scripts << "include::#{questions_file_name}[]\n\n"
             end
           }

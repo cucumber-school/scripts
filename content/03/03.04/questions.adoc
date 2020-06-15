@@ -1,0 +1,28 @@
+==== Lesson 4
+
+===== How can you express in a Cucumber Expression that matching some text is optional?
+
+* Enclose it in square brackets: [] - FALSE
+* Enclose it in parentheses: () - TRUE
+* Place a question mark after it: ? - FALSE
+* Precede it with a slash: / - FALSE
+
+Answer: Any text in a Cucumber Expression that is surrounded by parentheses `()` is considered optional.
+
+===== What does a slash `/` separating words mean in a Cucumber Expression?
+
+* The words are considered alternatives - the Cucumber Expression will match any of them - TRUE
+* It doesn't mean anything special - the Cucumber Expression will match the slash as a literal character- FALSE
+* The word that follows the slash is considered optional - FALSE
+
+Answer: Words in a Cucumber Expression that are separated by a slash `/` are considered alternates. There must be no whitespace between the word and the slash.
+
+===== Which of the following Cucumber Expressions would match both "it weighed 3 grammes" and "it weighed 1 gramme"?
+
+* "it weighed {int} gramme(s)" - TRUE
+* "it weighed 1/3 gramme/s" - FALSE
+* "it weighed 1/3 gramme(s)" - TRUE
+* "it weighed 1 / 3 gramme(s)" - FALSE
+* "it weighed 1/2/3 gramme/grammes" - TRUE
+
+Answer: Any text surrounded by parentheses `()` is considered optional. Any words separated by a slash `/` are considered to be alternates. You can find full documentation about Cucumber Expressions at https://cucumber.io/docs/cucumber/cucumber-expressions/

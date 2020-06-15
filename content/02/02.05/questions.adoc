@@ -1,8 +1,6 @@
-= Chapter 2
+==== Lesson 5 - Questions
 
-== Lesson 5
-
-=== How does the practice writing a failing test before implementing the solution help us?
+===== How does the practice writing a failing test before implementing the solution help us?
 
 * Until you see a scenario fail, you can’t be sure that it can ever fail [true]
 * There’s no need to always see a scenario fail [false]
@@ -21,7 +19,7 @@ It's surprisingly easy to write scenarios and step definitions that don't do any
 
 If a scenario passes as soon as we write it, that means that either it's not doing what we think it should or the behaviour that it describes has already been implemented. In that case, we're not developing using behaviour-driven development.
 
-=== Why did we change to use an instance variable for storing each Person? (select one) ::
+===== Why did we change to use an instance variable for storing each Person? (select one) ::
 
 * It ensures we can interact with the same object from different steps. [true]
 * It’s a better way to organise the code
@@ -31,7 +29,7 @@ If a scenario passes as soon as we write it, that means that either it's not doi
 Explanation:
 In Cucumber/SpecFlow, one of the ways to access the same instance of an object from different step definition methods, is to store it on an instance variable.
 
-=== How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? (select one) ::
+===== How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? (select one) ::
 
 * We duplicated the text inside our Person class
 * We used an instance variable to store the text that was shouted [true]
@@ -41,7 +39,7 @@ In Cucumber/SpecFlow, one of the ways to access the same instance of an object f
 Explanation:
 When you need to assert for a specific value coming out of your system in a Then step, you can use an instance variable to store it where it goes into the system (in a Given or When) step. This means you can avoid duplicating the value in multiple places in your code.
 
-=== Which flow should we follow when making a Scenario pass? (select one) ::
+===== Which flow should we follow when making a Scenario pass? (select one) ::
 
 * Domain modelling -> Write some code -> Make it compile -> Run the scenario & watch it fail
 * Write some code -> Domain modelling -> Make it compile -> Run the scenario
