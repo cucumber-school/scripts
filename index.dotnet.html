@@ -461,6 +461,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_expressing_yourself">3. Expressing yourself</a></li>
 <li><a href="#_cleaning_up">4. Cleaning up</a></li>
+<li><a href="#_loops">5. Loops</a></li>
 </ul>
 </div>
 </div>
@@ -552,6 +553,146 @@ We can translate this into a Gherkin scenario so that Cucumber can run it. Here&
 </div>
 <div class="paragraph">
 <p>Now that we’ve translated our example into Gherkin, we can automate it!</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions">2.2.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_whats_an_advantage_of_using_gherkin_to_express_our_examples_in_bdd_choose_one">What’s an advantage of using  Gherkin to express our examples in BDD? (choose one) ::</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>We can get Cucumber to test whether the code does what the scenario describes.</p>
+</li>
+<li>
+<p>We can easily automate tests even if we don&#8217;t know much about programming.</p>
+</li>
+<li>
+<p>We can use tools to generate the scenarios.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Gherkin is just one way of expressing examples of how you want your system to behave. The advantage of using this particular format is that you can use Cucumber to test them for you, making them into Living Documentation.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_these_are_gherkin_keywords_choose_multiple">Which of these are Gherkin keywords? (choose multiple)::</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Scenario</p>
+</li>
+<li>
+<p>Story</p>
+</li>
+<li>
+<p>Given</p>
+</li>
+<li>
+<p>Only</p>
+</li>
+<li>
+<p>If</p>
+</li>
+<li>
+<p>When</p>
+</li>
+<li>
+<p>Before</p>
+</li>
+<li>
+<p>Then</p>
+</li>
+<li>
+<p>While</p>
+</li>
+<li>
+<p>Check</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+We’ve introduced four Gherkin keywords so far:
+  * <code>Scenario</code> tells Cucumber we’re about to describe an example that it can execute.
+  * <code>Given</code>, <code>When</code> and <code>Then</code> identify the steps of the scenario.
+There are a few other keywords which will be introduced later in the course.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_the_gherkin_keywords_given_when_and_then_allow_us_to_express_three_different_components_of_a_scenario_which_of_these_statements_correctly_describes_how_each_of_these_keywords_should_be_used_choose_multiple">The Gherkin keywords Given, When and Then, allow us to express three different components of a scenario. Which of these statements correctly describes how each of these keywords should be used? (Choose multiple)::</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Given describes something that has already happened before the interesting part of the scenario starts. (Correct)</p>
+</li>
+<li>
+<p>Then describes an action you want to take.</p>
+</li>
+<li>
+<p>When explains what should happen at the end of the sceanario.</p>
+</li>
+<li>
+<p>Then explains what should happen at the end of the sceanario. (Correct)</p>
+</li>
+<li>
+<p>When expresses an action that changes the state of the system. (Correct)</p>
+</li>
+<li>
+<p>Given describes the context in which the scenario occurs (Correct)</p>
+</li>
+<li>
+<p>Explanation:</p>
+</li>
+<li>
+<p>Given is the context for the scenario. We’re putting the system into a specific state, ready for the scenario to unfold.</p>
+</li>
+<li>
+<p>When is an action. Something that happens to the system that will cause something else to happen: an outcome.</p>
+</li>
+<li>
+<p>Then is the outcome. It’s the behaviour we expect from the system when this action happens in this context.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+<strong>Given</strong> is the context for the scenario. We’re putting the system into a specific state, ready for the scenario to unfold.</p>
+</div>
+<div class="paragraph">
+<p><strong>When</strong> is an action. Something that happens to the system that will cause something else to happen: an outcome.</p>
+</div>
+<div class="paragraph">
+<p><strong>Then</strong> is the outcome. It’s the behaviour we expect from the system when this action happens in this context.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_did_our_scenario_not_mention_anything_about_lucy_walking_into_seans_store_and_making_a_purchase">Why did our scenario not mention anything about Lucy walking into Sean’s store and making a purchase?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It&#8217;s a business goal which does not belong in a Gherkin document.</p>
+</li>
+<li>
+<p>As BDD practitioners, we&#8217;re focussed on the behaviour of the system, so we don&#8217;t care about the people who use the software.</p>
+</li>
+<li>
+<p>Including details about these two people would be distracting from the main point of our scenario.</p>
+</li>
+<li>
+<p>Executable scenarios need to stay focussed on the behaviour of the system itself. We can document business goals elsewhere in our Gherkin to provide context. - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Behaviour-Driven Development practitioners definitely do care about business goals, but when we&#8217;re writing the Scenario part of our Gherkin, we need to focus on the observable, testable behaviour of the system we&#8217;re building.</p>
+</div>
+<div class="paragraph">
+<p>Later in the course we&#8217;ll show you how you can use other parts of Gherkin documents to add other relevant details, like business goals, to make great executable specifications.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -732,6 +873,178 @@ We&#8217;ll rename the <code>int</code> parameter to something that better refle
 </div>
 <div class="paragraph">
 <p>If you&#8217;re interested, that was caused by the  <code>{int}</code> in the step definition pattern or <em>cucumber expression</em>. We’ll explain these patterns in detail in a future lesson.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_4_questions">2.4.1. Lesson 4 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_do_step_definitions_do_choose_one">What do step definitions do? (choose one) ::</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Provide a glossary of domain terms for your stakeholders</p>
+</li>
+<li>
+<p>Give Cucumber/SpecFlow a way to automate your gherkin steps - TRUE</p>
+</li>
+<li>
+<p>Add extra meaning to our Gherkin steps</p>
+</li>
+<li>
+<p>Generate code from gherkin documents</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+&lt;java&gt;
+Step definitions are Java methods that actually do what&#8217;s described in each step of a Gherkin scenario.</p>
+</div>
+<div class="paragraph">
+<p>When it tries to run each step of a scenario, Cucumber will search for a step definition that matches. If there&#8217;s a matching step definition, it will call the method to run it.
+&lt;/java&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;js&gt;
+Step definitions are JavaScript functions that actually do what&#8217;s described in each step of a Gherkin scenario.</p>
+</div>
+<div class="paragraph">
+<p>When it tries to run each step of a scenario, Cucumber will search for a step definition that matches. If there&#8217;s a matching step definition, it will call the function.
+&lt;/js&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;ruby&gt;
+Step definitions are Ruby blocks that actually do what&#8217;s described in each step of a Gherkin scenario.</p>
+</div>
+<div class="paragraph">
+<p>When it tries to run each step of a scenario, Cucumber will search for a step definition that matches. If there&#8217;s a matching step definition, it will execute the code in the block.
+&lt;/ruby&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;C#&gt;
+Step definitions are C# methods that actually do what&#8217;s described in each step of a Gherkin scenario.</p>
+</div>
+<div class="paragraph">
+<p>When it tries to run each step of a scenario, SpecFlow will search for a step definition that matches. If there&#8217;s a matching step definition, it will call the method to run it.
+&lt;/C#&gt;</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_does_it_mean_when_cucumberspecflow_says_a_step_is_pending_choose_one">What does it mean when Cucumber/SpecFlow says a step is Pending? (choose one) ::</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The step took too long to execute and was terminated
+&lt;java&gt; * The step threw a <code>PendingException</code>, meaning we&#8217;re still working on implementing that step.&lt;/java&gt;
+&lt;js&gt; * The step returned pending, meaning we&#8217;re still working on implementing that step.&lt;/js&gt;
+&lt;ruby&gt; * The step definition threw a Pending error, meaning we&#8217;re still working on implementing that step.&lt;/ruby&gt;
+&lt;C#&gt; ASK GASPAR &lt;/C#&gt;</p>
+</li>
+<li>
+<p>Cucumber/SpecFlow was unable to find the step definitions</p>
+</li>
+<li>
+<p>The scenario is passing</p>
+</li>
+<li>
+<p>The scenario is failing</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>&lt;java&gt;
+Cucumber tells us that a step (and by inference the Scenario that contains it) is Pending when the automation code throws a PendingException.</p>
+</div>
+<div class="paragraph">
+<p>The PendingException is a special type of exception provided by Cucumber to allow the development team to signal that automation for a step is a work in progress. This makes it possible to tell the difference between steps that aren&#8217;t finished yet and steps that are failing due to a defect in the system.</p>
+</div>
+<div class="paragraph">
+<p>For example, when we run our tests in a Continuous Integration (CI) environment, we can choose to ignore pending scenarios.
+&lt;/java&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;js&gt;
+Cucumber tells us that a step (and by inference the Scenario that contains it) is Pending when the automation code throws a Pending error.</p>
+</div>
+<div class="paragraph">
+<p>This allows the development team to signal that automation for a step is a work in progress. This makes it possible to tell the difference between steps that are still being worked on and steps that are failing due to a defect in the system.</p>
+</div>
+<div class="paragraph">
+<p>For example, when we run our tests in a Continuous Integration (CI) environment, we can choose to ignore pending scenarios.
+&lt;/js&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;ruby&gt;
+Cucumber tells us that a step (and by inference the Scenario that contains it) is Pending when the automation code throws a Pending error.</p>
+</div>
+<div class="paragraph">
+<p>This allows the development team to signal that automation for a step is a work in progress. This makes it possible to tell the difference between steps that are still being worked on and steps that are failing due to a defect in the system.</p>
+</div>
+<div class="paragraph">
+<p>For example, when we run our tests in a Continuous Integration (CI) environment, we can choose to ignore pending scenarios.
+&lt;/ruby&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;C#&gt; ASK GASPAR &lt;/C#&gt;</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_might_you_want_to_consider_when_using_a_snippet_generated_by_cucumberspecflow">Which of the following might you want to consider when using a snippet generated by Cucumber/SpecFlow?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Does the name of the method correctly describe the intent of the step? - TRUE</p>
+</li>
+<li>
+<p>Do the parameter names correctly describe the meaning of the arguments? - TRUE</p>
+</li>
+<li>
+<p>Does the snippet correctly automate the gherkin step as described? - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+When Cucumber/SpecFlow generates a snippet, it has no idea of the business context of the undefined step. The implementation that Cucumber/SpecFlow generates will definitely not automate what&#8217;s been written in your Gherkin - that&#8217;s up to you! Also, the name of the method and the parameters are just placeholders. It&#8217;s the job of the person writing the code to rename the method and parameters to reflect the business domain.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_whats_the_next_step_in_bdd_after_weve_pasted_in_the_step_definition_snippet_and_seen_it_fail_with_a_pending_status">What’s the next step in BDD after we’ve pasted in the step definition snippet and seen it fail with a <code>pending</code> status?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Check with our project manager about the requirement</p>
+</li>
+<li>
+<p>Implement some code that does what the Gherkin step describes - TRUE</p>
+</li>
+<li>
+<p>Create a test framework for modelling our application</p>
+</li>
+<li>
+<p>Run a manual test to check what the system does</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+If you read the comment in the generated snippet, Cucumber/SpecFlow is telling you to "turn the phrase above into concrete actions".</p>
+</div>
+<div class="paragraph">
+<p>You need your step definition to call your application and do whatever the Gherkin step describes. In the case of our first step here, we want to tell the system that there are two people in certain locations.</p>
+</div>
+<div class="paragraph">
+<p>We can use the act of fleshing out the body of our step definition as an opportunity to do some software design. We can think about what we want the interface to our system to look like, from the point of view of someone who needs to interact with it. Should we interact with it through the User Interface, or make a call to the programmer API directly? How would we like that interface to work?</p>
+</div>
+<div class="paragraph">
+<p>We can do all of this without writing any implementation yet.</p>
+</div>
+<div class="paragraph">
+<p>This is known as "outside-in" development. It helps us to ensure that when we do come to implementing our solution, we&#8217;re implementing it based on real needs.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -1017,6 +1330,126 @@ Then Lucy hears Sean<span class="s1">'s message
 <div class="paragraph">
 <p>Now all we have to do is write the code to make it do what it&#8217;s supposed to.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_5_questions">2.5.1. Lesson 5 - Questions</h4>
+<div class="sect4">
+<h5 id="_how_does_the_practice_writing_a_failing_test_before_implementing_the_solution_help_us">How does the practice writing a failing test before implementing the solution help us?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Until you see a scenario fail, you can’t be sure that it can ever fail [true]</p>
+</li>
+<li>
+<p>There’s no need to always see a scenario fail [false]</p>
+</li>
+<li>
+<p>BDD practitioners use failing scenarios to guide their development [true]</p>
+</li>
+<li>
+<p>A passing scenario implies the functionality it describes has already been implemented, so it may be a duplicate of an existing scenario [true]</p>
+</li>
+<li>
+<p>BDD practitioners believe in learning from failure [false]</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Behaviour-Driven Development comes from Test-Driven Development, where we always start with a failing test, then use that to guide our development. This sometimes described as red-green-refactor.</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>red - write a scenario/test and see it fail
+green - make it pass (as simply as possible)
+refactor - improve your code, while keeping all the tests/scenarios green</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It&#8217;s surprisingly easy to write scenarios and step definitions that don&#8217;t do anything. It&#8217;s the transition from red to green that gives us confidence that the scenario and the implementation actually do what we expect.</p>
+</div>
+<div class="paragraph">
+<p>If a scenario passes as soon as we write it, that means that either it&#8217;s not doing what we think it should or the behaviour that it describes has already been implemented. In that case, we&#8217;re not developing using behaviour-driven development.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_did_we_change_to_use_an_instance_variable_for_storing_each_person_select_one">Why did we change to use an instance variable for storing each Person? (select one) ::</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It ensures we can interact with the same object from different steps. [true]</p>
+</li>
+<li>
+<p>It’s a better way to organise the code</p>
+</li>
+<li>
+<p>It’s more efficient for performance</p>
+</li>
+<li>
+<p>Cucumber/SpecFlow requires us to store our objects as instance variables.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+In Cucumber/SpecFlow, one of the ways to access the same instance of an object from different step definition methods, is to store it on an instance variable.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_did_we_avoid_having_to_mention_the_detail_of_the_text_sean_had_shouted_in_our_when_and_then_steps_select_one">How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? (select one) ::</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>We duplicated the text inside our Person class</p>
+</li>
+<li>
+<p>We used an instance variable to store the text that was shouted [true]</p>
+</li>
+<li>
+<p>We called a method on the Person class to retrieve the messages heard</p>
+</li>
+<li>
+<p>We passed the message text in from our Gherkin scenarios</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+When you need to assert for a specific value coming out of your system in a Then step, you can use an instance variable to store it where it goes into the system (in a Given or When) step. This means you can avoid duplicating the value in multiple places in your code.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_flow_should_we_follow_when_making_a_scenario_pass_select_one">Which flow should we follow when making a Scenario pass? (select one) ::</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Domain modelling &#8594; Write some code &#8594; Make it compile &#8594; Run the scenario &amp; watch it fail</p>
+</li>
+<li>
+<p>Write some code &#8594; Domain modelling &#8594; Make it compile &#8594; Run the scenario</p>
+</li>
+<li>
+<p>Write some code &#8594; Make it compile &#8594; Domain modelling &#8594; Run the scenario - TRUE</p>
+</li>
+<li>
+<p>Domain modelling &#8594; Run the scenario &#8594; Write some code &#8594; Make it compile</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Our goal at this stage is to get to a failing test, where the only thing left to do to make it pass is make changes to the implementation of the app itself.</p>
+</div>
+<div class="paragraph">
+<p>On an existing system, we might not need to create so much new code to get to this goal, but we might need to make some changes to how we call the system. This gives us an opportunity to do some lightweight domain modelling.</p>
+</div>
+<div class="paragraph">
+<p>It may not compile first-time, so we implement the bare-bones of our solution until it does.</p>
+</div>
+<div class="paragraph">
+<p>We use the scenarios to guide us in our implementation.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_make_the_scenario_pass">2.6. Make the scenario pass</h3>
@@ -1111,6 +1544,127 @@ In value:  List&lt;String&gt; ["free bagels at Sean'</span>s<span class="s2">"]<
 <div class="paragraph">
 <p>Of course, if you&#8217;re in the mood, you can always try to implement a solution yourself that makes both scenarios pass. Have fun!</p>
 </div>
+<div class="sect3">
+<h4 id="_questions">2.6.1. Questions</h4>
+<div class="qlist qanda">
+<ol>
+<li>
+<p><em>Why should we always make sure that we see a scenario fail before we make it pass? (select multiple) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Until you see a scenario fail, you can’t be sure that it can ever fail [true]</p>
+</li>
+<li>
+<p>There’s no need to always see a scenario fail [false]</p>
+</li>
+<li>
+<p>BDD practitioners use failing scenarios to drive their development [true]</p>
+</li>
+<li>
+<p>A passing scenario implies the functionality it describes has already been implemented, so it may be a duplicate of an existing scenario [true]</p>
+</li>
+<li>
+<p>BDD practitioners believe in learning from failure [false]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Why did we change to use an instance variable for storing each Person? </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>It ensures we can interact with the same object from different steps. [true]</p>
+</li>
+<li>
+<p>It’s a better way to organise the code</p>
+</li>
+<li>
+<p>It’s more efficient for performance</p>
+</li>
+<li>
+<p>Cucumber requires us to store our objects as instance variables.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>How did we avoid having to mention the detail of the text Sean had shouted in our When and Then steps? </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>We duplicated the text inside our Person class</p>
+</li>
+<li>
+<p>We used an instance variable to store the text that was shouted [true]</p>
+</li>
+<li>
+<p>We called a method on the Person class to retrieve the messages heard</p>
+</li>
+<li>
+<p>We passed the message text in from our Gherkin scenarios</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Which flow should we follow when making a Scenario pass? </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Domain modelling &#8594; Write some code &#8594; Make it compile &#8594; Run the scenario &amp; watch it fail</p>
+</li>
+<li>
+<p>Write some code &#8594; Domain modelling &#8594; Make it compile &#8594; Run the scenario</p>
+</li>
+<li>
+<p>Write some code &#8594; Make it compile &#8594; Domain modelling &#8594; Run the scenario</p>
+</li>
+<li>
+<p>Domain modelling &#8594; Run the scenario &#8594; Write some code &#8594; Make it compile</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Why is our naive implementation of Person.getMessagesHeard, with a hard-coded message OK in BDD? (select multiple) </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>It shows us that we need better examples to pin down the behaviour we really want from the code. [correct]</p>
+</li>
+<li>
+<p>We know we will iterate on our solution, when we come up with more examples of what we want it to do. [correct]</p>
+</li>
+<li>
+<p>Nobody is using our solution yet [incorrect]</p>
+</li>
+<li>
+<p>We have to do a bad implementation so we can see our test fail. [incorrect]</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><em>Look at this diagram (1) Write a scenario, 2) Automate it and watch it fail, 3) Write just enough code to make it pass). Which stage are we at as the video ends? </em></p>
+<div class="ulist">
+<ul>
+<li>
+<p>1</p>
+</li>
+<li>
+<p>2</p>
+</li>
+<li>
+<p>3</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -1123,15 +1677,19 @@ In value:  List&lt;String&gt; ["free bagels at Sean'</span>s<span class="s2">"]<
 <div class="sect1">
 <h2 id="_cleaning_up">4. Cleaning up</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in scripts.dotnet.adoc - include::05/index.adoc[]</p>
+
 </div>
+</div>
+<div class="sect1">
+<h2 id="_loops">5. Loops</h2>
+<div class="sectionbody">
+
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-15 09:29:11 UTC
+Last updated 2020-06-15 10:59:14 UTC
 </div>
 </div>
 <style>
