@@ -475,6 +475,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_the_before_hook">4.4. The "Before" hook</a></li>
 <li><a href="#_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</a></li>
 <li><a href="#_backgrounds">4.6. Backgrounds</a></li>
+<li><a href="#_refactoring_to_data_tables">4.7. Refactoring to Data Tables</a></li>
+<li><a href="#_deeper_into_data_tables">4.8. Deeper into Data Tables</a></li>
+<li><a href="#_docstring">4.9. DocString</a></li>
 </ul>
 </li>
 </ul>
@@ -1059,7 +1062,7 @@ Step skipped
 Step skipped
 
 Pending scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/hear_shout.feature:3# Listener within range
 
 1 Scenarios <span class="o">(</span>1 pending<span class="o">)</span>
 3 Steps <span class="o">(</span>2 skipped, 1 pending<span class="o">)</span>
@@ -1068,7 +1071,7 @@ file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# L
 
 io.cucumber.java.PendingException: TODO: implement me
 	at shouty.StepDefinitions.lucy_is_metres_from_Sean<span class="o">(</span>StepDefinitions.java:11<span class="o">)</span>
-	at ✽.Lucy is 15 metres from Sean<span class="o">(</span>file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:4<span class="o">)</span>
+	at ✽.Lucy is 15 metres from Sean<span class="o">(</span>file:///home/fedex/code/shouty-java/src/test/resources/hear_shouty/shout.feature:4<span class="o">)</span>
 
 
 
@@ -1109,7 +1112,7 @@ Step skipped
 Step skipped
 
 Pending scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/hear_shout.feature:3# Listener within range
 
 1 Scenarios <span class="o">(</span>1 pending<span class="o">)</span>
 3 Steps <span class="o">(</span>2 skipped, 1 pending<span class="o">)</span>
@@ -1604,7 +1607,7 @@ public void lucy_hears_Sean_s_message<span class="o">()</span> <span class="o">{
 
 
 Undefined scenarios:
-file:///home/fedex/code/shouty-java/src/test/resources/shouty/shout.feature:8# Listener hears a different message
+file:///home/fedex/code/shouty-java/src/test/resources/shouty/hear_shout.feature:8# Listener hears a different message
 
 2 Scenarios <span class="o">(</span>1 undefined, 1 passed<span class="o">)</span>
 6 Steps <span class="o">(</span>1 skipped, 2 undefined, 3 passed<span class="o">)</span>
@@ -1690,7 +1693,7 @@ Good step definitions are important because they enable the <em>readability</em>
 </div>
 </div>
 <div class="paragraph">
-<p>As Cucumber starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is 15 metres from Sean</code>  and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is 15 metres from Sean</code>?”"</p>
+<p>As Cucumber starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is located 15 metres from Sean</code>  and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is located 15 metres from Sean</code>?”"</p>
 </div>
 <div class="paragraph">
 <p>
@@ -1723,7 +1726,7 @@ The most simple cucumber expression that would match that step is this one:</p>
 <h3 id="_capturing_parameters">3.3. Capturing parameters</h3>
 <div class="paragraph">
 <p>
-Sometimes, we want to write step defintions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. </p>
+Sometimes, we want to write step definitions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. </p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -1807,7 +1810,7 @@ Step skipped
 Step skipped
 
 Undefined scenarios:
-file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/hear_shout.feature:3# Listener within range
 
 1 Scenarios (1 undefined)
 3 Steps (2 skipped, 1 undefined)
@@ -1855,7 +1858,7 @@ Step skipped
 Step skipped
 
 Pending scenarios:
-file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/hear_shout.feature:3# Listener within range
 
 1 Scenarios (1 pending)
 3 Steps (2 skipped, 1 pending)
@@ -1864,7 +1867,7 @@ file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:3#
 
 io.cucumber.java.PendingException: Lucy is 100 centimetres from Sean
 	at shouty.StepDefinitions.lucy_is_metres_from_Sean(StepDefinitions.java:18)
-	at ✽.Lucy is located 1 metre from Sean(file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:4)
+	at ✽.Lucy is located 1 metre from Sean(file:///home/fedex/code/shouty/shouty/src/test/resources/hear_shouty/shout.feature:4)
 
 
 
@@ -1907,7 +1910,7 @@ Step skipped
 Step skipped
 
 Pending scenarios:
-file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:3# Listener within range
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/hear_shout.feature:3# Listener within range
 
 1 Scenarios (1 pending)
 3 Steps (2 skipped, 1 pending)
@@ -1916,7 +1919,7 @@ file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:3#
 
 io.cucumber.java.PendingException: Lucy is 100 centimetres from Sean
 	at shouty.StepDefinitions.lucy_is_metres_from_Sean(StepDefinitions.java:18)
-	at ✽.Lucy is standing 1 metre from Sean(file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/shout.feature:4)
+	at ✽.Lucy is standing 1 metre from Sean(file:///home/fedex/code/shouty/shouty/src/test/resources/hear_shouty/shout.feature:4)
 
 
 
@@ -1948,7 +1951,113 @@ Process finished with exit code 1</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>TODO</code></pre>
+<pre class="rouge highlight"><code>Testing started at 10:09 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+
+May 25, 2020 10:10:00 AM io.cucumber.core.runtime.Runtime run
+SEVERE: Exception while executing pickle
+java.util.concurrent.ExecutionException: io.cucumber.core.exception.CucumberException: Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:108)
+	at io.cucumber.core.cli.Main.run(Main.java:73)
+	at io.cucumber.core.cli.Main.main(Main.java:31)
+Caused by: io.cucumber.core.exception.CucumberException: Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/
+	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:75)
+	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:57)
+	at io.cucumber.core.runner.CoreStepDefinition.createExpression(CoreStepDefinition.java:40)
+	at io.cucumber.core.runner.CoreStepDefinition.&lt;init&gt;(CoreStepDefinition.java:28)
+	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$4(CachingGlue.java:215)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:214)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:63)
+	at io.cucumber.core.runtime.Runtime.lambda$run$2(Runtime.java:100)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.cucumber.core.runtime.Runtime$SameThreadExecutorService.execute(Runtime.java:243)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:118)
+	at io.cucumber.core.runtime.Runtime.lambda$run$3(Runtime.java:100)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.SliceOps$1$1.accept(SliceOps.java:199)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.tryAdvance(ArrayList.java:1631)
+	at java.base/java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:127)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:502)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:488)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:101)
+	... 2 more
+Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: Undefined parameter type {person}. Please register a ParameterType for {person}.
+	at io.cucumber.cucumberexpressions.CucumberExpression.processParameters(CucumberExpression.java:104)
+	at io.cucumber.cucumberexpressions.CucumberExpression.&lt;init&gt;(CucumberExpression.java:35)
+	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:34)
+	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:55)
+	... 25 more
+
+May 25, 2020 10:10:00 AM io.cucumber.core.runtime.Runtime run
+SEVERE: Exception while executing pickle
+java.util.concurrent.ExecutionException: io.cucumber.core.exception.CucumberException: Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:108)
+	at io.cucumber.core.cli.Main.run(Main.java:73)
+	at io.cucumber.core.cli.Main.main(Main.java:31)
+Caused by: io.cucumber.core.exception.CucumberException: Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/
+	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:75)
+	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:57)
+	at io.cucumber.core.runner.CoreStepDefinition.createExpression(CoreStepDefinition.java:40)
+	at io.cucumber.core.runner.CoreStepDefinition.&lt;init&gt;(CoreStepDefinition.java:28)
+	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$4(CachingGlue.java:215)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:214)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:63)
+	at io.cucumber.core.runtime.Runtime.lambda$run$2(Runtime.java:100)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.cucumber.core.runtime.Runtime$SameThreadExecutorService.execute(Runtime.java:243)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:118)
+	at io.cucumber.core.runtime.Runtime.lambda$run$3(Runtime.java:100)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.SliceOps$1$1.accept(SliceOps.java:199)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.tryAdvance(ArrayList.java:1631)
+	at java.base/java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:127)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:502)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:488)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:101)
+	... 2 more
+Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: Undefined parameter type {person}. Please register a ParameterType for {person}.
+	at io.cucumber.cucumberexpressions.CucumberExpression.processParameters(CucumberExpression.java:104)
+	at io.cucumber.cucumberexpressions.CucumberExpression.&lt;init&gt;(CucumberExpression.java:35)
+	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:34)
+	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:55)
+	... 25 more
+
+Exception in thread "main" io.cucumber.core.exception.CompositeCucumberException: There were 2 exceptions:
+  io.cucumber.core.exception.CucumberException(Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/)
+  io.cucumber.core.exception.CucumberException(Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:120)
+	at io.cucumber.core.cli.Main.run(Main.java:73)
+	at io.cucumber.core.cli.Main.main(Main.java:31)
+
+Process finished with exit code 1</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1998,11 +2107,20 @@ All of this means that when we run our step, we&#8217;ll be passed an instance o
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>TODO</code></pre>
+<pre class="rouge highlight"><code>Testing started at 10:35 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+
+1 Scenarios (1 passed)
+3 Steps (3 passed)
+0m0.328s
+
+
+
+Process finished with exit code 0</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step defintions - closer together.</p>
+<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step definitions - closer together.</p>
 </div>
 </div>
 </div>
@@ -2023,7 +2141,7 @@ Your browser does not support the video tag.
 <p></p>
 </div>
 <div class="paragraph">
-<p>In the previous chapter, we talked about the importance of having readable scenarios, and you learned some new skills with cucumber expressions to help you achieve that goal. Those skills will give you the confidence to write scenarios exactly the way you want, knowing you’ll be able to match the Gherkin steps easily from your step definition code.</p>
+<p>In the previous chapter, we talked about the importance of having readable scenarios, and you learned some new skills with Cucumber Expressions to help you achieve that goal. Those skills will give you the confidence to write scenarios exactly the way you want, knowing you’ll be able to match the Gherkin steps easily from your step definition code.</p>
 </div>
 <div class="paragraph">
 <p>We emphasise readability because from our experience, writing Gherkin scenarios is a software design activity. Cucumber was created to bridge the communication gap between business domain experts and development teams. When you collaborate with domain experts to describe behaviour in Gherkin, you’re expressing the group’s shared understanding of the problem you need to solve. The words you use in your scenarios can have a deep impact on the way the software is designed, as we’ll see in later chapters.</p>
@@ -2032,7 +2150,7 @@ Your browser does not support the video tag.
 <p>The more fluent you become in writing Gherkin, the more useful a tool it becomes to help you facilitate this communication. Keeping your scenarios readable means you can get feedback at any time about whether you’re building the right thing. Over time, your features become living documentation about your system. We can’t emphasize enough how important it is to see your scenarios as more than just tests.</p>
 </div>
 <div class="paragraph">
-<p>Maintaining a living document works both ways: you’ll drive your solution design from your scenarios, but you may also have to update your Gherkin to reflect the things you learn as you build the solution. This dance back and forth between features and solution code is what BDD is all about.</p>
+<p>Maintaining a living document works both ways: the scenarios will guide your solution design, but you may also have to update your Gherkin to reflect the things you learn as you build the solution. This dance back and forth between features and solution code is an important part of BDD.</p>
 </div>
 <div class="paragraph">
 <p>In this chapter, we’ll learn about feature descriptions, the Background keyword, and about keeping scenarios and code up-to-date with your current understanding of the project.</p>
@@ -2090,7 +2208,7 @@ Let’s dig into the code and see how these steps have been automated.</p>
 <p>In the step definition layer, we can see that a new class has been defined, the Network. We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here. So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.</p>
 </div>
 <div class="paragraph">
-<p>There are also a couple of new unit test classes in the shouty package, one for the Network class, and another one for the Person class.</p>
+<p>There are also a couple of new unit test classes in the Shouty package, one for the Network class, and another one for the Person class.</p>
 </div>
 <div class="paragraph">
 <p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.</p>
@@ -2132,16 +2250,14 @@ Let’s dig into the code and see how these steps have been automated.</p>
 <div class="sect2">
 <h3 id="_description_field">4.3. Description field</h3>
 <div class="paragraph">
-<p>
-After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s <em>description</em>. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t use a Gherkin keyword, like &#8220;Rule&#8221; or &#8220;Scenario&#8221;.</p>
+<p>After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s <em>description</em>. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t start a line with a Gherkin keyword, like &#8220;Rule:&#8221; or &#8220;Scenario:&#8221;.</p>
 </div>
 <div class="paragraph">
-<p>
-In this case, we can add a high level description of the Shouty application. Because Shouty doesn&#8217;t yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.</p>
+<p>In this case, we can add a high level description of the Shouty application. Because Shouty doesn&#8217;t yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Shout
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
 
   Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
 
@@ -2153,8 +2269,7 @@ In this case, we can add a high level description of the Shouty application. Bec
 <p>Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.</p>
 </div>
 <div class="paragraph">
-<p>
-Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword. We&#8217;ll learn more about this in a later chapter.</p>
+<p>Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword. We&#8217;ll learn more about this in a later chapter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2164,7 +2279,7 @@ Our two scenarios are examples of how Shouty can broadcast a shout to other user
       <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message
 
-    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
       <span class="nf">Given </span>Lucy is 15 metres from Sean
       <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
@@ -2180,7 +2295,7 @@ The step “Given Lucy is 15 metres from Sean” is misleading, since the distan
 </div>
 </div>
 <div class="paragraph">
-<p>The step definition calls the moveTo method on Person,</p>
+<p>The step definition calls the moveTo method on Person, </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2211,7 +2326,7 @@ Let’s simplify this code to do just what it needs to do right now, and no more
       <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message
 
-    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
       <span class="nf">Given </span>Lucy is 15 metres from Sean
       <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
@@ -2238,7 +2353,7 @@ In this case, as well as adding it to the TODO list above, we’ve decided to do
 </div>
 <div class="paragraph">
 <p>
-Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps and paste them into our steps file.</p>
+Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps and paste them into our steps file. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2323,7 +2438,7 @@ Now we can use that Network instance as we create Lucy and Sean in these two new
 </div>
 <div class="paragraph">
 <p>
-It should be working again now. Let’s run cucumber to check.</p>
+It should be working again now. Let’s run Cucumber to check.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -2331,7 +2446,7 @@ Good. Let’s do the same with the other scenario.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
       <span class="nf">Given </span>a person named Lucy
       <span class="nf">And </span>a person named Sean
       <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
@@ -2486,7 +2601,7 @@ We’ll start by creating a new hash/map in the before hook, like this.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map.</p>
+<p>Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash/map. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2503,8 +2618,7 @@ We’ll start by creating a new hash/map in the before hook, like this.</p>
 <p>With that little refactoring done, we can now try and make this first step generic for any name.</p>
 </div>
 <div class="paragraph">
-<p>
-Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the hash/map.</p>
+<p>Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the hash/map.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2519,8 +2633,7 @@ Using your new found Cucumber expression skills from the last lesson, you’ll k
 If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.</p>
 </div>
 <div class="paragraph">
-<p>
-Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.</p>
+<p>Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2554,7 +2667,7 @@ Let’s switch back to the feature to show you one more technique for improving 
       <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message
 
-    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
       <span class="nf">Given </span>a person named Lucy
       <span class="nf">And </span>a person named Sean
       <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
@@ -2562,7 +2675,7 @@ Let’s switch back to the feature to show you one more technique for improving 
 </div>
 </div>
 <div class="paragraph">
-<p>When we have common context steps - the givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way.</p>
+<p>When we have common context steps - the Givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -2591,7 +2704,7 @@ But from a readability point of view, we can now see  more clearly what’s impo
       <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message
 
-    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
       <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
 </div>
@@ -2600,7 +2713,7 @@ But from a readability point of view, we can now see  more clearly what’s impo
 <p>Notice we just went straight into When steps in our scenarios. That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.</p>
 </div>
 <div class="paragraph">
-<p>Again, it’s debatable whether we’d bother to use a Background yet on a real project, but this at least illustrates the technique. Hopefully you’re already thinking about how you can use it on your own code.</p>
+<p>Again, it’s debatable whether we’d bother to use a Background to do this on a real project, but this at least illustrates the technique. We rarely use Backgrounds in our projects, because although they can improve readability by removing the duplication of repeated contexts, they also harm readability by requiring people to read the Background in conjunction with each Scenario.</p>
 </div>
 <div class="videoblock">
 <div class="content">
@@ -2618,13 +2731,412 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>We’re ready to start the next iteration.</p>
 </div>
+<div class="paragraph">
+<p>Unresolved directive in scripts.java.adoc - include::05/index.adoc[]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_refactoring_to_data_tables">4.7. Refactoring to Data Tables</h3>
+<div class="paragraph">
+<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again . We’re using two different listeners, Lucy,  who’s within range, and Larry,  who’s not. It’s always Sean  who’s doing the shouting.</p>
+</div>
+<div class="paragraph">
+<p>Notice that we also specify the range in each scenario . We could have just hard-coded it within the system, but having it documented here helps to make the behaviour we’ve specified much easier to understand.</p>
+</div>
+<div class="paragraph">
+<p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system . So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.</p>
+</div>
+<div class="paragraph">
+<p>Notice how the steps  that create the Sean, Lucy, and Larry are very similar.</p>
+</div>
+<div class="paragraph">
+<p>When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span> <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span> <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Well, we’re in luck. You can!</p>
+</div>
+<div class="paragraph">
+<p>Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>As you can see, the step definition implicitly takes a single argument , which as this comment explains is a io.cucumber.datatable.DataTable. This object has a rich API for using the tabular data.</p>
+</div>
+<div class="paragraph">
+<p>At its most basic, the table is just a two-dimensional array of arrays. So, Lucy&#8217;s location can be accessed by getting the value from array cell 1, 2</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>You can also turn the table into a List of Maps, where the first row is used for the map keys, and each following row is used for the map values.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Now we can easily iterate  over these maps and turn them into instances of Person:</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>
+With that done, we can update the other scenario  and delete our old step definition , which is now unused.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Cucumber strips all the white space surrounding each cell, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.</p>
+</div>
+<div class="paragraph">
+<p>Notice we’ve still had to convert the location from a string to an integer , because Cucumber can’t know that’s the type of value in our table.</p>
+</div>
+<div class="paragraph">
+<p>To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class we want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.</p>
+</div>
+<div class="paragraph">
+<p>Instead, we’ll define a simple Whereabouts class to represent the data in the table. </p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Whereabouts</span> <span class="o">{</span>
+        <span class="kd">public</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">;</span>
+
+        <span class="kd">public</span> <span class="nf">Whereabouts</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+            <span class="k">this</span><span class="o">.</span><span class="na">location</span> <span class="o">=</span> <span class="n">location</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.</p>
+</div>
+<div class="paragraph">
+<p>Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. </p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@DataTableType</span>
+    <span class="kd">public</span> <span class="nc">Whereabouts</span> <span class="nf">defineWhereabouts</span><span class="o">(</span><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">String</span><span class="o">&gt;</span> <span class="n">entry</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Whereabouts</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"name"</span><span class="o">),</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">entry</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"location"</span><span class="o">)));</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, if you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you. </p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">people_are_located_at</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Whereabouts</span><span class="o">&gt;</span> <span class="n">whereabouts</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">Whereabouts</span> <span class="n">whereabout</span> <span class="o">:</span> <span class="n">whereabouts</span> <span class="o">)</span> <span class="o">{</span>
+            <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">whereabout</span><span class="o">.</span><span class="na">name</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">,</span> <span class="n">whereabout</span><span class="o">.</span><span class="na">location</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deeper_into_data_tables">4.8. Deeper into Data Tables</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>The way that we’ve specified this data is OK, but your product owner would prefer you to express it like this instead:</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Lucy</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">location</span> <span class="p">|</span>  <span class="n">0</span>   <span class="p">|</span> <span class="n">50</span>   <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Lucy should hear a shout
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Larry</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">location</span> <span class="p">|</span>  <span class="n">0</span>   <span class="p">|</span> <span class="n">150</span>   <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It&#8217;s always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.</p>
+</div>
+<div class="paragraph">
+<p>If you annotate the method parameter with the @Transpose annotation , Cucumber will turn each row into a column before passing it to the step definition.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">people_are_located_at</span><span class="o">(</span><span class="nd">@Transpose</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">Whereabouts</span><span class="o">&gt;</span> <span class="n">whereabouts</span><span class="o">)</span> <span class="o">{</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
+</div>
+<div class="paragraph">
+<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once:</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">should</span> <span class="err">be</span> <span class="err">able</span> <span class="err">to</span> <span class="err">hear</span> <span class="err">multiple</span> <span class="err">shouts</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free bagels!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.</p>
+</div>
+<div class="paragraph">
+<p>So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s run Cucumber to generate the new step definition  and paste it into our StepDefinitions class </p>
+</div>
+<div class="paragraph">
+<p>So we need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.</p>
+</div>
+<div class="paragraph">
+<p>A List of List of String will do , so we can just iterate over Lucy’s messages and create a new single-item List for each row.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;</span> <span class="n">actualMessages</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;();</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">heard</span> <span class="o">=</span> <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Lucy"</span><span class="o">).</span><span class="na">getMessagesHeard</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">message</span> <span class="o">:</span> <span class="n">heard</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">actualMessages</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">Collections</span><span class="o">.</span><span class="na">singletonList</span><span class="o">(</span><span class="n">message</span><span class="o">));</span>
+        <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can pass that list to the diff method  on the table of expected messages passed in from the Gherkin.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">        <span class="n">expectedMessages</span><span class="o">.</span><span class="na">diff</span><span class="o">(</span><span class="nc">DataTable</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">actualMessages</span><span class="o">));</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
+</div>
+<div class="paragraph">
+<p>Let’s fix just one of these  so you can see how the diff output changes.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.</p>
+</div>
+<div class="paragraph">
+<p>Let’s fix this last typo , and we should be green again.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Great.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_docstring">4.9. DocString</h3>
+<div class="paragraph">
+<p>When writing scenarios, occasionally we want to use a really long piece of data.</p>
+</div>
+<div class="paragraph">
+<p>For example, let’s introduce a new rule about the maximum length of a message </p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and add a scenario to illustrate it , making the string just over the boundary of the rule:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s pretty ugly isn’t it!</p>
+</div>
+<div class="paragraph">
+<p>Still, we’ll press on and get it to green, then we’ll show you how to clean it up.</p>
+</div>
+<div class="paragraph">
+<p> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition </p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Then</span><span class="o">(</span><span class="s">"{word} should not hear a shout"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_should_not_hear_a_shout</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">name</span><span class="o">).</span><span class="na">getMessagesHeard</span><span class="o">().</span><span class="na">size</span><span class="o">());</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests and add a new example to specify this extra responsibility.</p>
+</div>
+<div class="paragraph">
+<p>We’ll create a 181-character message like this  and then assert that the message should not be heard when it’s broadcast.</p>
+</div>
+<div class="listingblock">
+<div class="title">NetworkTest.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">does_not_broadcast_a_message_over_180_characters_even_if_listener_is_in_range</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">seanLocation</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">chars</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">char</span><span class="o">[</span><span class="mi">181</span><span class="o">];</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">fill</span><span class="o">(</span><span class="n">chars</span><span class="o">,</span> <span class="sc">'x'</span><span class="o">);</span>
+        <span class="nc">String</span> <span class="n">longMessage</span> <span class="o">=</span> <span class="nc">String</span><span class="o">.</span><span class="na">valueOf</span><span class="o">(</span><span class="n">chars</span><span class="o">);</span>
+
+        <span class="nc">Person</span> <span class="n">laura</span> <span class="o">=</span> <span class="n">mock</span><span class="o">(</span><span class="nc">Person</span><span class="o">.</span><span class="na">class</span><span class="o">);</span>
+        <span class="n">network</span><span class="o">.</span><span class="na">subscribe</span><span class="o">(</span><span class="n">laura</span><span class="o">);</span>
+        <span class="n">network</span><span class="o">.</span><span class="na">broadcast</span><span class="o">(</span><span class="n">longMessage</span><span class="o">,</span> <span class="n">seanLocation</span><span class="o">);</span>
+
+        <span class="n">verify</span><span class="o">(</span><span class="n">laura</span><span class="o">,</span> <span class="n">never</span><span class="o">()).</span><span class="na">hear</span><span class="o">(</span><span class="n">longMessage</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s run that test . Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
+</div>
+<div class="paragraph">
+<p>It looks like we’re already implementing the proximity rule here  in the broadcast method. Let’s add another if statement here about the message length.</p>
+</div>
+<div class="listingblock">
+<div class="title">Network.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">                <span class="k">if</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&lt;=</span> <span class="mi">180</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">listener</span><span class="o">.</span><span class="na">hear</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+                <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p> Run the unit test again… and it’s passing. Great.</p>
+</div>
+<div class="paragraph">
+<p>The code here has got a little bit messy and hard to read. One very basic move we could make to improve it would be to just extract a couple of temporary variables.</p>
+</div>
+<div class="listingblock">
+<div class="title">Network.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">            <span class="kt">boolean</span> <span class="n">withinRange</span> <span class="o">=</span> <span class="o">(</span><span class="nc">Math</span><span class="o">.</span><span class="na">abs</span><span class="o">(</span><span class="n">listener</span><span class="o">.</span><span class="na">getLocation</span><span class="o">()</span> <span class="o">-</span> <span class="n">shouterLocation</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">range</span><span class="o">);</span>
+            <span class="kt">boolean</span> <span class="n">shortEnough</span> <span class="o">=</span> <span class="o">(</span><span class="n">message</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">&lt;=</span> <span class="mi">180</span><span class="o">);</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">withinRange</span> <span class="o">&amp;&amp;</span> <span class="n">shortEnough</span><span class="o">)</span> <span class="o">{</span>
+                <span class="n">listener</span><span class="o">.</span><span class="na">hear</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+            <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.</p>
+</div>
+<div class="paragraph">
+<p> Let’s just run the tests to check. Great - everything’s still green.</p>
+</div>
+<div class="paragraph">
+<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString.</p>
+</div>
+<div class="paragraph">
+<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now the scenario is much more readable.</p>
+</div>
+<div class="paragraph">
+<p>We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@When</span><span class="o">(</span><span class="s">"Sean shouts the following message"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sean_shouts_the_following_message</span><span class="o">(</span><span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Sean"</span><span class="o">).</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="n">messageFromSean</span> <span class="o">=</span> <span class="n">message</span><span class="o">;</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s check that we&#8217;re still green &#8201;&#8212;&#8201;and we are!</p>
+</div>
+<div class="paragraph">
+<p>We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-26 15:25:47 UTC
+Last updated 2020-06-15 09:29:11 UTC
 </div>
 </div>
 <style>

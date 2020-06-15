@@ -470,6 +470,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_cleaning_up">4. Cleaning up</a>
 <ul class="sectlevel2">
 <li><a href="#_the_importance_of_readability">4.1. The importance of readability</a></li>
+<li><a href="#_review_changes_that_happened_while_we_were_away">4.2. Review changes that happened while we were away</a></li>
+<li><a href="#_description_field">4.3. Description field</a></li>
+<li><a href="#_the_before_hook">4.4. The "Before" hook</a></li>
+<li><a href="#_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</a></li>
+<li><a href="#_backgrounds">4.6. Backgrounds</a></li>
+<li><a href="#_refactoring_to_data_tables">4.7. Refactoring to Data Tables</a></li>
+</ul>
+</li>
+<li><a href="#_java_code_obviously_different_but_same_overall_shape">Java code obviously different, but same overall shape</a>
+<ul class="sectlevel2">
+<li><a href="#_deeper_into_data_tables">.1. Deeper into Data Tables</a></li>
 </ul>
 </li>
 </ul>
@@ -1388,7 +1399,7 @@ Let&#8217;s look at the Shouty scenario from the last chapter.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>As Cucumber starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is 15 metres from Sean</code>  and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is 15 metres from Sean</code>?”"</p>
+<p>As Cucumber starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is located 15 metres from Sean</code>  and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is located 15 metres from Sean</code>?”"</p>
 </div>
 <div class="paragraph">
 <p>
@@ -1421,7 +1432,7 @@ The most simple cucumber expression that would match that step is this one:</p>
 <h3 id="_capturing_parameters">3.3. Capturing parameters</h3>
 <div class="paragraph">
 <p>
-Sometimes, we want to write step defintions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. </p>
+Sometimes, we want to write step definitions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. </p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -1628,7 +1639,7 @@ Let&#8217;s create a new Ruby file in <code>features/support</code> called <code
 <p>We need to give it a <code>name</code> which is the name we&#8217;ll use inside the curly brackets in our step definition expressions. </p>
 </div>
 <div class="paragraph">
-<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression.  This is neccesary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. </p>
+<p>We also need to define&#8201;&#8212;&#8201;gasp!&#8201;&#8212;&#8201;a regular expression.  This is necessary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won&#8217;t go into the details of regular expressions in this video, but in this case we&#8217;re just matching on either of the names of the people we&#8217;re using in our scenario. </p>
 </div>
 <div class="paragraph">
 <p>Finally, there&#8217;s a transformer block,  which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string)  which we can then pass to the <code>Person</code> class&#8217;s constructor. </p>
@@ -1664,7 +1675,7 @@ Feature: Hear shout
 </div>
 </div>
 <div class="paragraph">
-<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step defintions - closer together.</p>
+<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step definitions - closer together.</p>
 </div>
 </div>
 </div>
@@ -1685,7 +1696,7 @@ Your browser does not support the video tag.
 <p></p>
 </div>
 <div class="paragraph">
-<p>In the previous chapter, we talked about the importance of having readable scenarios, and you learned some new skills with cucumber expressions to help you achieve that goal. Those skills will give you the confidence to write scenarios exactly the way you want, knowing you’ll be able to match the Gherkin steps easily from your step definition code.</p>
+<p>In the previous chapter, we talked about the importance of having readable scenarios, and you learned some new skills with Cucumber Expressions to help you achieve that goal. Those skills will give you the confidence to write scenarios exactly the way you want, knowing you’ll be able to match the Gherkin steps easily from your step definition code.</p>
 </div>
 <div class="paragraph">
 <p>We emphasise readability because from our experience, writing Gherkin scenarios is a software design activity. Cucumber was created to bridge the communication gap between business domain experts and development teams. When you collaborate with domain experts to describe behaviour in Gherkin, you’re expressing the group’s shared understanding of the problem you need to solve. The words you use in your scenarios can have a deep impact on the way the software is designed, as we’ll see in later chapters.</p>
@@ -1694,7 +1705,7 @@ Your browser does not support the video tag.
 <p>The more fluent you become in writing Gherkin, the more useful a tool it becomes to help you facilitate this communication. Keeping your scenarios readable means you can get feedback at any time about whether you’re building the right thing. Over time, your features become living documentation about your system. We can’t emphasize enough how important it is to see your scenarios as more than just tests.</p>
 </div>
 <div class="paragraph">
-<p>Maintaining a living document works both ways: you’ll drive your solution design from your scenarios, but you may also have to update your Gherkin to reflect the things you learn as you build the solution. This dance back and forth between features and solution code is what BDD is all about.</p>
+<p>Maintaining a living document works both ways: the scenarios will guide your solution design, but you may also have to update your Gherkin to reflect the things you learn as you build the solution. This dance back and forth between features and solution code is an important part of BDD.</p>
 </div>
 <div class="paragraph">
 <p>In this chapter, we’ll learn about feature descriptions, the Background keyword, and about keeping scenarios and code up-to-date with your current understanding of the project.</p>
@@ -1702,16 +1713,829 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>First, let’s catch up with what’s been happening on the Shouty project.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_review_changes_that_happened_while_we_were_away">4.2. Review changes that happened while we were away</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>While we were away, the developers of Shouty have been busy working on the code. Let’s have a look at what they’ve been up to.</p>
+</div>
+<div class="paragraph">
+<p>
+We’ll start out by running Cucumber.</p>
+</div>
+<div class="paragraph">
+<p>Great! It looks like both these scenarios are working now - both the different messages that Sean shouts are being heard by Lucy.</p>
+</div>
+<div class="paragraph">
+<p>
+Let’s dig into the code and see how these steps have been automated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="nb">require</span> <span class="s1">'shouty'</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is {int} metres from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
+  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@lucy</span>    <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+  <span class="vi">@sean</span>    <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+
+  <span class="vi">@lucy</span><span class="p">.</span><span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts {string}"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+  <span class="vi">@sean</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="vi">@message_from_sean</span> <span class="o">=</span> <span class="n">message</span>
+<span class="k">end</span>
+
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy should hear Sean's message"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">expect</span><span class="p">(</span><span class="vi">@lucy</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="p">[</span><span class="vi">@message_from_sean</span><span class="p">]</span>
+<span class="k">end</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>In the step definition layer, we can see that a new class has been defined, the Network. We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here. So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.</p>
+</div>
+<div class="paragraph">
+<p>There are also a couple of new unit test classes in the <code>spec</code> directory, one for the Network class, and another one for the Person class.</p>
+</div>
+<div class="paragraph">
+<p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.</p>
+</div>
+<div class="paragraph">
+<p>The familiar <code>bundle exec cucumber</code> command will run those unit tests as well as Cucumber.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean, but we haven’t actually implemented any behaviour around that yet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Feature</span><span class="p">:</span> <span class="no">Shout</span>
+
+  <span class="no">Scenario</span><span class="p">:</span> <span class="no">Listener</span> <span class="n">within</span> <span class="n">range</span>
+    <span class="no">Given</span> <span class="no">Lucy</span> <span class="n">is</span> <span class="mi">15</span> <span class="n">metres</span> <span class="n">from</span> <span class="no">Sean</span>
+    <span class="no">When</span> <span class="no">Sean</span> <span class="n">shouts</span> <span class="s2">"free bagels at Sean's"</span>
+    <span class="no">Then</span> <span class="no">Lucy</span> <span class="n">should</span> <span class="n">hear</span> <span class="no">Sean</span><span class="s1">'s message
+
+  Scenario: Listener hears a different mesage
+    Given Lucy is 15 metres from Sean
+    When Sean shouts "Free coffee!"
+    Then Lucy should hear Sean'</span><span class="n">s</span> <span class="n">message</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This happens to us all the time - we have an idea for a new feature, but then we find the problem is too complex to solve all at once, so we break it down into simpler steps. If we’re not careful, little bits of that original idea can be left around like clutter, in the scenarios and in the code. That clutter can get in the way, especially if plans change.</p>
+</div>
+<div class="paragraph">
+<p>We’re definitely going to develop this behaviour, but we’ve decided to defer it to our next iteration. Our current solution is just focussed on broadcasting messages between the people on the network.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s clean up the feature to reflect that current understanding.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_field">4.3. Description field</h3>
+<div class="paragraph">
+<p>After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like. We call this the feature’s <em>description</em>. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t start a line with a Gherkin keyword, like &#8220;Rule:&#8221; or &#8220;Scenario:&#8221;.</p>
+</div>
+<div class="paragraph">
+<p>In this case, we can add a high level description of the Shouty application. Because Shouty doesn&#8217;t yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Shout
+
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  <span class="err">To do</span><span class="p">:</span>
+    <span class="err">-</span> <span class="err">only</span> <span class="err">shout</span> <span class="err">to</span> <span class="err">people</span> <span class="err">within</span> <span class="nf">a </span>certain distance</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.</p>
+</div>
+<div class="paragraph">
+<p>Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword. We&#8217;ll learn more about this in a later chapter.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener within range
+      <span class="nf">Given </span>Lucy is 15 metres from Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>Lucy is 15 metres from Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+The step “Given Lucy is 15 metres from Sean” is misleading, since the distance between the two people is not yet relevant in our current model.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="no">Rule</span><span class="p">:</span> <span class="no">Shouts</span> <span class="n">can</span> <span class="n">be</span> <span class="n">heard</span> <span class="n">by</span> <span class="n">other</span> <span class="n">users</span>
+
+    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Listener</span> <span class="n">within</span> <span class="n">range</span>
+      <span class="no">Given</span> <span class="no">Lucy</span> <span class="n">is</span> <span class="mi">15</span> <span class="n">metres</span> <span class="n">from</span> <span class="no">Sean</span>
+      <span class="no">When</span> <span class="no">Sean</span> <span class="n">shouts</span> <span class="s2">"free bagels at Sean's"</span>
+      <span class="no">Then</span> <span class="no">Lucy</span> <span class="n">should</span> <span class="n">hear</span> <span class="no">Sean</span><span class="s1">'s message
+
+    Scenario: Listener hears a different mesage
+      Given Lucy is 15 metres from Sean
+      When Sean shouts "Free coffee!"
+      Then Lucy should hear Sean'</span><span class="n">s</span> <span class="n">message</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The step definition calls the moveTo method on Person, </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+but the moveTo method doesn’t actually do anything.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">    <span class="k">def</span> <span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+    <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Let’s simplify this code to do just what it needs to do right now, and no more. We can start from the scenario by changing this single step to express what’s actually going on. We’ll work on one scenario at a time, and update the other one once we’re happy with this one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>Lucy is 15 metres from Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words <code>Person</code> and <code>name</code>. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
+</div>
+<div class="paragraph">
+<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were involved in writing and reviewing this scenario.</p>
+</div>
+<div class="paragraph">
+<p>
+In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+
+    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">is</span> <span class="err">out</span> <span class="err">of</span> <span class="err">range</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps and paste them into our steps file. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Lucy'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Sean'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the next lesson we&#8217;ll look at a couple of ways that we can implement these new step definitions.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_before_hook">4.4. The "Before" hook</h3>
+<div class="paragraph">
+<p>
+We now have two step definitions to implement, and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile. If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Lucy'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="vi">@lucy</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Sean'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="vi">@sean</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The most straightforward way to create this network instance in Ruby is to use a hook.</p>
+</div>
+<div class="paragraph">
+<p>We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:
+Now we can use that Network instance as we create Lucy and Sean in these two new steps.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Before</span> <span class="k">do</span>
+  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Lucy'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="vi">@lucy</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Sean'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="vi">@sean</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+It should be working again now. Let’s run Cucumber to check.</p>
+</div>
+<div class="paragraph">
+<p>
+Good. Let’s do the same with the other scenario.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>
+Now we can remove this old step definition. We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="nb">require</span> <span class="s1">'shouty'</span>
+
+<span class="no">Before</span> <span class="k">do</span>
+  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span>
+<span class="k">end</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s2">"Lucy is {int} metres from Sean"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">distance</span><span class="o">|</span>
+  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@lucy</span>    <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+  <span class="vi">@sean</span>    <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+
+  <span class="vi">@lucy</span><span class="p">.</span><span class="nf">move_to</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Lucy'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="vi">@lucy</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Sean'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="vi">@sean</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+<span class="k">end</span>
+
+<span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts {string}"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+  <span class="vi">@sean</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="vi">@message_from_sean</span> <span class="o">=</span> <span class="n">message</span>
+<span class="k">end</span>
+
+<span class="no">Then</span><span class="p">(</span><span class="s2">"Lucy should hear Sean's message"</span><span class="p">)</span> <span class="k">do</span>
+  <span class="n">expect</span><span class="p">(</span><span class="vi">@lucy</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="p">[</span><span class="vi">@message_from_sean</span><span class="p">]</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>
+Now we have one last bit of dead code left, the move_to method on Person. Let&#8217;s clean that up too.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">module</span> <span class="nn">Shouty</span>
+  <span class="k">class</span> <span class="nc">Person</span>
+    <span class="nb">attr_reader</span> <span class="ss">:messages_heard</span>
+
+    <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">network</span><span class="p">)</span>
+      <span class="vi">@messages_heard</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="vi">@network</span>        <span class="o">=</span> <span class="n">network</span>
+
+      <span class="vi">@network</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="nb">self</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+      <span class="vi">@network</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">hear</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+      <span class="vi">@messages_heard</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+
+  <span class="k">class</span> <span class="nc">Network</span>
+    <span class="k">def</span> <span class="nf">initialize</span>
+      <span class="vi">@listeners</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">subscribe</span><span class="p">(</span><span class="n">person</span><span class="p">)</span>
+      <span class="vi">@listeners</span> <span class="o">&lt;&lt;</span> <span class="n">person</span>
+    <span class="k">end</span>
+
+    <span class="k">def</span> <span class="nf">broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+      <span class="vi">@listeners</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">listener</span><span class="o">|</span>
+        <span class="n">listener</span><span class="p">.</span><span class="nf">hear</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>OK, so we’ve cleaned things up a bit, to bring the scenarios, the code and our current understanding of the problem all into sync. What’s nice to see is how well those new steps that create Lucy and Sean match the code inside the step definition.</p>
+</div>
+<div class="paragraph">
+<p>When step definitions have to make a big leap to translate between our plain-language description of the domain in the Gherkin scenario, and the code, that’s usually a sign that something is wrong. We like to see step definitions that are only one or two lines long, because that usually indicates our scenarios are doing a good job of reflecting the domain model in the code, and vice-versa.</p>
+</div>
+<div class="paragraph">
+<p>One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two steps for creating Lucy and Sean are almost identical, apart from those instance variables.</p>
+</div>
+<div class="paragraph">
+<p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.</p>
+</div>
+<div class="paragraph">
+<p>The first problem we’ll need to tackle is these hard-coded instance variable names.</p>
+</div>
+<div class="paragraph">
+<p>We can use a Hash to store all the people involved in the scenario.</p>
+</div>
+<div class="paragraph">
+<p>Let’s try replacing Lucy first.</p>
+</div>
+<div class="paragraph">
+<p>
+We’ll start by creating a new Hash in the before hook, like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Before</span> <span class="k">do</span>
+  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span>
+  <span class="vi">@people</span>  <span class="o">=</span> <span class="p">{}</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can store Lucy in the hash. We’ll use her name as the key, hard-coding it for now.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s1">'a person named Lucy'</span><span class="p">)</span> <span class="k">do</span>
+  <span class="vi">@people</span><span class="p">[</span><span class="s1">'Lucy'</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the hash. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="n">expect</span><span class="p">(</span><span class="vi">@people</span><span class="p">[</span><span class="s1">'Lucy'</span><span class="p">].</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="p">[</span><span class="vi">@message_from_sean</span><span class="p">]</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>With that little refactoring done, we can now try and make this first step generic for any name.</p>
+</div>
+<div class="paragraph">
+<p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the hash.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span><span class="p">(</span><span class="s1">'a person named {word}'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span>
+  <span class="vi">@people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.</p>
+</div>
+<div class="paragraph">
+<p>Let’s remove the old step definition, and fetch Sean from the hash here where he shouts his message.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span><span class="p">(</span><span class="s2">"Sean shouts {string}"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+  <span class="vi">@people</span><span class="p">[</span><span class="s1">'Sean'</span><span class="p">].</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="vi">@message_from_sean</span> <span class="o">=</span> <span class="n">message</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Great, we’re green again.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_backgrounds">4.6. Backgrounds</h3>
+<div class="paragraph">
+<p>
+Let’s switch back to the feature to show you one more technique for improving the readability of your scenarios.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we have common context steps - the Givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way.</p>
+</div>
+<div class="paragraph">
+<p>
+We can literally move them into the background, using a background keyword, like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Background</span><span class="p">:</span>
+    <span class="nf">Given </span>a person named Lucy
+    <span class="nf">And </span>a person named Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+As far as Cucumber is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.</p>
+</div>
+<div class="paragraph">
+<p>
+But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice we just went straight into When steps in our scenarios. That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.</p>
+</div>
+<div class="paragraph">
+<p>Again, it’s debatable whether we’d bother to use a Background to do this on a real project, but this at least illustrates the technique. We rarely use Backgrounds in our projects, because although they can improve readability by removing the duplication of repeated contexts, they also harm readability by requiring people to read the Background in conjunction with each Scenario.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="https://drive.google.com/uc?id=19VLE9qKbVN4bpMxsIVvPtPqc3RGw4bSW" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>To maintain trust in the BDD process, it’s important to keep your features fresh. Even when you drive the development from BDD scenarios, you’ll still learn lessons from the implementation that might need to be fed back into your Gherkin documentation.</p>
+</div>
+<div class="paragraph">
+<p>In this case, we discovered that we could find a smaller slice of this story, and defer the business rule about proximity until our next iteration. Splitting stories like this is a powerful agile technique, and one that BDD can help you to master. Now we have a clean codebase and a suite of scenarios that reflects the current state of the system’s development.</p>
+</div>
+<div class="paragraph">
+<p>We’re ready to start the next iteration.</p>
+</div>
+<div class="paragraph">
+<p>Unresolved directive in scripts.ruby.adoc - include::05/index.adoc[]</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_refactoring_to_data_tables">4.7. Refactoring to Data Tables</h3>
+<div class="paragraph">
+<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again. We’re using two different listeners, Lucy, who’s within range, and Larry, who’s not. It’s always Sean who’s doing the shouting.</p>
+</div>
+<div class="paragraph">
+<p>Notice that we also specify the range in each scenario. We could have just hard-coded it within the system, but having it documented here helps to make the behaviour we’ve specified much easier to understand.</p>
+</div>
+<div class="paragraph">
+<p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.</p>
+</div>
+<div class="paragraph">
+<p>Notice how the steps that create the Sean, Lucy, and Larry are very similar.</p>
+</div>
+<div class="paragraph">
+<p>When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>And the following people:
+     | name  | location |
+     | Lucy  |      100 |
+     | Sean  |        0 |</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Well, we’re in luck. You can!</p>
+</div>
+<div class="paragraph">
+<p>Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.</p>
+</div>
+<div class="paragraph">
+<p>As you can see, the step definition implicitly takes a single argument, which as this comment explains is a &lt;ruby&gt;Cucumber::Ast::DataTable&lt;/ruby&gt; &lt;java&gt;cucumber.api.DataTable&lt;/java&gt;. This object has a rich API for using the tabular data.</p>
+</div>
+<div class="paragraph">
+<p>At its most basic, the table is just a two-dimensional array of arrays.</p>
+</div>
+<div class="paragraph">
+<p>puts table.raw | System.out.println(table.raw());
+run cucumber</p>
+</div>
+<div class="paragraph">
+<p>&lt;ruby&gt;
+You don’t have to use a column header row in a data table, but when you do, you can ask for just the data:</p>
+</div>
+<div class="paragraph">
+<p>puts table.rows
+run cucumber</p>
+</div>
+<div class="paragraph">
+<p>When you do use column headers, it can be useful to fetch each data row as a hash, with the column names as keys, and the values from the cells in that row.</p>
+</div>
+<div class="paragraph">
+<p>puts table.hashes
+&lt;/ruby&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;java&gt;
+You can also turn the table into a List of Map, where the first row is used for the map keys, and each following row is used for the map values.</p>
+</div>
+<div class="dlist">
+<dl>
+<dt class="hdlist1">System.out.println(table.asMaps(String.class, String.class))</dt>
+<dd>
+<p>&lt;/java&gt;</p>
+</dd>
+</dl>
+</div>
+<div class="paragraph">
+<p>run cucumber</p>
+</div>
+<div class="paragraph">
+<p>Now we can easily iterate over these &lt;ruby&gt;hashes&lt;/ruby&gt;&lt;java&gt;maps&lt;/java&gt; and turn them into instances of Person:</p>
+</div>
+</div>
+</div>
+</div>
+<h1 id="_java_code_obviously_different_but_same_overall_shape" class="sect0">Java code obviously different, but same overall shape</h1>
+<div class="paragraph">
+<p>table.hashes.each do |row|
+  name = row['name']
+  location = row['location'].to_i
+  @people[name] = Person.new(@network, location)
+end</p>
+</div>
+<div class="paragraph">
+<p>run cucumber</p>
+</div>
+<div class="paragraph">
+<p>With that done, we can delete our old step definition, which is now unused.</p>
+</div>
+<div class="paragraph">
+<p>delete unused step def</p>
+</div>
+<div class="paragraph">
+<p>Cucumber strips all the white space surrounding each cell, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.</p>
+</div>
+<div class="paragraph">
+<p>&lt;ruby&gt;
+Map Columns (0:19)</p>
+</div>
+<div class="paragraph">
+<p>Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table. You can also use the map_column method for this:</p>
+</div>
+<div class="paragraph">
+<p>table = table.map_column('location') { |raw_location| raw_location.to_i }</p>
+</div>
+<div class="paragraph">
+<p>The new table’s location column will now contain integers rather than the raw strings.
+&lt;/ruby&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;java&gt;
+Table conversions (1:08)</p>
+</div>
+<div class="paragraph">
+<p>Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table.</p>
+</div>
+<div class="paragraph">
+<p>If you have a class that has the same field names as the header row in the table, you can have Cucumber automatically convert the table into a list of that class. If our Person object had name and location fields, and didn’t take an instance of Network in its constructor, we could automatically create instances of Person from this table.</p>
+</div>
+<div class="paragraph">
+<p>But things aren’t always that simple.</p>
+</div>
+<div class="paragraph">
+<p>Instead, we’ll define a simple Whereabouts class to represent the data in the table.</p>
+</div>
+<div class="paragraph">
+<p>creates the class</p>
+</div>
+<div class="paragraph">
+<p>We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.</p>
+</div>
+<div class="paragraph">
+<p>Now we can use the asList method on the DataTable to convert the table into a list of Whereabouts.</p>
+</div>
+<div class="paragraph">
+<p>changes the code</p>
+</div>
+<div class="paragraph">
+<p>In fact, you don’t have to explicitly convert the table to a list. If you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you.</p>
+</div>
+<div class="paragraph">
+<p>changes the code again.
+&lt;/java&gt;</p>
+</div>
+<div class="sect2">
+<h3 id="_deeper_into_data_tables">.1. Deeper into Data Tables</h3>
+<div class="paragraph">
+<p>open feature file</p>
+</div>
+<div class="paragraph">
+<p>Now the way we’ve specified this data is OK, but it’s quite hard to visualise where each of the people is stood. It might be better to express it like this instead:</p>
+</div>
+<div class="paragraph">
+<p>| name     | Sean | Lucy | Larry |
+| location | 0    | 100  | 150   |</p>
+</div>
+<div class="paragraph">
+<p>Do you like that better? You do, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.</p>
+</div>
+<div class="paragraph">
+<p>&lt;ruby&gt;
+The Data Table has a transpose method which returns a new DataTable where each row is turned into a column.</p>
+</div>
+<div class="paragraph">
+<p>add call to transpose</p>
+</div>
+<div class="paragraph">
+<p>Now we can use the transposed table object as we did before.</p>
+</div>
+<div class="paragraph">
+<p>Let’s tidy up this code so as not to keep using all these temporary variables.</p>
+</div>
+<div class="paragraph">
+<p>removes all the <code>table =</code> bits and uses dots instead.
+&lt;/ruby&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;java&gt;
+If you annotate the method parameter with the @Transpose annotation, Cucumber will turn each row into a column before passing it to the step definition. You can also call the transpose method on a DataTable to explicitly create a new transposed DataTable.
+&lt;/java&gt;</p>
+</div>
+<div class="paragraph">
+<p>Introduce Data Table for Outcome Step</p>
+</div>
+<div class="paragraph">
+<p>Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
+</div>
+<div class="paragraph">
+<p>One rule that we’ve been implying but have never actually explored with an example is that people remember everything they’ve heard. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once:</p>
+</div>
+<div class="paragraph">
+<p>Scenario: Two shouts
+  When Sean shouts "Free bagels!"
+  And Sean shouts "Free toast!"
+  Then Lucy hears the following messages:
+    | Free bagels |
+    | Free toast  |</p>
+</div>
+<div class="paragraph">
+<p>See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.</p>
+</div>
+<div class="paragraph">
+<p>So how do we implement this step definition? Well, the DataTable has a really handy method called diff! that we can use to compare two Data Tables. diff! will pass if the tables are the same, and fail if they’re different.</p>
+</div>
+<div class="paragraph">
+<p>So we need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.</p>
+</div>
+<div class="paragraph">
+<p>&lt;ruby&gt;
+A two-dimensional Array will do, so we can just map over Lucy’s messages and create a new single-item Array for each row.</p>
+</div>
+<div class="paragraph">
+<p>Now we can pass that two-dimensional Array to the diff method on the table of expected messages passed in from the Gherkin.</p>
+</div>
+<div class="paragraph">
+<p>Then(/^Lucy hears the following messages:$/) do |expected_messages|
+  lucy = @people['Lucy']
+  actual_messages = lucy.messages_heard.map { |message| [ message ] }
+  expected_messages.diff!(actual_messages)
+end</p>
+</div>
+<div class="paragraph">
+<p>&lt;/ruby&gt;</p>
+</div>
+<div class="paragraph">
+<p>&lt;java&gt;
+A List of List of String will do, so we can just iterate over Lucy’s messages and create a new single-item List for each row.</p>
+</div>
+<div class="paragraph">
+<p>Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin.
+&lt;/java&gt;</p>
+</div>
+<div class="paragraph">
+<p>runs cucumber</p>
+</div>
+<div class="paragraph">
+<p>&lt;ruby&gt;
+Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values in orange, and the actual values in white.</p>
+</div>
+<div class="paragraph">
+<p>Let’s fix just one of these so you can see how the diff output changes.</p>
+</div>
+<div class="paragraph">
+<p>changes bagels to bagels! in the feature.</p>
+</div>
+<div class="paragraph">
+<p>The matching bagels! line is green, and for the mismatched row, the actual output is white, and the expected output is orange.</p>
+</div>
+<div class="paragraph">
+<p>Let’s fix this last typo, and we should be green again.</p>
+</div>
+<div class="paragraph">
+<p>Great.
+&lt;/ruby&gt;
+&lt;java&gt;
+Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
+</div>
+<div class="paragraph">
+<p>Let’s fix just one of these so you can see how the diff output changes.</p>
+</div>
+<div class="paragraph">
+<p>changes bagels to bagels! in the feature.</p>
+</div>
+<div class="paragraph">
+<p>The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.</p>
+</div>
+<div class="paragraph">
+<p>Let’s fix this last typo, and we should be green again.</p>
+</div>
+<div class="paragraph">
+<p>Great.
+&lt;/java&gt;</p>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-05-26 15:25:47 UTC
+Last updated 2020-06-15 09:29:11 UTC
 </div>
 </div>
 <style>
