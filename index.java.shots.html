@@ -3655,7 +3655,7 @@ Now we have one last bit of dead code left, the move_to method on Person. Let&#8
 <p>One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two steps for creating Lucy and Sean are almost identical, apart from those instance variables.</p>
 </div>
 <div class="paragraph">
-<p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned last week to make a single step definition that can create Lucy or Sean.</p>
+<p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.</p>
 </div>
 <div class="paragraph">
 <p>The first problem we’ll need to tackle is these hard-coded instance variable names.<a href="#shot-473" id="shot-473" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a></p>
@@ -3710,7 +3710,7 @@ We’ll start by creating a new hash/map in the before hook, like this.</p>
 <p>With that little refactoring done, we can now try and make this first step generic for any name.</p>
 </div>
 <div class="paragraph">
-<p>Using your new found Cucumber expression skills from the last lesson, you’ll know that if we replace the word Lucy here with a 'word' expression,<a href="#shot-479" id="shot-479" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a> we’ll have the name passed into our step definition as an argument, here.<a href="#shot-480" id="shot-480" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a> Now we can use that as the key in the hash/map.<a href="#shot-481" id="shot-481" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10</a></p>
+<p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a 'word' expression,<a href="#shot-479" id="shot-479" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a> we’ll have the name passed into our step definition as an argument, here.<a href="#shot-480" id="shot-480" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a> Now we can use that as the key in the hash/map.<a href="#shot-481" id="shot-481" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4453,7 +4453,7 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-15 11:15:50 UTC
+Last updated 2020-06-16 22:34:50 UTC
 </div>
 </div>
 <style>
