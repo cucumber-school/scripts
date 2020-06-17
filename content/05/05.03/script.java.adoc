@@ -1,12 +1,6 @@
 include::./title.adoc[]
 
-Let's look at the two scenarios that illustrate the rule about range again shot::[show the range rule & scenarios]. We’re using two different listeners, Lucy, shot::[highlight Lucy] who’s within range, and Larry, shot::[highlight Larry] who’s not. It’s always Sean shot::[highlight Sean] who’s doing the shouting.
-
-Notice that we also specify the range in each scenario shot::[highlight range]. We could have just hard-coded it within the system, but having it documented here helps to make the behaviour we’ve specified much easier to understand.
-
-A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system shot::[highlight Network constructor]. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
-
-Notice how the steps shot::[compare the two scenarios] that create the Sean, Lucy, and Larry are very similar.
+Let's look at the two scenarios that illustrate the rule about range again shot::["show the range rule & scenarios"]. Notice how the steps shot::["compare the two scenarios"] that create the Sean, Lucy, and Larry are very similar.
 
 When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:
 
@@ -22,38 +16,78 @@ Well, we’re in luck. You can!
 
 Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.
 
-shot::[mvn test, copy snippet, paste into StepDefinition.java]
+shot::["mvn test, copy snippet, paste into StepDefinition.java"]
 
-As you can see, the step definition implicitly takes a single argument shot::[new step def], which as this comment explains is a io.cucumber.datatable.DataTable. This object has a rich API for using the tabular data.
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/06--step06-table-snippet-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..55]
+----
 
-At its most basic, the table is just a two-dimensional array of arrays. So, Lucy's location can be accessed by getting the value from array cell 1, 2
+As you can see, the step definition implicitly takes a single argument shot::["highlight stepdef parameters"], which as this comment explains is a DataTable. This object has a rich API for using the tabular data.
 
-shot::["System.out.println(dataTable.cell(1, 2));"]
+At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed shot::["Print out a single cell value"] by getting the value from array cell (2, 1)
 
-shot::[run Cucumber]
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/07--step07-use-cell-to-demonstrate-a-2d-array/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
+----
 
-You can also turn the table into a List of Maps, where the first row is used for the map keys, and each following row is used for the map values.
+shot::["run Cucumber, highlight 'Lucy's location'"]
 
-shot::[System.out.println(dataTable.asMaps());]
+You can also turn the table into a List of Maps shot::["Print out data table"], where the first row is used for the map keys, and each following row is used for the map values.
 
-shot::[run Cucumber]
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/08--step08-table-as-list-of-maps/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
+----
 
-Now we can easily iterate shot::[write the loop] over these maps and turn them into instances of Person:
+shot::["run Cucumber, highlight data table output"]
 
-shot::[run cucumber]
+Now we can easily iterate shot::["write the loop"] over these maps and turn them into instances of Person:
 
-shot::[delete unused step def]
-With that done, we can update the other scenario shot::[] and delete our old step definition shot::[], which is now unused.
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/09--step09-iterate-over-people-in-table/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..50]
+----
 
-shot::[run cucumber]
+shot::["run cucumber -- all green"]
 
-Cucumber strips all the white space surrounding each cell, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
 
-Notice we’ve still had to convert the location from a string to an integer shot::[Integer.parseInt], because Cucumber can’t know that’s the type of value in our table.
+With that done, we can update the other scenario shot::["update other scenario"] ...
 
-To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class we want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/resources/shouty/hear_shout.feature[lines=24..31]
+----
 
-Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::[creates the class]
+... and delete our old step definition shot::["delete unused step def"], which is now unused.
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/09--step09-iterate-over-people-in-table/shouty/src/test/java/shouty/StepDefinitions.java[lines=40..43]
+----
+
+shot::["run cucumber"]
+
+Cucumber strips all the white space surrounding each cell shot::["show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
+
+Notice we’ve still had to convert the location from a string to an integer shot::["Conversion in step def"], because Cucumber can’t know that’s the type of value in our table.
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/java/shouty/StepDefinitions.java[lines=42..44]
+----
+
+To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
+
+Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::["creates the class"]
 
 .StepDefinitions.java
 [source,java]
@@ -63,7 +97,7 @@ include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shou
 
 We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
 
-Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. shot::[changes the code]
+Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. shot::["write defineWhereabouts()"]
 
 .StepDefinitions.java
 [source,java]
@@ -71,10 +105,12 @@ Then we can create a method annotated with @DataTableType so that Cucumber knows
 include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=37..40]
 ----
 
-Now, if you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you. shot::[changes the code again]
+Now, if you declare your table parameter as a generic list shot::["modify stepdef"], Cucumber will automatically convert the table into a list of the generic type for you.
 
 .StepDefinitions.java
 [source,java]
 ----
 include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
 ----
+
+That looks much nicer - shot::["hear_shout.feature data tables"] people positioned using a table in the feature file and shot::["people_are_located_at()"] really clean code that creates and positions people according to the data.

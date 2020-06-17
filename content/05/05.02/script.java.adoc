@@ -74,3 +74,5 @@ shot::["Show hear_shout.feature"]
 That's better. We've removed inessential details, so that each scenario contains only the information needed to illustrate its business rule.
 
 The scenarios would still run green if we removed the steps that set the range of a shout shot::["Highlight in last two scenarios"] , because the range already has a default value. We're not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it's an essential part of context for anyone reading them.
+
+A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system shot::["highlight Network constructor"]. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
