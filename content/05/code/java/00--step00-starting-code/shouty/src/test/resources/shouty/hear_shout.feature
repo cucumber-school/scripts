@@ -11,7 +11,7 @@ Feature: Hear shout
       When Sean shouts "free bagels at Sean's"
       Then Lucy should hear Sean's message
 
-    Scenario: Listener hears a message
+    Scenario: Listener hears a different message
       Given the range is 100
       And a person named Sean is located at 0
       And a person named Lucy is located at 50
