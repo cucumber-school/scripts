@@ -3961,30 +3961,88 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where the listener is within range is a perfectly good way of checking that the message has been sent correctly.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_3">5.1.1. Lesson 1 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_was_it_a_good_idea_to_delete_the_scenario">Why was it a good idea to delete the scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It doesn&#8217;t help illustrate the rule "Shouts can be heard by other users"&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>No one should give away free coffee</p>
+</li>
+<li>
+<p>There should only be one scenario per rule</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+We created the scenario "Listener hears a different message" to force us to replace our hard-coded implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the second scenario.</p>
+</div>
+<div class="paragraph">
+<p>Keeping excess scenarios is wasteful: they clutter up your feature files and slow down feedback.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_incidental_details">5.2. Incidental details</h3>
 <div class="paragraph">
-<p>The first scenario has changed since we last looked at it - it now specifies the range of a shout and the location of Sean and Lucy. This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
+<p>
+The first scenario has changed since we last looked at it  - it now specifies the range of a shout and the location of Sean and Lucy. This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
 </div>
-<div class="paragraph">
-<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>
 Let&#8217;s ensure that this scenario includes only essential information for the reader and remove all references to location and range.</p>
 </div>
-<div class="paragraph">
-<p>
-We&#8217;ll need to make changes to the step definitions to make sure that a Network class is always create - which we can do using a Before hook.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>
-We&#8217;ve defaulted the range to 100. If a scenario needs to document specific range, that can still be done.</p>
+We&#8217;ll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="no">DEFAULT_RANGE</span><span class="o">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+We&#8217;ve defaulted the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step.</p>
 </div>
 <div class="paragraph">
 <p>
 We&#8217;ll also need to add a step definition that can create a person without the scenario needing to specify where they are located. The step definition gives each person created this way a default location of 0.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"a person named {word}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">a_person_named</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">,</span> <span class="mi">0</span><span class="o">));</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>
@@ -3994,17 +4052,106 @@ Let&#8217;s run Cucumber to check we haven&#8217;t broken anything&#8230;&#8203;
 <p>
 Looking at the two new scenarios - Listener is within range &amp; Listener is out of range - we can see that they also contain incidental details. Since their purpose is to illustrate the "Shouts should only be heard if listener is within range" rule, there&#8217;s no need to actually document the content of the shout.</p>
 </div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>
 Let&#8217;s remove the details that aren&#8217;t relevant to the range rule.</p>
 </div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Lucy should hear a shout
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>
-Next we fix up the step definitions</p>
+Next we add a step definition that allows Sean to shout, without needing us to specify the exact message.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@When</span><span class="o">(</span><span class="s">"Sean shouts"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sean_shouts</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Sean"</span><span class="o">).</span><span class="na">shout</span><span class="o">(</span><span class="s">"Hello, world"</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>
 And finally run Cucumber - and we&#8217;re still green.</p>
+</div>
+<div class="paragraph">
+<p>
+That&#8217;s better. We&#8217;ve removed inessential details, so that each scenario contains only the information needed to illustrate its business rule.</p>
+</div>
+<div class="paragraph">
+<p>The scenarios would still run green if we removed the steps that set the range of a shout  , because the range already has a default value. We&#8217;re not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it&#8217;s an essential part of context for anyone reading them.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_questions">5.2.1. Lesson ? - Questions</h4>
+<div class="sect4">
+<h5 id="_why_did_we_remove_any_reference_to_range_or_location_from_the_first_scenario_listener_hears_a_message">Why did we remove any reference to range or location from the first scenario "Listener hears a message"?</h5>
+<div class="paragraph">
+<p>*</p>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_do_we_need_to_know_the_names_of_people_using_shouty">Why do we need to know the names of people using Shouty?</h5>
+<div class="paragraph">
+<p>*</p>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_pieces_of_information_are_inessential_in_this_scenario">Which pieces of information are inessential in this scenario?</h5>
+<div class="paragraph">
+<p>Rule:
+  Scenario:
+    Given
+    When
+    Then</p>
+</div>
+<div class="paragraph">
+<p>*</p>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -4130,6 +4277,18 @@ With that done, we can update the other scenario  and delete our old step defini
             <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">whereabout</span><span class="o">.</span><span class="na">name</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">,</span> <span class="n">whereabout</span><span class="o">.</span><span class="na">location</span><span class="o">));</span>
         <span class="o">}</span>
     <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_questions_2">5.3.1. Lesson ? - Questions</h4>
+<div class="sect4">
+<h5 id="">?</h5>
+<div class="paragraph">
+<p>*</p>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
 </div>
 </div>
 </div>
@@ -4262,6 +4421,18 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 </div>
 <div class="paragraph">
 <p>Great.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_questions_3">5.4.1. Lesson ? - Questions</h4>
+<div class="sect4">
+<h5 id="_2">?</h5>
+<div class="paragraph">
+<p>*</p>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -4402,6 +4573,18 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 <div class="paragraph">
 <p>We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_questions_4">5.5.1. Lesson ? - Questions</h4>
+<div class="sect4">
+<h5 id="_3">?</h5>
+<div class="paragraph">
+<p>*</p>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_tdd_loops">5.6. TDD Loops</h3>
@@ -4447,13 +4630,25 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 <div class="paragraph">
 <p>That’s all for this chapter of Cucumber School. See you next time!</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_questions_5">5.6.1. Lesson ? - Questions</h4>
+<div class="sect4">
+<h5 id="_4">?</h5>
+<div class="paragraph">
+<p>*</p>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-17 11:08:14 UTC
+Last updated 2020-06-17 11:58:03 UTC
 </div>
 </div>
 <style>
