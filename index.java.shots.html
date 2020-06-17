@@ -3932,10 +3932,10 @@ Your browser does not support the video tag.
 <p>Last time we worked on cleaning up the Shouty features to keep them in sync with the current status of the project. We stripped the scenarios back to only specify the behaviour of passing messages between people. We made it clear that the proximity rule had not yet been implemented.</p>
 </div>
 <div class="paragraph">
-<p>You’ll already remember from the Cucumber expressions lesson how important it is to be expressive in your scenarios, and keep them readable. In this episode we’re going to learn some new tricks with Gherkin that will give you even more flexibility about how you write scenarios.</p>
+<p>You’ll already remember from the Cucumber expressions chapter how important it is to be expressive in your scenarios, and keep them readable. In this episode we’re going to learn some new tricks with Gherkin that will give you even more flexibility about how you write scenarios.</p>
 </div>
 <div class="paragraph">
-<p>Once again the Shouty pixies&#8201;&#8212;&#8201;ah&#8230;&#8203; I mean the Shouty developers&#8201;&#8212;&#8201;have been hard at work implementing that proximity rule. Let’s have a look at how they got on.</p>
+<p>Once again the Shouty developers&#8201;&#8212;&#8201;have been hard at work implementing that proximity rule. Let’s have a look at how they got on.</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-492" id="shot-492" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs cucumber</a></p>
@@ -3953,10 +3953,10 @@ Your browser does not support the video tag.
 <p>We now have four scenarios: our original two from the last time we looked at the code, and the two placeholders we wrote as reminders.</p>
 </div>
 <div class="paragraph">
-<p>We used the second scenario - Listener hears a different message - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the test.</p>
+<p>We used the second scenario - Listener hears a different message - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the second scenario.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-494" id="shot-494" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot removes first scenario: Listener hears a different message</a></p>
+<p><a href="#shot-494" id="shot-494" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot removes second scenario: Listener hears a different message</a></p>
 </div>
 <div class="paragraph">
 <p>Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where the listener is within range is a perfectly good way of checking that the message has been sent correctly.</p>
@@ -4453,7 +4453,7 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-16 22:34:50 UTC
+Last updated 2020-06-17 10:52:46 UTC
 </div>
 </div>
 <style>
