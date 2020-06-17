@@ -1,0 +1,12 @@
+==== Lesson 1 - Questions
+
+===== Why was it a good idea to delete the scenario?
+
+* It doesn't help illustrate the rule "Shouts can be heard by other users" -- TRUE
+* No one should give away free coffee
+* There should only be one scenario per rule
+
+Explanation:
+We created the scenario "Listener hears a different message" to force us to replace our hard-coded implementation. Now we have a domain model that uses a variable for the message, there's an insignificant chance of this behaviour regressing, so we can safely remove the second scenario.
+
+Keeping excess scenarios is wasteful: they clutter up your feature files and slow down feedback.
