@@ -3577,9 +3577,109 @@ Table conversions (1:08)</p>
 &lt;/java&gt;</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_questions">5.1.1. Lesson ? - Questions</h4>
+<h4 id="_lesson_3_questions_2">5.1.1. Lesson 3 - Questions</h4>
 <div class="sect4">
-<h5 id="">?</h5>
+<h5 id="_what_is_the_name_of_the_gherkin_syntax_that_allows_you_to_specify_pipe_separated_tabular_data_for_a_step">What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Array</p>
+</li>
+<li>
+<p>Data Matrix</p>
+</li>
+<li>
+<p>Data Table&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Example Table</p>
+</li>
+<li>
+<p>Table</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, with cell boundaries indicated by pipe characters <code>|</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_value_would_be_retieved_from_cell_1_2_in_the_following_table">What value would be retieved from cell (1, 2) in the following table?</h5>
+<div class="paragraph">
+<p>| 0 | 1 | 2 |
+| 3 | 4 | 5 |
+| 6 | 7 | 8 |</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0</p>
+</li>
+<li>
+<p>1</p>
+</li>
+<li>
+<p>2</p>
+</li>
+<li>
+<p>3</p>
+</li>
+<li>
+<p>4</p>
+</li>
+<li>
+<p>5&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>6</p>
+</li>
+<li>
+<p>7</p>
+</li>
+<li>
+<p>8</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The data table is indexed, starting from 0. The first coordinate indicates which <em>row</em> to access, the second indicates the <em>column</em>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_a_list_of_maps">Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps?</h5>
+<div class="paragraph">
+<p>| A | B | C |
+| D | 0 | 1 |
+| E | 2 | 3 |</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>[{A=A, B=B, C=C}, {A=D, B=0, C=1}, {A=E, B=2, C=3}]</p>
+</li>
+<li>
+<p>[{A=D, B=2, C=1}, {A=E, B=0, C=3}]</p>
+</li>
+<li>
+<p>[{A=B, D=0, E=2}, {A=C, D=1, E=3}]</p>
+</li>
+<li>
+<p>[{A=D, B=0, C=1}, {A=E, B=2, C=3}]&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+When Cucumber converts a Data Table into a list of maps, it treats the first row as the labels (or indexes), and each subsequent row provides the values for the next map within the list.</p>
+</div>
+<div class="paragraph">
+<p>So, in this example, since there are three rows, we end up with two maps in the list&#8201;&#8212;&#8201;the first row providing the indexes into each map, the next two rows providing the values for the two maps that are added to the list.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_does_it_mean_to_annotate_a_method_with_datatabletype">What does it mean to annotate a method with @DataTableType?</h5>
 <div class="paragraph">
 <p>*</p>
 </div>
@@ -3719,9 +3819,9 @@ Oops! It looks like we made a typo in our scenario. We should have included excl
 &lt;/java&gt;</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_questions_2">5.2.1. Lesson ? - Questions</h4>
+<h4 id="_lesson_questions">5.2.1. Lesson ? - Questions</h4>
 <div class="sect4">
-<h5 id="_2">?</h5>
+<h5 id="">?</h5>
 <div class="paragraph">
 <p>*</p>
 </div>
@@ -3731,9 +3831,9 @@ Oops! It looks like we made a typo in our scenario. We should have included excl
 </div>
 </div>
 <div class="sect3">
-<h4 id="_lesson_questions_3">5.2.2. Lesson ? - Questions</h4>
+<h4 id="_lesson_questions_2">5.2.2. Lesson ? - Questions</h4>
 <div class="sect4">
-<h5 id="_3">?</h5>
+<h5 id="_2">?</h5>
 <div class="paragraph">
 <p>*</p>
 </div>
@@ -3748,7 +3848,7 @@ Oops! It looks like we made a typo in our scenario. We should have included excl
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-17 15:52:35 UTC
+Last updated 2020-06-17 16:17:05 UTC
 </div>
 </div>
 <style>
