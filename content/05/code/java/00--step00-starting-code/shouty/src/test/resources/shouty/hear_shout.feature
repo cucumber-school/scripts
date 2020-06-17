@@ -15,7 +15,7 @@ Feature: Hear shout
       Given the range is 100
       And a person named Sean is located at 0
       And a person named Lucy is located at 50
-      When Sean shouts "free bagels at Sean's"
+      When Sean shouts "Free coffee!"
       Then Lucy should hear Sean's message
 
   Rule: Shouts should only be heard if listener is within range
