@@ -3648,7 +3648,7 @@ The data table is indexed, starting from 0. The first coordinate indicates which
 </div>
 </div>
 <div class="sect4">
-<h5 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_a_list_of_maps">Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps?</h5>
+<h5 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_a_list_of_maps_list_mapstring_string">Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List&lt; Map&lt;String, String&gt; &gt; ?</h5>
 <div class="paragraph">
 <p>| A | B | C |
 | D | 0 | 1 |
@@ -3679,12 +3679,51 @@ When Cucumber converts a Data Table into a list of maps, it treats the first row
 </div>
 </div>
 <div class="sect4">
-<h5 id="_what_does_it_mean_to_annotate_a_method_with_datatabletype">What does it mean to annotate a method with @DataTableType?</h5>
+<h5 id="_which_of_the_following_data_tables_will_this_method_process_successfully">Which of the following Data Tables will this method process successfully?</h5>
 <div class="paragraph">
-<p>*</p>
+<p>@DataTableType
+public OrderLine createOrderLine(Map&lt;String, String&gt; orderItem) {
+    return new OrderLine(entry.get("Item Name"), Integer.parseInt(entry.get("Quantity")));
+}</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>| Item Name       | Quantity |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        |</p>
+</li>
+<li>
+<p>| name            | quantity |
+| Cheese &amp; tomato | 1        |</p>
+</li>
+<li>
+<p>| Item Name       | Quantity |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        |
+| Pepperoni       | 1        |</p>
+</li>
+<li>
+<p>| Item Name       | Quantity |&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>| Item Name       | Quantity | Notes        |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        | Extra cheese |</p>
+</li>
+<li>
+<p>| Cheese &amp; tomato | 1        |
+| Pepperoni       | 1        |</p>
+</li>
+<li>
+<p>| Quantity | Item Name       | &#8201;&#8212;&#8201;TRUE
+| 1        | Cheese &amp; tomato |</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Explanation:</p>
+<p>Explanation:
+Cucumber attempts to convert each non-header row in the data table into an instance of OrderLine by calling this method. For the conversion to succeed, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and createOrderLine() would not be called and the relavent step definition would be passed an empty list of OrderLine objects.</p>
+</div>
+<div class="paragraph">
+<p>There is more documentation about Data Table conversions at <a href="https://github.com/cucumber/cucumber/tree/master/datatable" class="bare">https://github.com/cucumber/cucumber/tree/master/datatable</a></p>
 </div>
 </div>
 </div>
@@ -3819,21 +3858,61 @@ Oops! It looks like we made a typo in our scenario. We should have included excl
 &lt;/java&gt;</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_questions">5.2.1. Lesson ? - Questions</h4>
+<h4 id="_lesson_4_questions_3">5.2.1. Lesson 4 - Questions</h4>
 <div class="sect4">
-<h5 id="">?</h5>
-<div class="paragraph">
-<p>*</p>
+<h5 id="_why_might_you_use_the_transpose_annotation">Why might you use the @Transpose annotation?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Transpose has been deprecated and you should not use it</p>
+</li>
+<li>
+<p>Use it if it is more readable to have the headers in the first column&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Use it to ensure that every row in the data table has the same number of columns</p>
+</li>
+<li>
+<p>Use it to reverse the order of the data rows in the table</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Explanation:</p>
+<p>Explanation:
+The @Transpose annotation (and the transpose method on DataTable) allows you to use tables that have their headers in the first column of a table.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_method_on_datatable_compares_two_datatables_and_produces_a_textual_output_showing_their_differences">What method on DataTable compares two DataTables and produces a textual output showing their differences?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>compare</p>
+</li>
+<li>
+<p>difference</p>
+</li>
+<li>
+<p>contrast</p>
+</li>
+<li>
+<p>diff&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>covariance</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_lesson_questions_2">5.2.2. Lesson ? - Questions</h4>
+<h4 id="_lesson_questions">5.2.2. Lesson ? - Questions</h4>
 <div class="sect4">
-<h5 id="_2">?</h5>
+<h5 id="">?</h5>
 <div class="paragraph">
 <p>*</p>
 </div>
@@ -3848,7 +3927,7 @@ Oops! It looks like we made a typo in our scenario. We should have included excl
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-17 16:17:05 UTC
+Last updated 2020-06-18 09:30:50 UTC
 </div>
 </div>
 <style>
