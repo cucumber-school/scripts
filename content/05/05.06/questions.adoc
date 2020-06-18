@@ -1,7 +1,41 @@
-==== Lesson ? - Questions
+==== Lesson 6 - Questions
 
-===== ?
+===== Which of the following is the best definition of the term "refactoring"?
 
-*
+* Improving the efficiency of the code without changing its behaviour
+* Adding new functionality to the application
+* Changing the behaviour of the code
+* Tidying up the code without changing its behaviour -- TRUE
+* Rearchitecting the code to get ready for adding new functionality
 
 Explanation:
+The definition of refactoring is: improve the design (of some code) without changing its behaviour.
+
+===== When can refactoring happen?
+
+* When a refactoring story gets prioritised by the Product Owner
+* Whenever all tests are green -- TRUE
+* When at least one test is failing
+* First thing in the morning
+* Before committing code to source control
+* At the end of an iteration
+
+Explanation:
+Refactoring is part of the day-to-day work of every software developer. It's when they tidy up the code once they've got it working.
+
+Since part of the definition of refactoring is that it shouldn't change the behaviour of the code, they will run the tests to make sure nothing was broken. Which means that the tests MUST be passing BEFORE they start refactoring. Otherwise, how can they be sure that the behaviour hasn't changed?
+
+===== How are the acceptance test and unit test related?
+
+* Acceptance tests ensure we "build the right thing"; unit tests ensure we "build the thing right" -- TRUE
+* An acceptance test should be passing before we start writing unit tests
+* We may write many unit tests before the currently failing acceptance test passes -- TRUE
+* All unit tests should be passing before we write an acceptance test
+* BDD consists of two loops: an outer acceptance test loop and an inner unit test loop -- TRUE
+
+Explanation:
+Once we have a scenario, we automate it -- and we expect it to fail, because we haven't added the functionality it specifies to the system yet. This is the beginning of the outer, acceptance test loop, that ensures we're building what the Product Owner wants: "build the right thing."
+
+We then enter the inner, unit test loop. It's unit tests that define the precise behaviour of small units of code -- and ensure that we "build the thing right." They give us the safety to improve the code's design (refactor), because they will fail if we accidentally change the code's behaviour while refactoring. We may have to go round the inner loop a number of times, adding several unit tests, before we've added enought functionality to make the outer acceptance test pass.
+
+And then we write the next failing acceptance test...
