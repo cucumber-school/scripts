@@ -30,7 +30,7 @@ The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, 
 Explanation:
 The data table is indexed, starting from 0. The first coordinate indicates which _row_ to access, the second indicates the _column_.
 
-===== Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps?
+===== Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List< Map<String, String> > ?
 
 | A | B | C |
 | D | 0 | 1 |
@@ -46,8 +46,37 @@ When Cucumber converts a Data Table into a list of maps, it treats the first row
 
 So, in this example, since there are three rows, we end up with two maps in the list -- the first row providing the indexes into each map, the next two rows providing the values for the two maps that are added to the list.
 
-===== What does it mean to annotate a method with @DataTableType?
+===== Which of the following Data Tables will this method process successfully?
 
-*
+@DataTableType
+public OrderLine createOrderLine(Map<String, String> orderItem) {
+    return new OrderLine(entry.get("Item Name"), Integer.parseInt(entry.get("Quantity")));
+}
+
+
+* | Item Name       | Quantity | -- TRUE
+  | Cheese & tomato | 1        |
+
+* | name            | quantity |
+  | Cheese & tomato | 1        |
+
+* | Item Name       | Quantity | -- TRUE
+  | Cheese & tomato | 1        |
+  | Pepperoni       | 1        |
+
+* | Item Name       | Quantity | -- TRUE
+
+* | Item Name       | Quantity | Notes        | -- TRUE
+  | Cheese & tomato | 1        | Extra cheese |
+
+* | Cheese & tomato | 1        |
+  | Pepperoni       | 1        |
+
+* | Quantity | Item Name       |  -- TRUE
+  | 1        | Cheese & tomato |
+
 
 Explanation:
+Cucumber attempts to convert each non-header row in the data table into an instance of OrderLine by calling this method. For the conversion to succeed, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and createOrderLine() would not be called and the relavent step definition would be passed an empty list of OrderLine objects.
+
+There is more documentation about Data Table conversions at https://github.com/cucumber/cucumber/tree/master/datatable 
