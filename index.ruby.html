@@ -3912,12 +3912,93 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <div class="sect3">
 <h4 id="_lesson_questions">5.2.2. Lesson ? - Questions</h4>
 <div class="sect4">
-<h5 id="">?</h5>
-<div class="paragraph">
-<p>*</p>
+<h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Write another scenario to triangulate the new behaviour of the Network class</p>
+</li>
+<li>
+<p>Implement the changed behaviour in the Network class</p>
+</li>
+<li>
+<p>Add a new unit test to NetworkTest that specifies the change in behaviour of the Network class&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Explanation:</p>
+<p>Explanation:
+We wrote a new unit test in NetworkTest. We&#8217;ll talk more about this in the next lesson.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_would_we_use_a_docstring">Why would we use a DocString?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It&#8217;s the only way to include multi-line strings in a scenarios</p>
+</li>
+<li>
+<p>It&#8217;s a readable way to include long strings in a scenario&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>DocStrings support multiple languages</p>
+</li>
+<li>
+<p>Cucumber provides a DocString type that provides useful string manipulation features</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The DocString is Gherkin syntax that allows long strings to be readably represented in a scenario.</p>
+</div>
+<div class="paragraph">
+<p>All the magic happens when the DocString is read from the Gherkin. The content of the DocString gets passed to the step definition as a normal String&#8201;&#8212;&#8201;there&#8217;s no corresponding Cucumber type.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_snippets_of_code_are_correct_for_the_step_below">Which of the following snippets of code are correct for the step below?</h5>
+<div class="literalblock">
+<div class="content">
+<pre>Then Simone says
+"""
+Now on that limb there was a branch
+A rare branch and a rattlin' branch
+And the branch on the limb
+And the limb on the tree
+And the tree in the bog
+And the bog down in the valley-o
+"""</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>@Then("Simone says")
+public void simone_says() { }</p>
+</li>
+<li>
+<p>@Then("Simone says")
+public void simone_says(String lyrics) { }&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>@Then("Simone says {string}")
+public void simone_says(String lyrics) { }</p>
+</li>
+<li>
+<p>@Then("Simone says {docstring}")
+public void simone_says(String lyrics) { }</p>
+</li>
+<li>
+<p>@Then("Simone says {docstring}")
+public void simone_says(DocString lyrics) { }</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+When using a DocString in a scenario, you do not add any parameter to the matching Cucumber Expression. You do need to provide a String parameter to the step definition to receive the contents of the DocString.</p>
 </div>
 </div>
 </div>
@@ -3927,7 +4008,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-18 09:30:50 UTC
+Last updated 2020-06-18 11:03:39 UTC
 </div>
 </div>
 <style>

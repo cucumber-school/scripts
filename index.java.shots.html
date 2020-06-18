@@ -4756,7 +4756,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p>When writing scenarios, occasionally we want to use a really long piece of data.</p>
 </div>
 <div class="paragraph">
-<p>For example, let’s introduce a new rule about the maximum length of a message <a href="#shot-543" id="shot-543" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a></p>
+<p>For example, let’s introduce a new rule about the maximum length of a message <a href="#shot-543" id="shot-543" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot New rule</a></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4765,7 +4765,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;and add a scenario to illustrate it <a href="#shot-544" id="shot-544" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a>, making the string just over the boundary of the rule:</p>
+<p>&#8230;&#8203;and add a scenario to illustrate it <a href="#shot-544" id="shot-544" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot New scenario</a>, making the string just over the boundary of the rule:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4779,7 +4779,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p>Still, we’ll press on and get it to green, then we’ll show you how to clean it up.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-545" id="shot-545" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot mvn test</a> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition <a href="#shot-546" id="shot-546" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a></p>
+<p><a href="#shot-545" id="shot-545" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot run Cucumber</a> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition <a href="#shot-546" id="shot-546" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Modify stepdef</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4791,7 +4791,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-547" id="shot-547" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot runs cucumber</a></p>
+<p><a href="#shot-547" id="shot-547" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot run cucumber</a></p>
 </div>
 <div class="paragraph">
 <p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests and add a new example to specify this extra responsibility.</p>
@@ -4819,10 +4819,10 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run that test <a href="#shot-549" id="shot-549" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot mvn test - show the unit test results</a>. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
+<p>Let’s run that test <a href="#shot-549" id="shot-549" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot run Cucumber - show the unit test results</a>. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
 </div>
 <div class="paragraph">
-<p>It looks like we’re already implementing the proximity rule here <a href="#shot-550" id="shot-550" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a> in the broadcast method. Let’s add another if statement here about the message length.</p>
+<p>It looks like we’re already implementing the proximity rule here <a href="#shot-550" id="shot-550" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Network proximity logic</a> in the broadcast method. Let’s add another if statement here about the message length.</p>
 </div>
 <div class="listingblock">
 <div class="title">Network.java</div>
@@ -4833,7 +4833,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-551" id="shot-551" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot mvn test</a> Run the unit test again… and it’s passing. Great.</p>
+<p><a href="#shot-551" id="shot-551" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot run cucumber</a> Run the unit test again… and it’s passing. Great.</p>
 </div>
 <div class="paragraph">
 <p>The code here has got a little bit messy and hard to read. One very basic move we could make to improve it would be to just extract a couple of temporary variables.</p>
@@ -4852,7 +4852,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p>That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-552" id="shot-552" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot mvn test</a> Let’s just run the tests to check. Great - everything’s still green.</p>
+<p><a href="#shot-552" id="shot-552" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot run cucumber</a> Let’s just run the tests to check. Great - everything’s still green.</p>
 </div>
 <div class="paragraph">
 <p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString.</p>
@@ -4862,14 +4862,25 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">toast!</span>  <span class="p">|</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Message is too long
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts the following message
+        <span class="s">"""
+        This is a really long message
+        so long in fact that I am not going to
+        be allowed to send it, at least if I keep
+        typing like this until the length is over
+        the limit of 180 characters.
+        """</span>
+      <span class="nf">Then </span>Lucy should not hear a shout</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Now the scenario is much more readable.</p>
 </div>
 <div class="paragraph">
-<p>We have to add a new step definition too <a href="#shot-553" id="shot-553" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a>. It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+<p>We have to add a new step definition too <a href="#shot-553" id="shot-553" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot sean_shouts_the_following_message</a>. It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4883,7 +4894,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s check that we&#8217;re still green <a href="#shot-554" id="shot-554" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot mvn test</a>&#8201;&#8212;&#8201;and we are!</p>
+<p>Let&#8217;s check that we&#8217;re still green <a href="#shot-554" id="shot-554" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot run cucumber</a>&#8201;&#8212;&#8201;and we are!</p>
 </div>
 <div class="paragraph">
 <p>We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
@@ -4891,12 +4902,93 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <div class="sect3">
 <h4 id="_lesson_questions">5.5.1. Lesson ? - Questions</h4>
 <div class="sect4">
-<h5 id="">?</h5>
-<div class="paragraph">
-<p>*</p>
+<h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Write another scenario to triangulate the new behaviour of the Network class</p>
+</li>
+<li>
+<p>Implement the changed behaviour in the Network class</p>
+</li>
+<li>
+<p>Add a new unit test to NetworkTest that specifies the change in behaviour of the Network class&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Explanation:</p>
+<p>Explanation:
+We wrote a new unit test in NetworkTest. We&#8217;ll talk more about this in the next lesson.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_would_we_use_a_docstring">Why would we use a DocString?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It&#8217;s the only way to include multi-line strings in a scenarios</p>
+</li>
+<li>
+<p>It&#8217;s a readable way to include long strings in a scenario&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>DocStrings support multiple languages</p>
+</li>
+<li>
+<p>Cucumber provides a DocString type that provides useful string manipulation features</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The DocString is Gherkin syntax that allows long strings to be readably represented in a scenario.</p>
+</div>
+<div class="paragraph">
+<p>All the magic happens when the DocString is read from the Gherkin. The content of the DocString gets passed to the step definition as a normal String&#8201;&#8212;&#8201;there&#8217;s no corresponding Cucumber type.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_snippets_of_code_are_correct_for_the_step_below">Which of the following snippets of code are correct for the step below?</h5>
+<div class="literalblock">
+<div class="content">
+<pre>Then Simone says
+"""
+Now on that limb there was a branch
+A rare branch and a rattlin' branch
+And the branch on the limb
+And the limb on the tree
+And the tree in the bog
+And the bog down in the valley-o
+"""</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>@Then("Simone says")
+public void simone_says() { }</p>
+</li>
+<li>
+<p>@Then("Simone says")
+public void simone_says(String lyrics) { }&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>@Then("Simone says {string}")
+public void simone_says(String lyrics) { }</p>
+</li>
+<li>
+<p>@Then("Simone says {docstring}")
+public void simone_says(String lyrics) { }</p>
+</li>
+<li>
+<p>@Then("Simone says {docstring}")
+public void simone_says(DocString lyrics) { }</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+When using a DocString in a scenario, you do not add any parameter to the matching Cucumber Expression. You do need to provide a String parameter to the step definition to receive the contents of the DocString.</p>
 </div>
 </div>
 </div>
@@ -4948,7 +5040,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <div class="sect3">
 <h4 id="_lesson_questions_2">5.6.1. Lesson ? - Questions</h4>
 <div class="sect4">
-<h5 id="_2">?</h5>
+<h5 id="">?</h5>
 <div class="paragraph">
 <p>*</p>
 </div>
@@ -4963,7 +5055,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-18 09:30:50 UTC
+Last updated 2020-06-18 11:03:39 UTC
 </div>
 </div>
 <style>
