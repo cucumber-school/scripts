@@ -1,11 +1,18 @@
 require 'shouty'
 
+DEFAULT_RANGE = 100
+
 Before do
   @people = {}
+  @network = Shouty::Network.new(DEFAULT_RANGE)
 end
 
 Given "the range is {int}" do |range|
   @network = Shouty::Network.new(range)
+end
+
+Given "a person named {word}" do |name|
+  @people[name] = Shouty::Person.new(@network, 0)
 end
 
 Given "a person named {word} is located at {int}" do |name, location|
