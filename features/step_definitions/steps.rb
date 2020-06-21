@@ -20,7 +20,9 @@ Given "a person named {word} is located at {int}" do |name, location|
 end
 
 Given "people are located at" do |table|
-  p table.symbolic_hashes
+  table.symbolic_hashes.each do |name: , location: |
+    @people[name] = Shouty::Person.new(@network, location.to_i)
+  end
 end
 
 When "Sean shouts" do
