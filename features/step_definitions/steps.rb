@@ -30,6 +30,11 @@ When "Sean shouts {string}" do |message|
   @message_from_sean = message
 end
 
+When 'Sean shouts the following message' do |message|
+  @people["Sean"].shout(message)
+  @message_from_sean = message
+end
+
 Then "Lucy should hear Sean's message" do
   expect(@people['Lucy'].messages_heard).to eq [@message_from_sean]
 end
