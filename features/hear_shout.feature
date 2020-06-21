@@ -37,5 +37,5 @@ Feature: Hear shout
       And Sean shouts "Free toast!"
       Then Lucy hears the following messages:
         | Free bagels! |
-        | Free toast   |
+        | Free toast!  |
 
