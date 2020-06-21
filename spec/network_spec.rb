@@ -33,4 +33,16 @@ RSpec.describe Shouty::Network do
     expect(lionel.messages_heard).not_to have_received(:hear)
   end
 
+  it "does not broadcast a message over 180 characters even if listener is in range" do
+    sean_location = 0
+
+    long_message = 'x' * 181
+
+    laura = spy(Shouty::Person, location: 10)
+    network.subscribe(laura)
+    network.broadcast(long_message, sean_location)
+
+    expect(laura.messages_heard).not_to have_received(:hear).with(long_message)
+  end
+
 end
