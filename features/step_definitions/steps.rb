@@ -20,8 +20,7 @@ Given "a person named {word} is located at {int}" do |name, location|
 end
 
 Given "people are located at" do |table|
-  # table is a Cucumber::MultilineArgument::DataTable
-  pending # Write code here that turns the phrase above into concrete actions
+  p table.raw[2, 1]
 end
 
 When "Sean shouts" do
