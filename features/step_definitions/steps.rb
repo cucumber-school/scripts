@@ -15,10 +15,6 @@ Given "a person named {word}" do |name|
   @people[name] = Shouty::Person.new(@network, 0)
 end
 
-Given "a person named {word} is located at {int}" do |name, location|
-  @people[name] = Shouty::Person.new(@network, location)
-end
-
 Given "people are located at" do |table|
   table.symbolic_hashes.each do |name: , location: |
     @people[name] = Shouty::Person.new(@network, location.to_i)
