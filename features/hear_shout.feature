@@ -26,6 +26,6 @@ Feature: Hear shout
       And people are located at
         | name  | location |
         | Sean  | 0        |
-        | Larry | 150       |
+        | Larry | 150      |
       When Sean shouts
       Then Larry should not hear a shout
