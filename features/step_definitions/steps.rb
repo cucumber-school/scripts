@@ -45,3 +45,9 @@ end
 Then "Larry should not hear a shout" do
   expect(@people['Larry'].messages_heard.count).to eq 0
 end
+
+Then 'Lucy hears the following messages:' do |expected_messages|
+  actual_messages = @people['Lucy'].messages_heard.map { |message| [ message ] }
+
+  expected_messages.diff!(actual_messages)
+end
