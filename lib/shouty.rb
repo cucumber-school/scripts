@@ -31,8 +31,11 @@ module Shouty
 
     def broadcast(message, shouter_location)
       @listeners.each do |listener|
-        if (listener.location - shouter_location).abs <= @range
-          if message.size <= 180
+        within_range = (listener.location - shouter_location).abs <= @range
+        short_enough = message.size <= 180
+
+        if within_range
+          if short_enough
             listener.hear(message)
           end
         end
