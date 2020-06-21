@@ -42,8 +42,8 @@ Then "Larry should not hear Sean's message" do
   expect(@people['Larry'].messages_heard).not_to include(@message_from_sean)
 end
 
-Then "Larry should not hear a shout" do
-  expect(@people['Larry'].messages_heard.count).to eq 0
+Then "{word} should not hear a shout" do |name|
+  expect(@people[name].messages_heard.count).to eq 0
 end
 
 Then 'Lucy hears the following messages:' do |expected_messages|
