@@ -20,7 +20,7 @@ Given "a person named {word} is located at {int}" do |name, location|
 end
 
 Given "people are located at" do |table|
-  p table.raw[2, 1]
+  p table.symbolic_hashes
 end
 
 When "Sean shouts" do
