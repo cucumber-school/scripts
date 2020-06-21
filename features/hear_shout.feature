@@ -39,3 +39,12 @@ Feature: Hear shout
         | Free bagels! |
         | Free toast!  |
 
+  Rule:  Maximum length of message is 180 characters
+
+    Scenario: Message is too long
+      Given a person named Sean
+      And a person named Lucy
+      When Sean shouts "123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890x"
+      Then Lucy should not hear a shout
+
+
