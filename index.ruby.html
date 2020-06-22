@@ -479,9 +479,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_loops">5. Loops</a>
 <ul class="sectlevel2">
-<li><a href="#_incidental_details">5.1. Incidental details</a></li>
-<li><a href="#_refactoring_to_data_tables">5.2. Refactoring to Data Tables</a></li>
-<li><a href="#_deeper_into_data_tables">5.3. Deeper into Data Tables</a></li>
+<li><a href="#_removing_redundant_scenarios">5.1. Removing redundant scenarios</a></li>
+<li><a href="#_incidental_details">5.2. Incidental details</a></li>
+<li><a href="#_refactoring_to_data_tables">5.3. Refactoring to Data Tables</a></li>
+<li><a href="#_deeper_into_data_tables">5.4. Deeper into Data Tables</a></li>
 </ul>
 </li>
 </ul>
@@ -3436,7 +3437,75 @@ Your browser does not support the video tag.
 <h2 id="_loops">5. Loops</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_incidental_details">5.1. Incidental details</h3>
+<h3 id="_removing_redundant_scenarios">5.1. Removing redundant scenarios</h3>
+<div class="paragraph">
+<p>Welcome back to Cucumber School.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Last time we worked on cleaning up the Shouty features to keep them in sync with the current status of the project. We stripped the scenarios back to only specify the behaviour of passing messages between people. We made it clear that the proximity rule had not yet been implemented.</p>
+</div>
+<div class="paragraph">
+<p>You’ll already remember from the Cucumber expressions chapter how important it is to be expressive in your scenarios, and keep them readable. In this episode we’re going to learn some new tricks with Gherkin that will give you even more flexibility about how you write scenarios.</p>
+</div>
+<div class="paragraph">
+<p>Once again the Shouty developers&#8201;&#8212;&#8201;have been hard at work implementing that proximity rule. Let’s have a look at how they got on.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Right, so those two scenarios we just left as just placeholders: the one where the listener is within range, and the one where the listener is out of range have been fleshed out, and are passing. Fantastic!</p>
+</div>
+<div class="paragraph">
+<p>Let’s review the changes to the feature file in more detail.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>We now have four scenarios: our original two from the last time we looked at the code, and the two placeholders we wrote as reminders.</p>
+</div>
+<div class="paragraph">
+<p>We used the second scenario - Listener hears a different message - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the second scenario.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where the listener is within range is a perfectly good way of checking that the message has been sent correctly.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_3">5.1.1. Lesson 1 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_was_it_a_good_idea_to_delete_the_scenario">Why was it a good idea to delete the scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It doesn&#8217;t help illustrate the rule "Shouts can be heard by other users"&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>No one should give away free coffee</p>
+</li>
+<li>
+<p>There should only be one scenario per rule</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+We created the scenario "Listener hears a different message" to force us to replace our hard-coded implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the second scenario.</p>
+</div>
+<div class="paragraph">
+<p>Keeping excess scenarios is wasteful: they clutter up your feature files and slow down feedback.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_incidental_details">5.2. Incidental details</h3>
 <div class="paragraph">
 <p>
 The first scenario has changed since we last looked at it  - it now specifies the range of a shout and the location of Sean and Lucy. This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
@@ -3565,7 +3634,7 @@ That&#8217;s better. We&#8217;ve removed inessential details, so that each scena
 <p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system . So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_2_questions_4">5.1.1. Lesson 2 - Questions</h4>
+<h4 id="_lesson_2_questions_4">5.2.1. Lesson 2 - Questions</h4>
 <div class="sect4">
 <h5 id="_why_did_we_remove_any_reference_to_range_or_location_from_the_first_scenario_listener_hears_a_message">Why did we remove any reference to range or location from the first scenario "Listener hears a message"?</h5>
 <div class="ulist">
@@ -3667,28 +3736,22 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="sect2">
-<h3 id="_refactoring_to_data_tables">5.2. Refactoring to Data Tables</h3>
+<h3 id="_refactoring_to_data_tables">5.3. Refactoring to Data Tables</h3>
 <div class="paragraph">
-<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again. We’re using two different listeners, Lucy, who’s within range, and Larry, who’s not. It’s always Sean who’s doing the shouting.</p>
-</div>
-<div class="paragraph">
-<p>Notice that we also specify the range in each scenario. We could have just hard-coded it within the system, but having it documented here helps to make the behaviour we’ve specified much easier to understand.</p>
-</div>
-<div class="paragraph">
-<p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.</p>
-</div>
-<div class="paragraph">
-<p>Notice how the steps that create the Sean, Lucy, and Larry are very similar.</p>
+<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again . Notice how the steps  that create the Sean, Lucy, and Larry are very similar.</p>
 </div>
 <div class="paragraph">
 <p>When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:</p>
 </div>
-<div class="literalblock">
+<div class="paragraph">
+<p></p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
 <div class="content">
-<pre>And the following people:
-     | name  | location |
-     | Lucy  |      100 |
-     | Sean  |        0 |</pre>
+<pre class="rouge highlight"><code data-lang="gherkin">      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span> <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span> <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3698,118 +3761,166 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p>Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.</p>
 </div>
 <div class="paragraph">
-<p>As you can see, the step definition implicitly takes a single argument, which as this comment explains is a &lt;ruby&gt;Cucumber::Ast::DataTable&lt;/ruby&gt; &lt;java&gt;cucumber.api.DataTable&lt;/java&gt;. This object has a rich API for using the tabular data.</p>
+<p></p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
+  <span class="c1"># table is a Cucumber::MultilineArgument::DataTable</span>
+  <span class="n">pending</span> <span class="c1"># Write code here that turns the phrase above into concrete actions</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>At its most basic, the table is just a two-dimensional array of arrays.</p>
+<p>As you can see, the step definition implicitly takes a single argument , which as this comment explains is a DataTable. This object has a rich API for using the tabular data.</p>
 </div>
 <div class="paragraph">
-<p>puts table.raw | System.out.println(table.raw());
-run cucumber</p>
+<p>At its most basic, the table is just a two-dimensional array. So, Lucy&#8217;s location can be accessed  by getting the value from array cell (2, 1)</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
+  <span class="nb">p</span> <span class="n">table</span><span class="p">.</span><span class="nf">raw</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>&lt;ruby&gt;
-You don’t have to use a column header row in a data table, but when you do, you can ask for just the data:</p>
+<p></p>
 </div>
 <div class="paragraph">
-<p>puts table.rows
-run cucumber</p>
+<p>You can also turn the table into a List of Maps , where the first row is used for the map keys, and each following row is used for the map values.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
+  <span class="nb">p</span> <span class="n">table</span><span class="p">.</span><span class="nf">symbolic_hashes</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>When you do use column headers, it can be useful to fetch each data row as a hash, with the column names as keys, and the values from the cells in that row.</p>
+<p></p>
 </div>
 <div class="paragraph">
-<p>puts table.hashes
-&lt;/ruby&gt;</p>
+<p>Now we can easily iterate  over these maps and turn them into instances of Person:</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
+  <span class="n">table</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="ss">name: </span><span class="p">,</span> <span class="ss">location: </span><span class="o">|</span>
+    <span class="vi">@people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">,</span> <span class="n">location</span><span class="p">.</span><span class="nf">to_i</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>&lt;java&gt;
-You can also turn the table into a List of Map, where the first row is used for the map keys, and each following row is used for the map values.</p>
-</div>
-<div class="dlist">
-<dl>
-<dt class="hdlist1">System.out.println(table.asMaps(String.class, String.class))</dt>
-<dd>
-<p>&lt;/java&gt;</p>
-</dd>
-</dl>
+<p></p>
 </div>
 <div class="paragraph">
-<p>run cucumber</p>
+<p>With that done, we can update the other scenario  &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>  <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span>  <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Larry</span> <span class="p">|</span> <span class="n">150</span>       <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>and delete our old step definition , which is now unused.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"a person named {word} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span>
+  <span class="vi">@people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">,</span> <span class="n">location</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Now we can easily iterate over these &lt;ruby&gt;hashes&lt;/ruby&gt;&lt;java&gt;maps&lt;/java&gt; and turn them into instances of Person:</p>
+<p></p>
 </div>
 <div class="paragraph">
-<p>table.hashes.each do |row|
-  name = row['name']
-  location = row['location'].to_i
-  @people[name] = Person.new(@network, location)
-end</p>
+<p>Cucumber strips all the white space surrounding each cell , so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.</p>
 </div>
 <div class="paragraph">
-<p>run cucumber</p>
+<p>Notice we’ve still had to convert the location from a string to an integer , because Cucumber can’t know that’s the type of value in our table.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
+  <span class="n">table</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="ss">name: </span><span class="p">,</span> <span class="ss">location: </span><span class="o">|</span>
+    <span class="vi">@people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">,</span> <span class="n">location</span><span class="p">.</span><span class="nf">to_i</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>With that done, we can delete our old step definition, which is now unused.</p>
+<p>To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.</p>
 </div>
 <div class="paragraph">
-<p>delete unused step def</p>
+<p>Instead, we’ll define a simple Whereabouts class to represent the data in the table. </p>
 </div>
-<div class="paragraph">
-<p>Cucumber strips all the white space surrounding each cell, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.</p>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">class</span> <span class="nc">Whereabouts</span>
+  <span class="nb">attr_reader</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:location</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="ss">name: </span><span class="p">,</span> <span class="ss">location: </span><span class="p">)</span>
+    <span class="vi">@name</span>     <span class="o">=</span> <span class="nb">name</span>
+    <span class="vi">@location</span> <span class="o">=</span> <span class="n">location</span><span class="p">.</span><span class="nf">to_i</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
 </div>
-<div class="paragraph">
-<p>&lt;ruby&gt;
-Map Columns (0:19)</p>
-</div>
-<div class="paragraph">
-<p>Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table. You can also use the map_column method for this:</p>
-</div>
-<div class="paragraph">
-<p>table = table.map_column('location') { |raw_location| raw_location.to_i }</p>
-</div>
-<div class="paragraph">
-<p>The new table’s location column will now contain integers rather than the raw strings.
-&lt;/ruby&gt;</p>
-</div>
-<div class="paragraph">
-<p>&lt;java&gt;
-Table conversions (1:08)</p>
-</div>
-<div class="paragraph">
-<p>Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table.</p>
-</div>
-<div class="paragraph">
-<p>If you have a class that has the same field names as the header row in the table, you can have Cucumber automatically convert the table into a list of that class. If our Person object had name and location fields, and didn’t take an instance of Network in its constructor, we could automatically create instances of Person from this table.</p>
-</div>
-<div class="paragraph">
-<p>But things aren’t always that simple.</p>
-</div>
-<div class="paragraph">
-<p>Instead, we’ll define a simple Whereabouts class to represent the data in the table.</p>
-</div>
-<div class="paragraph">
-<p>creates the class</p>
 </div>
 <div class="paragraph">
 <p>We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.</p>
 </div>
 <div class="paragraph">
-<p>Now we can use the asList method on the DataTable to convert the table into a list of Whereabouts.</p>
+<p>Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. </p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">def</span> <span class="nf">define_whereabouts</span><span class="p">(</span><span class="n">whereabouts_hash</span><span class="p">)</span>
+  <span class="no">Whereabouts</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="o">**</span><span class="n">whereabouts_hash</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>changes the code</p>
+<p>Now, if you declare your table parameter as a generic list , Cucumber will automatically convert the table into a list of the generic type for you.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
+  <span class="n">table</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">whereabouts_hash</span><span class="o">|</span>
+    <span class="n">whereabouts</span> <span class="o">=</span> <span class="n">define_whereabouts</span><span class="p">(</span><span class="n">whereabouts_hash</span><span class="p">)</span>
+    <span class="vi">@people</span><span class="p">[</span><span class="n">whereabouts</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">,</span> <span class="n">whereabouts</span><span class="p">.</span><span class="nf">location</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>In fact, you don’t have to explicitly convert the table to a list. If you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you.</p>
-</div>
-<div class="paragraph">
-<p>changes the code again.
-&lt;/java&gt;</p>
+<p>That looks much nicer -  people positioned using a table in the feature file and  really clean code that creates and positions people according to the data.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_3_questions_2">5.2.1. Lesson 3 - Questions</h4>
+<h4 id="_lesson_3_questions_2">5.3.1. Lesson 3 - Questions</h4>
 <div class="sect4">
 <h5 id="_what_is_the_name_of_the_gherkin_syntax_that_allows_you_to_specify_pipe_separated_tabular_data_for_a_step">What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?</h5>
 <div class="ulist">
@@ -3961,7 +4072,7 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_deeper_into_data_tables">5.3. Deeper into Data Tables</h3>
+<h3 id="_deeper_into_data_tables">5.4. Deeper into Data Tables</h3>
 <div class="paragraph">
 <p>open feature file</p>
 </div>
@@ -4090,7 +4201,7 @@ Oops! It looks like we made a typo in our scenario. We should have included excl
 &lt;/java&gt;</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_4_questions_3">5.3.1. Lesson 4 - Questions</h4>
+<h4 id="_lesson_4_questions_3">5.4.1. Lesson 4 - Questions</h4>
 <div class="sect4">
 <h5 id="_why_might_you_use_the_transpose_annotation">Why might you use the @Transpose annotation?</h5>
 <div class="ulist">
@@ -4142,7 +4253,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_lesson_5_questions_3">5.3.2. Lesson 5 - Questions</h4>
+<h4 id="_lesson_5_questions_3">5.4.2. Lesson 5 - Questions</h4>
 <div class="sect4">
 <h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
 <div class="ulist">
@@ -4240,7 +4351,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-22 15:09:52 UTC
+Last updated 2020-06-22 21:17:08 UTC
 </div>
 </div>
 <style>
