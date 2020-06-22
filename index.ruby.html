@@ -479,8 +479,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_loops">5. Loops</a>
 <ul class="sectlevel2">
-<li><a href="#_refactoring_to_data_tables">5.1. Refactoring to Data Tables</a></li>
-<li><a href="#_deeper_into_data_tables">5.2. Deeper into Data Tables</a></li>
+<li><a href="#_incidental_details">5.1. Incidental details</a></li>
+<li><a href="#_refactoring_to_data_tables">5.2. Refactoring to Data Tables</a></li>
+<li><a href="#_deeper_into_data_tables">5.3. Deeper into Data Tables</a></li>
 </ul>
 </li>
 </ul>
@@ -3435,7 +3436,238 @@ Your browser does not support the video tag.
 <h2 id="_loops">5. Loops</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_refactoring_to_data_tables">5.1. Refactoring to Data Tables</h3>
+<h3 id="_incidental_details">5.1. Incidental details</h3>
+<div class="paragraph">
+<p>
+The first scenario has changed since we last looked at it  - it now specifies the range of a shout and the location of Sean and Lucy. This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Let&#8217;s ensure that this scenario includes only essential information for the reader and remove all references to location and range.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+We&#8217;ll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+We&#8217;ve defaulted the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step.</p>
+</div>
+<div class="paragraph">
+<p>
+We&#8217;ll also need to add a step definition that can create a person without the scenario needing to specify where they are located. The step definition gives each person created this way a default location of 0.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"a person named {word}"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span>
+  <span class="vi">@people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Let&#8217;s run Cucumber to check we haven&#8217;t broken anything&#8230;&#8203; and we&#8217;re good!</p>
+</div>
+<div class="paragraph">
+<p>
+Looking at the two new scenarios - Listener is within range &amp; Listener is out of range - we can see that they also contain incidental details. Since their purpose is to illustrate the "Shouts should only be heard if listener is within range" rule, there&#8217;s no need to actually document the content of the shout.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Let&#8217;s remove the details that aren&#8217;t relevant to the range rule.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Lucy should hear a shout
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Next we add a step definition that allows Sean to shout, without needing us to specify the exact message.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span> <span class="s2">"Sean shouts"</span> <span class="k">do</span>
+  <span class="vi">@people</span><span class="p">[</span><span class="s2">"Sean"</span><span class="p">].</span><span class="nf">shout</span><span class="p">(</span><span class="s2">"Hello, world"</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+And finally run Cucumber - and we&#8217;re still green.</p>
+</div>
+<div class="paragraph">
+<p>
+That&#8217;s better. We&#8217;ve removed inessential details, so that each scenario contains only the information needed to illustrate its business rule.</p>
+</div>
+<div class="paragraph">
+<p>The scenarios would still run green if we removed the steps that set the range of a shout  , because the range already has a default value. We&#8217;re not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it&#8217;s an essential part of context for anyone reading them.</p>
+</div>
+<div class="paragraph">
+<p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system . So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_4">5.1.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_did_we_remove_any_reference_to_range_or_location_from_the_first_scenario_listener_hears_a_message">Why did we remove any reference to range or location from the first scenario "Listener hears a message"?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>They are essential to system behaviour</p>
+</li>
+<li>
+<p>They are incidental to the rule being illustrated&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>They were only needed to triangulate the implementation</p>
+</li>
+<li>
+<p>They made the scenario too long</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The first scenario exists to illustrate the rule "Listener hears a message." Since the behaviour is not affected by the range of a shout, neither the range nor the distance between the shouter and the listener is relevant. The information is therefore <em>incidental</em> and should be omitted from the scenario.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_do_we_need_to_know_the_names_of_people_using_shouty">Why do we need to know the names of people using Shouty?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It&#8217;s important that every person in the system has a real name</p>
+</li>
+<li>
+<p>It&#8217;s necessary to use <em>persona</em>, where the shouter is called Sean and the listeners are called Lucy or Larry</p>
+</li>
+<li>
+<p>It doesn&#8217;t matter what we call them&#8201;&#8212;&#8201;but the automation code does need to be able to tell them apart&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>The automation code has been written to recognise the names Sean, Lucy, and Larry</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+It&#8217;s necessary to be able to distinguish the people that are involved in the scenario. We have called them Sean, Lucy, and Larry, but we could have called them Shouter, Listener1, and Listener2 (or even User1, User2, and User3).</p>
+</div>
+<div class="paragraph">
+<p>We find that using <em>persona</em> (where the name gives an indication of the person&#8217;s purpose in the scenario) can be a useful way of conveying information, without cluttering up the scenario. If the names conveyed no information at all, they would not contribute to the readability of the scenario, and could be considered incidental.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_pieces_of_information_are_incidental_in_this_scenario">Which pieces of information are incidental in this scenario?</h5>
+<div class="paragraph">
+<p>Rule: Offer is only valid for Shouty users
+  Scenario: Customer is not a Shouty user
+    Given Nora is not a Shouty user
+    And Sean shouted "free bagels until midday"
+    When Nora orders a bagel and a coffee at 11:00am
+    Then she should be charged 75¢ for the bagel</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Nora is not a Shouty user</p>
+</li>
+<li>
+<p>Sean is offering "free bagels!"</p>
+</li>
+<li>
+<p>Sean&#8217;s offer is only valid until midday&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Nora orders a bagel</p>
+</li>
+<li>
+<p>Nora orders a coffee&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Nora places her order at 11:00am&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Nora gets charged for the bagel</p>
+</li>
+<li>
+<p>Nora get charged 75¢ for the bagel&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+This scenario is illustrating the rule that the "offer is only valid for Shouty users". It&#8217;s therefore essential to know that Nora is not a Shouty user, because this means that she is not eligible for the offer.</p>
+</div>
+<div class="paragraph">
+<p>We don&#8217;t need to know that Nora orders a coffee, because that has no relevance to the rule. Nor do we need to know when the offer expires, when Nora places the order, or how much she will be charged&#8201;&#8212;&#8201;there will be other rules (and other scenarios) that illustrate that behaviour.</p>
+</div>
+<div class="paragraph">
+<p>Although it&#8217;s incidental that the offer is for bagels, it is necessary to illustrate that Nora has ordered the item that is on offer to Shouty users&#8201;&#8212;&#8201;and that she will be charged for that item. We use "bagels" as an example to make the scenario easier to read, not because there&#8217;s something inherently special about bagels!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_refactoring_to_data_tables">5.2. Refactoring to Data Tables</h3>
 <div class="paragraph">
 <p>Let&#8217;s look at the two scenarios that illustrate the rule about range again. We’re using two different listeners, Lucy, who’s within range, and Larry, who’s not. It’s always Sean who’s doing the shouting.</p>
 </div>
@@ -3577,7 +3809,7 @@ Table conversions (1:08)</p>
 &lt;/java&gt;</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_3_questions_2">5.1.1. Lesson 3 - Questions</h4>
+<h4 id="_lesson_3_questions_2">5.2.1. Lesson 3 - Questions</h4>
 <div class="sect4">
 <h5 id="_what_is_the_name_of_the_gherkin_syntax_that_allows_you_to_specify_pipe_separated_tabular_data_for_a_step">What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?</h5>
 <div class="ulist">
@@ -3729,7 +3961,7 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_deeper_into_data_tables">5.2. Deeper into Data Tables</h3>
+<h3 id="_deeper_into_data_tables">5.3. Deeper into Data Tables</h3>
 <div class="paragraph">
 <p>open feature file</p>
 </div>
@@ -3858,7 +4090,7 @@ Oops! It looks like we made a typo in our scenario. We should have included excl
 &lt;/java&gt;</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_4_questions_3">5.2.1. Lesson 4 - Questions</h4>
+<h4 id="_lesson_4_questions_3">5.3.1. Lesson 4 - Questions</h4>
 <div class="sect4">
 <h5 id="_why_might_you_use_the_transpose_annotation">Why might you use the @Transpose annotation?</h5>
 <div class="ulist">
@@ -3910,7 +4142,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_lesson_5_questions_3">5.2.2. Lesson 5 - Questions</h4>
+<h4 id="_lesson_5_questions_3">5.3.2. Lesson 5 - Questions</h4>
 <div class="sect4">
 <h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
 <div class="ulist">
@@ -4008,7 +4240,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-22 14:48:17 UTC
+Last updated 2020-06-22 15:09:52 UTC
 </div>
 </div>
 <style>
