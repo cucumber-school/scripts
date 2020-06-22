@@ -28,7 +28,7 @@ Given "a person named {word}" do |name|
   @people[name] = Shouty::Person.new(@network, 0)
 end
 
-Given 'people are located at' do |table|
+Given "people are located at" do |table|
   table.transpose.symbolic_hashes.each do |whereabouts_hash|
     whereabouts = define_whereabouts(whereabouts_hash)
     @people[whereabouts.name] = Shouty::Person.new(@network, whereabouts.location)

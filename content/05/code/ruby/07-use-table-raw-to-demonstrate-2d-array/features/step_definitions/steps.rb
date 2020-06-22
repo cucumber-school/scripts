@@ -19,9 +19,8 @@ Given "a person named {word} is located at {int}" do |name, location|
   @people[name] = Shouty::Person.new(@network, location)
 end
 
-Given('people are located at') do |table|
+Given "people are located at" do |table|
   p table.raw
-  pending # Write code here that turns the phrase above into concrete actions
 end
 
 When "Sean shouts" do
