@@ -483,6 +483,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_incidental_details">5.2. Incidental details</a></li>
 <li><a href="#_refactoring_to_data_tables">5.3. Refactoring to Data Tables</a></li>
 <li><a href="#_deeper_into_data_tables">5.4. Deeper into Data Tables</a></li>
+<li><a href="#_docstring">5.5. DocString</a></li>
 </ul>
 </li>
 </ul>
@@ -4074,131 +4075,130 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 <div class="sect2">
 <h3 id="_deeper_into_data_tables">5.4. Deeper into Data Tables</h3>
 <div class="paragraph">
-<p>open feature file</p>
+<p><a href="#shot-199" id="shot-199" title="open feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: open feature file</a></p>
 </div>
 <div class="paragraph">
-<p>Now the way we’ve specified this data is OK, but it’s quite hard to visualise where each of the people is stood. It might be better to express it like this instead:</p>
+<p>The way that we’ve specified this data is OK, but your product owner would prefer you to express it like this instead:</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Lucy</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">location</span> <span class="p">|</span>  <span class="n">0</span>   <span class="p">|</span> <span class="n">50</span>   <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Lucy should hear a shout
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Larry</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">location</span> <span class="p">|</span>  <span class="n">0</span>   <span class="p">|</span> <span class="n">150</span>   <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>| name     | Sean | Lucy | Larry |
-| location | 0    | 100  | 150   |</p>
+<p>It&#8217;s always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.</p>
 </div>
 <div class="paragraph">
-<p>Do you like that better? You do, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.</p>
+<p>If you annotate the method parameter with the @Transpose annotation <a href="#shot-200" id="shot-200" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a>, Cucumber will turn each row into a column before passing it to the step definition.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="n">table</span><span class="p">.</span><span class="nf">transpose</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">whereabouts_hash</span><span class="o">|</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>&lt;ruby&gt;
-The Data Table has a transpose method which returns a new DataTable where each row is turned into a column.</p>
-</div>
-<div class="paragraph">
-<p>add call to transpose</p>
-</div>
-<div class="paragraph">
-<p>Now we can use the transposed table object as we did before.</p>
-</div>
-<div class="paragraph">
-<p>Let’s tidy up this code so as not to keep using all these temporary variables.</p>
-</div>
-<div class="paragraph">
-<p>removes all the <code>table =</code> bits and uses dots instead.
-&lt;/ruby&gt;</p>
-</div>
-<div class="paragraph">
-<p>&lt;java&gt;
-If you annotate the method parameter with the @Transpose annotation, Cucumber will turn each row into a column before passing it to the step definition. You can also call the transpose method on a DataTable to explicitly create a new transposed DataTable.
-&lt;/java&gt;</p>
-</div>
-<div class="paragraph">
-<p>Introduce Data Table for Outcome Step</p>
+<p><a href="#shot-201" id="shot-201" title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: mvn test</a></p>
 </div>
 <div class="paragraph">
 <p>Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
 </div>
 <div class="paragraph">
-<p>One rule that we’ve been implying but have never actually explored with an example is that people remember everything they’ve heard. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once:</p>
+<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once:</p>
 </div>
-<div class="paragraph">
-<p>Scenario: Two shouts
-  When Sean shouts "Free bagels!"
-  And Sean shouts "Free toast!"
-  Then Lucy hears the following messages:
-    | Free bagels |
-    | Free toast  |</p>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">should</span> <span class="err">be</span> <span class="err">able</span> <span class="err">to</span> <span class="err">hear</span> <span class="err">multiple</span> <span class="err">shouts</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free bagels!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels</span>  <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast</span>   <span class="p">|</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.</p>
 </div>
 <div class="paragraph">
-<p>So how do we implement this step definition? Well, the DataTable has a really handy method called diff! that we can use to compare two Data Tables. diff! will pass if the tables are the same, and fail if they’re different.</p>
+<p>So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s run Cucumber to generate the new step definition <a href="#shot-202" id="shot-202" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a> and paste it into our StepDefinitions class <a href="#shot-203" id="shot-203" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5</a></p>
 </div>
 <div class="paragraph">
 <p>So we need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.</p>
 </div>
 <div class="paragraph">
-<p>&lt;ruby&gt;
-A two-dimensional Array will do, so we can just map over Lucy’s messages and create a new single-item Array for each row.</p>
+<p>A List of List of String will do <a href="#shot-204" id="shot-204" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a>, so we can just iterate over Lucy’s messages and create a new single-item List for each row.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="n">actual_messages</span> <span class="o">=</span> <span class="vi">@people</span><span class="p">[</span><span class="s1">'Lucy'</span><span class="p">].</span><span class="nf">messages_heard</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span> <span class="p">[</span> <span class="n">message</span> <span class="p">]</span> <span class="p">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Now we can pass that two-dimensional Array to the diff method on the table of expected messages passed in from the Gherkin.</p>
+<p>Now we can pass that list to the diff method <a href="#shot-205" id="shot-205" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a> on the table of expected messages passed in from the Gherkin.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="n">expected_messages</span><span class="p">.</span><span class="nf">diff!</span><span class="p">(</span><span class="n">actual_messages</span><span class="p">)</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Then(/^Lucy hears the following messages:$/) do |expected_messages|
-  lucy = @people['Lucy']
-  actual_messages = lucy.messages_heard.map { |message| [ message ] }
-  expected_messages.diff!(actual_messages)
-end</p>
+<p><a href="#shot-206" id="shot-206" title="runs cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: runs cucumber</a></p>
 </div>
 <div class="paragraph">
-<p>&lt;/ruby&gt;</p>
+<p>Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
 </div>
 <div class="paragraph">
-<p>&lt;java&gt;
-A List of List of String will do, so we can just iterate over Lucy’s messages and create a new single-item List for each row.</p>
+<p>Let’s fix just one of these <a href="#shot-207" id="shot-207" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a> so you can see how the diff output changes.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin.
-&lt;/java&gt;</p>
+<p><a href="#shot-208" id="shot-208" title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: mvn test</a>
+The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.</p>
 </div>
 <div class="paragraph">
-<p>runs cucumber</p>
+<p>Let’s fix this last typo <a href="#shot-209" id="shot-209" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a>, and we should be green again.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">toast!</span>  <span class="p">|</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>&lt;ruby&gt;
-Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values in orange, and the actual values in white.</p>
+<p><a href="#shot-210" id="shot-210" title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: mvn test</a></p>
 </div>
 <div class="paragraph">
-<p>Let’s fix just one of these so you can see how the diff output changes.</p>
-</div>
-<div class="paragraph">
-<p>changes bagels to bagels! in the feature.</p>
-</div>
-<div class="paragraph">
-<p>The matching bagels! line is green, and for the mismatched row, the actual output is white, and the expected output is orange.</p>
-</div>
-<div class="paragraph">
-<p>Let’s fix this last typo, and we should be green again.</p>
-</div>
-<div class="paragraph">
-<p>Great.
-&lt;/ruby&gt;
-&lt;java&gt;
-Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
-</div>
-<div class="paragraph">
-<p>Let’s fix just one of these so you can see how the diff output changes.</p>
-</div>
-<div class="paragraph">
-<p>changes bagels to bagels! in the feature.</p>
-</div>
-<div class="paragraph">
-<p>The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.</p>
-</div>
-<div class="paragraph">
-<p>Let’s fix this last typo, and we should be green again.</p>
-</div>
-<div class="paragraph">
-<p>Great.
-&lt;/java&gt;</p>
+<p>Great.</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_4_questions_3">5.4.1. Lesson 4 - Questions</h4>
@@ -4252,8 +4252,162 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_docstring">5.5. DocString</h3>
+<div class="paragraph">
+<p>When writing scenarios, occasionally we want to use a really long piece of data.</p>
+</div>
+<div class="paragraph">
+<p>For example, let’s introduce a new rule about the maximum length of a message <a href="#shot-211" id="shot-211" title="New rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: New rule</a></p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span>  <span class="err">Maximum</span> <span class="err">length</span> <span class="err">of</span> <span class="err">message</span> <span class="err">is</span> <span class="err">180</span> <span class="err">characters</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and add a scenario to illustrate it <a href="#shot-212" id="shot-212" title="New scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: New scenario</a>, making the string just over the boundary of the rule:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Message is too long
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890x"</span>
+      <span class="nf">Then </span>Lucy should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s pretty ugly isn’t it!</p>
+</div>
+<div class="paragraph">
+<p>Still, we’ll press on and get it to green, then we’ll show you how to clean it up.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-213" id="shot-213" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: run Cucumber</a> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition <a href="#shot-214" id="shot-214" title="Modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: Modify stepdef</a></p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span> <span class="s2">"{word} should not hear a shout"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span>
+  <span class="n">expect</span><span class="p">(</span><span class="vi">@people</span><span class="p">[</span><span class="nb">name</span><span class="p">].</span><span class="nf">messages_heard</span><span class="p">.</span><span class="nf">count</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="mi">0</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-215" id="shot-215" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: run cucumber</a></p>
+</div>
+<div class="paragraph">
+<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests and add a new example to specify this extra responsibility.</p>
+</div>
+<div class="paragraph">
+<p>We’ll create a 181-character message like this <a href="#shot-216" id="shot-216" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a> and then assert that the message should not be heard when it’s broadcast.</p>
+</div>
+<div class="listingblock">
+<div class="title">network_spec.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="n">it</span> <span class="s2">"does not broadcast a message over 180 characters even if listener is in range"</span> <span class="k">do</span>
+    <span class="n">sean_location</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">long_message</span> <span class="o">=</span> <span class="s1">'x'</span> <span class="o">*</span> <span class="mi">181</span>
+
+    <span class="n">laura</span> <span class="o">=</span> <span class="n">spy</span><span class="p">(</span><span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">,</span> <span class="ss">location: </span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">network</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="n">laura</span><span class="p">)</span>
+    <span class="n">network</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="n">long_message</span><span class="p">,</span> <span class="n">sean_location</span><span class="p">)</span>
+
+    <span class="n">expect</span><span class="p">(</span><span class="n">laura</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">not_to</span> <span class="n">have_received</span><span class="p">(</span><span class="ss">:hear</span><span class="p">).</span><span class="nf">with</span><span class="p">(</span><span class="n">long_message</span><span class="p">)</span>
+  <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s run that test <a href="#shot-217" id="shot-217" title="run Cucumber - show the unit test results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run Cucumber - show the unit test results</a>. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
+</div>
+<div class="paragraph">
+<p>It looks like we’re already implementing the proximity rule here <a href="#shot-218" id="shot-218" title="Network proximity logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: Network proximity logic</a> in the broadcast method. Let’s add another if statement here about the message length.</p>
+</div>
+<div class="listingblock">
+<div class="title">shouty.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">          <span class="k">if</span> <span class="n">message</span><span class="p">.</span><span class="nf">size</span> <span class="o">&lt;=</span> <span class="mi">180</span>
+            <span class="n">listener</span><span class="p">.</span><span class="nf">hear</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+          <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-219" id="shot-219" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run cucumber</a> Run the unit test again… and it’s passing. Great.</p>
+</div>
+<div class="paragraph">
+<p>The code here has got a little bit messy and hard to read. One very basic move we could make to improve it would be to just extract a couple of temporary variables.</p>
+</div>
+<div class="listingblock">
+<div class="title">shouty.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">      <span class="vi">@listeners</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">listener</span><span class="o">|</span>
+        <span class="n">within_range</span> <span class="o">=</span> <span class="p">(</span><span class="n">listener</span><span class="p">.</span><span class="nf">location</span> <span class="o">-</span> <span class="n">shouter_location</span><span class="p">).</span><span class="nf">abs</span> <span class="o">&lt;=</span> <span class="vi">@range</span>
+        <span class="n">short_enough</span> <span class="o">=</span> <span class="n">message</span><span class="p">.</span><span class="nf">size</span> <span class="o">&lt;=</span> <span class="mi">180</span>
+
+        <span class="k">if</span> <span class="n">within_range</span>
+          <span class="k">if</span> <span class="n">short_enough</span>
+            <span class="n">listener</span><span class="p">.</span><span class="nf">hear</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+          <span class="k">end</span>
+        <span class="k">end</span>
+      <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-220" id="shot-220" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run cucumber</a> Let’s just run the tests to check. Great - everything’s still green.</p>
+</div>
+<div class="paragraph">
+<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString.</p>
+</div>
+<div class="paragraph">
+<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Message is too long
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts the following message
+        <span class="s">"""
+        This is a really long message
+        so long in fact that I am not going to
+        be allowed to send it, at least if I keep
+        typing like this until the length is over
+        the limit of 180 characters.
+        """</span>
+      <span class="nf">Then </span>Lucy should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now the scenario is much more readable.</p>
+</div>
+<div class="paragraph">
+<p>We have to add a new step definition too <a href="#shot-221" id="shot-221" title="sean_shouts_the_following_message" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: sean_shouts_the_following_message</a>. It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span> <span class="s1">'Lucy hears the following messages:'</span> <span class="k">do</span> <span class="o">|</span><span class="n">expected_messages</span><span class="o">|</span>
+  <span class="n">actual_messages</span> <span class="o">=</span> <span class="vi">@people</span><span class="p">[</span><span class="s1">'Lucy'</span><span class="p">].</span><span class="nf">messages_heard</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span> <span class="p">[</span> <span class="n">message</span> <span class="p">]</span> <span class="p">}</span>
+
+  <span class="n">expected_messages</span><span class="p">.</span><span class="nf">diff!</span><span class="p">(</span><span class="n">actual_messages</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s check that we&#8217;re still green <a href="#shot-222" id="shot-222" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: run cucumber</a>&#8201;&#8212;&#8201;and we are!</p>
+</div>
+<div class="paragraph">
+<p>We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
+</div>
 <div class="sect3">
-<h4 id="_lesson_5_questions_3">5.4.2. Lesson 5 - Questions</h4>
+<h4 id="_lesson_5_questions_3">5.5.1. Lesson 5 - Questions</h4>
 <div class="sect4">
 <h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
 <div class="ulist">
@@ -4351,7 +4505,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-22 21:17:08 UTC
+Last updated 2020-06-23 13:45:42 UTC
 </div>
 </div>
 <style>
