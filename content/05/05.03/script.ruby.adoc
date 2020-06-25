@@ -1,96 +1,116 @@
 include::./title.adoc[]
 
-Let's look at the two scenarios that illustrate the rule about range again. We’re using two different listeners, Lucy, who’s within range, and Larry, who’s not. It’s always Sean who’s doing the shouting.
-
-Notice that we also specify the range in each scenario. We could have just hard-coded it within the system, but having it documented here helps to make the behaviour we’ve specified much easier to understand.
-
-A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
-
-Notice how the steps that create the Sean, Lucy, and Larry are very similar.
+Let's look at the two scenarios that illustrate the rule about range again shot::[1,"show the range rule & scenarios"]. Notice how the steps shot::[2,"compare the two scenarios"] that create the Sean, Lucy, and Larry are very similar.
 
 When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:
 
- And the following people:
-      | name  | location |
-      | Lucy  |      100 |
-      | Sean  |        0 |
+shot::[3,feature file]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/ruby/05-location-specified-in-data-table/features/hear_shout.feature[lines=17..19]
+----
 
 Well, we’re in luck. You can!
 
 Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.
 
-As you can see, the step definition implicitly takes a single argument, which as this comment explains is a <ruby>Cucumber::Ast::DataTable</ruby> <java>cucumber.api.DataTable</java>. This object has a rich API for using the tabular data.
+shot::[4,"mvn test, copy snippet, paste into StepDefinition.java"]
 
-At its most basic, the table is just a two-dimensional array of arrays.
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/06-table-snippet-added/features/step_definitions/steps.rb[lines=22..25]
+----
 
-puts table.raw | System.out.println(table.raw());
-run cucumber
+As you can see, the step definition implicitly takes a single argument shot::[5,"highlight stepdef parameters"], which as this comment explains is a DataTable. This object has a rich API for using the tabular data.
 
-<ruby>
-You don’t have to use a column header row in a data table, but when you do, you can ask for just the data:
+At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed shot::[6,"Print out a single cell value"] by getting the value from array cell (2, 1)
 
-puts table.rows
-run cucumber
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/07-use-table-raw-to-demonstrate-2d-array/features/step_definitions/steps.rb[lines=22..24]
+----
 
-When you do use column headers, it can be useful to fetch each data row as a hash, with the column names as keys, and the values from the cells in that row.
+shot::[7,"run Cucumber, highlight 'Lucy's location'"]
 
-puts table.hashes
-</ruby>
+You can also turn the table into a List of Maps shot::[8,"Print out data table"], where the first row is used for the map keys, and each following row is used for the map values.
 
-<java>
-You can also turn the table into a List of Map, where the first row is used for the map keys, and each following row is used for the map values.
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/08-table-as-symbolic-hashes/features/step_definitions/steps.rb[lines=22..24]
+----
 
-System.out.println(table.asMaps(String.class, String.class));;
-</java>
+shot::[9,"run Cucumber, highlight data table output"]
 
-run cucumber
+Now we can easily iterate shot::[10,"write the loop"] over these maps and turn them into instances of Person:
 
-Now we can easily iterate over these <ruby>hashes</ruby><java>maps</java> and turn them into instances of Person:
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/09-iterate-over-people-in-table/features/step_definitions/steps.rb[lines=22..26]
+----
 
-table.hashes.each do |row|
-  name = row['name']
-  location = row['location'].to_i
-  @people[name] = Person.new(@network, location)
-end
+shot::[11,"run cucumber -- all green"]
 
-run cucumber
 
-With that done, we can delete our old step definition, which is now unused.
+With that done, we can update the other scenario shot::[12,"update other scenario"] ...
 
-delete unused step def
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/resources/shouty/hear_shout.feature[lines=24..31]
+----
 
-Cucumber strips all the white space surrounding each cell, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
+... and delete our old step definition shot::[13,"delete unused step def"], which is now unused.
 
-<ruby>
-Map Columns (0:19)
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/09-iterate-over-people-in-table/features/step_definitions/steps.rb[lines=18..20]
+----
 
-Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table. You can also use the map_column method for this:
+shot::[14,"run cucumber"]
 
-table = table.map_column('location') { |raw_location| raw_location.to_i }
+Cucumber strips all the white space surrounding each cell shot::[15,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
 
-The new table’s location column will now contain integers rather than the raw strings.
-</ruby>
+Notice we’ve still had to convert the location from a string to an integer shot::[16,"Conversion in step def"], because Cucumber can’t know that’s the type of value in our table.
 
-<java>
-Table conversions (1:08)
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/10-changed-other-scenario-and-deleted-unused-stepdef/features/step_definitions/steps.rb[lines=18..22]
+----
 
-Notice we’ve still had to convert the location from a string to an integer, because Cucumber can’t know that’s the type of value in our table.
+To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
 
-If you have a class that has the same field names as the header row in the table, you can have Cucumber automatically convert the table into a list of that class. If our Person object had name and location fields, and didn’t take an instance of Network in its constructor, we could automatically create instances of Person from this table.
+Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::[17,"creates the class"]
 
-But things aren’t always that simple.
-
-Instead, we’ll define a simple Whereabouts class to represent the data in the table.
-
-creates the class
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/12-use-whereabouts-class/features/step_definitions/steps.rb[lines=5..12]
+----
 
 We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
 
-Now we can use the asList method on the DataTable to convert the table into a list of Whereabouts.
+Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. shot::[18,"write defineWhereabouts()"]
 
-changes the code
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/12-use-whereabouts-class/features/step_definitions/steps.rb[lines=14..16]
+----
 
-In fact, you don’t have to explicitly convert the table to a list. If you declare your table parameter as a generic list, Cucumber will automatically convert the table into a list of the generic type for you.
+Now, if you declare your table parameter as a generic list shot::[19,"modify stepdef"], Cucumber will automatically convert the table into a list of the generic type for you.
 
-changes the code again.
-</java>
+.steps.rb
+[source,ruby]
+----
+include::../code/ruby/12-use-whereabouts-class/features/step_definitions/steps.rb[lines=31..36]
+----
+
+That looks much nicer - shot::[20,"hear_shout.feature data tables"] people positioned using a table in the feature file and shot::[21,"people_are_located_at()"] really clean code that creates and positions people according to the data.
