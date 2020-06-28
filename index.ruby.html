@@ -3871,54 +3871,20 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p>To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.</p>
-</div>
-<div class="paragraph">
-<p>Instead, we’ll define a simple Whereabouts class to represent the data in the table. </p>
-</div>
-<div class="listingblock">
-<div class="title">steps.rb</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="k">class</span> <span class="nc">Whereabouts</span>
-  <span class="nb">attr_reader</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:location</span>
-
-  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="ss">name: </span><span class="p">,</span> <span class="ss">location: </span><span class="p">)</span>
-    <span class="vi">@name</span>     <span class="o">=</span> <span class="nb">name</span>
-    <span class="vi">@location</span> <span class="o">=</span> <span class="n">location</span><span class="p">.</span><span class="nf">to_i</span>
-  <span class="k">end</span>
-<span class="k">end</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.</p>
-</div>
-<div class="paragraph">
-<p>Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. </p>
-</div>
-<div class="listingblock">
-<div class="title">steps.rb</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="k">def</span> <span class="nf">define_whereabouts</span><span class="p">(</span><span class="n">whereabouts_hash</span><span class="p">)</span>
-  <span class="no">Whereabouts</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="o">**</span><span class="n">whereabouts_hash</span><span class="p">)</span>
-<span class="k">end</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now, if you declare your table parameter as a generic list , Cucumber will automatically convert the table into a list of the generic type for you.</p>
-</div>
-<div class="listingblock">
-<div class="title">steps.rb</div>
-<div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
-  <span class="n">table</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">whereabouts_hash</span><span class="o">|</span>
-    <span class="n">whereabouts</span> <span class="o">=</span> <span class="n">define_whereabouts</span><span class="p">(</span><span class="n">whereabouts_hash</span><span class="p">)</span>
-    <span class="vi">@people</span><span class="p">[</span><span class="n">whereabouts</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">,</span> <span class="n">whereabouts</span><span class="p">.</span><span class="nf">location</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
 <p>That looks much nicer -  people positioned using a table in the feature file and  really clean code that creates and positions people according to the data.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>  <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span>  <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Larry</span> <span class="p">|</span> <span class="n">150</span>       <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_lesson_3_questions_2">5.3.1. Lesson 3 - Questions</h4>
@@ -4104,12 +4070,12 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 <p>It&#8217;s always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.</p>
 </div>
 <div class="paragraph">
-<p>If you annotate the method parameter with the @Transpose annotation , Cucumber will turn each row into a column before passing it to the step definition.</p>
+<p>If you call the <code>transpose</code> method on the table , Cucumber will turn each row into a column before passing it to the step definition.</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="n">table</span><span class="p">.</span><span class="nf">transpose</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">whereabouts_hash</span><span class="o">|</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="n">table</span><span class="p">.</span><span class="nf">transpose</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="ss">name: </span><span class="p">,</span> <span class="ss">location: </span><span class="o">|</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4505,7 +4471,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-25 07:09:53 UTC
+Last updated 2020-06-28 20:41:11 UTC
 </div>
 </div>
 <style>
