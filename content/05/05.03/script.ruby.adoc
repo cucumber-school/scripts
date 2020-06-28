@@ -85,32 +85,10 @@ Notice we’ve still had to convert the location from a string to an integer sho
 include::../code/ruby/10-changed-other-scenario-and-deleted-unused-stepdef/features/step_definitions/steps.rb[lines=18..22]
 ----
 
-To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
-
-Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::[17,"creates the class"]
-
-.steps.rb
-[source,ruby]
-----
-include::../code/ruby/12-use-whereabouts-class/features/step_definitions/steps.rb[lines=5..12]
-----
-
-We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
-
-Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. shot::[18,"write defineWhereabouts()"]
-
-.steps.rb
-[source,ruby]
-----
-include::../code/ruby/12-use-whereabouts-class/features/step_definitions/steps.rb[lines=14..16]
-----
-
-Now, if you declare your table parameter as a generic list shot::[19,"modify stepdef"], Cucumber will automatically convert the table into a list of the generic type for you.
-
-.steps.rb
-[source,ruby]
-----
-include::../code/ruby/12-use-whereabouts-class/features/step_definitions/steps.rb[lines=31..36]
-----
-
 That looks much nicer - shot::[20,"hear_shout.feature data tables"] people positioned using a table in the feature file and shot::[21,"people_are_located_at()"] really clean code that creates and positions people according to the data.
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/resources/shouty/hear_shout.feature[lines=24..31]
+----

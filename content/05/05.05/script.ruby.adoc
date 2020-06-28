@@ -7,14 +7,14 @@ For example, let’s introduce a new rule about the maximum length of a message 
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/ruby/17-max-length-rule/features/hear_shout.feature[lines=42]
+include::../code/ruby/16-max-length-rule/features/hear_shout.feature[lines=42]
 ----
 
 ...and add a scenario to illustrate it shot::[2,"New scenario"], making the string just over the boundary of the rule:
 
 [source,gherkin]
 ----
-include::../code/ruby/17-max-length-rule/features/hear_shout.feature[lines=44..48]
+include::../code/ruby/16-max-length-rule/features/hear_shout.feature[lines=44..48]
 ----
 
 That’s pretty ugly isn’t it!
@@ -26,7 +26,7 @@ shot::[3,"run Cucumber"] Our existing step definition handles that ugly step wit
 .steps.rb
 [source,ruby]
 ----
-include::../code/ruby/18-parameterise-stepdef/features/step_definitions/steps.rb[lines=59..61]
+include::../code/ruby/17-parameterise-stepdef/features/step_definitions/steps.rb[lines=45..47]
 ----
 
 shot::[5,"run cucumber"]
@@ -38,7 +38,7 @@ We’ll create a 181-character message like this shot::[6,] and then assert that
 .network_spec.rb
 [source,ruby]
 ----
-include::../code/ruby/19-add-test-to-networktest/spec/network_spec.rb[lines=36..46]
+include::../code/ruby/18-add-test-to-networktest/spec/network_spec.rb[lines=36..46]
 ----
 
 Let’s run that test shot::[7,"run Cucumber - show the unit test results"]. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?
@@ -48,7 +48,7 @@ It looks like we’re already implementing the proximity rule here shot::[8,"Net
 .shouty.rb
 [source,ruby]
 ----
-include::../code/ruby/20-implement-maximum-length/lib/shouty.rb[lines=35..37]
+include::../code/ruby/19-implement-maximum-length/lib/shouty.rb[lines=35..37]
 ----
 
 shot::[9,"run cucumber"] Run the unit test again… and it’s passing. Great.
@@ -58,7 +58,7 @@ The code here has got a little bit messy and hard to read. One very basic move w
 .shouty.rb
 [source,ruby]
 ----
-include::../code/ruby/21-tidy-up-network-logic/lib/shouty.rb[lines=33..42]
+include::../code/ruby/20-tidy-up-network-logic/lib/shouty.rb[lines=33..42]
 ----
 
 That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.
@@ -71,7 +71,7 @@ DocStrings allow you to specify a text argument for a step that spans over multi
 
 [source,gherkin]
 ----
-include::../code/ruby/22-docstring/features/hear_shout.feature[lines=44..55]
+include::../code/ruby/21-docstring/features/hear_shout.feature[lines=44..55]
 ----
 
 Now the scenario is much more readable.
@@ -81,7 +81,7 @@ We have to add a new step definition too shot::[11,"sean_shouts_the_following_me
 .steps.rb
 [source,ruby]
 ----
-include::../code/ruby/22-docstring/features/step_definitions/steps.rb[lines=68..72]
+include::../code/ruby/21-docstring/features/step_definitions/steps.rb[lines=54..58]
 ----
 
 Let's check that we're still green shot::[12,"run cucumber"] -- and we are!

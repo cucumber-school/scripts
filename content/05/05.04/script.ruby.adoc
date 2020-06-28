@@ -7,17 +7,17 @@ The way that we’ve specified this data is OK, but your product owner would pre
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/ruby/13-transpose-annotation/features/hear_shout.feature[lines=15..29]
+include::../code/ruby/12-transpose-annotation/features/hear_shout.feature[lines=15..29]
 ----
 
 It's always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.
 
-If you annotate the method parameter with the @Transpose annotation shot::[2], Cucumber will turn each row into a column before passing it to the step definition.
+If you call the `transpose` method on the table shot::[2], Cucumber will turn each row into a column before passing it to the step definition.
 
 .steps.rb
 [source, ruby]
 ----
-include::../code/ruby/13-transpose-annotation/features/step_definitions/steps.rb[lines=32]
+include::../code/ruby/12-transpose-annotation/features/step_definitions/steps.rb[lines=19]
 ----
 
 shot::[3,mvn test]
@@ -29,7 +29,7 @@ One rule that we’ve been implying but have never actually explored with an exa
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/ruby/14-diff/features/hear_shout.feature[lines=31..40]
+include::../code/ruby/13-diff/features/hear_shout.feature[lines=31..40]
 ----
 
 See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.
@@ -45,7 +45,7 @@ A List of List of String will do shot::[6], so we can just iterate over Lucy’s
 .steps.rb
 [source, ruby]
 ----
-include::../code/ruby/14-diff/features/step_definitions/steps.rb[lines=64]
+include::../code/ruby/13-diff/features/step_definitions/steps.rb[lines=50]
 ----
 
 Now we can pass that list to the diff method shot::[7] on the table of expected messages passed in from the Gherkin.
@@ -53,7 +53,7 @@ Now we can pass that list to the diff method shot::[7] on the table of expected 
 .steps.rb
 [source, ruby]
 ----
-include::../code/ruby/14-diff/features/step_definitions/steps.rb[lines=66]
+include::../code/ruby/13-diff/features/step_definitions/steps.rb[lines=52]
 ----
 
 shot::[8,runs cucumber]
@@ -65,7 +65,7 @@ Let’s fix just one of these shot::[9] so you can see how the diff output chang
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/ruby/15-fix-first-typo/features/hear_shout.feature[lines=39]
+include::../code/ruby/14-fix-first-typo/features/hear_shout.feature[lines=39]
 ----
 
 shot::[10,mvn test]
@@ -76,7 +76,7 @@ Let’s fix this last typo shot::[11], and we should be green again.
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/ruby/16-fix-second-typo/features/hear_shout.feature[lines=40]
+include::../code/ruby/15-fix-second-typo/features/hear_shout.feature[lines=40]
 ----
 
 shot::[12,mvn test]
