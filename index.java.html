@@ -3457,7 +3457,7 @@ There are a couple of different ways to create this network instance in Java. Th
 <div class="paragraph">
 <p>
 We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:
-Now we can use that Network instance as we create Lucy and Sean in these two new steps.</p>
+Now we can use that Network instance as we  create Lucy and Sean in these two new steps.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3481,12 +3481,10 @@ Now we can use that Network instance as we create Lucy and Sean in these two new
 </div>
 </div>
 <div class="paragraph">
-<p>
-It should be working again now. Let’s run Cucumber to check.</p>
+<p>It should be working again now.  Let’s run Cucumber to check.</p>
 </div>
 <div class="paragraph">
-<p>
-Good. Let’s do the same with the other scenario.</p>
+<p>Good. Let’s do the  same with the other scenario.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3501,8 +3499,7 @@ Good. Let’s do the same with the other scenario.</p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>
-Now we can remove this old step definition. We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.</p>
+<p>Now we can remove this old step definition. We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like,  so let&#8217;s clean it out for now.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3555,8 +3552,7 @@ Now we can remove this old step definition. We know we&#8217;ll need something l
 <p></p>
 </div>
 <div class="paragraph">
-<p>
-Now we have one last bit of dead code left, the move_to method on Person. Let&#8217;s clean that up too.</p>
+<p>Now we have  one last bit of dead code left, the move_to method on Person. [9a, "Delete moveTo method"]Let&#8217;s clean that up too.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3589,7 +3585,7 @@ Now we have one last bit of dead code left, the move_to method on Person. Let&#8
 </div>
 </div>
 <div class="paragraph">
-<p></p>
+<p> And we&#8217;re still green!</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_4_questions_2">4.4.1. Lesson 4 - Questions</h4>
@@ -3659,13 +3655,13 @@ Now we have one last bit of dead code left, the move_to method on Person. Let&#8
 <p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.</p>
 </div>
 <div class="paragraph">
-<p>The first problem we’ll need to tackle is these hard-coded instance variable names.</p>
+<p> The first problem we’ll need to tackle is these hard-coded instance variable names.</p>
 </div>
 <div class="paragraph">
 <p>We can use a Map to store all the people involved in the scenario.</p>
 </div>
 <div class="paragraph">
-<p>Let’s try replacing Lucy first.</p>
+<p> Let’s try replacing Lucy first.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -3708,7 +3704,7 @@ We’ll start by creating a new hash/map in the before hook, like this.</p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>With that little refactoring done, we can now try and make this first step generic for any name.</p>
+<p>With that little refactoring done, we can  now try and make this first step generic for any name.</p>
 </div>
 <div class="paragraph">
 <p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the hash/map.</p>
@@ -3723,7 +3719,10 @@ We’ll start by creating a new hash/map in the before hook, like this.</p>
 </div>
 <div class="paragraph">
 <p>
-If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.</p>
+If we try and run Cucumber now, we get an error about an ambiguous match.</p>
+</div>
+<div class="paragraph">
+<p> Our generic step definition is now matching the step “a person named Sean”, but so is the  original one. In bigger projects, this can be a real issue, so this warning is important.</p>
 </div>
 <div class="paragraph">
 <p>Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.</p>
@@ -3738,10 +3737,8 @@ If we try and run Cucumber now, we get an error about an ambiguous match. Our ge
 </div>
 </div>
 <div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>Great, we’re green again.</p>
+<p>
+Great, we’re green again.</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_5_questions_2">4.5.1. Lesson 5 - Questions</h4>
@@ -5140,6 +5137,9 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 <div class="paragraph">
 <p>And then we write the next failing acceptance test&#8230;&#8203;</p>
 </div>
+<div class="paragraph">
+<p>Unresolved directive in scripts.java.adoc - include::06/index.adoc[]</p>
+</div>
 </div>
 </div>
 </div>
@@ -5148,7 +5148,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-30 10:36:57 UTC
+Last updated 2020-06-30 15:13:18 UTC
 </div>
 </div>
 <style>
