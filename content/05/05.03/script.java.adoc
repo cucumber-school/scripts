@@ -9,7 +9,7 @@ shot::[3,feature file]
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/java/05--step05-location-specified-in-data-table/shouty/src/test/resources/shouty/hear_shout.feature[lines=17..19]
+include::../code/java/05--step05-location-specified-in-data-table/shouty/src/test/resources/shouty/hear_shout.feature[lines=17..20]
 ----
 
 Well, we’re in luck. You can!
@@ -65,7 +65,7 @@ With that done, we can update the other scenario shot::[12,"update other scenari
 include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/resources/shouty/hear_shout.feature[lines=24..31]
 ----
 
-... and delete our old step definition shot::[13,"delete unused step def"], which is now unused.
+and delete our old step definition shot::[13,"delete unused step def"], which is now unused.
 
 .StepDefinitions.java
 [source,java]
@@ -97,7 +97,7 @@ include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shou
 
 We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
 
-Then we can create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects. shot::[18,"write defineWhereabouts()"]
+Then we can shot::[18,"write defineWhereabouts()"] create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects.
 
 .StepDefinitions.java
 [source,java]
@@ -113,4 +113,8 @@ Now, if you declare your table parameter as a generic list shot::[19,"modify ste
 include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
 ----
 
-That looks much nicer - shot::[20,"hear_shout.feature data tables"] people positioned using a table in the feature file and shot::[21,"people_are_located_at()"] really clean code that creates and positions people according to the data.
+shot::[19a,"Run Cucumber"]
+Let's run Cucumber to check that we're still green. And we are!
+
+shot::[20,"hear_shout.feature data tables"]
+That looks much nicer -  people positioned using a table in the feature file and shot::[21,"people_are_located_at()"] really clean code that creates and positions people according to the data.
