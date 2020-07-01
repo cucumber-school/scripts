@@ -8,8 +8,7 @@ We now have two step definitions to implement, and that presents us with a bit o
 include::../code/java/06--step06-broken-stepdef-implmentation/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..32]
 ----
 
-shot::[2, "Network as instance field"]
-There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration of the `StepDefinitions` class. Every time Cucumber runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.
+There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration of the `StepDefinitions` class.shot::[2] Every time Cucumber runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.
 
 [source,java]
 ----
@@ -18,9 +17,11 @@ include::../code/java/07--step07-network-as-an-instance-field/shouty/src/test/ja
 
 As an alternative, that can be useful if you have more complex setup to do, you can use a hook.
 
-shot::[3, "Create Before hook"]
-We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:
-Now we can use that Network instance as we shot::[3a, "highlight stepdefs a_person_named_Lucy() and a_person_named_Sean()"] create Lucy and Sean in these two new steps.
+We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this: shot::[3]
+
+// TODO: also add a shot hightligthing both steps at the same time in full just in case there is too little time to hightlight them individually
+
+Now we can use that Network instance as we create Lucy shot::[4] and Sean shot::[5] in these two new steps.
 
 [source,java]
 ----
@@ -33,32 +34,40 @@ include::../code/java/08--step08-using-a-before-hook/shouty/src/test/java/shouty
 ----
 
 
-It should be working again now. shot::[4, "Run Cucumber"] Let’s run Cucumber to check.
+It should be working again now. Let’s run Cucumber to check.shot::[6]
 
 
-Good. Let’s do the shot::[5, "Copy and paste in feature file"] same with the other scenario.
+Good. Let’s do the same with the other scenario. shot::[7]
 
 [source,gherkin]
 ----
 include::../code/java/09--step09-change-second-scenario/shouty/src/test/resources/shouty/hear_shout.feature[lines=16..20]
 ----
 
-shot::[6, "run Cucumber"]
+shot::[8, "run Cucumber"]
 
-Now we can remove shot::[7, "highlight lucy_is_located_m_from_Sean"]this old step definition. We know we'll need something like this in the future when we implement the proximity rule, but we don't want to second-guess what that code will look like, shot::[7b, "Delete lucy_is_located_m_from_Sean"] so let's clean it out for now.
+Now we can remove this old step definition. shot::[9, move the cursor to the step definition]
+
+[source,java]
+----
+include::../code/java/09--step09-change-second-scenario/shouty/src/test/java/shouty/StepDefinitions.java[lines=23..29]
+----
+
+We know we'll need something like this in the future when we implement the proximity rule, but we don't want to second-guess what that code will look like, so let's clean it out for now.shot::[10]
 
 [source,java]
 ----
 include::../code/java/10--step10-delete-unused-stepdef/shouty/src/test/java/shouty/StepDefinitions.java[]
 ----
 
-shot::[8, "run Cucumber"]
+shot::[11, "run Cucumber"]
 
-Now we have shot::[9, "Highlight moveTo method"] one last bit of dead code left, the move_to method on Person. [9a, "Delete moveTo method"]Let's clean that up too.
+Now we have one last bit of dead code left, the moveTo method on Person. shot::[12]
+Let's clean that up too.shot::[13]
 
 [source,java]
 ----
 include::../code/java/11--step11-delete-move_to/shouty/src/main/java/shouty/Person.java[]
 ----
 
-shot::[10, "run Cucumber"] And we're still green!
+shot::[14, "run Cucumber"] And we're still green!
