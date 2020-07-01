@@ -3128,7 +3128,8 @@ We’ll start out by running Cucumber.</p>
 </div>
 <div class="paragraph">
 <p>
-Let’s dig into the code and see how these steps have been automated.</p>
+Let’s dig into the code and see how these steps have been automated.
+b</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3438,8 +3439,7 @@ We now have two step definitions to implement, and that presents us with a bit o
 </div>
 </div>
 <div class="paragraph">
-<p>
-There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration of the <code>StepDefinitions</code> class. Every time Cucumber runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.</p>
+<p>There are a couple of different ways to create this network instance in Java. The most straightforward is to create a network field and initialize it in the declaration of the <code>StepDefinitions</code> class. Every time Cucumber runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3455,9 +3455,10 @@ There are a couple of different ways to create this network instance in Java. Th
 <p>As an alternative, that can be useful if you have more complex setup to do, you can use a hook.</p>
 </div>
 <div class="paragraph">
-<p>
-We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:
-Now we can use that Network instance as we  create Lucy and Sean in these two new steps.</p>
+<p>We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this: </p>
+</div>
+<div class="paragraph">
+<p>Now we can use that Network instance as we create Lucy  and Sean  in these two new steps.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3481,10 +3482,10 @@ Now we can use that Network instance as we  create Lucy and Sean in these two ne
 </div>
 </div>
 <div class="paragraph">
-<p>It should be working again now.  Let’s run Cucumber to check.</p>
+<p>It should be working again now. Let’s run Cucumber to check.</p>
 </div>
 <div class="paragraph">
-<p>Good. Let’s do the  same with the other scenario.</p>
+<p>Good. Let’s do the same with the other scenario. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3499,7 +3500,21 @@ Now we can use that Network instance as we  create Lucy and Sean in these two ne
 <p></p>
 </div>
 <div class="paragraph">
-<p>Now we can remove this old step definition. We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like,  so let&#8217;s clean it out for now.</p>
+<p>Now we can remove this old step definition. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"Lucy is {int} metres from Sean"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_is_located_m_from_Sean</span><span class="o">(</span><span class="kt">int</span> <span class="n">distance</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">();</span>
+        <span class="n">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
+        <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">network</span><span class="o">);</span>
+        <span class="n">lucy</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">distance</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3552,7 +3567,8 @@ Now we can use that Network instance as we  create Lucy and Sean in these two ne
 <p></p>
 </div>
 <div class="paragraph">
-<p>Now we have  one last bit of dead code left, the move_to method on Person. [9a, "Delete moveTo method"]Let&#8217;s clean that up too.</p>
+<p>Now we have one last bit of dead code left, the moveTo method on Person. 
+Let&#8217;s clean that up too.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3655,17 +3671,16 @@ Now we can use that Network instance as we  create Lucy and Sean in these two ne
 <p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.</p>
 </div>
 <div class="paragraph">
-<p> The first problem we’ll need to tackle is these hard-coded instance variable names.</p>
+<p>The first problem we’ll need to tackle is these hard-coded instance variable names.</p>
 </div>
 <div class="paragraph">
 <p>We can use a Map to store all the people involved in the scenario.</p>
 </div>
 <div class="paragraph">
-<p> Let’s try replacing Lucy first.</p>
+<p>Let’s try replacing Lucy first.</p>
 </div>
 <div class="paragraph">
-<p>
-We’ll start by creating a new hash/map in the before hook, like this.</p>
+<p>We’ll start by creating a new hash/map in the before hook, like this. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3704,7 +3719,7 @@ We’ll start by creating a new hash/map in the before hook, like this.</p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>With that little refactoring done, we can  now try and make this first step generic for any name.</p>
+<p>With that little refactoring done, we can now try and make this first step generic for any name.</p>
 </div>
 <div class="paragraph">
 <p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the hash/map.</p>
@@ -3718,11 +3733,10 @@ We’ll start by creating a new hash/map in the before hook, like this.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>
-If we try and run Cucumber now, we get an error about an ambiguous match.</p>
+<p>If we try and run Cucumber now, we get an error about an ambiguous match. </p>
 </div>
 <div class="paragraph">
-<p> Our generic step definition is now matching the step “a person named Sean”, but so is the  original one. In bigger projects, this can be a real issue, so this warning is important.</p>
+<p>Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.</p>
 </div>
 <div class="paragraph">
 <p>Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.</p>
@@ -3737,8 +3751,7 @@ If we try and run Cucumber now, we get an error about an ambiguous match.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>
-Great, we’re green again.</p>
+<p>Great, we’re green again. </p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_5_questions_2">4.5.1. Lesson 5 - Questions</h4>
@@ -5148,7 +5161,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-06-30 15:13:18 UTC
+Last updated 2020-07-01 11:42:45 UTC
 </div>
 </div>
 <style>
