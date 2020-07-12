@@ -1,5 +1,5 @@
 const { Given, When, Then, Before } = require('@cucumber/cucumber')
-const { assertThat, contains, not } = require('hamjest')
+const { assertThat, contains, is, not } = require('hamjest')
 
 const { Person, Network } = require('../../src/shouty')
 
@@ -22,6 +22,10 @@ Given('a person named {word} is located at {int}', function (name, location) {
   this.people[name] = new Person(this.network, location)
 })
 
+When('Sean shouts', function () {
+  this.people['Sean'].shout('Hello, world')
+})
+
 When('Sean shouts {string}', function (message) {
   this.people['Sean'].shout(message)
   this.messageFromSean = message
@@ -31,6 +35,14 @@ Then('Lucy should hear Sean\'s message', function () {
   assertThat(this.people['Lucy'].messagesHeard(), contains(this.messageFromSean))
 })
 
+Then('Lucy should hear a shout', function () {
+  assertThat(this.people['Lucy'].messagesHeard().length, is(1))
+})
+
 Then('Larry should not hear Sean\'s message', function () {
   assertThat(this.people['Larry'].messagesHeard(), not(contains(this.messageFromSean)))
+})
+
+Then('Larry should not hear a shout', function () {
+  assertThat(this.people['Larry'].messagesHeard().length, is(0))
 })
