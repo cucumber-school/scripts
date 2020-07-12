@@ -23,7 +23,7 @@ Given('a person named {word} is located at {int}', function (name, location) {
 })
 
 Given('people are located at', function (dataTable) {
-  console.log(dataTable.raw())
+  console.log(dataTable.hashes())
 })
 
 When('Sean shouts', function () {
