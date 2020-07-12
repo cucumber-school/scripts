@@ -18,10 +18,6 @@ Given('a person named {word}', function (name) {
   this.people[name] = new Person(this.network, 0)
 })
 
-Given('a person named {word} is located at {int}', function (name, location) {
-  this.people[name] = new Person(this.network, location)
-})
-
 Given('people are located at', function (dataTable) {
   dataTable.hashes().map((person) => {
     this.people[person.name] = new Person(this.network, person.location)
