@@ -3,12 +3,19 @@ const { assertThat, contains, not } = require('hamjest')
 
 const { Person, Network } = require('../../src/shouty')
 
+const default_range = 100
+
 Before(function () {
   this.people = {}
+  this.network = new Network(default_range)
 })
 
 Given('the range is {int}', function (range) {
   this.network = new Network(range)
+})
+
+Given('a person named {word}', function (name) {
+  this.people[name] = new Person(this.network, 0)
 })
 
 Given('a person named {word} is located at {int}', function (name, location) {
