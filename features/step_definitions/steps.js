@@ -23,8 +23,7 @@ Given('a person named {word} is located at {int}', function (name, location) {
 })
 
 Given('people are located at', function (dataTable) {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending'
+  console.log(dataTable.raw())
 })
 
 When('Sean shouts', function () {
