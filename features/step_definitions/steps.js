@@ -23,7 +23,9 @@ Given('a person named {word} is located at {int}', function (name, location) {
 })
 
 Given('people are located at', function (dataTable) {
-  console.log(dataTable.hashes())
+  dataTable.hashes().map((person) => {
+    this.people[person.name] = new Person(this.network, person.location)
+  })
 })
 
 When('Sean shouts', function () {
