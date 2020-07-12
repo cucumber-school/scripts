@@ -19,7 +19,7 @@ Given('a person named {word}', function (name) {
 })
 
 Given('people are located at', function (dataTable) {
-  dataTable.hashes().map((person) => {
+  dataTable.transpose().hashes().map((person) => {
     this.people[person.name] = new Person(this.network, person.location)
   })
 })
