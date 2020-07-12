@@ -22,6 +22,11 @@ Given('a person named {word} is located at {int}', function (name, location) {
   this.people[name] = new Person(this.network, location)
 })
 
+Given('people are located at', function (dataTable) {
+  // Write code here that turns the phrase above into concrete actions
+  return 'pending'
+})
+
 When('Sean shouts', function () {
   this.people['Sean'].shout('Hello, world')
 })
