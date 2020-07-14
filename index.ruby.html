@@ -3449,7 +3449,7 @@ Your browser does not support the video tag.
 <p>Last time we worked on cleaning up the Shouty features to keep them in sync with the current status of the project. We stripped the scenarios back to only specify the behaviour of passing messages between people. We made it clear that the proximity rule had not yet been implemented.</p>
 </div>
 <div class="paragraph">
-<p>You’ll already remember from the Cucumber expressions chapter how important it is to be expressive in your scenarios, and keep them readable. In this episode we’re going to learn some new tricks with Gherkin that will give you even more flexibility about how you write scenarios.</p>
+<p>You’ll already remember from the Cucumber expressions chapter how important it is to be expressive in your scenarios, and keep them readable. In this chapter we’re going to learn some new tricks with Gherkin that will give you even more flexibility about how you write scenarios.</p>
 </div>
 <div class="paragraph">
 <p>Once again the Shouty developers&#8201;&#8212;&#8201;have been hard at work implementing that proximity rule. Let’s have a look at how they got on.</p>
@@ -3477,7 +3477,7 @@ We used the second scenario - Listener hears a different message - to triangulat
 <p></p>
 </div>
 <div class="paragraph">
-<p>Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where the listener is within range is a perfectly good way of checking that the message has been sent correctly.</p>
+<p>Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where a "listener hears a "message" is a perfectly good way of checking that the message has been sent correctly.</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_1_questions_3">5.1.1. Lesson 1 - Questions</h4>
@@ -3753,7 +3753,8 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <div class="content">
 <pre class="rouge highlight"><code data-lang="gherkin">      <span class="nf">And </span>people are located at
         <span class="p">|</span> <span class="nv">name</span> <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
-        <span class="p">|</span> <span class="n">Sean</span> <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span></code></pre>
+        <span class="p">|</span> <span class="n">Sean</span> <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Lucy</span> <span class="p">|</span> <span class="n">50</span>       <span class="p">|</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4223,7 +4224,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <div class="sect2">
 <h3 id="_docstring">5.5. DocString</h3>
 <div class="paragraph">
-<p>When writing scenarios, occasionally we want to use a really long piece of data.</p>
+<p>When writing scenarios, occasionally we want to use a really long piece of data. </p>
 </div>
 <div class="paragraph">
 <p>For example, let’s introduce a new rule about the maximum length of a message </p>
@@ -4267,7 +4268,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests and add a new example to specify this extra responsibility.</p>
+<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests  and add a new example to specify this extra responsibility. </p>
 </div>
 <div class="paragraph">
 <p>We’ll create a 181-character message like this  and then assert that the message should not be heard when it’s broadcast.</p>
@@ -4292,7 +4293,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p>Let’s run that test . Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
 </div>
 <div class="paragraph">
-<p>It looks like we’re already implementing the proximity rule here  in the broadcast method. Let’s add another if statement here about the message length.</p>
+<p>It looks like we’re already implementing the proximity rule here  in the broadcast method. Let’s add another if statement here about the message length. </p>
 </div>
 <div class="listingblock">
 <div class="title">shouty.rb</div>
@@ -4306,7 +4307,8 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p> Run the unit test again… and it’s passing. Great.</p>
 </div>
 <div class="paragraph">
-<p>The code here has got a little bit messy and hard to read. One very basic move we could make to improve it would be to just extract a couple of temporary variables.</p>
+<p>The code here has got a little bit messy and hard to read. 
+One very basic move we could make to improve it would be to just extract a couple of temporary variables. </p>
 </div>
 <div class="listingblock">
 <div class="title">shouty.rb</div>
@@ -4327,13 +4329,13 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p>That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.</p>
 </div>
 <div class="paragraph">
-<p> Let’s just run the tests to check. Great - everything’s still green.</p>
+<p>Let’s just run the tests to check.  Great - everything’s still green.</p>
 </div>
 <div class="paragraph">
-<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString.</p>
+<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. </p>
 </div>
 <div class="paragraph">
-<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead:</p>
+<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4352,7 +4354,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario is much more readable.</p>
+<p>Now the scenario is much more readable. </p>
 </div>
 <div class="paragraph">
 <p>We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
@@ -4475,7 +4477,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-01 11:42:45 UTC
+Last updated 2020-07-14 13:04:44 UTC
 </div>
 </div>
 <style>
