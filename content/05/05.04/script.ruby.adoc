@@ -20,7 +20,7 @@ If you call the `transpose` method on the table shot::[2], Cucumber will turn ea
 include::../code/ruby/12-transpose-annotation/features/step_definitions/steps.rb[lines=19]
 ----
 
-shot::[3,mvn test]
+shot::[3,run cucumber]
 
 Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.
 
@@ -68,7 +68,7 @@ Let’s fix just one of these shot::[9] so you can see how the diff output chang
 include::../code/ruby/14-fix-first-typo/features/hear_shout.feature[lines=39]
 ----
 
-shot::[10,mvn test]
+shot::[10,run cucumber]
 The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.
 
 Let’s fix this last typo shot::[11], and we should be green again.
@@ -79,6 +79,6 @@ Let’s fix this last typo shot::[11], and we should be green again.
 include::../code/ruby/15-fix-second-typo/features/hear_shout.feature[lines=40]
 ----
 
-shot::[12,mvn test]
+shot::[12,run cucumber]
 
 Great.

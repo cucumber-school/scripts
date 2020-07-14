@@ -1,6 +1,6 @@
 include::./title.adoc[]
 
-When writing scenarios, occasionally we want to use a really long piece of data.
+When writing scenarios, occasionally we want to use a really long piece of data. shot::[0,"Show feature file"]
 
 For example, let’s introduce a new rule about the maximum length of a message shot::[1,"New rule"]
 
@@ -31,7 +31,7 @@ include::../code/ruby/17-parameterise-stepdef/features/step_definitions/steps.rb
 
 shot::[5,"run cucumber"]
 
-OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests and add a new example to specify this extra responsibility.
+OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests shot::[5a,show NetworkTest] and add a new example to specify this extra responsibility. shot::[5b, start creating new unit test]
 
 We’ll create a 181-character message like this shot::[6,] and then assert that the message should not be heard when it’s broadcast.
 
@@ -43,7 +43,7 @@ include::../code/ruby/18-add-test-to-networktest/spec/network_spec.rb[lines=36..
 
 Let’s run that test shot::[7,"run Cucumber - show the unit test results"]. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?
 
-It looks like we’re already implementing the proximity rule here shot::[8,"Network proximity logic"] in the broadcast method. Let’s add another if statement here about the message length.
+It looks like we’re already implementing the proximity rule here shot::[8,"Network proximity logic"] in the broadcast method. Let’s add another if statement here about the message length. shot::[8a,"add message length logic"] 
 
 .shouty.rb
 [source,ruby]
@@ -53,7 +53,8 @@ include::../code/ruby/19-implement-maximum-length/lib/shouty.rb[lines=35..37]
 
 shot::[9,"run cucumber"] Run the unit test again… and it’s passing. Great.
 
-The code here has got a little bit messy and hard to read. One very basic move we could make to improve it would be to just extract a couple of temporary variables.
+The code here has got a little bit messy and hard to read. shot::[9a,"show the modified logic in the Network class"]
+One very basic move we could make to improve it would be to just extract a couple of temporary variables. shot::[9b,"extract temporary variables"]
 
 .shouty.rb
 [source,ruby]
@@ -63,18 +64,18 @@ include::../code/ruby/20-tidy-up-network-logic/lib/shouty.rb[lines=33..42]
 
 That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.
 
-shot::[10,"run cucumber"] Let’s just run the tests to check. Great - everything’s still green.
+Let’s just run the tests to check. shot::[10,"run cucumber"] Great - everything’s still green.
 
-Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString.
+Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. shot::[10a,"show message length scenario in feature file"]
 
-DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead:
+DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: shot::[10b,"convert message to DocString"]
 
 [source,gherkin]
 ----
 include::../code/ruby/21-docstring/features/hear_shout.feature[lines=44..55]
 ----
 
-Now the scenario is much more readable.
+Now the scenario is much more readable. shot::[10c,"show existing stepdef code"]
 
 We have to add a new step definition too shot::[11,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression -- the DocString gets passed as a string argument to the step definition automatically.
 
