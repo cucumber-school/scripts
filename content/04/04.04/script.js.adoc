@@ -1,7 +1,7 @@
 include::./title.adoc[]
 
 shot::[1, "broken implementation"]
-We now have two step definitions to implement, and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile. If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.
+We now have two step definitions to implement,shot::[2] and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile.shot::[3] If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.
 
 [source,js]
 ----
@@ -10,8 +10,9 @@ include::../code/js/06-broken-step-definition-implementation/features/step_defin
 
 The most straightforward way to create this network instance in JavaScript is to use a hook.
 
-We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:shot::[2]
-Now we can use that Network instance as we create Lucy and Sean in these two new steps.shot::[3]shot::[4]
+We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:shot::[4]
+
+Now we can use that Network instance as we create Lucy shot::[5] and Sean shot::[6] in these two new steps.
 
 [source,js]
 ----
@@ -23,35 +24,40 @@ include::../code/js/07-using-a-before-hook/features/step_definitions/steps.js[li
 include::../code/js/07-using-a-before-hook/features/step_definitions/steps.js[lines=17..23]
 ----
 
-shot::[5, "npm test"]
-It should be working again now. Let’s run Cucumber to check.
+It should be working again now. Let’s run Cucumber to check. shot::[7]
 
-shot::[6, "Copy and paste in feature file"]
-Good. Let’s do the same with the other scenario.
+Good. Let’s do the same with the other scenario. shot::[8]
 
 [source,gherkin]
 ----
 include::../code/js/08-change-second-scenario/features/hear_shout.feature[lines=16..20]
 ----
 
-shot::[7, "npm test"]
+shot::[9, "npm test"]
 
-shot::[8, "Delete lucy_is_located_m_from_Sean"]
-Now we can remove this old step definition. We know we'll need something like this in the future when we implement the proximity rule, but we don't want to second-guess what that code will look like, so let's clean it out for now.
+Now we can remove this old step definition. shot::[10, move the cursor to the step definition]
+
+[source,js]
+----
+include::../code/js/09-delete-unused-step-definition/features/step_definitions/steps.js[]
+----
+
+We know we'll need something like this in the future when we implement the proximity rule, but we don't want to second-guess what that code will look like, so let's clean it out for now.shot::[11]
 
 [source,js]
 ----
 include::../code/js/07-using-a-before-hook/features/step_definitions/steps.js[]
 ----
 
-shot::[9, "npm test"]
+shot::[12, "npm test"]
 
-shot::[10, "delete moveTo"]
-Now we have one last bit of dead code left, the move_to method on Person. Let's clean that up too.
+Now we have one last bit of dead code left, the move_to method on Person.shot::[13]
+Let's clean that up too.shot::[14]
 
 [source,js]
 ----
 include::../code/js/07-using-a-before-hook/src/shouty.js[lines=1..24]
 ----
 
-shot::[11, "npm test"]
+shot::[15, "npm test"]
+And we're still green!

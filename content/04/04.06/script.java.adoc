@@ -8,9 +8,9 @@ Let’s switch back to the feature to show you one more technique for improving 
 include::../code/java/14--step14-replace-hardcoded-sean-instance/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..20]
 ----
 
-When we have common context steps - the Givens - in all the scenarios in our feature, it can sometimes be useful to get those out of the way.
+When we have common context steps - the Givens - shot::[2] in all the scenarios in our feature, it can sometimes be useful to get those out of the way.
 
-shot::[2, "move Given steps into background"]
+shot::[3, "move Given steps into background"]
 We can literally move them into the background, using a background keyword, like this:
 
 [source,gherkin]
@@ -18,10 +18,10 @@ We can literally move them into the background, using a background keyword, like
 include::../code/java/15--step15-move-givens-into-background/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..10]
 ----
 
-shot::[3, "mvn test"]
+shot::[4, "mvn test"]
 As far as Cucumber is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.
 
-shot::[4, "Feature file, showing Background and shortened scenarios"]
+shot::[5, "Feature file, showing Background and shortened scenarios"]
 But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.
 
 [source,gherkin]
@@ -29,7 +29,7 @@ But from a readability point of view, we can now see  more clearly what’s impo
 include::../code/java/15--step15-move-givens-into-background/shouty/src/test/resources/shouty/hear_shout.feature[lines=12..20]
 ----
 
-Notice we just went straight into When steps in our scenarios.shot::[5] That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.
+Notice we just went straight into When steps in our scenarios.shot::[6] That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.
 
 Again, it’s debatable whether we’d bother to use a Background to do this on a real project, but this at least illustrates the technique. We rarely use Backgrounds in our projects, because although they can improve readability by removing the duplication of repeated contexts, they also harm readability by requiring people to read the Background in conjunction with each Scenario.
 
