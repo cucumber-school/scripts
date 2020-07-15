@@ -34,6 +34,11 @@ When('Sean shouts {string}', function (message) {
   this.messageFromSean = message
 })
 
+When('Sean shouts the following message', function (message) {
+  this.people['Sean'].shout(message)
+  this.messageFromSean = message
+})
+
 Then('Lucy should hear Sean\'s message', function () {
   assertThat(this.people['Lucy'].messagesHeard(), contains(this.messageFromSean))
 })
