@@ -3037,7 +3037,7 @@ Let’s dig into the code and see how these steps have been automated.</p>
 <p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.</p>
 </div>
 <div class="paragraph">
-<p>The familiar <code>npm test</code> command will run those unit tests as well as Cucumber.</p>
+<p>The familiar <code>npm test</code>  command will run those unit tests as well as Cucumber.</p>
 </div>
 <div class="paragraph">
 <p></p>
@@ -3314,8 +3314,10 @@ We now have two step definitions to implement, and that presents us with a bit o
 <p>The most straightforward way to create this network instance in JavaScript is to use a hook.</p>
 </div>
 <div class="paragraph">
-<p>We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:
-Now we can use that Network instance as we create Lucy and Sean in these two new steps.</p>
+<p>We need an instance of Network in every scenario, so we can declare a Before Hook that creates one before each scenario starts, like this:</p>
+</div>
+<div class="paragraph">
+<p>Now we can use that Network instance as we create Lucy  and Sean  in these two new steps.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3335,12 +3337,10 @@ Now we can use that Network instance as we create Lucy and Sean in these two new
 </div>
 </div>
 <div class="paragraph">
-<p>
-It should be working again now. Let’s run Cucumber to check.</p>
+<p>It should be working again now. Let’s run Cucumber to check. </p>
 </div>
 <div class="paragraph">
-<p>
-Good. Let’s do the same with the other scenario.</p>
+<p>Good. Let’s do the same with the other scenario. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3355,8 +3355,39 @@ Good. Let’s do the same with the other scenario.</p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>
-Now we can remove this old step definition. We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.</p>
+<p>Now we can remove this old step definition. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span><span class="p">,</span> <span class="nx">Before</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">)</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">assertThat</span><span class="p">,</span> <span class="nx">is</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">hamjest</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">Person</span><span class="p">,</span> <span class="nx">Network</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../src/shouty</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="nx">Before</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">()</span>
+<span class="p">})</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">a person named Lucy</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">a person named Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messageFromSean</span> <span class="o">=</span> <span class="nx">message</span>
+<span class="p">})</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy should hear Sean</span><span class="se">\'</span><span class="s1">s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">assertThat</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">(),</span> <span class="nx">is</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">messageFromSean</span><span class="p">]))</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3399,8 +3430,8 @@ Now we can remove this old step definition. We know we&#8217;ll need something l
 <p></p>
 </div>
 <div class="paragraph">
-<p>
-Now we have one last bit of dead code left, the move_to method on Person. Let&#8217;s clean that up too.</p>
+<p>Now we have one last bit of dead code left, the move_to method on Person.
+Let&#8217;s clean that up too.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3431,7 +3462,8 @@ Now we have one last bit of dead code left, the move_to method on Person. Let&#8
 </div>
 </div>
 <div class="paragraph">
-<p></p>
+<p>
+And we&#8217;re still green!</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_4_questions_2">4.4.1. Lesson 4 - Questions</h4>
@@ -3558,7 +3590,7 @@ We’ll start by creating a new object in the before hook, like this.</p>
 </div>
 <div class="paragraph">
 <p>
-If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.</p>
+If we try and run Cucumber now, we get an error about an ambiguous match. Our generic step definition is now matching the step “a person named Sean”, but so is the original one.  In bigger projects, this can be a real issue, so this warning is important.</p>
 </div>
 <div class="paragraph">
 <p>Let’s remove the old step definition, and fetch Sean from the people object here where he shouts his message.</p>
@@ -3763,7 +3795,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-14 13:04:44 UTC
+Last updated 2020-07-15 20:08:16 UTC
 </div>
 </div>
 <style>
