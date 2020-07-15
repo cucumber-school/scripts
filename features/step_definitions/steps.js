@@ -46,8 +46,8 @@ Then('Larry should not hear Sean\'s message', function () {
   assertThat(this.people['Larry'].messagesHeard(), not(contains(this.messageFromSean)))
 })
 
-Then('Larry should not hear a shout', function () {
-  assertThat(this.people['Larry'].messagesHeard().length, is(0))
+Then('{word} should not hear a shout', function (name) {
+  assertThat(this.people[name].messagesHeard().length, is(0))
 })
 
 Then('Lucy hears the following messages:', function (expectedMessages) {
