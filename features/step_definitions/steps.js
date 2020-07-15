@@ -1,5 +1,6 @@
 const { Given, When, Then, Before } = require('@cucumber/cucumber')
 const { assertThat, contains, is, not } = require('hamjest')
+const assert = require('assert')
 
 const { Person, Network } = require('../../src/shouty')
 
@@ -47,4 +48,10 @@ Then('Larry should not hear Sean\'s message', function () {
 
 Then('Larry should not hear a shout', function () {
   assertThat(this.people['Larry'].messagesHeard().length, is(0))
+})
+
+Then('Lucy hears the following messages:', function (expectedMessages) {
+  let actualMessages = this.people['Lucy'].messagesHeard().map(message => [message])
+
+  assert.deepEqual(actualMessages, expectedMessages.raw())
 })
