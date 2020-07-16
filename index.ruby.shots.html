@@ -484,6 +484,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_refactoring_to_data_tables">5.3. Refactoring to Data Tables</a></li>
 <li><a href="#_deeper_into_data_tables">5.4. Deeper into Data Tables</a></li>
 <li><a href="#_docstring">5.5. DocString</a></li>
+<li><a href="#_tdd_loops">5.6. TDD Loops</a></li>
 </ul>
 </li>
 </ul>
@@ -4466,6 +4467,144 @@ public void simone_says(DocString lyrics) { }</p>
 <p>Explanation:
 When using a DocString in a scenario, you do not add any parameter to the matching Cucumber Expression. You do need to provide a String parameter to the step definition to receive the contents of the DocString.</p>
 </div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tdd_loops">5.6. TDD Loops</h3>
+<div class="paragraph">
+<p><a href="#shot-230" id="shot-230" title="original animation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: original animation</a></p>
+</div>
+<div class="paragraph">
+<p>You might have noticed that we’ve followed a pattern when we added behaviour to the system during this episode.</p>
+</div>
+<div class="paragraph">
+<p>First we expressed the behaviour we wanted in a Gherkin scenario, wired up the step definitions, then ran Cucumber to watch it fail.</p>
+</div>
+<div class="paragraph">
+<p>Then, we found the first class in our domain model that needed to change in order to support that new behaviour. In this case, the Network class. We used a unit test to describe how we wanted instances of that class to behave. Then we ran the unit test and watched it fail.</p>
+</div>
+<div class="paragraph">
+<p>We focused in and made changes to the class until its unit tests were passing. When the unit tests were passing, we then made some minor changes to clean up the code and make it more readable. This is the basic test-driven-development cycle: red, green, clean.</p>
+</div>
+<div class="paragraph">
+<p>The technical name for this last clean-up step is refactoring. Refactoring is an ugly name for an extremely valuable activity: improving the design of existing code without changing its behaviour. You can think about it like cleaning up and washing the dishes after you’ve prepared a meal: basic housekeeping. But imagine the state of your kitchen if you never made time to do the dishes.</p>
+</div>
+<div class="paragraph">
+<p>Go on, imagine it for a second.</p>
+</div>
+<div class="paragraph">
+<p>Yuck!</p>
+</div>
+<div class="paragraph">
+<p>Well, that’s how many, many codebase end up. The good thing about taking this course is that we’re teaching you how to write solid automated tests, and the good thing about having solid automated tests is you can refactor with confidence, knowing that if you accidentally change the system’s behaviour, your tests will tell you.</p>
+</div>
+<div class="paragraph">
+<p>Once we’re done refactoring, what do we do next? Run Cucumber, of course! In this case, our scenario was passing with a single trip round the inner TDD loop, but sometimes you can spend several hours working through all the unit tests you need to get a single scenario to green.</p>
+</div>
+<div class="paragraph">
+<p>Once the acceptance test is passing, we figure out the next most valuable scenario on our todo list, and start the whole thing all over again!</p>
+</div>
+<div class="paragraph">
+<p>Together, these two loops make the BDD cycle. The outer loop, which starts with an acceptance test, keeps us focussed on what the business needs us to do next. The inner loop, where we continuously test, implement then refactor small units of code, is where decide how we’ll implement that behaviour.</p>
+</div>
+<div class="paragraph">
+<p>Both of these levels of feedback are important. It’s sometimes said that your acceptance tests ensure you’re building the right thing, and your unit tests ensure you’re building the thing right.</p>
+</div>
+<div class="paragraph">
+<p>That’s all for this chapter of Cucumber School. See you next time!</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_6_questions_2">5.6.1. Lesson 6 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_is_the_best_definition_of_the_term_refactoring">Which of the following is the best definition of the term "refactoring"?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Improving the efficiency of the code without changing its behaviour</p>
+</li>
+<li>
+<p>Adding new functionality to the application</p>
+</li>
+<li>
+<p>Changing the behaviour of the code</p>
+</li>
+<li>
+<p>Tidying up the code without changing its behaviour&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Rearchitecting the code to get ready for adding new functionality</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The definition of refactoring is: improve the design (of some code) without changing its behaviour.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_when_can_refactoring_happen">When can refactoring happen?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>When a refactoring story gets prioritised by the Product Owner</p>
+</li>
+<li>
+<p>Whenever all tests are green&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>When at least one test is failing</p>
+</li>
+<li>
+<p>First thing in the morning</p>
+</li>
+<li>
+<p>Before committing code to source control</p>
+</li>
+<li>
+<p>At the end of an iteration</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Refactoring is part of the day-to-day work of every software developer. It&#8217;s when they tidy up the code once they&#8217;ve got it working.</p>
+</div>
+<div class="paragraph">
+<p>Since part of the definition of refactoring is that it shouldn&#8217;t change the behaviour of the code, they will run the tests to make sure nothing was broken. Which means that the tests MUST be passing BEFORE they start refactoring. Otherwise, how can they be sure that the behaviour hasn&#8217;t changed?</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_are_the_acceptance_test_and_unit_test_related">How are the acceptance test and unit test related?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Acceptance tests ensure we "build the right thing"; unit tests ensure we "build the thing right"&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>An acceptance test should be passing before we start writing unit tests</p>
+</li>
+<li>
+<p>We may write many unit tests before the currently failing acceptance test passes&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>All unit tests should be passing before we write an acceptance test</p>
+</li>
+<li>
+<p>BDD consists of two loops: an outer acceptance test loop and an inner unit test loop&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to fail, because we haven&#8217;t added the functionality it specifies to the system yet. This is the beginning of the outer, acceptance test loop, that ensures we&#8217;re building what the Product Owner wants: "build the right thing."</p>
+</div>
+<div class="paragraph">
+<p>We then enter the inner, unit test loop. It&#8217;s unit tests that define the precise behaviour of small units of code&#8201;&#8212;&#8201;and ensure that we "build the thing right." They give us the safety to improve the code&#8217;s design (refactor), because they will fail if we accidentally change the code&#8217;s behaviour while refactoring. We may have to go round the inner loop a number of times, adding several unit tests, before we&#8217;ve added enought functionality to make the outer acceptance test pass.</p>
+</div>
+<div class="paragraph">
+<p>And then we write the next failing acceptance test&#8230;&#8203;</p>
+</div>
 <div class="paragraph">
 <p>Unresolved directive in scripts.ruby.adoc - include::06/index.adoc[]</p>
 </div>
@@ -4477,7 +4616,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-15 20:08:16 UTC
+Last updated 2020-07-16 15:07:37 UTC
 </div>
 </div>
 <style>
