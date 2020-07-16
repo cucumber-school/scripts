@@ -3446,6 +3446,45 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Last time we worked on cleaning up the Shouty features to keep them in sync with the current status of the project. We stripped the scenarios back to only specify the behaviour of passing messages between people. We made it clear that the proximity rule had not yet been implemented.</p>
 </div>
@@ -3459,7 +3498,24 @@ Your browser does not support the video tag.
 <p></p>
 </div>
 <div class="paragraph">
-<p>Right, so those two scenarios we just left as just placeholders: the one where the listener is within range, and the one where the listener is out of range have been fleshed out, and are passing. Fantastic!</p>
+<p>Right, so those two scenarios we just left as just placeholders: the one where the listener is within range, and the one where the listener is out of range  have been fleshed out, and are passing. Fantastic!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Let’s review the changes to the feature file in more detail.</p>
@@ -3470,12 +3526,57 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>We now have four scenarios: our original two from the last time we looked at the code, and the two placeholders we wrote as reminders.</p>
 </div>
-<div class="paragraph">
-<p>
-We used the second scenario - Listener hears a different message - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the second scenario.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p></p>
+<p>We used the second scenario - Listener hears a different message  - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the second scenario. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where a "listener hears a "message" is a perfectly good way of checking that the message has been sent correctly.</p>
@@ -4616,7 +4717,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-16 15:07:37 UTC
+Last updated 2020-07-16 20:47:49 UTC
 </div>
 </div>
 <style>
