@@ -4105,8 +4105,7 @@ We created the scenario "Listener hears a different message" to force us to repl
 <div class="sect2">
 <h3 id="_incidental_details">5.2. Incidental details</h3>
 <div class="paragraph">
-<p>
-The first scenario has changed since we last looked at it  - it now specifies the range of a shout and the location of Sean and Lucy. This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
+<p>The first scenario has changed since we last looked at it  - it now specifies the range of a shout and the location of Sean and Lucy. This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4145,9 +4144,13 @@ We&#8217;ll need to make changes to the step definitions to make sure that a Net
 <p>
 We&#8217;ve defaulted the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">DEFAULT_RANGE</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>
-We&#8217;ll also need to add a step definition that can create a person without the scenario needing to specify where they are located. The step definition gives each person created this way a default location of 0.</p>
+<p>We&#8217;ll also need to add a step definition that can create a person without the scenario needing to specify where they are located. The step definition gives each person  created this way a default location of 0.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4164,7 +4167,7 @@ Let&#8217;s run Cucumber to check we haven&#8217;t broken anything&#8230;&#8203;
 </div>
 <div class="paragraph">
 <p>
-Looking at the two new scenarios - Listener is within range &amp; Listener is out of range - we can see that they also contain incidental details. Since their purpose is to illustrate the "Shouts should only be heard if listener is within range" rule, there&#8217;s no need to actually document the content of the shout.</p>
+Looking at the two new scenarios - Listener is within range  &amp; Listener is out of range  - we can see that they also contain incidental details. Since their purpose is to illustrate the "Shouts should only be heard if listener is within range" rule, there&#8217;s no need to actually document the content of the shout. </p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -5261,7 +5264,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-16 20:47:49 UTC
+Last updated 2020-07-16 21:27:36 UTC
 </div>
 </div>
 <style>
