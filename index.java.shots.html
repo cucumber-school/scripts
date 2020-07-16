@@ -4873,10 +4873,10 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <div class="sect2">
 <h3 id="_docstring">5.5. DocString</h3>
 <div class="paragraph">
-<p>When writing scenarios, occasionally we want to use a really long piece of data. <a href="#shot-726" id="shot-726" title="Show feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 0: Show feature file</a></p>
+<p>When writing scenarios, occasionally we want to use a really long piece of data. <a href="#shot-726" id="shot-726" title="Show feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Show feature file</a></p>
 </div>
 <div class="paragraph">
-<p>For example, let’s introduce a new rule about the maximum length of a message <a href="#shot-727" id="shot-727" title="New rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: New rule</a></p>
+<p>For example, let’s introduce a new rule about the maximum length of a message <a href="#shot-727" id="shot-727" title="New rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: New rule</a></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4885,7 +4885,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;and add a scenario to illustrate it <a href="#shot-728" id="shot-728" title="New scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: New scenario</a>, making the string just over the boundary of the rule:</p>
+<p>&#8230;&#8203;and add a scenario to illustrate it <a href="#shot-728" id="shot-728" title="New scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: New scenario</a>, making the string just over the boundary of the rule:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4903,7 +4903,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p>Still, we’ll press on and get it to green, then we’ll show you how to clean it up.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-729" id="shot-729" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: run Cucumber</a> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition <a href="#shot-730" id="shot-730" title="Modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: Modify stepdef</a></p>
+<p><a href="#shot-729" id="shot-729" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run Cucumber</a> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition <a href="#shot-730" id="shot-730" title="Modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Modify stepdef</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4915,13 +4915,13 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-731" id="shot-731" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: run cucumber</a></p>
+<p><a href="#shot-731" id="shot-731" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: run cucumber</a></p>
 </div>
 <div class="paragraph">
-<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests <a href="#shot-732" id="shot-732" title="show NetworkTest" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5a: show NetworkTest</a> and add a new example to specify this extra responsibility. <a href="#shot-733" id="shot-733" title="start creating new unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5b: start creating new unit test</a></p>
+<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests <a href="#shot-732" id="shot-732" title="show NetworkTest" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: show NetworkTest</a> and add a new example to specify this extra responsibility. <a href="#shot-733" id="shot-733" title="start creating new unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: start creating new unit test</a></p>
 </div>
 <div class="paragraph">
-<p>We’ll create a 181-character message like this <a href="#shot-734" id="shot-734" title="finish implementing unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: finish implementing unit test</a> and then assert that the message should not be heard when it’s broadcast.</p>
+<p>We’ll create a 181-character message like this <a href="#shot-734" id="shot-734" title="finish implementing unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: finish implementing unit test</a> and then assert that the message should not be heard when it’s broadcast.</p>
 </div>
 <div class="listingblock">
 <div class="title">NetworkTest.java</div>
@@ -4943,10 +4943,10 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run that test <a href="#shot-735" id="shot-735" title="run Cucumber - show the unit test results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run Cucumber - show the unit test results</a>. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
+<p>Let’s run that test <a href="#shot-735" id="shot-735" title="run Cucumber - show the unit test results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run Cucumber - show the unit test results</a>. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
 </div>
 <div class="paragraph">
-<p>It looks like we’re already <a href="#shot-736" id="shot-736" title="show Network proximity logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: show Network proximity logic</a> implementing the proximity rule here in the broadcast method. Let’s add another if statement here about the message length. <a href="#shot-737" id="shot-737" title="add message length logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8a: add message length logic</a></p>
+<p>It looks like we’re already implementing the proximity rule here in the broadcast method. <a href="#shot-736" id="shot-736" title="show Network proximity logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: show Network proximity logic</a> Let’s add another if statement here about the message length. <a href="#shot-737" id="shot-737" title="add message length logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: add message length logic</a></p>
 </div>
 <div class="listingblock">
 <div class="title">Network.java</div>
@@ -4957,11 +4957,11 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-738" id="shot-738" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run cucumber</a> Run the unit test again… and it’s passing. Great.</p>
+<p><a href="#shot-738" id="shot-738" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run cucumber</a> Run the unit test again… and it’s passing. Great.</p>
 </div>
 <div class="paragraph">
-<p>The code here has got a little bit messy and hard to read. <a href="#shot-739" id="shot-739" title="show the modified logic in the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9a: show the modified logic in the Network class</a>
-One very basic move we could make to improve it would be to just extract a couple of temporary variables. <a href="#shot-740" id="shot-740" title="extract temporary variables" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9b: extract temporary variables</a></p>
+<p>The code here has got a little bit messy and hard to read. <a href="#shot-739" id="shot-739" title="show the modified logic in the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: show the modified logic in the Network class</a>
+One very basic move we could make to improve it would be to just extract a couple of temporary variables. <a href="#shot-740" id="shot-740" title="extract temporary variables" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: extract temporary variables</a></p>
 </div>
 <div class="listingblock">
 <div class="title">Network.java</div>
@@ -4977,13 +4977,13 @@ One very basic move we could make to improve it would be to just extract a coupl
 <p>That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.</p>
 </div>
 <div class="paragraph">
-<p>Let’s just run the tests to check. <a href="#shot-741" id="shot-741" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run cucumber</a> Great - everything’s still green.</p>
+<p>Let’s just run the tests to check. <a href="#shot-741" id="shot-741" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run cucumber</a> Great - everything’s still green.</p>
 </div>
 <div class="paragraph">
-<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. <a href="#shot-742" id="shot-742" title="show message length scenario in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10a: show message length scenario in feature file</a></p>
+<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. <a href="#shot-742" id="shot-742" title="show message length scenario in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: show message length scenario in feature file</a></p>
 </div>
 <div class="paragraph">
-<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines.  We could change our step to look like this instead: <a href="#shot-743" id="shot-743" title="convert message to DocString" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10b: convert message to DocString</a></p>
+<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines.  We could change our step to look like this instead: <a href="#shot-743" id="shot-743" title="convert message to DocString" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: convert message to DocString</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5002,10 +5002,10 @@ One very basic move we could make to improve it would be to just extract a coupl
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario is much more readable. <a href="#shot-744" id="shot-744" title="show existing stepdef code" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10c: show existing stepdef code</a></p>
+<p>Now the scenario is much more readable. <a href="#shot-744" id="shot-744" title="show existing stepdef code" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: show existing stepdef code</a></p>
 </div>
 <div class="paragraph">
-<p>We have to add a new step definition too <a href="#shot-745" id="shot-745" title="add sean_shouts_the_following_message stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: add sean_shouts_the_following_message stepdef</a>. It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+<p>We have to add a new step definition too <a href="#shot-745" id="shot-745" title="add sean_shouts_the_following_message stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: add sean_shouts_the_following_message stepdef</a>. It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -5019,7 +5019,7 @@ One very basic move we could make to improve it would be to just extract a coupl
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s check that we&#8217;re still green <a href="#shot-746" id="shot-746" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: run cucumber</a>&#8201;&#8212;&#8201;and we are!</p>
+<p>Let&#8217;s check that we&#8217;re still green <a href="#shot-746" id="shot-746" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: run cucumber</a>&#8201;&#8212;&#8201;and we are!</p>
 </div>
 <div class="paragraph">
 <p>We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
@@ -5264,7 +5264,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-16 21:54:29 UTC
+Last updated 2020-07-16 22:05:41 UTC
 </div>
 </div>
 <style>
