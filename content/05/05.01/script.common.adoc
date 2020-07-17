@@ -16,14 +16,11 @@ Once again the Shouty developers -- have been hard at work implementing that pro
 
 shot::[2,Runs cucumber]
 
-// ORIGINAL
-Right, so those two scenarios we just left as just placeholders: the one where the listener is within range,shot::[3] and the one where the listener is out of range shot::[4] have been fleshed out, and are passing. Fantastic!
-
-//ALTERNATIVE
-Right, so those two scenarios we just left as just placeholders: the one where the listener is within range, and the one where the listener is out of range shot::[3, "Show output from Cucumber showing the in-range/out-of-range results"] are passing. Fantastic! If we look in the feature file, we can see how they have been fleshed out. shot::[4, "show the in-range/out-of-range scenarios in the feature file"]
+Right, so those two scenarios we just left as just placeholders: the one where the listener is within range,shot::[3, "show in feature file"] and the one where the listener is out of range shot::[3, "show in feature file"] are passing.shot::[5, "Show output from Cucumber showing the in-range/out-of-range results"] Fantastic! If we look in our step definitions, we can see how they have been fleshed out. shot::[6, "show the in-range/out-of-range scenarios in the step definitions"]
 
 // SEB: I think it's a good idea to move the cursor to each scenario individually to make it more dynamic, but I could also show this on the step definitions file.
 // FEDE: Yes - you're right. We should show the Cucumber output showing that they are passing AND the step definition file where they are fleshed out. I have added an alternative paragraph in the script above. What do you think?
+// The only "problem" I see with showing the output specifically is that we're just gonna be seeing a bunch of green dots, since we are not using cucumber-pretty at the moment. That said, it won't take away from the episode either, so I'll take it. I made just a couple of changes to the paragraph though
 
 [source,gherkin]
 ----
@@ -32,7 +29,7 @@ include::../code/ruby/00-starting-code/features/hear_shout.feature[lines=23..35]
 
 Let’s review the changes to the feature file in more detail.
 
-shot::[5,Show all four scenarios in feature file]
+shot::[7,Show all four scenarios in feature file]
 
 We now have four scenarios: our original two from the last time we looked at the code, and the two placeholders we wrote as reminders.
 
@@ -41,7 +38,7 @@ We now have four scenarios: our original two from the last time we looked at the
 include::../code/ruby/00-starting-code/features/hear_shout.feature[]
 ----
 
-We used the second scenario - Listener hears a different message shot::[6,Highlight second scenario] - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there's an insignificant chance of this behaviour regressing, so we can safely remove the second scenario. shot::[7,removes second scenario: Listener hears a different message]
+We used the second scenario - Listener hears a different message shot::[8,Highlight second scenario] - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there's an insignificant chance of this behaviour regressing, so we can safely remove the second scenario. shot::[9,removes second scenario: Listener hears a different message]
 
 [source,gherkin]
 ----

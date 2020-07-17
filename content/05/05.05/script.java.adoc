@@ -32,6 +32,7 @@ include::../code/java/18--step18-parameterise-stepdef/shouty/src/test/java/shout
 shot::[6,"run cucumber"]
 // SEB: I think in the next paragraph we need an explanation about why we're adding a unit test. That's something that we only ever did "off screen".
 // FEDE: That gets explanied in the next lesson 5.06. Do you think we need to add some text that says that we explain it later?
+// SEB: Yes, either add a vague explanation or say we'll see it on the next lesson. As someone who's trying to learn BDD and the difference between it and TDD, having a unit test added out of the blue raises questions.
 
 OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests shot::[7,show NetworkTest] and add a new example to specify this extra responsibility. shot::[8, start creating new unit test]
 
@@ -58,9 +59,6 @@ shot::[13,"run cucumber"] Run the unit test again… and it’s passing. Great.
 
 The code here has got a little bit messy and hard to read. shot::[14,"show the modified logic in the Network class"]
 One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule shot::[15,"extract range temporary variable"] and one for the length rule. shot::[16,"extract length temporary variable"]
-
-// SEB: I'd add to the end of this sentence "one for the range rule and one for the length rule". That'll allow us to show this in two steps
-// FEDE: Done
 
 .Network.java
 [source,java]
