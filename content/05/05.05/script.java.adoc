@@ -30,11 +30,8 @@ include::../code/java/18--step18-parameterise-stepdef/shouty/src/test/java/shout
 ----
 
 shot::[6,"run cucumber"]
-// SEB: I think in the next paragraph we need an explanation about why we're adding a unit test. That's something that we only ever did "off screen".
-// FEDE: That gets explanied in the next lesson 5.06. Do you think we need to add some text that says that we explain it later?
-// SEB: Yes, either add a vague explanation or say we'll see it on the next lesson. As someone who's trying to learn BDD and the difference between it and TDD, having a unit test added out of the blue raises questions.
 
-OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests shot::[7,show NetworkTest] and add a new example to specify this extra responsibility. shot::[8, start creating new unit test]
+OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests. shot::[7,show NetworkTest] As we explain in more detail in the next lesson, we start by adding a new example to specify this extra responsibility. shot::[8, start creating new unit test]
 
 We’ll create a 181-character message like this shot::[9,finish implementing unit test] and then assert that the message should not be heard when it’s broadcast.
 
