@@ -2,7 +2,7 @@
 
 # BDD with Cucumber - Video Scripts
 
-This repo contains the scripts and other artefacts used to generate the *BDD with Cucumber* Courses for Java, Ruby annd JavaScript hosted at https://school.cucumber.io
+This repo contains the scripts and other artefacts used to generate the *BDD with Cucumber* Courses for Java, Ruby and JavaScript hosted at https://school.cucumber.io
 
 Video and audio assets are stored on Google Drive, [here](https://drive.google.com/drive/u/2/folders/1UevNOmYoxXFosSrg_wxfretQmJxunjv4).
 
@@ -101,4 +101,3 @@ Code used to build and test the site as well as code samples on the site, if any
 This means you can use the content and code in this repository except for Cucumber trademarks in your projects.
 
 When you contribute to this repository you are doing so under the above licenses.
-
