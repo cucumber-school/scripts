@@ -8,8 +8,8 @@ LANGUAGES = {
 task :list do
   puts "Available languages: \n"
 
-  LANGUAGES.each do |code, name|
-    puts " rake \"html[#{lang}]\"  # Generate HTML for #{name} version."
+  LANGUAGES.each do |lang, name|
+    puts "  rake html[#{lang}]".ljust(25, ' ') + "# Generate HTML for #{name} version."
   end
 end
 
