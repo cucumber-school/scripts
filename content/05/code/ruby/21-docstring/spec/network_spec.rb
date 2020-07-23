@@ -21,16 +21,16 @@ RSpec.describe Shouty::Network do
     network.subscribe(laura)
     network.broadcast(message, sean_location)
 
-    expect(laura.messages_heard).not_to have_received(:hear).with(message)
+    expect(laura.messages_heard).not_to have_received(:hear)
   end
 
   it "does not broadcast a message to a listener out of range negative distance" do
-    sally_location = 101
-    lionel = spy(Shouty::Person, location: 0)
+    sally_location = 0
+    lionel = spy(Shouty::Person, location: -101)
     network.subscribe(lionel)
     network.broadcast(message, sally_location)
 
-    expect(lionel.messages_heard).not_to have_received(:hear).with(message)
+    expect(lionel.messages_heard).not_to have_received(:hear)
   end
 
   it "does not broadcast a message over 180 characters even if listener is in range" do
