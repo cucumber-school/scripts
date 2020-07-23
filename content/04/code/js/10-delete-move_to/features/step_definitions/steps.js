@@ -16,7 +16,8 @@ Given('a person named Sean', function () {
 })
 
 When('Sean shouts {string}', function (message) {
-  this.sean.shout(message)
+  sean = new Person(this.network)
+  sean.shout(message)
   this.messageFromSean = message
 })
 
