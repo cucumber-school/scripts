@@ -3021,13 +3021,13 @@ Let’s dig into the code and see how these steps have been automated.</p>
 <span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">()</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
 
   <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span>
 <span class="p">})</span>
 
 <span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+  <span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">messageFromSean</span> <span class="o">=</span> <span class="nx">message</span>
 <span class="p">})</span>
 
@@ -3211,7 +3211,7 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 <div class="content">
 <pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
 
-    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+    <span class="kn">Scenario</span><span class="p">:</span> Listener within range
       <span class="nf">Given </span>a person named Lucy
       <span class="nf">And </span>a person named Sean
       <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
@@ -3255,7 +3255,8 @@ Let’s press on. We can run Cucumber to generate new step definition snippets f
 
 <span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">a person named Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
-  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span></code></pre>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3316,7 +3317,8 @@ We now have two step definitions to implement, and that presents us with a bit o
 <span class="p">})</span>
 
 <span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">a person named Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span></code></pre>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3342,7 +3344,8 @@ We now have two step definitions to implement, and that presents us with a bit o
 <span class="p">})</span>
 
 <span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">a person named Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span></code></pre>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3386,7 +3389,8 @@ We now have two step definitions to implement, and that presents us with a bit o
 <span class="p">})</span>
 
 <span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+  <span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">messageFromSean</span> <span class="o">=</span> <span class="nx">message</span>
 <span class="p">})</span>
 
@@ -3412,7 +3416,6 @@ We now have two step definitions to implement, and that presents us with a bit o
 <span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">()</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span>    <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
 
   <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span>
 <span class="p">})</span>
@@ -3426,7 +3429,8 @@ We now have two step definitions to implement, and that presents us with a bit o
 <span class="p">})</span>
 
 <span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+  <span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">messageFromSean</span> <span class="o">=</span> <span class="nx">message</span>
 <span class="p">})</span>
 
@@ -3447,7 +3451,7 @@ Let&#8217;s clean that up too.</p>
 <pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
   <span class="kd">constructor</span><span class="p">(</span><span class="nx">network</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">this</span><span class="p">.</span><span class="nx">messages</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">network</span>  <span class="o">=</span> <span class="nx">network</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">network</span>      <span class="o">=</span> <span class="nx">network</span>
 
     <span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="k">this</span><span class="p">)</span>
   <span class="p">}</span>
@@ -3577,7 +3581,8 @@ We’ll start by creating a new object in the before hook, like this.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">  <span class="nx">assertThat</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">'</span><span class="s1">Lucy</span><span class="dl">'</span><span class="p">].</span><span class="nx">messagesHeard</span><span class="p">(),</span> <span class="nx">is</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">messageFromSean</span><span class="p">]))</span>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy should hear Sean</span><span class="se">\'</span><span class="s1">s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">assertThat</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">'</span><span class="s1">Lucy</span><span class="dl">'</span><span class="p">].</span><span class="nx">messagesHeard</span><span class="p">(),</span> <span class="nx">is</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">messageFromSean</span><span class="p">]))</span>
 <span class="p">})</span></code></pre>
 </div>
 </div>
@@ -3670,7 +3675,7 @@ Let’s switch back to the feature to show you one more technique for improving 
 <div class="content">
 <pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
 
-    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+    <span class="kn">Scenario</span><span class="p">:</span> Listener within range
       <span class="nf">Given </span>a person named Lucy
       <span class="nf">And </span>a person named Sean
       <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
@@ -5066,7 +5071,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-22 15:26:01 UTC
+Last updated 2020-07-23 07:52:33 UTC
 </div>
 </div>
 <style>
