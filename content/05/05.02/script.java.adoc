@@ -73,12 +73,28 @@ Next we add a step definition that allows Sean to shout, without needing us to s
 include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
 ----
 
-shot::[16,"Run Cucumber"]
+shot::[16]
+One that allows us to check that Lucy has heard exactly one shout
+[source,java]
+----
+include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=61..64]
+----
+
+shot::[17]
+And one that allows us to check that Larry haven't heard any messages at all.
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=66..69]
+----
+
+shot::[18,"Run Cucumber"]
 And finally run Cucumber - and we're still green.
 
-shot::[17,"Show hear_shout.feature"]
+shot::[19,"Show hear_shout.feature"]
 That's better. We've removed inessential details, so that each scenario contains only the information needed to illustrate its business rule.
 
-The scenarios would still run green if we removed the steps that set the range of a shout shot::[18,"Highlight in last two scenarios"] , because the range already has a default value. We're not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it's an essential part of context for anyone reading them.
+The scenarios would still run green if we removed the steps that set the range of a shout shot::[20,"Highlight in last two scenarios"] , because the range already has a default value. We're not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it's an essential part of context for anyone reading them.
 
-A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system shot::[19,"highlight Network constructor"]. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
+A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system shot::[21,"highlight Network constructor"]. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
