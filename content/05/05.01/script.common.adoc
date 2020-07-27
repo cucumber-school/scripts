@@ -16,7 +16,7 @@ Once again the Shouty developers -- have been hard at work implementing that pro
 
 shot::[2,Runs cucumber]
 
-Right, so those two scenarios we just left as just placeholders: the one where the listener is within range,shot::[3, "show in feature file"] and the one where the listener is out of range shot::[3, "show in feature file"] are passing.shot::[5, "Show output from Cucumber showing the in-range/out-of-range results"] Fantastic! If we look at our step definitions, we can see how they have been implemented. shot::[6, "show the in-range/out-of-range scenarios in the step definitions"]
+Right, so those two scenarios we just left as just placeholders: the one where the listener is within range,shot::[3, "show in feature file"] and the one where the listener is out of range shot::[4, "show in feature file"] are passing.shot::[5, "Show output from Cucumber showing the in-range/out-of-range results"] Fantastic! If we look at our step definitions, we can see how they have been implemented. shot::[6, "show the in-range/out-of-range scenarios in the step definitions"]
 
 [source,gherkin]
 ----
@@ -25,16 +25,14 @@ include::../code/ruby/00-starting-code/features/hear_shout.feature[lines=23..35]
 
 Let’s review the changes to the feature file in more detail.
 
-shot::[7,Show all four scenarios in feature file]
-
-We now have four scenarios: our original two from the last time we looked at the code, and the two placeholders we wrote as reminders.
+We now have four scenarios:shot::[7] our original two from the last time we looked at the code,shot::[8] and the two placeholders we wrote as reminders.shot::[9]
 
 [source,gherkin]
 ----
 include::../code/ruby/00-starting-code/features/hear_shout.feature[]
 ----
 
-We used the second scenario - Listener hears a different message shot::[8,Highlight second scenario] - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there's an insignificant chance of this behaviour regressing, so we can safely remove the second scenario. shot::[9,removes second scenario: Listener hears a different message]
+We used the second scenario - Listener hears a different message shot::[10,Highlight second scenario] - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there's an insignificant chance of this behaviour regressing, so we can safely remove the second scenario. shot::[11,removes second scenario: Listener hears a different message]
 
 [source,gherkin]
 ----
