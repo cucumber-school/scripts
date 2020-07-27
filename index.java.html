@@ -4015,9 +4015,6 @@ Your browser does not support the video tag.
 <p>Let’s review the changes to the feature file in more detail.</p>
 </div>
 <div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
 <p>We now have four scenarios: our original two from the last time we looked at the code, and the two placeholders we wrote as reminders.</p>
 </div>
 <div class="listingblock">
@@ -4219,6 +4216,31 @@ Next we add a step definition that allows Sean to shout, without needing us to s
 <pre class="rouge highlight"><code data-lang="java">    <span class="nd">@When</span><span class="o">(</span><span class="s">"Sean shouts"</span><span class="o">)</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">sean_shouts</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
         <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Sean"</span><span class="o">).</span><span class="na">shout</span><span class="o">(</span><span class="s">"Hello, world"</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+One that allows us to check that Lucy has heard exactly one shout</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Then</span><span class="o">(</span><span class="s">"Lucy should hear a shout"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">lucy_should_hear_a_shout</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Lucy"</span><span class="o">).</span><span class="na">getMessagesHeard</span><span class="o">().</span><span class="na">size</span><span class="o">());</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+And one that allows us to check that Larry haven&#8217;t heard any messages at all.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Then</span><span class="o">(</span><span class="s">"Larry should not hear a shout"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">larry_should_not_hear_a_shout</span><span class="o">()</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="s">"Larry"</span><span class="o">).</span><span class="na">getMessagesHeard</span><span class="o">().</span><span class="na">size</span><span class="o">());</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -5264,7 +5286,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-27 10:45:38 UTC
+Last updated 2020-07-27 14:35:51 UTC
 </div>
 </div>
 <style>
