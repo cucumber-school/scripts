@@ -4363,13 +4363,32 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <div class="sect2">
 <h3 id="_refactoring_to_data_tables">5.3. Refactoring to Data Tables</h3>
 <div class="paragraph">
-<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again <a href="#shot-701" id="shot-701" title="show the range rule &amp; scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show the range rule &amp; scenarios</a>. Notice how the steps <a href="#shot-702" id="shot-702" title="compare the two scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: compare the two scenarios</a> that create the Sean, Lucy, and Larry are very similar.</p>
+<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again <a href="#shot-701" id="shot-701" title="show the range rule &amp; scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show the range rule &amp; scenarios</a>. Notice how the steps that create the Sean,<a href="#shot-702" id="shot-702" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> Lucy,<a href="#shot-703" id="shot-703" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a> and Larry <a href="#shot-704" id="shot-704" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a> are very similar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">  <span class="nl">Rule:</span> <span class="nc">Shouts</span> <span class="n">should</span> <span class="n">only</span> <span class="n">be</span> <span class="n">heard</span> <span class="k">if</span> <span class="n">listener</span> <span class="n">is</span> <span class="n">within</span> <span class="n">range</span>
+
+    <span class="nl">Scenario:</span> <span class="nc">Listener</span> <span class="n">is</span> <span class="n">within</span> <span class="n">range</span>
+      <span class="nc">Given</span> <span class="n">the</span> <span class="n">range</span> <span class="n">is</span> <span class="mi">100</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Sean</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">0</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Lucy</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">50</span>
+      <span class="nc">When</span> <span class="nc">Sean</span> <span class="n">shouts</span>
+      <span class="nc">Then</span> <span class="nc">Lucy</span> <span class="n">should</span> <span class="n">hear</span> <span class="n">a</span> <span class="n">shout</span>
+
+    <span class="nl">Scenario:</span> <span class="nc">Listener</span> <span class="n">is</span> <span class="n">out</span> <span class="n">of</span> <span class="n">range</span>
+      <span class="nc">Given</span> <span class="n">the</span> <span class="n">range</span> <span class="n">is</span> <span class="mi">100</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Sean</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">0</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Larry</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">150</span>
+      <span class="nc">When</span> <span class="nc">Sean</span> <span class="n">shouts</span>
+      <span class="nc">Then</span> <span class="nc">Larry</span> <span class="n">should</span> <span class="n">not</span> <span class="n">hear</span> <span class="n">a</span> <span class="n">shout</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-703" id="shot-703" title="feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: feature file</a></p>
+<p><a href="#shot-705" id="shot-705" title="feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: feature file</a></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4387,7 +4406,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p>Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-704" id="shot-704" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run cucumber</a><a href="#shot-705" id="shot-705" title="copy snippet, paste into StepDefinition.java" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: copy snippet, paste into StepDefinition.java</a></p>
+<p><a href="#shot-706" id="shot-706" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: run cucumber</a><a href="#shot-707" id="shot-707" title="copy snippet, paste into StepDefinition.java" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: copy snippet, paste into StepDefinition.java</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4406,10 +4425,10 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see, the step definition implicitly takes a single argument <a href="#shot-706" id="shot-706" title="highlight stepdef parameters" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight stepdef parameters</a>, which as this comment explains is a DataTable. This object has a rich API for using the tabular data.</p>
+<p>As you can see, the step definition implicitly takes a single argument <a href="#shot-708" id="shot-708" title="highlight stepdef parameters" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: highlight stepdef parameters</a>, which as this comment explains is a DataTable. This object has a rich API for using the tabular data.</p>
 </div>
 <div class="paragraph">
-<p>At its most basic, the table is just a two-dimensional array. So, Lucy&#8217;s location can be accessed <a href="#shot-707" id="shot-707" title="Print out a single cell value" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: Print out a single cell value</a> by getting the value from array cell (2, 1)</p>
+<p>At its most basic, the table is just a two-dimensional array. So, Lucy&#8217;s location can be accessed <a href="#shot-709" id="shot-709" title="Print out a single cell value" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: Print out a single cell value</a> by getting the value from array cell (2, 1)</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4421,10 +4440,10 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-708" id="shot-708" title="run Cucumber, highlight 'Lucy&#8217;s location'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run Cucumber, highlight 'Lucy&#8217;s location'</a></p>
+<p><a href="#shot-710" id="shot-710" title="run Cucumber, highlight 'Lucy&#8217;s location'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run Cucumber, highlight 'Lucy&#8217;s location'</a></p>
 </div>
 <div class="paragraph">
-<p>You can also turn the table into a List of Maps <a href="#shot-709" id="shot-709" title="Print out data table" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: Print out data table</a>, where the first row is used for the map keys, and each following row is used for the map values.</p>
+<p>You can also turn the table into a List of Maps <a href="#shot-711" id="shot-711" title="Print out data table" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: Print out data table</a>, where the first row is used for the map keys, and each following row is used for the map values.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4436,10 +4455,10 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-710" id="shot-710" title="run Cucumber, highlight data table output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run Cucumber, highlight data table output</a></p>
+<p><a href="#shot-712" id="shot-712" title="run Cucumber, highlight data table output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: run Cucumber, highlight data table output</a></p>
 </div>
 <div class="paragraph">
-<p>Now we can easily iterate <a href="#shot-711" id="shot-711" title="write the loop" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: write the loop</a> over these maps and turn them into instances of Person: <a href="#shot-712" id="shot-712" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
+<p>Now we can easily iterate <a href="#shot-713" id="shot-713" title="write the loop" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: write the loop</a> over these maps and turn them into instances of Person: <a href="#shot-714" id="shot-714" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4453,10 +4472,10 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-713" id="shot-713" title="run cucumber&#8201;&#8212;&#8201;all green" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run cucumber&#8201;&#8212;&#8201;all green</a></p>
+<p><a href="#shot-715" id="shot-715" title="run cucumber&#8201;&#8212;&#8201;all green" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: run cucumber&#8201;&#8212;&#8201;all green</a></p>
 </div>
 <div class="paragraph">
-<p>With that done, we can update the other scenario <a href="#shot-714" id="shot-714" title="update other scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: update other scenario</a> &#8230;&#8203;</p>
+<p>With that done, we can update the other scenario <a href="#shot-716" id="shot-716" title="update other scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: update other scenario</a> &#8230;&#8203;</p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4472,7 +4491,10 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p>and delete our old step definition <a href="#shot-715" id="shot-715" title="delete unused step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: delete unused step def</a>, which is now unused.</p>
+<p>Now we can check that everything is still green. <a href="#shot-717" id="shot-717" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17</a></p>
+</div>
+<div class="paragraph">
+<p>and delete our old step definition <a href="#shot-718" id="shot-718" title="delete unused step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: delete unused step def</a>, which is now unused.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4484,13 +4506,13 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-716" id="shot-716" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run cucumber</a></p>
+<p><a href="#shot-719" id="shot-719" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: run cucumber</a></p>
 </div>
 <div class="paragraph">
-<p>Cucumber strips all the white space surrounding each cell <a href="#shot-717" id="shot-717" title="show lining up of pipe characters" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: show lining up of pipe characters</a>, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.</p>
+<p>Cucumber strips all the white space surrounding each cell <a href="#shot-720" id="shot-720" title="show lining up of pipe characters" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: show lining up of pipe characters</a>, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.</p>
 </div>
 <div class="paragraph">
-<p>Notice we’ve still had to convert the location from a string to an integer <a href="#shot-718" id="shot-718" title="Conversion in step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: Conversion in step def</a>, because Cucumber can’t know that’s the type of value in our table.</p>
+<p>Notice we’ve still had to convert the location from a string to an integer <a href="#shot-721" id="shot-721" title="Conversion in step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: Conversion in step def</a>, because Cucumber can’t know that’s the type of value in our table.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4504,7 +4526,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p>To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.</p>
 </div>
 <div class="paragraph">
-<p>Instead, we’ll define a simple Whereabouts class to represent the data in the table. <a href="#shot-719" id="shot-719" title="creates the class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: creates the class</a></p>
+<p>Instead, we’ll define a simple Whereabouts class to represent the data in the table. <a href="#shot-722" id="shot-722" title="creates the class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: creates the class</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4524,7 +4546,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p>We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.</p>
 </div>
 <div class="paragraph">
-<p>Then we can <a href="#shot-720" id="shot-720" title="write defineWhereabouts()" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: write defineWhereabouts()</a> create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects.</p>
+<p>Then we can <a href="#shot-723" id="shot-723" title="write defineWhereabouts()" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: write defineWhereabouts()</a> create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4536,7 +4558,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p>Now, if you declare your table parameter as a generic list <a href="#shot-721" id="shot-721" title="modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: modify stepdef</a>, Cucumber will automatically convert the table into a list of the generic type for you.</p>
+<p>Now, if you declare your table parameter as a generic list <a href="#shot-724" id="shot-724" title="modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: modify stepdef</a>, Cucumber will automatically convert the table into a list of the generic type for you.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4549,12 +4571,12 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-722" id="shot-722" title="Run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: Run Cucumber</a>
+<p><a href="#shot-725" id="shot-725" title="Run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25: Run Cucumber</a>
 Let&#8217;s run Cucumber to check that we&#8217;re still green. And we are!</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-723" id="shot-723" title="hear_shout.feature data tables" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: hear_shout.feature data tables</a>
-That looks much nicer -  people positioned using a table in the feature file and <a href="#shot-724" id="shot-724" title="people_are_located_at()" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: people_are_located_at()</a> really clean code that creates and positions people according to the data.</p>
+<p><a href="#shot-726" id="shot-726" title="hear_shout.feature data tables" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26: hear_shout.feature data tables</a>
+That looks much nicer -  people positioned using a table in the feature file and <a href="#shot-727" id="shot-727" title="people_are_located_at()" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 27: people_are_located_at()</a> really clean code that creates and positions people according to the data.</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_3_questions_2">5.3.1. Lesson 3 - Questions</h4>
@@ -4711,10 +4733,37 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 <div class="sect2">
 <h3 id="_deeper_into_data_tables">5.4. Deeper into Data Tables</h3>
 <div class="paragraph">
-<p><a href="#shot-725" id="shot-725" title="open feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: open feature file</a></p>
+<p><a href="#shot-728" id="shot-728" title="open feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: open feature file</a></p>
 </div>
 <div class="paragraph">
-<p>The way that we’ve specified this data is OK, but your product owner would prefer you to express it like this instead: <a href="#shot-726" id="shot-726" title="edit data table to have headings in the first column" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: edit data table to have headings in the first column</a></p>
+<p>The way that we’ve specified this data is OK,</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span> <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span> <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Lucy</span> <span class="p">|</span> <span class="n">50</span>       <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Lucy should hear a shout
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>  <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span>  <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Larry</span> <span class="p">|</span> <span class="n">150</span>       <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>but your product owner would prefer you to express it like this instead: <a href="#shot-729" id="shot-729" title="edit data table to have headings in the first column" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: edit data table to have headings in the first column</a></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4738,7 +4787,7 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 <p>It&#8217;s always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.</p>
 </div>
 <div class="paragraph">
-<p>If you annotate the method parameter with the @Transpose annotation <a href="#shot-727" id="shot-727" title="add Transpose annotation to stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: add Transpose annotation to stepdef</a>, Cucumber will turn each row into a column before passing it to the step definition.</p>
+<p>If you annotate the method parameter with the @Transpose annotation <a href="#shot-730" id="shot-730" title="add Transpose annotation to stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: add Transpose annotation to stepdef</a>, Cucumber will turn each row into a column before passing it to the step definition.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4747,14 +4796,14 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-728" id="shot-728" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run Cucumber</a></p>
+<p><a href="#shot-731" id="shot-731" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run Cucumber</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-729" id="shot-729" title="show data tables in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: show data tables in feature file</a>
+<p><a href="#shot-732" id="shot-732" title="show data tables in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: show data tables in feature file</a>
 Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
 </div>
 <div class="paragraph">
-<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: <a href="#shot-730" id="shot-730" title="write two-shouts scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: write two-shouts scenario</a></p>
+<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: <a href="#shot-733" id="shot-733" title="write two-shouts scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: write two-shouts scenario</a></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4778,13 +4827,13 @@ Data tables are very useful for setting up data in Given steps, but you can also
 <p>So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run Cucumber to generate the new step definition <a href="#shot-731" id="shot-731" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run Cucumber</a> and paste it into our StepDefinitions class <a href="#shot-732" id="shot-732" title="paste snippet" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: paste snippet</a></p>
+<p>Let&#8217;s run Cucumber to generate the new step definition <a href="#shot-734" id="shot-734" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run Cucumber</a> and paste it into our StepDefinitions class <a href="#shot-735" id="shot-735" title="paste snippet" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: paste snippet</a> <a href="#shot-736" id="shot-736" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a></p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.</p>
 </div>
 <div class="paragraph">
-<p>A List of List of String will do <a href="#shot-733" id="shot-733" title="write code to create list-of-list-of-strings" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: write code to create list-of-list-of-strings</a>, so we can just iterate over Lucy’s messages and create a new single-item List for each row.<a href="#shot-734" id="shot-734" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10</a></p>
+<p>A List of List of String will do <a href="#shot-737" id="shot-737" title="write code to create list-of-list-of-strings" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: write code to create list-of-list-of-strings</a>, so we can just iterate over Lucy’s messages and create a new single-item List for each row.<a href="#shot-738" id="shot-738" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4797,7 +4846,7 @@ Data tables are very useful for setting up data in Given steps, but you can also
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can pass that list to the diff method <a href="#shot-735" id="shot-735" title="write code to call diff" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: write code to call diff</a> on the table of expected messages passed in from the Gherkin.</p>
+<p>Now we can pass that list to the diff method <a href="#shot-739" id="shot-739" title="write code to call diff" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: write code to call diff</a> on the table of expected messages passed in from the Gherkin.</p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4806,13 +4855,13 @@ Data tables are very useful for setting up data in Given steps, but you can also
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-736" id="shot-736" title="runs cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: runs cucumber</a></p>
+<p><a href="#shot-740" id="shot-740" title="runs cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: runs cucumber</a></p>
 </div>
 <div class="paragraph">
-<p>Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
+<p>Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. <a href="#shot-741" id="shot-741" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14</a> Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
 </div>
 <div class="paragraph">
-<p>Let’s fix just one of these <a href="#shot-737" id="shot-737" title="add an exclamation mark" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: add an exclamation mark</a> so you can see how the diff output changes.</p>
+<p>Let’s fix just one of these <a href="#shot-742" id="shot-742" title="add an exclamation mark" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: add an exclamation mark</a> so you can see how the diff output changes.</p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4821,11 +4870,11 @@ Data tables are very useful for setting up data in Given steps, but you can also
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-738" id="shot-738" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: run Cucumber</a>
+<p><a href="#shot-743" id="shot-743" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run Cucumber</a>
 The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.</p>
 </div>
 <div class="paragraph">
-<p>Let’s fix this last typo <a href="#shot-739" id="shot-739" title="add another exclamation mark" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: add another exclamation mark</a>, and we should be green again.</p>
+<p>Let’s fix this last typo <a href="#shot-744" id="shot-744" title="add another exclamation mark" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: add another exclamation mark</a>, and we should be green again.</p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4834,7 +4883,7 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-740" id="shot-740" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run Cucumber</a></p>
+<p><a href="#shot-745" id="shot-745" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: run Cucumber</a></p>
 </div>
 <div class="paragraph">
 <p>Great.</p>
@@ -4895,10 +4944,10 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <div class="sect2">
 <h3 id="_docstring">5.5. DocString</h3>
 <div class="paragraph">
-<p>When writing scenarios, occasionally we want to use a really long piece of data. <a href="#shot-741" id="shot-741" title="Show feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Show feature file</a></p>
+<p>When writing scenarios, occasionally we want to use a really long piece of data. <a href="#shot-746" id="shot-746" title="Show feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Show feature file</a></p>
 </div>
 <div class="paragraph">
-<p>For example, let’s introduce a new rule about the maximum length of a message <a href="#shot-742" id="shot-742" title="New rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: New rule</a></p>
+<p>For example, let’s introduce a new rule about the maximum length of a message <a href="#shot-747" id="shot-747" title="New rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: New rule</a></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4907,7 +4956,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;and add a scenario to illustrate it <a href="#shot-743" id="shot-743" title="New scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: New scenario</a>, making the string just over the boundary of the rule:</p>
+<p>&#8230;&#8203;and add a scenario to illustrate it <a href="#shot-748" id="shot-748" title="New scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: New scenario</a>, making the string just over the boundary of the rule:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4925,7 +4974,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p>Still, we’ll press on and get it to green, then we’ll show you how to clean it up.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-744" id="shot-744" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run Cucumber</a> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition <a href="#shot-745" id="shot-745" title="Modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Modify stepdef</a></p>
+<p><a href="#shot-749" id="shot-749" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run Cucumber</a> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition <a href="#shot-750" id="shot-750" title="Modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Modify stepdef</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4937,13 +4986,13 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-746" id="shot-746" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: run cucumber</a></p>
+<p><a href="#shot-751" id="shot-751" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: run cucumber</a></p>
 </div>
 <div class="paragraph">
-<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests. <a href="#shot-747" id="shot-747" title="show NetworkTest" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: show NetworkTest</a> As we explain in more detail in the next lesson, we start by adding a new example to specify this extra responsibility. <a href="#shot-748" id="shot-748" title="start creating new unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: start creating new unit test</a></p>
+<p>OK, so we have a failing acceptance test.<a href="#shot-752" id="shot-752" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a> Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests. <a href="#shot-753" id="shot-753" title="show NetworkTest" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: show NetworkTest</a> As we explain in more detail in the next lesson, we start by adding a new example to specify this extra responsibility. <a href="#shot-754" id="shot-754" title="start creating new unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: start creating new unit test</a></p>
 </div>
 <div class="paragraph">
-<p>We’ll create a 181-character message like this <a href="#shot-749" id="shot-749" title="finish implementing unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: finish implementing unit test</a> and then assert that the message should not be heard when it’s broadcast.</p>
+<p>We’ll create a 181-character message like this <a href="#shot-755" id="shot-755" title="finish implementing unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: finish implementing unit test</a> and then assert that the message should not be heard when it’s broadcast.<a href="#shot-756" id="shot-756" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a></p>
 </div>
 <div class="listingblock">
 <div class="title">NetworkTest.java</div>
@@ -4965,10 +5014,10 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run that test <a href="#shot-750" id="shot-750" title="run Cucumber - show the unit test results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run Cucumber - show the unit test results</a>. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
+<p>Let’s run that test. <a href="#shot-757" id="shot-757" title="run Cucumber - show the unit test results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: run Cucumber - show the unit test results</a><a href="#shot-758" id="shot-758" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13</a> Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
 </div>
 <div class="paragraph">
-<p>It looks like we’re already implementing the proximity rule here in the broadcast method. <a href="#shot-751" id="shot-751" title="show Network proximity logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: show Network proximity logic</a> Let’s add another if statement here about the message length. <a href="#shot-752" id="shot-752" title="add message length logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: add message length logic</a></p>
+<p>It looks like we’re already implementing the proximity rule here in the broadcast method. <a href="#shot-759" id="shot-759" title="show Network proximity logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: show Network proximity logic</a> Let’s add another if statement here about the message length. <a href="#shot-760" id="shot-760" title="add message length logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: add message length logic</a></p>
 </div>
 <div class="listingblock">
 <div class="title">Network.java</div>
@@ -4979,11 +5028,11 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-753" id="shot-753" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run cucumber</a> Run the unit test again… and it’s passing. Great.</p>
+<p><a href="#shot-761" id="shot-761" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run cucumber</a> Run the unit test again… and it’s passing. Great.</p>
 </div>
 <div class="paragraph">
-<p>The code here has got a little bit messy and hard to read. <a href="#shot-754" id="shot-754" title="show the modified logic in the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: show the modified logic in the Network class</a>
-One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule <a href="#shot-755" id="shot-755" title="extract range temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: extract range temporary variable</a> and one for the length rule. <a href="#shot-756" id="shot-756" title="extract length temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: extract length temporary variable</a></p>
+<p>The code here has got a little bit messy and hard to read. <a href="#shot-762" id="shot-762" title="show the modified logic in the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: show the modified logic in the Network class</a>
+One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule <a href="#shot-763" id="shot-763" title="extract range temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: extract range temporary variable</a> and one for the length rule. <a href="#shot-764" id="shot-764" title="extract length temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: extract length temporary variable</a></p>
 </div>
 <div class="listingblock">
 <div class="title">Network.java</div>
@@ -4999,13 +5048,13 @@ One very basic move we could make to improve it would be to just extract a coupl
 <p>That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.</p>
 </div>
 <div class="paragraph">
-<p>Let’s just run the tests to check. <a href="#shot-757" id="shot-757" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run cucumber</a> Great - everything’s still green.</p>
+<p>Let’s just run the tests to check. <a href="#shot-765" id="shot-765" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run cucumber</a> Great - everything’s still green.</p>
 </div>
 <div class="paragraph">
-<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. <a href="#shot-758" id="shot-758" title="show message length scenario in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: show message length scenario in feature file</a></p>
+<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. <a href="#shot-766" id="shot-766" title="show message length scenario in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: show message length scenario in feature file</a></p>
 </div>
 <div class="paragraph">
-<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines.  We could change our step to look like this instead: <a href="#shot-759" id="shot-759" title="convert message to DocString" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: convert message to DocString</a></p>
+<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines.  We could change our step to look like this instead: <a href="#shot-767" id="shot-767" title="convert message to DocString" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: convert message to DocString</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5024,10 +5073,13 @@ One very basic move we could make to improve it would be to just extract a coupl
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario is much more readable. <a href="#shot-760" id="shot-760" title="show existing stepdef code" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: show existing stepdef code</a></p>
+<p>Now the scenario is much more readable. <a href="#shot-768" id="shot-768" title="show existing stepdef code" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: show existing stepdef code</a></p>
 </div>
 <div class="paragraph">
-<p>We have to add a new step definition too <a href="#shot-761" id="shot-761" title="add sean_shouts_the_following_message stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: add sean_shouts_the_following_message stepdef</a>. It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+<p>We have to add a new step definition too <a href="#shot-769" id="shot-769" title="add sean_shouts_the_following_message stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: add sean_shouts_the_following_message stepdef</a>. It doesn&#8217;t need a parameter in the Cucumber Expression <a href="#shot-770" id="shot-770" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25</a>&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.<a href="#shot-771" id="shot-771" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26</a></p>
+</div>
+<div class="paragraph">
+<p>Now we can fill out the rest of our new step definition. <a href="#shot-772" id="shot-772" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 27</a><a href="#shot-773" id="shot-773" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 27.2</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -5041,7 +5093,7 @@ One very basic move we could make to improve it would be to just extract a coupl
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s check that we&#8217;re still green <a href="#shot-762" id="shot-762" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: run cucumber</a>&#8201;&#8212;&#8201;and we are!</p>
+<p>Let&#8217;s check that we&#8217;re still green <a href="#shot-774" id="shot-774" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 28: run cucumber</a><a href="#shot-775" id="shot-775" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 28.2</a>&#8201;&#8212;&#8201;and we are!</p>
 </div>
 <div class="paragraph">
 <p>We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
@@ -5143,7 +5195,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 <div class="sect2">
 <h3 id="_tdd_loops">5.6. TDD Loops</h3>
 <div class="paragraph">
-<p><a href="#shot-763" id="shot-763" title="original animation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: original animation</a></p>
+<p><a href="#shot-776" id="shot-776" title="original animation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: original animation</a></p>
 </div>
 <div class="paragraph">
 <p>You might have noticed that we’ve followed a pattern when we added behaviour to the system during this episode.</p>
@@ -5286,7 +5338,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-07-27 14:35:51 UTC
+Last updated 2020-07-28 11:44:46 UTC
 </div>
 </div>
 <style>
