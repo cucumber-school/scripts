@@ -1,0 +1,236 @@
+Hello, and welcome back to Cucumber School.
+
+Last time we learned about two very different kinds of loops. First, we used DataTables to loop over data in your scenarios.
+
+Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to build the right thing while the inner loop helps you build the thing right.
+
+In this lesson, we’re going to teach you all about how to configure Cucumber.
+Filters
+
+When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.
+
+If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.
+
+Filter by name
+
+There are several ways to do this in Cucumber. Probably the easiest way is to tell Cucumber to only run a scenario with a particular name.
+
+<ruby>
+cucumber --name 'Message is too long'
+</ruby>
+
+<java>
+mvn test -Dcucumber.options="--name 'Message is too long'"
+</java>
+
+The name option tells Cucumber to only run scenarios with a name matching Message is too long. The value of this option is actually a regular expression, so you can use your imagination here to run more than one scenario.
+
+Filter by file:line
+
+Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file:
+
+<java>
+mvn test -Dcucumber.options="src/test/resources/shouty/shout.feature:33"
+</java>
+
+You can even specify multiple line numbers for each file:
+
+<java>
+mvn test -Dcucumber.options="src/test/resources/shouty/shout.feature:18:33"
+</java>
+
+You can list several files and lines together like this if you have a specific set of scenarios you want to run.
+
+<ruby>
+When a scenario fails, you’ll notice that Cucumber outputs the command you can use to re-run that particular scenario again. You can just copy Cucumber’s output and paste it into your command prompt.
+</ruby>
+
+Filter by tag
+
+Narrowing down the set of scenarios to run like this is called filtering. Cucumber has a third filtering mechanism that uses tags. Tags start with an at-sign. We’ll put a focus tag right here, above this scenario.
+
+[ adds a @focus tag to the “Listener is out of range” scenario ]
+
+Now we can run the scenarios tagged with focus - there should be only one...
+
+<java>
+mvn test -Dcucumber.options="--tags @focus"
+</java>
+
+Yep.
+
+It’s entirely up to you what you name your tags. When we’re working on a particular area of the application it is common to use a temporary tag like this - we’ll remove it before we check our code into source control.
+Other uses of tags
+
+Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. This will give you a certain level of confidence that nothing is broken without having to run them all.
+
+[tags first and third scenario with @smoke, runs `-t @smoke`]
+
+If you’re running Cucumber on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests.
+
+[runs all scenarios]
+
+Tags give you a way to organise your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.
+
+Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. All the scenarios within that file now inherit that tag.
+
+[tags the feature with @SHOUTY-11, runs `-t @SHOUTY-11`]
+
+In lesson four we learned about hooks. In a future episode, we’ll see how tags can be combined with hooks, so you can be selective about which hooks to run when.
+
+Tag expressions
+If you want to, you can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow.
+
+[ tags last two scenarios with @slow, runs `-t ~@slow` ]
+
+<java>
+mvn test -Dcucumber.options="--tags ~@slow"
+</java>
+
+<ruby>
+cucumber --tags ~@slow
+</ruby>
+
+Help
+
+Let’s take a look at some of the other configuration options Cucumber offers. If we pass the help option to Cucumber it will exit immediately without running any scenarios, and print all the available options, along with some useful documentation:
+
+<java>
+mvn test -Dcucumber.options="--help"
+</java>
+
+<java>
+We’ll cover the --glue option in a future episode, so let’s skip that for now.
+</java>
+
+<ruby>
+For example, you can see more details here about the boolean expressions used for tag filtering.
+</ruby>
+
+Formatter plugins
+Let’s take a closer look at the <java>--plugin</java><ruby>--format</ruby> option.
+
+[ highlights --format help ]
+
+So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.
+
+Let’s try the HTML <java>plugin</java><ruby>formatter</ruby>.
+
+<java>
+mvn test -Dcucumber.options="--plugin html:target/cucumber-report"
+Opens target/cucumber-report/index.html in the browser
+
+When we use the html formatter we simply append a colon followed by the path to the directory where we want the report written.
+</java>
+
+<ruby>
+When we use the html formatter we use dash-dash out to specify the file where the report should be written. Otherwise it will be written directly to the console.
+
+[ runs `cucumber --format html --out report.html` and `open report.html ]
+</ruby>
+
+Let’s try another one - JSON.
+
+<java>
+mvn test -Dcucumber.options="--plugin json:target/cucumber-report.json"
+</java>
+
+The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.
+
+There is also a progress formatter, which just prints out a single character for each step. The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.
+
+<ruby>
+We can specify multiple formatters like this. The one without a dash-dash out will be written to the console.
+</ruby>
+Rerun formatter
+
+One of these formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.
+
+[ Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!" ]
+
+<java>
+mvn test -Dcucumber.options="--plugin rerun:rerun.txt"
+</java>
+
+We choose the rerun formatter and send the output to a file called rerun.txt.
+
+Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
+
+This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. c:
+
+<java>
+mvn test -Dcucumber.options="@rerun.txt"
+</java>
+
+This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.
+
+Dry-run
+
+The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps.
+
+Strict
+
+The --strict option affects the exit status of Cucumber. To see how it works, let’s add an undefined step:
+
+(Adds “Then we have an undefined step” to the end of shout.feature).
+
+Let’s first run it without --strict:
+
+<java>
+mvn test
+echo $?
+0
+</java>
+
+That last command tells us that Cucumber didn’t fail - it exited with exit status zero, which means success. Now, let’s run it with strict:
+
+<java>
+mvn test -Dcucumber.options="--strict"
+echo $?
+1
+</java>
+
+This time the exit status was one, which means Cucumber failed.
+
+Why is this interesting? Well, if you run Cucumber on a Continuous Integration server it will fail the build if there are undefined or pending steps. That’s pretty handy!
+
+I18n
+
+Cucumber is first and foremost a tool that facilitates a common understanding between people on a project. Imagine our customers were cats. We could write our features in English, but the cats would obviously not understand that.
+
+We all know that cats speak LOLCAT, not English, so our feature would have to look like this in order for cats to understand:
+
+# language: en-lol
+
+
+We tell Cucumber what language to use by adding a language comment at the top of the file. Cucumber supports over 60 different languages, thanks to contributions from people and cats all over the world.
+
+You can get a list of all the supported languages with --i18n help. To see the translation of the Gherkin keywords for a particular language, just replace help with the language code. For example --i18n hi for Hindi.
+
+Static configuration
+
+It would be tedious if you had to write out these configuration options every time you run Cucumber. To make this easier you can write the options in a file that Cucumber will pick up.
+
+<java>
+The easiest is to write the options down in a file called cucumber.properties that you place on the classpath. In a maven project, this file should be in src/test/resources/cucumber.properties. Just define a single property called cucumber.options and pass all the configuration options there.
+
+Alternatively, you can set all the configuration options using a Java annotation. Let’s take a look at RunCukesTest.
+
+The Cucumber annotation tells JUnit to run Cucumber. The CucumberOptions annotation has a corresponding property for each of the options you can pass to Cucumber. If you forget what they are, just run Cucumber with the help option.
+</java>
+
+<ruby>
+You can use the cucumber.yml file to define one or more profiles that describe a set of configuration options for Cucumber.
+
+For example, we can define a `dev` profile that runs only the @focus scenarios and uses the progress formatter.
+
+We use the --profile option to choose this profile when running Cucumber.
+
+To change the default behaviour of Cucumber, change the default profile. Let’s make Cucumber strict by default.
+
+It’s common for teams to have a number of profiles defined, usually for the different environments where Cucumber runs. You can have a CI profile that behaves differently to the one you use on your dev machines, for example.
+</ruby>
+
+Close
+
+To make Cucumber really useful to your team, it’s good to spend time learning the details of how to configure it. In this lesson, we gave you a tour of almost all of Cucumber’s configuration options. You learned how to filter scenarios by name, line number or tag. You learned how to format Cucumber’s output, and you learned how to write your scenarios in different spoken languages. You also learned how to set up different configurations for use by your whole team.

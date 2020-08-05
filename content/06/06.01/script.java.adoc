@@ -1,0 +1,36 @@
+include::./title.adoc[]
+
+shot::[1, "Animation"]
+Hello, and welcome back to Cucumber School.
+
+Last time we learned about two very different kinds of loops. First, we used DataTables to loop over data in your scenarios.
+
+Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to build the right thing while the inner loop helps you build the thing right.
+
+In this lesson, we’re going to teach you all about how to configure Cucumber.
+
+shot::[2, "shout.feature including scenario 'Message too long'"]
+When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.
+
+If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.
+
+
+=================================
+
+shot::[3,"Edit context of first scenario"]
+Let's ensure that this scenario includes only essential information for the reader and remove all references to location and range.
+
+[source,gherkin]
+----
+include::../code/java/02--step02-edit-first-scenario-to-remove-inessential-details/shouty/src/test/resources/shouty/hear_shout.feature[lines=7..11]
+----
+
+shot::[4,"Add Network creation"]
+// TODO: Maybe divide this into 2 shots, first network creation and then variable assignment
+We'll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/java/shouty/StepDefinitions.java[lines=22..22]
+----
