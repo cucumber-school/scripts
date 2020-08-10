@@ -19,7 +19,7 @@ include::../code/java/05--step05-location-specified-in-data-table/shouty/src/tes
 
 Well, we’re in luck. You can!
 
-Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.
+Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells. shot::(5a, highlight data table)
 
 shot::[6,"run cucumber"]shot::[7,"copy snippet, paste into StepDefinition.java"]
 
@@ -29,9 +29,9 @@ shot::[6,"run cucumber"]shot::[7,"copy snippet, paste into StepDefinition.java"]
 include::../code/java/06--step06-table-snippet-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..55]
 ----
 
-As you can see, the step definition implicitly takes a single argument shot::[8,"highlight stepdef parameters"], which as this comment explains is a DataTable. This object has a rich API for using the tabular data.
+As you can see, the step definition implicitly takes a single argument shot::[8,"highlight stepdef parameters"], which as this comment explains is a DataTable. shot::[8a,"highlight comment"] This object has a rich API for using the tabular data.
 
-At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed shot::[9,"Print out a single cell value"] by getting the value from array cell (2, 1)
+At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed by getting the value from array cell (2, 1)  shot::[9,"Print out a single cell value"]
 
 .StepDefinitions.java
 [source,java]
@@ -41,7 +41,7 @@ include::../code/java/07--step07-use-cell-to-demonstrate-a-2d-array/shouty/src/t
 
 shot::[10,"run Cucumber, highlight 'Lucy's location'"]
 
-You can also turn the table into a List of Maps shot::[11,"Print out data table"], where the first row is used for the map keys, and each following row is used for the map values.
+You can also turn the table into a List of Maps shot::[11,"Print out data table"], where the first row is used for the map keys, shot::[11a,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the map values. shot::[11b,"Highlight second & third rows"]
 
 .StepDefinitions.java
 [source,java]
@@ -71,7 +71,7 @@ include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepd
 
 Now we can check that everything is still green. shot::[17]
 
-and delete our old step definition shot::[18,"delete unused step def"], which is now unused.
+and delete our old step definition, which is now unused.  shot::[18,"delete unused step def"]
 
 .StepDefinitions.java
 [source,java]
