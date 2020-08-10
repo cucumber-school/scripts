@@ -3987,13 +3987,10 @@ Your browser does not support the video tag.
 <p>You’ll already remember from the Cucumber expressions chapter how important it is to be expressive in your scenarios, and keep them readable. In this chapter we’re going to learn some new tricks with Gherkin that will give you even more flexibility about how you write scenarios.</p>
 </div>
 <div class="paragraph">
-<p>Once again the Shouty developers&#8201;&#8212;&#8201;have been hard at work implementing that proximity rule. Let’s have a look at how they got on.</p>
+<p>Once again the Shouty developers&#8201;&#8212;&#8201;have been hard at work implementing that proximity rule. Let’s have a look at how they got on. </p>
 </div>
 <div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>Right, so those two scenarios we just left as just placeholders: the one where the listener is within range, and the one where the listener is out of range  are passing. Fantastic! If we look at our step definitions, we can see how they have been implemented. </p>
+<p>Right, so those two scenarios we just left as just placeholders: the one where the listener is within range, and the one where the listener is out of range  are passing.  Fantastic! If we look at our step definitions, we can see how they have been implemented. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4139,8 +4136,10 @@ We&#8217;ll need to make changes to the step definitions to make sure that a Net
 </div>
 </div>
 <div class="paragraph">
-<p>
-We&#8217;ve defaulted the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step.</p>
+<p>We&#8217;ve defaulted the range to 100. </p>
+</div>
+<div class="paragraph">
+<p>If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4404,7 +4403,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p>Well, we’re in luck. You can!</p>
 </div>
 <div class="paragraph">
-<p>Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.</p>
+<p>Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells. shot::(5a, highlight data table)</p>
 </div>
 <div class="paragraph">
 <p></p>
@@ -4426,10 +4425,10 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see, the step definition implicitly takes a single argument , which as this comment explains is a DataTable. This object has a rich API for using the tabular data.</p>
+<p>As you can see, the step definition implicitly takes a single argument , which as this comment explains is a DataTable.  This object has a rich API for using the tabular data.</p>
 </div>
 <div class="paragraph">
-<p>At its most basic, the table is just a two-dimensional array. So, Lucy&#8217;s location can be accessed  by getting the value from array cell (2, 1)</p>
+<p>At its most basic, the table is just a two-dimensional array. So, Lucy&#8217;s location can be accessed by getting the value from array cell (2, 1)  </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4444,7 +4443,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p></p>
 </div>
 <div class="paragraph">
-<p>You can also turn the table into a List of Maps , where the first row is used for the map keys, and each following row is used for the map values.</p>
+<p>You can also turn the table into a List of Maps , where the first row is used for the map keys,  and each following row is used for the map values. </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4495,7 +4494,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p>Now we can check that everything is still green. </p>
 </div>
 <div class="paragraph">
-<p>and delete our old step definition , which is now unused.</p>
+<p>and delete our old step definition, which is now unused.  </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -4847,7 +4846,7 @@ Data tables are very useful for setting up data in Given steps, but you can also
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can pass that list to the diff method  on the table of expected messages passed in from the Gherkin.</p>
+<p>Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.java</div>
@@ -5074,10 +5073,11 @@ One very basic move we could make to improve it would be to just extract a coupl
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario is much more readable. </p>
+<p>Now the scenario is much more readable.</p>
 </div>
 <div class="paragraph">
-<p>We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression &#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+<p>
+We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression &#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
 </div>
 <div class="paragraph">
 <p>Now we can fill out the rest of our new step definition. </p>
@@ -5385,7 +5385,7 @@ We&#8217;ll need to make changes to the step definitions to make sure that a Net
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-09 16:53:18 UTC
+Last updated 2020-08-10 17:03:11 UTC
 </div>
 </div>
 <style>
