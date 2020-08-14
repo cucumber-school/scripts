@@ -1,0 +1,106 @@
+=== Controlling Output With Plugins
+
+shot::[1, the plugin section of the help output shown in lesson 3]
+Remember the help information that we got Cucumber to print in the last lesson. In this lesson, we're going to concentrate on configuring Cucumber's output using plugins.
+
+[source]
+----
+  -p, --[add-]plugin PLUGIN[:[PATH|[URI [OPTIONS]]]
+                                           Register a plugin.
+                                           Built-in formatter PLUGIN types:
+                                           html, json, junit, message, pretty,
+                                           progress, rerun, teamcity, testng,
+                                           timeline, usage
+----
+
+So far, every time we have run Cucumber, it has printed the features back to us - in the console. This is called the `pretty` formatter. Cucumber can report results in other formats, and this is useful for generating reports.
+
+Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.shot::[4, "run maven in console"]
+
+[source]
+----
+mvn test -Dcucumber.plugin="html:target/my-report"
+----
+
+Now, let's take a look at the html that has been generated. shot::[5, "Open target/my-report in the browser"]
+
+You probably noticed that we still got the `pretty` output in the console. That's because we have specified the `pretty` plugin in the @CucumberOptions annotation in `RunCucumberTests.java`. shot::[6, highlight @CucumberOptions]
+
+.RunCucumberTests.java
+[source,java]
+----
+//include::../code/java/00--step00-initial-checkin/shouty/src/test/java/shouty/RunCucumberTests.java[lines=8..10]
+----
+
+Let's delete that. shot::[7, remove pretty plugin]
+[source,java]
+----
+@CucumberOptions()
+----
+
+and run maven again. shot::[8,run maven in console] Notice that this time the only console output is a summary of the number of tests being run. There's no `pretty` output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.
+
+There's also a progress formatter, which just prints out a single character for each step. shot::[9, "run maven in console, show output"]
+
+[source]
+----
+mvn test -Dcucumber.plugin="progress"
+----
+
+The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. shot::[10, "run maven in console, show output"]
+
+[source]
+----
+mvn test -Dcucumber.plugin="junit"
+----
+
+We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the `pretty` plugin and the HTML plugin at the same time. There's a limitation that only one plugin can write to the console at the same time. Let's try to use the `progress` and `junit` plugin together shot::[11, run maven in console]
+
+[source]
+----
+mvn test -Dcucumber.plugin="progress, junit"
+----
+
+shot::[12, scroll up to show error]
+
+[source]
+----
+initializationError(shouty.RunCucumberTest)  Time elapsed: 0.003 sec  <<< ERROR!
+io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, now both progress and junit use it. If you use more than one plugin you must specify output path with junit:DIR|FILE|URL
+	at io.cucumber.core.plugin.PluginFactory.defaultOutOrFailIfAlreadyUsed(PluginFactory.java:128)
+----
+
+We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. shot::[13, "run maven in console, show progress output"]
+
+[source]
+----
+mvn test -Dcucumber.plugin="progress, junit:target/junit.xml"
+----
+
+The JUnit XML has been written to a file. shot::[14, open junit.xml in the IDE]
+
+The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. shot::[15, edit the step When Sean shouts 'Free bagels!' -> 'Free cupcakes!'].
+
+While we're at it, let's put the `pretty` plugin back in @CucumberOptions. shot::[16, undo earlier edit so we're left with @CucumberOptions(plugin = {"pretty"}')
+].
+
+Now let's run Maven again using the `rerun` plugin writing its output to `rerun.txt`. shot::[17, run maven from console]
+
+[source]
+----
+mvn test -Dcucumber.plugin="rerun:target/rerun.txt"
+----
+
+We can see in the console that the `Two shouts` scenario has failed. shot::[18, scroll to show failure]
+
+Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! shot::[19, open target/rerun.txt] And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
+
+This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file, preceded by the `@` (at) sign. shot::[20, "run maven from console, highlighting `pretty` output showing only failing scenario"]
+
+[source]
+----
+mvn test -Dcucumber.features="@target/rerun.txt"
+----
+
+This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let's fix the scenario shot::[21, undo change in feature file] and rerun the failing scenario again shot::[20, "run maven from console"]
+

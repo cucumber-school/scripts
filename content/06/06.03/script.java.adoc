@@ -1,0 +1,30 @@
+include::./title.adoc[]
+
+shot::[1, "show 'List configuration options' section of https://cucumber.io/docs/cucumber/api/#options"]
+
+A full list of Cucumber configuration options can be found on the https://cucumber.io/docs/cucumber/api/#options[Cucumber website]. There's also a help page included with Cucumber, which can be printed using Maven. shot::[2, "run maven in console, scroll through the help output"]
+
+[source]
+----
+mvn exec:java -Dexec.mainClass=io.cucumber.core.cli.Main -Dexec.classpathScope=test -Dexec.args="--help"
+----
+
+That's quite a lot to digest! In this lesson we're going to focus on a few of the options that control how Cucumber behaves.
+
+The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps. Let's start by subtly changing a step in the feature file shot::[1]
+
+shot::[1]
+
+[source]
+----
+mvn test -Dcucumber.execution.dry-run="true"
+----
+
+The output shows us which step definition would have been called for each line in the feature file shot::[1] -- and also show any that have no matching step definitions shot::[1, highlight `#null`]
+
+SNIPPETS
+
+STRICT
+
+I18N
+
