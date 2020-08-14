@@ -9,28 +9,54 @@ Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to 
 
 In this lesson, we’re going to teach you all about how to configure Cucumber.
 
-shot::[2, "shout.feature including scenario 'Message too long'"]
+shot::[2, "Scroll through shout.feature, end by showing scenario 'Message too long'"]
 When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.
 
 If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.
 
+There are several ways to do this in Cucumber - and your IDE may offer other options. We'll start by showing some basic filtering using Maven on the command line, and then show one of the shortcuts offered by IntelliJ.
 
-=================================
+Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.
 
-shot::[3,"Edit context of first scenario"]
-Let's ensure that this scenario includes only essential information for the reader and remove all references to location and range.
+shot::[3, "type mvn command in console, show output and highlight that it has only run the one scenario 'Message too long'"]
+We can pass arguments to Cucumber using the property cucumber.options. The name option tells Cucumber to only run scenarios with a name matching "Message is too long".
 
-[source,gherkin]
+[source]
 ----
-include::../code/java/02--step02-edit-first-scenario-to-remove-inessential-details/shouty/src/test/resources/shouty/hear_shout.feature[lines=7..11]
+mvn test -Dcucumber.filter.name="Message is too long"
 ----
 
-shot::[4,"Add Network creation"]
-// TODO: Maybe divide this into 2 shots, first network creation and then variable assignment
-We'll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.
+The value of the cucumber.filter.name option is actually a regular expression, so you can use your imagination here to run more than one scenario. Let's use it to run all scenarios with the text "range" in their name. shot::[4, "type mvn command in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
 
-.StepDefinitions.java
-[source,java]
+[source]
 ----
-include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/java/shouty/StepDefinitions.java[lines=22..22]
+mvn test -Dcucumber.filter.name="range"
 ----
+
+Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. shot::[5, "in feature file show that 'Message too long' starts on line 44"]
+
+We can use that line number when we run Cucumber. shot::[6, "type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'"]
+
+[source]
+----
+mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:44"
+----
+
+You can even specify multiple line numbers for each file. Let's run 'Two shouts' as well. [shot::[7, "in feature file, show 'Two shouts' starts on line 33"]
+
+Let's add that line number to the Maven command.shot::[8, "type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'"]
+
+[source]
+----
+mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:33:44"
+----
+
+shot::[9,"click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'"]
+If you want to run a single scenario from within your IDE, simply click on it and choose how you would like to run it. Recent versions of IntelliJ use a green triangle to the left of the source code to indicate where to click.
+
+
+
+
+
+
+
