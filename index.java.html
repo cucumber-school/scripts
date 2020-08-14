@@ -5356,28 +5356,54 @@ When we start working on a new scenario we often take a dive down to the inner T
 <div class="paragraph">
 <p>If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.</p>
 </div>
-<div class="exampleblock">
-<div class="content">
 <div class="paragraph">
-<p>
-Let&#8217;s ensure that this scenario includes only essential information for the reader and remove all references to location and range.</p>
+<p>There are several ways to do this in Cucumber - and your IDE may offer other options. We&#8217;ll start by showing some basic filtering using Maven on the command line, and then show one of the shortcuts offered by IntelliJ.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 06/06.01/script.java.adoc - include</span><span class="p">::</span><span class="err">../code/java/02--step02-edit-first-scenario-to-remove-inessential-details/shouty/src/test/resources/shouty/hear_shout.feature[lines=7..11]</span></code></pre>
-</div>
+<div class="paragraph">
+<p>Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.</p>
 </div>
 <div class="paragraph">
 <p>
-We&#8217;ll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.</p>
+We can pass arguments to Cucumber using the property cucumber.options. The name option tells Cucumber to only run scenarios with a name matching "Message is too long".</p>
 </div>
 <div class="listingblock">
-<div class="title">StepDefinitions.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nc">Unresolved</span> <span class="n">directive</span> <span class="n">in</span> <span class="mo">06</span><span class="o">/</span><span class="mf">06.01</span><span class="o">/</span><span class="n">script</span><span class="o">.</span><span class="na">java</span><span class="o">.</span><span class="na">adoc</span> <span class="o">-</span> <span class="nl">include:</span><span class="o">:../</span><span class="n">code</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="mo">03</span><span class="o">--</span><span class="n">step03</span><span class="o">-</span><span class="n">edit</span><span class="o">-</span><span class="n">step</span><span class="o">-</span><span class="n">definitions</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">get</span><span class="o">-</span><span class="n">back</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">green</span><span class="o">/</span><span class="n">shouty</span><span class="o">/</span><span class="n">src</span><span class="o">/</span><span class="n">test</span><span class="o">/</span><span class="n">java</span><span class="o">/</span><span class="n">shouty</span><span class="o">/</span><span class="nc">StepDefinitions</span><span class="o">.</span><span class="na">java</span><span class="o">[</span><span class="n">lines</span><span class="o">=</span><span class="mi">22</span><span class="o">..</span><span class="mi">22</span><span class="o">]</span></code></pre>
+<pre class="rouge highlight"><code>mvn test -Dcucumber.filter.name="Message is too long"</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>The value of the cucumber.filter.name option is actually a regular expression, so you can use your imagination here to run more than one scenario. Let&#8217;s use it to run all scenarios with the text "range" in their name. </p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.filter.name="range"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. </p>
+</div>
+<div class="paragraph">
+<p>We can use that line number when we run Cucumber. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:44"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can even specify multiple line numbers for each file. Let&#8217;s run 'Two shouts' as well. [</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add that line number to the Maven command.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:33:44"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+If you want to run a single scenario from within your IDE, simply click on it and choose how you would like to run it. Recent versions of IntelliJ use a green triangle to the left of the source code to indicate where to click.</p>
 </div>
 </div>
 </div>
@@ -5385,7 +5411,7 @@ We&#8217;ll need to make changes to the step definitions to make sure that a Net
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-10 17:03:11 UTC
+Last updated 2020-08-14 11:08:29 UTC
 </div>
 </div>
 <style>
