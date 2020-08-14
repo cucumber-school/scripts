@@ -487,6 +487,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_tdd_loops">5.6. TDD Loops</a></li>
 <li><a href="#_basic_filtering">5.7. Basic Filtering</a></li>
 <li><a href="#_filtering_with_tags">5.8. Filtering With Tags</a></li>
+<li><a href="#_controlling_execution">5.9. Controlling Execution</a></li>
+<li><a href="#_controlling_output_with_plugins">5.10. Controlling Output With Plugins</a></li>
 </ul>
 </li>
 </ul>
@@ -5410,7 +5412,7 @@ We can pass arguments to Cucumber using the property cucumber.options. The name 
 If you want to run a single scenario from within your IDE, simply click on it and choose how you would like to run it. Recent versions of IntelliJ use a green triangle to the left of the source code to indicate where to click.</p>
 </div>
 <div class="paragraph">
-<p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers. In the next lesson we&#8217;ll look at filtering using a Gherkin feature called Tags.</p>
+<p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line. In the next lesson we&#8217;ll look at Cucumber&#8217;s JUnit integration.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5466,12 +5468,179 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 <p>There&#8217;s one more thing to learn about tags. They can be combined with hooks, so that you can be selective about which hooks to run when. We&#8217;ll cover that in a future chapter.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_controlling_execution">5.9. Controlling Execution</h3>
+<div class="paragraph">
+<p><a href="#shot-808" id="shot-808" title="show 'List configuration options' section of <a href="https://cucumber.io/docs/cucumber/api/#options"" class="bare">https://cucumber.io/docs/cucumber/api/#options"</a> style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show 'List configuration options' section of <a href="https://cucumber.io/docs/cucumber/api/#options" class="bare">https://cucumber.io/docs/cucumber/api/#options</a></a></p>
+</div>
+<div class="paragraph">
+<p>A full list of Cucumber configuration options can be found on the <a href="https://cucumber.io/docs/cucumber/api/#options">Cucumber website</a>. There&#8217;s also a help page included with Cucumber, which can be printed using Maven. <a href="#shot-809" id="shot-809" title="run maven in console, scroll through the help output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: run maven in console, scroll through the help output</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn exec:java -Dexec.mainClass=io.cucumber.core.cli.Main -Dexec.classpathScope=test -Dexec.args="--help"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s quite a lot to digest! In this lesson we&#8217;re going to focus on a few of the options that control how Cucumber behaves.</p>
+</div>
+<div class="paragraph">
+<p>The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps. Let&#8217;s start by subtly changing a step in the feature file <a href="#shot-810" id="shot-810" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-811" id="shot-811" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.execution.dry-run="true"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output shows us which step definition would have been called for each line in the feature file <a href="#shot-812" id="shot-812" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a>&#8201;&#8212;&#8201;and also show any that have no matching step definitions <a href="#shot-813" id="shot-813" title="highlight <code>#null</code>" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: highlight <code>#null</code></a></p>
+</div>
+<div class="paragraph">
+<p>SNIPPETS</p>
+</div>
+<div class="paragraph">
+<p>STRICT</p>
+</div>
+<div class="paragraph">
+<p>I18N</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_controlling_output_with_plugins">5.10. Controlling Output With Plugins</h3>
+<div class="paragraph">
+<p><a href="#shot-814" id="shot-814" title="the plugin section of the help output shown in lesson 3" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: the plugin section of the help output shown in lesson 3</a>
+Remember the help information that we got Cucumber to print in the last lesson. In this lesson, we&#8217;re going to concentrate on configuring Cucumber&#8217;s output using plugins.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>  -p, --[add-]plugin PLUGIN[:[PATH|[URI [OPTIONS]]]
+                                           Register a plugin.
+                                           Built-in formatter PLUGIN types:
+                                           html, json, junit, message, pretty,
+                                           progress, rerun, teamcity, testng,
+                                           timeline, usage</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So far, every time we have run Cucumber, it has printed the features back to us - in the console. This is called the <code>pretty</code> formatter. Cucumber can report results in other formats, and this is useful for generating reports.</p>
+</div>
+<div class="paragraph">
+<p>Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.<a href="#shot-815" id="shot-815" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run maven in console</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="html:target/my-report"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, let&#8217;s take a look at the html that has been generated. <a href="#shot-816" id="shot-816" title="Open target/my-report in the browser" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Open target/my-report in the browser</a></p>
+</div>
+<div class="paragraph">
+<p>You probably noticed that we still got the <code>pretty</code> output in the console. That&#8217;s because we have specified the <code>pretty</code> plugin in the @CucumberOptions annotation in <code>RunCucumberTests.java</code>. <a href="#shot-817" id="shot-817" title="highlight @CucumberOptions" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight @CucumberOptions</a></p>
+</div>
+<div class="listingblock">
+<div class="title">RunCucumberTests.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="c1">//include::../code/java/00--step00-initial-checkin/shouty/src/test/java/shouty/RunCucumberTests.java[lines=8..10]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s delete that. <a href="#shot-818" id="shot-818" title="remove pretty plugin" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: remove pretty plugin</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">()</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and run maven again. <a href="#shot-819" id="shot-819" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run maven in console</a> Notice that this time the only console output is a summary of the number of tests being run. There&#8217;s no <code>pretty</code> output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s also a progress formatter, which just prints out a single character for each step. <a href="#shot-820" id="shot-820" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run maven in console, show output</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="progress"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. <a href="#shot-821" id="shot-821" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run maven in console, show output</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="junit"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the <code>pretty</code> plugin and the HTML plugin at the same time. There&#8217;s a limitation that only one plugin can write to the console at the same time. Let&#8217;s try to use the <code>progress</code> and <code>junit</code> plugin together <a href="#shot-822" id="shot-822" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: run maven in console</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="progress, junit"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-823" id="shot-823" title="scroll up to show error" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: scroll up to show error</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>initializationError(shouty.RunCucumberTest)  Time elapsed: 0.003 sec  &lt;&lt;&lt; ERROR!
+io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, now both progress and junit use it. If you use more than one plugin you must specify output path with junit:DIR|FILE|URL
+	at io.cucumber.core.plugin.PluginFactory.defaultOutOrFailIfAlreadyUsed(PluginFactory.java:128)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. <a href="#shot-824" id="shot-824" title="run maven in console, show progress output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run maven in console, show progress output</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="progress, junit:target/junit.xml"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The JUnit XML has been written to a file. <a href="#shot-825" id="shot-825" title="open junit.xml in the IDE" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: open junit.xml in the IDE</a></p>
+</div>
+<div class="paragraph">
+<p>The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. <a href="#shot-826" id="shot-826" title="edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'</a>.</p>
+</div>
+<div class="paragraph">
+<p>While we&#8217;re at it, let&#8217;s put the <code>pretty</code> plugin back in @CucumberOptions. <a href="#shot-827" id="shot-827" title="undo earlier edit so we&#8217;re left with @CucumberOptions(plugin = {"pretty"}')" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: undo earlier edit so we&#8217;re left with @CucumberOptions(plugin = {"pretty"}')</a>.</p>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s run Maven again using the <code>rerun</code> plugin writing its output to <code>rerun.txt</code>. <a href="#shot-828" id="shot-828" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: run maven from console</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="rerun:target/rerun.txt"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can see in the console that the <code>Two shouts</code> scenario has failed. <a href="#shot-829" id="shot-829" title="scroll to show failure" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: scroll to show failure</a></p>
+</div>
+<div class="paragraph">
+<p>Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! <a href="#shot-830" id="shot-830" title="open target/rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: open target/rerun.txt</a> And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
+</div>
+<div class="paragraph">
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file, preceded by the <code>@</code> (at) sign. <a href="#shot-831" id="shot-831" title="run maven from console, highlighting <code>pretty</code> output showing only failing scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console, highlighting <code>pretty</code> output showing only failing scenario</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.features="@target/rerun.txt"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let&#8217;s fix the scenario <a href="#shot-832" id="shot-832" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: undo change in feature file</a> and rerun the failing scenario again <a href="#shot-833" id="shot-833" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console</a></p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-14 13:36:22 UTC
+Last updated 2020-08-14 16:32:16 UTC
 </div>
 </div>
 <style>
