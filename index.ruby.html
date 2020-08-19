@@ -3862,7 +3862,26 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <div class="sect2">
 <h3 id="_refactoring_to_data_tables">5.3. Refactoring to Data Tables</h3>
 <div class="paragraph">
-<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again . Notice how the steps  that create the Sean, Lucy, and Larry are very similar.</p>
+<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again . Notice how the steps that create the Sean, Lucy, and Larry  are very similar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">  <span class="nl">Rule:</span> <span class="nc">Shouts</span> <span class="n">should</span> <span class="n">only</span> <span class="n">be</span> <span class="n">heard</span> <span class="k">if</span> <span class="n">listener</span> <span class="n">is</span> <span class="n">within</span> <span class="n">range</span>
+
+    <span class="nl">Scenario:</span> <span class="nc">Listener</span> <span class="n">is</span> <span class="n">within</span> <span class="n">range</span>
+      <span class="nc">Given</span> <span class="n">the</span> <span class="n">range</span> <span class="n">is</span> <span class="mi">100</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Sean</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">0</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Lucy</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">50</span>
+      <span class="nc">When</span> <span class="nc">Sean</span> <span class="n">shouts</span>
+      <span class="nc">Then</span> <span class="nc">Lucy</span> <span class="n">should</span> <span class="n">hear</span> <span class="n">a</span> <span class="n">shout</span>
+
+    <span class="nl">Scenario:</span> <span class="nc">Listener</span> <span class="n">is</span> <span class="n">out</span> <span class="n">of</span> <span class="n">range</span>
+      <span class="nc">Given</span> <span class="n">the</span> <span class="n">range</span> <span class="n">is</span> <span class="mi">100</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Sean</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">0</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Larry</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">150</span>
+      <span class="nc">When</span> <span class="nc">Sean</span> <span class="n">shouts</span>
+      <span class="nc">Then</span> <span class="nc">Larry</span> <span class="n">should</span> <span class="n">not</span> <span class="n">hear</span> <span class="n">a</span> <span class="n">shout</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:</p>
@@ -3901,7 +3920,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p>As you can see, the step definition implicitly takes a single argument , which as this comment explains is a DataTable. This object has a rich API for using the tabular data.</p>
 </div>
 <div class="paragraph">
-<p>At its most basic, the table is just a two-dimensional array. So, Lucy&#8217;s location can be accessed  by getting the value from array cell (2, 1)</p>
+<p>At its most basic, the table is just a two-dimensional array. So, Lucy&#8217;s location can be accessed by getting the value from array cell (2, 1) </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -3915,7 +3934,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p></p>
 </div>
 <div class="paragraph">
-<p>You can also turn the table into a List of Maps , where the first row is used for the map keys, and each following row is used for the map values.</p>
+<p>You can also turn the table into an array of arrays , where the first row is used for the keys, and each following row is used for the map values.</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -3929,7 +3948,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p></p>
 </div>
 <div class="paragraph">
-<p>Now we can easily iterate  over these maps and turn them into instances of Person:</p>
+<p>Now we can easily iterate  over these maps and turn them into instances of Person: </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -3959,6 +3978,9 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
       <span class="nf">When </span>Sean shouts
       <span class="nf">Then </span>Larry should not hear a shout</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Now we can check that everything is still green. </p>
 </div>
 <div class="olist lowerroman">
 <ol class="lowerroman" type="i">
@@ -4168,7 +4190,34 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 <p></p>
 </div>
 <div class="paragraph">
-<p>The way that we’ve specified this data is OK, but your product owner would prefer you to express it like this instead:</p>
+<p>The way that we’ve specified this data is OK,</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span> <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span> <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Lucy</span> <span class="p">|</span> <span class="n">50</span>       <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Lucy should hear a shout
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>  <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span>  <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Larry</span> <span class="p">|</span> <span class="n">150</span>       <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>but your product owner would prefer you to express it like this instead: </p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4206,10 +4255,11 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 <p></p>
 </div>
 <div class="paragraph">
-<p>Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
+<p>
+Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
 </div>
 <div class="paragraph">
-<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once:</p>
+<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: </p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4233,10 +4283,10 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 <p>So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run Cucumber to generate the new step definition  and paste it into our StepDefinitions class </p>
+<p>Let&#8217;s run Cucumber to generate the new step definition  and paste it into our StepDefinitions class  </p>
 </div>
 <div class="paragraph">
-<p>So we need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.</p>
+<p>We&#8217;ll need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.</p>
 </div>
 <div class="paragraph">
 <p>A List of List of String will do , so we can just iterate over Lucy’s messages and create a new single-item List for each row.</p>
@@ -4248,7 +4298,7 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can pass that list to the diff method  on the table of expected messages passed in from the Gherkin.</p>
+<p>Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -4260,7 +4310,7 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 <p></p>
 </div>
 <div class="paragraph">
-<p>Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
+<p>Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages.  Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
 </div>
 <div class="paragraph">
 <p>Let’s fix just one of these  so you can see how the diff output changes.</p>
@@ -4426,11 +4476,12 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p> Run the unit test again… and it’s passing. Great.</p>
+<p>
+Run the unit test again… and it’s passing. Great.</p>
 </div>
 <div class="paragraph">
 <p>The code here has got a little bit messy and hard to read. 
-One very basic move we could make to improve it would be to just extract a couple of temporary variables. </p>
+One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule  and one for the length rule. </p>
 </div>
 <div class="listingblock">
 <div class="title">shouty.rb</div>
@@ -4476,10 +4527,14 @@ One very basic move we could make to improve it would be to just extract a coupl
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario is much more readable. </p>
+<p>Now the scenario is much more readable.</p>
 </div>
 <div class="paragraph">
-<p>We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+<p>
+We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression &#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+</div>
+<div class="paragraph">
+<p>Now we can fill out the rest of our new step definition. </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -4737,7 +4792,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-14 16:32:16 UTC
+Last updated 2020-08-19 13:27:26 UTC
 </div>
 </div>
 <style>
