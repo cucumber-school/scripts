@@ -51,7 +51,8 @@ It looks like we’re already implementing the proximity rule here in the broadc
 include::../code/java/20--step20-implement-maximum-length/shouty/src/main/java/shouty/Network.java[lines=21..23]
 ----
 
-shot::[16,"run cucumber"] Run the unit test again… and it’s passing. Great.
+shot::[16,"run cucumber"]
+Run the unit test again… and it’s passing. Great.
 
 
 The code here has got a little bit messy and hard to read. shot::[17,"show the modified logic in the Network class"]
@@ -81,7 +82,7 @@ Now the scenario is much more readable.
 shot::[23,"show existing stepdef code"]
 We have to add a new step definition too shot::[24,"add sean_shouts_the_following_message stepdef"]. It doesn't need a parameter in the Cucumber Expression shot::[25] -- the DocString gets passed as a string argument to the step definition automatically.shot::[26]
 
-Now we can fill out the rest of our new step definition. shot::[27]shot::[27.2]
+Now we can fill out the rest of our new step definition. shot::[27]shot::[28]
 
 .StepDefinitions.java
 [source,java]
@@ -89,6 +90,6 @@ Now we can fill out the rest of our new step definition. shot::[27]shot::[27.2]
 include::../code/java/22--step22-docstring/shouty/src/test/java/shouty/StepDefinitions.java[lines=77..82]
 ----
 
-Let's check that we're still green shot::[28,"run cucumber"]shot::[28.2] -- and we are!
+Let's check that we're still green shot::[29,"run cucumber"]shot::[30] -- and we are!
 
 We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it's useful to know about.

@@ -1,8 +1,8 @@
 include::./title.adoc[]
 
-When writing scenarios, occasionally we want to use a really long piece of data. shot::[0,"Show feature file"]
+When writing scenarios, occasionally we want to use a really long piece of data. shot::[1,"Show feature file"]
 
-For example, let’s introduce a new rule about the maximum length of a message shot::[1,"New rule"]
+For example, let’s introduce a new rule about the maximum length of a message shot::[2,"New rule"]
 
 .hear_shout.feature
 [source,gherkin]
@@ -10,7 +10,7 @@ For example, let’s introduce a new rule about the maximum length of a message 
 include::../code/ruby/16-max-length-rule/features/hear_shout.feature[lines=42]
 ----
 
-...and add a scenario to illustrate it shot::[2,"New scenario"], making the string just over the boundary of the rule:
+...and add a scenario to illustrate it shot::[3,"New scenario"], making the string just over the boundary of the rule:
 
 [source,gherkin]
 ----
@@ -21,7 +21,7 @@ That’s pretty ugly isn’t it!
 
 Still, we’ll press on and get it to green, then we’ll show you how to clean it up.
 
-shot::[3,"run Cucumber"] Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let's modify the existing step definition shot::[4,"Modify stepdef"]
+shot::[4,"run Cucumber"] Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let's modify the existing step definition shot::[5,"Modify stepdef"]
 
 .steps.rb
 [source,ruby]
@@ -29,11 +29,11 @@ shot::[3,"run Cucumber"] Our existing step definition handles that ugly step wit
 include::../code/ruby/17-parameterise-stepdef/features/step_definitions/steps.rb[lines=45..47]
 ----
 
-shot::[5,"run cucumber"]
+shot::[6,"run cucumber"]
 
-OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests shot::[5a,show NetworkTest] and add a new example to specify this extra responsibility. shot::[5b, start creating new unit test]
+OK, so we have a failing acceptance test.shot::[7] Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests shot::[8,show NetworkTest] and add a new example to specify this extra responsibility. shot::[9, start creating new unit test]
 
-We’ll create a 181-character message like this shot::[6,] and then assert that the message should not be heard when it’s broadcast.
+We’ll create a 181-character message like this shot::[10,finish implementing unit test] and then assert that the message should not be heard when it’s broadcast.shot::[11]
 
 .network_spec.rb
 [source,ruby]
@@ -41,9 +41,9 @@ We’ll create a 181-character message like this shot::[6,] and then assert that
 include::../code/ruby/18-add-test-to-networktest/spec/network_spec.rb[lines=36..46]
 ----
 
-Let’s run that test shot::[7,"run Cucumber - show the unit test results"]. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?
+Let’s run that test shot::[12,"run Cucumber - show the unit test results"]shot::[13]. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?
 
-It looks like we’re already implementing the proximity rule here shot::[8,"Network proximity logic"] in the broadcast method. Let’s add another if statement here about the message length. shot::[8a,"add message length logic"] 
+It looks like we’re already implementing the proximity rule here shot::[14,"Network proximity logic"] in the broadcast method. Let’s add another if statement here about the message length. shot::[15,"add message length logic"] 
 
 .shouty.rb
 [source,ruby]
@@ -51,10 +51,11 @@ It looks like we’re already implementing the proximity rule here shot::[8,"Net
 include::../code/ruby/19-implement-maximum-length/lib/shouty.rb[lines=35..37]
 ----
 
-shot::[9,"run cucumber"] Run the unit test again… and it’s passing. Great.
+shot::[16,"run cucumber"]
+Run the unit test again… and it’s passing. Great.
 
-The code here has got a little bit messy and hard to read. shot::[9a,"show the modified logic in the Network class"]
-One very basic move we could make to improve it would be to just extract a couple of temporary variables. shot::[9b,"extract temporary variables"]
+The code here has got a little bit messy and hard to read. shot::[17,"show the modified logic in the Network class"]
+One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule shot::[18,"extract range temporary variable"] and one for the length rule. shot::[19,"extract length temporary variable"]
 
 .shouty.rb
 [source,ruby]
@@ -64,20 +65,23 @@ include::../code/ruby/20-tidy-up-network-logic/lib/shouty.rb[lines=33..42]
 
 That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.
 
-Let’s just run the tests to check. shot::[10,"run cucumber"] Great - everything’s still green.
+Let’s just run the tests to check. shot::[20,"run cucumber"] Great - everything’s still green.
 
-Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. shot::[10a,"show message length scenario in feature file"]
+Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. shot::[21,"show message length scenario in feature file"]
 
-DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: shot::[10b,"convert message to DocString"]
+DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: shot::[22,"convert message to DocString"]
 
 [source,gherkin]
 ----
 include::../code/ruby/21-docstring/features/hear_shout.feature[lines=44..55]
 ----
 
-Now the scenario is much more readable. shot::[10c,"show existing stepdef code"]
+Now the scenario is much more readable.
 
-We have to add a new step definition too shot::[11,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression -- the DocString gets passed as a string argument to the step definition automatically.
+shot::[23,"show existing stepdef code"]
+We have to add a new step definition too shot::[24,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression shot::[25] -- the DocString gets passed as a string argument to the step definition automatically.shot::[26]
+
+Now we can fill out the rest of our new step definition. shot::[27]shot::[28]
 
 .steps.rb
 [source,ruby]
@@ -85,6 +89,6 @@ We have to add a new step definition too shot::[11,"sean_shouts_the_following_me
 include::../code/ruby/21-docstring/features/step_definitions/steps.rb[lines=54..58]
 ----
 
-Let's check that we're still green shot::[12,"run cucumber"] -- and we are!
+Let's check that we're still green shot::[29,"run cucumber"]shot::[30] -- and we are!
 
 We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it's useful to know about.
