@@ -3927,7 +3927,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <div class="title">steps.rb</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
-  <span class="nb">p</span> <span class="n">table</span><span class="p">.</span><span class="nf">raw</span>
+  <span class="nb">p</span> <span class="n">table</span><span class="p">.</span><span class="nf">raw</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="k">end</span></code></pre>
 </div>
 </div>
@@ -3935,7 +3935,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p><a href="#shot-204" id="shot-204" title="run Cucumber, highlight 'Lucy&#8217;s location'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: run Cucumber, highlight 'Lucy&#8217;s location'</a></p>
 </div>
 <div class="paragraph">
-<p>You can also turn the table into an array of arrays <a href="#shot-205" id="shot-205" title="Print out data table" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: Print out data table</a>, where the first row is used for the keys,<a href="#shot-206" id="shot-206" title="split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row</a> and each following row is used for the map values.<a href="#shot-207" id="shot-207" title="highlight second and third rows" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: highlight second and third rows</a></p>
+<p>You can also turn the table into an array of hashes <a href="#shot-205" id="shot-205" title="Print out data table" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: Print out data table</a>, where the first row is used for the keys,<a href="#shot-206" id="shot-206" title="split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row</a> and each following row is used for the map values.<a href="#shot-207" id="shot-207" title="highlight second and third rows" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: highlight second and third rows</a></p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -4477,12 +4477,17 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-253" id="shot-253" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run cucumber</a>
-Run the unit test again… and it’s passing. Great.</p>
+<p>Run the unit test again… and it’s passing.<a href="#shot-253" id="shot-253" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16</a></p>
 </div>
 <div class="paragraph">
-<p>The code here has got a little bit messy and hard to read. <a href="#shot-254" id="shot-254" title="show the modified logic in the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: show the modified logic in the Network class</a>
-One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule <a href="#shot-255" id="shot-255" title="extract range temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: extract range temporary variable</a> and one for the length rule. <a href="#shot-256" id="shot-256" title="extract length temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: extract length temporary variable</a></p>
+<p>And cucumber is green as well <a href="#shot-254" id="shot-254" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: run cucumber</a></p>
+</div>
+<div class="paragraph">
+<p>Great.</p>
+</div>
+<div class="paragraph">
+<p>The code here has got a little bit messy and hard to read. <a href="#shot-255" id="shot-255" title="show the modified logic in the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: show the modified logic in the Network class</a>
+One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule <a href="#shot-256" id="shot-256" title="extract range temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: extract range temporary variable</a> and one for the length rule. <a href="#shot-257" id="shot-257" title="extract length temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: extract length temporary variable</a></p>
 </div>
 <div class="listingblock">
 <div class="title">shouty.rb</div>
@@ -4503,13 +4508,13 @@ One very basic move we could make to improve it would be to just extract a coupl
 <p>That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.</p>
 </div>
 <div class="paragraph">
-<p>Let’s just run the tests to check. <a href="#shot-257" id="shot-257" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run cucumber</a> Great - everything’s still green.</p>
+<p>Let’s just run the tests to check. <a href="#shot-258" id="shot-258" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: run cucumber</a> Great - everything’s still green.</p>
 </div>
 <div class="paragraph">
-<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. <a href="#shot-258" id="shot-258" title="show message length scenario in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: show message length scenario in feature file</a></p>
+<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. <a href="#shot-259" id="shot-259" title="show message length scenario in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: show message length scenario in feature file</a></p>
 </div>
 <div class="paragraph">
-<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: <a href="#shot-259" id="shot-259" title="convert message to DocString" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: convert message to DocString</a></p>
+<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: <a href="#shot-260" id="shot-260" title="convert message to DocString" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: convert message to DocString</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4531,19 +4536,18 @@ One very basic move we could make to improve it would be to just extract a coupl
 <p>Now the scenario is much more readable.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-260" id="shot-260" title="show existing stepdef code" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: show existing stepdef code</a>
-We have to add a new step definition too <a href="#shot-261" id="shot-261" title="sean_shouts_the_following_message" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: sean_shouts_the_following_message</a>. It doesn&#8217;t need a parameter in the Cucumber Expression <a href="#shot-262" id="shot-262" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25</a>&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.<a href="#shot-263" id="shot-263" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26</a></p>
+<p><a href="#shot-261" id="shot-261" title="show existing stepdef code" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: show existing stepdef code</a>
+We have to add a new step definition too <a href="#shot-262" id="shot-262" title="sean_shouts_the_following_message" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25: sean_shouts_the_following_message</a>. It doesn&#8217;t need a parameter in the Cucumber Expression <a href="#shot-263" id="shot-263" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26</a>&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.<a href="#shot-264" id="shot-264" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 27</a></p>
 </div>
 <div class="paragraph">
-<p>Now we can fill out the rest of our new step definition. <a href="#shot-264" id="shot-264" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 27</a><a href="#shot-265" id="shot-265" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 28</a></p>
+<p>Now we can fill out the rest of our new step definition. <a href="#shot-265" id="shot-265" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 28</a></p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span> <span class="s1">'Lucy hears the following messages:'</span> <span class="k">do</span> <span class="o">|</span><span class="n">expected_messages</span><span class="o">|</span>
-  <span class="n">actual_messages</span> <span class="o">=</span> <span class="vi">@people</span><span class="p">[</span><span class="s1">'Lucy'</span><span class="p">].</span><span class="nf">messages_heard</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span> <span class="p">[</span> <span class="n">message</span> <span class="p">]</span> <span class="p">}</span>
-
-  <span class="n">expected_messages</span><span class="p">.</span><span class="nf">diff!</span><span class="p">(</span><span class="n">actual_messages</span><span class="p">)</span>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span> <span class="s1">'Sean shouts the following message'</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+  <span class="vi">@people</span><span class="p">[</span><span class="s2">"Sean"</span><span class="p">].</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="vi">@message_from_sean</span> <span class="o">=</span> <span class="n">message</span>
 <span class="k">end</span></code></pre>
 </div>
 </div>
@@ -4796,7 +4800,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-21 08:19:25 UTC
+Last updated 2020-08-21 15:46:38 UTC
 </div>
 </div>
 <style>

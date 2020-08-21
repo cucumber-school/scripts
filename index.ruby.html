@@ -3927,7 +3927,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <div class="title">steps.rb</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
-  <span class="nb">p</span> <span class="n">table</span><span class="p">.</span><span class="nf">raw</span>
+  <span class="nb">p</span> <span class="n">table</span><span class="p">.</span><span class="nf">raw</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
 <span class="k">end</span></code></pre>
 </div>
 </div>
@@ -3935,7 +3935,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p></p>
 </div>
 <div class="paragraph">
-<p>You can also turn the table into an array of arrays , where the first row is used for the keys, and each following row is used for the map values.</p>
+<p>You can also turn the table into an array of hashes , where the first row is used for the keys, and each following row is used for the map values.</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -4477,8 +4477,13 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>
-Run the unit test again… and it’s passing. Great.</p>
+<p>Run the unit test again… and it’s passing.</p>
+</div>
+<div class="paragraph">
+<p>And cucumber is green as well </p>
+</div>
+<div class="paragraph">
+<p>Great.</p>
 </div>
 <div class="paragraph">
 <p>The code here has got a little bit messy and hard to read. 
@@ -4540,10 +4545,9 @@ We have to add a new step definition too . It doesn&#8217;t need a parameter in 
 <div class="listingblock">
 <div class="title">steps.rb</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span> <span class="s1">'Lucy hears the following messages:'</span> <span class="k">do</span> <span class="o">|</span><span class="n">expected_messages</span><span class="o">|</span>
-  <span class="n">actual_messages</span> <span class="o">=</span> <span class="vi">@people</span><span class="p">[</span><span class="s1">'Lucy'</span><span class="p">].</span><span class="nf">messages_heard</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span> <span class="p">[</span> <span class="n">message</span> <span class="p">]</span> <span class="p">}</span>
-
-  <span class="n">expected_messages</span><span class="p">.</span><span class="nf">diff!</span><span class="p">(</span><span class="n">actual_messages</span><span class="p">)</span>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span> <span class="s1">'Sean shouts the following message'</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
+  <span class="vi">@people</span><span class="p">[</span><span class="s2">"Sean"</span><span class="p">].</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="vi">@message_from_sean</span> <span class="o">=</span> <span class="n">message</span>
 <span class="k">end</span></code></pre>
 </div>
 </div>
@@ -4796,7 +4800,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-21 08:19:25 UTC
+Last updated 2020-08-21 15:46:38 UTC
 </div>
 </div>
 <style>
