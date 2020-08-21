@@ -51,11 +51,14 @@ It looks like we’re already implementing the proximity rule here shot::[14,"Ne
 include::../code/ruby/19-implement-maximum-length/lib/shouty.rb[lines=35..37]
 ----
 
-shot::[16,"run cucumber"]
-Run the unit test again… and it’s passing. Great.
+Run the unit test again… and it’s passing.shot::[16]
 
-The code here has got a little bit messy and hard to read. shot::[17,"show the modified logic in the Network class"]
-One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule shot::[18,"extract range temporary variable"] and one for the length rule. shot::[19,"extract length temporary variable"]
+And cucumber is green as well shot::[17,"run cucumber"]
+
+Great.
+
+The code here has got a little bit messy and hard to read. shot::[18,"show the modified logic in the Network class"]
+One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule shot::[19,"extract range temporary variable"] and one for the length rule. shot::[20,"extract length temporary variable"]
 
 .shouty.rb
 [source,ruby]
@@ -65,11 +68,11 @@ include::../code/ruby/20-tidy-up-network-logic/lib/shouty.rb[lines=33..42]
 
 That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.
 
-Let’s just run the tests to check. shot::[20,"run cucumber"] Great - everything’s still green.
+Let’s just run the tests to check. shot::[21,"run cucumber"] Great - everything’s still green.
 
-Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. shot::[21,"show message length scenario in feature file"]
+Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. shot::[22,"show message length scenario in feature file"]
 
-DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: shot::[22,"convert message to DocString"]
+DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: shot::[23,"convert message to DocString"]
 
 [source,gherkin]
 ----
@@ -78,10 +81,10 @@ include::../code/ruby/21-docstring/features/hear_shout.feature[lines=44..55]
 
 Now the scenario is much more readable.
 
-shot::[23,"show existing stepdef code"]
-We have to add a new step definition too shot::[24,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression shot::[25] -- the DocString gets passed as a string argument to the step definition automatically.shot::[26]
+shot::[24,"show existing stepdef code"]
+We have to add a new step definition too shot::[25,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression shot::[26] -- the DocString gets passed as a string argument to the step definition automatically.shot::[27]
 
-Now we can fill out the rest of our new step definition. shot::[27]shot::[28]
+Now we can fill out the rest of our new step definition. shot::[28]
 
 .steps.rb
 [source,ruby]
