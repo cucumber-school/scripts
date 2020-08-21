@@ -485,10 +485,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_deeper_into_data_tables">5.4. Deeper into Data Tables</a></li>
 <li><a href="#_docstring">5.5. DocString</a></li>
 <li><a href="#_tdd_loops">5.6. TDD Loops</a></li>
-<li><a href="#_basic_filtering">5.7. Basic Filtering</a></li>
-<li><a href="#_filtering_with_tags">5.8. Filtering With Tags</a></li>
-<li><a href="#_controlling_execution">5.9. Controlling Execution</a></li>
-<li><a href="#_controlling_output_with_plugins">5.10. Controlling Output With Plugins</a></li>
+</ul>
+</li>
+<li><a href="#_configuring_cucumber">6. Configuring Cucumber</a>
+<ul class="sectlevel2">
+<li><a href="#_basic_filtering">6.1. Basic Filtering</a></li>
+<li><a href="#_filtering_with_tags">6.2. Filtering With Tags</a></li>
+<li><a href="#_controlling_execution">6.3. Controlling Execution</a></li>
+<li><a href="#_controlling_output_with_plugins">6.4. Controlling Output With Plugins</a></li>
 </ul>
 </li>
 </ul>
@@ -5332,14 +5336,16 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 <div class="paragraph">
 <p>And then we write the next failing acceptance test&#8230;&#8203;</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in scripts.java.adoc - include::06/index.adoc[]</p>
 </div>
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_cucumber">6. Configuring Cucumber</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_basic_filtering">5.7. Basic Filtering</h3>
+<h3 id="_basic_filtering">6.1. Basic Filtering</h3>
 <div class="paragraph">
 <p>
 Hello, and welcome back to Cucumber School.</p>
@@ -5384,6 +5390,37 @@ We can pass arguments to Cucumber using the property cucumber.options. The name 
 </div>
 </div>
 <div class="paragraph">
+<p>The examples that you&#8217;ve just seen use the -D option to set a Java system property on the command line. If you&#8217;re working in an IDE this is less than ideal, but fortunately there are several other ways to achieve exactly the same outcome. Let&#8217;s look at using a property file first.</p>
+</div>
+<div class="paragraph">
+<p>Create a property file called cucumber.properties in src/test/resource  and add the line <code>cucumber.filter.name="range"</code> </p>
+</div>
+<div class="paragraph">
+<p>When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The property file is also picked up if you run Cucumber from within your IDE </p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s undo that change shot[4d, delete <code>cucumber.filter.name="range"</code> from properties file] and apply the same filter using CucumberOptions. shot[4e, show <code>RunCucumberTests.java</code> highlighting <code>@CucumberOptions</code> line]. Here we add a new argument to the annotation. shot 4f, add <code>name</code> to <code>@CucumberOptions</code>]</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"range"</span><span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This setting is picked up when we run Cucumber using Maven from the command line . It&#8217;s also picked up when we run <code>RunCucumberTest</code> from IntelliJ . If, instead, we use IntelliJ to run all scenarios from our feature file, it will run all the scenarios, unfiltered.</p>
+</div>
+<div class="paragraph">
+<p>So, using a property file is the safest way to ensure that your configuration options are respected, no matter how you invoke Cucumber. Which is what we&#8217;ll use from now on.</p>
+</div>
+<div class="paragraph">
 <p>Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. </p>
 </div>
 <div class="paragraph">
@@ -5391,7 +5428,7 @@ We can pass arguments to Cucumber using the property cucumber.options. The name 
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:44"</code></pre>
+<pre class="rouge highlight"><code>@CucumberOptions(plugin = {"pretty"}, strict = true, features="src/test/resources/shouty/hear_shout.feature:44")</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5417,7 +5454,7 @@ If you want to run a single scenario from within your IDE, simply click on it an
 </div>
 </div>
 <div class="sect2">
-<h3 id="_filtering_with_tags">5.8. Filtering With Tags</h3>
+<h3 id="_filtering_with_tags">6.2. Filtering With Tags</h3>
 <div class="paragraph">
 <p>
 Cucumber has a third filtering mechanism that uses tags. Tags start with an at-sign. We’ll put a focus tag right here, above this scenario. </p>
@@ -5470,7 +5507,7 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 </div>
 </div>
 <div class="sect2">
-<h3 id="_controlling_execution">5.9. Controlling Execution</h3>
+<h3 id="_controlling_execution">6.3. Controlling Execution</h3>
 <div class="paragraph">
 <p></p>
 </div>
@@ -5510,7 +5547,7 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 </div>
 </div>
 <div class="sect2">
-<h3 id="_controlling_output_with_plugins">5.10. Controlling Output With Plugins</h3>
+<h3 id="_controlling_output_with_plugins">6.4. Controlling Output With Plugins</h3>
 <div class="paragraph">
 <p>
 Remember the help information that we got Cucumber to print in the last lesson. In this lesson, we&#8217;re going to concentrate on configuring Cucumber&#8217;s output using plugins.</p>
@@ -5641,7 +5678,7 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-19 13:27:26 UTC
+Last updated 2020-08-21 08:19:25 UTC
 </div>
 </div>
 <style>

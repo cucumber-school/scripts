@@ -485,10 +485,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_deeper_into_data_tables">5.4. Deeper into Data Tables</a></li>
 <li><a href="#_docstring">5.5. DocString</a></li>
 <li><a href="#_tdd_loops">5.6. TDD Loops</a></li>
-<li><a href="#_basic_filtering">5.7. Basic Filtering</a></li>
-<li><a href="#_filtering_with_tags">5.8. Filtering With Tags</a></li>
-<li><a href="#_controlling_execution">5.9. Controlling Execution</a></li>
-<li><a href="#_controlling_output_with_plugins">5.10. Controlling Output With Plugins</a></li>
+</ul>
+</li>
+<li><a href="#_configuring_cucumber">6. Configuring Cucumber</a>
+<ul class="sectlevel2">
+<li><a href="#_basic_filtering">6.1. Basic Filtering</a></li>
+<li><a href="#_filtering_with_tags">6.2. Filtering With Tags</a></li>
+<li><a href="#_controlling_execution">6.3. Controlling Execution</a></li>
+<li><a href="#_controlling_output_with_plugins">6.4. Controlling Output With Plugins</a></li>
 </ul>
 </li>
 </ul>
@@ -5332,14 +5336,16 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 <div class="paragraph">
 <p>And then we write the next failing acceptance test&#8230;&#8203;</p>
 </div>
-<div class="paragraph">
-<p>Unresolved directive in scripts.java.adoc - include::06/index.adoc[]</p>
 </div>
 </div>
 </div>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_configuring_cucumber">6. Configuring Cucumber</h2>
+<div class="sectionbody">
 <div class="sect2">
-<h3 id="_basic_filtering">5.7. Basic Filtering</h3>
+<h3 id="_basic_filtering">6.1. Basic Filtering</h3>
 <div class="paragraph">
 <p><a href="#shot-814" id="shot-814" title="Animation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Animation</a>
 Hello, and welcome back to Cucumber School.</p>
@@ -5384,21 +5390,52 @@ We can pass arguments to Cucumber using the property cucumber.options. The name 
 </div>
 </div>
 <div class="paragraph">
-<p>Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. <a href="#shot-818" id="shot-818" title="in feature file show that 'Message too long' starts on line 44" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: in feature file show that 'Message too long' starts on line 44</a></p>
+<p>The examples that you&#8217;ve just seen use the -D option to set a Java system property on the command line. If you&#8217;re working in an IDE this is less than ideal, but fortunately there are several other ways to achieve exactly the same outcome. Let&#8217;s look at using a property file first.</p>
 </div>
 <div class="paragraph">
-<p>We can use that line number when we run Cucumber. <a href="#shot-819" id="shot-819" title="type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'</a></p>
+<p>Create a property file called cucumber.properties in src/test/resource <a href="#shot-818" id="shot-818" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4a</a> and add the line <code>cucumber.filter.name="range"</code> <a href="#shot-819" id="shot-819" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4b</a></p>
+</div>
+<div class="paragraph">
+<p>When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. <a href="#shot-820" id="shot-820" title="type <code>mvn test</code> in console, show output and highlight that it has run the two scenarios containing the word 'range'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4c: type <code>mvn test</code> in console, show output and highlight that it has run the two scenarios containing the word 'range'</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:44"</code></pre>
+<pre class="rouge highlight"><code>mvn test</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>You can even specify multiple line numbers for each file. Let&#8217;s run 'Two shouts' as well. [<a href="#shot-820" id="shot-820" title="in feature file, show 'Two shouts' starts on line 33" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: in feature file, show 'Two shouts' starts on line 33</a></p>
+<p>The property file is also picked up if you run Cucumber from within your IDE <a href="#shot-821" id="shot-821" title="use IntelliJ to run all scenarios in <code>hear_shout.feature</code> and then highlight that only the range scenarios have been run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4ca: use IntelliJ to run all scenarios in <code>hear_shout.feature</code> and then highlight that only the range scenarios have been run</a></p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s add that line number to the Maven command.<a href="#shot-821" id="shot-821" title="type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'</a></p>
+<p>Let&#8217;s undo that change shot[4d, delete <code>cucumber.filter.name="range"</code> from properties file] and apply the same filter using CucumberOptions. shot[4e, show <code>RunCucumberTests.java</code> highlighting <code>@CucumberOptions</code> line]. Here we add a new argument to the annotation. shot 4f, add <code>name</code> to <code>@CucumberOptions</code>]</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s">"range"</span><span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This setting is picked up when we run Cucumber using Maven from the command line <a href="#shot-822" id="shot-822" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a>. It&#8217;s also picked up when we run <code>RunCucumberTest</code> from IntelliJ <a href="#shot-823" id="shot-823" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a>. If, instead, we use IntelliJ to run all scenarios from our feature file, it will run all the scenarios, unfiltered.</p>
+</div>
+<div class="paragraph">
+<p>So, using a property file is the safest way to ensure that your configuration options are respected, no matter how you invoke Cucumber. Which is what we&#8217;ll use from now on.</p>
+</div>
+<div class="paragraph">
+<p>Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. <a href="#shot-824" id="shot-824" title="in feature file show that 'Message too long' starts on line 44" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: in feature file show that 'Message too long' starts on line 44</a></p>
+</div>
+<div class="paragraph">
+<p>We can use that line number when we run Cucumber. <a href="#shot-825" id="shot-825" title="type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>@CucumberOptions(plugin = {"pretty"}, strict = true, features="src/test/resources/shouty/hear_shout.feature:44")</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can even specify multiple line numbers for each file. Let&#8217;s run 'Two shouts' as well. [<a href="#shot-826" id="shot-826" title="in feature file, show 'Two shouts' starts on line 33" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: in feature file, show 'Two shouts' starts on line 33</a></p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add that line number to the Maven command.<a href="#shot-827" id="shot-827" title="type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5409,7 +5446,7 @@ We can pass arguments to Cucumber using the property cucumber.options. The name 
 <p>You can list several files and lines together like this if you have a specific set of scenarios you want to run.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-822" id="shot-822" title="click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'</a>
+<p><a href="#shot-828" id="shot-828" title="click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'</a>
 If you want to run a single scenario from within your IDE, simply click on it and choose how you would like to run it. Recent versions of IntelliJ use a green triangle to the left of the source code to indicate where to click.</p>
 </div>
 <div class="paragraph">
@@ -5417,13 +5454,13 @@ If you want to run a single scenario from within your IDE, simply click on it an
 </div>
 </div>
 <div class="sect2">
-<h3 id="_filtering_with_tags">5.8. Filtering With Tags</h3>
+<h3 id="_filtering_with_tags">6.2. Filtering With Tags</h3>
 <div class="paragraph">
-<p><a href="#shot-823" id="shot-823" title="show 'Listener is out of range' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show 'Listener is out of range' scenario</a>
-Cucumber has a third filtering mechanism that uses tags. Tags start with an at-sign. We’ll put a focus tag right here, above this scenario. <a href="#shot-824" id="shot-824" title="add a @focus tag to the 'Listener is out of range' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: add a @focus tag to the 'Listener is out of range' scenario</a></p>
+<p><a href="#shot-829" id="shot-829" title="show 'Listener is out of range' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show 'Listener is out of range' scenario</a>
+Cucumber has a third filtering mechanism that uses tags. Tags start with an at-sign. We’ll put a focus tag right here, above this scenario. <a href="#shot-830" id="shot-830" title="add a @focus tag to the 'Listener is out of range' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: add a @focus tag to the 'Listener is out of range' scenario</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-825" id="shot-825" title="run mvn from console, then highlight that only 'Listener is out of range' scenario was run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: run mvn from console, then highlight that only 'Listener is out of range' scenario was run</a>
+<p><a href="#shot-831" id="shot-831" title="run mvn from console, then highlight that only 'Listener is out of range' scenario was run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: run mvn from console, then highlight that only 'Listener is out of range' scenario was run</a>
 Now we can run only the scenarios tagged with focus - there should be only one&#8230;&#8203;</p>
 </div>
 <div class="listingblock">
@@ -5438,7 +5475,7 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 <p>It’s entirely up to you what you name your tags. When we’re working on a particular area of the application it is common to use a temporary tag like this - we’ll remove it before we check our code into source control.</p>
 </div>
 <div class="paragraph">
-<p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. <a href="#shot-826" id="shot-826" title="tag first and third scenario with @smoke" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: tag first and third scenario with @smoke</a> Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. <a href="#shot-827" id="shot-827" title="run mvn from console, then highlight that only first and third scenarios were run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: run mvn from console, then highlight that only first and third scenarios were run</a></p>
+<p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. <a href="#shot-832" id="shot-832" title="tag first and third scenario with @smoke" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: tag first and third scenario with @smoke</a> Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. <a href="#shot-833" id="shot-833" title="run mvn from console, then highlight that only first and third scenarios were run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: run mvn from console, then highlight that only first and third scenarios were run</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5452,10 +5489,10 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 <p>Tags give you a way to organise your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.</p>
 </div>
 <div class="paragraph">
-<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. <a href="#shot-828" id="shot-828" title="tag feature with @SHOUTY-11" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: tag feature with @SHOUTY-11</a> All the scenarios within that file now inherit that tag, so this command will run all the scenarios. <a href="#shot-829" id="shot-829" title="run mvn from console, then show that all scenarios were run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run mvn from console, then show that all scenarios were run</a></p>
+<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. <a href="#shot-834" id="shot-834" title="tag feature with @SHOUTY-11" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: tag feature with @SHOUTY-11</a> All the scenarios within that file now inherit that tag, so this command will run all the scenarios. <a href="#shot-835" id="shot-835" title="run mvn from console, then show that all scenarios were run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run mvn from console, then show that all scenarios were run</a></p>
 </div>
 <div class="paragraph">
-<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. <a href="#shot-830" id="shot-830" title="tag last two scenarios with @slow" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: tag last two scenarios with @slow</a> Then pass a tag expression using the <code>not</code> keyword to Cucumber and the "@slow" scenarios won&#8217;t be run. <a href="#shot-831" id="shot-831" title="run mvn from console, then show that the slow scenarios were not run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run mvn from console, then show that the slow scenarios were not run</a></p>
+<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. <a href="#shot-836" id="shot-836" title="tag last two scenarios with @slow" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: tag last two scenarios with @slow</a> Then pass a tag expression using the <code>not</code> keyword to Cucumber and the "@slow" scenarios won&#8217;t be run. <a href="#shot-837" id="shot-837" title="run mvn from console, then show that the slow scenarios were not run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run mvn from console, then show that the slow scenarios were not run</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5463,19 +5500,19 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 </div>
 </div>
 <div class="paragraph">
-<p>You can read about how to build more complicated tag expressions on the <a href="https://cucumber.io/docs/cucumber/api/#tag-expressions">Cucumber website</a> <a href="#shot-832" id="shot-832" title="open the link and show the Cucumber website" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: open the link and show the Cucumber website</a></p>
+<p>You can read about how to build more complicated tag expressions on the <a href="https://cucumber.io/docs/cucumber/api/#tag-expressions">Cucumber website</a> <a href="#shot-838" id="shot-838" title="open the link and show the Cucumber website" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: open the link and show the Cucumber website</a></p>
 </div>
 <div class="paragraph">
 <p>There&#8217;s one more thing to learn about tags. They can be combined with hooks, so that you can be selective about which hooks to run when. We&#8217;ll cover that in a future chapter.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_controlling_execution">5.9. Controlling Execution</h3>
+<h3 id="_controlling_execution">6.3. Controlling Execution</h3>
 <div class="paragraph">
-<p><a href="#shot-833" id="shot-833" title="show 'List configuration options' section of <a href="https://cucumber.io/docs/cucumber/api/#options"" class="bare">https://cucumber.io/docs/cucumber/api/#options"</a> style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show 'List configuration options' section of <a href="https://cucumber.io/docs/cucumber/api/#options" class="bare">https://cucumber.io/docs/cucumber/api/#options</a></a></p>
+<p><a href="#shot-839" id="shot-839" title="show 'List configuration options' section of <a href="https://cucumber.io/docs/cucumber/api/#options"" class="bare">https://cucumber.io/docs/cucumber/api/#options"</a> style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show 'List configuration options' section of <a href="https://cucumber.io/docs/cucumber/api/#options" class="bare">https://cucumber.io/docs/cucumber/api/#options</a></a></p>
 </div>
 <div class="paragraph">
-<p>A full list of Cucumber configuration options can be found on the <a href="https://cucumber.io/docs/cucumber/api/#options">Cucumber website</a>. There&#8217;s also a help page included with Cucumber, which can be printed using Maven. <a href="#shot-834" id="shot-834" title="run maven in console, scroll through the help output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: run maven in console, scroll through the help output</a></p>
+<p>A full list of Cucumber configuration options can be found on the <a href="https://cucumber.io/docs/cucumber/api/#options">Cucumber website</a>. There&#8217;s also a help page included with Cucumber, which can be printed using Maven. <a href="#shot-840" id="shot-840" title="run maven in console, scroll through the help output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: run maven in console, scroll through the help output</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5486,10 +5523,10 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 <p>That&#8217;s quite a lot to digest! In this lesson we&#8217;re going to focus on a few of the options that control how Cucumber behaves.</p>
 </div>
 <div class="paragraph">
-<p>The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps. Let&#8217;s start by subtly changing a step in the feature file <a href="#shot-835" id="shot-835" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a></p>
+<p>The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps. Let&#8217;s start by subtly changing a step in the feature file <a href="#shot-841" id="shot-841" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-836" id="shot-836" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a></p>
+<p><a href="#shot-842" id="shot-842" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5497,7 +5534,7 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 </div>
 </div>
 <div class="paragraph">
-<p>The output shows us which step definition would have been called for each line in the feature file <a href="#shot-837" id="shot-837" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a>&#8201;&#8212;&#8201;and also show any that have no matching step definitions <a href="#shot-838" id="shot-838" title="highlight <code>#null</code>" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: highlight <code>#null</code></a></p>
+<p>The output shows us which step definition would have been called for each line in the feature file <a href="#shot-843" id="shot-843" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a>&#8201;&#8212;&#8201;and also show any that have no matching step definitions <a href="#shot-844" id="shot-844" title="highlight <code>#null</code>" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: highlight <code>#null</code></a></p>
 </div>
 <div class="paragraph">
 <p>SNIPPETS</p>
@@ -5510,9 +5547,9 @@ Now we can run only the scenarios tagged with focus - there should be only one&#
 </div>
 </div>
 <div class="sect2">
-<h3 id="_controlling_output_with_plugins">5.10. Controlling Output With Plugins</h3>
+<h3 id="_controlling_output_with_plugins">6.4. Controlling Output With Plugins</h3>
 <div class="paragraph">
-<p><a href="#shot-839" id="shot-839" title="the plugin section of the help output shown in lesson 3" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: the plugin section of the help output shown in lesson 3</a>
+<p><a href="#shot-845" id="shot-845" title="the plugin section of the help output shown in lesson 3" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: the plugin section of the help output shown in lesson 3</a>
 Remember the help information that we got Cucumber to print in the last lesson. In this lesson, we&#8217;re going to concentrate on configuring Cucumber&#8217;s output using plugins.</p>
 </div>
 <div class="listingblock">
@@ -5529,7 +5566,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 <p>So far, every time we have run Cucumber, it has printed the features back to us - in the console. This is called the <code>pretty</code> formatter. Cucumber can report results in other formats, and this is useful for generating reports.</p>
 </div>
 <div class="paragraph">
-<p>Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.<a href="#shot-840" id="shot-840" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run maven in console</a></p>
+<p>Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.<a href="#shot-846" id="shot-846" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run maven in console</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5537,10 +5574,10 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>Now, let&#8217;s take a look at the html that has been generated. <a href="#shot-841" id="shot-841" title="Open target/my-report in the browser" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Open target/my-report in the browser</a></p>
+<p>Now, let&#8217;s take a look at the html that has been generated. <a href="#shot-847" id="shot-847" title="Open target/my-report in the browser" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Open target/my-report in the browser</a></p>
 </div>
 <div class="paragraph">
-<p>You probably noticed that we still got the <code>pretty</code> output in the console. That&#8217;s because we have specified the <code>pretty</code> plugin in the @CucumberOptions annotation in <code>RunCucumberTests.java</code>. <a href="#shot-842" id="shot-842" title="highlight @CucumberOptions" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight @CucumberOptions</a></p>
+<p>You probably noticed that we still got the <code>pretty</code> output in the console. That&#8217;s because we have specified the <code>pretty</code> plugin in the @CucumberOptions annotation in <code>RunCucumberTests.java</code>. <a href="#shot-848" id="shot-848" title="highlight @CucumberOptions" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight @CucumberOptions</a></p>
 </div>
 <div class="listingblock">
 <div class="title">RunCucumberTests.java</div>
@@ -5549,7 +5586,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s delete that. <a href="#shot-843" id="shot-843" title="remove pretty plugin" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: remove pretty plugin</a></p>
+<p>Let&#8217;s delete that. <a href="#shot-849" id="shot-849" title="remove pretty plugin" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: remove pretty plugin</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5557,10 +5594,10 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>and run maven again. <a href="#shot-844" id="shot-844" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run maven in console</a> Notice that this time the only console output is a summary of the number of tests being run. There&#8217;s no <code>pretty</code> output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.</p>
+<p>and run maven again. <a href="#shot-850" id="shot-850" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run maven in console</a> Notice that this time the only console output is a summary of the number of tests being run. There&#8217;s no <code>pretty</code> output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.</p>
 </div>
 <div class="paragraph">
-<p>There&#8217;s also a progress formatter, which just prints out a single character for each step. <a href="#shot-845" id="shot-845" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run maven in console, show output</a></p>
+<p>There&#8217;s also a progress formatter, which just prints out a single character for each step. <a href="#shot-851" id="shot-851" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run maven in console, show output</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5568,7 +5605,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. <a href="#shot-846" id="shot-846" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run maven in console, show output</a></p>
+<p>The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. <a href="#shot-852" id="shot-852" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run maven in console, show output</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5576,7 +5613,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the <code>pretty</code> plugin and the HTML plugin at the same time. There&#8217;s a limitation that only one plugin can write to the console at the same time. Let&#8217;s try to use the <code>progress</code> and <code>junit</code> plugin together <a href="#shot-847" id="shot-847" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: run maven in console</a></p>
+<p>We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the <code>pretty</code> plugin and the HTML plugin at the same time. There&#8217;s a limitation that only one plugin can write to the console at the same time. Let&#8217;s try to use the <code>progress</code> and <code>junit</code> plugin together <a href="#shot-853" id="shot-853" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: run maven in console</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5584,7 +5621,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-848" id="shot-848" title="scroll up to show error" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: scroll up to show error</a></p>
+<p><a href="#shot-854" id="shot-854" title="scroll up to show error" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: scroll up to show error</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5594,7 +5631,7 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. <a href="#shot-849" id="shot-849" title="run maven in console, show progress output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run maven in console, show progress output</a></p>
+<p>We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. <a href="#shot-855" id="shot-855" title="run maven in console, show progress output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run maven in console, show progress output</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5602,16 +5639,16 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>The JUnit XML has been written to a file. <a href="#shot-850" id="shot-850" title="open junit.xml in the IDE" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: open junit.xml in the IDE</a></p>
+<p>The JUnit XML has been written to a file. <a href="#shot-856" id="shot-856" title="open junit.xml in the IDE" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: open junit.xml in the IDE</a></p>
 </div>
 <div class="paragraph">
-<p>The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. <a href="#shot-851" id="shot-851" title="edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'</a>.</p>
+<p>The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. <a href="#shot-857" id="shot-857" title="edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'</a>.</p>
 </div>
 <div class="paragraph">
-<p>While we&#8217;re at it, let&#8217;s put the <code>pretty</code> plugin back in @CucumberOptions. <a href="#shot-852" id="shot-852" title="undo earlier edit so we&#8217;re left with @CucumberOptions(plugin = {"pretty"}')" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: undo earlier edit so we&#8217;re left with @CucumberOptions(plugin = {"pretty"}')</a>.</p>
+<p>While we&#8217;re at it, let&#8217;s put the <code>pretty</code> plugin back in @CucumberOptions. <a href="#shot-858" id="shot-858" title="undo earlier edit so we&#8217;re left with @CucumberOptions(plugin = {"pretty"}')" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: undo earlier edit so we&#8217;re left with @CucumberOptions(plugin = {"pretty"}')</a>.</p>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s run Maven again using the <code>rerun</code> plugin writing its output to <code>rerun.txt</code>. <a href="#shot-853" id="shot-853" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: run maven from console</a></p>
+<p>Now let&#8217;s run Maven again using the <code>rerun</code> plugin writing its output to <code>rerun.txt</code>. <a href="#shot-859" id="shot-859" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: run maven from console</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5619,13 +5656,13 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>We can see in the console that the <code>Two shouts</code> scenario has failed. <a href="#shot-854" id="shot-854" title="scroll to show failure" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: scroll to show failure</a></p>
+<p>We can see in the console that the <code>Two shouts</code> scenario has failed. <a href="#shot-860" id="shot-860" title="scroll to show failure" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: scroll to show failure</a></p>
 </div>
 <div class="paragraph">
-<p>Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! <a href="#shot-855" id="shot-855" title="open target/rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: open target/rerun.txt</a> And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
+<p>Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! <a href="#shot-861" id="shot-861" title="open target/rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: open target/rerun.txt</a> And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
 </div>
 <div class="paragraph">
-<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file, preceded by the <code>@</code> (at) sign. <a href="#shot-856" id="shot-856" title="run maven from console, highlighting <code>pretty</code> output showing only failing scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console, highlighting <code>pretty</code> output showing only failing scenario</a></p>
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file, preceded by the <code>@</code> (at) sign. <a href="#shot-862" id="shot-862" title="run maven from console, highlighting <code>pretty</code> output showing only failing scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console, highlighting <code>pretty</code> output showing only failing scenario</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5633,7 +5670,7 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let&#8217;s fix the scenario <a href="#shot-857" id="shot-857" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: undo change in feature file</a> and rerun the failing scenario again <a href="#shot-858" id="shot-858" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console</a></p>
+<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let&#8217;s fix the scenario <a href="#shot-863" id="shot-863" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: undo change in feature file</a> and rerun the failing scenario again <a href="#shot-864" id="shot-864" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console</a></p>
 </div>
 </div>
 </div>
@@ -5641,7 +5678,7 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-19 13:27:26 UTC
+Last updated 2020-08-21 08:19:25 UTC
 </div>
 </div>
 <style>
