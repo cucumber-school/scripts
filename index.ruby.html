@@ -481,10 +481,9 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <ul class="sectlevel2">
 <li><a href="#_removing_redundant_scenarios">5.1. Removing redundant scenarios</a></li>
 <li><a href="#_incidental_details">5.2. Incidental details</a></li>
-<li><a href="#_refactoring_to_data_tables">5.3. Refactoring to Data Tables</a></li>
-<li><a href="#_deeper_into_data_tables">5.4. Deeper into Data Tables</a></li>
-<li><a href="#_docstring">5.5. DocString</a></li>
-<li><a href="#_tdd_loops">5.6. TDD Loops</a></li>
+<li><a href="#_deeper_into_data_tables">5.3. Deeper into Data Tables</a></li>
+<li><a href="#_docstring">5.4. DocString</a></li>
+<li><a href="#_tdd_loops">5.5. TDD Loops</a></li>
 </ul>
 </li>
 <li><a href="#_configuring_cucumber">6. Configuring Cucumber</a></li>
@@ -3857,11 +3856,11 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <div class="paragraph">
 <p>Although it&#8217;s incidental that the offer is for bagels, it is necessary to illustrate that Nora has ordered the item that is on offer to Shouty users&#8201;&#8212;&#8201;and that she will be charged for that item. We use "bagels" as an example to make the scenario easier to read, not because there&#8217;s something inherently special about bagels!</p>
 </div>
+<div class="literalblock">
+<div class="content">
+<pre>include::./title.adoc[]</pre>
 </div>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_refactoring_to_data_tables">5.3. Refactoring to Data Tables</h3>
 <div class="paragraph">
 <p>Let&#8217;s look at the two scenarios that illustrate the rule about range again . Notice how the steps that create the Sean, Lucy, and Larry  are very similar.</p>
 </div>
@@ -3935,7 +3934,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p></p>
 </div>
 <div class="paragraph">
-<p>You can also turn the table into an array of hashes , where the first row is used for the keys, and each following row is used for the map values.</p>
+<p>You can also turn the table into an array of hashes , where the first row is used for the hash keys, and each following row is used for the hash values.</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -3949,7 +3948,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p></p>
 </div>
 <div class="paragraph">
-<p>Now we can easily iterate  over these maps and turn them into instances of Person: </p>
+<p>Now we can easily iterate  over these hashes and turn them into instances of Person: </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -3983,12 +3982,10 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <div class="paragraph">
 <p>Now we can check that everything is still green. </p>
 </div>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
-<li>
-<p>and delete our old step definition , which is now unused.</p>
-</li>
-</ol>
+<div class="literalblock">
+<div class="content">
+<pre>and delete our old step definition shot::[22,"delete unused step def"], which is now unused.</pre>
+</div>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -4033,8 +4030,10 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
       <span class="nf">Then </span>Larry should not hear a shout</code></pre>
 </div>
 </div>
+</div>
+</div>
 <div class="sect3">
-<h4 id="_lesson_3_questions_2">5.3.1. Lesson 3 - Questions</h4>
+<h4 id="_lesson_3_questions_2">5.2.2. Lesson 3 - Questions</h4>
 <div class="sect4">
 <h5 id="_what_is_the_name_of_the_gherkin_syntax_that_allows_you_to_specify_pipe_separated_tabular_data_for_a_step">What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?</h5>
 <div class="ulist">
@@ -4186,7 +4185,7 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 </div>
 </div>
 <div class="sect2">
-<h3 id="_deeper_into_data_tables">5.4. Deeper into Data Tables</h3>
+<h3 id="_deeper_into_data_tables">5.3. Deeper into Data Tables</h3>
 <div class="paragraph">
 <p></p>
 </div>
@@ -4284,13 +4283,13 @@ Data tables are very useful for setting up data in Given steps, but you can also
 <p>So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run Cucumber to generate the new step definition  and paste it into our StepDefinitions class  </p>
+<p>Let&#8217;s run Cucumber to generate the new step definition  and paste it into our step definitions file   </p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.</p>
 </div>
 <div class="paragraph">
-<p>A List of List of String will do , so we can just iterate over Lucy’s messages and create a new single-item List for each row.</p>
+<p>An array of arrays will do , so we can just iterate over Lucy’s messages and create a new single-item array for each row.</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -4299,7 +4298,7 @@ Data tables are very useful for setting up data in Given steps, but you can also
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. </p>
+<p>Now we can pass that array to the diff method on the table of expected messages passed in from the Gherkin. </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -4342,7 +4341,7 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 <p>Great.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_4_questions_3">5.4.1. Lesson 4 - Questions</h4>
+<h4 id="_lesson_4_questions_3">5.3.1. Lesson 4 - Questions</h4>
 <div class="sect4">
 <h5 id="_why_might_you_use_the_transpose_annotation">Why might you use the @Transpose annotation?</h5>
 <div class="ulist">
@@ -4395,7 +4394,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_docstring">5.5. DocString</h3>
+<h3 id="_docstring">5.4. DocString</h3>
 <div class="paragraph">
 <p>When writing scenarios, occasionally we want to use a really long piece of data. </p>
 </div>
@@ -4427,7 +4426,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p>Still, we’ll press on and get it to green, then we’ll show you how to clean it up.</p>
 </div>
 <div class="paragraph">
-<p> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition </p>
+<p> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or parameterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.rb</div>
@@ -4441,7 +4440,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <p></p>
 </div>
 <div class="paragraph">
-<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests  and add a new example to specify this extra responsibility. </p>
+<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests  As we explain in more detail in the next lesson, we start by adding a new example to specify this extra responsibility. </p>
 </div>
 <div class="paragraph">
 <p>We’ll create a 181-character message like this  and then assert that the message should not be heard when it’s broadcast.</p>
@@ -4558,7 +4557,7 @@ We have to add a new step definition too . It doesn&#8217;t need a parameter in 
 <p>We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_5_questions_3">5.5.1. Lesson 5 - Questions</h4>
+<h4 id="_lesson_5_questions_3">5.4.1. Lesson 5 - Questions</h4>
 <div class="sect4">
 <h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
 <div class="ulist">
@@ -4652,7 +4651,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 </div>
 </div>
 <div class="sect2">
-<h3 id="_tdd_loops">5.6. TDD Loops</h3>
+<h3 id="_tdd_loops">5.5. TDD Loops</h3>
 <div class="paragraph">
 <p></p>
 </div>
@@ -4696,7 +4695,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 <p>That’s all for this chapter of Cucumber School. See you next time!</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_6_questions_2">5.6.1. Lesson 6 - Questions</h4>
+<h4 id="_lesson_6_questions_2">5.5.1. Lesson 6 - Questions</h4>
 <div class="sect4">
 <h5 id="_which_of_the_following_is_the_best_definition_of_the_term_refactoring">Which of the following is the best definition of the term "refactoring"?</h5>
 <div class="ulist">
@@ -4800,7 +4799,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-08-21 15:46:38 UTC
+Last updated 2020-08-27 16:06:48 UTC
 </div>
 </div>
 <style>
