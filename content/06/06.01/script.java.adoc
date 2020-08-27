@@ -14,7 +14,7 @@ When we start working on a new scenario we often take a dive down to the inner T
 
 If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.
 
-There are several ways to do this in Cucumber - and your IDE may offer other options. We'll start by showing some basic filtering using Maven on the command line, and then show one of the shortcuts offered by IntelliJ.
+There are several ways to do this in Cucumber - and your IDE may offer other options. We'll start by showing some basic filtering using Maven on the command line, before showing you some alternatives.
 
 Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.
 
@@ -33,38 +33,16 @@ The value of the cucumber.filter.name option is actually a regular expression, s
 mvn test -Dcucumber.filter.name="range"
 ----
 
-The examples that you've just seen use the -D option to set a Java system property on the command line. If you're working in an IDE this is less than ideal, but fortunately there are several other ways to achieve exactly the same outcome. Let's look at using a property file first.
-
-Create a property file called cucumber.properties in src/test/resource shot::[4a] and add the line `cucumber.filter.name="range"` shot::[4b]
-
-When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. shot::[4c, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
-
-[source]
-----
-mvn test
-----
-
-The property file is also picked up if you run Cucumber from within your IDE shot::[4ca, use IntelliJ to run all scenarios in `hear_shout.feature` and then highlight that only the range scenarios have been run]
-
-Let's undo that change shot[4d, delete `cucumber.filter.name="range"` from properties file] and apply the same filter using CucumberOptions. shot[4e, show `RunCucumberTests.java` highlighting `@CucumberOptions` line]. Here we add a new argument to the annotation. shot 4f, add `name` to `@CucumberOptions`]
-
-[source, java]
-----
-@CucumberOptions(plugin = {"pretty"}, strict = true, name = "range")
-----
-
-This setting is picked up when we run Cucumber using Maven from the command line shot::[]. It's also picked up when we run `RunCucumberTest` from IntelliJ shot::[]. If, instead, we use IntelliJ to run all scenarios from our feature file, it will run all the scenarios, unfiltered.
-
-So, using a property file is the safest way to ensure that your configuration options are respected, no matter how you invoke Cucumber. Which is what we'll use from now on.
-
 Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. shot::[5, "in feature file show that 'Message too long' starts on line 44"]
 
-We can use that line number when we run Cucumber. shot::[6, "type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'"]
+We can use that line number when we run Cucumber. shot::[6, "add entry to property file"]
 
 [source]
 ----
-@CucumberOptions(plugin = {"pretty"}, strict = true, features="src/test/resources/shouty/hear_shout.feature:44")
+mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:44
 ----
+
+shot::[6, "type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'"]
 
 You can even specify multiple line numbers for each file. Let's run 'Two shouts' as well. [shot::[7, "in feature file, show 'Two shouts' starts on line 33"]
 
@@ -77,10 +55,24 @@ mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:33:44
 
 You can list several files and lines together like this if you have a specific set of scenarios you want to run.
 
-shot::[9,"click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'"]
-If you want to run a single scenario from within your IDE, simply click on it and choose how you would like to run it. Recent versions of IntelliJ use a green triangle to the left of the source code to indicate where to click.
+The examples that you've just seen use the -D option to set a Java system property on the command line. If you're working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.
 
-In this lesson you've learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line. In the next lesson we'll look at Cucumber's JUnit integration.
+Let's look at using a property file to set the system properties. Create a property file called cucumber.properties in src/test/resource shot::[4a] and add the line `cucumber.filter.name=range` shot::[4b]
+
+When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. shot::[4c, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
+
+[source]
+----
+mvn test
+----
+
+The property file is also picked up if you run Cucumber from within your IDE shot::[4ca, use IntelliJ to run all scenarios in `hear_shout.feature` and then highlight that only the range scenarios have been run]
+
+The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.
+
+The final thing I want to show you in this lesson is how to run a single scenario is directly from your IDE. In IntelliJ, click on the green triangle to the left of the scenario name and select "Run Scenario:" shot::[9,"click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'"]
+
+In this lesson you've learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using property files.
 
 
 

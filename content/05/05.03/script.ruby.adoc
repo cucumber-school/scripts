@@ -1,4 +1,4 @@
-include::./title.adoc[]
+ include::./title.adoc[]
 
 Let's look at the two scenarios that illustrate the rule about range again shot::[1,"show the range rule & scenarios"]. Notice how the steps that create the Sean,shot::[2] Lucy,shot::[3] and Larry shot::[4] are very similar.
 
@@ -41,7 +41,7 @@ include::../code/ruby/07-use-table-raw-to-demonstrate-2d-array/features/step_def
 
 shot::[12,"run Cucumber, highlight 'Lucy's location'"]
 
-You can also turn the table into an array of hashes shot::[13,"Print out data table"], where the first row is used for the keys,shot::[14,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the map values.shot::[15, "highlight second and third rows"]
+You can also turn the table into an array of hashes shot::[13,"Print out data table"], where the first row is used for the hash keys,shot::[14,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the hash values.shot::[15, "highlight second and third rows"]
 
 .steps.rb
 [source,ruby]
@@ -51,7 +51,7 @@ include::../code/ruby/08-table-as-symbolic-hashes/features/step_definitions/step
 
 shot::[16,"run Cucumber, highlight data table output"]
 
-Now we can easily iterate shot::[17,"write the loop"] over these maps and turn them into instances of Person: shot::[18]
+Now we can easily iterate shot::[17,"write the loop"] over these hashes and turn them into instances of Person: shot::[18]
 
 .steps.rb
 [source,ruby]
@@ -71,7 +71,7 @@ include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepd
 
 Now we can check that everything is still green. shot::[21]
 
-... and delete our old step definition shot::[22,"delete unused step def"], which is now unused.
+      and delete our old step definition shot::[22,"delete unused step def"], which is now unused.
 
 .steps.rb
 [source,ruby]

@@ -20,7 +20,7 @@ include::../code/ruby/12-transpose-annotation/features/hear_shout.feature[lines=
 
 It's always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.
 
-If you call the `transpose` method on the table shot::[3,add Transpose annotation to stepdef], Cucumber will turn each row into a column before passing it to the step definition.
+If you call the `transpose` method on the table shot::[3, stepdef], Cucumber will turn each row into a column before passing it to the step definition.
 
 .steps.rb
 [source, ruby]
@@ -45,11 +45,11 @@ See how natural it is to use a Data Table here? We also haven’t used any colum
 
 So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.
 
-Let's run Cucumber to generate the new step definition shot::[7, run Cucumber] and paste it into our StepDefinitions class shot::[8, paste snippet] shot::[9]
+Let's run Cucumber to generate the new step definition shot::[7, run Cucumber] and paste it into our step definitions file  shot::[8, paste snippet] shot::[9]
 
 We'll need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.
 
-A List of List of String will do shot::[10,write code to create list-of-list-of-strings], so we can just iterate over Lucy’s messages and create a new single-item List for each row.shot::[11]
+An array of arrays will do shot::[10,write code to create list-of-list-of-strings], so we can just iterate over Lucy’s messages and create a new single-item array for each row.shot::[11]
 
 .steps.rb
 [source, ruby]
@@ -57,7 +57,7 @@ A List of List of String will do shot::[10,write code to create list-of-list-of-
 include::../code/ruby/13-diff/features/step_definitions/steps.rb[lines=50]
 ----
 
-Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. shot::[12, write code to call diff]
+Now we can pass that array to the diff method on the table of expected messages passed in from the Gherkin. shot::[12, write code to call diff]
 
 .steps.rb
 [source, ruby]

@@ -21,7 +21,7 @@ That’s pretty ugly isn’t it!
 
 Still, we’ll press on and get it to green, then we’ll show you how to clean it up.
 
-shot::[4,"run Cucumber"] Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let's modify the existing step definition shot::[5,"Modify stepdef"]
+shot::[4,"run Cucumber"] Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or parameterise "Larry should not hear a shout". Let's modify the existing step definition shot::[5,"Modify stepdef"]
 
 .steps.rb
 [source,ruby]
@@ -31,7 +31,7 @@ include::../code/ruby/17-parameterise-stepdef/features/step_definitions/steps.rb
 
 shot::[6,"run cucumber"]
 
-OK, so we have a failing acceptance test.shot::[7] Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests shot::[8,show NetworkTest] and add a new example to specify this extra responsibility. shot::[9, start creating new unit test]
+OK, so we have a failing acceptance test.shot::[7] Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule, so let’s go to its unit tests shot::[8,show NetworkTest] As we explain in more detail in the next lesson, we start by adding a new example to specify this extra responsibility. shot::[9, start creating new unit test]
 
 We’ll create a 181-character message like this shot::[10,finish implementing unit test] and then assert that the message should not be heard when it’s broadcast.shot::[11]
 
