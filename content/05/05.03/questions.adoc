@@ -30,7 +30,8 @@ The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, 
 Explanation:
 The data table is indexed, starting from 0. The first coordinate indicates which _row_ to access, the second indicates the _column_.
 
-===== Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List< Map<String, String> > ?
+===== JAVA ONLY
+====== Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List< Map<String, String> > ?
 
 | A | B | C |
 | D | 0 | 1 |
@@ -46,7 +47,7 @@ When Cucumber converts a Data Table into a list of maps, it treats the first row
 
 So, in this example, since there are three rows, we end up with two maps in the list -- the first row providing the indexes into each map, the next two rows providing the values for the two maps that are added to the list.
 
-===== Which of the following Data Tables will this method process successfully?
+====== Which of the following Data Tables will this method process successfully?
 
 @DataTableType
 public OrderLine createOrderLine(Map<String, String> orderItem) {
@@ -79,4 +80,60 @@ public OrderLine createOrderLine(Map<String, String> orderItem) {
 Explanation:
 Cucumber attempts to convert each non-header row in the data table into an instance of OrderLine by calling this method. For the conversion to succeed, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and createOrderLine() would not be called and the relavent step definition would be passed an empty list of OrderLine objects.
 
-There is more documentation about Data Table conversions at https://github.com/cucumber/cucumber/tree/master/datatable 
+There is more documentation about Data Table conversions at https://github.com/cucumber/cucumber/tree/master/datatable
+
+===== RUBY ONLY
+
+====== Which of the answers correctly shows how Cucumber will convert the following data table into symbolic hashes?
+
+| A | B | C |
+| D | 0 | 1 |
+| E | 2 | 3 |
+
+* [{:A="A", :B="B", :C="C"}, {:A="D", :B="0", :C="1"}, {:A="E", :B="2", :C="3"}]
+* [{:A="D", :B="2", :C="1"}, {:A="E", :B="0", :C="3"}]
+* [{:A="B", :D="0", :E="2"}, {:A="C", :D="1", :E="3"}]
+* [{:A="D", :B="0", :C="1"}, {:A="E", :B="2", :C="3"}] -- TRUE
+
+Explanation:
+DataTable.symbolic_hashes returns an array of hashes. The first row is treated as the symbolic labels (or keys), and each subsequent row provides the values for the next hash within the array.
+
+So, in this example, since there are three rows, we end up with two hashes in the list -- the first row provides the keys into each hash, the next two rows providing the values for the two hashes that are added to the list.
+
+
+
+====== Which of the following Data Tables will this step definition process successfully?
+
+When "Sean orders" do |order|
+  order.symbolic_hashes.each do |name:, quantity: |
+    p "Item #{name} x #{quantity}"
+  end
+end
+
+
+* | Name       | Quantity | -- TRUE
+| Cheese & tomato | 1        |
+
+* | Item name            | quantity |
+| Cheese & tomato | 1        |
+
+* | Name       | Quantity | -- TRUE
+| Cheese & tomato | 1        |
+| Pepperoni       | 1        |
+
+* | Name       | Quantity | -- TRUE
+
+* | Name       | Quantity | Notes        | -- TRUE
+| Cheese & tomato | 1        | Extra cheese |
+
+* | Cheese & tomato | 1        |
+| Pepperoni       | 1        |
+
+* | Quantity | Name       |  -- TRUE
+| 1        | Cheese & tomato |
+
+
+Explanation:
+For this method to execute successfully, the header cell text must match the hard coded index strings used in the method. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and symbolic_hashes would return an empty array.
+
+There is more documentation about Data Table conversions at https://github.com/cucumber/cucumber/tree/master/datatable
