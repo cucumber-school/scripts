@@ -4420,7 +4420,9 @@ The data table is indexed, starting from 0. The first coordinate indicates which
 </div>
 </div>
 <div class="sect4">
-<h5 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_a_list_of_maps_list_mapstring_string">Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List&lt; Map&lt;String, String&gt; &gt; ?</h5>
+<h5 id="_java_only">JAVA ONLY</h5>
+<div class="sect5">
+<h6 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_a_list_of_maps_list_mapstring_string">Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List&lt; Map&lt;String, String&gt; &gt; ?</h6>
 <div class="paragraph">
 <p>| A | B | C |
 | D | 0 | 1 |
@@ -4450,8 +4452,8 @@ When Cucumber converts a Data Table into a list of maps, it treats the first row
 <p>So, in this example, since there are three rows, we end up with two maps in the list&#8201;&#8212;&#8201;the first row providing the indexes into each map, the next two rows providing the values for the two maps that are added to the list.</p>
 </div>
 </div>
-<div class="sect4">
-<h5 id="_which_of_the_following_data_tables_will_this_method_process_successfully">Which of the following Data Tables will this method process successfully?</h5>
+<div class="sect5">
+<h6 id="_which_of_the_following_data_tables_will_this_method_process_successfully">Which of the following Data Tables will this method process successfully?</h6>
 <div class="paragraph">
 <p>@DataTableType
 public OrderLine createOrderLine(Map&lt;String, String&gt; orderItem) {
@@ -4496,6 +4498,90 @@ Cucumber attempts to convert each non-header row in the data table into an insta
 </div>
 <div class="paragraph">
 <p>There is more documentation about Data Table conversions at <a href="https://github.com/cucumber/cucumber/tree/master/datatable" class="bare">https://github.com/cucumber/cucumber/tree/master/datatable</a></p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ruby_only">RUBY ONLY</h5>
+<div class="sect5">
+<h6 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_symbolic_hashes">Which of the answers correctly shows how Cucumber will convert the following data table into symbolic hashes?</h6>
+<div class="paragraph">
+<p>| A | B | C |
+| D | 0 | 1 |
+| E | 2 | 3 |</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>[{:A="A", :B="B", :C="C"}, {:A="D", :B="0", :C="1"}, {:A="E", :B="2", :C="3"}]</p>
+</li>
+<li>
+<p>[{:A="D", :B="2", :C="1"}, {:A="E", :B="0", :C="3"}]</p>
+</li>
+<li>
+<p>[{:A="B", :D="0", :E="2"}, {:A="C", :D="1", :E="3"}]</p>
+</li>
+<li>
+<p>[{:A="D", :B="0", :C="1"}, {:A="E", :B="2", :C="3"}]&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+DataTable.symbolic_hashes returns an array of hashes. The first row is treated as the symbolic labels (or keys), and each subsequent row provides the values for the next hash within the array.</p>
+</div>
+<div class="paragraph">
+<p>So, in this example, since there are three rows, we end up with two hashes in the list&#8201;&#8212;&#8201;the first row provides the keys into each hash, the next two rows providing the values for the two hashes that are added to the list.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_which_of_the_following_data_tables_will_this_step_definition_process_successfully">Which of the following Data Tables will this step definition process successfully?</h6>
+<div class="paragraph">
+<p>When "Sean orders" do |order|
+  order.symbolic_hashes.each do |name:, quantity: |
+    p "Item #{name} x #{quantity}"
+  end
+end</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        |</p>
+</li>
+<li>
+<p>| Item name            | quantity |
+| Cheese &amp; tomato | 1        |</p>
+</li>
+<li>
+<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        |
+| Pepperoni       | 1        |</p>
+</li>
+<li>
+<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>| Name       | Quantity | Notes        |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        | Extra cheese |</p>
+</li>
+<li>
+<p>| Cheese &amp; tomato | 1        |
+| Pepperoni       | 1        |</p>
+</li>
+<li>
+<p>| Quantity | Name       | &#8201;&#8212;&#8201;TRUE
+| 1        | Cheese &amp; tomato |</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+For this method to execute successfully, the header cell text must match the hard coded index strings used in the method. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and symbolic_hashes would return an empty array.</p>
+</div>
+<div class="paragraph">
+<p>There is more documentation about Data Table conversions at <a href="https://github.com/cucumber/cucumber/tree/master/datatable" class="bare">https://github.com/cucumber/cucumber/tree/master/datatable</a></p>
+</div>
 </div>
 </div>
 </div>
@@ -4630,8 +4716,10 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 </div>
 <div class="sect3">
 <h4 id="_lesson_4_questions_3">5.4.1. Lesson 4 - Questions</h4>
-<div class="sect4">
-<h5 id="_why_might_you_use_the_transpose_annotation">Why might you use the @Transpose annotation?</h5>
+<div class="paragraph">
+<p>JAVA ONLY
+===== Why might you use the @Transpose annotation?</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
@@ -4651,7 +4739,6 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 <div class="paragraph">
 <p>Explanation:
 The @Transpose annotation (and the transpose method on DataTable) allows you to use tables that have their headers in the first column of a table.</p>
-</div>
 </div>
 <div class="sect4">
 <h5 id="_what_method_on_datatable_compares_two_datatables_and_produces_a_textual_output_showing_their_differences">What method on DataTable compares two DataTables and produces a textual output showing their differences?</h5>
@@ -5067,7 +5154,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-01 16:04:22 UTC
+Last updated 2020-09-02 14:24:37 UTC
 </div>
 </div>
 <style>
