@@ -79,12 +79,12 @@ DocStrings allow you to specify a text argument for a step that spans over multi
 include::../code/ruby/21-docstring/features/hear_shout.feature[lines=44..55]
 ----
 
-Now the scenario is much more readable.
+Now the scenario is much more readable. shot::[24,"show existing stepdef code"]
 
-shot::[24,"show existing stepdef code"]
-We have to add a new step definition too shot::[25,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression shot::[26] -- the DocString gets passed as a string argument to the step definition automatically.shot::[27]
+shot::[25,"show existing stepdef code"]
+We have to add a new step definition too shot::[26,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression shot::[27] -- the DocString gets passed as a string argument to the step definition automatically.shot::[28]
 
-Now we can fill out the rest of our new step definition. shot::[28]
+Now we can fill out the rest of our new step definition. shot::[29]
 
 .steps.rb
 [source,ruby]
@@ -92,6 +92,6 @@ Now we can fill out the rest of our new step definition. shot::[28]
 include::../code/ruby/21-docstring/features/step_definitions/steps.rb[lines=33..36]
 ----
 
-Let's check that we're still green shot::[29,"run cucumber"]shot::[30] -- and we are!
+Let's check that we're still green shot::[30,"run cucumber"]shot::[31] -- and we are!
 
 We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it's useful to know about.

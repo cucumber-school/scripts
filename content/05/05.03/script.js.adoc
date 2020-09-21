@@ -1,10 +1,15 @@
 include::./title.adoc[]
 
-Let's look at the two scenarios that illustrate the rule about range again shot::[1,"show the range rule & scenarios"]. Notice how the steps shot::[2,"compare the two scenarios"] that create the Sean, Lucy, and Larry are very similar.
+Let's look at the two scenarios that illustrate the rule about range again shot::[1,"show the range rule & scenarios"]. Notice how the steps that create the Sean,shot::[2] Lucy,shot::[3] and Larry shot::[4] are very similar.
+
+[source,java]
+----
+include::../code/js/04-remove-incidental-details-from-range-scenarios-and-fix-step-defs/features/hear_shout.feature[lines=13..27]
+----
 
 When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:
 
-shot::[3,feature file]
+shot::[5,feature file]
 
 .hear_shout.feature
 [source,gherkin]
@@ -14,9 +19,9 @@ include::../code/js/05-location-specified-in-data-table/features/hear_shout.feat
 
 Well, we’re in luck. You can!
 
-Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.
+Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells.shot::[6, highlight data table]
 
-shot::[4,"run cucumber, copy snippet, paste into StepDefinition.java"]
+shot::[7,"run cucumber"]shot::[8,"copy snippet, paste into steps.rb"]
 
 .steps.js
 [source,js]
@@ -24,9 +29,9 @@ shot::[4,"run cucumber, copy snippet, paste into StepDefinition.java"]
 include::../code/js/06-table-snippet-added/features/step_definitions/steps.js[lines=25..28]
 ----
 
-As you can see, the step definition implicitly takes a single argument shot::[5,"highlight stepdef parameters"], which as this comment explains is a DataTable. This object has a rich API for using the tabular data.
+As you can see, the step definition implicitly takes a single argument shot::[9,"highlight stepdef parameters"], which as this comment explains is a DataTable.shot::[10, "highlight comment"] This object has a rich API for using the tabular data.
 
-At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed shot::[6,"Print out a single cell value"] by getting the value from array cell (2, 1)
+At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed shot::[11,"Print out a single cell value"] by getting the value from array cell (2, 1)
 
 .steps.js
 [source,js]
@@ -34,9 +39,9 @@ At its most basic, the table is just a two-dimensional array. So, Lucy's locatio
 include::../code/js/07-use-datatable-raw-to-demonstrate-2d-array/features/step_definitions/steps.js[lines=25..27]
 ----
 
-shot::[7,"run Cucumber, highlight 'Lucy's location'"]
+shot::[12,"run Cucumber, highlight 'Lucy's location'"]
 
-You can also turn the table into a List of Maps shot::[8,"Print out data table"], where the first row is used for the map keys, and each following row is used for the map values.
+You can also turn the table into a List of Maps shot::[13,"Print out data table"], where the first row is used for the map keys,shot::[14,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the map values.shot::[15, "highlight second and third rows"]
 
 .steps.js
 [source,js]
@@ -44,9 +49,9 @@ You can also turn the table into a List of Maps shot::[8,"Print out data table"]
 include::../code/js/08-table-as-hashes/features/step_definitions/steps.js[lines=25..27]
 ----
 
-shot::[9,"run Cucumber, highlight data table output"]
+shot::[16,"run Cucumber, highlight data table output"]
 
-Now we can easily iterate shot::[10,"write the loop"] over these maps and turn them into instances of Person:
+Now we can easily iterate shot::[17,"write the loop"] over these maps and turn them into instances of Person: shot::[18]
 
 .steps.js
 [source,js]
@@ -54,10 +59,9 @@ Now we can easily iterate shot::[10,"write the loop"] over these maps and turn t
 include::../code/js/09-iterate-over-people-in-table/features/step_definitions/steps.js[lines=25..29]
 ----
 
-shot::[11,"run cucumber -- all green"]
+shot::[19,"run cucumber -- all green"]
 
-
-With that done, we can update the other scenario shot::[12,"update other scenario"] ...
+With that done, we can update the other scenario shot::[20,"update other scenario"] ...
 
 .hear_shout.feature
 [source,gherkin]
@@ -65,7 +69,9 @@ With that done, we can update the other scenario shot::[12,"update other scenari
 include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/resources/shouty/hear_shout.feature[lines=24..31]
 ----
 
-... and delete our old step definition shot::[13,"delete unused step def"], which is now unused.
+Now we can check that everything is still green. shot::[21]
+
+... and delete our old step definition shot::[22,"delete unused step def"], which is now unused.
 
 .steps.js
 [source,js]
@@ -73,11 +79,11 @@ include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepd
 include::../code/js/09-iterate-over-people-in-table/features/step_definitions/steps.js[lines=21..23]
 ----
 
-shot::[14,"run cucumber"]
+shot::[23,"run cucumber"]
 
-Cucumber strips all the white space surrounding each cell shot::[15,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
+Cucumber strips all the white space surrounding each cell shot::[24,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
 
-Notice we’ve still had to convert the location from a string to an integer shot::[16,"Conversion in step def"], because Cucumber can’t know that’s the type of value in our table.
+Notice we’ve still had to convert the location from a string to an integer shot::[25,"Conversion in step def"], because Cucumber can’t know that’s the type of value in our table.
 
 .steps.js
 [source,js]
@@ -85,7 +91,7 @@ Notice we’ve still had to convert the location from a string to an integer sho
 include::../code/js/10-changed-other-scenario-and-deleted-unused-stepdef/features/step_definitions/steps.js[lines=21..25]
 ----
 
-That looks much nicer - shot::[20,"hear_shout.feature data tables"] people positioned using a table in the feature file and shot::[21,"people_are_located_at()"] really clean code that creates and positions people according to the data.
+That looks much nicer - shot::[26,"hear_shout.feature data tables"] people positioned using a table in the feature file and shot::[27,"people_are_located_at()"] really clean code that creates and positions people according to the data.
 
 .hear_shout.feature
 [source,gherkin]
