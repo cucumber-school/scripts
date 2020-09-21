@@ -3969,8 +3969,7 @@ We created the scenario "Listener hears a different message" to force us to repl
 <div class="sect2">
 <h3 id="_incidental_details">5.2. Incidental details</h3>
 <div class="paragraph">
-<p>
-The first scenario has changed since we last looked at it  - it now specifies the range of a shout and the location of Sean and Lucy. This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
+<p>The first scenario has changed since we last looked at it  - it now specifies the range of a shout and the location of Sean and Lucy. This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -4010,8 +4009,7 @@ We&#8217;ll need to make changes to the step definitions to make sure that a Net
 We&#8217;ve defaulted the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step.</p>
 </div>
 <div class="paragraph">
-<p>
-We&#8217;ll also need to add a step definition that can create a person without the scenario needing to specify where they are located. The step definition gives each person created this way a default location of 0.</p>
+<p>We&#8217;ll also need to add a step definition that can create a person without the scenario needing to specify where they are located. The step definition gives each person  created this way a default location of 0.</p>
 </div>
 <div class="listingblock">
 <div class="title">steps.js</div>
@@ -4027,7 +4025,7 @@ Let&#8217;s run Cucumber to check we haven&#8217;t broken anything&#8230;&#8203;
 </div>
 <div class="paragraph">
 <p>
-Looking at the two new scenarios - Listener is within range &amp; Listener is out of range - we can see that they also contain incidental details. Since their purpose is to illustrate the "Shouts should only be heard if listener is within range" rule, there&#8217;s no need to actually document the content of the shout.</p>
+Looking at the two new scenarios - Listener is within range  &amp; Listener is out of range  - we can see that they also contain incidental details. Since their purpose is to illustrate the "Shouts should only be heard if listener is within range" rule, there&#8217;s no need to actually document the content of the shout.</p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4074,10 +4072,33 @@ Let&#8217;s remove the details that aren&#8217;t relevant to the range rule.</p>
 Next we add a step definition that allows Sean to shout, without needing us to specify the exact message.</p>
 </div>
 <div class="listingblock">
-<div class="title">steps.js</div>
+<div class="title">steps.rb</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">'</span><span class="s1">Sean</span><span class="dl">'</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="dl">'</span><span class="s1">Hello, world</span><span class="dl">'</span><span class="p">)</span>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span><span class="p">(</span><span class="s1">'Sean shouts'</span><span class="p">,</span> <span class="n">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="n">this</span><span class="p">.</span><span class="nf">people</span><span class="p">[</span><span class="s1">'Sean'</span><span class="p">].</span><span class="nf">shout</span><span class="p">(</span><span class="s1">'Hello, world'</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+One that allows us to check that Lucy has heard exactly one shout - because she&#8217;s in range of the shouter.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span><span class="p">(</span><span class="s1">'Lucy should hear a shout'</span><span class="p">,</span> <span class="n">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="n">assertThat</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="nf">people</span><span class="p">[</span><span class="s1">'Lucy'</span><span class="p">].</span><span class="nf">messagesHeard</span><span class="p">().</span><span class="nf">length</span><span class="p">,</span> <span class="n">is</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+And one that allows us to check that Larry hasn&#8217;t heard any messages at all - because he&#8217;s out-of-range.</p>
+</div>
+<div class="listingblock">
+<div class="title">steps.rb</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span><span class="p">(</span><span class="s1">'Larry should not hear Sean\'s message'</span><span class="p">,</span> <span class="n">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="n">assertThat</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="nf">people</span><span class="p">[</span><span class="s1">'Larry'</span><span class="p">].</span><span class="nf">messagesHeard</span><span class="p">(),</span> <span class="n">not</span><span class="p">(</span><span class="n">contains</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="nf">messageFromSean</span><span class="p">)))</span>
 <span class="p">})</span></code></pre>
 </div>
 </div>
@@ -4200,7 +4221,26 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <div class="sect2">
 <h3 id="_refactoring_to_data_tables">5.3. Refactoring to Data Tables</h3>
 <div class="paragraph">
-<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again . Notice how the steps  that create the Sean, Lucy, and Larry are very similar.</p>
+<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again . Notice how the steps that create the Sean, Lucy, and Larry  are very similar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">  <span class="nl">Rule:</span> <span class="nc">Shouts</span> <span class="n">should</span> <span class="n">only</span> <span class="n">be</span> <span class="n">heard</span> <span class="k">if</span> <span class="n">listener</span> <span class="n">is</span> <span class="n">within</span> <span class="n">range</span>
+
+    <span class="nl">Scenario:</span> <span class="nc">Listener</span> <span class="n">is</span> <span class="n">within</span> <span class="n">range</span>
+      <span class="nc">Given</span> <span class="n">the</span> <span class="n">range</span> <span class="n">is</span> <span class="mi">100</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Sean</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">0</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Lucy</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">50</span>
+      <span class="nc">When</span> <span class="nc">Sean</span> <span class="n">shouts</span>
+      <span class="nc">Then</span> <span class="nc">Lucy</span> <span class="n">should</span> <span class="n">hear</span> <span class="n">a</span> <span class="n">shout</span>
+
+    <span class="nl">Scenario:</span> <span class="nc">Listener</span> <span class="n">is</span> <span class="n">out</span> <span class="n">of</span> <span class="n">range</span>
+      <span class="nc">Given</span> <span class="n">the</span> <span class="n">range</span> <span class="n">is</span> <span class="mi">100</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Sean</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">0</span>
+      <span class="nc">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="nc">Larry</span> <span class="n">is</span> <span class="n">located</span> <span class="n">at</span> <span class="mi">150</span>
+      <span class="nc">When</span> <span class="nc">Sean</span> <span class="n">shouts</span>
+      <span class="nc">Then</span> <span class="nc">Larry</span> <span class="n">should</span> <span class="n">not</span> <span class="n">hear</span> <span class="n">a</span> <span class="n">shout</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:</p>
@@ -4267,7 +4307,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p></p>
 </div>
 <div class="paragraph">
-<p>Now we can easily iterate  over these maps and turn them into instances of Person:</p>
+<p>Now we can easily iterate  over these maps and turn them into instances of Person: </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.js</div>
@@ -4297,6 +4337,9 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
       <span class="nf">When </span>Sean shouts
       <span class="nf">Then </span>Larry should not hear a shout</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Now we can check that everything is still green. </p>
 </div>
 <div class="olist lowerroman">
 <ol class="lowerroman" type="i">
@@ -4592,7 +4635,34 @@ For this method to execute successfully, the header cell text must match the har
 <p></p>
 </div>
 <div class="paragraph">
-<p>The way that we’ve specified this data is OK, but your product owner would prefer you to express it like this instead:</p>
+<p>The way that we’ve specified this data is OK,</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span> <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span> <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Lucy</span> <span class="p">|</span> <span class="n">50</span>       <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Lucy should hear a shout
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>  <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span>  <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Larry</span> <span class="p">|</span> <span class="n">150</span>       <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>but your product owner would prefer you to express it like this instead: </p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4630,10 +4700,11 @@ For this method to execute successfully, the header cell text must match the har
 <p></p>
 </div>
 <div class="paragraph">
-<p>Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
+<p>
+Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
 </div>
 <div class="paragraph">
-<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once:</p>
+<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: </p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -4657,13 +4728,13 @@ For this method to execute successfully, the header cell text must match the har
 <p>So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run Cucumber to generate the new step definition  and paste it into our StepDefinitions class </p>
+<p>Let&#8217;s run Cucumber to generate the new step definition  and paste it into our StepDefinitions class  </p>
 </div>
 <div class="paragraph">
 <p>So we need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.</p>
 </div>
 <div class="paragraph">
-<p>A List of List of String will do , so we can just iterate over Lucy’s messages and create a new single-item List for each row.</p>
+<p>A List of List of String will do , so we can just iterate over Lucy’s messages and create a new single-item List for each row. </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.js</div>
@@ -4672,7 +4743,7 @@ For this method to execute successfully, the header cell text must match the har
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can pass that list to the diff method  on the table of expected messages passed in from the Gherkin.</p>
+<p>Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.js</div>
@@ -4827,7 +4898,7 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run that test . Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
+<p>Let’s run that test  . Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
 </div>
 <div class="paragraph">
 <p>It looks like we’re already implementing the proximity rule here  in the broadcast method. Let’s add another if statement here about the message length. </p>
@@ -4841,14 +4912,20 @@ The method that compares two data tables is called <strong>diff</strong></p>
 </div>
 </div>
 <div class="paragraph">
-<p> Run the unit test again… and it’s passing. Great.</p>
+<p>Run the unit test again… and it’s passing.</p>
+</div>
+<div class="paragraph">
+<p>And cucumber is green as well </p>
+</div>
+<div class="paragraph">
+<p>Great.</p>
 </div>
 <div class="paragraph">
 <p>The code here has got a little bit messy and hard to read. 
-One very basic move we could make to improve it would be to just extract a couple of temporary variables. </p>
+One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule  and one for the length rule. </p>
 </div>
 <div class="listingblock">
-<div class="title">shouty.rb</div>
+<div class="title">shouty.js</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="js">    <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">listener</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">withinRange</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">listener</span><span class="p">.</span><span class="nx">location</span> <span class="o">-</span> <span class="nx">shouter_location</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">range</span>
@@ -4893,7 +4970,11 @@ One very basic move we could make to improve it would be to just extract a coupl
 <p>Now the scenario is much more readable. </p>
 </div>
 <div class="paragraph">
-<p>We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+<p>
+We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression &#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.</p>
+</div>
+<div class="paragraph">
+<p>Now we can fill out the rest of our new step definition. </p>
 </div>
 <div class="listingblock">
 <div class="title">steps.js</div>
@@ -5154,7 +5235,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-21 14:18:16 UTC
+Last updated 2020-09-21 21:03:30 UTC
 </div>
 </div>
 <style>
