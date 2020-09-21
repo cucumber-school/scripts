@@ -492,6 +492,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_basic_filtering">6.1. Basic Filtering</a></li>
 <li><a href="#_filtering_with_tags">6.2. Filtering With Tags</a></li>
 <li><a href="#_more_control">6.3. More Control</a></li>
+<li><a href="#_formatter_plugins">6.4. Formatter plugins</a></li>
+<li><a href="#_rerun_formatter">6.5. Rerun formatter</a></li>
+<li><a href="#_static_configuration">6.6. Static configuration</a></li>
+<li><a href="#_close">6.7. Close</a></li>
 </ul>
 </li>
 </ul>
@@ -5140,12 +5144,144 @@ bundle exec cucumber -h</code></pre>
 <p>That&#8217;s quite a lot to digest, but to make Cucumber really useful to your team, it’s good to spend some time learning the details of how to configure it. In this lesson, we showcased two of Cucumber’s configuration options and you learned how to write your scenarios in different spoken languages.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_formatter_plugins">6.4. Formatter plugins</h3>
+<div class="paragraph">
+<p>Let’s take a closer look at the <code>--format</code> option.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber --format help</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.</p>
+</div>
+<div class="paragraph">
+<p>Let’s try the HTML formatter.</p>
+</div>
+<div class="paragraph">
+<p>When we use the html formatter we use dash-dash out to specify the file where the report should be written. Otherwise it will be written directly to the console.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber --format html --out report.html</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s try another one - JSON.</p>
+</div>
+<div class="paragraph">
+<p>The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.</p>
+</div>
+<div class="paragraph">
+<p>There is also a progress formatter, which just prints out a single character for each step. The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.</p>
+</div>
+<div class="paragraph">
+<p>We can specify multiple formatters like this. The one without a dash-dash out will be written to the console.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rerun_formatter">6.5. Rerun formatter</h3>
+<div class="paragraph">
+<p>One of these formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>We choose the rerun formatter and send the output to a file called rerun.txt.</p>
+</div>
+<div class="paragraph">
+<p>Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
+</div>
+<div class="paragraph">
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. c:</p>
+</div>
+<div class="paragraph">
+<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.</p>
+</div>
+<div class="sect3">
+<h4 id="_dry_run">6.5.1. Dry-run</h4>
+<div class="paragraph">
+<p>The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_strict">6.5.2. Strict</h4>
+<div class="paragraph">
+<p>The --strict option affects the exit status of Cucumber. To see how it works, let’s add an undefined step:</p>
+</div>
+<div class="paragraph">
+<p>(Adds “Then we have an undefined step” to the end of shout.feature).</p>
+</div>
+<div class="paragraph">
+<p>Let’s first run it without <code>--strict</code>:</p>
+</div>
+<div class="paragraph">
+<p>That last command tells us that Cucumber didn’t fail - it exited with exit status zero, which means success. Now, let’s run it with strict:</p>
+</div>
+<div class="paragraph">
+<p>This time the exit status was one, which means Cucumber failed.</p>
+</div>
+<div class="paragraph">
+<p>Why is this interesting? Well, if you run Cucumber on a Continuous Integration server it will fail the build if there are undefined or pending steps. That’s pretty handy!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_i18n">6.5.3. I18n</h4>
+<div class="paragraph">
+<p>Cucumber is first and foremost a tool that facilitates a common understanding between people on a project. Imagine our customers were cats. We could write our features in English, but the cats would obviously not understand that.</p>
+</div>
+<div class="paragraph">
+<p>We all know that cats speak LOLCAT, not English, so our feature would have to look like this in order for cats to understand:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code># language: en-lol</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We tell Cucumber what language to use by adding a language comment at the top of the file. Cucumber supports over 60 different languages, thanks to contributions from people and cats all over the world.</p>
+</div>
+<div class="paragraph">
+<p>You can get a list of all the supported languages with --i18n help. To see the translation of the Gherkin keywords for a particular language, just replace help with the language code. For example --i18n hi for Hindi.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_static_configuration">6.6. Static configuration</h3>
+<div class="paragraph">
+<p>It would be tedious if you had to write out these configuration options every time you run Cucumber. To make this easier you can write the options in a file that Cucumber will pick up.</p>
+</div>
+<div class="paragraph">
+<p>You can use the cucumber.yml file to define one or more profiles that describe a set of configuration options for Cucumber.</p>
+</div>
+<div class="paragraph">
+<p>For example, we can define a <code>dev</code> profile that runs only the @focus scenarios and uses the progress formatter.</p>
+</div>
+<div class="paragraph">
+<p>We use the <code>--profile</code> option to choose this profile when running Cucumber.</p>
+</div>
+<div class="paragraph">
+<p>To change the default behaviour of Cucumber, change the default profile. Let’s make Cucumber strict by default.</p>
+</div>
+<div class="paragraph">
+<p>It’s common for teams to have a number of profiles defined, usually for the different environments where Cucumber runs. You can have a CI profile that behaves differently to the one you use on your dev machines, for example.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_close">6.7. Close</h3>
+<div class="paragraph">
+<p>To make Cucumber really useful to your team, it’s good to spend time learning the details of how to configure it. In this lesson, we gave you a tour of almost all of Cucumber’s configuration options. You learned how to filter scenarios by name, line number or tag. You learned how to format Cucumber’s output, and you learned how to write your scenarios in different spoken languages. You also learned how to set up different configurations for use by your whole team.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-15 22:40:26 UTC
+Last updated 2020-09-21 14:18:16 UTC
 </div>
 </div>
 <style>
