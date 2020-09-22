@@ -29,7 +29,7 @@ shot::[7,"run cucumber"]shot::[8,"copy snippet, paste into steps.rb"]
 include::../code/js/06-table-snippet-added/features/step_definitions/steps.js[lines=25..28]
 ----
 
-As you can see, the step definition implicitly takes a single argument shot::[9,"highlight stepdef parameters"], which as this comment explains is a DataTable.shot::[10, "highlight comment"] This object has a rich API for using the tabular data.
+As you can see, the step definition implicitly takes a single argument shot::[9,"highlight stepdef parameters"], which is a DataTable. This object has a rich API for using the tabular data.
 
 At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed shot::[11,"Print out a single cell value"] by getting the value from array cell (2, 1)
 
@@ -41,7 +41,7 @@ include::../code/js/07-use-datatable-raw-to-demonstrate-2d-array/features/step_d
 
 shot::[12,"run Cucumber, highlight 'Lucy's location'"]
 
-You can also turn the table into a List of Maps shot::[13,"Print out data table"], where the first row is used for the map keys,shot::[14,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the map values.shot::[15, "highlight second and third rows"]
+You can also turn the table into a array of objects shot::[13,"Print out data table as hashes"], where the first row is used for the property names,shot::[14,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the property values.shot::[15, "highlight second and third rows"]
 
 .steps.js
 [source,js]
@@ -83,13 +83,6 @@ shot::[23,"run cucumber"]
 
 Cucumber strips all the white space surrounding each cell shot::[24,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
 
-Notice we’ve still had to convert the location from a string to an integer shot::[25,"Conversion in step def"], because Cucumber can’t know that’s the type of value in our table.
-
-.steps.js
-[source,js]
-----
-include::../code/js/10-changed-other-scenario-and-deleted-unused-stepdef/features/step_definitions/steps.js[lines=21..25]
-----
 
 That looks much nicer - shot::[26,"hear_shout.feature data tables"] people positioned using a table in the feature file and shot::[27,"people_are_located_at()"] really clean code that creates and positions people according to the data.
 

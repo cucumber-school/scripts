@@ -43,13 +43,13 @@ include::../code/js/13-deepequal/features/hear_shout.feature[lines=31..40]
 
 See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.
 
-So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.
+So how do we implement this step definition? Well, the Javascript assert class has a really handy method called deepEqual that we can use to compare two Data Tables. deepEqual will pass if the tables are the same, and fail if they’re different.
 
 Let's run Cucumber to generate the new step definition shot::[7, run Cucumber] and paste it into our StepDefinitions class shot::[8, paste snippet] shot::[9]
 
-So we need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.
+So we need the actual messages that Lucy’s heard to be stored in an object that looks like a raw DataTable, so we can compare it to the ones we expect.
 
-A List of List of String will do shot::[10], so we can just iterate over Lucy’s messages and create a new single-item List for each row. shot::[11]
+A array of array of Strings will do shot::[10], so we can just iterate over Lucy’s messages and create a new array. shot::[11]
 
 .steps.js
 [source, js]
@@ -57,7 +57,7 @@ A List of List of String will do shot::[10], so we can just iterate over Lucy’
 include::../code/js/13-deepequal/features/step_definitions/steps.js[lines=54]
 ----
 
-Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. shot::[12, write code to call diff]
+Now we can pass the array of actual messages and the data table of expected messages to the deepEqual method. shot::[12, write code to call deepEqual]
 
 .steps.js
 [source, js]
@@ -67,9 +67,9 @@ include::../code/js/13-deepequal/features/step_definitions/steps.js[lines=56]
 
 shot::[13,runs cucumber]
 
-Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages.shot::[14] Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.
+Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages.shot::[14] Well, at least this gives you a chance to see the output from deepEqual when the tables are different. We see the expected values prefixed with a plus, and the actual values prefixed with a minus.
 
-Let’s fix just one of these shot::[15, add exclamation mark] so you can see how the diff output changes.
+Let’s fix just one of these shot::[15, add exclamation mark] so you can see how the output from deepEqual changes.
 
 .hear_shout.feature
 [source,gherkin]

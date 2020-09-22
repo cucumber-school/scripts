@@ -21,7 +21,7 @@ That’s pretty ugly isn’t it!
 
 Still, we’ll press on and get it to green, then we’ll show you how to clean it up.
 
-shot::[4,"run Cucumber"] Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let's modify the existing step definition shot::[5,"Modify stepdef"]
+shot::[4,"run Cucumber"] Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or parameterise "Larry should not hear a shout". Let's modify the existing step definition shot::[5,"Modify stepdef"]
 
 .steps.js
 [source,js]
@@ -38,7 +38,7 @@ We’ll create a 181-character message like this shot::[10,finish implementing u
 .network.test.js
 [source,js]
 ----
-include::../code/js/18-add-test-to-networktest/test/network.test.js[lines=48..50]
+include::../code/js/18-add-test-to-networktest/test/network.test.js[lines=47..50]
 ----
 
 Let’s run that test shot::[12,"run Cucumber - show the unit test results"] shot::[13]. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?
@@ -82,14 +82,14 @@ include::../code/js/21-docstring/features/hear_shout.feature[lines=44..55]
 Now the scenario is much more readable. shot::[24,"show existing stepdef code"]
 
 shot::[25,"show existing stepdef code"]
-We have to add a new step definition too shot::[26,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression shot::[27] -- the DocString gets passed as a string argument to the step definition automatically.shot::[28]
+We have to add a new step definition too shot::[26,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression shot::[27] -- the DocString gets passed as an argument to the step definition automatically.shot::[28]
 
 Now we can fill out the rest of our new step definition. shot::[29]
 
 .steps.js
 [source,js]
 ----
-include::../code/js/21-docstring/features/step_definitions/steps.js[lines=58..62]
+include::../code/js/21-docstring/features/step_definitions/steps.js[lines=37..40]
 ----
 
 Let's check that we're still green shot::[30,"run cucumber"]shot::[31] -- and we are!
