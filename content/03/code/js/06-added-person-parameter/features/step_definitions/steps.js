@@ -1,4 +1,4 @@
-const { Given, When, Then } = require('cucumber')
+const { Given, When, Then } = require('@cucumber/cucumber')
 const Person = require('../../src/shouty')
 require('../support/person_parameter')
 

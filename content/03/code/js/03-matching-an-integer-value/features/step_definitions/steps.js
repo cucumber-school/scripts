@@ -1,4 +1,4 @@
-const { Given, When, Then } = require('cucumber')
+const { Given, When, Then } = require('@cucumber/cucumber')
 
 Given('Lucy is located {int} metres from Sean', function (distance) {
   // Write code here that turns the phrase above into concrete actions
