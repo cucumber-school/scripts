@@ -78,17 +78,23 @@ There is a [check](https://github.com/cucumber-school/bdd-with-cucumber/blob/mas
 ### Workflow tip: iterating between storyboard and script
 
 Sometimes you want to work on the code and the script at the same time. It's a hassle to keep switching
-branches in this situation. A good tip is to have two clones of the repo, like this:
+branches in this situation. A good tip is to use `git worktree`, like this:
 
 ````
-mkdir bdd-with-cucumber && cd bdd-with-cucumber
-git clone git@github.com:cucumber-school/bdd-with-cucumber.git script
-git clone script code
+git worktree add <new-path-for-worktree> <branch-to-work-on-in-worktree>
 ````
 
-Now you have two clones of the repo. You can work on the code branch in the `code` directory, and the script in the `script` directory. When you've made changes to the code, use `git push --force` to push them to the `scripts` directory. Then you can run `rake code` ro unroll the latest commits and make them available to your script.
+The `new-path-for-worktree` should be **outside** the existing git repo.
 
-When everything is done, push *both branches* (master and your code branch) to GitHub from the `script` directory.
+You can work on the code branch in the `worktree` branch, and the script on `master`. When you've made commits to the worktree, they will be reflected in the repo. Then you can run `rake code` to unroll the latest commits and make them available to your script.
+
+Once you have committed your code changes, it's safe to remove the worktree:
+
+````
+git worktree remove <new-path-for-worktree>
+````
+
+When everything is done, push *both branches* (master and your code branch) to GitHub. You may need to force push the code branch.
 
 ## License
 
