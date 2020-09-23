@@ -34,7 +34,7 @@ class Network {
   broadcast(message, shouter_location) {
     this.listeners.forEach(listener => {
       if( Math.abs(listener.location - shouter_location) <= this.range)
-        if( message.length <= 100) {
+        if( message.length <= 180) {
           listener.hear(message)
         }
     })

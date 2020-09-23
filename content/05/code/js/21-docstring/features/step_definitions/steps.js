@@ -1,4 +1,4 @@
-const { Given, When, Then, Before } = require('cucumber')
+const { Given, When, Then, Before } = require('@cucumber/cucumber')
 const { assertThat, contains, is, not } = require('hamjest')
 const assert = require('assert')
 

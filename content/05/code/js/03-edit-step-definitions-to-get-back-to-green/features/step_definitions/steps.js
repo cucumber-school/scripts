@@ -1,4 +1,4 @@
-const { Given, When, Then, Before } = require('cucumber')
+const { Given, When, Then, Before } = require('@cucumber/cucumber')
 const { assertThat, contains, not } = require('hamjest')
 
 const { Person, Network } = require('../../src/shouty')
