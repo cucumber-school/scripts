@@ -4001,7 +4001,12 @@ We&#8217;ll need to make changes to the step definitions to make sure that a Net
 <div class="listingblock">
 <div class="title">steps.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">  <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">(</span><span class="nx">range</span><span class="p">)</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="nx">default_range</span> <span class="o">=</span> <span class="mi">100</span>
+
+<span class="nx">Before</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">people</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">(</span><span class="nx">default_range</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4726,7 +4731,11 @@ Data tables are very useful for setting up data in Given steps, but you can also
 <div class="listingblock">
 <div class="title">steps.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">  <span class="kd">let</span> <span class="nx">actualMessages</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">'</span><span class="s1">Lucy</span><span class="dl">'</span><span class="p">].</span><span class="nx">messagesHeard</span><span class="p">().</span><span class="nx">map</span><span class="p">(</span><span class="nx">message</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">message</span><span class="p">])</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears the following messages:</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">expectedMessages</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">let</span> <span class="nx">actualMessages</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">'</span><span class="s1">Lucy</span><span class="dl">'</span><span class="p">].</span><span class="nx">messagesHeard</span><span class="p">().</span><span class="nx">map</span><span class="p">(</span><span class="nx">message</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">message</span><span class="p">])</span>
+
+  <span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span><span class="nx">actualMessages</span><span class="p">,</span> <span class="nx">expectedMessages</span><span class="p">.</span><span class="nx">raw</span><span class="p">())</span>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4882,7 +4891,15 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <div class="title">network.test.js</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="js">  <span class="nx">it</span><span class="p">(</span><span class="dl">'</span><span class="s1">does not broadcast a message over 180 characters even if listener is in range</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">shouterLocation</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="kd">const</span> <span class="nx">listenerLocation</span> <span class="o">=</span> <span class="mi">90</span>
+    <span class="kd">const</span> <span class="nx">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">network</span><span class="p">,</span> <span class="nx">listenerLocation</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">lucyStub</span> <span class="o">=</span> <span class="nx">sinon</span><span class="p">.</span><span class="nx">spy</span><span class="p">(</span><span class="nx">lucy</span><span class="p">)</span>
 
+    <span class="nx">network</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="nx">lucy</span><span class="p">)</span>
+    <span class="nx">network</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">(</span><span class="nx">longMessage</span><span class="p">,</span> <span class="nx">shouterLocation</span><span class="p">)</span>
+
+    <span class="nx">assert</span><span class="p">(</span><span class="nx">lucyStub</span><span class="p">.</span><span class="nx">hear</span><span class="p">.</span><span class="nx">notCalled</span><span class="p">)</span>
   <span class="p">})</span></code></pre>
 </div>
 </div>
@@ -4895,16 +4912,13 @@ The method that compares two data tables is called <strong>diff</strong></p>
 <div class="listingblock">
 <div class="title">shouty.rb</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">        <span class="k">if</span><span class="p">(</span> <span class="nx">message</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">100</span><span class="p">)</span> <span class="p">{</span>
+<pre class="rouge highlight"><code data-lang="js">        <span class="k">if</span><span class="p">(</span> <span class="nx">message</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">180</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">listener</span><span class="p">.</span><span class="nx">hear</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
         <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Run the unit test again… and it’s passing.</p>
-</div>
-<div class="paragraph">
-<p>And cucumber is green as well </p>
+<p>Run the unit test again… and it’s passing. And cucumber is green as well </p>
 </div>
 <div class="paragraph">
 <p>Great.</p>
@@ -4918,13 +4932,13 @@ One very basic move we could make to improve it would be to just extract a coupl
 <div class="content">
 <pre class="rouge highlight"><code data-lang="js">    <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">.</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">listener</span> <span class="o">=&gt;</span> <span class="p">{</span>
       <span class="kd">let</span> <span class="nx">withinRange</span> <span class="o">=</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">listener</span><span class="p">.</span><span class="nx">location</span> <span class="o">-</span> <span class="nx">shouter_location</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">range</span>
-      <span class="kd">let</span> <span class="nx">shortEnough</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">100</span>
+      <span class="kd">let</span> <span class="nx">shortEnough</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">180</span>
 
-      <span class="k">if</span><span class="p">(</span> <span class="nx">withinRange</span> <span class="p">)</span>
-        <span class="k">if</span><span class="p">(</span> <span class="nx">shortEnough</span> <span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span><span class="p">(</span> <span class="nx">withinRange</span> <span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="p">{</span>
           <span class="nx">listener</span><span class="p">.</span><span class="nx">hear</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
         <span class="p">}</span>
-    <span class="p">})</span></code></pre>
+      <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -4956,11 +4970,11 @@ One very basic move we could make to improve it would be to just extract a coupl
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario is much more readable. </p>
+<p>Now the scenario is much more readable.</p>
 </div>
 <div class="paragraph">
 <p>
-We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression &#8201;&#8212;&#8201;the DocString gets passed as an argument to the step definition automatically.</p>
+We have to add a new step definition too . It doesn&#8217;t need a parameter in the Cucumber Expression&#8201;&#8212;&#8201;the DocString gets passed as an argument to the step definition automatically.</p>
 </div>
 <div class="paragraph">
 <p>Now we can fill out the rest of our new step definition. </p>
@@ -5223,7 +5237,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-23 10:47:16 UTC
+Last updated 2020-09-24 16:12:36 UTC
 </div>
 </div>
 <style>
