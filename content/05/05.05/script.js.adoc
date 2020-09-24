@@ -38,7 +38,7 @@ We’ll create a 181-character message like this shot::[10,finish implementing u
 .network.test.js
 [source,js]
 ----
-include::../code/js/18-add-test-to-networktest/test/network.test.js[lines=47..50]
+include::../code/js/18-add-test-to-networktest/test/network.test.js[lines=48..58]
 ----
 
 Let’s run that test shot::[12,"run Cucumber - show the unit test results"] shot::[13]. Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?
@@ -51,14 +51,12 @@ It looks like we’re already implementing the proximity rule here shot::[14,"Ne
 include::../code/js/19-implement-maximum-length/src/shouty.js[lines=37..39]
 ----
 
-Run the unit test again… and it’s passing.shot::[16]
-
-And cucumber is green as well shot::[17,"run cucumber"]
+Run the unit test again… and it’s passing. And cucumber is green as well shot::[16,"run cucumber"]
 
 Great.
 
-The code here has got a little bit messy and hard to read. shot::[18,"show the modified logic in the Network class"]
-One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule shot::[19,"extract range temporary variable"] and one for the length rule. shot::[20,"extract length temporary variable"]
+The code here has got a little bit messy and hard to read. shot::[17,"show the modified logic in the Network class"]
+One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule shot::[18,"extract range temporary variable"] and one for the length rule. shot::[19,"extract length temporary variable"]
 
 .shouty.js
 [source,js]
@@ -68,23 +66,23 @@ include::../code/js/20-tidy-up-network-logic/src/shouty.js[lines=35..43]
 
 That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.
 
-Let’s just run the tests to check. shot::[21,"run cucumber"] Great - everything’s still green.
+Let’s just run the tests to check. shot::[20,"run cucumber"] Great - everything’s still green.
 
-Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. shot::[22,"show message length scenario in feature file"]
+Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. shot::[21,"show message length scenario in feature file"]
 
-DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: shot::[23,"convert message to DocString"]
+DocStrings allow you to specify a text argument for a step that spans over multiple lines. We could change our step to look like this instead: shot::[22,"convert message to DocString"]
 
 [source,gherkin]
 ----
 include::../code/js/21-docstring/features/hear_shout.feature[lines=44..55]
 ----
 
-Now the scenario is much more readable. shot::[24,"show existing stepdef code"]
+Now the scenario is much more readable.
 
-shot::[25,"show existing stepdef code"]
-We have to add a new step definition too shot::[26,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression shot::[27] -- the DocString gets passed as an argument to the step definition automatically.shot::[28]
+shot::[23,"show existing stepdef code"]
+We have to add a new step definition too shot::[24,"sean_shouts_the_following_message"]. It doesn't need a parameter in the Cucumber Expression -- the DocString gets passed as an argument to the step definition automatically.shot::[25]
 
-Now we can fill out the rest of our new step definition. shot::[29]
+Now we can fill out the rest of our new step definition. shot::[26]
 
 .steps.js
 [source,js]
@@ -92,6 +90,6 @@ Now we can fill out the rest of our new step definition. shot::[29]
 include::../code/js/21-docstring/features/step_definitions/steps.js[lines=37..40]
 ----
 
-Let's check that we're still green shot::[30,"run cucumber"]shot::[31] -- and we are!
+Let's check that we're still green shot::[27,"run cucumber"] -- and we are!
 
 We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it's useful to know about.

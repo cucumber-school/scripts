@@ -21,7 +21,7 @@ We'll need to make changes to the step definitions to make sure that a Network c
 .steps.js
 [source,js]
 ----
-include::../code/js/03-edit-step-definitions-to-get-back-to-green/features/step_definitions/steps.js[lines=14]
+include::../code/js/03-edit-step-definitions-to-get-back-to-green/features/step_definitions/steps.js[lines=6..11]
 ----
 
 shot::[5,"Highlight DEFAULT_RANGE"]
@@ -87,6 +87,6 @@ And finally run Cucumber - and we're still green.
 shot::[19,"Show hear_shout.feature"]
 That's better. We've removed inessential details, so that each scenario contains only the information needed to illustrate its business rule.
 
-The scenarios would still run green if we removed the steps that set the range of a shout shot::[20,"Highlight in last two scenarios"]shot::[21] , because the range already has a default value. We're not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it's an essential part of context for anyone reading them.
+The scenarios would still run green if we removed the steps that set the range of a shout shot::[20,"Highlight in last two scenarios"] , because the range already has a default value. We're not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it's an essential part of context for anyone reading them.
 
-A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system shot::[22,"highlight Network constructor"]. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.
+A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system shot::[21,"highlight Network constructor"]. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.

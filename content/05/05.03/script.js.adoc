@@ -31,7 +31,7 @@ include::../code/js/06-table-snippet-added/features/step_definitions/steps.js[li
 
 As you can see, the step definition implicitly takes a single argument shot::[9,"highlight stepdef parameters"], which is a DataTable. This object has a rich API for using the tabular data.
 
-At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed shot::[11,"Print out a single cell value"] by getting the value from array cell (2, 1)
+At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed shot::[10,"Print out a single cell value"] by getting the value from array cell (2, 1)
 
 .steps.js
 [source,js]
@@ -39,9 +39,9 @@ At its most basic, the table is just a two-dimensional array. So, Lucy's locatio
 include::../code/js/07-use-datatable-raw-to-demonstrate-2d-array/features/step_definitions/steps.js[lines=25..27]
 ----
 
-shot::[12,"run Cucumber, highlight 'Lucy's location'"]
+shot::[11,"run Cucumber, highlight 'Lucy's location'"]
 
-You can also turn the table into a array of objects shot::[13,"Print out data table as hashes"], where the first row is used for the property names,shot::[14,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the property values.shot::[15, "highlight second and third rows"]
+You can also turn the table into a array of objects shot::[12,"Print out data table as hashes"], where the first row is used for the property names,shot::[13,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the property values.shot::[14, "highlight second and third rows"]
 
 .steps.js
 [source,js]
@@ -49,9 +49,9 @@ You can also turn the table into a array of objects shot::[13,"Print out data ta
 include::../code/js/08-table-as-hashes/features/step_definitions/steps.js[lines=25..27]
 ----
 
-shot::[16,"run Cucumber, highlight data table output"]
+shot::[15,"run Cucumber, highlight data table output"]
 
-Now we can easily iterate shot::[17,"write the loop"] over these maps and turn them into instances of Person: shot::[18]
+Now we can easily iterate shot::[16,"write the loop"] over these maps and turn them into instances of Person: shot::[17]
 
 .steps.js
 [source,js]
@@ -59,9 +59,9 @@ Now we can easily iterate shot::[17,"write the loop"] over these maps and turn t
 include::../code/js/09-iterate-over-people-in-table/features/step_definitions/steps.js[lines=25..29]
 ----
 
-shot::[19,"run cucumber -- all green"]
+shot::[18,"run cucumber -- all green"]
 
-With that done, we can update the other scenario shot::[20,"update other scenario"] ...
+With that done, we can update the other scenario shot::[19,"update other scenario"] ...
 
 .hear_shout.feature
 [source,gherkin]
@@ -69,9 +69,9 @@ With that done, we can update the other scenario shot::[20,"update other scenari
 include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/resources/shouty/hear_shout.feature[lines=24..31]
 ----
 
-Now we can check that everything is still green. shot::[21]
+Now we can check that everything is still green. shot::[20]
 
-... and delete our old step definition shot::[22,"delete unused step def"], which is now unused.
+... and delete our old step definition shot::[21,"delete unused step def"], which is now unused.
 
 .steps.js
 [source,js]
@@ -79,12 +79,12 @@ Now we can check that everything is still green. shot::[21]
 include::../code/js/09-iterate-over-people-in-table/features/step_definitions/steps.js[lines=21..23]
 ----
 
-shot::[23,"run cucumber"]
+shot::[22,"run cucumber"]
 
-Cucumber strips all the white space surrounding each cell shot::[24,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
+Cucumber strips all the white space surrounding each cell shot::[23,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
 
 
-That looks much nicer - shot::[26,"hear_shout.feature data tables"] people positioned using a table in the feature file and shot::[27,"people_are_located_at()"] really clean code that creates and positions people according to the data.
+That looks much nicer - shot::[24,"hear_shout.feature data tables"] people positioned using a table in the feature file and shot::[25,"people_are_located_at()"] really clean code that creates and positions people according to the data.
 
 .hear_shout.feature
 [source,gherkin]
