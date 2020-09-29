@@ -1,3 +1,4 @@
+const Person = require('../../src/shouty.js')
 const { Given, When, Then } = require('@cucumber/cucumber')
 
 Given('Lucy is located {int} metres from Sean', function (distance) {
