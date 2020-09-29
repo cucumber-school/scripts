@@ -1,8 +1,9 @@
 const { Given, When, Then } = require('@cucumber/cucumber')
 
 Given('Lucy is located {int} metres from Sean', function (distance) {
-  console.log(distance);
-  return 'pending';
+  this.lucy = new Person
+  this.sean = new Person
+  this.lucy.moveTo(distance)
 })
 
 When('Sean shouts {string}', function (string) {
