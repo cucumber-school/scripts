@@ -29,11 +29,7 @@ This is the one where the listener is within range, shot::[5] Lucy is located 15
 .hear_shout.feature
 [source,gherkin]
 ----
-Feature: Hear shout
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts "free bagels at Sean's"
-    Then Lucy hears Sean’s message
+include::../code/js/03-feature-file-created/features/hear_shout.feature[]
 ----
 
 shot::[9]
@@ -76,10 +72,10 @@ Warnings:
            return 'pending';
          });
 
-   ? Then Lucy hears Sean’s message
+   ? Then Lucy hears Sean's message
        Undefined. Implement with the following snippet:
 
-         Then('Lucy hears Sean’s message', function () {
+         Then('Lucy hears Sean\'s message', function () {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
@@ -111,23 +107,7 @@ We need to import the `Given`, shot::[13] `When` shot::[14] and `Then` shot::[15
 .steps.js
 [source,js]
 ----
-const { Given, When, Then } = require('cucumber')
-
-Given('Lucy is located {int} metres from Sean', function (int) {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending'
-})
-
-When('Sean shouts {string}', function (string) {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending'
-})
-
-Then('Lucy hears Sean’s message', function () {
-  // Write code here that turns the phrase above into concrete actions
-  return 'pending'
-})
-
+include::../code/js/04-pending-steps/features/step_definitions/steps.js[]
 ----
 
 shot::[17]
@@ -170,12 +150,7 @@ And we can print it to the terminal to see the captured result
 
 [source,js]
 ----
-const { Given, When, Then } = require('cucumber')
-
-Given('Lucy is located {int} metres from Sean', function (distance) {
-  console.log(distance);
-  return 'pending';
-});
+include::../code/js/05-output-stepdef-argument-to-console/features/step_definitions/steps.js[lines=3..6]
 ----
 
 shot::[23]

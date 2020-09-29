@@ -33,58 +33,44 @@ $ cd shouty
 shot::[5]
 First we’ll create a `package.json` that describes the NPM packages we need for our project
 shot::[6]
-and add the `cucumber` package to it.
+and add the `@cucumber/cucumber` package to it.
 
 [source,bash]
 ----
 $ npm init -y
-$ npm install -D cucumber
+$ npm install -D @cucumber/cucumber
 ----
 
-shot::[7]
-We'll  also add `cucumber-pretty`, which will prettify our output.
-
-----
-$ npm install -D cucumber-pretty
-----
 
 shot::[8]
-We can now run  the `cucumber-js -f node_modules/cucumber-pretty` command to see if everything works:
+We can now run  the `cucumber-js` command to see if everything works:
 
 [source,bash]
 ----
-$ ./node_modules/.bin/cucumber-js -f node_modules/cucumber-pretty
+$ ./node_modules/.bin/cucumber-js
 ----
 
-But this is not very user friendly. There's a nicer way to run cucumber.
+There's no output, because we haven't written any scenarios yet, but there are no errors either! Having to remember the full path to Cucumber is not very user friendly, but luckily there's a nicer way.
 
 shot::[9]
 Edit `package.json` and change the `test` line under the `scripts` from it's default to `cucumber-js` shot::[10]
 
 [source,javascript]
 ----
-{
-  // ...
-  "scripts": {
-    "test": "cucumber-js -f node_modules/cucumber-pretty"
-  },
-  // ...
-}
+include::../code/js/01-install-packages/package.json[lines=6..8]
 ----
 
 shot::[11]
-Now we’re ready! If we run `npm test` at this point, we’ll see cucumber pass with no scenarios or steps to run:
+Now we’re ready! If we run `npm test` at this point, we’ll again see cucumber pass with no errors:
 
 [source,bash]
 ----
 $ npm test
 
 > shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
-> cucumber-js -f node_modules/cucumber-pretty
+> cucumber-js
 
-0 scenarios
-0 steps
-0m00.000s
+>
 ----
 
 // TODO: Matt, feel free to change this phrase during VO

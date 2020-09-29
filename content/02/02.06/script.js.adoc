@@ -59,19 +59,7 @@ In this case, we’re going to cheat. We have a one-line fix that will make this
 
 [source,js]
 ----
-class Person {
-  move_to() {
-    
-  }
-
-  shout(message) {
-    
-  }
-
-  messagesHeard() {
-    return ["free bagels at Sean's"]
-  }
-}
+include::../code/js/11-passing-scenario/src/shouty.js[lines=1..13]
 ----
 
 I told you it wasn’t very future proof!
@@ -109,16 +97,7 @@ Instead of writing a note on our TODO list, let's write another scenario that sh
 
 [source,gherkin]
 ----
-Feature: Hear shout
-  Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
-    When Sean shouts "free bagels at Sean's"
-    Then Lucy hears Sean’s message
-
-  Scenario: Listener hears a different message
-    Given Lucy is 15 metres from Sean
-    When Sean shouts "Free coffee!"
-    Then Lucy hears Sean's message
+include::../code/js/12-add-second-scenario-see-it-fail/features/hear_shout.feature[]
 ----
 
 shot::[5]
