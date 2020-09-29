@@ -8,7 +8,7 @@ class Person {
   }
 
   messagesHeard() {
-    return []
+    return ["free bagels at Sean's"]
   }
 }
 
