@@ -762,34 +762,25 @@ Go use cd to go into that directory.</p>
 <p>
 First we’ll create a <code>package.json</code> that describes the NPM packages we need for our project
 
-and add the <code>cucumber</code> package to it.</p>
+and add the <code>@cucumber/cucumber</code> package to it.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm init <span class="nt">-y</span>
-<span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">-D</span> cucumber</code></pre>
+<span class="nv">$ </span>npm <span class="nb">install</span> <span class="nt">-D</span> @cucumber/cucumber</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>
-We&#8217;ll  also add <code>cucumber-pretty</code>, which will prettify our output.</p>
+We can now run  the <code>cucumber-js</code> command to see if everything works:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>$ npm install -D cucumber-pretty</pre>
+<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>./node_modules/.bin/cucumber-js</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>
-We can now run  the <code>cucumber-js -f node_modules/cucumber-pretty</code> command to see if everything works:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>./node_modules/.bin/cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>But this is not very user friendly. There&#8217;s a nicer way to run cucumber.</p>
+<p>There&#8217;s no output, because we haven&#8217;t written any scenarios yet, but there are no errors either! Having to remember the full path to Cucumber is not very user friendly, but luckily there&#8217;s a nicer way.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -797,29 +788,23 @@ Edit <code>package.json</code> and change the <code>test</code> line under the <
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="javascript"><span class="p">{</span>
-  <span class="c1">// ...</span>
-  <span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">cucumber-js -f node_modules/cucumber-pretty</span><span class="dl">"</span>
-  <span class="p">},</span>
-  <span class="c1">// ...</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="javascript">  <span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">cucumber-js</span><span class="dl">"</span>
+  <span class="p">},</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>
-Now we’re ready! If we run <code>npm test</code> at this point, we’ll see cucumber pass with no scenarios or steps to run:</p>
+Now we’re ready! If we run <code>npm test</code> at this point, we’ll again see cucumber pass with no errors:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
 <span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> cucumber-js
 
-0 scenarios
-0 steps
-0m00.000s</code></pre>
+<span class="o">&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -874,7 +859,7 @@ It’s a good convention to give it a name that matches the file name.</p>
   <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
     <span class="nf">Given </span>Lucy is located 15 metres from Sean
     <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
-    <span class="nf">Then </span>Lucy hears Sean’s message</code></pre>
+    <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -918,19 +903,19 @@ Warnings:
            <span class="k">return</span> <span class="s1">'pending'</span><span class="p">;</span>
          <span class="o">})</span><span class="p">;</span>
 
-   ? Then Lucy hears Sean’s message
+   ? Then Lucy hears Sean<span class="s1">'s message
        Undefined. Implement with the following snippet:
 
-         Then<span class="o">(</span><span class="s1">'Lucy hears Sean’s message'</span>, <span class="k">function</span> <span class="o">()</span> <span class="o">{</span>
+         Then('</span>Lucy hears Sean<span class="se">\'</span>s message<span class="s1">', function () {
            // Write code here that turns the phrase above into concrete actions
-           <span class="k">return</span> <span class="s1">'pending'</span><span class="p">;</span>
-         <span class="o">})</span><span class="p">;</span>
+           return '</span>pending<span class="s1">';
+         });
 
 
-1 scenario <span class="o">(</span>1 undefined<span class="o">)</span>
-3 steps <span class="o">(</span>3 undefined<span class="o">)</span>
+1 scenario (1 undefined)
+3 steps (3 undefined)
 0m00.000s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -961,7 +946,7 @@ We’ll paste them into a JavaScript file under a new directory called <code>ste
 <div class="listingblock">
 <div class="title">steps.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">)</span>
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@cucumber/cucumber</span><span class="dl">'</span><span class="p">)</span>
 
 <span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">int</span><span class="p">)</span> <span class="p">{</span>
   <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
@@ -973,7 +958,7 @@ We’ll paste them into a JavaScript file under a new directory called <code>ste
   <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>
 <span class="p">})</span>
 
-<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean</span><span class="se">\'</span><span class="s1">s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
   <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>
 <span class="p">})</span></code></pre>
@@ -1025,12 +1010,10 @@ And we can print it to the terminal to see the captured result</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">)</span>
-
-<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
   <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">distance</span><span class="p">);</span>
   <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
-<span class="p">});</span></code></pre>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1260,11 +1243,11 @@ Now that we have the step definitions matching, we can start working on our solu
 <div class="listingblock">
 <div class="title">steps.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">)</span>
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@cucumber/cucumber</span><span class="dl">'</span><span class="p">)</span>
 
 <span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
-  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span>
-  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">distance</span><span class="p">);</span>
+  <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span><span class="p">;</span>
 <span class="p">})</span>
 
 <span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">string</span><span class="p">)</span> <span class="p">{</span>
@@ -1272,7 +1255,7 @@ Now that we have the step definitions matching, we can start working on our solu
   <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>
 <span class="p">})</span>
 
-<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean</span><span class="se">\'</span><span class="s1">s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="c1">// Write code here that turns the phrase above into concrete actions</span>
   <span class="k">return</span> <span class="dl">'</span><span class="s1">pending</span><span class="dl">'</span>
 <span class="p">})</span></code></pre>
@@ -1362,16 +1345,7 @@ For now, we’ll just require the <code>Person</code> class from our <code>steps
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../src/shouty.js</span><span class="dl">'</span><span class="p">)</span>
-<span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">cucumber</span><span class="dl">'</span><span class="p">);</span>
-
-<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int}m from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span>
-<span class="p">});</span>
-
-<span class="c1">// ...</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../src/shouty.js</span><span class="dl">'</span><span class="p">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1481,15 +1455,9 @@ And now we can now tell him to <em>shout</em> the message:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy is located {int} metres from Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span>
-<span class="p">})</span>
-
-<span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
-<span class="p">});</span></code></pre>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1594,11 +1562,11 @@ Once again we’re are going to write the code we wish we had.</p>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="p">{</span> <span class="nx">assertThat</span><span class="p">,</span> <span class="nx">is</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">hamjest</span><span class="dl">'</span><span class="p">)</span>
 
-<span class="c1">// ...</span>
+<span class="c1">//...</span>
 
-<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean’s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+<span class="nx">Then</span><span class="p">(</span><span class="dl">'</span><span class="s1">Lucy hears Sean</span><span class="se">\'</span><span class="s1">s message</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
   <span class="nx">assertThat</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">(),</span> <span class="nx">is</span><span class="p">([</span><span class="k">this</span><span class="p">.</span><span class="nx">message</span><span class="p">]))</span>
-<span class="p">});</span></code></pre>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1613,7 +1581,7 @@ We can record what Sean shouts by storing it in the <code>this.message</code> pr
 <pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">'</span><span class="s1">Sean shouts {string}</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">sean</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">message</span> <span class="o">=</span> <span class="nx">message</span>
-<span class="p">});</span></code></pre>
+<span class="p">})</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1623,7 +1591,7 @@ We also need to add a <code>messagesHeard</code> method to our Person class. Let
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
-  <span class="nx">moveTo</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">moveTo</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
 
   <span class="p">}</span>
 
@@ -1886,7 +1854,7 @@ In this case, we’re going to cheat. We have a one-line fix that will make this
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="js"><span class="kd">class</span> <span class="nx">Person</span> <span class="p">{</span>
-  <span class="nx">move_to</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">moveTo</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span> <span class="p">{</span>
 
   <span class="p">}</span>
 
@@ -1945,12 +1913,12 @@ Instead of writing a note on our TODO list, let&#8217;s write another scenario t
 <div class="content">
 <pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
   <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
-    <span class="nf">Given </span>Lucy is located 15m from Sean
+    <span class="nf">Given </span>Lucy is located 15 metres from Sean
     <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
-    <span class="nf">Then </span>Lucy hears Sean’s message
+    <span class="nf">Then </span>Lucy hears Sean's message
 
   <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
-    <span class="nf">Given </span>Lucy is 15 metres from Sean
+    <span class="nf">Given </span>Lucy is located 15 metres from Sean
     <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
     <span class="nf">Then </span>Lucy hears Sean's message</code></pre>
 </div>
@@ -5237,7 +5205,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-29 16:05:15 UTC
+Last updated 2020-09-29 16:14:12 UTC
 </div>
 </div>
 <style>
