@@ -10,7 +10,7 @@ Our next goal is for the scenario to fail because we need to implement the actua
 .steps.js
 [source,js]
 ----
-include::../code/js/05-output-stepdef-argument-to-console/features/step_definitions/steps.js[]
+include::../code/js/04-output-stepdef-argument-to-console/features/step_definitions/steps.js[]
 ----
 
 To implement the first step, we need to create a couple of `Person` objects,shot::[2] with the specified distance between them. shot::[3] We can remove the `pending` status now,shot::[4] and this `console.log` statement,shot::[5] and write the implementation for the first step like this:
@@ -18,7 +18,7 @@ To implement the first step, we need to create a couple of `Person` objects,shot
 .steps.js
 [source,js]
 ----
-include::../code/js/06-person-undefined/features/step_definitions/steps.js[lines=3..7]
+include::../code/js/05-person-undefined/features/step_definitions/steps.js[lines=3..7]
 ----
 
 We have two instances of person, one representing Lucy, shot::[6]and one representing Sean. shot::[7]Then we call a method to move Lucy to the position specified in the scenario.shot::[8]
@@ -72,7 +72,7 @@ Then we can  create an empty `Person` class, shot::[13] and export it.shot::[14]
 .src/shouty.js
 [source,js]
 ----
-include::../code/js/07-person-class-created/src/shouty.js[]
+include::../code/js/06-person-class-created/src/shouty.js[]
 ----
 
 shot::[15]
@@ -80,7 +80,7 @@ For now, we’ll just require the `Person` class from our `steps.js` file. In a 
 
 [source,js]
 ----
-include::../code/js/07-person-class-created/features/step_definitions/steps.js[lines=1..1]
+include::../code/js/06-person-class-created/features/step_definitions/steps.js[lines=1..1]
 ----
 
 shot::[16]
@@ -125,7 +125,7 @@ We'll add the method definition without implementing it yet.
 
 [source,js]
 ----
-include::../code/js/08-person-moveto-defined/src/shouty.js[lines=1..5]
+include::../code/js/07-person-moveto-defined/src/shouty.js[lines=1..5]
 ----
 
 When we run the scenario again,shot::[19] the first step is green!shot::[20]
@@ -177,7 +177,7 @@ And now we can now tell him to _shout_ the message:
 
 [source,js]
 ----
-include::../code/js/09-person-shout-defined/features/step_definitions/steps.js[lines=10..12]
+include::../code/js/08-person-shout-defined/features/step_definitions/steps.js[lines=10..12]
 ----
 
 shot::[25]
@@ -222,7 +222,7 @@ Let’s not worry about the implementation yet. The most important thing right n
 .shouty.rb
 [source,js]
 ----
-include::../code/js/09-person-shout-defined/src/shouty.js[lines=1..9]
+include::../code/js/08-person-shout-defined/src/shouty.js[lines=1..9]
 
 ----
 
@@ -267,11 +267,11 @@ But before, we need to import `assertThat` shot::[30] and `is` shot::[31] from `
 
 [source,js]
 ----
-include::../code/js/10-add-assertions-and-person-messagesheard/features/step_definitions/steps.js[lines=1..1]
+include::../code/js/09-add-assertions-and-person-messagesheard/features/step_definitions/steps.js[lines=1..1]
 
 //...
 
-include::../code/js/10-add-assertions-and-person-messagesheard/features/step_definitions/steps.js[lines=16..18]
+include::../code/js/09-add-assertions-and-person-messagesheard/features/step_definitions/steps.js[lines=16..18]
 ----
 
 So we need a way to ask Lucy what messages she’s heard, and we also need to know what it was that Sean shouted.
@@ -281,7 +281,7 @@ We can record what Sean shouts by storing it in the `this.message` property as t
 
 [source,js]
 ----
-include::../code/js/10-add-assertions-and-person-messagesheard/features/step_definitions/steps.js[lines=10..14]
+include::../code/js/09-add-assertions-and-person-messagesheard/features/step_definitions/steps.js[lines=10..14]
 ----
 
 shot::[34]
@@ -289,7 +289,7 @@ We also need to add a `messagesHeard` method to our Person class. Let’s do tha
 
 [source,js]
 ----
-include::../code/js/10-add-assertions-and-person-messagesheard/src/shouty.js[lines=1..13]
+include::../code/js/09-add-assertions-and-person-messagesheard/src/shouty.js[lines=1..13]
 ----
 
 shot::[36]
