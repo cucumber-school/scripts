@@ -17,10 +17,10 @@ namespace Shouty.Specs.StepDefinitions
             person.MoveTo(distance);
         }
 
-        [When("Sean shouts {string}")]
-        public void WhenSeanShouts(string message)
+        [When("{Person} shouts {string}")]
+        public void WhenShouterShouts(Person shouter, string message)
         {
-            sean.Shout(message);
+            shouter.Shout(message);
             messageFromSean = message;
         }
 
