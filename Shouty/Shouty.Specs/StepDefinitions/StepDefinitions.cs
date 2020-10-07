@@ -11,7 +11,7 @@ namespace Shouty.Specs.StepDefinitions
         private Person sean = new Person();
         private string messageFromSean;
 
-        [Given("Lucy is located {int} metres from Sean")]
+        [Given("Lucy is located {int} metre(s) from Sean")]
         public void GivenLucyIsLocatedMetresFromSean(int distance)
         {
             throw new NotImplementedException($"Lucy is {distance * 100} centimetres from Sean");
