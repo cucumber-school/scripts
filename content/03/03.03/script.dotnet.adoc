@@ -1,0 +1,32 @@
+include::./title.adoc[]
+
+shot::[1]
+Sometimes, we want to write step definitions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. shot::[2]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/02--step02-capture-int-parameter/shouty/src/test/resources/shouty/hear_shout.feature[lines=1..6]
+----
+
+To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called _parameters_.
+
+For example, to capture the number of metres, we can use the `{int}` parameter: shot::[3] which is passed as an argument to our step definition: shot::[4]
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/02--step02-capture-int-parameter/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..17]
+----
+
+Now we’re capturing that value as an argument. The value `100` will be passed to our code automatically by Cucumber.
+
+Because we've used Cucumber Expressions' built-in `{int}` parameter type, the value has been cast to a `Integer` data type for us automatically, so we can do maths with it if we want.shot::[5]
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/02--step02-capture-int-parameter/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..19]
+----
+
+Cucumber has a bunch of built-in parameter types: `{int}`, `{float}`, `{word}` and `{string}`. You can also define your own, as we'll see later.
