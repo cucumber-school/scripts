@@ -1,0 +1,29 @@
+include::./title.adoc[]
+
+Let's look at the Shouty scenario from the last chapter. shot::[1]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/01--step01-literal-match/shouty/src/test/resources/shouty/hear_shout.feature[lines=1..6]
+----
+
+As Cucumber starts to execute this feature, it will come to the first step of the scenario `Given Lucy is located 15 metres from Sean` shot::[2] and say to itself "now - do I have any step definitions that match the phrase `Lucy is located 15 metres from Sean`?”"
+
+shot::[3]
+The most simple cucumber expression that would match that step is this one:
+
+----
+Lucy is located 15 metres from Sean
+----
+
+That’s pretty simple isn't it? Cucumber expressions are just string patterns, and the most simple pattern you can use is a perfect match.
+
+In Java, we can use this pattern to make a step definition like this: shot::[4]
+
+[source, java]
+----
+include::../code/java/01--step01-literal-match/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..19]
+----
+
+We use a normal Java string to pass the cucumber expression to Cucumber.
