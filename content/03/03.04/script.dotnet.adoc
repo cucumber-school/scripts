@@ -1,0 +1,137 @@
+include::./title.adoc[]
+
+shot::[1]
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:
+
+[source, gherkin]
+----
+include::../code/java/03--step03-use-singular-metre/shouty/src/test/resources/shouty/hear_shout.feature[lines=4]
+----
+
+shot::[2]
+Because we’ve used the singular `metre` instead of the plural `metres` we don't get a match:
+
+[source]
+----
+Testing started at 11:36 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+Step undefined
+You can implement missing steps with the snippets below:
+@Given("Lucy is located {int} metre from Sean")
+public void lucy_is_located_metre_from_Sean(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+Step skipped
+
+Step skipped
+
+Undefined scenarios:
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/hear_shout.feature:3# Listener within range
+
+1 Scenarios (1 undefined)
+3 Steps (2 skipped, 1 undefined)
+0m0.751s
+
+
+You can implement missing steps with the snippets below:
+
+@Given("Lucy is located {int} metre from Sean")
+public void lucy_is_located_metre_from_Sean(Integer int1) {
+    // Write code here that turns the phrase above into concrete actions
+    throw new io.cucumber.java.PendingException();
+}
+
+
+
+Process finished with exit code 1
+----
+
+What a pain!
+
+Fear not. We can just surround the `s` in parentheses to make it optional, like this: shot::[3]
+
+[source, java]
+----
+include::../code/java/04--step04-allow-for-singular-or-plural-metres/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..17]
+----
+
+shot::[4]
+Now our step matches:
+
+[source]
+----
+Testing started at 11:37 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+
+Lucy is 100 centimetres from Sean
+
+Step skipped
+
+Step skipped
+
+Pending scenarios:
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/hear_shout.feature:3# Listener within range
+
+1 Scenarios (1 pending)
+3 Steps (2 skipped, 1 pending)
+0m0.523s
+
+
+io.cucumber.java.PendingException: Lucy is 100 centimetres from Sean
+	at shouty.StepDefinitions.lucy_is_metres_from_Sean(StepDefinitions.java:18)
+	at ✽.Lucy is located 1 metre from Sean(file:///home/fedex/code/shouty/shouty/src/test/resources/hear_shouty/shout.feature:4)
+
+
+
+Process finished with exit code 1
+----
+
+This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.
+
+Another is to allow _alternates_ - different ways of saying the same thing. For example, to accept this step: shot::[5]
+
+[source, gherkin]
+----
+include::../code/java/05--step05-allow-standing-or-located-as-alternates/shouty/src/test/resources/shouty/hear_shout.feature[lines=4]
+----
+
+...we can use this Cucumber Expression: shot::[6]
+
+[source, java]
+----
+include::../code/java/05--step05-allow-standing-or-located-as-alternates/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..17]
+----
+
+shot::[7]
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine:
+
+[source]
+----
+Testing started at 11:39 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+
+Lucy is 100 centimetres from Sean
+
+Step skipped
+
+Step skipped
+
+Pending scenarios:
+file:///home/fedex/code/shouty/shouty/src/test/resources/shouty/hear_shout.feature:3# Listener within range
+
+1 Scenarios (1 pending)
+3 Steps (2 skipped, 1 pending)
+0m0.499s
+
+
+io.cucumber.java.PendingException: Lucy is 100 centimetres from Sean
+	at shouty.StepDefinitions.lucy_is_metres_from_Sean(StepDefinitions.java:18)
+	at ✽.Lucy is standing 1 metre from Sean(file:///home/fedex/code/shouty/shouty/src/test/resources/hear_shouty/shout.feature:4)
+
+
+
+Process finished with exit code 1
+----
