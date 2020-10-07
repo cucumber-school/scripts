@@ -7,14 +7,14 @@ namespace Shouty.Specs.StepDefinitions
     [Binding]
     public class StepDefinitions
     {
-        private Person lucy = new Person();
-        private Person sean = new Person();
+        private Person lucy = new Person("Lucy");
+        private Person sean = new Person("Sean");
         private string messageFromSean;
 
-        [Given("Lucy is located/standing {int} metre(s) from Sean")]
-        public void GivenLucyIsLocatedMetresFromSean(int distance)
+        [Given("{Person} is located/standing {int} metre(s) from Sean")]
+        public void GivenPersonIsLocatedMetresFromSean(Person person, int distance)
         {
-            throw new NotImplementedException($"Lucy is {distance * 100} centimetres from Sean");
+            person.MoveTo(distance);
         }
 
         [When("Sean shouts {string}")]
