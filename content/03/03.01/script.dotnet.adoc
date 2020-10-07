@@ -1,0 +1,23 @@
+=== Cucumber expressions not regular expressions
+
+shot::[0.1, "03.01.animation.mp4"]
+
+In the previous chapter we explored the fundamental components of a Cucumber test suite, and how we use Cucumber to drive out a solution, test-first.
+
+First we specified the behaviour we wanted, using a Gherkin scenario in a feature file. Then we wrote step definitions to translate the plain english from our scenario into concrete actions in code. Finally, we used the step definitions to guide us in building out our very basic domain model for the Shouty application.
+
+We tend to think of the code that actually pokes around with the system as distinct from the step definitions, so we’ve drawn an extra box labelled "automation code" for this.
+
+Automation code can do almost anything to your application: it can drive a web browser around your site, make HTTP requests to a REST API, or -- as you’ve already seen -- drive a domain model directly.
+
+Automation code is a big topic that we’ll come back to. First, we want to concentrate on step definitions.
+Good step definitions are important because they enable the _readability_ of your scenarios. The better you are at matching plain language phrases from Gherkin, the more expressive you can be when writing scenarios. Teams who do this well refer to their features as _living documentation_ - a specification document that never goes out of date.
+
+When Cucumber first started, we used to use _regular expressions_ to match plain language phrases from Gherkin steps.
+
+Regular expressions have quite an intimidating reputation.
+
+So we replaced them with something simpler, something we call _Cucumber expressions_. Cucumber is backwards compatible so you can still use the power of regular expressions if that's your thing. 
+
+This chapter is all about Cucumber Expressions.
+
