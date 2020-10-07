@@ -11,10 +11,10 @@ namespace Shouty.Specs.StepDefinitions
         private Person sean = new Person();
         private string messageFromSean;
 
-        [Given("Lucy is located {int} metres from Sean")]
-        public void GivenLucyIsLocatedMetresFromSean(int distance)
+        [Given("Lucy is located 15 metres from Sean")]
+        public void GivenLucyIsLocatedMetresFromSean()
         {
-            lucy.MoveTo(distance);
+            throw new NotImplementedException("Matched!");
         }
 
         [When("Sean shouts {string}")]
