@@ -1,0 +1,162 @@
+include::./title.adoc[]
+
+We can start with the step definition, which would look something like this:  shot::[1]
+
+[source, java]
+----
+include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/StepDefinitions.java[lines=17..20]
+----
+
+If we run Cucumber at this point we'll see an error, because we haven't defined the `{person}` parameter type yet. shot::[2]
+
+[source]
+----
+Testing started at 10:09 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+
+May 25, 2020 10:10:00 AM io.cucumber.core.runtime.Runtime run
+SEVERE: Exception while executing pickle
+java.util.concurrent.ExecutionException: io.cucumber.core.exception.CucumberException: Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:108)
+	at io.cucumber.core.cli.Main.run(Main.java:73)
+	at io.cucumber.core.cli.Main.main(Main.java:31)
+Caused by: io.cucumber.core.exception.CucumberException: Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/
+	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:75)
+	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:57)
+	at io.cucumber.core.runner.CoreStepDefinition.createExpression(CoreStepDefinition.java:40)
+	at io.cucumber.core.runner.CoreStepDefinition.<init>(CoreStepDefinition.java:28)
+	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$4(CachingGlue.java:215)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:214)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:63)
+	at io.cucumber.core.runtime.Runtime.lambda$run$2(Runtime.java:100)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.cucumber.core.runtime.Runtime$SameThreadExecutorService.execute(Runtime.java:243)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:118)
+	at io.cucumber.core.runtime.Runtime.lambda$run$3(Runtime.java:100)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.SliceOps$1$1.accept(SliceOps.java:199)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.tryAdvance(ArrayList.java:1631)
+	at java.base/java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:127)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:502)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:488)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:101)
+	... 2 more
+Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: Undefined parameter type {person}. Please register a ParameterType for {person}.
+	at io.cucumber.cucumberexpressions.CucumberExpression.processParameters(CucumberExpression.java:104)
+	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:35)
+	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:34)
+	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:55)
+	... 25 more
+
+May 25, 2020 10:10:00 AM io.cucumber.core.runtime.Runtime run
+SEVERE: Exception while executing pickle
+java.util.concurrent.ExecutionException: io.cucumber.core.exception.CucumberException: Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/
+	at java.base/java.util.concurrent.FutureTask.report(FutureTask.java:122)
+	at java.base/java.util.concurrent.FutureTask.get(FutureTask.java:191)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:108)
+	at io.cucumber.core.cli.Main.run(Main.java:73)
+	at io.cucumber.core.cli.Main.main(Main.java:31)
+Caused by: io.cucumber.core.exception.CucumberException: Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/
+	at io.cucumber.core.stepexpression.StepExpressionFactory.registerTypeInConfiguration(StepExpressionFactory.java:75)
+	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:57)
+	at io.cucumber.core.runner.CoreStepDefinition.createExpression(CoreStepDefinition.java:40)
+	at io.cucumber.core.runner.CoreStepDefinition.<init>(CoreStepDefinition.java:28)
+	at io.cucumber.core.runner.CachingGlue.lambda$prepareGlue$4(CachingGlue.java:215)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1540)
+	at io.cucumber.core.runner.CachingGlue.prepareGlue(CachingGlue.java:214)
+	at io.cucumber.core.runner.Runner.runPickle(Runner.java:63)
+	at io.cucumber.core.runtime.Runtime.lambda$run$2(Runtime.java:100)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:515)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at io.cucumber.core.runtime.Runtime$SameThreadExecutorService.execute(Runtime.java:243)
+	at java.base/java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:118)
+	at io.cucumber.core.runtime.Runtime.lambda$run$3(Runtime.java:100)
+	at java.base/java.util.stream.ReferencePipeline$3$1.accept(ReferencePipeline.java:195)
+	at java.base/java.util.stream.SliceOps$1$1.accept(SliceOps.java:199)
+	at java.base/java.util.ArrayList$ArrayListSpliterator.tryAdvance(ArrayList.java:1631)
+	at java.base/java.util.stream.ReferencePipeline.forEachWithCancel(ReferencePipeline.java:127)
+	at java.base/java.util.stream.AbstractPipeline.copyIntoWithCancel(AbstractPipeline.java:502)
+	at java.base/java.util.stream.AbstractPipeline.copyInto(AbstractPipeline.java:488)
+	at java.base/java.util.stream.AbstractPipeline.wrapAndCopyInto(AbstractPipeline.java:474)
+	at java.base/java.util.stream.ReduceOps$ReduceOp.evaluateSequential(ReduceOps.java:913)
+	at java.base/java.util.stream.AbstractPipeline.evaluate(AbstractPipeline.java:234)
+	at java.base/java.util.stream.ReferencePipeline.collect(ReferencePipeline.java:578)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:101)
+	... 2 more
+Caused by: io.cucumber.cucumberexpressions.UndefinedParameterTypeException: Undefined parameter type {person}. Please register a ParameterType for {person}.
+	at io.cucumber.cucumberexpressions.CucumberExpression.processParameters(CucumberExpression.java:104)
+	at io.cucumber.cucumberexpressions.CucumberExpression.<init>(CucumberExpression.java:35)
+	at io.cucumber.cucumberexpressions.ExpressionFactory.createExpression(ExpressionFactory.java:34)
+	at io.cucumber.core.stepexpression.StepExpressionFactory.createExpression(StepExpressionFactory.java:55)
+	... 25 more
+
+Exception in thread "main" io.cucumber.core.exception.CompositeCucumberException: There were 2 exceptions:
+  io.cucumber.core.exception.CucumberException(Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/)
+  io.cucumber.core.exception.CucumberException(Could not create a cucumber expression for '{person} is located/standing {int} metre(s) from Sean'.
+It appears you did not register parameter type. The details are in the stacktrace below.
+You can find the documentation here: https://docs.cucumber.io/cucumber/cucumber-expressions/)
+	at io.cucumber.core.runtime.Runtime.run(Runtime.java:120)
+	at io.cucumber.core.cli.Main.run(Main.java:73)
+	at io.cucumber.core.cli.Main.main(Main.java:31)
+
+Process finished with exit code 1
+----
+
+Here's how we define one.
+
+Let's create a new Java class called `ParameterTypes` in the `shouty.support` package: shot::[3]
+
+We're going to create a `person` method, which takes the name of a person as a string, and returns an instance of our `Person` class with that name. shot::[4, Create bare method]
+
+[source, java]
+----
+include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/support/ParameterTypes.java[lines=9..11]
+----
+
+Cucumber will use the method name - `person` - as the parameter name we use inside the curly brackets in our step definition expressions, as soon as we've wired it up.
+
+To do that, we add the ParameterType annotation shot::[5, Add empty ParameterType annotation to method], import it, shot::[6, Add import] and pass it -- gasp! -- a regular expression. shot::[7, Add regex pattern to annotation]
+
+[source, java]
+----
+include::../code/java/06--step06-sketch-out-parameter-type/shouty/src/test/java/shouty/support/ParameterTypes.java[]
+----
+
+This is necessary to tell cucumber expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario.
+
+shot::[8]
+All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
+
+[source]
+----
+Testing started at 10:35 AM ...
+/usr/lib/jvm/java-1.11.0-openjdk-amd64/bin/java ...
+
+1 Scenarios (1 passed)
+3 Steps (3 passed)
+0m0.328s
+
+
+
+Process finished with exit code 0
+----
+
+Custom parameters allow you to bring your domain _model_ - the names of the classes and objects in your solution - and your domain _language_ - the words you use in your scenarios and step definitions - closer together.
