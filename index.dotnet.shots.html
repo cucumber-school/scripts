@@ -2129,10 +2129,13 @@ Now we can use either 'standing' or 'located' in our scenarios, and both will ma
 <p>To do that, we add the <code>StepArgumentTransformation</code> attribute <a href="#shot-1101" id="shot-1101" title="Add empty StepArgumentTransformation attribute to method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Add empty StepArgumentTransformation attribute to method</a>, that is from the SpecFlow namespace&#8230;&#8203; <a href="#shot-1102" id="shot-1102" title="Add using" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6.1: Add using</a>. We also need to add a <code>Binding</code> attribute to the class <a href="#shot-1103" id="shot-1103" title="Add Binding" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6.2: Add Binding</a>, otherwise SpecFlow will not find our conversion method.</p>
 </div>
 <div class="paragraph">
-<p>By default, any name is recognized as a person, but we could restrict it to a specific pattern. We could even let SpecFlow split the name into first name and last name. We don&#8217;t need such things now, so let&#8217;s leave this as it is. You can find more examples about using <code>StepArgumentTransformation</code> in the SpecFlow documentation.</p>
+<p>By default, any name is recognized as a person, but we could restrict it to a specific names using - gasp! - a regular expression. <a href="#shot-1104" id="shot-1104" title="add regex filter '(Lucy|Sean)'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7.1: add regex filter '(Lucy|Sean)'</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1104" id="shot-1104" title="Set a breakpoint to step definition; debug; show person details; stop debugger" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: Set a breakpoint to step definition; debug; show person details; stop debugger</a>
+<p>This is not what we want in this project now, so let&#8217;s leave it as it was. [7.2, "remove filter"] You can find more examples about using <code>StepArgumentTransformation</code> in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/Step-Argument-Conversions.html#step-argument-transformation">SpecFlow documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1105" id="shot-1105" title="Set a breakpoint to step definition; debug; show person details; stop debugger" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: Set a breakpoint to step definition; debug; show person details; stop debugger</a>
 All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
 </div>
 <div class="paragraph">
@@ -2327,7 +2330,7 @@ public Status state(String activationState) {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-09 06:17:14 UTC
+Last updated 2020-10-09 09:04:10 UTC
 </div>
 </div>
 <style>
