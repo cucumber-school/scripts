@@ -1,0 +1,20 @@
+==== Lesson 2 - Questions
+
+===== Why have the Shouty developers created unit tests for the Person and Network classes?
+
+* They don't understand how to do BDD - FALSE
+* Unit tests are fine-grained tests that define the precise behaviour of each of those classes - TRUE
+* Unit tests run faster than Cucumber scenarios - FALSE
+
+Answer: Unit tests (also known as programmer tests) are used to define precise behaviour of units of code that may not be interesting to the business -- and so should not be written in a feature file. Writing unit tests is entirely compatible with BDD.
+
+There is no reason for Cucumber scenarios to run significantly slower than unit tests. The Shouty step definitions that we've seen so far interact directly with the domain layer and run extremely fast.
+
+===== Why is the distance between Sean and Lucy not being used by Shouty?
+
+* The team has decided to defer implementing range functionality until a later iteration - TRUE
+* The developers have misunderstood the specification
+* The specification has changed since the scenarios were written
+* The distance between Sean and Lucy is being used to decide if the shout is "in range"
+
+Answer: Teams often find that the problem is too big to solve all at once, so we split it into thinner slices. Working in smaller steps is a faster, safer way of delivering software. In this case the team has decided that broadcasting messages and calculating if a person is in-range are different problems that they will address separately.

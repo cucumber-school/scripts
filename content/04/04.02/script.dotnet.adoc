@@ -1,0 +1,40 @@
+include::./title.adoc[]
+
+While we were away, the developers of Shouty have been busy working on the code. Let’s have a look at what they’ve been up to.
+
+shot::[1, "run Cucumber"]
+We’ll start out by running Cucumber.
+
+Great! It looks like both these scenarios are working now - both the different messages that Sean shouts are being heard by Lucy.
+
+shot::[2, "open stepdef file"]
+Let’s dig into the code and see how these steps have been automated.
+b
+[source,java]
+----
+include::../code/java/00--step00-initial-commit/shouty/src/test/java/shouty/StepDefinitions.java[lines=10..34]
+----
+
+In the step definition layer, we can see that a new class has been defined, the Network.shot::[3, creating instance of Network] We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here.shot::[4, create instances of Person] So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.
+
+There are also a couple of new unit test classes in the Shouty package, one for the Network class,shot::[5, show existence of NetworkTest] and another one for the Person class.shot::[6, show existence of PersonTest]
+
+Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.
+
+shot::[7, run Cucumber & show output that demonstrates the unit tests are passing (run by clicking on the test folder and hitting run)]
+The familiar `mvn test` command will run those unit tests as well as Cucumber.
+
+shot::[8, "open the feature file"]
+
+The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean,shot::[9] but we haven’t actually implemented any behaviour around that yet.
+
+[source,java]
+----
+include::../code/java/00--step00-initial-commit/shouty/src/test/resources/shouty/hear_shout.feature[]
+----
+
+This happens to us all the time - we have an idea for a new feature, but then we find the problem is too complex to solve all at once, so we break it down into simpler steps. If we’re not careful, little bits of that original idea can be left around like clutter, in the scenarios and in the code. That clutter can get in the way, especially if plans change.
+
+We’re definitely going to develop this behaviour, but we’ve decided to defer it to our next iteration. Our current solution is just focussed on broadcasting messages between the people on the network.
+
+Let's clean up the feature to reflect that current understanding.

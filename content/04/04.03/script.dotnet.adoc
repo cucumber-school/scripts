@@ -1,0 +1,72 @@
+include::./title.adoc[]
+
+After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like.shot::[1, "feature file"] We call this the feature’s _description_. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t start a line with a Gherkin keyword, like "`Rule:`" or "`Scenario:`".
+
+In this case, we can add a high level description of the Shouty application.shot::[2] Because Shouty doesn't yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.shot::[3]
+
+[source,gherkin]
+----
+include::../code/java/01--step01-description-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=1..7]
+----
+
+Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.
+
+Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword.shot::[4, "add Rules keyword and indent scenarios"] We'll learn more about this in a later chapter.
+
+[source,gherkin]
+----
+include::../code/java/02--step02-rule-keyword-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..17]
+----
+
+shot::[5, "shows 'Lucy is 15 metres from Sean' step definition"]
+The step “Given Lucy is 15 metres from Sean” is misleading, since the distance between the two people is not yet relevant in our current model.
+
+[source,java]
+----
+include::../code/java/02--step02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..16]
+----
+
+The step definition calls the moveTo method on Person, shot::[6]
+
+[source,java]
+----
+include::../code/java/02--step02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=21..21]
+----
+
+shot::[7, "shows move_to method in Person class"]
+but the moveTo method doesn’t actually do anything.
+
+[source,java]
+----
+include::../code/java/02--step02-rule-keyword-added/shouty/src/main/java/shouty/Person.java[lines=19..20]
+----
+
+shot::[8]
+Let’s simplify this code to do just what it needs to do right now, and no more. We can start from the scenario by changing this single step to express what’s actually going on.shot::[9] We’ll work on one scenario at a time, and update the other one once we’re happy with this one.
+
+[source,gherkin]
+----
+include::../code/java/03--step03-first-scenario-rewritten/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..19]
+----
+
+Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words `Person` and `name`. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.
+
+One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were involved in writing and reviewing this scenario.
+
+shot::[10, "create new Rule and writes out two new empty scenarios for in / out of range"]
+In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.
+
+[source,gherkin]
+----
+include::../code/java/04--step04-empty-scenarios-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=21..25]
+----
+
+shot::[11, "mvn clean test"]
+Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps and paste them into our steps file. shot::[12]
+
+[source,java]
+----
+include::../code/java/05--step05-snippets-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..34]
+----
+
+In the next lesson we'll look at a couple of ways that we can implement these new step definitions.
