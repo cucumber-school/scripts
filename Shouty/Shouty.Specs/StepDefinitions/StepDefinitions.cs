@@ -10,7 +10,7 @@ namespace Shouty.Specs.StepDefinitions
         private Person lucy;
         private Person sean;
         private string messageFromSean;
-        private Network network;
+        private Network network = new Network();
 
         [Given("Lucy is {int} metres from Sean")]
         public void GivenLucyIsMetresFromSean(int distance)
@@ -24,7 +24,6 @@ namespace Shouty.Specs.StepDefinitions
         [Given("a person named Lucy")]
         public void GivenAPersonNamedLucy()
         {
-            network = new Network();
             lucy = new Person(network);
         }
 
