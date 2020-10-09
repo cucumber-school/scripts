@@ -6,39 +6,39 @@ In this case, we can add a high level description of the Shouty application.shot
 
 [source,gherkin]
 ----
-include::../code/java/01--step01-description-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=1..7]
+include::../code/dotnet/01--step01-description-added/Shouty/Shouty.Specs/Features/HearShout.feature[lines=1..7]
 ----
 
-Changing the description doesn’t change anything about how Cucumber will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.
+Changing the description doesn’t change anything about how SpecFlow will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.
 
-Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword.shot::[4, "add Rules keyword and indent scenarios"] We'll learn more about this in a later chapter.
+Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword.shot::[4, "add Rules keyword"] We'll learn more about this in a later chapter.
 
 [source,gherkin]
 ----
-include::../code/java/02--step02-rule-keyword-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..17]
+include::../code/dotnet/02--step02-rule-keyword-added/Shouty/Shouty.Specs/Features/HearShout.feature[lines=8..17]
 ----
 
 shot::[5, "shows 'Lucy is 15 metres from Sean' step definition"]
 The step “Given Lucy is 15 metres from Sean” is misleading, since the distance between the two people is not yet relevant in our current model.
 
-[source,java]
+[source,c#]
 ----
-include::../code/java/02--step02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=16..16]
+include::../code/dotnet/02--step02-rule-keyword-added/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=14]
 ----
 
-The step definition calls the moveTo method on Person, shot::[6]
+The step definition calls the `MoveTo` method on Person, shot::[6]
 
-[source,java]
+[source,c#]
 ----
-include::../code/java/02--step02-rule-keyword-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=21..21]
+include::../code/dotnet/02--step02-rule-keyword-added/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=20]
 ----
 
 shot::[7, "shows move_to method in Person class"]
 but the moveTo method doesn’t actually do anything.
 
-[source,java]
+[source,c#]
 ----
-include::../code/java/02--step02-rule-keyword-added/shouty/src/main/java/shouty/Person.java[lines=19..20]
+include::../code/dotnet/02--step02-rule-keyword-added/Shouty/Shouty/Person.cs[lines=17..19]
 ----
 
 shot::[8]
@@ -46,7 +46,7 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 
 [source,gherkin]
 ----
-include::../code/java/03--step03-first-scenario-rewritten/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..19]
+include::../code/dotnet/03--step03-first-scenario-rewritten/Shouty/Shouty.Specs/Features/HearShout.feature[lines=10..14]
 ----
 
 Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words `Person` and `name`. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.
@@ -58,15 +58,15 @@ In this case, as well as adding it to the TODO list above, we’ve decided to do
 
 [source,gherkin]
 ----
-include::../code/java/04--step04-empty-scenarios-added/shouty/src/test/resources/shouty/hear_shout.feature[lines=21..25]
+include::../code/dotnet/04--step04-empty-scenarios-added/Shouty/Shouty.Specs/Features/HearShout.feature[lines=22..26]
 ----
 
-shot::[11, "mvn clean test"]
-Let’s press on. We can run Cucumber to generate new step definition snippets for the new steps and paste them into our steps file. shot::[12]
+shot::[11.1, "invoke 'define steps'"]
+Let’s press on. We can invoke the *Define steps...* command to generate new step definition snippets for the new steps. shot::[11.2, "press 'copy to clipboard'"] Copy them to clipboard and paste them into our steps file. shot::[12]
 
-[source,java]
+[source,c#]
 ----
-include::../code/java/05--step05-snippets-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=24..34]
+include::../code/dotnet/05--step05-snippets-added/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=23..33]
 ----
 
 In the next lesson we'll look at a couple of ways that we can implement these new step definitions.

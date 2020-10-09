@@ -5,7 +5,7 @@ Let’s switch back to the feature to show you one more technique for improving 
 
 [source,gherkin]
 ----
-include::../code/java/14--step14-replace-hardcoded-sean-instance/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..20]
+include::../code/dotnet/14--step14-replace-hardcoded-sean-instance/Shouty/Shouty.Specs/Features/HearShout.feature[lines=8..20]
 ----
 
 When we have common context steps - the Givens - shot::[2] in all the scenarios in our feature, it can sometimes be useful to get those out of the way.
@@ -15,18 +15,18 @@ We can literally move them into the background, using a background keyword, like
 
 [source,gherkin]
 ----
-include::../code/java/15--step15-move-givens-into-background/shouty/src/test/resources/shouty/hear_shout.feature[lines=8..10]
+include::../code/dotnet/15--step15-move-givens-into-background/Shouty/Shouty.Specs/Features/HearShout.feature[lines=8..10]
 ----
 
 shot::[4, "mvn test"]
-As far as Cucumber is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.
+As far as SpecFlow is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.
 
 shot::[5, "Feature file, showing Background and shortened scenarios"]
 But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.
 
 [source,gherkin]
 ----
-include::../code/java/15--step15-move-givens-into-background/shouty/src/test/resources/shouty/hear_shout.feature[lines=12..20]
+include::../code/dotnet/15--step15-move-givens-into-background/Shouty/Shouty.Specs/Features/HearShout.feature[lines=12..20]
 ----
 
 Notice we just went straight into When steps in our scenarios.shot::[6] That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.
