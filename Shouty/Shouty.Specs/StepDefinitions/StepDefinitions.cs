@@ -18,15 +18,6 @@ namespace Shouty.Specs.StepDefinitions
             network = new Network();
         }
 
-        [Given("Lucy is {int} metres from Sean")]
-        public void GivenLucyIsMetresFromSean(int distance)
-        {
-            var network = new Network();
-            sean = new Person(network);
-            lucy = new Person(network);
-            lucy.MoveTo(distance);
-        }
-
         [Given("a person named Lucy")]
         public void GivenAPersonNamedLucy()
         {
