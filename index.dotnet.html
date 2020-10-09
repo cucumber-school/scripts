@@ -459,7 +459,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_make_the_scenario_pass">2.6. Make the scenario pass</a></li>
 </ul>
 </li>
-<li><a href="#_expressing_yourself">3. Expressing yourself</a></li>
+<li><a href="#_expressing_yourself">3. Expressing yourself</a>
+<ul class="sectlevel2">
+<li><a href="#_cucumber_expressions_not_regular_expressions">3.1. Cucumber expressions not regular expressions</a></li>
+<li><a href="#_literal_expressions">3.2. Literal expressions</a></li>
+<li><a href="#_capturing_parameters">3.3. Capturing parameters</a></li>
+<li><a href="#_flexibility">3.4. Flexibility</a></li>
+<li><a href="#_custom_parameters">3.5. Custom parameters</a></li>
+</ul>
+</li>
 <li><a href="#_cleaning_up">4. Cleaning up</a></li>
 <li><a href="#_loops">5. Loops</a></li>
 <li><a href="#_configuring_cucumber">6. Configuring Cucumber</a></li>
@@ -1672,7 +1680,630 @@ In value:  List&lt;String&gt; ["free bagels at Sean'</span>s<span class="s2">"]<
 <div class="sect1">
 <h2 id="_expressing_yourself">3. Expressing yourself</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_cucumber_expressions_not_regular_expressions">3.1. Cucumber expressions not regular expressions</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>In the previous chapter we explored the fundamental components of a SpecFlow test suite, and how we use SpecFlow to drive out a solution, test-first.</p>
+</div>
+<div class="paragraph">
+<p>First we specified the behaviour we wanted, using a Gherkin scenario in a feature file. Then we wrote step definitions to translate the plain english from our scenario into concrete actions in code. Finally, we used the step definitions to guide us in building out our very basic domain model for the Shouty application.</p>
+</div>
+<div class="paragraph">
+<p>We tend to think of the code that actually pokes around with the system as distinct from the step definitions, so we’ve drawn an extra box labelled "automation code" for this.</p>
+</div>
+<div class="paragraph">
+<p>Automation code can do almost anything to your application: it can drive a web browser around your site, make HTTP requests to a REST API, or&#8201;&#8212;&#8201;as you’ve already seen&#8201;&#8212;&#8201;drive a domain model directly.</p>
+</div>
+<div class="paragraph">
+<p>Automation code is a big topic that we’ll come back to. First, we want to concentrate on step definitions.
+Good step definitions are important because they enable the <em>readability</em> of your scenarios. The better you are at matching plain language phrases from Gherkin, the more expressive you can be when writing scenarios. Teams who do this well refer to their features as <em>living documentation</em> - a specification document that never goes out of date.</p>
+</div>
+<div class="paragraph">
+<p>When SpecFlow first started, we used to use <em>regular expressions</em> to match plain language phrases from Gherkin steps.</p>
+</div>
+<div class="paragraph">
+<p>Regular expressions have quite an intimidating reputation.</p>
+</div>
+<div class="paragraph">
+<p>Although regular expressions are still the default matching option, we started to adopt a simpler option that has been introduced in Cucumber. It is called <em>Cucumber expressions</em>.</p>
+</div>
+<div class="paragraph">
+<p>In SpecFlow version 3.4 that we use Cucumber Expressions are not supported by default. You can enable this feature by adding the <code>CucumberExpressions.SpecFlow.3-4</code> NuGet package to the project, as we have described in Chapter 2.</p>
+</div>
+<div class="paragraph">
+<p>SpecFlow is backwards compatible so you can still use the power of regular expressions if that&#8217;s your thing.</p>
+</div>
+<div class="paragraph">
+<p>This chapter is all about Cucumber Expressions.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_1_questions">3.1.1. Lesson 1 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_statements_are_true">Which of the following statements are true?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Step definitions translate human-readable scenarios into concrete actions in code - TRUE</p>
+</li>
+<li>
+<p>BDD practitioners think of "step definitions" and "automation code" as distinct concepts - TRUE</p>
+</li>
+<li>
+<p>Cucumber only supports automation through the user interface - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: A step definition is a piece of code that is called by Cucumber in response to a step in a scenario. You can write any code you like inside a step definition, but we&#8217;ve found it easier to maintain if we keep them short. This leads to step definitions calling dedicated automation code to perform concrete actions against the system under construction. That automation code can manipulate the user interface, make a REST call, or drive the domain model directly.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_statements_are_true_2">Which of the following statements are true?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Regular Expressions are exactly the same as Cucumber Expressions - FALSE</p>
+</li>
+<li>
+<p>Modern versions of Cucumber only support both Cucumber Expressions and Rregular Expressions - TRUE</p>
+</li>
+<li>
+<p>Cucumber Expressions are more intimidating than Regular Expressions - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Regular Expressions are a powerful tool that have been in use in computer science for many decades. They can be hard understand and maintain, so the Cucumber team created a simplified mechanism, called Cucumber Expressions. However, Cucumber remains backwards compatible, so you can use both Regular Expressions and Cucumber Expressions with modern releases of Cucumber.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_literal_expressions">3.2. Literal expressions</h3>
+<div class="paragraph">
+<p>Let&#8217;s look at the Shouty scenario from the last chapter. </p>
+</div>
+<div class="listingblock">
+<div class="title">HearShout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
 
+<span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+	<span class="nf">Given </span>Lucy is located 15 metres from Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As SpecFlow starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is located 15 metres from Sean</code>  and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is located 15 metres from Sean</code>?"</p>
+</div>
+<div class="paragraph">
+<p>
+The most simple cucumber expression that would match that step is this one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Lucy is located 15 metres from Sean</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s pretty simple isn&#8217;t it? Cucumber expressions are just string patterns, and the most simple pattern you can use is a perfect match.</p>
+</div>
+<div class="paragraph">
+<p>In C#, we can use this pattern to make a step definition like this: </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is located 15 metres from Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsLocatedMetresFromSean</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotImplementedException</span><span class="p">(</span><span class="s">"Matched!"</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We use a normal C# string to pass the cucumber expression to SpecFlow.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_2">3.2.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_cucumber_expressions_will_match_the_step_given_lucy_is_15_metres_from_sean">Which of the following Cucumber Expressions will match the step "Given Lucy is 15 metres from Sean"?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>"lucy is 15 metres from sean" - FALSE</p>
+</li>
+<li>
+<p>"Given Lucy is 15 metres from Sean" - FALSE</p>
+</li>
+<li>
+<p>"Lucy is 15 metres from Sean" - TRUE</p>
+</li>
+<li>
+<p>"Lucy is 15 metres from Sean Smith" - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Cucumber Expressions look for a match of the whole step text EXCLUDING the Gherkin keyword (Given/When/Then/And/But). The match is case sensitive and matches whitespace as well.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_capturing_parameters">3.3. Capturing parameters</h3>
+<div class="paragraph">
+<p>
+Sometimes, we want to write step definitions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. </p>
+</div>
+<div class="listingblock">
+<div class="title">HearShout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+	<span class="nf">Given </span>Lucy is located 100 metres from Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called <em>parameters</em>.</p>
+</div>
+<div class="paragraph">
+<p>For example, to capture the number of metres, we can use the <code>{int}</code> parameter:  which is passed as an argument to our step definition: </p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is located {int} metres from Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsLocatedMetresFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we’re capturing that value as an argument. The value <code>100</code> will be passed to our code automatically by SpecFlow.</p>
+</div>
+<div class="paragraph">
+<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to a <code>int</code> data type for us automatically, so we can do maths with it if we want.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is located {int} metres from Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsLocatedMetresFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotImplementedException</span><span class="p">(</span><span class="s">$"Lucy is </span><span class="p">{</span><span class="n">distance</span> <span class="p">*</span> <span class="m">100</span><span class="p">}</span><span class="s"> centimetres from Sean"</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cucumber Expressions have a bunch of built-in parameter types: <code>{int}</code>, <code>{float}</code>, <code>{word}</code> and <code>{string}</code>. You can also define your own, as we&#8217;ll see later.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3">3.3.1. Lesson 3</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_is_not_a_built_in_cucumber_expression_parameter_type">Which of the following is NOT a built in Cucumber Expression parameter type?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>float - FALSE</p>
+</li>
+<li>
+<p>integer - TRUE</p>
+</li>
+<li>
+<p>string - FALSE</p>
+</li>
+<li>
+<p>word - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The Cucumber Expression parameter type that matches an integer is <code>{int}</code>, not <code>{integer}</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_statements_is_true">Which of the following statements is true?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>You cannot create your own Cucumber Expression parameter types - FALSE</p>
+</li>
+<li>
+<p>Cucumber discards the value that matches a Cucumber Expression parameter type - FALSE</p>
+</li>
+<li>
+<p>Your step definition code will be passed the value that matched the Cucumber Expression parameter type - TRUE</p>
+</li>
+<li>
+<p>Cucumber always passes the matched parameter as a string - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Cucumber will pass the step definition a parameter for each Cucumber Expression parameter type. Cucumber will attempt to convert the text that matched into a suitable format. Using the <code>{int}</code> parameter type will result in a number being passed to the step definition. You can extend the predefined Cucumber Expression parameter types, by creating your own.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_flexibility">3.4. Flexibility</h3>
+<div class="paragraph">
+<p>Although it&#8217;s important to try to use consistent terminology in our Gherkin scenarios to help develop the ubiquitous language of your domain, we also want scenarios to read naturally, which sometimes means allowing a bit of flexibility.</p>
+</div>
+<div class="paragraph">
+<p>Ideally, the language used in scenarios should never be constrained by your step definitions. Otherwise they&#8217;ll end up sounding like they were written by robots. Or worse, they read like code.</p>
+</div>
+<div class="paragraph">
+<p>
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">	<span class="nf">Given </span>Lucy is located 1 metre from Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Given Lucy is located 1 metre from Sean
+-&gt; No matching step definition found for the step. Use the following code to create one:
+        [Given(@"Lucy is located (.*) metre from Sean")]
+        public void GivenLucyIsLocatedMetreFromSean(int p0)
+        {
+            _scenarioContext.Pending();
+        }</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What a pain!</p>
+</div>
+<div class="paragraph">
+<p>Fear not. We can just surround the <code>s</code> in parentheses to make it optional, like this: </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is located {int} metre(s) from Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsLocatedMetresFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Now our step matches:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>System.NotImplementedException : Lucy is 100 centimetres from Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.</p>
+</div>
+<div class="paragraph">
+<p>Another is to allow <em>alternates</em> - different ways of saying the same thing. For example, to accept this step: </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">	<span class="nf">Given </span>Lucy is standing 1 metre from Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;we can use this Cucumber Expression: </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is located/standing {int} metre(s) from Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsLocatedMetresFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine as you can see&#8230;&#8203;</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_4">3.4.1. Lesson 4</h4>
+<div class="sect4">
+<h5 id="_how_can_you_express_in_a_cucumber_expression_that_matching_some_text_is_optional">How can you express in a Cucumber Expression that matching some text is optional?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Enclose it in square brackets: [] - FALSE</p>
+</li>
+<li>
+<p>Enclose it in parentheses: () - TRUE</p>
+</li>
+<li>
+<p>Place a question mark after it: ? - FALSE</p>
+</li>
+<li>
+<p>Precede it with a slash: / - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Any text in a Cucumber Expression that is surrounded by parentheses <code>()</code> is considered optional.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_does_a_slash_separating_words_mean_in_a_cucumber_expression">What does a slash <code>/</code> separating words mean in a Cucumber Expression?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The words are considered alternatives - the Cucumber Expression will match any of them - TRUE</p>
+</li>
+<li>
+<p>It doesn&#8217;t mean anything special - the Cucumber Expression will match the slash as a literal character- FALSE</p>
+</li>
+<li>
+<p>The word that follows the slash is considered optional - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Words in a Cucumber Expression that are separated by a slash <code>/</code> are considered alternates. There must be no whitespace between the word and the slash.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_cucumber_expressions_would_match_both_it_weighed_3_grammes_and_it_weighed_1_gramme">Which of the following Cucumber Expressions would match both "it weighed 3 grammes" and "it weighed 1 gramme"?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>"it weighed {int} gramme(s)" - TRUE</p>
+</li>
+<li>
+<p>"it weighed 1/3 gramme/s" - FALSE</p>
+</li>
+<li>
+<p>"it weighed 1/3 gramme(s)" - TRUE</p>
+</li>
+<li>
+<p>"it weighed 1 / 3 gramme(s)" - FALSE</p>
+</li>
+<li>
+<p>"it weighed 1/2/3 gramme/grammes" - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Any text surrounded by parentheses <code>()</code> is considered optional. Any words separated by a slash <code>/</code> are considered to be alternates. You can find full documentation about Cucumber Expressions at <a href="https://cucumber.io/docs/cucumber/cucumber-expressions/" class="bare">https://cucumber.io/docs/cucumber/cucumber-expressions/</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_custom_parameters">3.5. Custom parameters</h3>
+<div class="paragraph">
+<p>Although you can get a long way with Cucumber Expressions' built-in parameter types, you get real power when you define your own <em>custom parameter types</em>. This allows you to transform the text captured from the Gherkin into any object you like before it&#8217;s passed into your step definition.</p>
+</div>
+<div class="paragraph">
+<p>For example, let&#8217;s define our own <code>{person}</code> custom parameter type that will convert the string <code>Lucy</code> into an instance of <code>Person</code> automatically.</p>
+</div>
+<div class="paragraph">
+<p>We can start with the step definition, which would look something like this:  </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"{Person} is located/standing {int} metre(s) from Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenPersonIsLocatedMetresFromSean</span><span class="p">(</span><span class="n">Person</span> <span class="n">person</span><span class="p">,</span> <span class="kt">int</span> <span class="n">distance</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">person</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we build or run the tests at this point we&#8217;ll see an error, because we haven&#8217;t defined the <code>{Person}</code> parameter type yet. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Undefined parameter type: 'Person'</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here&#8217;s how we define one.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s create a new class called <code>ParameterTypes</code> in the <code>Support</code> folder: </p>
+</div>
+<div class="paragraph">
+<p>We&#8217;re going to create a method, which takes the name of a person as a string, and returns an instance of our <code>Person</code> class with that name. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="k">public</span> <span class="n">Person</span> <span class="nf">ConvertPerson</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">name</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>SpecFlow will use the name of the return type - <code>Person</code> - as the parameter name we use inside the curly brackets in our step definition expressions, as soon as we&#8217;ve wired it up.</p>
+</div>
+<div class="paragraph">
+<p>To do that, we add the <code>StepArgumentTransformation</code> attribute , that is from the SpecFlow namespace&#8230;&#8203; . We also need to add a <code>Binding</code> attribute to the class , otherwise SpecFlow will not find our conversion method.</p>
+</div>
+<div class="paragraph">
+<p>By default, any name is recognized as a person, but we could restrict it to a specific pattern. We could even let SpecFlow split the name into first name and last name. We don&#8217;t need such things now, so let&#8217;s leave this as it is. You can find more examples about using <code>StepArgumentTransformation</code> in the SpecFlow documentation.</p>
+</div>
+<div class="paragraph">
+<p>
+All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
+</div>
+<div class="paragraph">
+<p>Custom parameters allow you to bring your domain <em>model</em> - the names of the classes and objects in your solution - and your domain <em>language</em> - the words you use in your scenarios and step definitions - closer together.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_java">3.5.1. Lesson 5 - Questions (Java)</h4>
+<div class="sect4">
+<h5 id="_what_role_do_regular_expressions_play_in_cucumber_expressions">What role do Regular Expressions play in Cucumber Expressions?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>None</p>
+</li>
+<li>
+<p>Cucumber Expressions provide a subset of Regular Expression syntax</p>
+</li>
+<li>
+<p>Cucumber Expressions are exactly the same as Regular Expressions</p>
+</li>
+<li>
+<p>A Regular Expression is used to define the text to be matched when using a custom Parameter Type - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: We use a Regular Expression to specify the text that should be matched when a custom Parameter Type is used in a Cucumber Expression.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_would_you_use_the_custom_parameter_type_defined_by_the_following_code">How would you use the custom Parameter Type defined by the following code?</h5>
+<div class="paragraph">
+<p>@ParameterType("activated")
+public Status state(String activationState) {
+    return new Status(activationState);
+}</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>{activated}</p>
+</li>
+<li>
+<p>{activationState}</p>
+</li>
+<li>
+<p>{state} - TRUE</p>
+</li>
+<li>
+<p>{Status}</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The name of a custom Parameter Type is defined by the name of the method that is decorated with the <code>@ParameterType</code> annotation.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_javascript">3.5.2. Lesson 5 - Questions (Javascript)</h4>
+<div class="sect4">
+<h5 id="_what_role_do_regular_expressions_play_in_cucumber_expressions_2">What role do Regular Expressions play in Cucumber Expressions?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>None</p>
+</li>
+<li>
+<p>Cucumber Expressions provide a subset of Regular Expression syntax</p>
+</li>
+<li>
+<p>Cucumber Expressions are exactly the same as Regular Expressions</p>
+</li>
+<li>
+<p>A Regular Expression is used to define the text to be matched when using a custom Parameter Type - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: We use a Regular Expression to specify the text that should be matched when a custom Parameter Type is used in a Cucumber Expression.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_would_you_use_the_custom_parameter_type_defined_by_the_following_code_2">How would you use the custom Parameter Type defined by the following code?</h5>
+<div class="paragraph">
+<p>defineParameterType({
+  name: 'state',
+  regexp: /activated/,
+  transformer: activationState &#8658; new Status(activationState)
+})</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>{activated}</p>
+</li>
+<li>
+<p>{activationState}</p>
+</li>
+<li>
+<p>{state} - TRUE</p>
+</li>
+<li>
+<p>{Status}</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The name of a custom Parameter Type is defined by the <code>name</code> parameter passed to the <code>defineParameterType</code> method.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_ruby">3.5.3. Lesson 5 - Questions (Ruby)</h4>
+<div class="sect4">
+<h5 id="_what_role_do_regular_expressions_play_in_cucumber_expressions_3">What role do Regular Expressions play in Cucumber Expressions?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>None</p>
+</li>
+<li>
+<p>Cucumber Expressions provide a subset of Regular Expression syntax</p>
+</li>
+<li>
+<p>Cucumber Expressions are exactly the same as Regular Expressions</p>
+</li>
+<li>
+<p>A Regular Expression is used to define the text to be matched when using a custom Parameter Type - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: We use a Regular Expression to specify the text that should be matched when a custom Parameter Type is used in a Cucumber Expression.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_would_you_use_the_custom_parameter_type_defined_by_the_following_code_3">How would you use the custom Parameter Type defined by the following code?</h5>
+<div class="paragraph">
+<p>ParameterType(
+  name:        'state',
+  regexp:      /activated/,
+  transformer: &#8594; (activationState) { Status.new(activationState) }
+)</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>{activated}</p>
+</li>
+<li>
+<p>{activationState}</p>
+</li>
+<li>
+<p>{state} - TRUE</p>
+</li>
+<li>
+<p>{Status}</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The name of a custom Parameter Type is defined by the <code>name</code> parameter passed to the <code>ParameterType</code> method.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_c">C#</h5>
+
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -1696,7 +2327,7 @@ In value:  List&lt;String&gt; ["free bagels at Sean'</span>s<span class="s2">"]<
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-09-30 11:45:28 UTC
+Last updated 2020-10-09 06:17:14 UTC
 </div>
 </div>
 <style>
