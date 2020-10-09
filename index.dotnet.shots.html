@@ -468,7 +468,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_custom_parameters">3.5. Custom parameters</a></li>
 </ul>
 </li>
-<li><a href="#_cleaning_up">4. Cleaning up</a></li>
+<li><a href="#_cleaning_up">4. Cleaning up</a>
+<ul class="sectlevel2">
+<li><a href="#_the_importance_of_readability">4.1. The importance of readability</a></li>
+<li><a href="#_review_changes_that_happened_while_we_were_away">4.2. Review changes that happened while we were away</a></li>
+<li><a href="#_description_field">4.3. Description field</a></li>
+<li><a href="#_the_before_hook">4.4. The "Before" hook</a></li>
+<li><a href="#_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</a></li>
+<li><a href="#_backgrounds">4.6. Backgrounds</a></li>
+</ul>
+</li>
 <li><a href="#_loops">5. Loops</a></li>
 <li><a href="#_configuring_cucumber">6. Configuring Cucumber</a></li>
 </ul>
@@ -2312,7 +2321,916 @@ public Status state(String activationState) {
 <div class="sect1">
 <h2 id="_cleaning_up">4. Cleaning up</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_the_importance_of_readability">4.1. The importance of readability</h3>
+<div class="videoblock">
+<div class="content">
+<video src="https://drive.google.com/uc?id=1arEP_-0Fi5CK7EC8IYCJWrc67I_XF34Z" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1106" id="shot-1106" title="04.01.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 0.1: 04.01.animation.mp4</a></p>
+</div>
+<div class="paragraph">
+<p>In the previous chapter, we talked about the importance of having readable scenarios, and you learned some new skills with Cucumber Expressions to help you achieve that goal. Those skills will give you the confidence to write scenarios exactly the way you want, knowing you’ll be able to match the Gherkin steps easily from your step definition code.</p>
+</div>
+<div class="paragraph">
+<p>We emphasise readability because from our experience, writing Gherkin scenarios is a software design activity. Cucumber was created to bridge the communication gap between business domain experts and development teams. When you collaborate with domain experts to describe behaviour in Gherkin, you’re expressing the group’s shared understanding of the problem you need to solve. The words you use in your scenarios can have a deep impact on the way the software is designed, as we’ll see in later chapters.</p>
+</div>
+<div class="paragraph">
+<p>The more fluent you become in writing Gherkin, the more useful a tool it becomes to help you facilitate this communication. Keeping your scenarios readable means you can get feedback at any time about whether you’re building the right thing. Over time, your features become living documentation about your system. We can’t emphasize enough how important it is to see your scenarios as more than just tests.</p>
+</div>
+<div class="paragraph">
+<p>Maintaining a living document works both ways: the scenarios will guide your solution design, but you may also have to update your Gherkin to reflect the things you learn as you build the solution. This dance back and forth between features and solution code is an important part of BDD.</p>
+</div>
+<div class="paragraph">
+<p>In this chapter, we’ll learn about feature descriptions, the Background keyword, and about keeping scenarios and code up-to-date with your current understanding of the project.</p>
+</div>
+<div class="paragraph">
+<p>First, let’s catch up with what’s been happening on the Shouty project.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_2">4.1.1. Lesson 1 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_aspects_of_cucumber_help_bridge_the_communication_gap_between_business_domain_experts_and_development_teams">Which aspects of Cucumber help bridge the communication gap between business domain experts and development teams?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The readability of Gherkin scenarios - TRUE</p>
+</li>
+<li>
+<p>Cucumber&#8217;s availability for different programming languages - FALSE</p>
+</li>
+<li>
+<p>Being able to express scenarios using your own domain language - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The feature files that Cucumber understands are written using Gherkin, so that you can create scenarios that utilise your own domain language, so that they can be read and understood by everyone involved in specifying and delivering your software.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_do_cucumber_feature_files_differ_from_more_traditional_automated_tests">How do Cucumber feature files differ from more traditional automated tests?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The purpose of feature files is to create readable specifications that can be understood by the whole team, not to provide test coverage</p>
+</li>
+<li>
+<p>Business-readable specifications make it easier to obtain feedback about what you&#8217;re building while you&#8217;re building it, rather than waiting for a later test cycle</p>
+</li>
+<li>
+<p>Feature files become "living documentation" when they are automated, providing a single source of truth for the whole team</p>
+</li>
+<li>
+<p>Feature files should be written collaboratively by business and delivery, not in isolation by testers</p>
+</li>
+<li>
+<p>There is no difference - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: BDD is the collaborative approach to developing software that Cucumber was created to support. Although Cucumber scenarios do act as tests when they are automated, this is not their primary purpose. Their primary purpose is to provide a single, shared specification, written in the domain language of your business&#8201;&#8212;&#8201;facilitating collaboration, feedback, and
+reliable documentation. The primary purpose of traditional automated tests, on the other hand, is to check that the software behaves as expected.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_review_changes_that_happened_while_we_were_away">4.2. Review changes that happened while we were away</h3>
+<div class="paragraph">
+<p>While we were away, the developers of Shouty have been busy working on the code. Let’s have a look at what they’ve been up to.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1107" id="shot-1107" title="run Specs tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: run Specs tests</a>
+We’ll start out by running our scenarios.</p>
+</div>
+<div class="paragraph">
+<p>Great! It looks like both these scenarios are working now - both the different messages that Sean shouts are being heard by Lucy.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1108" id="shot-1108" title="open stepdef file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: open stepdef file</a>
+Let’s dig into the code and see how these steps have been automated.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">    <span class="p">[</span><span class="n">Binding</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">StepDefinitions</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">Person</span> <span class="n">lucy</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">Person</span> <span class="n">sean</span><span class="p">;</span>
+        <span class="k">private</span> <span class="kt">string</span> <span class="n">messageFromSean</span><span class="p">;</span>
 
+        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is {int} metres from Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsMetresFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">();</span>
+            <span class="n">sean</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+            <span class="n">lucy</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+            <span class="n">lucy</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts {string}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShouts</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">sean</span><span class="p">.</span><span class="nf">Shout</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+            <span class="n">messageFromSean</span> <span class="p">=</span> <span class="n">message</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucy should hear Sean's message"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyShouldHearSeansMessage</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">messageFromSean</span><span class="p">,</span> <span class="n">lucy</span><span class="p">.</span><span class="nf">GetMessagesHeard</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the step definition layer, we can see that a new class has been defined, the Network.<a href="#shot-1109" id="shot-1109" title="creating instance of Network" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: creating instance of Network</a> We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here.<a href="#shot-1110" id="shot-1110" title="create instances of Person" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: create instances of Person</a> So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.</p>
+</div>
+<div class="paragraph">
+<p>There are also a couple of new unit test classes in the Shouty package, one for the Network class,<a href="#shot-1111" id="shot-1111" title="show existence of NetworkTests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: show existence of NetworkTests</a> and another one for the Person class.<a href="#shot-1112" id="shot-1112" title="show existence of PersonTests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: show existence of PersonTests</a></p>
+</div>
+<div class="paragraph">
+<p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1113" id="shot-1113" title="run all tests &amp; show output that demonstrates the unit tests are passing" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run all tests &amp; show output that demonstrates the unit tests are passing</a>
+The <strong>Run All Tests</strong> command will run those unit tests as well as the SpecFlow scenarios.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1114" id="shot-1114" title="open the feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: open the feature file</a></p>
+</div>
+<div class="paragraph">
+<p>The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean,<a href="#shot-1115" id="shot-1115" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a> but we haven’t actually implemented any behaviour around that yet.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+	<span class="nf">Given </span>Lucy is 15 metres from Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+	<span class="nf">Given </span>Lucy is 15 metres from Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This happens to us all the time - we have an idea for a new feature, but then we find the problem is too complex to solve all at once, so we break it down into simpler steps. If we’re not careful, little bits of that original idea can be left around like clutter, in the scenarios and in the code. That clutter can get in the way, especially if plans change.</p>
+</div>
+<div class="paragraph">
+<p>We’re definitely going to develop this behaviour, but we’ve decided to defer it to our next iteration. Our current solution is just focussed on broadcasting messages between the people on the network.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s clean up the feature to reflect that current understanding.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_3">4.2.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_have_the_shouty_developers_created_unit_tests_for_the_person_and_network_classes">Why have the Shouty developers created unit tests for the Person and Network classes?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>They don&#8217;t understand how to do BDD - FALSE</p>
+</li>
+<li>
+<p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes - TRUE</p>
+</li>
+<li>
+<p>Unit tests run faster than Cucumber scenarios - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Unit tests (also known as programmer tests) are used to define precise behaviour of units of code that may not be interesting to the business&#8201;&#8212;&#8201;and so should not be written in a feature file. Writing unit tests is entirely compatible with BDD.</p>
+</div>
+<div class="paragraph">
+<p>There is no reason for Cucumber scenarios to run significantly slower than unit tests. The Shouty step definitions that we&#8217;ve seen so far interact directly with the domain layer and run extremely fast.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_is_the_distance_between_sean_and_lucy_not_being_used_by_shouty">Why is the distance between Sean and Lucy not being used by Shouty?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The team has decided to defer implementing range functionality until a later iteration - TRUE</p>
+</li>
+<li>
+<p>The developers have misunderstood the specification</p>
+</li>
+<li>
+<p>The specification has changed since the scenarios were written</p>
+</li>
+<li>
+<p>The distance between Sean and Lucy is being used to decide if the shout is "in range"</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Teams often find that the problem is too big to solve all at once, so we split it into thinner slices. Working in smaller steps is a faster, safer way of delivering software. In this case the team has decided that broadcasting messages and calculating if a person is in-range are different problems that they will address separately.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_description_field">4.3. Description field</h3>
+<div class="paragraph">
+<p>After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like.<a href="#shot-1116" id="shot-1116" title="feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: feature file</a> We call this the feature’s <em>description</em>. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t start a line with a Gherkin keyword, like &#8220;Rule:&#8221; or &#8220;Scenario:&#8221;.</p>
+</div>
+<div class="paragraph">
+<p>In this case, we can add a high level description of the Shouty application.<a href="#shot-1117" id="shot-1117" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> Because Shouty doesn&#8217;t yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.<a href="#shot-1118" id="shot-1118" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+
+Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+<span class="err">To do</span><span class="p">:</span>
+<span class="err">-</span> <span class="err">only</span> <span class="err">shout</span> <span class="err">to</span> <span class="err">people</span> <span class="err">within</span> <span class="nf">a </span>certain distance</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Changing the description doesn’t change anything about how SpecFlow will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.</p>
+</div>
+<div class="paragraph">
+<p>Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword.<a href="#shot-1119" id="shot-1119" title="add Rules keyword" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: add Rules keyword</a> We&#8217;ll learn more about this in a later chapter.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+	<span class="nf">Given </span>Lucy is 15 metres from Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+	<span class="nf">Given </span>Lucy is 15 metres from Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1120" id="shot-1120" title="shows 'Lucy is 15 metres from Sean' step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: shows 'Lucy is 15 metres from Sean' step definition</a>
+The step “Given Lucy is 15 metres from Sean” is misleading, since the distance between the two people is not yet relevant in our current model.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is {int} metres from Sean"</span><span class="p">)]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The step definition calls the <code>MoveTo</code> method on Person, <a href="#shot-1121" id="shot-1121" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">            <span class="n">lucy</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1122" id="shot-1122" title="shows move_to method in Person class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: shows move_to method in Person class</a>
+but the moveTo method doesn’t actually do anything.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="k">public</span> <span class="k">void</span> <span class="nf">MoveTo</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span>
+        <span class="p">{</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1123" id="shot-1123" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a>
+Let’s simplify this code to do just what it needs to do right now, and no more. We can start from the scenario by changing this single step to express what’s actually going on.<a href="#shot-1124" id="shot-1124" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a> We’ll work on one scenario at a time, and update the other one once we’re happy with this one.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+	<span class="nf">Given </span>a person named Lucy
+	<span class="nf">And </span>a person named Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words <code>Person</code> and <code>name</code>. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
+</div>
+<div class="paragraph">
+<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were involved in writing and reviewing this scenario.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1125" id="shot-1125" title="create new Rule and writes out two new empty scenarios for in / out of range" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: create new Rule and writes out two new empty scenarios for in / out of range</a>
+In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+
+<span class="kn">Scenario</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">is</span> <span class="err">out</span> <span class="err">of</span> <span class="err">range</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1126" id="shot-1126" title="invoke 'define steps'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11.1: invoke 'define steps'</a>
+Let’s press on. We can invoke the <strong>Define steps&#8230;&#8203;</strong> command to generate new step definition snippets for the new steps. <a href="#shot-1127" id="shot-1127" title="press 'copy to clipboard'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11.2: press 'copy to clipboard'</a> Copy them to clipboard and paste them into our steps file. <a href="#shot-1128" id="shot-1128" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Lucy"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedLucy</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingStepException</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedSean</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingStepException</span><span class="p">();</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the next lesson we&#8217;ll look at a couple of ways that we can implement these new step definitions.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions">4.3.1. Lesson 3 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_is_a_feature_file_description">What is a feature file <em>description</em>?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Any lines of text between the feature name and the first rule or scenario - TRUE</p>
+</li>
+<li>
+<p>A line of text that starts with the <code>#</code> character</p>
+</li>
+<li>
+<p>A block of text introduced by the <code>Description:</code> keyword</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: You can add a free text description of a feature file after the <code>Feature:</code> line that defines the feature&#8217;s name. The description can be any number of lines long. The description continues until the first rule, scenario, or scenario outline is encountered.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_is_the_purpose_of_writing_an_empty_scenario">What is the purpose of writing an empty scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It is not valid Gherkin syntax to write an empty scenario</p>
+</li>
+<li>
+<p>Empty scenarios act as a reminder that we have more work to do - TRUE</p>
+</li>
+<li>
+<p>Empty scenarios are a way of pretending that we have done more work than we actually have</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Cucumber treats empty scenarios as work that needs to be done and reports them as <em>pending</em>.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_the_before_hook">4.4. The "Before" hook</h3>
+<div class="paragraph">
+<p><a href="#shot-1129" id="shot-1129" title="broken implementation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: broken implementation</a>
+We now have two step definitions to implement,<a href="#shot-1130" id="shot-1130" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile.<a href="#shot-1131" id="shot-1131" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a> If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Lucy"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedLucy</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">();</span>
+            <span class="n">lucy</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedSean</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">sean</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are a couple of different ways to create this network instance in C#. The most straightforward is to create a network field and initialize it in the declaration of the <code>StepDefinitions</code> class.<a href="#shot-1132" id="shot-1132" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a> Every time SpecFlow runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">    <span class="k">public</span> <span class="k">class</span> <span class="nc">StepDefinitions</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">Person</span> <span class="n">lucy</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">Person</span> <span class="n">sean</span><span class="p">;</span>
+        <span class="k">private</span> <span class="kt">string</span> <span class="n">messageFromSean</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">Network</span> <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">();</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As an alternative, that can be useful if you have more complex setup to do, you can use a hook.</p>
+</div>
+<div class="paragraph">
+<p>We need an instance of Network in every scenario, so we can declare a <code>BeforeSceanrio</code> Hook that creates one before each scenario starts, like this: <a href="#shot-1133" id="shot-1133" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5</a></p>
+</div>
+<div class="paragraph">
+<p>Now we can use that Network instance as we create Lucy <a href="#shot-1134" id="shot-1134" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a> and Sean <a href="#shot-1135" id="shot-1135" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a> in these two new steps.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="n">BeforeScenario</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">CreateNetwork</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">();</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Lucy"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedLucy</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">lucy</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedSean</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">sean</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It should be working again now. Let’s run the tests to check.<a href="#shot-1136" id="shot-1136" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a></p>
+</div>
+<div class="paragraph">
+<p>Good. Let’s do the same with the other scenario. <a href="#shot-1137" id="shot-1137" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+	<span class="nf">Given </span>a person named Lucy
+	<span class="nf">And </span>a person named Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1138" id="shot-1138" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run tests</a></p>
+</div>
+<div class="paragraph">
+<p>Now we can remove this old step definition. <a href="#shot-1139" id="shot-1139" title="move the cursor to the step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: move the cursor to the step definition</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"Lucy is {int} metres from Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenLucyIsMetresFromSean</span><span class="p">(</span><span class="kt">int</span> <span class="n">distance</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">();</span>
+            <span class="n">sean</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+            <span class="n">lucy</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+            <span class="n">lucy</span><span class="p">.</span><span class="nf">MoveTo</span><span class="p">(</span><span class="n">distance</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.<a href="#shot-1140" id="shot-1140" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">TechTalk.SpecFlow</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">Xunit</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Shouty.Specs.StepDefinitions</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Binding</span><span class="p">]</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">StepDefinitions</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="n">Person</span> <span class="n">lucy</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">Person</span> <span class="n">sean</span><span class="p">;</span>
+        <span class="k">private</span> <span class="kt">string</span> <span class="n">messageFromSean</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">Network</span> <span class="n">network</span><span class="p">;</span>
+
+        <span class="p">[</span><span class="n">BeforeScenario</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">CreateNetwork</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">();</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Lucy"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedLucy</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">lucy</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Sean"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedSean</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">sean</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts {string}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShouts</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">sean</span><span class="p">.</span><span class="nf">Shout</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+            <span class="n">messageFromSean</span> <span class="p">=</span> <span class="n">message</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucy should hear Sean's message"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyShouldHearSeansMessage</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">messageFromSean</span><span class="p">,</span> <span class="n">lucy</span><span class="p">.</span><span class="nf">GetMessagesHeard</span><span class="p">());</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1141" id="shot-1141" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run tests</a></p>
+</div>
+<div class="paragraph">
+<p>Now we have one last bit of dead code left, the moveTo method on Person. <a href="#shot-1142" id="shot-1142" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14</a>
+Let&#8217;s clean that up too.<a href="#shot-1143" id="shot-1143" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#"><span class="k">using</span> <span class="nn">System</span><span class="p">;</span>
+<span class="k">using</span> <span class="nn">System.Collections.Generic</span><span class="p">;</span>
+
+<span class="k">namespace</span> <span class="nn">Shouty</span>
+<span class="p">{</span>
+    <span class="k">public</span> <span class="k">class</span> <span class="nc">Person</span>
+    <span class="p">{</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">Network</span> <span class="n">network</span><span class="p">;</span>
+        <span class="k">private</span> <span class="k">readonly</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="n">messagesHeard</span> <span class="p">=</span> <span class="k">new</span> <span class="n">List</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;();</span>
+
+        <span class="k">public</span> <span class="nf">Person</span><span class="p">(</span><span class="n">Network</span> <span class="n">network</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">this</span><span class="p">.</span><span class="n">network</span> <span class="p">=</span> <span class="n">network</span><span class="p">;</span>
+            <span class="n">network</span><span class="p">.</span><span class="nf">Subscribe</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Shout</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">network</span><span class="p">.</span><span class="nf">Broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">IList</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">GetMessagesHeard</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">messagesHeard</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Hear</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">messagesHeard</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1144" id="shot-1144" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run tests</a>
+And we&#8217;re still green!</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_4_questions_2">4.4.1. Lesson 4 - Questions</h4>
+<div class="sect4">
+<h5 id="_when_does_a_before_hook_run">When does a Before hook run?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Before every run of Cucumber</p>
+</li>
+<li>
+<p>Before the first scenario in each feature file</p>
+</li>
+<li>
+<p>Before each scenario - TRUE</p>
+</li>
+<li>
+<p>Before each step in a scenario</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: A Before hook runs before each scenario. Since there is no way to tell if a hook exists by looking at the feature file, you should only use hooks for performing actions that you don&#8217;t expect the business to provide feedback on.</p>
+</div>
+<div class="paragraph">
+<p>You can read more about hooks at <a href="https://cucumber.io/docs/cucumber/api/#hooks" class="bare">https://cucumber.io/docs/cucumber/api/#hooks</a></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_isnt_it_a_good_idea_to_create_a_network_instance_in_the_same_step_definition_where_we_create_lucy">Why isn&#8217;t it a good idea to create a Network instance in the same step definition where we create Lucy?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It is a good idea</p>
+</li>
+<li>
+<p>Steps should be independent and composable. If the Network is only created when Lucy is created, future scenarios will be forced to create Lucy - TRUE</p>
+</li>
+<li>
+<p>We&#8217;ll need to create another Network instance when we create Sean</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Every person needs to share the <strong>same</strong> Network instance, which means we need to create the Network before we create any people. By creating the Network instance in the same step definition that we create Lucy, we are forcing people to:
+* create Lucy&#8201;&#8212;&#8201;even if the scenario doesn&#8217;t need Lucy
+* create Lucy before any other person&#8201;&#8212;&#8201;because otherwise Network will not have been created yet</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</h3>
+<div class="paragraph">
+<p><a href="#shot-1145" id="shot-1145" title="Freeze of stepdef code from end of lesson 4, highlighting a_person_named_Lucy/Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Freeze of stepdef code from end of lesson 4, highlighting a_person_named_Lucy/Sean</a></p>
+</div>
+<div class="paragraph">
+<p>OK, so we’ve cleaned things up a bit, to bring the scenarios, the code and our current understanding of the problem all into sync. What’s nice to see is how well those new steps that create Lucy and Sean match the code inside the step definition.</p>
+</div>
+<div class="paragraph">
+<p>When step definitions have to make a big leap to translate between our plain-language description of the domain in the Gherkin scenario, and the code, that’s usually a sign that something is wrong. We like to see step definitions that are only one or two lines long, because that usually indicates our scenarios are doing a good job of reflecting the domain model in the code, and vice-versa.</p>
+</div>
+<div class="paragraph">
+<p>One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two steps for creating Lucy and Sean are almost identical, apart from those instance variables.<a href="#shot-1146" id="shot-1146" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a></p>
+</div>
+<div class="paragraph">
+<p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.</p>
+</div>
+<div class="paragraph">
+<p>The first problem we’ll need to tackle is these hard-coded instance variable names.<a href="#shot-1147" id="shot-1147" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a></p>
+</div>
+<div class="paragraph">
+<p>We can use a <code>Dictionary</code> to store all the people involved in the scenario.</p>
+</div>
+<div class="paragraph">
+<p>Let’s try replacing Lucy first.<a href="#shot-1148" id="shot-1148" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a></p>
+</div>
+<div class="paragraph">
+<p>We’ll start by creating a new <code>Dictionary</code> in the before hook, like this. <a href="#shot-1149" id="shot-1149" title="Edit Stepdefs.cs, adding private instance field <strong>people</strong>, creating in Before hook" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Edit Stepdefs.cs, adding private instance field <strong>people</strong>, creating in Before hook</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="k">private</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">Person</span><span class="p">&gt;</span> <span class="n">people</span><span class="p">;</span>
+
+        <span class="p">[</span><span class="n">BeforeScenario</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">CreateNetwork</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">();</span>
+            <span class="n">people</span> <span class="p">=</span> <span class="k">new</span> <span class="n">Dictionary</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">,</span> <span class="n">Person</span><span class="p">&gt;();</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can store Lucy in a key in that Dictionary. We’ll use her name as the key, hard-coding it for now.<a href="#shot-1150" id="shot-1150" title="modify a_person_named_Lucy" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: modify a_person_named_Lucy</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named Lucy"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedLucy</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="s">"Lucy"</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">));</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the Dictionary. <a href="#shot-1151" id="shot-1151" title="modify lucy_hears_Sean_s_message" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: modify lucy_hears_Sean_s_message</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucy should hear Sean's message"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyShouldHearSeansMessage</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">messageFromSean</span><span class="p">,</span> <span class="n">people</span><span class="p">[</span><span class="s">"Lucy"</span><span class="p">].</span><span class="nf">GetMessagesHeard</span><span class="p">());</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1152" id="shot-1152" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run tests</a></p>
+</div>
+<div class="paragraph">
+<p>With that little refactoring done, we can now try and make this first step generic for any name.<a href="#shot-1153" id="shot-1153" title="highlight a_person_named_Lucy" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: highlight a_person_named_Lucy</a></p>
+</div>
+<div class="paragraph">
+<p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a 'word' expression,<a href="#shot-1154" id="shot-1154" title="replace 'Lucy' with {word}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: replace 'Lucy' with {word}</a> we’ll have the name passed into our step definition as an argument, here.<a href="#shot-1155" id="shot-1155" title="modify stepdef name &amp; parameter list" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: modify stepdef name &amp; parameter list</a> Now we can use that as the key in the Dictionary.<a href="#shot-1156" id="shot-1156" title="store Person instance in Dictionary" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: store Person instance in Dictionary</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named {word}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamed</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">));</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we try and run the tests now, we get an error from SpecFlow about an ambiguous match. <a href="#shot-1157" id="shot-1157" title="running tests FAILS" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: running tests FAILS</a></p>
+</div>
+<div class="paragraph">
+<p>Our generic step definition is now matching the step “a person named Sean”,<a href="#shot-1158" id="shot-1158" title="highlight stepdef a_person_named" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: highlight stepdef a_person_named</a> but so is the original one.<a href="#shot-1159" id="shot-1159" title="highlight stepdef a_person_named_Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: highlight stepdef a_person_named_Sean</a> In bigger projects, this can be a real issue, so this warning is important.</p>
+</div>
+<div class="paragraph">
+<p>Let’s remove the old step definition,<a href="#shot-1160" id="shot-1160" title="delete a_person_named_Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: delete a_person_named_Sean</a> and fetch Sean from the hash/map here where he shouts his message.<a href="#shot-1161" id="shot-1161" title="modify sean_shouts" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: modify sean_shouts</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts {string}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShouts</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">people</span><span class="p">[</span><span class="s">"Sean"</span><span class="p">].</span><span class="nf">Shout</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+            <span class="n">messageFromSean</span> <span class="p">=</span> <span class="n">message</span><span class="p">;</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Great, we’re green again. <a href="#shot-1162" id="shot-1162" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: run tests</a></p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_2">4.5.1. Lesson 5 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_should_a_step_definition_be_short">Why should a step definition be short?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Because the plain-language description of the domain in the Gherkin step should be close to the domain model in the code - TRUE</p>
+</li>
+<li>
+<p>Step definitions don&#8217;t need to be short</p>
+</li>
+<li>
+<p>Cucumber limits the length of step definitions to five lines of code</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Step definitions are a thin glue between the plain-language description in a scenario and the software that we&#8217;re building. If the business domain and the solution domain are aligned, then there should be little translation to do in the step definition.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_does_it_mean_when_cucumber_compains_about_an_ambiguous_step">What does it mean when Cucumber compains about an <em>ambiguous</em> step?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Cucumber couldn&#8217;t find a step definition that matches a step</p>
+</li>
+<li>
+<p>Cucumber only found one step definition that matches a step</p>
+</li>
+<li>
+<p>Cucumber found more than one step definition that matches a step - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: If more than one step definition matches a step, then Cucumber doesn&#8217;t know which one to call. When this ambiguity occurs, Cucumber issues an error, rather than try to choose between the matching step definitions.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_backgrounds">4.6. Backgrounds</h3>
+<div class="paragraph">
+<p><a href="#shot-1163" id="shot-1163" title="Feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Feature file</a>
+Let’s switch back to the feature to show you one more technique for improving the readability of your scenarios.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+	<span class="nf">Given </span>a person named Lucy
+	<span class="nf">And </span>a person named Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+	<span class="nf">Given </span>a person named Lucy
+	<span class="nf">And </span>a person named Sean
+	<span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we have common context steps - the Givens - <a href="#shot-1164" id="shot-1164" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> in all the scenarios in our feature, it can sometimes be useful to get those out of the way.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1165" id="shot-1165" title="move Given steps into background" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: move Given steps into background</a>
+We can literally move them into the background, using a background keyword, like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Background</span><span class="p">:</span>
+    <span class="nf">Given </span>a person named Lucy
+    <span class="nf">And </span>a person named Sean</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1166" id="shot-1166" title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: mvn test</a>
+As far as SpecFlow is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1167" id="shot-1167" title="Feature file, showing Background and shortened scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Feature file, showing Background and shortened scenarios</a>
+But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+	<span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+	<span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+	<span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Notice we just went straight into When steps in our scenarios.<a href="#shot-1168" id="shot-1168" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a> That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.</p>
+</div>
+<div class="paragraph">
+<p>Again, it’s debatable whether we’d bother to use a Background to do this on a real project, but this at least illustrates the technique. We rarely use Backgrounds in our projects, because although they can improve readability by removing the duplication of repeated contexts, they also harm readability by requiring people to read the Background in conjunction with each Scenario.</p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="https://drive.google.com/uc?id=19VLE9qKbVN4bpMxsIVvPtPqc3RGw4bSW" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>To maintain trust in the BDD process, it’s important to keep your features fresh. Even when you drive the development from BDD scenarios, you’ll still learn lessons from the implementation that might need to be fed back into your Gherkin documentation.</p>
+</div>
+<div class="paragraph">
+<p>In this case, we discovered that we could find a smaller slice of this story, and defer the business rule about proximity until our next iteration. Splitting stories like this is a powerful agile technique, and one that BDD can help you to master. Now we have a clean codebase and suite of scenarios that reflects the current state of the system’s development.</p>
+</div>
+<div class="paragraph">
+<p>We’re ready to start the next iteration.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_6_questions">4.6.1. Lesson 6 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_does_the_gherkin_keyword_background_do">What does the Gherkin keyword _Background_do?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It provides a place to write a description of why the feature is valuable</p>
+</li>
+<li>
+<p>It is treated exactly like a scenario, but is run as soon as Cucumber starts</p>
+</li>
+<li>
+<p>It is treated exactly like a scenario, but is run once before any other scenario in the feature file</p>
+</li>
+<li>
+<p>The steps from the background are run as if they were inserted at the beginning of every scenario in the feature file - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The background is used to reduce duplication in scenarios by moving steps that are common to all scenarios into a single location. The steps in the background are run before every scenario in the feature file.</p>
+</div>
+<div class="paragraph">
+<p>There can be a maximum of one Background per feature file. A Background only affects scenarios that are in the same feature file as the Background.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_might_backgrounds_decrease_the_readability_or_maintainability_of_a_feature_file">How might Backgrounds decrease the readability or maintainability of a feature file?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Backgrounds always improve readability</p>
+</li>
+<li>
+<p>Readability can decrease because the reader must remember the contents of the background even when reading scenarios at the end of the feature file</p>
+</li>
+<li>
+<p>Maintainability can decrease because the maintainer must be aware that there is a background even when adding scenarios to the end of the feature file</p>
+</li>
+<li>
+<p>Maintainability can decrease because the maintainer must be aware of the background when moving a scenario to a different feature file</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Backgrounds were created to aid readability, by reducing duplication in the scenarios. Unfortunately, moving important information out of a scenario means that anyone reading or modifying a feature file must be fully aware that of the existence and content of a background. Since feature files typically contain several scenarios, that means holding two sections of the feature file in your mind at the same time, making a feature file harder to read or maintain.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -2330,7 +3248,7 @@ public Status state(String activationState) {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-09 09:28:32 UTC
+Last updated 2020-10-09 13:37:24 UTC
 </div>
 </div>
 <style>
