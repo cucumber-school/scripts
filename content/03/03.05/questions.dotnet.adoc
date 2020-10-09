@@ -1,76 +1,25 @@
-==== Lesson 5 - Questions (Java)
+==== Lesson 5 - Questions (SpecFlow)
 
 ===== What role do Regular Expressions play in Cucumber Expressions?
 
 * None
 * Cucumber Expressions provide a subset of Regular Expression syntax
 * Cucumber Expressions are exactly the same as Regular Expressions
-* A Regular Expression is used to define the text to be matched when using a custom Parameter Type - TRUE
+* A Regular Expression is used to restrict the text to be matched when using a custom parameter type (StepArgumentTransformation) - TRUE
 
-Answer: We use a Regular Expression to specify the text that should be matched when a custom Parameter Type is used in a Cucumber Expression.
+Answer: We use a Regular Expression to restrict the text that should be matched when a custom parameter type (StepArgumentTransformation) is used in a Cucumber Expression. You can find more examples about using `StepArgumentTransformation` in the https://docs.specflow.org/projects/specflow/en/latest/Bindings/Step-Argument-Conversions.html#step-argument-transformation[SpecFlow documentation].
 
 ===== How would you use the custom Parameter Type defined by the following code?
-@ParameterType("activated")
-public Status state(String activationState) {
+[StepArgumentTransformation("(activated|deactivated)")]
+public Status ConvertState(string activationState) 
+{
     return new Status(activationState);
 }
 
-* {activated}
+* {activated} or {deactivated}
 * {activationState}
-* {state} - TRUE
-* {Status}
+* {Status} - TRUE
+* {ConvertState}
 
-Answer: The name of a custom Parameter Type is defined by the name of the method that is decorated with the `@ParameterType` annotation.
+Answer: The name of a custom Parameter Type is defined by the name of the return type in the method that is decorated with the `[StepArgumentTransformation]` annotation.
 
-==== Lesson 5 - Questions (Javascript)
-
-===== What role do Regular Expressions play in Cucumber Expressions?
-
-* None
-* Cucumber Expressions provide a subset of Regular Expression syntax
-* Cucumber Expressions are exactly the same as Regular Expressions
-* A Regular Expression is used to define the text to be matched when using a custom Parameter Type - TRUE
-
-Answer: We use a Regular Expression to specify the text that should be matched when a custom Parameter Type is used in a Cucumber Expression.
-
-===== How would you use the custom Parameter Type defined by the following code?
-defineParameterType({
-  name: 'state',
-  regexp: /activated/,
-  transformer: activationState => new Status(activationState)
-})
-
-* {activated}
-* {activationState}
-* {state} - TRUE
-* {Status}
-
-Answer: The name of a custom Parameter Type is defined by the `name` parameter passed to the `defineParameterType` method.
-
-==== Lesson 5 - Questions (Ruby)
-
-===== What role do Regular Expressions play in Cucumber Expressions?
-
-* None
-* Cucumber Expressions provide a subset of Regular Expression syntax
-* Cucumber Expressions are exactly the same as Regular Expressions
-* A Regular Expression is used to define the text to be matched when using a custom Parameter Type - TRUE
-
-Answer: We use a Regular Expression to specify the text that should be matched when a custom Parameter Type is used in a Cucumber Expression.
-
-===== How would you use the custom Parameter Type defined by the following code?
-ParameterType(
-  name:        'state',
-  regexp:      /activated/,
-  transformer: -> (activationState) { Status.new(activationState) }
-)
-
-* {activated}
-* {activationState}
-* {state} - TRUE
-* {Status}
-
-Answer: The name of a custom Parameter Type is defined by the `name` parameter passed to the `ParameterType` method.
-
-
-===== C#
