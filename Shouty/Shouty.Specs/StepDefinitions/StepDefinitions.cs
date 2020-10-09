@@ -20,10 +20,10 @@ namespace Shouty.Specs.StepDefinitions
             people = new Dictionary<string, Person>();
         }
 
-        [Given("a person named Lucy")]
-        public void GivenAPersonNamedLucy()
+        [Given("a person named {word}")]
+        public void GivenAPersonNamed(string name)
         {
-            people.Add("Lucy", new Person(network));
+            people.Add(name, new Person(network));
         }
 
         [Given("a person named Sean")]
