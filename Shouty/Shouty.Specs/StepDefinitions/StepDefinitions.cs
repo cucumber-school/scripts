@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TechTalk.SpecFlow;
 using Xunit;
 
@@ -7,21 +8,22 @@ namespace Shouty.Specs.StepDefinitions
     [Binding]
     public class StepDefinitions
     {
-        private Person lucy;
         private Person sean;
         private string messageFromSean;
         private Network network;
+        private Dictionary<string, Person> people;
 
         [BeforeScenario]
         public void CreateNetwork()
         {
             network = new Network();
+            people = new Dictionary<string, Person>();
         }
 
         [Given("a person named Lucy")]
         public void GivenAPersonNamedLucy()
         {
-            lucy = new Person(network);
+            people.Add("Lucy", new Person(network));
         }
 
         [Given("a person named Sean")]
@@ -40,7 +42,7 @@ namespace Shouty.Specs.StepDefinitions
         [Then("Lucy should hear Sean's message")]
         public void ThenLucyShouldHearSeansMessage()
         {
-            Assert.Contains(messageFromSean, lucy.GetMessagesHeard());
+            Assert.Contains(messageFromSean, people["Lucy"].GetMessagesHeard());
         }
     }
 }
