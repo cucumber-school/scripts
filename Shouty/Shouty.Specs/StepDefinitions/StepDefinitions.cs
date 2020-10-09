@@ -10,6 +10,7 @@ namespace Shouty.Specs.StepDefinitions
         private Person lucy;
         private Person sean;
         private string messageFromSean;
+        private Network network;
 
         [Given("Lucy is {int} metres from Sean")]
         public void GivenLucyIsMetresFromSean(int distance)
@@ -23,13 +24,14 @@ namespace Shouty.Specs.StepDefinitions
         [Given("a person named Lucy")]
         public void GivenAPersonNamedLucy()
         {
-            throw new PendingStepException();
+            network = new Network();
+            lucy = new Person(network);
         }
 
         [Given("a person named Sean")]
         public void GivenAPersonNamedSean()
         {
-            throw new PendingStepException();
+            sean = new Person(network);
         }
 
         [When("Sean shouts {string}")]
