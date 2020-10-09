@@ -14,10 +14,6 @@ namespace Shouty
             network.Subscribe(this);
         }
 
-        public void MoveTo(int distance)
-        {
-        }
-
         public void Shout(string message)
         {
             network.Broadcast(message);
