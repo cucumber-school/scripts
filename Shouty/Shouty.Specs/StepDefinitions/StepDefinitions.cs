@@ -8,7 +8,6 @@ namespace Shouty.Specs.StepDefinitions
     [Binding]
     public class StepDefinitions
     {
-        private Person sean;
         private string messageFromSean;
         private Network network;
         private Dictionary<string, Person> people;
@@ -26,16 +25,10 @@ namespace Shouty.Specs.StepDefinitions
             people.Add(name, new Person(network));
         }
 
-        [Given("a person named Sean")]
-        public void GivenAPersonNamedSean()
-        {
-            sean = new Person(network);
-        }
-
         [When("Sean shouts {string}")]
         public void WhenSeanShouts(string message)
         {
-            sean.Shout(message);
+            people["Sean"].Shout(message);
             messageFromSean = message;
         }
 
