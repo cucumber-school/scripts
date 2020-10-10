@@ -36,7 +36,7 @@ If we run Cucumber, we’ll see a compilation error from JavaScript: we need to 
 ----
 $ npm test
 
-> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
 > cucumber-js
 
 F--
@@ -44,15 +44,15 @@ F--
 Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✖ Given Lucy is located 15m from Sean # features/step_definitions/steps.js:17
+   ✖ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:3
        ReferenceError: Person is not defined
-           at World.<anonymous> (/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:18:19)
-   - When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.js:23
-   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:28
+           at World.<anonymous> (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:4:19)
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:9
+   - Then Lucy hears Sean's message # features/step_definitions/steps.js:14
 
 1 scenario (1 failed)
 3 steps (1 failed, 2 skipped)
-0m00.001s
+0m00.011s (executing steps: 0m00.001s)
 npm ERR! Test failed.  See above for more details.
 ----
 
@@ -90,33 +90,23 @@ When we run the scenario, cucumber tells us that we're missing the `moveTo` meth
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/code/shouty
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    ✖ failed
-      TypeError: this.lucy.moveTo is not a function
-          at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:7:13)
-    When Sean shouts "free bagels at Sean's"
-    - skipped
-    Then Lucy hears Sean’s message
-    - skipped
+F--
 
 Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
    ✖ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
        TypeError: this.lucy.moveTo is not a function
-           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:7:13)
+           at World.<anonymous> (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:7:13)
    - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
-   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:15
+   - Then Lucy hears Sean's message # features/step_definitions/steps.js:15
 
 1 scenario (1 failed)
 3 steps (1 failed, 2 skipped)
-0m00.000s
+0m00.010s (executing steps: 0m00.001s)
 npm ERR! Test failed.  See above for more details.
 ----
 
@@ -134,17 +124,10 @@ When we run the scenario again,shot::[19] the first step is green!shot::[20]
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/code/shouty
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts "free bagels at Sean's"
-    ? pending
-    Then Lucy hears Sean’s message
-    - skipped
+.P-
 
 Warnings:
 
@@ -152,11 +135,11 @@ Warnings:
    ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
    ? When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
        Pending
-   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:15
+   - Then Lucy hears Sean's message # features/step_definitions/steps.js:15
 
 1 scenario (1 pending)
 3 steps (1 pending, 1 skipped, 1 passed)
-0m00.001s
+0m00.009s (executing steps: 0m00.001s)
 npm ERR! Test failed.  See above for more details.
 ----
 
@@ -187,19 +170,10 @@ If we run Cucumber, it's telling is that our `Person` class needs a `shout` meth
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/code/shouty
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts "free bagels at Sean's"
-    ✖ failed
-      TypeError: this.sean.shout is not a function
-          at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:11:13)
-    Then Lucy hears Sean’s message
-    - skipped
+.F-
 
 Failures:
 
@@ -207,12 +181,12 @@ Failures:
    ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
    ✖ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
        TypeError: this.sean.shout is not a function
-           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:11:13)
-   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:14
+           at World.<anonymous> (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:11:13)
+   - Then Lucy hears Sean's message # features/step_definitions/steps.js:14
 
 1 scenario (1 failed)
 3 steps (1 failed, 1 skipped, 1 passed)
-0m00.000s
+0m00.009s (executing steps: 0m00.001s)
 npm ERR! Test failed.  See above for more details.
 ----
 
@@ -232,28 +206,32 @@ And now the second step is green: shot::[27]
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/code/shouty
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Feature: Hear shout
+.....F
 
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts "free bagels at Sean's"
-    Then Lucy hears Sean’s message
-    ? pending
+Failures:
 
-Warnings:
+1) Scenario: Listener hears a different message # features/hear_shout.feature:7
+   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:5
+   ✔ When Sean shouts "Free coffee!" # features/step_definitions/steps.js:11
+   ✖ Then Lucy hears Sean's message # features/step_definitions/steps.js:16
+       AssertionError: 
+       Expected: is ["Free coffee!"]
+            but: was ["free bagels at Sean's"]
+           + expected - actual
 
-1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
-   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
-   ? Then Lucy hears Sean’s message # features/step_definitions/steps.js:14
-       Pending
+            [
+           -  "free bagels at Sean's"
+           +  "Free coffee!"
+            ]
 
-1 scenario (1 pending)
-3 steps (1 pending, 2 passed)
-0m00.000s
+           at World.<anonymous> (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:17:3)
+
+2 scenarios (1 failed, 1 passed)
+6 steps (1 failed, 5 passed)
+0m00.014s (executing steps: 0m00.004s)
 npm ERR! Test failed.  See above for more details.
 ----
 
@@ -299,34 +277,17 @@ shot::[36]
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/code/shouty
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts "free bagels at Sean's"
-    Then Lucy hears Sean’s message
-    ✖ failed
-      AssertionError: 
-      Expected: is ["free bagels at Sean's"]
-           but: was []
-          + expected - actual
-      
-          -[]
-          +[
-          +  "free bagels at Sean's"
-          +]
-      
-          at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:17:3)
+..F
 
 Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
    ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:5
    ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:11
-   ✖ Then Lucy hears Sean’s message # features/step_definitions/steps.js:16
+   ✖ Then Lucy hears Sean's message # features/step_definitions/steps.js:16
        AssertionError: 
        Expected: is ["free bagels at Sean's"]
             but: was []
@@ -336,12 +297,12 @@ Failures:
            +[
            +  "free bagels at Sean's"
            +]
-       
-           at World.<anonymous> (/home/fedex/code/shouty/features/step_definitions/steps.js:17:3)
+
+           at World.<anonymous> (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:17:3)
 
 1 scenario (1 failed)
 3 steps (1 failed, 2 passed)
-0m00.003s
+0m00.014s (executing steps: 0m00.004s)
 npm ERR! Test failed.  See above for more details.
 ----
 

@@ -13,23 +13,40 @@ If we run Cucumber at this point we'll see an error, because we haven't defined 
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Error: Undefined parameter type {person}
-    at UndefinedParameterTypeError.CucumberExpressionError [as constructor] (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/Errors.js:19:42)
-    at new UndefinedParameterTypeError (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/Errors.js:47:23)
-    at /home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:101:23
-    at String.replace (<anonymous>)
-    at CucumberExpression.processParameters (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:93:27)
-    at new CucumberExpression (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:46:21)
-    at buildStepDefinitionFromConfig (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/build_helpers.js:158:22)
-    at /home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/index.js:83:134
-    at Array.map (<anonymous>)
-    at SupportCodeLibraryBuilder.finalize (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/index.js:83:71)
-    at Cli.getSupportCodeLibrary (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/index.js:120:50)
-    at Cli.run (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/index.js:141:37)
-    at async Object.run [as default] (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/run.js:30:14)
+U-U
+
+Undefined parameter types:
+
+- "person" e.g. `{person} is located/standing {int} metre(s) from Sean`
+
+Failures:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ? Given Lucy is located 1 metres from Sean
+       Undefined. Implement with the following snippet:
+
+         Given('Lucy is located {int} metres from Sean', function (int) {
+         // Given('Lucy is located {float} metres from Sean', function (float) {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+       
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:15
+   ? Then Lucy hears Sean's message
+       Undefined. Implement with the following snippet:
+
+         Then('Lucy hears Sean\'s message', function () {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+       
+
+1 scenario (1 undefined)
+3 steps (2 undefined, 1 skipped)
+0m00.013s (executing steps: 0m00.000s)
 npm ERR! Test failed.  See above for more details.
 ----
 
@@ -65,27 +82,19 @@ All of this means that when we run our step, an instance of `Person` will be pas
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 1 metres from Sean
 Person {}
 Lucy is 100 centimetres from Sean
-    ? pending
-    When Sean shouts "free bagels at Sean's"
-    - skipped
-    Then Lucy hears Sean's message
-    ? undefined
+P-U
 
-Warnings:
+Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
    ? Given Lucy is located 1 metres from Sean # features/step_definitions/steps.js:5
        Pending
-   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:16
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:15
    ? Then Lucy hears Sean's message
        Undefined. Implement with the following snippet:
 
@@ -93,11 +102,11 @@ Warnings:
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
-
+       
 
 1 scenario (1 undefined)
 3 steps (1 undefined, 1 pending, 1 skipped)
-0m00.002s
+0m00.011s (executing steps: 0m00.003s)
 npm ERR! Test failed.  See above for more details.
 ----
 
