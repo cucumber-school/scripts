@@ -840,10 +840,7 @@ Now we’re ready to create our first feature file. Call the file <code>hear_sho
 </div>
 </div>
 <div class="paragraph">
-<p>
-All feature files start with the keyword <code>Feature:</code>
-
-followed by a name.
+<p>All feature files start with the keyword <code>Feature:</code>  followed by a name. 
 It’s a good convention to give it a name that matches the file name.</p>
 </div>
 <div class="paragraph">
@@ -863,27 +860,21 @@ It’s a good convention to give it a name that matches the file name.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>
-Save the file, switch back to the command-prompt and run <code>npm test</code>. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.</p>
+<p>Save the file, switch back to the command-prompt and run <code>npm test</code>. </p>
+</div>
+<div class="paragraph">
+<p>You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
+UUU
 
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    ? undefined
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    ? undefined
-    Then Lucy hears Sean’s message
-    ? undefined
-
-Warnings:
+Failures:
 
 1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
    ? Given Lucy is located 15 metres from Sean
@@ -914,7 +905,7 @@ Warnings:
 
 1 scenario (1 undefined)
 3 steps (3 undefined)
-0m00.000s
+0m00.006s (executing steps: 0m00.000s)
 npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
@@ -979,7 +970,7 @@ But that first step definition returns <code>'pending'</code>, which causes Cucu
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
 <span class="o">&gt;</span> cucumber-js
 
 P--
@@ -987,15 +978,15 @@ P--
 Warnings:
 
 1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
-   ? Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:5</span>
+   ? Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:3</span>
        Pending
-   - When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.js:10</span>
-   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:15</span>
+   - When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:8</span>
+   - Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:13
 
-1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
-3 steps <span class="o">(</span>1 pending, 2 skipped<span class="o">)</span>
-0m00.000s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+1 scenario (1 pending)
+3 steps (1 pending, 2 skipped)
+0m00.007s (executing steps: 0m00.001s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1024,32 +1015,24 @@ If we run <code>cucumber</code> again on our terminal, we can see the number 15 
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
 15
-    ? pending
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    - skipped
-    Then Lucy hears Sean’s message
-    - skipped
+P--
 
 Warnings:
 
 1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
-   ? Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:3</span>
+   ? Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:3</span>
        Pending
    - When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:8</span>
-   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:13</span>
+   - Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:13
 
-1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
-3 steps <span class="o">(</span>1 pending, 2 skipped<span class="o">)</span>
-0m00.002s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+1 scenario (1 pending)
+3 steps (1 pending, 2 skipped)
+0m00.009s (executing steps: 0m00.002s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1294,7 +1277,7 @@ If we run Cucumber, we’ll see a compilation error from JavaScript: we need to 
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty-js@1.0.0 <span class="nb">test</span> /home/fedex/cucumber/shouty-js
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
 <span class="o">&gt;</span> cucumber-js
 
 F--
@@ -1302,16 +1285,16 @@ F--
 Failures:
 
 1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
-   ✖ Given Lucy is located 15m from Sean <span class="c"># features/step_definitions/steps.js:17</span>
+   ✖ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:3</span>
        ReferenceError: Person is not defined
-           at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/cucumber/shouty-js/features/step_definitions/steps.js:18:19<span class="o">)</span>
-   - When Sean shouts “free bagels at Sean’s” <span class="c"># features/step_definitions/steps.js:23</span>
-   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:28</span>
+           at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:4:19<span class="o">)</span>
+   - When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:9</span>
+   - Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:14
 
-1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
-3 steps <span class="o">(</span>1 failed, 2 skipped<span class="o">)</span>
-0m00.001s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+1 scenario (1 failed)
+3 steps (1 failed, 2 skipped)
+0m00.011s (executing steps: 0m00.001s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1356,34 +1339,24 @@ When we run the scenario, cucumber tells us that we&#8217;re missing the <code>m
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    ✖ failed
-      TypeError: this.lucy.moveTo is not a <span class="k">function
-          </span>at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty/features/step_definitions/steps.js:7:13<span class="o">)</span>
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    - skipped
-    Then Lucy hears Sean’s message
-    - skipped
+F--
 
 Failures:
 
 1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
    ✖ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:4</span>
        TypeError: this.lucy.moveTo is not a <span class="k">function
-           </span>at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty/features/step_definitions/steps.js:7:13<span class="o">)</span>
+           </span>at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:7:13<span class="o">)</span>
    - When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:10</span>
-   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:15</span>
+   - Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:15
 
-1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
-3 steps <span class="o">(</span>1 failed, 2 skipped<span class="o">)</span>
-0m00.000s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+1 scenario (1 failed)
+3 steps (1 failed, 2 skipped)
+0m00.010s (executing steps: 0m00.001s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1406,17 +1379,10 @@ We&#8217;ll add the method definition without implementing it yet.</p>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    ? pending
-    Then Lucy hears Sean’s message
-    - skipped
+.P-
 
 Warnings:
 
@@ -1424,12 +1390,12 @@ Warnings:
    ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:4</span>
    ? When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:10</span>
        Pending
-   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:15</span>
+   - Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:15
 
-1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
-3 steps <span class="o">(</span>1 pending, 1 skipped, 1 passed<span class="o">)</span>
-0m00.001s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+1 scenario (1 pending)
+3 steps (1 pending, 1 skipped, 1 passed)
+0m00.009s (executing steps: 0m00.001s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1468,19 +1434,10 @@ If we run Cucumber, it&#8217;s telling is that our <code>Person</code> class nee
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    ✖ failed
-      TypeError: this.sean.shout is not a <span class="k">function
-          </span>at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty/features/step_definitions/steps.js:11:13<span class="o">)</span>
-    Then Lucy hears Sean’s message
-    - skipped
+.F-
 
 Failures:
 
@@ -1488,13 +1445,13 @@ Failures:
    ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:4</span>
    ✖ When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:10</span>
        TypeError: this.sean.shout is not a <span class="k">function
-           </span>at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty/features/step_definitions/steps.js:11:13<span class="o">)</span>
-   - Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:14</span>
+           </span>at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:11:13<span class="o">)</span>
+   - Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:14
 
-1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
-3 steps <span class="o">(</span>1 failed, 1 skipped, 1 passed<span class="o">)</span>
-0m00.000s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+1 scenario (1 failed)
+3 steps (1 failed, 1 skipped, 1 passed)
+0m00.009s (executing steps: 0m00.001s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1522,29 +1479,33 @@ Let’s not worry about the implementation yet. The most important thing right n
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
+.....F
 
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    Then Lucy hears Sean’s message
-    ? pending
+Failures:
 
-Warnings:
+1<span class="o">)</span> Scenario: Listener hears a different message <span class="c"># features/hear_shout.feature:7</span>
+   ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:5</span>
+   ✔ When Sean shouts <span class="s2">"Free coffee!"</span> <span class="c"># features/step_definitions/steps.js:11</span>
+   ✖ Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:16
+       AssertionError:
+       Expected: is ["Free coffee!"]
+            but: was ["free bagels at Sean'</span>s<span class="s2">"]
+           + expected - actual
 
-1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
-   ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:4</span>
-   ✔ When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:10</span>
-   ? Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:14</span>
-       Pending
+            [
+           -  "</span>free bagels at Sean<span class="s1">'s"
+           +  "Free coffee!"
+            ]
 
-1 scenario <span class="o">(</span>1 pending<span class="o">)</span>
-3 steps <span class="o">(</span>1 pending, 2 passed<span class="o">)</span>
-0m00.000s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+           at World.&lt;anonymous&gt; (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:17:3)
+
+2 scenarios (1 failed, 1 passed)
+6 steps (1 failed, 5 passed)
+0m00.014s (executing steps: 0m00.004s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1613,50 +1574,33 @@ We also need to add a <code>messagesHeard</code> method to our Person class. Let
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    Then Lucy hears Sean’s message
-    ✖ failed
-      AssertionError:
-      Expected: is <span class="o">[</span><span class="s2">"free bagels at Sean's"</span><span class="o">]</span>
-           but: was <span class="o">[]</span>
-          + expected - actual
-
-          -[]
-          +[
-          +  <span class="s2">"free bagels at Sean's"</span>
-          +]
-
-          at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty/features/step_definitions/steps.js:17:3<span class="o">)</span>
+..F
 
 Failures:
 
 1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
    ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:5</span>
    ✔ When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:11</span>
-   ✖ Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:16</span>
+   ✖ Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:16
        AssertionError:
-       Expected: is <span class="o">[</span><span class="s2">"free bagels at Sean's"</span><span class="o">]</span>
-            but: was <span class="o">[]</span>
+       Expected: is ["free bagels at Sean'</span>s<span class="s2">"]
+            but: was []
            + expected - actual
 
            -[]
            +[
-           +  <span class="s2">"free bagels at Sean's"</span>
+           +  "</span>free bagels at Sean<span class="s1">'s"
            +]
 
-           at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty/features/step_definitions/steps.js:17:3<span class="o">)</span>
+           at World.&lt;anonymous&gt; (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:17:3)
 
-1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
-3 steps <span class="o">(</span>1 failed, 2 passed<span class="o">)</span>
-0m00.003s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+1 scenario (1 failed)
+3 steps (1 failed, 2 passed)
+0m00.014s (executing steps: 0m00.004s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1798,50 +1742,33 @@ Our goal at this stage is to get to a failing test, where the only thing left to
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    Then Lucy hears Sean’s message
-    ✖ failed
-      AssertionError:
-      Expected: is <span class="o">[</span><span class="s2">"free bagels at Sean's"</span><span class="o">]</span>
-           but: was <span class="o">[]</span>
-          + expected - actual
-
-          -[]
-          +[
-          +  <span class="s2">"free bagels at Sean's"</span>
-          +]
-
-          at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty/features/step_definitions/steps.js:17:3<span class="o">)</span>
+..F
 
 Failures:
 
 1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
    ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:5</span>
    ✔ When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:11</span>
-   ✖ Then Lucy hears Sean’s message <span class="c"># features/step_definitions/steps.js:16</span>
+   ✖ Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:16
        AssertionError:
-       Expected: is <span class="o">[</span><span class="s2">"free bagels at Sean's"</span><span class="o">]</span>
-            but: was <span class="o">[]</span>
+       Expected: is ["free bagels at Sean'</span>s<span class="s2">"]
+            but: was []
            + expected - actual
 
            -[]
            +[
-           +  <span class="s2">"free bagels at Sean's"</span>
+           +  "</span>free bagels at Sean<span class="s1">'s"
            +]
 
-           at World.&lt;anonymous&gt; <span class="o">(</span>/home/fedex/code/shouty/features/step_definitions/steps.js:17:3<span class="o">)</span>
+           at World.&lt;anonymous&gt; (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:17:3)
 
-1 scenario <span class="o">(</span>1 failed<span class="o">)</span>
-3 steps <span class="o">(</span>1 failed, 2 passed<span class="o">)</span>
-0m00.003s
-npm ERR! Test failed.  See above <span class="k">for </span>more details.</code></pre>
+1 scenario (1 failed)
+3 steps (1 failed, 2 passed)
+0m00.014s (executing steps: 0m00.003s)
+npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1878,19 +1805,14 @@ In this case, we’re going to cheat. We have a one-line fix that will make this
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    Then Lucy hears Sean’s message
+...
 
 1 scenario <span class="o">(</span>1 passed<span class="o">)</span>
 3 steps <span class="o">(</span>3 passed<span class="o">)</span>
-0m00.001s</code></pre>
+0m00.010s <span class="o">(</span>executing steps: 0m00.002s<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -1932,49 +1854,32 @@ Now when we come back to this code, we can just run the tests and Cucumber will 
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash"><span class="nv">$ </span>npm <span class="nb">test</span>
 
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty
-<span class="o">&gt;</span> cucumber-js <span class="nt">-f</span> node_modules/cucumber-pretty
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
+<span class="o">&gt;</span> cucumber-js
 
-Feature: Hear shout
+.....F
 
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    When Sean shouts <span class="s2">"free bagels at Sean's"</span>
-    Then Lucy hears Sean’s message
+Failures:
 
-  Scenario: Listener hears a different message
-    Given Lucy is 15 metres from Sean
-    ? undefined
-    When Sean shouts <span class="s2">"Free coffee!"</span>
-    - skipped
-    Then Lucy hears Sean<span class="s1">'s message
-    ? undefined
+1<span class="o">)</span> Scenario: Listener hears a different message <span class="c"># features/hear_shout.feature:7</span>
+   ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:5</span>
+   ✔ When Sean shouts <span class="s2">"Free coffee!"</span> <span class="c"># features/step_definitions/steps.js:11</span>
+   ✖ Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:16
+       AssertionError:
+       Expected: is ["Free coffee!"]
+            but: was ["free bagels at Sean'</span>s<span class="s2">"]
+           + expected - actual
 
-Warnings:
+            [
+           -  "</span>free bagels at Sean<span class="s1">'s"
+           +  "Free coffee!"
+            ]
 
-1) Scenario: Listener hears a different message # features/hear_shout.feature:7
-   ? Given Lucy is 15 metres from Sean
-       Undefined. Implement with the following snippet:
+           at World.&lt;anonymous&gt; (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:17:3)
 
-         Given('</span>Lucy is <span class="o">{</span>int<span class="o">}</span> metres from Sean<span class="s1">', function (int) {
-         // Given('</span>Lucy is <span class="o">{</span>float<span class="o">}</span> metres from Sean<span class="s1">', function (float) {
-           // Write code here that turns the phrase above into concrete actions
-           return '</span>pending<span class="s1">';
-         });
-
-   - When Sean shouts "Free coffee!" # features/step_definitions/steps.js:11
-   ? Then Lucy hears Sean'</span>s message
-       Undefined. Implement with the following snippet:
-
-         Then<span class="o">(</span><span class="s1">'Lucy hears Sean\'</span>s message<span class="s1">', function () {
-           // Write code here that turns the phrase above into concrete actions
-           return '</span>pending<span class="s1">';
-         });
-
-
-2 scenarios (1 undefined, 1 passed)
-6 steps (2 undefined, 1 skipped, 3 passed)
-0m00.001s
+2 scenarios (1 failed, 1 passed)
+6 steps (1 failed, 5 passed)
+0m00.015s (executing steps: 0m00.004s)
 npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
@@ -2371,20 +2276,12 @@ The most simple cucumber expression that would match that step is this one:</p>
 <div class="content">
 <pre class="rouge highlight"><code>$ npm test
 
-&gt; shouty@1.0.0 test /home/fedex/code/shouty
-&gt; cucumber-js -f node_modules/cucumber-pretty
+&gt; shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+&gt; cucumber-js
 
-Feature: Hear shout
+U-U
 
-  Scenario: Listener is within range
-    Given Lucy is located 1 metre from Sean
-    ? undefined
-    When Sean shouts "free bagels at Sean's"
-    - skipped
-    Then Lucy hears Sean's message
-    - skipped
-
-Warnings:
+Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
    ? Given Lucy is located 1 metre from Sean
@@ -2397,11 +2294,18 @@ Warnings:
          });
 
    - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
-   - Then Lucy hears Sean's message # features/step_definitions/steps.js:15
+   ? Then Lucy hears Sean's message
+       Undefined. Implement with the following snippet:
+
+         Then('Lucy hears Sean\'s message', function () {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
 
 1 scenario (1 undefined)
-3 steps (1 undefined, 2 skipped)
-0m00.000s
+3 steps (2 undefined, 1 skipped)
+0m00.007s (executing steps: 0m00.000s)
 npm ERR! Test failed.  See above for more details.</code></pre>
 </div>
 </div>
@@ -2424,37 +2328,30 @@ Now our step matches:</p>
 <div class="content">
 <pre class="rouge highlight"><code>$ npm test
 
-&gt; shouty@1.0.0 test /home/fedex/code/shouty
-&gt; cucumber-js -f node_modules/cucumber-pretty
+&gt; shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+&gt; cucumber-js
 
-Feature: Hear shout
+Lucy is 100 centimetres from Sean
+P-U
 
-  Scenario: Listener is within range
-    Given Lucy is located 1 metre from Sean
-    ? undefined
-    When Sean shouts "free bagels at Sean's"
-    - skipped
-    Then Lucy hears Sean's message
-    - skipped
-
-Warnings:
+Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ? Given Lucy is located 1 metre from Sean
+   ? Given Lucy is located 1 metre from Sean # features/step_definitions/steps.js:3
+       Pending
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
+   ? Then Lucy hears Sean's message
        Undefined. Implement with the following snippet:
 
-         Given('Lucy is located {int} metre from Sean', function (int) {
-         // Given('Lucy is located {float} metre from Sean', function (float) {
+         Then('Lucy hears Sean\'s message', function () {
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
 
-   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
-   - Then Lucy hears Sean's message # features/step_definitions/steps.js:15
 
 1 scenario (1 undefined)
-3 steps (1 undefined, 2 skipped)
-0m00.000s
+3 steps (1 undefined, 1 pending, 1 skipped)
+0m00.010s (executing steps: 0m00.001s)
 npm ERR! Test failed.  See above for more details.</code></pre>
 </div>
 </div>
@@ -2485,31 +2382,30 @@ Now we can use either 'standing' or 'located' in our scenarios, and both will ma
 <div class="content">
 <pre class="rouge highlight"><code>$ npm test
 
-&gt; shouty@1.0.0 test /home/fedex/code/shouty
-&gt; cucumber-js -f node_modules/cucumber-pretty
+&gt; shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+&gt; cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is standing 1 metre from Sean
 Lucy is 100 centimetres from Sean
-    ? pending
-    When Sean shouts "free bagels at Sean's"
-    - skipped
-    Then Lucy hears Sean's message
-    - skipped
+P-U
 
-Warnings:
+Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
    ? Given Lucy is standing 1 metre from Sean # features/step_definitions/steps.js:3
        Pending
    - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
-   - Then Lucy hears Sean's message # features/step_definitions/steps.js:15
+   ? Then Lucy hears Sean's message
+       Undefined. Implement with the following snippet:
 
-1 scenario (1 pending)
-3 steps (1 pending, 2 skipped)
-0m00.002s
+         Then('Lucy hears Sean\'s message', function () {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+
+1 scenario (1 undefined)
+3 steps (1 undefined, 1 pending, 1 skipped)
+0m00.010s (executing steps: 0m00.002s)
 npm ERR! Test failed.  See above for more details.</code></pre>
 </div>
 </div>
@@ -2608,23 +2504,40 @@ If we run Cucumber at this point we&#8217;ll see an error, because we haven&#821
 <div class="content">
 <pre>$ npm test
 
-&gt; shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
-&gt; cucumber-js -f node_modules/cucumber-pretty
+&gt; shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+&gt; cucumber-js
 
-Error: Undefined parameter type {person}
-    at UndefinedParameterTypeError.CucumberExpressionError [as constructor] (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/Errors.js:19:42)
-    at new UndefinedParameterTypeError (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/Errors.js:47:23)
-    at /home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:101:23
-    at String.replace (&lt;anonymous&gt;)
-    at CucumberExpression.processParameters (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:93:27)
-    at new CucumberExpression (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber-expressions/dist/src/CucumberExpression.js:46:21)
-    at buildStepDefinitionFromConfig (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/build_helpers.js:158:22)
-    at /home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/index.js:83:134
-    at Array.map (&lt;anonymous&gt;)
-    at SupportCodeLibraryBuilder.finalize (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/support_code_library_builder/index.js:83:71)
-    at Cli.getSupportCodeLibrary (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/index.js:120:50)
-    at Cli.run (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/index.js:141:37)
-    at async Object.run [as default] (/home/fedex/cucumber/chapter-03-code-js/node_modules/cucumber/lib/cli/run.js:30:14)
+U-U
+
+Undefined parameter types:
+
+- "person" e.g. `{person} is located/standing {int} metre(s) from Sean`
+
+Failures:
+
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ? Given Lucy is located 1 metres from Sean
+       Undefined. Implement with the following snippet:
+
+         Given('Lucy is located {int} metres from Sean', function (int) {
+         // Given('Lucy is located {float} metres from Sean', function (float) {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:15
+   ? Then Lucy hears Sean's message
+       Undefined. Implement with the following snippet:
+
+         Then('Lucy hears Sean\'s message', function () {
+           // Write code here that turns the phrase above into concrete actions
+           return 'pending';
+         });
+
+
+1 scenario (1 undefined)
+3 steps (2 undefined, 1 skipped)
+0m00.013s (executing steps: 0m00.000s)
 npm ERR! Test failed.  See above for more details.</pre>
 </div>
 </div>
@@ -2675,27 +2588,19 @@ All of this means that when we run our step, an instance of <code>Person</code> 
 <div class="content">
 <pre class="rouge highlight"><code>$ npm test
 
-&gt; shouty@1.0.0 test /home/fedex/cucumber/chapter-03-code-js
-&gt; cucumber-js -f node_modules/cucumber-pretty
+&gt; shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+&gt; cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 1 metres from Sean
 Person {}
 Lucy is 100 centimetres from Sean
-    ? pending
-    When Sean shouts "free bagels at Sean's"
-    - skipped
-    Then Lucy hears Sean's message
-    ? undefined
+P-U
 
-Warnings:
+Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
    ? Given Lucy is located 1 metres from Sean # features/step_definitions/steps.js:5
        Pending
-   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:16
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:15
    ? Then Lucy hears Sean's message
        Undefined. Implement with the following snippet:
 
@@ -2707,7 +2612,7 @@ Warnings:
 
 1 scenario (1 undefined)
 3 steps (1 undefined, 1 pending, 1 skipped)
-0m00.002s
+0m00.011s (executing steps: 0m00.003s)
 npm ERR! Test failed.  See above for more details.</code></pre>
 </div>
 </div>
@@ -5205,7 +5110,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-09 13:37:24 UTC
+Last updated 2020-10-10 15:05:01 UTC
 </div>
 </div>
 <style>
