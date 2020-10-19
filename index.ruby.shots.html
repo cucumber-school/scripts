@@ -4945,6 +4945,9 @@ We can pass arguments to Cucumber using the <code>--name</code> option, which te
 </div>
 </div>
 <div class="paragraph">
+<p>We can accomplish the same thing by adding some configuration on the <code>cucumber.yml</code> file, but we&#8217;ll talk about that in the next lesson.</p>
+</div>
+<div class="paragraph">
 <p>Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. <a href="#shot-276" id="shot-276" title="in feature file show that 'Message too long' starts on line 44" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: in feature file show that 'Message too long' starts on line 44</a></p>
 </div>
 <div class="paragraph">
@@ -4979,7 +4982,7 @@ We can pass arguments to Cucumber using the <code>--name</code> option, which te
 <p>Let&#8217;s look at using a property file to set the system properties. Create a property file called <code>cucumber.yml</code> in the root path of the project <a href="#shot-281" id="shot-281" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a> and add <code>default: --name range</code> <a href="#shot-282" id="shot-282" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
 </div>
 <div class="paragraph">
-<p>When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. <a href="#shot-283" id="shot-283" title="type <code>mvn test</code> in console, show output and highlight that it has run the two scenarios containing the word 'range'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: type <code>mvn test</code> in console, show output and highlight that it has run the two scenarios containing the word 'range'</a></p>
+<p>When we run Cucumber, it picks up the property setting from the file and only runs the "range" scenarios. <a href="#shot-283" id="shot-283" title="type <code>mvn test</code> in console, show output and highlight that it has run the two scenarios containing the word 'range'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: type <code>mvn test</code> in console, show output and highlight that it has run the two scenarios containing the word 'range'</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5051,11 +5054,11 @@ We’ll put a focus tag right here, above this scenario. <a href="#shot-290" id=
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="k">default</span><span class="o">:</span> <span class="o">--</span><span class="n">tags</span> <span class="s">"not @slow"</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="k">default</span><span class="p">:</span> <span class="o">--</span><span class="nx">tags</span> <span class="dl">"</span><span class="s2">not @slow</span><span class="dl">"</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Note the need to add quotes around <code>"not @slow"</code>.<a href="#shot-299" id="shot-299" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a> If they&#8217;re not added, running <code>bundle exec cucumber</code> will result in an error.</p>
+<p>Note the need to add quotes around <code>"not @slow"</code>.<a href="#shot-299" id="shot-299" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a> If they&#8217;re not added, running <code>npm test</code> will result in an error.</p>
 </div>
 <div class="paragraph">
 <p>You can read about how to build more complicated tag expressions on the <a href="https://cucumber.io/docs/cucumber/api/#tag-expressions">Cucumber website</a> <a href="#shot-300" id="shot-300" title="open the link and show the Cucumber website" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: open the link and show the Cucumber website</a></p>
@@ -5283,7 +5286,7 @@ bundle exec cucumber -h</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-19 10:55:38 UTC
+Last updated 2020-10-19 11:31:59 UTC
 </div>
 </div>
 <style>

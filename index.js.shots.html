@@ -487,7 +487,17 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_tdd_loops">5.6. TDD Loops</a></li>
 </ul>
 </li>
-<li><a href="#_configuring_cucumber">6. Configuring Cucumber</a></li>
+<li><a href="#_configuring_cucumber">6. Configuring Cucumber</a>
+<ul class="sectlevel2">
+<li><a href="#_basic_filtering">6.1. Basic Filtering</a></li>
+<li><a href="#_filtering_with_tags">6.2. Filtering With Tags</a></li>
+<li><a href="#_more_control">6.3. More Control</a></li>
+<li><a href="#_formatter_plugins">6.4. Formatter plugins</a></li>
+<li><a href="#_rerun_formatter">6.5. Rerun formatter</a></li>
+<li><a href="#_static_configuration">6.6. Static configuration</a></li>
+<li><a href="#_close">6.7. Close</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -5094,13 +5104,422 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 <div class="sect1">
 <h2 id="_configuring_cucumber">6. Configuring Cucumber</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_basic_filtering">6.1. Basic Filtering</h3>
+<div class="paragraph">
+<p><a href="#shot-588" id="shot-588" title="Animation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Animation</a>
+Hello, and welcome back to Cucumber School.</p>
+</div>
+<div class="paragraph">
+<p>Last time we learned about two very different kinds of loops. First, we used DataTables to loop over data in your scenarios.</p>
+</div>
+<div class="paragraph">
+<p>Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to build the right thing while the inner loop helps you build the thing right.</p>
+</div>
+<div class="paragraph">
+<p>In this lesson, we’re going to teach you all about how to configure Cucumber.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-589" id="shot-589" title="Scroll through shout.feature, end by showing scenario 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: Scroll through shout.feature, end by showing scenario 'Message too long'</a>
+When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.</p>
+</div>
+<div class="paragraph">
+<p>If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.</p>
+</div>
+<div class="paragraph">
+<p>There are several ways to do this in Cucumber - and your IDE may offer other options. We&#8217;ll start by showing some basic filtering on the command line, before showing you some alternatives.</p>
+</div>
+<div class="paragraph">
+<p>Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-590" id="shot-590" title="type mvn command in console, show output and highlight that it has only run the one scenario 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: type mvn command in console, show output and highlight that it has only run the one scenario 'Message too long'</a>
+We can pass arguments to Cucumber using the <code>--name</code> option, which tells Cucumber to only run scenarios with a name matching "Message is too long".</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js --name "Message is too long"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The value of the <code>--name</code> option is actually a regular expression, so you can use your imagination here to run more than one scenario.
+Let&#8217;s use it to run all scenarios with the text "range" in their name. <a href="#shot-591" id="shot-591" title="type mvn command in console, show output and highlight that it has run the two scenarios containing the word 'range'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: type mvn command in console, show output and highlight that it has run the two scenarios containing the word 'range'</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js --name "range"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can accomplish the same thing by adding some configuration on the <code>cucumber.js</code> file, but we&#8217;ll talk about that in the next lesson.</p>
+</div>
+<div class="paragraph">
+<p>Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. <a href="#shot-592" id="shot-592" title="in feature file show that 'Message too long' starts on line 44" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: in feature file show that 'Message too long' starts on line 44</a></p>
+</div>
+<div class="paragraph">
+<p>We can use that line number when we run Cucumber. <a href="#shot-593" id="shot-593" title="add entry to property file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: add entry to property file</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js features/hear_shout.feature:44</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-594" id="shot-594" title="type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'</a></p>
+</div>
+<div class="paragraph">
+<p>You can even specify multiple line numbers for each file. Let&#8217;s run 'Two shouts' as well. [<a href="#shot-595" id="shot-595" title="in feature file, show 'Two shouts' starts on line 33" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: in feature file, show 'Two shouts' starts on line 33</a></p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s add that line number to the Maven command.<a href="#shot-596" id="shot-596" title="type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js features/hear_shout.feature:33:44</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can list several files and lines together like this if you have a specific set of scenarios you want to run.</p>
+</div>
+<div class="paragraph">
+<p>The examples that you&#8217;ve just seen set a Ruby property on the command line. If you&#8217;re working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s look at using a property file to set the system properties. Create a property file called <code>cucumber.js</code> in the root path of the project <a href="#shot-597" id="shot-597" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a> and add <code>default: --name range</code> <a href="#shot-598" id="shot-598" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
+</div>
+<div class="paragraph">
+<p>When we run <code>nmp test</code>, Cucumber picks up the property setting from the file and only runs the "range" scenarios. <a href="#shot-599" id="shot-599" title="type <code>mvn test</code> in console, show output and highlight that it has run the two scenarios containing the word 'range'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: type <code>mvn test</code> in console, show output and highlight that it has run the two scenarios containing the word 'range'</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The property file is also picked up if you run Cucumber from within your IDE <a href="#shot-600" id="shot-600" title="use IntelliJ to run all scenarios in <code>hear_shout.feature</code> and then highlight that only the range scenarios have been run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: use IntelliJ to run all scenarios in <code>hear_shout.feature</code> and then highlight that only the range scenarios have been run</a></p>
+</div>
+<div class="paragraph">
+<p>The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.</p>
+</div>
+<div class="paragraph">
+<p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using property files.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_filtering_with_tags">6.2. Filtering With Tags</h3>
+<div class="paragraph">
+<p><a href="#shot-601" id="shot-601" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a>
+In the previous lesson, we modified Cucumber&#8217;s behavior over the command line.</p>
+</div>
+<div class="paragraph">
+<p>As you can see, there&#8217;s not much in the Cucumber Runner class, but you can control how Cucumber runs by using the @CucumberOptions annotation. <a href="#shot-602" id="shot-602" title="highlight annotation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: highlight annotation</a> We&#8217;ll use this to show you how to filter using tags.</p>
+</div>
+<div class="paragraph">
+<p>First, let&#8217;s delete the contents of <code>cucumber.js</code>. <a href="#shot-603" id="shot-603" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a> Now, Cucumber will run all scenarios. <a href="#shot-604" id="shot-604" title="run Cucumber from IntelliJ" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run Cucumber from IntelliJ</a></p>
+</div>
+<div class="paragraph">
+<p>Since Cucumber 1.0, you may notice a comment at the end of the execusion that looks like this</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">┌──────────────────────────────────────────────────────────────────────────┐
+│ Share your Cucumber Report with your team at https://reports.cucumber.io │
+│                                                                          │
+│ Command line option:    <span class="nt">--publish</span>                                        │
+│ Environment variable:   <span class="nv">CUCUMBER_PUBLISH_ENABLED</span><span class="o">=</span><span class="nb">true</span>                    │
+│                                                                          │
+│ More information at https://reports.cucumber.io/docs/cucumber-js         │
+│                                                                          │
+│ To disable this message, add this to your ./cucumber.js:                 │
+│ module.exports <span class="o">=</span> <span class="o">{</span> default: <span class="s1">'--publish-quiet'</span> <span class="o">}</span>                          │
+└──────────────────────────────────────────────────────────────────────────┘</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As the comment says, we can remove it by adding <code>module.exports = { default: '--publish-quiet' }</code> to the <code>cucumber.js</code> file. <a href="#shot-605" id="shot-605" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-606" id="shot-606" title="show 'Listener is out of range' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: show 'Listener is out of range' scenario</a>
+We’ll put a focus tag right here, above this scenario. <a href="#shot-607" id="shot-607" title="add a @focus tag to the 'Listener is out of range' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: add a @focus tag to the 'Listener is out of range' scenario</a> Tags start with an at-sign and are case sensitive.</p>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s add a tag expression to the default key, which Cucumber will use to filter the scenarios run</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = {</span>
+  <span class="s">default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">@focus'</span>
+<span class="err">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can run only the scenarios tagged with focus - there should be only one&#8230;&#8203; <a href="#shot-608" id="shot-608" title="run RunCucumberTest.java from IntelliJ, then highlight that only 'Listener is out of range' scenario was run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run RunCucumberTest.java from IntelliJ, then highlight that only 'Listener is out of range' scenario was run</a></p>
+</div>
+<div class="paragraph">
+<p>Yep.</p>
+</div>
+<div class="paragraph">
+<p>It’s entirely up to you what you name your tags. When we’re working on a particular area of the application it is common to use a temporary tag like this - we’ll remove it before we check our code into source control.</p>
+</div>
+<div class="paragraph">
+<p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. <a href="#shot-609" id="shot-609" title="tag first and third scenario with @smoke" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: tag first and third scenario with @smoke</a> Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. <a href="#shot-610" id="shot-610" title="run RunCucumberTest.java from IntelliJ, then highlight that only first and third scenarios were run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run RunCucumberTest.java from IntelliJ, then highlight that only first and third scenarios were run</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = {</span>
+  <span class="s">default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">@smoke'</span>
+<span class="err">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If you’re running Cucumber on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests.</p>
+</div>
+<div class="paragraph">
+<p>Tags give you a way to organise your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.</p>
+</div>
+<div class="paragraph">
+<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. <a href="#shot-611" id="shot-611" title="tag feature with @SHOUTY-11" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: tag feature with @SHOUTY-11</a> All the scenarios within that file now inherit that tag, so if we change the tag expression in @CucumberOptions, Cucumber will run all the scenarios in the feature file. <a href="#shot-612" id="shot-612" title="run RunCucumberTest.java from IntelliJ, then show that all scenarios were run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: run RunCucumberTest.java from IntelliJ, then show that all scenarios were run</a></p>
+</div>
+<div class="paragraph">
+<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. <a href="#shot-613" id="shot-613" title="tag last two scenarios with @slow" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: tag last two scenarios with @slow</a> Then rewrite the tag expression in CucumberOptions using the <code>not</code> keyword <a href="#shot-614" id="shot-614" title=""modify CucumberOptions" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: "modify CucumberOptions</a> Now when you run Cucumber, the "@slow" scenarios won&#8217;t be run. <a href="#shot-615" id="shot-615" title="run RunCucumberTest.java from IntelliJ, then show that the slow scenarios were not run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: run RunCucumberTest.java from IntelliJ, then show that the slow scenarios were not run</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">default</span><span class="p">:</span> <span class="dl">'</span><span class="s1">--publish-quiet --tags not @slow</span><span class="dl">'</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Note the need to add quotes around <code>"not @slow"</code>.<a href="#shot-616" id="shot-616" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16</a> If they&#8217;re not added, running <code>bundle exec cucumber</code> will result in an error.</p>
+</div>
+<div class="paragraph">
+<p>You can read about how to build more complicated tag expressions on the <a href="https://cucumber.io/docs/cucumber/api/#tag-expressions">Cucumber website</a> <a href="#shot-617" id="shot-617" title="open the link and show the Cucumber website" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: open the link and show the Cucumber website</a></p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s one more thing to learn about tags. They can be combined with hooks, so that you can be selective about which hooks to run when. We&#8217;ll cover that in a future chapter.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_more_control">6.3. More Control</h3>
+<div class="paragraph">
+<p>Cucumber is first and foremost a tool that facilitates a common understanding between people on a project. Imagine our customers were cats. We could write our features in English, but the cats would obviously not understand that, so I&#8217;ll show you how to write a scenario in LOLCAT instead.</p>
+</div>
+<div class="paragraph">
+<p>You can get a list of all the supported languages with --i18n-languages. <a href="#shot-618" id="shot-618" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js --i18n-languages</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cucumber supports over 70 different languages, thanks to contributions from people from all over the world.</p>
+</div>
+<div class="paragraph">
+<p>To see the translation of the Gherkin keywords for a particular language, just use the '--i18n' option with the language code. <a href="#shot-619" id="shot-619" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js --i18n-keywords en-lol</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now create a new feature file in src/test/resources called cat.feature <a href="#shot-620" id="shot-620" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a></p>
+</div>
+<div class="paragraph">
+<p>The first line tells Cucumber which language the feature file is written in. <a href="#shot-621" id="shot-621" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="c"># language: en-lol</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cucumber then expects the Gherkin keywords to be in LOLCAT <a href="#shot-622" id="shot-622" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="c"># language: en-lol</span>
 
+<span class="kd">OH HAI</span><span class="p">:</span> HEAR SHOUT
+
+  <span class="kn">MISHUN</span><span class="p">:</span> MESAGE IZ 2 LONG
+    <span class="nf">I </span>CAN HAZ A KAT CALLD SHOUTR</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The step is undefined, but we can quickly generate it by running Cucumber <a href="#shot-623" id="shot-623" title="run new scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: run new scenario</a> Cucumber has generated a step definition.</p>
+</div>
+<div class="paragraph">
+<p>Notice that the scenarios have been run in the order that the occur in the feature file <a href="#shot-624" id="shot-624" title="expand/highlight the test results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: expand/highlight the test results</a> That&#8217;s fine, but there&#8217;s a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.</p>
+</div>
+<div class="paragraph">
+<p>Each scenario should be isolated - it&#8217;s result should not depend on the outcome of any other scenario. To help you catch any dependencies between your scenarios, Cucumber can be told to run your scenarios in a random order.</p>
+</div>
+<div class="paragraph">
+<p>To do this, we can use the random flag in the profile file. <a href="#shot-625" id="shot-625" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>default: --order random</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when we run Cucumber, the scenarios are run in a random order <a href="#shot-626" id="shot-626" title="run Cucumber &amp; show new order of scenario execution" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run Cucumber &amp; show new order of scenario execution</a>. Now there&#8217;s almost no chance of a dependency between scenarios slipping through without being noticed.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-627" id="shot-627" title="show 'List configuration options' section of <a href="https://cucumber.io/docs/cucumber/api/#options"" class="bare">https://cucumber.io/docs/cucumber/api/#options"</a> style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: show 'List configuration options' section of <a href="https://cucumber.io/docs/cucumber/api/#options" class="bare">https://cucumber.io/docs/cucumber/api/#options</a></a>
+A full list of Cucumber&#8217;s configuration properties can be found by passing the <code>--help</code> flag on the command line. <a href="#shot-628" id="shot-628" title="highlight top of output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: highlight top of output</a> Or using the abbreviated version <code>-h</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js --help
+node_modules/.bin/cucumber-js -h</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That&#8217;s quite a lot to digest, but to make Cucumber really useful to your team, it’s good to spend some time learning the details of how to configure it. In this lesson, we showcased two of Cucumber’s configuration options and you learned how to write your scenarios in different spoken languages.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_formatter_plugins">6.4. Formatter plugins</h3>
+<div class="paragraph">
+<p>Let’s take a closer look at the <code>--format</code> option.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber --format help</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.</p>
+</div>
+<div class="paragraph">
+<p>Let’s try the HTML formatter.</p>
+</div>
+<div class="paragraph">
+<p>When we use the html formatter we use dash-dash out to specify the file where the report should be written. Otherwise it will be written directly to the console.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber --format html --out report.html</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s try another one - JSON.</p>
+</div>
+<div class="paragraph">
+<p>The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.</p>
+</div>
+<div class="paragraph">
+<p>There is also a progress formatter, which just prints out a single character for each step. The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.</p>
+</div>
+<div class="paragraph">
+<p>We can specify multiple formatters like this. The one without a dash-dash out will be written to the console.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rerun_formatter">6.5. Rerun formatter</h3>
+<div class="paragraph">
+<p>One of these formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-629" id="shot-629" title="Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!"" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!"</a></p>
+</div>
+<div class="paragraph">
+<p>We choose the rerun formatter and send the output to a file called rerun.txt.</p>
+</div>
+<div class="paragraph">
+<p>Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
+</div>
+<div class="paragraph">
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. c:</p>
+</div>
+<div class="paragraph">
+<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.</p>
+</div>
+<div class="sect3">
+<h4 id="_dry_run">6.5.1. Dry-run</h4>
+<div class="paragraph">
+<p>The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_strict">6.5.2. Strict</h4>
+<div class="paragraph">
+<p>The --strict option affects the exit status of Cucumber. To see how it works, let’s add an undefined step:</p>
+</div>
+<div class="paragraph">
+<p>(Adds “Then we have an undefined step” to the end of shout.feature).</p>
+</div>
+<div class="paragraph">
+<p>Let’s first run it without <code>--strict</code>:</p>
+</div>
+<div class="paragraph">
+<p>That last command tells us that Cucumber didn’t fail - it exited with exit status zero, which means success. Now, let’s run it with strict:</p>
+</div>
+<div class="paragraph">
+<p>This time the exit status was one, which means Cucumber failed.</p>
+</div>
+<div class="paragraph">
+<p>Why is this interesting? Well, if you run Cucumber on a Continuous Integration server it will fail the build if there are undefined or pending steps. That’s pretty handy!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_i18n">6.5.3. I18n</h4>
+<div class="paragraph">
+<p>Cucumber is first and foremost a tool that facilitates a common understanding between people on a project. Imagine our customers were cats. We could write our features in English, but the cats would obviously not understand that.</p>
+</div>
+<div class="paragraph">
+<p>We all know that cats speak LOLCAT, not English, so our feature would have to look like this in order for cats to understand:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code># language: en-lol</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We tell Cucumber what language to use by adding a language comment at the top of the file. Cucumber supports over 60 different languages, thanks to contributions from people and cats all over the world.</p>
+</div>
+<div class="paragraph">
+<p>You can get a list of all the supported languages with --i18n help. To see the translation of the Gherkin keywords for a particular language, just replace help with the language code. For example --i18n hi for Hindi.</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_static_configuration">6.6. Static configuration</h3>
+<div class="paragraph">
+<p>It would be tedious if you had to write out these configuration options every time you run Cucumber. To make this easier you can write the options in a file that Cucumber will pick up.</p>
+</div>
+<div class="paragraph">
+<p>You can use the cucumber.js file to define one or more profiles that describe a set of configuration options for Cucumber.</p>
+</div>
+<div class="paragraph">
+<p>For example, we can define a <code>dev</code> profile that runs only the @focus scenarios and uses the progress formatter.</p>
+</div>
+<div class="paragraph">
+<p>We use the <code>--profile</code> option to choose this profile when running Cucumber.</p>
+</div>
+<div class="paragraph">
+<p>To change the default behaviour of Cucumber, change the default profile. Let’s make Cucumber strict by default.</p>
+</div>
+<div class="paragraph">
+<p>It’s common for teams to have a number of profiles defined, usually for the different environments where Cucumber runs. You can have a CI profile that behaves differently to the one you use on your dev machines, for example.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_close">6.7. Close</h3>
+<div class="paragraph">
+<p>To make Cucumber really useful to your team, it’s good to spend time learning the details of how to configure it. In this lesson, we gave you a tour of almost all of Cucumber’s configuration options. You learned how to filter scenarios by name, line number or tag. You learned how to format Cucumber’s output, and you learned how to write your scenarios in different spoken languages. You also learned how to set up different configurations for use by your whole team.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-19 10:55:38 UTC
+Last updated 2020-10-19 11:31:59 UTC
 </div>
 </div>
 <style>
