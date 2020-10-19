@@ -1482,29 +1482,19 @@ Let’s not worry about the implementation yet. The most important thing right n
 <span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span> /home/fedex/code/shouty-js/shouty
 <span class="o">&gt;</span> cucumber-js
 
-.....F
+..P
 
-Failures:
+Warnings:
 
-1<span class="o">)</span> Scenario: Listener hears a different message <span class="c"># features/hear_shout.feature:7</span>
-   ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:5</span>
-   ✔ When Sean shouts <span class="s2">"Free coffee!"</span> <span class="c"># features/step_definitions/steps.js:11</span>
-   ✖ Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:16
-       AssertionError:
-       Expected: is ["Free coffee!"]
-            but: was ["free bagels at Sean'</span>s<span class="s2">"]
-           + expected - actual
+1<span class="o">)</span> Scenario: Listener is within range <span class="c"># features/hear_shout.feature:2</span>
+   ✔ Given Lucy is located 15 metres from Sean <span class="c"># features/step_definitions/steps.js:4</span>
+   ✔ When Sean shouts <span class="s2">"free bagels at Sean's"</span> <span class="c"># features/step_definitions/steps.js:10</span>
+   ? Then Lucy hears Sean<span class="s1">'s message # features/step_definitions/steps.js:14
+       Pending
 
-            [
-           -  "</span>free bagels at Sean<span class="s1">'s"
-           +  "Free coffee!"
-            ]
-
-           at World.&lt;anonymous&gt; (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:17:3)
-
-2 scenarios (1 failed, 1 passed)
-6 steps (1 failed, 5 passed)
-0m00.014s (executing steps: 0m00.004s)
+1 scenario (1 pending)
+3 steps (1 pending, 2 passed)
+0m00.009s (executing steps: 0m00.001s)
 npm ERR! Test failed.  See above for more details.</span></code></pre>
 </div>
 </div>
@@ -5110,7 +5100,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-10 15:05:01 UTC
+Last updated 2020-10-19 10:55:38 UTC
 </div>
 </div>
 <style>
