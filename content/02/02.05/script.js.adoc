@@ -209,29 +209,19 @@ $ npm test
 > shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
 > cucumber-js
 
-.....F
+..P
 
-Failures:
+Warnings:
 
-1) Scenario: Listener hears a different message # features/hear_shout.feature:7
-   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:5
-   ✔ When Sean shouts "Free coffee!" # features/step_definitions/steps.js:11
-   ✖ Then Lucy hears Sean's message # features/step_definitions/steps.js:16
-       AssertionError: 
-       Expected: is ["Free coffee!"]
-            but: was ["free bagels at Sean's"]
-           + expected - actual
+1) Scenario: Listener is within range # features/hear_shout.feature:2
+   ✔ Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:4
+   ✔ When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:10
+   ? Then Lucy hears Sean's message # features/step_definitions/steps.js:14
+       Pending
 
-            [
-           -  "free bagels at Sean's"
-           +  "Free coffee!"
-            ]
-
-           at World.<anonymous> (/home/fedex/code/shouty-js/shouty/features/step_definitions/steps.js:17:3)
-
-2 scenarios (1 failed, 1 passed)
-6 steps (1 failed, 5 passed)
-0m00.014s (executing steps: 0m00.004s)
+1 scenario (1 pending)
+3 steps (1 pending, 2 passed)
+0m00.009s (executing steps: 0m00.001s)
 npm ERR! Test failed.  See above for more details.
 ----
 
