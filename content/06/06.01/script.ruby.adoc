@@ -40,6 +40,8 @@ We can also use the abbreviated form of `--name`, `-n` shot::[5]
 bundle exec cucumber -n "range"
 ----
 
+We can accomplish the same thing by adding some configuration on the `cucumber.yml` file, but we'll talk about that in the next lesson.
+
 Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. shot::[6, "in feature file show that 'Message too long' starts on line 44"]
 
 We can use that line number when we run Cucumber. shot::[7, "add entry to property file"]
@@ -66,7 +68,7 @@ The examples that you've just seen set a Ruby property on the command line. If y
 
 Let's look at using a property file to set the system properties. Create a property file called `cucumber.yml` in the root path of the project shot::[11] and add `default: --name range` shot::[12]
 
-When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. shot::[13, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
+When we run Cucumber, it picks up the property setting from the file and only runs the "range" scenarios. shot::[13, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
 
 [source]
 ----

@@ -40,12 +40,12 @@ Some teams also use tags to reference external documents, for example, tickets i
 You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. shot::[12, "tag last two scenarios with @slow""] Then rewrite the tag expression in CucumberOptions using the `not` keyword shot::[13, "modify CucumberOptions] Now when you run Cucumber, the "@slow" scenarios won't be run. shot::[14, "run RunCucumberTest.java from IntelliJ, then show that the slow scenarios were not run"]
 
 
-[source, java]
+[source, js]
 ----
 default: --tags "not @slow"
 ----
 
-Note the need to add quotes around `"not @slow"`.shot::[] If they're not added, running `bundle exec cucumber` will result in an error.
+Note the need to add quotes around `"not @slow"`.shot::[] If they're not added, running `npm test` will result in an error.
 
 You can read about how to build more complicated tag expressions on the https://cucumber.io/docs/cucumber/api/#tag-expressions[Cucumber website] shot::[15, "open the link and show the Cucumber website"]
 
