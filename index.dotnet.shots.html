@@ -1773,7 +1773,7 @@ Good step definitions are important because they enable the <em>readability</em>
 <div class="sect2">
 <h3 id="_literal_expressions">3.2. Literal expressions</h3>
 <div class="paragraph">
-<p>Let&#8217;s look at the Shouty scenario from the last chapter. <a href="#shot-1123" id="shot-1123" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a></p>
+<p>Let&#8217;s look at the Shouty scenario from the last chapter. <a href="#shot-1123" id="shot-1123" title="initial zoom 150%" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: initial zoom 150%</a></p>
 </div>
 <div class="listingblock">
 <div class="title">HearShout.feature</div>
@@ -1790,7 +1790,7 @@ Good step definitions are important because they enable the <em>readability</em>
 <p>As SpecFlow starts to execute this feature, it will come to the first step of the scenario <code>Given Lucy is located 15 metres from Sean</code> <a href="#shot-1124" id="shot-1124" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> and say to itself "now - do I have any step definitions that match the phrase <code>Lucy is located 15 metres from Sean</code>?"</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1125" id="shot-1125" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a>
+<p><a href="#shot-1125" id="shot-1125" title="new text file, zoom 200%, full screen, make text left aligned in line 7" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: new text file, zoom 200%, full screen, make text left aligned in line 7</a>
 The most simple cucumber expression that would match that step is this one:</p>
 </div>
 <div class="listingblock">
@@ -1845,8 +1845,8 @@ The most simple cucumber expression that would match that step is this one:</p>
 <div class="sect2">
 <h3 id="_capturing_parameters">3.3. Capturing parameters</h3>
 <div class="paragraph">
-<p><a href="#shot-1127" id="shot-1127" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a>
-Sometimes, we want to write step definitions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. <a href="#shot-1128" id="shot-1128" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a></p>
+<p><a href="#shot-1127" id="shot-1127" title="initial zoom 120%" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: initial zoom 120%</a>
+Sometimes, we want to write step definitions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. <a href="#shot-1128" id="shot-1128" title="change 15 to 100" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: change 15 to 100</a></p>
 </div>
 <div class="listingblock">
 <div class="title">HearShout.feature</div>
@@ -1863,7 +1863,7 @@ Sometimes, we want to write step definitions that allow us to use different valu
 <p>To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called <em>parameters</em>.</p>
 </div>
 <div class="paragraph">
-<p>For example, to capture the number of metres, we can use the <code>{int}</code> parameter: <a href="#shot-1129" id="shot-1129" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a> which is passed as an argument to our step definition: <a href="#shot-1130" id="shot-1130" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a></p>
+<p>For example, to capture the number of metres, we can use the <code>{int}</code> parameter: <a href="#shot-1129" id="shot-1129" title="change 15 to {int}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: change 15 to {int}</a> which is passed as an argument to our step definition: <a href="#shot-1130" id="shot-1130" title="add parameter" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: add parameter</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -1876,7 +1876,7 @@ Sometimes, we want to write step definitions that allow us to use different valu
 <p>Now we’re capturing that value as an argument. The value <code>100</code> will be passed to our code automatically by SpecFlow.</p>
 </div>
 <div class="paragraph">
-<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to a <code>int</code> data type for us automatically, so we can do maths with it if we want.<a href="#shot-1131" id="shot-1131" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5</a></p>
+<p>Because we&#8217;ve used Cucumber Expressions' built-in <code>{int}</code> parameter type, the value has been cast to a <code>int</code> data type for us automatically, so we can do maths with it if we want.<a href="#shot-1131" id="shot-1131" title="add text with calculation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: add text with calculation</a></p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -1948,7 +1948,7 @@ Sometimes, we want to write step definitions that allow us to use different valu
 <p>Ideally, the language used in scenarios should never be constrained by your step definitions. Otherwise they&#8217;ll end up sounding like they were written by robots. Or worse, they read like code.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1132" id="shot-1132" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1</a>
+<p><a href="#shot-1132" id="shot-1132" title="initial zoom 120%, change step text" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: initial zoom 120%, change step text</a>
 One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:</p>
 </div>
 <div class="listingblock">
@@ -1957,25 +1957,19 @@ One common example is the problem of plurals. Suppose we want to place Lucy and 
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1133" id="shot-1133" title="Show test results and open test output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: Show test results and open test output</a>
-Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match:</p>
+<p><a href="#shot-1133" id="shot-1133" title="select metre" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: select metre</a>
+Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match as you can see from the different step color:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>Given Lucy is located 1 metre from Sean
--&gt; No matching step definition found for the step. Use the following code to create one:
-        [Given(@"Lucy is located (.*) metre from Sean")]
-        public void GivenLucyIsLocatedMetreFromSean(int p0)
-        {
-            _scenarioContext.Pending();
-        }</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">	<span class="nf">Given </span>Lucy is located 1 metre from Sean</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>What a pain!</p>
 </div>
 <div class="paragraph">
-<p>Fear not. We can just surround the <code>s</code> in parentheses to make it optional, like this: <a href="#shot-1134" id="shot-1134" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a></p>
+<p>Fear not. <a href="#shot-1134" id="shot-1134" title="change expression in step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: change expression in step def</a> We can just surround the <code>s</code> in parentheses to make it optional, like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1984,19 +1978,19 @@ Because we’ve used the singular <code>metre</code> instead of the plural <code
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1135" id="shot-1135" title="Run tests and show test result" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: Run tests and show test result</a>
-Now our step matches:</p>
+<p><a href="#shot-1135" id="shot-1135" title="build and show scenario step color changing" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: build and show scenario step color changing</a>
+We build the project and now our step matches:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>System.NotImplementedException : Lucy is 100 centimetres from Sean</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">	<span class="nf">Given </span>Lucy is located 1 metre from Sean</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.</p>
 </div>
 <div class="paragraph">
-<p>Another is to allow <em>alternates</em> - different ways of saying the same thing. For example, to accept this step: <a href="#shot-1136" id="shot-1136" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5</a></p>
+<p>Another is to allow <em>alternates</em> - different ways of saying the same thing. For example, to accept this step: <a href="#shot-1136" id="shot-1136" title="change located to standing" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: change located to standing</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2004,7 +1998,7 @@ Now our step matches:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;we can use this Cucumber Expression: <a href="#shot-1137" id="shot-1137" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a></p>
+<p>&#8230;&#8203;we can use this Cucumber Expression: <a href="#shot-1137" id="shot-1137" title="change step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: change step def</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2141,10 +2135,10 @@ Now we can use either 'standing' or 'located' in our scenarios, and both will ma
 <p>By default, any name is recognized as a person, but we could restrict it to a specific names using - gasp! - a regular expression. <a href="#shot-1146" id="shot-1146" title="add regex filter '(Lucy|Sean)'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7.1: add regex filter '(Lucy|Sean)'</a></p>
 </div>
 <div class="paragraph">
-<p>This is not what we want in this project now, so let&#8217;s leave it as it was. [7.2, "remove filter"] You can find more examples about using <code>StepArgumentTransformation</code> in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/Step-Argument-Conversions.html#step-argument-transformation">SpecFlow documentation</a>.</p>
+<p>This is not what we want in this project now, so let&#8217;s leave it as it was. <a href="#shot-1147" id="shot-1147" title="remove filter" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7.2: remove filter</a> You can find more examples about using <code>StepArgumentTransformation</code> in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/Step-Argument-Conversions.html#step-argument-transformation">SpecFlow documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1147" id="shot-1147" title="Set a breakpoint to step definition; debug; show person details; stop debugger" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: Set a breakpoint to step definition; debug; show person details; stop debugger</a>
+<p><a href="#shot-1148" id="shot-1148" title="Set a breakpoint to step definition; debug; show person details; stop debugger" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: Set a breakpoint to step definition; debug; show person details; stop debugger</a>
 All of this means that when we run our step, we&#8217;ll be passed an instance of <code>Person</code> into our step definition automatically.</p>
 </div>
 <div class="paragraph">
@@ -2331,7 +2325,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1148" id="shot-1148" title="04.01.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 0.1: 04.01.animation.mp4</a></p>
+<p><a href="#shot-1149" id="shot-1149" title="04.01.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 0.1: 04.01.animation.mp4</a></p>
 </div>
 <div class="paragraph">
 <p>In the previous chapter, we talked about the importance of having readable scenarios, and you learned some new skills with Cucumber Expressions to help you achieve that goal. Those skills will give you the confidence to write scenarios exactly the way you want, knowing you’ll be able to match the Gherkin steps easily from your step definition code.</p>
@@ -2406,14 +2400,14 @@ reliable documentation. The primary purpose of traditional automated tests, on t
 <p>While we were away, the developers of Shouty have been busy working on the code. Let’s have a look at what they’ve been up to.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1149" id="shot-1149" title="run Specs tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: run Specs tests</a>
+<p><a href="#shot-1150" id="shot-1150" title="feature file open, run Specs tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: feature file open, run Specs tests</a>
 We’ll start out by running our scenarios.</p>
 </div>
 <div class="paragraph">
 <p>Great! It looks like both these scenarios are working now - both the different messages that Sean shouts are being heard by Lucy.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1150" id="shot-1150" title="open stepdef file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: open stepdef file</a>
+<p><a href="#shot-1151" id="shot-1151" title="open stepdef file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: open stepdef file</a>
 Let’s dig into the code and see how these steps have been automated.</p>
 </div>
 <div class="listingblock">
@@ -2450,23 +2444,23 @@ Let’s dig into the code and see how these steps have been automated.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>In the step definition layer, we can see that a new class has been defined, the Network.<a href="#shot-1151" id="shot-1151" title="creating instance of Network" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: creating instance of Network</a> We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here.<a href="#shot-1152" id="shot-1152" title="create instances of Person" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: create instances of Person</a> So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.</p>
+<p>In the step definition layer, we can see that a new class has been defined, the Network.<a href="#shot-1152" id="shot-1152" title="creating instance of Network" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: creating instance of Network</a> We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here.<a href="#shot-1153" id="shot-1153" title="create instances of Person" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: create instances of Person</a> So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.</p>
 </div>
 <div class="paragraph">
-<p>There are also a couple of new unit test classes in the Shouty package, one for the Network class,<a href="#shot-1153" id="shot-1153" title="show existence of NetworkTests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: show existence of NetworkTests</a> and another one for the Person class.<a href="#shot-1154" id="shot-1154" title="show existence of PersonTests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: show existence of PersonTests</a></p>
+<p>There are also a couple of new unit test classes in the Shouty solution, one for the Network class,<a href="#shot-1154" id="shot-1154" title="show existence of NetworkTests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: show existence of NetworkTests</a> and another one for the Person class.<a href="#shot-1155" id="shot-1155" title="show existence of PersonTests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: show existence of PersonTests</a></p>
 </div>
 <div class="paragraph">
 <p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1155" id="shot-1155" title="run all tests &amp; show output that demonstrates the unit tests are passing" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run all tests &amp; show output that demonstrates the unit tests are passing</a>
+<p><a href="#shot-1156" id="shot-1156" title="run all tests &amp; show output that demonstrates the unit tests are passing" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run all tests &amp; show output that demonstrates the unit tests are passing</a>
 The <strong>Run All Tests</strong> command will run those unit tests as well as the SpecFlow scenarios.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1156" id="shot-1156" title="open the feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: open the feature file</a></p>
+<p><a href="#shot-1157" id="shot-1157" title="open the feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: open the feature file</a></p>
 </div>
 <div class="paragraph">
-<p>The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean,<a href="#shot-1157" id="shot-1157" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a> but we haven’t actually implemented any behaviour around that yet.</p>
+<p>The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean,<a href="#shot-1158" id="shot-1158" title="focus on given step" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: focus on given step</a> but we haven’t actually implemented any behaviour around that yet.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2543,10 +2537,10 @@ The <strong>Run All Tests</strong> command will run those unit tests as well as 
 <div class="sect2">
 <h3 id="_description_field">4.3. Description field</h3>
 <div class="paragraph">
-<p>After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like.<a href="#shot-1158" id="shot-1158" title="feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: feature file</a> We call this the feature’s <em>description</em>. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t start a line with a Gherkin keyword, like &#8220;Rule:&#8221; or &#8220;Scenario:&#8221;.</p>
+<p>After the feature keyword, we have space in a Gherkin document to write any arbitrary text that we like.<a href="#shot-1159" id="shot-1159" title="feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: feature file</a> We call this the feature’s <em>description</em>. This is a great place to write up any notes or other details that can’t easily be expressed in examples. You might have links to wiki pages or issue trackers, or to wireframes. You can put anything you like in here, as long as you don’t start a line with a Gherkin keyword, like &#8220;Rule:&#8221; or &#8220;Scenario:&#8221;.</p>
 </div>
 <div class="paragraph">
-<p>In this case, we can add a high level description of the Shouty application.<a href="#shot-1159" id="shot-1159" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> Because Shouty doesn&#8217;t yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.<a href="#shot-1160" id="shot-1160" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a></p>
+<p>In this case, we can add a high level description of the Shouty application.<a href="#shot-1160" id="shot-1160" title="add description" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: add description</a> Because Shouty doesn&#8217;t yet filter by proximity, we can also write a todo list here so it’s clear that we do intend to get to that soon.<a href="#shot-1161" id="shot-1161" title="add todo list" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: add todo list</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2562,7 +2556,7 @@ Shouty allows users to "hear" other users "shouts" as long as they are close eno
 <p>Changing the description doesn’t change anything about how SpecFlow will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.</p>
 </div>
 <div class="paragraph">
-<p>Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword.<a href="#shot-1161" id="shot-1161" title="add Rules keyword" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: add Rules keyword</a> We&#8217;ll learn more about this in a later chapter.</p>
+<p>Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rule keyword.<a href="#shot-1162" id="shot-1162" title="add Rule keyword" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: add Rule keyword</a> We&#8217;ll learn more about this in a later chapter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2579,7 +2573,7 @@ Shouty allows users to "hear" other users "shouts" as long as they are close eno
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1162" id="shot-1162" title="shows 'Lucy is 15 metres from Sean' step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: shows 'Lucy is 15 metres from Sean' step definition</a>
+<p><a href="#shot-1163" id="shot-1163" title="shows 'Lucy is 15 metres from Sean' step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: shows 'Lucy is 15 metres from Sean' step definition</a>
 The step “Given Lucy is 15 metres from Sean” is misleading, since the distance between the two people is not yet relevant in our current model.</p>
 </div>
 <div class="listingblock">
@@ -2588,7 +2582,7 @@ The step “Given Lucy is 15 metres from Sean” is misleading, since the distan
 </div>
 </div>
 <div class="paragraph">
-<p>The step definition calls the <code>MoveTo</code> method on Person, <a href="#shot-1163" id="shot-1163" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a></p>
+<p>The step definition calls the <code>MoveTo</code> method on Person, <a href="#shot-1164" id="shot-1164" title="highlight MoveTo call" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight MoveTo call</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2596,8 +2590,8 @@ The step “Given Lucy is 15 metres from Sean” is misleading, since the distan
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1164" id="shot-1164" title="shows move_to method in Person class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: shows move_to method in Person class</a>
-but the moveTo method doesn’t actually do anything.</p>
+<p><a href="#shot-1165" id="shot-1165" title="shows move_to method in Person class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: shows move_to method in Person class</a>
+but the MoveTo method doesn’t actually do anything.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2607,8 +2601,8 @@ but the moveTo method doesn’t actually do anything.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1165" id="shot-1165" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a>
-Let’s simplify this code to do just what it needs to do right now, and no more. We can start from the scenario by changing this single step to express what’s actually going on.<a href="#shot-1166" id="shot-1166" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a> We’ll work on one scenario at a time, and update the other one once we’re happy with this one.</p>
+<p><a href="#shot-1166" id="shot-1166" title="open feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: open feature file</a>
+Let’s simplify this code to do just what it needs to do right now, and no more. We can start from the scenario by changing this single step to express what’s actually going on.<a href="#shot-1167" id="shot-1167" title="change title, given steps" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: change title, given steps</a> We’ll work on one scenario at a time, and update the other one once we’re happy with this one.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2620,13 +2614,13 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words <code>Person</code> and <code>name</code>. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
+<p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words <code>Person</code> and <code>name</code>. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become a property of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
 </div>
 <div class="paragraph">
-<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were involved in writing and reviewing this scenario.</p>
+<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that without discussing it with the other people who were involved in writing and reviewing this scenario.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1167" id="shot-1167" title="create new Rule and writes out two new empty scenarios for in / out of range" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: create new Rule and writes out two new empty scenarios for in / out of range</a>
+<p><a href="#shot-1168" id="shot-1168" title="create new Rule and writes out two new empty scenarios for in / out of range" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: create new Rule and writes out two new empty scenarios for in / out of range</a>
 In this case, as well as adding it to the TODO list above, we’ve decided to document the range rule, and write a couple of new empty scenarios to remind us to implement that behaviour later.</p>
 </div>
 <div class="listingblock">
@@ -2639,8 +2633,8 @@ In this case, as well as adding it to the TODO list above, we’ve decided to do
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1168" id="shot-1168" title="invoke 'define steps'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11.1: invoke 'define steps'</a>
-Let’s press on. We can invoke the <strong>Define steps&#8230;&#8203;</strong> command to generate new step definition snippets for the new steps. <a href="#shot-1169" id="shot-1169" title="press 'copy to clipboard'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11.2: press 'copy to clipboard'</a> Copy them to clipboard and paste them into our steps file. <a href="#shot-1170" id="shot-1170" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
+<p><a href="#shot-1169" id="shot-1169" title="invoke 'define steps'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11.1: invoke 'define steps'</a>
+Let’s press on. We can invoke the <strong>Define steps&#8230;&#8203;</strong> command to generate new step definition snippets for the new steps. <a href="#shot-1170" id="shot-1170" title="press 'copy to clipboard'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11.2: press 'copy to clipboard'</a> Copy them to clipboard and paste them into our steps file. <a href="#shot-1171" id="shot-1171" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2705,8 +2699,8 @@ Let’s press on. We can invoke the <strong>Define steps&#8230;&#8203;</strong> 
 <div class="sect2">
 <h3 id="_the_before_hook">4.4. The "Before" hook</h3>
 <div class="paragraph">
-<p><a href="#shot-1171" id="shot-1171" title="broken implementation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: broken implementation</a>
-We now have two step definitions to implement,<a href="#shot-1172" id="shot-1172" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile.<a href="#shot-1173" id="shot-1173" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a> If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.</p>
+<p><a href="#shot-1172" id="shot-1172" title="broken implementation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: broken implementation</a>
+We now have two step definitions to implement,<a href="#shot-1173" id="shot-1173" title="highlight network" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: highlight network</a> and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile.<a href="#shot-1174" id="shot-1174" title="initialize network in first setpdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: initialize network in first setpdef</a> If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2725,7 +2719,7 @@ We now have two step definitions to implement,<a href="#shot-1172" id="shot-1172
 </div>
 </div>
 <div class="paragraph">
-<p>There are a couple of different ways to create this network instance in C#. The most straightforward is to create a network field and initialize it in the declaration of the <code>StepDefinitions</code> class.<a href="#shot-1174" id="shot-1174" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a> Every time SpecFlow runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.</p>
+<p>There are a couple of different ways to create this network instance in C#. The most straightforward is to use a network field and initialize it in the declaration of the <code>StepDefinitions</code> class.<a href="#shot-1175" id="shot-1175" title="remove create from step, highlight field, initialize it" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: remove create from step, highlight field, initialize it</a> Every time SpecFlow runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2741,10 +2735,10 @@ We now have two step definitions to implement,<a href="#shot-1172" id="shot-1172
 <p>As an alternative, that can be useful if you have more complex setup to do, you can use a hook.</p>
 </div>
 <div class="paragraph">
-<p>We need an instance of Network in every scenario, so we can declare a <code>BeforeScenario</code> Hook that creates one before each scenario starts, like this: <a href="#shot-1175" id="shot-1175" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5</a></p>
+<p>We need an instance of Network in every scenario, so we can declare a <code>BeforeScenario</code> Hook that creates one before each scenario starts, like this: <a href="#shot-1176" id="shot-1176" title="add hook" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: add hook</a></p>
 </div>
 <div class="paragraph">
-<p>Now we can use that Network instance as we create Lucy <a href="#shot-1176" id="shot-1176" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a> and Sean <a href="#shot-1177" id="shot-1177" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a> in these two new steps.</p>
+<p>Now we can use that Network instance as we create Lucy <a href="#shot-1177" id="shot-1177" title="highlight network in first stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight network in first stepdef</a> and Sean <a href="#shot-1178" id="shot-1178" title="highlight network in second stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: highlight network in second stepdef</a> in these two new steps.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2771,10 +2765,10 @@ We now have two step definitions to implement,<a href="#shot-1172" id="shot-1172
 </div>
 </div>
 <div class="paragraph">
-<p>It should be working again now. Let’s run the tests to check.<a href="#shot-1178" id="shot-1178" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a></p>
+<p>It should be working again now. Let’s run the tests to check.<a href="#shot-1179" id="shot-1179" title="run all" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run all</a></p>
 </div>
 <div class="paragraph">
-<p>Good. Let’s do the same with the other scenario. <a href="#shot-1179" id="shot-1179" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a></p>
+<p>Good. Let’s do the same with the other scenario. <a href="#shot-1180" id="shot-1180" title="fix givens of other scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: fix givens of other scenario</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2786,10 +2780,10 @@ We now have two step definitions to implement,<a href="#shot-1172" id="shot-1172
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1180" id="shot-1180" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run tests</a></p>
+<p><a href="#shot-1181" id="shot-1181" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: run tests</a></p>
 </div>
 <div class="paragraph">
-<p>Now we can remove this old step definition. <a href="#shot-1181" id="shot-1181" title="move the cursor to the step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: move the cursor to the step definition</a></p>
+<p>Now we can remove this old step definition. <a href="#shot-1182" id="shot-1182" title="open up olf given step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: open up olf given step definition</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2804,7 +2798,7 @@ We now have two step definitions to implement,<a href="#shot-1172" id="shot-1172
 </div>
 </div>
 <div class="paragraph">
-<p>We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.<a href="#shot-1182" id="shot-1182" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
+<p>We know we&#8217;ll need something like this in the future when we implement the proximity rule, but we don&#8217;t want to second-guess what that code will look like, so let&#8217;s clean it out for now.<a href="#shot-1183" id="shot-1183" title="remove step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: remove step def</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2857,11 +2851,11 @@ We now have two step definitions to implement,<a href="#shot-1172" id="shot-1172
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1183" id="shot-1183" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run tests</a></p>
+<p><a href="#shot-1184" id="shot-1184" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run tests</a></p>
 </div>
 <div class="paragraph">
-<p>Now we have one last bit of dead code left, the moveTo method on Person. <a href="#shot-1184" id="shot-1184" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14</a>
-Let&#8217;s clean that up too.<a href="#shot-1185" id="shot-1185" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15</a></p>
+<p>Now we have one last bit of dead code left, the <code>MoveTo</code> method on Person. <a href="#shot-1185" id="shot-1185" title="Go to MoveTo method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: Go to MoveTo method</a>
+Let&#8217;s clean that up too.<a href="#shot-1186" id="shot-1186" title="delete method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: delete method</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2900,7 +2894,7 @@ Let&#8217;s clean that up too.<a href="#shot-1185" id="shot-1185" title="" style
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1186" id="shot-1186" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run tests</a>
+<p><a href="#shot-1187" id="shot-1187" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run tests</a>
 And we&#8217;re still green!</p>
 </div>
 <div class="sect3">
@@ -2956,7 +2950,7 @@ And we&#8217;re still green!</p>
 <div class="sect2">
 <h3 id="_create_person_in_a_generic_stepdef">4.5. Create Person in a generic stepdef</h3>
 <div class="paragraph">
-<p><a href="#shot-1187" id="shot-1187" title="Freeze of stepdef code from end of lesson 4, highlighting a_person_named_Lucy/Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Freeze of stepdef code from end of lesson 4, highlighting a_person_named_Lucy/Sean</a></p>
+<p><a href="#shot-1188" id="shot-1188" title="Freeze of stepdef code from end of lesson 4, highlighting a_person_named_Lucy/Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Freeze of stepdef code from end of lesson 4, highlighting a_person_named_Lucy/Sean</a></p>
 </div>
 <div class="paragraph">
 <p>OK, so we’ve cleaned things up a bit, to bring the scenarios, the code and our current understanding of the problem all into sync. What’s nice to see is how well those new steps that create Lucy and Sean match the code inside the step definition.</p>
@@ -2965,22 +2959,22 @@ And we&#8217;re still green!</p>
 <p>When step definitions have to make a big leap to translate between our plain-language description of the domain in the Gherkin scenario, and the code, that’s usually a sign that something is wrong. We like to see step definitions that are only one or two lines long, because that usually indicates our scenarios are doing a good job of reflecting the domain model in the code, and vice-versa.</p>
 </div>
 <div class="paragraph">
-<p>One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two steps for creating Lucy and Sean are almost identical, apart from those instance variables.<a href="#shot-1188" id="shot-1188" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a></p>
+<p>One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two step definitions for creating Lucy and Sean are almost identical, apart from those instance fields.<a href="#shot-1189" id="shot-1189" title="highlight lucy and sean fields" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: highlight lucy and sean fields</a></p>
 </div>
 <div class="paragraph">
 <p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.</p>
 </div>
 <div class="paragraph">
-<p>The first problem we’ll need to tackle is these hard-coded instance variable names.<a href="#shot-1189" id="shot-1189" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a></p>
+<p>The first problem we’ll need to tackle is these hard-coded instance field names.<a href="#shot-1190" id="shot-1190" title="highlight lucy and sean fields" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: highlight lucy and sean fields</a></p>
 </div>
 <div class="paragraph">
 <p>We can use a <code>Dictionary</code> to store all the people involved in the scenario.</p>
 </div>
 <div class="paragraph">
-<p>Let’s try replacing Lucy first.<a href="#shot-1190" id="shot-1190" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a></p>
+<p>Let’s try replacing Lucy first.<a href="#shot-1191" id="shot-1191" title="highlight lucy" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: highlight lucy</a></p>
 </div>
 <div class="paragraph">
-<p>We’ll start by creating a new <code>Dictionary</code> in the before hook, like this. <a href="#shot-1191" id="shot-1191" title="Edit Stepdefs.cs, adding private instance field <strong>people</strong>, creating in Before hook" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Edit Stepdefs.cs, adding private instance field <strong>people</strong>, creating in Before hook</a></p>
+<p>We’ll start by creating a new <code>Dictionary</code> in the before hook, like this. <a href="#shot-1192" id="shot-1192" title="Edit Stepdefs.cs, adding private instance field <strong>people</strong>, creating in Before hook" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Edit Stepdefs.cs, adding private instance field <strong>people</strong>, creating in Before hook</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2995,7 +2989,7 @@ And we&#8217;re still green!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can store Lucy in a key in that Dictionary. We’ll use her name as the key, hard-coding it for now.<a href="#shot-1192" id="shot-1192" title="modify a_person_named_Lucy" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: modify a_person_named_Lucy</a></p>
+<p>Now we can store Lucy in a key in that Dictionary. We’ll use her name as the key, hard-coding it for now.<a href="#shot-1193" id="shot-1193" title="modify a_person_named_Lucy, use people.Add" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: modify a_person_named_Lucy, use people.Add</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3007,7 +3001,7 @@ And we&#8217;re still green!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the Dictionary. <a href="#shot-1193" id="shot-1193" title="modify lucy_hears_Sean_s_message" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: modify lucy_hears_Sean_s_message</a></p>
+<p>Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the Dictionary. <a href="#shot-1194" id="shot-1194" title="modify lucy_hears_Sean_s_message, use indexer" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: modify lucy_hears_Sean_s_message, use indexer</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3019,13 +3013,13 @@ And we&#8217;re still green!</p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1194" id="shot-1194" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run tests</a></p>
+<p><a href="#shot-1195" id="shot-1195" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: run tests</a></p>
 </div>
 <div class="paragraph">
-<p>With that little refactoring done, we can now try and make this first step generic for any name.<a href="#shot-1195" id="shot-1195" title="highlight a_person_named_Lucy" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: highlight a_person_named_Lucy</a></p>
+<p>With that little refactoring done, we can now try and make this first step generic for any name.<a href="#shot-1196" id="shot-1196" title="highlight a_person_named_Lucy" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: highlight a_person_named_Lucy</a></p>
 </div>
 <div class="paragraph">
-<p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a 'word' expression,<a href="#shot-1196" id="shot-1196" title="replace 'Lucy' with {word}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: replace 'Lucy' with {word}</a> we’ll have the name passed into our step definition as an argument, here.<a href="#shot-1197" id="shot-1197" title="modify stepdef name &amp; parameter list" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: modify stepdef name &amp; parameter list</a> Now we can use that as the key in the Dictionary.<a href="#shot-1198" id="shot-1198" title="store Person instance in Dictionary" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: store Person instance in Dictionary</a></p>
+<p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a parameter expression,<a href="#shot-1197" id="shot-1197" title="replace 'Lucy' with {word}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: replace 'Lucy' with {word}</a> we’ll have the name passed into our step definition as an argument, here.<a href="#shot-1198" id="shot-1198" title="modify stepdef name &amp; parameter list" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11.1: modify stepdef name &amp; parameter list</a> <a href="#shot-1199" id="shot-1199" title="highlight {word}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11.2: highlight {word}</a> {word} is a special parameter type matches to a&#8230;&#8203; word. What else. Now we can use that as the key in the Dictionary.<a href="#shot-1200" id="shot-1200" title="store Person instance in Dictionary" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: store Person instance in Dictionary</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3037,13 +3031,13 @@ And we&#8217;re still green!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If we try and run the tests now, we get an error from SpecFlow about an ambiguous match. <a href="#shot-1199" id="shot-1199" title="running tests FAILS" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: running tests FAILS</a></p>
+<p>If we try and run the tests now, we get an error from SpecFlow about an ambiguous match. <a href="#shot-1201" id="shot-1201" title="running tests FAILS" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: running tests FAILS</a></p>
 </div>
 <div class="paragraph">
-<p>Our generic step definition is now matching the step “a person named Sean”,<a href="#shot-1200" id="shot-1200" title="highlight stepdef a_person_named" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: highlight stepdef a_person_named</a> but so is the original one.<a href="#shot-1201" id="shot-1201" title="highlight stepdef a_person_named_Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: highlight stepdef a_person_named_Sean</a> In bigger projects, this can be a real issue, so this warning is important.</p>
+<p>Our generic step definition is now matching the step “a person named Sean”,<a href="#shot-1202" id="shot-1202" title="highlight stepdef a_person_named" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: highlight stepdef a_person_named</a> but so is the original one.<a href="#shot-1203" id="shot-1203" title="highlight stepdef a_person_named_Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: highlight stepdef a_person_named_Sean</a> In bigger projects, this can be a real issue, so this warning is important.</p>
 </div>
 <div class="paragraph">
-<p>Let’s remove the old step definition,<a href="#shot-1202" id="shot-1202" title="delete a_person_named_Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: delete a_person_named_Sean</a> and fetch Sean from the hash/map here where he shouts his message.<a href="#shot-1203" id="shot-1203" title="modify sean_shouts" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: modify sean_shouts</a></p>
+<p>Let’s remove the old step definition,<a href="#shot-1204" id="shot-1204" title="delete a_person_named_Sean" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: delete a_person_named_Sean</a> and fetch Sean from the Dictionary here where he shouts his message.<a href="#shot-1205" id="shot-1205" title="modify sean_shouts" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: modify sean_shouts</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3056,7 +3050,7 @@ And we&#8217;re still green!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Great, we’re green again. <a href="#shot-1204" id="shot-1204" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: run tests</a></p>
+<p>Great, we’re green again. <a href="#shot-1206" id="shot-1206" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: run tests</a></p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_5_questions_2">4.5.1. Lesson 5 - Questions</h4>
@@ -3103,8 +3097,8 @@ And we&#8217;re still green!</p>
 <div class="sect2">
 <h3 id="_backgrounds">4.6. Backgrounds</h3>
 <div class="paragraph">
-<p><a href="#shot-1205" id="shot-1205" title="Feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Feature file</a>
-Let’s switch back to the feature to show you one more technique for improving the readability of your scenarios.</p>
+<p><a href="#shot-1207" id="shot-1207" title="Feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Feature file</a>
+Let’s switch back to the feature file to show you one more technique for improving the readability of your scenarios.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3124,11 +3118,11 @@ Let’s switch back to the feature to show you one more technique for improving 
 </div>
 </div>
 <div class="paragraph">
-<p>When we have common context steps - the Givens - <a href="#shot-1206" id="shot-1206" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> in all the scenarios in our feature, it can sometimes be useful to get those out of the way.</p>
+<p>When we have common context steps - the Givens - <a href="#shot-1208" id="shot-1208" title="highlight Given" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: highlight Given</a> in all the scenarios in our feature, it can sometimes be useful to get those out of the way.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1207" id="shot-1207" title="move Given steps into background" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: move Given steps into background</a>
-We can literally move them into the background, using a background keyword, like this:</p>
+<p><a href="#shot-1209" id="shot-1209" title="move Given steps into background" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: move Given steps into background</a>
+We can literally move them into the background, using a Background keyword, like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3138,12 +3132,11 @@ We can literally move them into the background, using a background keyword, like
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1208" id="shot-1208" title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: mvn test</a>
+<p><a href="#shot-1210" id="shot-1210" title="run test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run test</a>
 As far as SpecFlow is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1209" id="shot-1209" title="Feature file, showing Background and shortened scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Feature file, showing Background and shortened scenarios</a>
-But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.</p>
+<p>But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3159,7 +3152,10 @@ But from a readability point of view, we can now see  more clearly what’s impo
 </div>
 </div>
 <div class="paragraph">
-<p>Notice we just went straight into When steps in our scenarios.<a href="#shot-1210" id="shot-1210" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a> That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.</p>
+<p>Notice we just went straight into When steps in our scenarios.<a href="#shot-1211" id="shot-1211" title="highlight When" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: highlight When</a> That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1212" id="shot-1212" title="Feature file, showing Background and shortened scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: Feature file, showing Background and shortened scenarios</a></p>
 </div>
 <div class="paragraph">
 <p>Again, it’s debatable whether we’d bother to use a Background to do this on a real project, but this at least illustrates the technique. We rarely use Backgrounds in our projects, because although they can improve readability by removing the duplication of repeated contexts, they also harm readability by requiring people to read the Background in conjunction with each Scenario.</p>
@@ -3248,7 +3244,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-27 07:17:16 UTC
+Last updated 2020-10-30 17:40:34 UTC
 </div>
 </div>
 <style>

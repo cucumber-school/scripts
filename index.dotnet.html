@@ -1958,24 +1958,18 @@ One common example is the problem of plurals. Suppose we want to place Lucy and 
 </div>
 <div class="paragraph">
 <p>
-Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match:</p>
+Because we’ve used the singular <code>metre</code> instead of the plural <code>metres</code> we don&#8217;t get a match as you can see from the different step color:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>Given Lucy is located 1 metre from Sean
--&gt; No matching step definition found for the step. Use the following code to create one:
-        [Given(@"Lucy is located (.*) metre from Sean")]
-        public void GivenLucyIsLocatedMetreFromSean(int p0)
-        {
-            _scenarioContext.Pending();
-        }</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">	<span class="nf">Given </span>Lucy is located 1 metre from Sean</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>What a pain!</p>
 </div>
 <div class="paragraph">
-<p>Fear not. We can just surround the <code>s</code> in parentheses to make it optional, like this: </p>
+<p>Fear not.  We can just surround the <code>s</code> in parentheses to make it optional, like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -1985,11 +1979,11 @@ Because we’ve used the singular <code>metre</code> instead of the plural <code
 </div>
 <div class="paragraph">
 <p>
-Now our step matches:</p>
+We build the project and now our step matches:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>System.NotImplementedException : Lucy is 100 centimetres from Sean</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">	<span class="nf">Given </span>Lucy is located 1 metre from Sean</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -2141,7 +2135,7 @@ Now we can use either 'standing' or 'located' in our scenarios, and both will ma
 <p>By default, any name is recognized as a person, but we could restrict it to a specific names using - gasp! - a regular expression. </p>
 </div>
 <div class="paragraph">
-<p>This is not what we want in this project now, so let&#8217;s leave it as it was. [7.2, "remove filter"] You can find more examples about using <code>StepArgumentTransformation</code> in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/Step-Argument-Conversions.html#step-argument-transformation">SpecFlow documentation</a>.</p>
+<p>This is not what we want in this project now, so let&#8217;s leave it as it was.  You can find more examples about using <code>StepArgumentTransformation</code> in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/Step-Argument-Conversions.html#step-argument-transformation">SpecFlow documentation</a>.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -2453,7 +2447,7 @@ Let’s dig into the code and see how these steps have been automated.</p>
 <p>In the step definition layer, we can see that a new class has been defined, the Network. We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here. So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.</p>
 </div>
 <div class="paragraph">
-<p>There are also a couple of new unit test classes in the Shouty package, one for the Network class, and another one for the Person class.</p>
+<p>There are also a couple of new unit test classes in the Shouty solution, one for the Network class, and another one for the Person class.</p>
 </div>
 <div class="paragraph">
 <p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.</p>
@@ -2562,7 +2556,7 @@ Shouty allows users to "hear" other users "shouts" as long as they are close eno
 <p>Changing the description doesn’t change anything about how SpecFlow will run this feature. It just helps the human beings reading this document to understand more about the system you’re building.</p>
 </div>
 <div class="paragraph">
-<p>Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rules keyword. We&#8217;ll learn more about this in a later chapter.</p>
+<p>Our two scenarios are examples of how Shouty can broadcast a shout to other users. This is one of the main business rules, which we can document using the Rule keyword. We&#8217;ll learn more about this in a later chapter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2597,7 +2591,7 @@ The step “Given Lucy is 15 metres from Sean” is misleading, since the distan
 </div>
 <div class="paragraph">
 <p>
-but the moveTo method doesn’t actually do anything.</p>
+but the MoveTo method doesn’t actually do anything.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2620,10 +2614,10 @@ Let’s simplify this code to do just what it needs to do right now, and no more
 </div>
 </div>
 <div class="paragraph">
-<p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words <code>Person</code> and <code>name</code>. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become an attribute of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
+<p>Now the scenario names make sense, and we have two steps, each creating a person. Notice we’re starting to reveal some more of our domain language here: we’ve introduced the words <code>Person</code> and <code>name</code>. Person is already a part of our domain language, so it’s nice to have that revealed in the language of the scenario. Name may well become a property of our person soon, so it’s also useful to have that surfaced so we can get feedback about it from the team.</p>
 </div>
 <div class="paragraph">
-<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that unilaterally, without discussing it with the other people who were involved in writing and reviewing this scenario.</p>
+<p>One thing we’ve lost by doing this is the idea that, eventually, the two people will need to be close to each other for the message to be transmitted. We definitely wouldn’t remove detail like that without discussing it with the other people who were involved in writing and reviewing this scenario.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -2725,7 +2719,7 @@ We now have two step definitions to implement, and that presents us with a bit o
 </div>
 </div>
 <div class="paragraph">
-<p>There are a couple of different ways to create this network instance in C#. The most straightforward is to create a network field and initialize it in the declaration of the <code>StepDefinitions</code> class. Every time SpecFlow runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.</p>
+<p>There are a couple of different ways to create this network instance in C#. The most straightforward is to use a network field and initialize it in the declaration of the <code>StepDefinitions</code> class. Every time SpecFlow runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -2860,7 +2854,7 @@ We now have two step definitions to implement, and that presents us with a bit o
 <p></p>
 </div>
 <div class="paragraph">
-<p>Now we have one last bit of dead code left, the moveTo method on Person. 
+<p>Now we have one last bit of dead code left, the <code>MoveTo</code> method on Person. 
 Let&#8217;s clean that up too.</p>
 </div>
 <div class="listingblock">
@@ -2965,13 +2959,13 @@ And we&#8217;re still green!</p>
 <p>When step definitions have to make a big leap to translate between our plain-language description of the domain in the Gherkin scenario, and the code, that’s usually a sign that something is wrong. We like to see step definitions that are only one or two lines long, because that usually indicates our scenarios are doing a good job of reflecting the domain model in the code, and vice-versa.</p>
 </div>
 <div class="paragraph">
-<p>One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two steps for creating Lucy and Sean are almost identical, apart from those instance variables.</p>
+<p>One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two step definitions for creating Lucy and Sean are almost identical, apart from those instance fields.</p>
 </div>
 <div class="paragraph">
 <p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.</p>
 </div>
 <div class="paragraph">
-<p>The first problem we’ll need to tackle is these hard-coded instance variable names.</p>
+<p>The first problem we’ll need to tackle is these hard-coded instance field names.</p>
 </div>
 <div class="paragraph">
 <p>We can use a <code>Dictionary</code> to store all the people involved in the scenario.</p>
@@ -3025,7 +3019,7 @@ And we&#8217;re still green!</p>
 <p>With that little refactoring done, we can now try and make this first step generic for any name.</p>
 </div>
 <div class="paragraph">
-<p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a 'word' expression, we’ll have the name passed into our step definition as an argument, here. Now we can use that as the key in the Dictionary.</p>
+<p>Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a parameter expression, we’ll have the name passed into our step definition as an argument, here.  {word} is a special parameter type matches to a&#8230;&#8203; word. What else. Now we can use that as the key in the Dictionary.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3043,7 +3037,7 @@ And we&#8217;re still green!</p>
 <p>Our generic step definition is now matching the step “a person named Sean”, but so is the original one. In bigger projects, this can be a real issue, so this warning is important.</p>
 </div>
 <div class="paragraph">
-<p>Let’s remove the old step definition, and fetch Sean from the hash/map here where he shouts his message.</p>
+<p>Let’s remove the old step definition, and fetch Sean from the Dictionary here where he shouts his message.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3104,7 +3098,7 @@ And we&#8217;re still green!</p>
 <h3 id="_backgrounds">4.6. Backgrounds</h3>
 <div class="paragraph">
 <p>
-Let’s switch back to the feature to show you one more technique for improving the readability of your scenarios.</p>
+Let’s switch back to the feature file to show you one more technique for improving the readability of your scenarios.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3128,7 +3122,7 @@ Let’s switch back to the feature to show you one more technique for improving 
 </div>
 <div class="paragraph">
 <p>
-We can literally move them into the background, using a background keyword, like this:</p>
+We can literally move them into the background, using a Background keyword, like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3142,8 +3136,7 @@ We can literally move them into the background, using a background keyword, like
 As far as SpecFlow is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.</p>
 </div>
 <div class="paragraph">
-<p>
-But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.</p>
+<p>But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3160,6 +3153,9 @@ But from a readability point of view, we can now see  more clearly what’s impo
 </div>
 <div class="paragraph">
 <p>Notice we just went straight into When steps in our scenarios. That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.</p>
+</div>
+<div class="paragraph">
+<p></p>
 </div>
 <div class="paragraph">
 <p>Again, it’s debatable whether we’d bother to use a Background to do this on a real project, but this at least illustrates the technique. We rarely use Backgrounds in our projects, because although they can improve readability by removing the duplication of repeated contexts, they also harm readability by requiring people to read the Background in conjunction with each Scenario.</p>
@@ -3248,7 +3244,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-27 07:17:16 UTC
+Last updated 2020-10-30 17:40:34 UTC
 </div>
 </div>
 <style>
