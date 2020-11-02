@@ -23,7 +23,8 @@ namespace Shouty
             foreach (var listener in listeners)
             {
                 if (Math.Abs(listener.Location - shouterLocation) <= range)
-                    listener.Hear(message);
+                    if (message.Length <= 180)
+                        listener.Hear(message);
             }
         }
     }
