@@ -42,7 +42,10 @@ namespace Shouty.Specs.StepDefinitions
         [Given("people are located at")]
         public void GivenPeopleAreLocatedAt(Table personTable)
         {
-            throw new NotImplementedException("Lucy's location: " + personTable.Rows[1]["location"]);
+            foreach (var row in personTable.Rows)
+            {
+                people.Add(row["name"], new Person(network, int.Parse(row["location"])));
+            }
         }
 
         [When("Sean shouts")]
