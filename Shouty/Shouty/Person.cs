@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Shouty
 {
@@ -24,6 +25,18 @@ namespace Shouty
         public IList<string> GetMessagesHeard()
         {
             return messagesHeard;
+        }
+
+        public class HeardMessage
+        {
+            public string Message { get; set; }
+        }
+
+        public IList<HeardMessage> GetMessagesHeardEx()
+        {
+            return messagesHeard
+                .Select(m => new HeardMessage {Message = m})
+                .ToArray();
         }
 
         public void Hear(string message)

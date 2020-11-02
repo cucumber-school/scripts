@@ -89,9 +89,8 @@ namespace Shouty.Specs.StepDefinitions
         [Then("Lucy hears the following messages:")]
         public void ThenLucyHearsTheFollowingMessages(Table expectedMessagesTable)
         {
-            var actualMessages = people["Lucy"].GetMessagesHeard();
-            var expectedMessages = expectedMessagesTable.Rows.Select(r => r["message"]);
-            Assert.Equal(expectedMessages, actualMessages);
+            var actualMessages = people["Lucy"].GetMessagesHeardEx();
+            expectedMessagesTable.CompareToSet(actualMessages);
         }
     }
 }
