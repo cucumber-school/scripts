@@ -85,5 +85,11 @@ namespace Shouty.Specs.StepDefinitions
         {
             Assert.Equal(0, people["Larry"].GetMessagesHeard().Count);
         }
+
+        [Then("Lucy hears the following messages:")]
+        public void ThenLucyHearsTheFollowingMessages(Table table)
+        {
+            throw new PendingStepException();
+        }
     }
 }
