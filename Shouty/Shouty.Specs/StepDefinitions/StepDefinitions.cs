@@ -39,6 +39,12 @@ namespace Shouty.Specs.StepDefinitions
             people.Add(name, new Person(network, location));
         }
 
+        [Given("people are located at")]
+        public void GivenPeopleAreLocatedAt(Table table)
+        {
+            throw new PendingStepException();
+        }
+
         [When("Sean shouts")]
         public void WhenSeanShouts()
         {
