@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 using Xunit;
 
 namespace Shouty.Specs.StepDefinitions
@@ -24,13 +25,7 @@ namespace Shouty.Specs.StepDefinitions
         [StepArgumentTransformation]
         public Whereabouts[] ConvertWhereabouts(Table table)
         {
-            return table.Rows
-                .Select(row => new Whereabouts
-                {
-                    Name = row["name"],
-                    Location = int.Parse(row["location"])
-                })
-                .ToArray();
+            return table.CreateSet<Whereabouts>().ToArray();
         }
 
         [BeforeScenario]
