@@ -40,9 +40,9 @@ namespace Shouty.Specs.StepDefinitions
         }
 
         [Given("people are located at")]
-        public void GivenPeopleAreLocatedAt(Table table)
+        public void GivenPeopleAreLocatedAt(Table personTable)
         {
-            throw new PendingStepException();
+            throw new NotImplementedException("Lucy's location: " + personTable.Rows[1]["location"]);
         }
 
         [When("Sean shouts")]
