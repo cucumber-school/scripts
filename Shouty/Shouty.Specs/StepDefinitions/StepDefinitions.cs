@@ -68,6 +68,13 @@ namespace Shouty.Specs.StepDefinitions
             messageFromSean = message;
         }
 
+        [When("Sean shouts the following message")]
+        public void WhenSeanShoutsTheFollowingMessage(string message)
+        {
+            people["Sean"].Shout(message);
+            messageFromSean = message;
+        }
+
         [Then("Lucy should hear Sean's message")]
         public void ThenLucyShouldHearSeansMessage()
         {
