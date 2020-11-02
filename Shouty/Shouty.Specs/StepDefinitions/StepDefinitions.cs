@@ -15,6 +15,24 @@ namespace Shouty.Specs.StepDefinitions
         private Network network = new Network(DEFAULT_RANGE);
         private Dictionary<string, Person> people;
 
+        public class Whereabouts
+        {
+            public string Name { get; set; }
+            public int Location { get; set; }
+        }
+
+        [StepArgumentTransformation]
+        public Whereabouts[] ConvertWhereabouts(Table table)
+        {
+            return table.Rows
+                .Select(row => new Whereabouts
+                {
+                    Name = row["name"],
+                    Location = int.Parse(row["location"])
+                })
+                .ToArray();
+        }
+
         [BeforeScenario]
         public void CreateNetwork()
         {
@@ -34,11 +52,11 @@ namespace Shouty.Specs.StepDefinitions
         }
 
         [Given("people are located at")]
-        public void GivenPeopleAreLocatedAt(Table personTable)
+        public void GivenPeopleAreLocatedAt(Whereabouts[] whereaboutsList)
         {
-            foreach (var row in personTable.Rows)
+            foreach (var whereabouts in whereaboutsList)
             {
-                people.Add(row["name"], new Person(network, int.Parse(row["location"])));
+                people.Add(whereabouts.Name, new Person(network, whereabouts.Location));
             }
         }
 
