@@ -80,10 +80,10 @@ namespace Shouty.Specs.StepDefinitions
             Assert.Equal(1, people["Lucy"].GetMessagesHeard().Count);
         }
 
-        [Then("Larry should not hear a shout")]
-        public void ThenLarryShouldNotHearAShout()
+        [Then("{word} should not hear a shout")]
+        public void ThenPersonShouldNotHearAShout(string name)
         {
-            Assert.Equal(0, people["Larry"].GetMessagesHeard().Count);
+            Assert.Equal(0, people[name].GetMessagesHeard().Count);
         }
 
         [Then("Lucy hears the following messages:")]
