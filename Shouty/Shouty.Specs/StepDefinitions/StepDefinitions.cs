@@ -33,12 +33,6 @@ namespace Shouty.Specs.StepDefinitions
             people.Add(name, new Person(network, 0));
         }
 
-        [Given("a person named {word} is located at {int}")]
-        public void GivenAPersonNamedIsLocatedAt(string name, int location)
-        {
-            people.Add(name, new Person(network, location));
-        }
-
         [Given("people are located at")]
         public void GivenPeopleAreLocatedAt(Table personTable)
         {
