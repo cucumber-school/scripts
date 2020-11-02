@@ -41,5 +41,5 @@ Scenario: Two shouts
     And Sean shouts "Free toast!"
     Then Lucy hears the following messages:
         | message     |
-        | Free bagels |
+        | Free bagels! |
         | Free toast  |
