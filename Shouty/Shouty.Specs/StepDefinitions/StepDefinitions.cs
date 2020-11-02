@@ -87,9 +87,11 @@ namespace Shouty.Specs.StepDefinitions
         }
 
         [Then("Lucy hears the following messages:")]
-        public void ThenLucyHearsTheFollowingMessages(Table table)
+        public void ThenLucyHearsTheFollowingMessages(Table expectedMessagesTable)
         {
-            throw new PendingStepException();
+            var actualMessages = people["Lucy"].GetMessagesHeard();
+            var expectedMessages = expectedMessagesTable.Rows.Select(r => r["message"]);
+            Assert.Equal(expectedMessages, actualMessages);
         }
     }
 }
