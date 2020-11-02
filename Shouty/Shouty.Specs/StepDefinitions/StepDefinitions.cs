@@ -9,8 +9,10 @@ namespace Shouty.Specs.StepDefinitions
     [Binding]
     public class StepDefinitions
     {
+        private const int DEFAULT_RANGE = 100;
+
         private string messageFromSean;
-        private Network network;
+        private Network network = new Network(DEFAULT_RANGE);
         private Dictionary<string, Person> people;
 
         [BeforeScenario]
@@ -23,6 +25,12 @@ namespace Shouty.Specs.StepDefinitions
         public void GivenTheRangeIs(int range)
         {
             network = new Network(range);
+        }
+
+        [Given("a person named {word}")]
+        public void GivenAPersonNamed(string name)
+        {
+            people.Add(name, new Person(network, 0));
         }
 
         [Given("a person named {word} is located at {int}")]
