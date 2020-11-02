@@ -39,8 +39,14 @@ namespace Shouty.Specs.StepDefinitions
             people.Add(name, new Person(network, location));
         }
 
+        [When("Sean shouts")]
+        public void WhenSeanShouts()
+        {
+            people["Sean"].Shout("Hello, world");
+        }
+
         [When("Sean shouts {string}")]
-        public void WhenSeanShouts(string message)
+        public void WhenSeanShoutsAMessage(string message)
         {
             people["Sean"].Shout(message);
             messageFromSean = message;
@@ -52,11 +58,16 @@ namespace Shouty.Specs.StepDefinitions
             Assert.Contains(messageFromSean, people["Lucy"].GetMessagesHeard());
         }
 
-        [Then("Larry should not hear Sean's message")]
-        public void ThenLarryShouldNotHearSeansMessage()
+        [Then("Lucy should hear a shout")]
+        public void ThenLucyShouldHearAShout()
         {
-            var heardByLarry = people["Larry"].GetMessagesHeard();
-            Assert.DoesNotContain(messageFromSean, heardByLarry);
+            Assert.Equal(1, people["Lucy"].GetMessagesHeard().Count);
+        }
+
+        [Then("Larry should not hear a shout")]
+        public void ThenLarryShouldNotHearAShout()
+        {
+            Assert.Equal(0, people["Larry"].GetMessagesHeard().Count);
         }
     }
 }
