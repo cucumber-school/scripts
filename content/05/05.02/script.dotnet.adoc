@@ -1,0 +1,102 @@
+include::./title.adoc[]
+
+
+The first scenario has changed since we last looked at it shot::[1,"hear_shout.feature"] - it now specifies the range of a shout and the location of Sean and Lucy.shot::[2,"Highlight the first three line of the first scenario"] This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.
+
+[source,gherkin]
+----
+include::../code/java/00--step00-starting-code/shouty/src/test/resources/shouty/hear_shout.feature[lines=7..12]
+----
+
+shot::[3,"Edit context of first scenario"]
+Let's ensure that this scenario includes only essential information for the reader and remove all references to location and range.
+
+[source,gherkin]
+----
+include::../code/java/02--step02-edit-first-scenario-to-remove-inessential-details/shouty/src/test/resources/shouty/hear_shout.feature[lines=7..11]
+----
+
+shot::[4,"Add Network creation"]
+// TODO: Maybe divide this into 2 shots, first network creation and then variable assignment
+We'll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/java/shouty/StepDefinitions.java[lines=22..22]
+----
+
+
+We've defaulted the range to 100. shot::[5,"Highlight DEFAULT_RANGE"]
+
+If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is ..." step. shot::[5a,"Highlight step definition @Given() annotation and the_range_is() method"]shot::[5b, "Shot to match shot 6"]
+
+[source,java]
+----
+include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/java/shouty/StepDefinitions.java[lines=20]
+----
+
+
+We'll also need to add a step definition that can create a person without the scenario needing to specify where they are located.shot::[6,"Create new step definition"] The step definition gives each person shot::[7] created this way a default location of 0.shot::[8]
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/java/shouty/StepDefinitions.java[lines=35..38]
+----
+
+shot::[9,"run Cucumber"]
+Let's run Cucumber to check we haven't broken anything... and we're good!
+
+shot::[10]
+Looking at the two new scenarios - Listener is within range shot::[11] & Listener is out of range shot::[12] - we can see that they also contain incidental details. Since their purpose is to illustrate the "Shouts should only be heard if listener is within range" rule, there's no need to actually document the content of the shout. shot::[13, "highlight free bagels at seans]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/resources/shouty/hear_shout.feature[lines=15..27]
+----
+
+shot::[14,"Delete message text"]
+Let's remove the details that aren't relevant to the range rule.
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/resources/shouty/hear_shout.feature[lines=15..27]
+----
+
+shot::[15,"Add new step definition"]
+Next we add a step definition that allows Sean to shout, without needing us to specify the exact message.
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
+----
+
+shot::[16]
+One that allows us to check that Lucy has heard exactly one shout - because she's in range of the shouter.
+[source,java]
+----
+include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=61..64]
+----
+
+shot::[17]
+And one that allows us to check that Larry hasn't heard any messages at all - because he's out-of-range.
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=66..69]
+----
+
+shot::[18,"Run Cucumber"]
+And finally run Cucumber - and we're still green.
+
+shot::[19,"Show hear_shout.feature"]
+That's better. We've removed inessential details, so that each scenario contains only the information needed to illustrate its business rule.
+
+The scenarios would still run green if we removed the steps that set the range of a shout shot::[20,"Highlight in last two scenarios"] , because the range already has a default value. We're not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it's an essential part of context for anyone reading them.
+
+A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system shot::[21,"highlight Network constructor"]. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.

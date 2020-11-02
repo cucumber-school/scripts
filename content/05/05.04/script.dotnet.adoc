@@ -1,0 +1,93 @@
+include::./title.adoc[]
+
+shot::[1,open feature file]
+
+The way that we’ve specified this data is OK,
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/resources/shouty/hear_shout.feature[lines=13..31]
+----
+
+but your product owner would prefer you to express it like this instead: shot::[2,edit data table to have headings in the first column]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/12--step12-transpose-annotation/shouty/src/test/resources/shouty/hear_shout.feature[lines=15..27]
+----
+
+It's always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.
+
+If you annotate the method parameter with the @Transpose annotation shot::[3,add Transpose annotation to stepdef], Cucumber will turn each row into a column before passing it to the step definition.
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/12--step12-transpose-annotation/shouty/src/test/java/shouty/StepDefinitions.java[lines=59..59]
+----
+
+shot::[4,run Cucumber]
+
+shot::[5, show data tables in feature file]
+Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.
+
+One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: shot::[6, write two-shouts scenario]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/13--step13-outcome-data-tables/shouty/src/test/resources/shouty/hear_shout.feature[lines=31..40]
+----
+
+See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.
+
+So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.
+
+Let's run Cucumber to generate the new step definition shot::[7, run Cucumber] and paste it into our StepDefinitions class shot::[8, paste snippet] shot::[9]
+
+We'll need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.
+
+A List of List of String will do shot::[10,write code to create list-of-list-of-strings], so we can just iterate over Lucy’s messages and create a new single-item List for each row.shot::[11]
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/14--step14-diff/shouty/src/test/java/shouty/StepDefinitions.java[lines=94..98]
+----
+
+Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. shot::[12,write code to call diff] 
+
+.StepDefinitions.java
+[source,java]
+----
+include::../code/java/14--step14-diff/shouty/src/test/java/shouty/StepDefinitions.java[lines=99..99]
+----
+
+shot::[13,runs cucumber]
+
+Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. shot::[14] Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.
+
+Let’s fix just one of these shot::[15,add an exclamation mark] so you can see how the diff output changes.
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/15--step15-fix-first-typo/shouty/src/test/resources/shouty/hear_shout.feature[lines=39..39]
+----
+
+shot::[16,run Cucumber]
+The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.
+
+Let’s fix this last typo shot::[17,add another exclamation mark], and we should be green again.
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/16--step16-fix-second-typo/shouty/src/test/resources/shouty/hear_shout.feature[lines=40..40]
+----
+
+shot::[18,run Cucumber]
+
+Great.

@@ -1,0 +1,82 @@
+==== Lesson 3 - Questions
+
+===== What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?
+
+* Array
+* Data Matrix
+* Data Table -- TRUE
+* Example Table
+* Table
+
+Explanation:
+The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, with cell boundaries indicated by pipe characters `|`
+
+===== What value would be retieved from cell (1, 2) in the following table?
+
+| 0 | 1 | 2 |
+| 3 | 4 | 5 |
+| 6 | 7 | 8 |
+
+* 0
+* 1
+* 2
+* 3
+* 4
+* 5 -- TRUE
+* 6
+* 7
+* 8
+
+Explanation:
+The data table is indexed, starting from 0. The first coordinate indicates which _row_ to access, the second indicates the _column_.
+
+====== Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List< Map<String, String> > ?
+
+| A | B | C |
+| D | 0 | 1 |
+| E | 2 | 3 |
+
+* [{A=A, B=B, C=C}, {A=D, B=0, C=1}, {A=E, B=2, C=3}]
+* [{A=D, B=2, C=1}, {A=E, B=0, C=3}]
+* [{A=B, D=0, E=2}, {A=C, D=1, E=3}]
+* [{A=D, B=0, C=1}, {A=E, B=2, C=3}] -- TRUE
+
+Explanation:
+When Cucumber converts a Data Table into a list of maps, it treats the first row as the labels (or indexes), and each subsequent row provides the values for the next map within the list.
+
+So, in this example, since there are three rows, we end up with two maps in the list -- the first row providing the indexes into each map, the next two rows providing the values for the two maps that are added to the list.
+
+====== Which of the following Data Tables will this method process successfully?
+
+@DataTableType
+public OrderLine createOrderLine(Map<String, String> orderItem) {
+    return new OrderLine(entry.get("Item Name"), Integer.parseInt(entry.get("Quantity")));
+}
+
+
+* | Item Name       | Quantity | -- TRUE
+  | Cheese & tomato | 1        |
+
+* | name            | quantity |
+  | Cheese & tomato | 1        |
+
+* | Item Name       | Quantity | -- TRUE
+  | Cheese & tomato | 1        |
+  | Pepperoni       | 1        |
+
+* | Item Name       | Quantity | -- TRUE
+
+* | Item Name       | Quantity | Notes        | -- TRUE
+  | Cheese & tomato | 1        | Extra cheese |
+
+* | Cheese & tomato | 1        |
+  | Pepperoni       | 1        |
+
+* | Quantity | Item Name       |  -- TRUE
+  | 1        | Cheese & tomato |
+
+
+Explanation:
+Cucumber attempts to convert each non-header row in the data table into an instance of OrderLine by calling this method. For the conversion to succeed, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and createOrderLine() would not be called and the relavent step definition would be passed an empty list of OrderLine objects.
+
+There is more documentation about Data Table conversions at https://github.com/cucumber/cucumber/tree/master/datatable
