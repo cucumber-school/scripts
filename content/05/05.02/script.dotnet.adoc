@@ -5,7 +5,7 @@ The first scenario has changed since we last looked at it shot::[1,"hear_shout.f
 
 [source,gherkin]
 ----
-include::../code/java/00--step00-starting-code/shouty/src/test/resources/shouty/hear_shout.feature[lines=7..12]
+include::../code/dotnet/00--step00-starting-code/Shouty/Shouty.Specs/Features/HearShout.feature[lines=7..12]
 ----
 
 shot::[3,"Edit context of first scenario"]
@@ -13,17 +13,17 @@ Let's ensure that this scenario includes only essential information for the read
 
 [source,gherkin]
 ----
-include::../code/java/02--step02-edit-first-scenario-to-remove-inessential-details/shouty/src/test/resources/shouty/hear_shout.feature[lines=7..11]
+include::../code/dotnet/02--step02-edit-first-scenario-to-remove-inessential-details/Shouty/Shouty.Specs/Features/HearShout.feature[lines=7..11]
 ----
 
 shot::[4,"Add Network creation"]
 // TODO: Maybe divide this into 2 shots, first network creation and then variable assignment
 We'll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/java/shouty/StepDefinitions.java[lines=22..22]
+include::../code/dotnet/03--step03-edit-step-definitions-to-get-back-to-green/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=15]
 ----
 
 
@@ -31,18 +31,18 @@ We've defaulted the range to 100. shot::[5,"Highlight DEFAULT_RANGE"]
 
 If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is ..." step. shot::[5a,"Highlight step definition @Given() annotation and the_range_is() method"]shot::[5b, "Shot to match shot 6"]
 
-[source,java]
+[source,c#]
 ----
-include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/java/shouty/StepDefinitions.java[lines=20]
+include::../code/dotnet/03--step03-edit-step-definitions-to-get-back-to-green/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=12]
 ----
 
 
 We'll also need to add a step definition that can create a person without the scenario needing to specify where they are located.shot::[6,"Create new step definition"] The step definition gives each person shot::[7] created this way a default location of 0.shot::[8]
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/java/shouty/StepDefinitions.java[lines=35..38]
+include::../code/dotnet/03--step03-edit-step-definitions-to-get-back-to-green/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=30..34]
 ----
 
 shot::[9,"run Cucumber"]
@@ -54,7 +54,7 @@ Looking at the two new scenarios - Listener is within range shot::[11] & Listene
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/java/03--step03-edit-step-definitions-to-get-back-to-green/shouty/src/test/resources/shouty/hear_shout.feature[lines=15..27]
+include::../code/dotnet/03--step03-edit-step-definitions-to-get-back-to-green/Shouty/Shouty.Specs/Features/HearShout.feature[lines=15..27]
 ----
 
 shot::[14,"Delete message text"]
@@ -63,32 +63,32 @@ Let's remove the details that aren't relevant to the range rule.
 .hear_shout.feature
 [source,gherkin]
 ----
-include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/resources/shouty/hear_shout.feature[lines=15..27]
+include::../code/dotnet/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/Shouty/Shouty.Specs/Features/HearShout.feature[lines=15..27]
 ----
 
 shot::[15,"Add new step definition"]
 Next we add a step definition that allows Sean to shout, without needing us to specify the exact message.
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
+include::../code/dotnet/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=42..46]
 ----
 
 shot::[16]
 One that allows us to check that Lucy has heard exactly one shout - because she's in range of the shouter.
-[source,java]
+[source,c#]
 ----
-include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=61..64]
+include::../code/dotnet/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=61..65]
 ----
 
 shot::[17]
 And one that allows us to check that Larry hasn't heard any messages at all - because he's out-of-range.
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/java/shouty/StepDefinitions.java[lines=66..69]
+include::../code/dotnet/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=67..71]
 ----
 
 shot::[18,"Run Cucumber"]

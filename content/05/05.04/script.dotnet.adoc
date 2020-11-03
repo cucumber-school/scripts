@@ -22,23 +22,23 @@ It's always good to please the product owner, but you’re worried how we’ll h
 
 If you annotate the method parameter with the @Transpose annotation shot::[3,add Transpose annotation to stepdef], Cucumber will turn each row into a column before passing it to the step definition.
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/12--step12-transpose-annotation/shouty/src/test/java/shouty/StepDefinitions.java[lines=59..59]
+include::../code/dotnet/11--step11-use-createset/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=25..29]
 ----
 
 shot::[4,run Cucumber]
 
-shot::[5, show data tables in feature file]
+shot::[6, show data tables in feature file]
 Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.
 
-One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: shot::[6, write two-shouts scenario]
+One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: shot::[6, "write two-shouts scenario"]
 
-.hear_shout.feature
+.HearShout.feature
 [source,gherkin]
 ----
-include::../code/java/13--step13-outcome-data-tables/shouty/src/test/resources/shouty/hear_shout.feature[lines=31..40]
+include::../code/dotnet/12--step12-outcome-data-table/Shouty/Shouty.Specs/Features/HearShout.feature[lines=35..45]
 ----
 
 See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.
@@ -51,18 +51,19 @@ We'll need the actual messages that Lucy’s heard to be stored in an object tha
 
 A List of List of String will do shot::[10,write code to create list-of-list-of-strings], so we can just iterate over Lucy’s messages and create a new single-item List for each row.shot::[11]
 
-.StepDefinitions.java
-[source,java]
+.Person.cs
+[source,c#]
 ----
-include::../code/java/14--step14-diff/shouty/src/test/java/shouty/StepDefinitions.java[lines=94..98]
+include::../code/dotnet/14--step14-use-comparetoset/Shouty/Shouty/Person.cs[lines=30..40]
 ----
 
 Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. shot::[12,write code to call diff] 
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/14--step14-diff/shouty/src/test/java/shouty/StepDefinitions.java[lines=99..99]
+include::../code/dotnet/14--step14-use-comparetoset/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=89..94]
 ----
 
 shot::[13,runs cucumber]
@@ -71,10 +72,10 @@ Oops! It looks like we made a typo in our scenario. We should have included excl
 
 Let’s fix just one of these shot::[15,add an exclamation mark] so you can see how the diff output changes.
 
-.hear_shout.feature
+.HearShout.feature
 [source,gherkin]
 ----
-include::../code/java/15--step15-fix-first-typo/shouty/src/test/resources/shouty/hear_shout.feature[lines=39..39]
+include::../code/dotnet/15--step15-fix-first-typo/Shouty/Shouty.Specs/Features/HearShout.feature[lines=44..44]
 ----
 
 shot::[16,run Cucumber]
@@ -82,10 +83,10 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 
 Let’s fix this last typo shot::[17,add another exclamation mark], and we should be green again.
 
-.hear_shout.feature
+.HearShout.feature
 [source,gherkin]
 ----
-include::../code/java/16--step16-fix-second-typo/shouty/src/test/resources/shouty/hear_shout.feature[lines=40..40]
+include::../code/dotnet/16--step16-fix-second-typo/Shouty/Shouty.Specs/Features/HearShout.feature[lines=45..45]
 ----
 
 shot::[18,run Cucumber]

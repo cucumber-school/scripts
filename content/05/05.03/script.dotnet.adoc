@@ -2,19 +2,19 @@ include::./title.adoc[]
 
 Let's look at the two scenarios that illustrate the rule about range again shot::[1,"show the range rule & scenarios"]. Notice how the steps that create the Sean,shot::[2] Lucy,shot::[3] and Larry shot::[4] are very similar.
 
-[source,java]
+[source,c#]
 ----
-include::../code/java/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/shouty/src/test/resources/shouty/hear_shout.feature[lines=13..27]
+include::../code/dotnet/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/Shouty/Shouty.Specs/Features/HearShout.feature[lines=14..28]
 ----
 
 When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:
 
 shot::[5,feature file]
 
-.hear_shout.feature
+.HearShout.feature
 [source,gherkin]
 ----
-include::../code/java/05--step05-location-specified-in-data-table/shouty/src/test/resources/shouty/hear_shout.feature[lines=17..20]
+include::../code/dotnet/05--step05-location-specified-in-data-table/Shouty/Shouty.Specs/Features/HearShout.feature[lines=18..21]
 ----
 
 Well, we’re in luck. You can!
@@ -53,74 +53,74 @@ shot::[16,"run Cucumber, highlight data table output"]
 
 Now we can easily iterate shot::[17,"write the loop"] over these maps and turn them into instances of Person: shot::[18]
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/09--step09-iterate-over-people-in-table/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..50]
+include::../code/dotnet/08--step08-iterate-over-people-in-table/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41..49]
 ----
 
-shot::[19,"run cucumber -- all green"]
+shot::[13,"run tests -- all green"]
 
-With that done, we can update the other scenario shot::[20,"update other scenario"] ...
+With that done, we can update the other scenario shot::[14,"update other scenario"] ...
 
-.hear_shout.feature
+.HearShout.feature
 [source,gherkin]
 ----
-include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/resources/shouty/hear_shout.feature[lines=24..31]
+include::../code/dotnet/09--step09-changed-other-scenario-and-deleted-unused-stepdef/Shouty/Shouty.Specs/Features/HearShout.feature[lines=25..32]
 ----
 
-Now we can check that everything is still green. shot::[21]
+Now we can check that everything is still green. shot::[15]
 
-and delete our old step definition, which is now unused.  shot::[22,"delete unused step def"]
+and delete our old step definition, which is now unused.  shot::[16,"delete unused step def"]
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/09--step09-iterate-over-people-in-table/shouty/src/test/java/shouty/StepDefinitions.java[lines=40..43]
+include::../code/dotnet/08--step08-iterate-over-people-in-table/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=35..40]
 ----
 
-shot::[23,"run cucumber"]
+shot::[17,"run tests"]
 
 Cucumber strips all the white space surrounding each cell shot::[24,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
 
 Notice we’ve still had to convert the location from a string to an integer shot::[25,"Conversion in step def"], because Cucumber can’t know that’s the type of value in our table.
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/10--step10-changed-other-scenario-and-deleted-unused-stepdef/shouty/src/test/java/shouty/StepDefinitions.java[lines=42..44]
+include::../code/dotnet/09--step09-changed-other-scenario-and-deleted-unused-stepdef/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41]
 ----
 
 To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
 
-Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::[26,"creates the class"]
+Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::[20,"creates the class"]
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=27..35]
+include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=18..22]
 ----
 
 We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
 
 Then we can shot::[27,"write defineWhereabouts()"] create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects.
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=37..40]
+include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=24..34]
 ----
 
 Now, if you declare your table parameter as a generic list shot::[28,"modify stepdef"], Cucumber will automatically convert the table into a list of the generic type for you.
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
+include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=54..61]
 ----
 
 shot::[29,"Run Cucumber"]
 Let's run Cucumber to check that we're still green. And we are!
 
-shot::[30,"hear_shout.feature data tables"]
-That looks much nicer -  people positioned using a table in the feature file and shot::[31,"people_are_located_at()"] really clean code that creates and positions people according to the data.
+shot::[25,"hear_shout.feature data tables"]
+That looks much nicer -  people positioned using a table in the feature file and shot::[26,"people_are_located_at()"] really clean code that creates and positions people according to the data.
