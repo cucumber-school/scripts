@@ -4,7 +4,7 @@ shot::[1,"original animation"]
 
 You might have noticed that we’ve followed a pattern when we added behaviour to the system during this episode.
 
-First we expressed the behaviour we wanted in a Gherkin scenario, wired up the step definitions, then ran Cucumber to watch it fail.
+First we expressed the behaviour we wanted in a Gherkin scenario, wired up the step definitions, then ran SpecFlow to watch it fail.
 
 Then, we found the first class in our domain model that needed to change in order to support that new behaviour. In this case, the Network class. We used a unit test to describe how we wanted instances of that class to behave. Then we ran the unit test and watched it fail.
 
@@ -18,7 +18,7 @@ Yuck!
 
 Well, that’s how many, many codebase end up. The good thing about taking this course is that we’re teaching you how to write solid automated tests, and the good thing about having solid automated tests is you can refactor with confidence, knowing that if you accidentally change the system’s behaviour, your tests will tell you.
 
-Once we’re done refactoring, what do we do next? Run Cucumber, of course! In this case, our scenario was passing with a single trip round the inner TDD loop, but sometimes you can spend several hours working through all the unit tests you need to get a single scenario to green.
+Once we’re done refactoring, what do we do next? Run SpecFlow, of course! In this case, our scenario was passing with a single trip round the inner TDD loop, but sometimes you can spend several hours working through all the unit tests you need to get a single scenario to green.
 
 Once the acceptance test is passing, we figure out the next most valuable scenario on our todo list, and start the whole thing all over again!
 

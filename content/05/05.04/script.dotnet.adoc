@@ -1,26 +1,24 @@
 include::./title.adoc[]
 
-shot::[1,open feature file]
+shot::[1,"open step def"]
 
-The way that we’ve specified this data is OK,
-
-.hear_shout.feature
-[source,gherkin]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/11--step11-use-whereabouts-class/shouty/src/test/resources/shouty/hear_shout.feature[lines=13..31]
+include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=54..61]
 ----
 
-but your product owner would prefer you to express it like this instead: shot::[2,edit data table to have headings in the first column]
+We separated the Data Table conversion from the step definition. The step definition is nice and clean now, but out conversion method is still fairly complex as it needs to handle the table headers and the cell data conversion. shot::[2,"open conversion"]
 
-.hear_shout.feature
-[source,gherkin]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/12--step12-transpose-annotation/shouty/src/test/resources/shouty/hear_shout.feature[lines=15..27]
+include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=24..34]
 ----
 
-It's always good to please the product owner, but you’re worried how we’ll handle it in our step definition? Fear not. Cucumber has you covered.
+But even though it is complex, we can notice a pattern in it. We take the "name" cell and update the `Name` property of the Whereabouts object. We take the "location" cell and update the `Location` property... This is not a big surprise for us, because we let the domain terms in the scenarios drive our domain model.
 
-If you annotate the method parameter with the @Transpose annotation shot::[3,add Transpose annotation to stepdef], Cucumber will turn each row into a column before passing it to the step definition.
+Anyhow it happens, this sort of consistency allows us to simplify this code further. SpecFlow defines an extension method on the Table class, called `CreateSet`. `CreateSet` can do exactly what we need here: create instances of a particular class and update its properties based on the table cells. shot::[3,"change DefineWhereabouts to use CreateSet"]
 
 .StepDefinitions.cs
 [source,c#]
@@ -28,7 +26,9 @@ If you annotate the method parameter with the @Transpose annotation shot::[3,add
 include::../code/dotnet/11--step11-use-createset/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=25..29]
 ----
 
-shot::[4,run Cucumber]
+The `CreateSet` extension method is defined in the `TechTalk.SpecFlow.Assist` namespace, so we have to add a using statement for that. shot::[4,"add using statement"]
+
+shot::[5,"run tests"] With that change our conversion method is also clean and our tests still pass. 
 
 shot::[6, show data tables in feature file]
 Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.
@@ -41,15 +41,21 @@ One rule that we’ve been implying but have never actually explored with an exa
 include::../code/dotnet/12--step12-outcome-data-table/Shouty/Shouty.Specs/Features/HearShout.feature[lines=35..45]
 ----
 
-See how natural it is to use a Data Table here? We also haven’t used any column headers in this case, since the data is all in a single column anyway.
+See how natural it is to use a Data Table here?
 
-So how do we implement this step definition? Well, the DataTable has a really handy method called diff that we can use to compare two Data Tables. diff will pass if the tables are the same, and fail if they’re different.
+So how do we implement this step definition? First, let's practice what we have learned about the Table class. 
 
-Let's run Cucumber to generate the new step definition shot::[7, run Cucumber] and paste it into our StepDefinitions class shot::[8, paste snippet] shot::[9]
+For that we first paste the snippet into the StepDefinitions class and rename the parameter. shot::[7, "define steps, copy, paste snippet, rename parameter to expectedMessagesTable"] What we want to have here is the actually heard messages and the messages we expect to hear and then compare them. Getting the expected messages is easy, we just need to call the `GetMessagesHeard` method. shot::[8, "add actualMessages"] To get the expected messages we need to take the "message" cell from each table row like this. shot::[9, "add expectedMessages"] And finally we can make sure they are the same using an assert statement. shot::[10, "add assert"]
 
-We'll need the actual messages that Lucy’s heard to be stored in an object that looks like a DataTable, so we can compare it to the ones we expect.
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/13--step13-use-collection-assert/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=89..95]
+----
 
-A List of List of String will do shot::[10,write code to create list-of-list-of-strings], so we can just iterate over Lucy’s messages and create a new single-item List for each row.shot::[11]
+shot::[11,"runs tests"] Oops! It looks like there is a problem. The two lists are different. By checking the error message we would find that there is a typo in our scenario. But let's not fix this yet. Instead of that let's look at another typical pattern for a data table related assertion.
+
+shot::[12,"show type of actualResults"] The `GetMessagesHeard` method returned a list of strings, but in many cases the list that we want to compare the Data Table with is a list of objects. Let's imagine that later we will extend the `GetMessagesHeard` method to not only return the message but also the person who shouted it. shot::[12,"add HeardMessage and GetMessagesHeardEx"] To simulate that let's add an alternative version of `GetMessagesHeard`, called `GetMessagesHeardEx`. The new method returns a list of `HeardMessage` instances. shot::[13,"highlight method return type"] The HeardMessage class has only one property, the message, shot::[14,"highlight Message property"] but later we might extend it. 
 
 .Person.cs
 [source,c#]
@@ -57,18 +63,29 @@ A List of List of String will do shot::[10,write code to create list-of-list-of-
 include::../code/dotnet/14--step14-use-comparetoset/Shouty/Shouty/Person.cs[lines=30..40]
 ----
 
-Now we can pass that list to the diff method on the table of expected messages passed in from the Gherkin. shot::[12,write code to call diff] 
+Let's first change the part of the step definition that calculates the actual messages by calling our extended method. shot::[15,"change actualMessages calculation, show type of the result"]
 
 .StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/14--step14-use-comparetoset/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=92..92]
+----
+
+To compare this with the expected messages in the table, we need to check if the "message" cell matches to the `Message` property for each row. If there would be a "shouter name" cell we would need to match that to a `ShouterName` property and so on. This is the same consistency that we had when we used CreateSet. For such assertions, we can use another helper method, called `CompareToSet`.
+
+It works similarly to CreateSet. shot::[16,"add CreateSet call"] The CompareToSet is an extension method on the Table class from the Assist namespace, and you need to pass the list of objects that you would like to compare the table with. shot::[16,"highlight actualMessages argument"]
+
 .StepDefinitions.cs
 [source,c#]
 ----
 include::../code/dotnet/14--step14-use-comparetoset/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=89..94]
 ----
 
-shot::[13,runs cucumber]
+Both CreateSet and CompareToSet can be further customized, but this is just enough for us. Let's run the tests and look at the error message.
 
-Oops! It looks like we made a typo in our scenario. We should have included exclamation marks on the expected messages. shot::[14] Well, at least this gives you a chance to see the nice diff output from Cucumber when the tables are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.
+shot::[13,"run tests"]
+
+Oh! We've found the typo: we should have included exclamation marks on the expected messages. shot::[14] Well, at least this gives you a chance to see the nice diff output from CompareToSet when the table and the list are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.
 
 Let’s fix just one of these shot::[15,add an exclamation mark] so you can see how the diff output changes.
 

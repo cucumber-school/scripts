@@ -21,37 +21,27 @@ Well, we’re in luck. You can!
 
 Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells. shot::[6, highlight data table]
 
-shot::[7,"run cucumber"]shot::[8,"copy snippet, paste into StepDefinition.java"]
+shot::[7,"copy snippet, paste into StepDefinitions.cs"]
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/06--step06-table-snippet-added/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..55]
-----
-
-As you can see, the step definition implicitly takes a single argument shot::[9,"highlight stepdef parameters"], which as this comment explains is a DataTable. shot::[10,"highlight comment"] This object has a rich API for using the tabular data.
-
-At its most basic, the table is just a two-dimensional array. So, Lucy's location can be accessed by getting the value from array cell (2, 1)  shot::[11,"Print out a single cell value"]
-
-.StepDefinitions.java
-[source,java]
-----
-include::../code/java/07--step07-use-cell-to-demonstrate-a-2d-array/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
+include::../code/dotnet/06--step06-table-snippet-added/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41..46]
 ----
 
-shot::[12,"run Cucumber, highlight 'Lucy's location'"]
+As you can see, the step definition implicitly takes a single argument shot::[8,"highlight stepdef parameters"] of type `Table`, which is a representation of a Data Table in SpecFlow. As it represents a table of persons, we can rename it to `presonsTable` shot::[9,"rename parameter"] 
 
-You can also turn the table into a List of Maps shot::[13,"Print out data table"], where the first row is used for the map keys, shot::[14,"split IntelliJ screen horizontally, showing feature file at top and stepdefs below. Highlight first row"] and each following row is used for the map values. shot::[15,"Highlight second & third rows"]
+This object has a rich API for using the tabular data. The `Rows` property of the table class can be used to access the data rows of the table -- all rows, except the header row. shot::[10,"split screen"] A particular cell value can be retrieved from a row by the header name. So, Lucy's location can be accessed by getting the "name" cell of the row at index 1. shot::[11,"Add cell value to an exception"]
 
-.StepDefinitions.java
-[source,java]
+.StepDefinitions.cs
+[source,c#]
 ----
-include::../code/java/08--step08-table-as-list-of-maps/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
+include::../code/dotnet/07--step07-read-cell-value-from-table/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41..46]
 ----
 
-shot::[16,"run Cucumber, highlight data table output"]
+shot::[12,"run tests, highlight 'Lucy's location'"]
 
-Now we can easily iterate shot::[17,"write the loop"] over these maps and turn them into instances of Person: shot::[18]
+Now we can easily iterate shot::[12,"close split, write the loop"] through the rows and turn them into instances of Person: 
 
 .StepDefinitions.cs
 [source,c#]
@@ -81,9 +71,9 @@ include::../code/dotnet/08--step08-iterate-over-people-in-table/Shouty/Shouty.Sp
 
 shot::[17,"run tests"]
 
-Cucumber strips all the white space surrounding each cell shot::[24,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
+SpecFlow strips all the white space surrounding each cell shot::[18,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
 
-Notice we’ve still had to convert the location from a string to an integer shot::[25,"Conversion in step def"], because Cucumber can’t know that’s the type of value in our table.
+Notice we’ve still had to convert the location from a string to an integer shot::[19,"Conversion in step def"], because SpecFlow can’t know that’s the type of value in our table.
 
 .StepDefinitions.cs
 [source,c#]
@@ -91,7 +81,7 @@ Notice we’ve still had to convert the location from a string to an integer sho
 include::../code/dotnet/09--step09-changed-other-scenario-and-deleted-unused-stepdef/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41]
 ----
 
-To improve the readability and maintainability of your step definition you can have Cucumber automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
+To improve the readability and maintainability of your step definition you can have SpecFlow automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
 
 Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::[20,"creates the class"]
 
@@ -101,9 +91,9 @@ Instead, we’ll define a simple Whereabouts class to represent the data in the 
 include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=18..22]
 ----
 
-We’ve made it an inner class to the step definition class, as it doesn’t form part of our core domain.
+We’ve made it a nested type to the step definition class, as it doesn’t form part of our core domain.
 
-Then we can shot::[27,"write defineWhereabouts()"] create a method annotated with @DataTableType so that Cucumber knows how to convert the table into a list of Whereabouts objects.
+Then we can shot::[21,"write ConvertWhereabouts()"] create a conversion method similarly to the ones we created in Chapter 3 that converts a Table instance to an array of Whereabouts. shot::[22,"add attribute"] We have to add the `[StepArgumentTransformation]` attribute to it so that SpecFlow recognizes this conversion. 
 
 .StepDefinitions.cs
 [source,c#]
@@ -111,7 +101,7 @@ Then we can shot::[27,"write defineWhereabouts()"] create a method annotated wit
 include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=24..34]
 ----
 
-Now, if you declare your table parameter as a generic list shot::[28,"modify stepdef"], Cucumber will automatically convert the table into a list of the generic type for you.
+Now, if you declare your table parameter as a Whereabouts array shot::[23,"modify stepdef"], SpecFlow will automatically call our conversion method.
 
 .StepDefinitions.cs
 [source,c#]
@@ -119,8 +109,8 @@ Now, if you declare your table parameter as a generic list shot::[28,"modify ste
 include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=54..61]
 ----
 
-shot::[29,"Run Cucumber"]
-Let's run Cucumber to check that we're still green. And we are!
+shot::[24,"Run Tests"]
+Let's run the scenarios to check that we're still green. And we are!
 
 shot::[25,"hear_shout.feature data tables"]
 That looks much nicer -  people positioned using a table in the feature file and shot::[26,"people_are_located_at()"] really clean code that creates and positions people according to the data.

@@ -1,23 +1,23 @@
-==== Lesson 4 - Questions
+==== Lesson 4 - Questions (SpecFlow)
 
-JAVA ONLY
-===== Why might you use the @Transpose annotation?
+===== Which statements are true for the CreateSet method
 
-* Transpose has been deprecated and you should not use it
-* Use it if it is more readable to have the headers in the first column -- TRUE
-* Use it to ensure that every row in the data table has the same number of columns
-* Use it to reverse the order of the data rows in the table
-
-Explanation:
-The @Transpose annotation (and the transpose method on DataTable) allows you to use tables that have their headers in the first column of a table.
-
-===== What method on DataTable compares two DataTables and produces a textual output showing their differences?
-
-* compare
-* difference
-* contrast
-* diff -- TRUE
-* covariance
+* CreateSet is an extension method that extends the Table class -- TRUE
+* CreateSet updates the properties based on the column headers with a case-sensitive exact match
+* When succeeds, CreateSet returns an enumerable that has exactly as many items as many non-header row the Data Table had -- TRUE
+* To be able to use the CreateSet extension method, the TechTalk.SpecFlow.Assist namespace has to be listed among the using statements of the file -- TRUE
+* CreateSet can detect the type of the objects to be created based on the Data Table header
 
 Explanation:
-The method that compares two data tables is called *diff*
+CreateSet is an extension method for the Table class that is defined in the TechTalk.SpecFlow.Assist namespace. The target type has to be specified as a generic type parameter. The fields and properties of the target type are found using case-insensitive match. Whitespaces in the header name are also ignored, so cells of header "shouter name" will update the property ShouterName. CreateSet returns an object for each non-header row in the Data Table. By default it creates the objects using their default constructor, but you can also specify a delegate to create the instance differently.
+
+===== What extension method on the Table class compares two the table with a list of objects and produces a textual output showing their differences?
+
+* Compare
+* AssertEqual
+* CompareToList
+* CompareToSet -- TRUE
+* Covariance
+
+Explanation:
+The method that compares two data tables is called *CompareToSet*. It is defined in the TechTalk.SpecFlow.Assist namespace.

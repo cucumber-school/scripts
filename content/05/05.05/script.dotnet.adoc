@@ -90,6 +90,17 @@ Now we can fill out the rest of our new step definition. shot::[27]shot::[28]
 include::../code/dotnet/22--step22-docstring/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=71..76]
 ----
 
-Let's check that we're still green shot::[29,"run cucumber"]shot::[30] -- and we are!
+Let's check that we're still green shot::[29,"run cucumber"] -- and we are!
 
+This two step definitions do the same and they even have the same parameters. So we can keep just one of them and add the When attribute of the other to it. shot::[30, "move second When attribute up, delete second method"]
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/23--step23-merge-when-steps/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=64..70]
+----
+
+shot::[31,"run tests"] Having multiple Given, When or Then attribute on the same method is another way to handle alternates.
+
+shot::[32,"switch back to feature file"]
 We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it's useful to know about.

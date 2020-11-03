@@ -1,4 +1,4 @@
-==== Lesson 3 - Questions
+==== Lesson 3 - Questions (SpecFlow)
 
 ===== What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?
 
@@ -11,8 +11,9 @@
 Explanation:
 The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, with cell boundaries indicated by pipe characters `|`
 
-===== What value would be retieved from cell (1, 2) in the following table?
+===== What value would be retrieved from cell Rows[1]["C"] in the following table?
 
+| A | B | C |
 | 0 | 1 | 2 |
 | 3 | 4 | 5 |
 | 6 | 7 | 8 |
@@ -28,29 +29,17 @@ The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, 
 * 8
 
 Explanation:
-The data table is indexed, starting from 0. The first coordinate indicates which _row_ to access, the second indicates the _column_.
-
-====== Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List< Map<String, String> > ?
-
-| A | B | C |
-| D | 0 | 1 |
-| E | 2 | 3 |
-
-* [{A=A, B=B, C=C}, {A=D, B=0, C=1}, {A=E, B=2, C=3}]
-* [{A=D, B=2, C=1}, {A=E, B=0, C=3}]
-* [{A=B, D=0, E=2}, {A=C, D=1, E=3}]
-* [{A=D, B=0, C=1}, {A=E, B=2, C=3}] -- TRUE
-
-Explanation:
-When Cucumber converts a Data Table into a list of maps, it treats the first row as the labels (or indexes), and each subsequent row provides the values for the next map within the list.
-
-So, in this example, since there are three rows, we end up with two maps in the list -- the first row providing the indexes into each map, the next two rows providing the values for the two maps that are added to the list.
+SpecFlow treats the first row as the header, and the Rows property returns each subsequent row indexed, starting from 0. The cells within a row can be retrieved by indexing the row with the header name. We need two pairs of brackets, because the first selects the row and the second selects the cell within the row.
 
 ====== Which of the following Data Tables will this method process successfully?
 
-@DataTableType
-public OrderLine createOrderLine(Map<String, String> orderItem) {
-    return new OrderLine(entry.get("Item Name"), Integer.parseInt(entry.get("Quantity")));
+[Given("the order contains the following items")]
+public void GivenTheOrderContainsTheFollowingItems(Table orderItemsTable) 
+{
+    foreach (var row in orderItemsTable.Rows)
+    {
+        order.AddLine(row["Item Name"], int.Parse(row["Quantity"]));
+    }
 }
 
 
@@ -77,6 +66,28 @@ public OrderLine createOrderLine(Map<String, String> orderItem) {
 
 
 Explanation:
-Cucumber attempts to convert each non-header row in the data table into an instance of OrderLine by calling this method. For the conversion to succeed, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and createOrderLine() would not be called and the relavent step definition would be passed an empty list of OrderLine objects.
+The Rows property of the Table class contains all non-header row in the data table. To be able retrieve a cell from the row, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would have an empty Rows collection and hence it would not add any items to the order.
 
-There is more documentation about Data Table conversions at https://github.com/cucumber/cucumber/tree/master/datatable
+====== How would you need to change the step definition in order to be able to use the OrderItem list converted from a Data Table with the following conversion method
+
+[StepArgumentTransformation]
+public OrderItem[] ConvertOrderItems(Table orderItemsTable) 
+{
+    return orderItemsTable.CreateSet<OrderItem>().ToArray();
+}
+
+* [Given("the order contains the following items {OrderItems[]}")]
+  public void GivenTheOrderContainsTheFollowingItems(OrderItem[] orderItems) { ... }
+
+* [Given("the order contains the following items")] -- TRUE
+  public void GivenTheOrderContainsTheFollowingItems(OrderItem[] orderItems) { ... }
+
+* [Given("the order contains the following items")]
+  public void GivenTheOrderContainsTheFollowingItems(IEnumerable<OrderItem> orderItems) { ... }
+
+* [Given("the order contains the following items")]
+  public void GivenTheOrderContainsTheFollowingItems(Table orderItemsTable) { ... }
+
+
+Explanation:
+In order to access the Data Table attached to the step, you don't have to add parameters to the Cucumber Expression. The parameters of the expression refer to the parts of the step text only. The parameter type of the method should be exactly the same as the return type of the conversion method. So even though that the array implements the IEnumerable interface, SpecFlow will not find that. If the parameter is defined as a Table, the conversion method will not be invoked.
