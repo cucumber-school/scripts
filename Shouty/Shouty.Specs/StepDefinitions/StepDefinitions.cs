@@ -62,14 +62,8 @@ namespace Shouty.Specs.StepDefinitions
         }
 
         [When("Sean shouts {string}")]
-        public void WhenSeanShoutsAMessage(string message)
-        {
-            people["Sean"].Shout(message);
-            messageFromSean = message;
-        }
-
         [When("Sean shouts the following message")]
-        public void WhenSeanShoutsTheFollowingMessage(string message)
+        public void WhenSeanShoutsAMessage(string message)
         {
             people["Sean"].Shout(message);
             messageFromSean = message;
