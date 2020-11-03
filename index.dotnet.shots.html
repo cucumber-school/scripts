@@ -478,7 +478,16 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_backgrounds">4.6. Backgrounds</a></li>
 </ul>
 </li>
-<li><a href="#_loops">5. Loops</a></li>
+<li><a href="#_loops">5. Loops</a>
+<ul class="sectlevel2">
+<li><a href="#_removing_redundant_scenarios">5.1. Removing redundant scenarios</a></li>
+<li><a href="#_incidental_details">5.2. Incidental details</a></li>
+<li><a href="#_refactoring_to_data_tables">5.3. Refactoring to Data Tables</a></li>
+<li><a href="#_deeper_into_data_tables">5.4. Deeper into Data Tables</a></li>
+<li><a href="#_docstring">5.5. DocString</a></li>
+<li><a href="#_tdd_loops">5.6. TDD Loops</a></li>
+</ul>
+</li>
 <li><a href="#_configuring_cucumber">6. Configuring Cucumber</a></li>
 </ul>
 </div>
@@ -3232,7 +3241,1528 @@ Your browser does not support the video tag.
 <div class="sect1">
 <h2 id="_loops">5. Loops</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_removing_redundant_scenarios">5.1. Removing redundant scenarios</h3>
+<div class="paragraph">
+<p>Welcome back to Cucumber School.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1213" id="shot-1213" title="feature file from end of Ch 4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: feature file from end of Ch 4</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
 
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Last time we worked on cleaning up the Shouty features to keep them in sync with the current status of the project. We stripped the scenarios back to only specify the behaviour of passing messages between people. We made it clear that the proximity rule had not yet been implemented.</p>
+</div>
+<div class="paragraph">
+<p>You’ll already remember from the Cucumber expressions chapter how important it is to be expressive in your scenarios, and keep them readable. In this chapter we’re going to learn some new tricks with Gherkin that will give you even more flexibility about how you write scenarios.</p>
+</div>
+<div class="paragraph">
+<p>Once again the Shouty developers&#8201;&#8212;&#8201;have been hard at work implementing that proximity rule. Let’s have a look at how they got on. <a href="#shot-1214" id="shot-1214" title="Show chapter 5 initial checkin feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: Show chapter 5 initial checkin feature file</a></p>
+</div>
+<div class="paragraph">
+<p>Right, so those two scenarios we just left as just placeholders: the one where the listener is within range,<a href="#shot-1215" id="shot-1215" title="show in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: show in feature file</a> and the one where the listener is out of range <a href="#shot-1216" id="shot-1216" title="show in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: show in feature file</a> are passing. <a href="#shot-1217" id="shot-1217" title="Show output from Cucumber showing the in-range/out-of-range results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Show output from Cucumber showing the in-range/out-of-range results</a> Fantastic! If we look at our step definitions, we can see how they have been implemented. <a href="#shot-1218" id="shot-1218" title="show the in-range/out-of-range scenarios in the step definitions" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: show the in-range/out-of-range scenarios in the step definitions</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s review the changes to the feature file in more detail.</p>
+</div>
+<div class="paragraph">
+<p>We now have four scenarios:<a href="#shot-1219" id="shot-1219" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a> our original two from the last time we looked at the code,<a href="#shot-1220" id="shot-1220" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a> and the two placeholders we wrote as reminders.<a href="#shot-1221" id="shot-1221" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Larry is located at 150
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We used the second scenario - Listener hears a different message <a href="#shot-1222" id="shot-1222" title="Highlight second scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: Highlight second scenario</a> - to triangulate and force us to replace the hard-coded message output with a proper implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the second scenario. <a href="#shot-1223" id="shot-1223" title="removes second scenario: Listener hears a different message" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: removes second scenario: Listener hears a different message</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>a person named Sean is located at 0
+      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where a "listener hears a "message" is a perfectly good way of checking that the message has been sent correctly.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_3">5.1.1. Lesson 1 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_was_it_a_good_idea_to_delete_the_scenario">Why was it a good idea to delete the scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It doesn&#8217;t help illustrate the rule "Shouts can be heard by other users"&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>No one should give away free coffee</p>
+</li>
+<li>
+<p>There should only be one scenario per rule</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+We created the scenario "Listener hears a different message" to force us to replace our hard-coded implementation. Now we have a domain model that uses a variable for the message, there&#8217;s an insignificant chance of this behaviour regressing, so we can safely remove the second scenario.</p>
+</div>
+<div class="paragraph">
+<p>Keeping excess scenarios is wasteful: they clutter up your feature files and slow down feedback.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_incidental_details">5.2. Incidental details</h3>
+<div class="paragraph">
+<p>The first scenario has changed since we last looked at it <a href="#shot-1224" id="shot-1224" title="hear_shout.feature" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: hear_shout.feature</a> - it now specifies the range of a shout and the location of Sean and Lucy.<a href="#shot-1225" id="shot-1225" title="Highlight the first three line of the first scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: Highlight the first three line of the first scenario</a> This scenario exists to illustrate that a listener hears the message exactly as the shouter shouted it. All the additional details are incidental and make the scenario harder to read.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>a person named Sean is located at 0
+    <span class="nf">And </span>a person named Lucy is located at 50
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1226" id="shot-1226" title="Edit context of first scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: Edit context of first scenario</a>
+Let&#8217;s ensure that this scenario includes only essential information for the reader and remove all references to location and range.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+    <span class="nf">Given </span>a person named Sean
+    <span class="nf">And </span>a person named Lucy
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy should hear Sean's message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1227" id="shot-1227" title="Add Network creation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: Add Network creation</a>
+We&#8217;ll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance field.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="k">private</span> <span class="n">Network</span> <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">(</span><span class="n">DEFAULT_RANGE</span><span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve defaulted the range to 100. <a href="#shot-1228" id="shot-1228" title="Highlight DEFAULT_RANGE" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Highlight DEFAULT_RANGE</a></p>
+</div>
+<div class="paragraph">
+<p>If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step. <a href="#shot-1229" id="shot-1229" title="Highlight step definition @Given() annotation and the_range_is() method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5a: Highlight step definition @Given() annotation and the_range_is() method</a><a href="#shot-1230" id="shot-1230" title="Shot to match shot 6" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5b: Shot to match shot 6</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="k">private</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">DEFAULT_RANGE</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll also need to add a step definition that can create a person without the scenario needing to specify where they are located.<a href="#shot-1231" id="shot-1231" title="Create new step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: Create new step definition</a> The step definition gives each person <a href="#shot-1232" id="shot-1232" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a> created this way a default location of 0.<a href="#shot-1233" id="shot-1233" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named {word}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamed</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1234" id="shot-1234" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run Cucumber</a>
+Let&#8217;s run the scenarios to check we haven&#8217;t broken anything&#8230;&#8203; and we&#8217;re good!</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1235" id="shot-1235" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10</a>
+Looking at the two new scenarios - Listener is within range <a href="#shot-1236" id="shot-1236" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a> &amp; Listener is out of range <a href="#shot-1237" id="shot-1237" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a> - we can see that they also contain incidental details. Since their purpose is to illustrate the "Shouts should only be heard if listener is within range" rule, there&#8217;s no need to actually document the content of the shout. <a href="#shot-1238" id="shot-1238" title=""highlight free bagels at seans" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: "highlight free bagels at seans</a></p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>a person named Sean is located at 0
+    <span class="nf">And </span>a person named Lucy is located at 50
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+    <span class="nf">Then </span>Lucy should hear Sean's message
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>a person named Sean is located at 0
+    <span class="nf">And </span>a person named Larry is located at 150
+    <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1239" id="shot-1239" title="Delete message text" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: Delete message text</a>
+Let&#8217;s remove the details that aren&#8217;t relevant to the range rule.</p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>a person named Sean is located at 0
+    <span class="nf">And </span>a person named Lucy is located at 50
+    <span class="nf">When </span>Sean shouts
+    <span class="nf">Then </span>Lucy should hear a shout
+
+<span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>a person named Sean is located at 0
+    <span class="nf">And </span>a person named Larry is located at 150
+    <span class="nf">When </span>Sean shouts</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1240" id="shot-1240" title="Add new step definition" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: Add new step definition</a>
+Next we add a step definition that allows Sean to shout, without needing us to specify the exact message.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShouts</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">people</span><span class="p">[</span><span class="s">"Sean"</span><span class="p">].</span><span class="nf">Shout</span><span class="p">(</span><span class="s">"Hello, world"</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1241" id="shot-1241" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16</a>
+One that allows us to check that Lucy has heard exactly one shout - because she&#8217;s in range of the shouter.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucy should hear a shout"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyShouldHearAShout</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="m">1</span><span class="p">,</span> <span class="n">people</span><span class="p">[</span><span class="s">"Lucy"</span><span class="p">].</span><span class="nf">GetMessagesHeard</span><span class="p">().</span><span class="n">Count</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1242" id="shot-1242" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17</a>
+And one that allows us to check that Larry hasn&#8217;t heard any messages at all - because he&#8217;s out-of-range.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Larry should not hear a shout"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLarryShouldNotHearAShout</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">people</span><span class="p">[</span><span class="s">"Larry"</span><span class="p">].</span><span class="nf">GetMessagesHeard</span><span class="p">().</span><span class="n">Count</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1243" id="shot-1243" title="Run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: Run Cucumber</a>
+And finally run all tests - and we&#8217;re still green.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1244" id="shot-1244" title="Show hear_shout.feature" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: Show hear_shout.feature</a>
+That&#8217;s better. We&#8217;ve removed inessential details, so that each scenario contains only the information needed to illustrate its business rule.</p>
+</div>
+<div class="paragraph">
+<p>The scenarios would still run green if we removed the steps that set the range of a shout <a href="#shot-1245" id="shot-1245" title="Highlight in last two scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: Highlight in last two scenarios</a> , because the range already has a default value. We&#8217;re not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it&#8217;s an essential part of context for anyone reading them.</p>
+</div>
+<div class="paragraph">
+<p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system <a href="#shot-1246" id="shot-1246" title="highlight Network constructor" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: highlight Network constructor</a>. So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_4">5.2.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_did_we_remove_any_reference_to_range_or_location_from_the_first_scenario_listener_hears_a_message">Why did we remove any reference to range or location from the first scenario "Listener hears a message"?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>They are essential to system behaviour</p>
+</li>
+<li>
+<p>They are incidental to the rule being illustrated&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>They were only needed to triangulate the implementation</p>
+</li>
+<li>
+<p>They made the scenario too long</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The first scenario exists to illustrate the rule "Listener hears a message." Since the behaviour is not affected by the range of a shout, neither the range nor the distance between the shouter and the listener is relevant. The information is therefore <em>incidental</em> and should be omitted from the scenario.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_do_we_need_to_know_the_names_of_people_using_shouty">Why do we need to know the names of people using Shouty?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It&#8217;s important that every person in the system has a real name</p>
+</li>
+<li>
+<p>It&#8217;s necessary to use <em>persona</em>, where the shouter is called Sean and the listeners are called Lucy or Larry</p>
+</li>
+<li>
+<p>It doesn&#8217;t matter what we call them&#8201;&#8212;&#8201;but the automation code does need to be able to tell them apart&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>The automation code has been written to recognise the names Sean, Lucy, and Larry</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+It&#8217;s necessary to be able to distinguish the people that are involved in the scenario. We have called them Sean, Lucy, and Larry, but we could have called them Shouter, Listener1, and Listener2 (or even User1, User2, and User3).</p>
+</div>
+<div class="paragraph">
+<p>We find that using <em>persona</em> (where the name gives an indication of the person&#8217;s purpose in the scenario) can be a useful way of conveying information, without cluttering up the scenario. If the names conveyed no information at all, they would not contribute to the readability of the scenario, and could be considered incidental.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_pieces_of_information_are_incidental_in_this_scenario">Which pieces of information are incidental in this scenario?</h5>
+<div class="paragraph">
+<p>Rule: Offer is only valid for Shouty users
+  Scenario: Customer is not a Shouty user
+    Given Nora is not a Shouty user
+    And Sean shouted "free bagels until midday"
+    When Nora orders a bagel and a coffee at 11:00am
+    Then she should be charged 75¢ for the bagel</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Nora is not a Shouty user</p>
+</li>
+<li>
+<p>Sean is offering "free bagels!"</p>
+</li>
+<li>
+<p>Sean&#8217;s offer is only valid until midday&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Nora orders a bagel</p>
+</li>
+<li>
+<p>Nora orders a coffee&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Nora places her order at 11:00am&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Nora gets charged for the bagel</p>
+</li>
+<li>
+<p>Nora get charged 75¢ for the bagel&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+This scenario is illustrating the rule that the "offer is only valid for Shouty users". It&#8217;s therefore essential to know that Nora is not a Shouty user, because this means that she is not eligible for the offer.</p>
+</div>
+<div class="paragraph">
+<p>We don&#8217;t need to know that Nora orders a coffee, because that has no relevance to the rule. Nor do we need to know when the offer expires, when Nora places the order, or how much she will be charged&#8201;&#8212;&#8201;there will be other rules (and other scenarios) that illustrate that behaviour.</p>
+</div>
+<div class="paragraph">
+<p>Although it&#8217;s incidental that the offer is for bagels, it is necessary to illustrate that Nora has ordered the item that is on offer to Shouty users&#8201;&#8212;&#8201;and that she will be charged for that item. We use "bagels" as an example to make the scenario easier to read, not because there&#8217;s something inherently special about bagels!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_refactoring_to_data_tables">5.3. Refactoring to Data Tables</h3>
+<div class="paragraph">
+<p>Let&#8217;s look at the two scenarios that illustrate the rule about range again <a href="#shot-1247" id="shot-1247" title="show the range rule &amp; scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show the range rule &amp; scenarios</a>. Notice how the steps that create the Sean,<a href="#shot-1248" id="shot-1248" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2</a> Lucy,<a href="#shot-1249" id="shot-1249" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a> and Larry <a href="#shot-1250" id="shot-1250" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a> are very similar.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#"><span class="n">Rule</span><span class="p">:</span> <span class="n">Shouts</span> <span class="n">should</span> <span class="n">only</span> <span class="n">be</span> <span class="n">heard</span> <span class="k">if</span> <span class="n">listener</span> <span class="k">is</span> <span class="n">within</span> <span class="n">range</span>
+
+<span class="n">Scenario</span><span class="p">:</span> <span class="n">Listener</span> <span class="k">is</span> <span class="n">within</span> <span class="n">range</span>
+    <span class="n">Given</span> <span class="n">the</span> <span class="n">range</span> <span class="k">is</span> <span class="m">100</span>
+    <span class="n">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="n">Sean</span> <span class="k">is</span> <span class="n">located</span> <span class="n">at</span> <span class="m">0</span>
+    <span class="n">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="n">Lucy</span> <span class="k">is</span> <span class="n">located</span> <span class="n">at</span> <span class="m">50</span>
+    <span class="n">When</span> <span class="n">Sean</span> <span class="n">shouts</span>
+    <span class="n">Then</span> <span class="n">Lucy</span> <span class="n">should</span> <span class="n">hear</span> <span class="n">a</span> <span class="n">shout</span>
+
+<span class="n">Scenario</span><span class="p">:</span> <span class="n">Listener</span> <span class="k">is</span> <span class="k">out</span> <span class="n">of</span> <span class="n">range</span>
+    <span class="n">Given</span> <span class="n">the</span> <span class="n">range</span> <span class="k">is</span> <span class="m">100</span>
+    <span class="n">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="n">Sean</span> <span class="k">is</span> <span class="n">located</span> <span class="n">at</span> <span class="m">0</span>
+    <span class="n">And</span> <span class="n">a</span> <span class="n">person</span> <span class="n">named</span> <span class="n">Larry</span> <span class="k">is</span> <span class="n">located</span> <span class="n">at</span> <span class="m">150</span>
+    <span class="n">When</span> <span class="n">Sean</span> <span class="n">shouts</span>
+    <span class="n">Then</span> <span class="n">Larry</span> <span class="n">should</span> <span class="n">not</span> <span class="n">hear</span> <span class="n">a</span> <span class="n">shout</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1251" id="shot-1251" title="feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: feature file</a></p>
+</div>
+<div class="listingblock">
+<div class="title">HearShout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span> <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span> <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Lucy</span> <span class="p">|</span> <span class="n">50</span>       <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Well, we’re in luck. You can!</p>
+</div>
+<div class="paragraph">
+<p>Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells. <a href="#shot-1252" id="shot-1252" title="highlight data table" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight data table</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1253" id="shot-1253" title="copy snippet, paste into StepDefinitions.cs" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: copy snippet, paste into StepDefinitions.cs</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"people are located at"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenPeopleAreLocatedAt</span><span class="p">(</span><span class="n">Table</span> <span class="n">table</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">PendingStepException</span><span class="p">();</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, the step definition implicitly takes a single argument <a href="#shot-1254" id="shot-1254" title="highlight stepdef parameters" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: highlight stepdef parameters</a> of type <code>Table</code>, which is a representation of a Data Table in SpecFlow. As it represents a table of persons, we can rename it to <code>presonsTable</code> <a href="#shot-1255" id="shot-1255" title="rename parameter" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: rename parameter</a></p>
+</div>
+<div class="paragraph">
+<p>This object has a rich API for using the tabular data. The <code>Rows</code> property of the table class can be used to access the data rows of the table&#8201;&#8212;&#8201;all rows, except the header row. <a href="#shot-1256" id="shot-1256" title="split screen" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: split screen</a> A particular cell value can be retrieved from a row by the header name. So, Lucy&#8217;s location can be accessed by getting the "name" cell of the row at index 1. <a href="#shot-1257" id="shot-1257" title="Add cell value to an exception" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: Add cell value to an exception</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"people are located at"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenPeopleAreLocatedAt</span><span class="p">(</span><span class="n">Table</span> <span class="n">personTable</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">NotImplementedException</span><span class="p">(</span><span class="s">"Lucy's location: "</span> <span class="p">+</span> <span class="n">personTable</span><span class="p">.</span><span class="n">Rows</span><span class="p">[</span><span class="m">1</span><span class="p">][</span><span class="s">"location"</span><span class="p">]);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1258" id="shot-1258" title="run tests, highlight 'Lucy&#8217;s location'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: run tests, highlight 'Lucy&#8217;s location'</a></p>
+</div>
+<div class="paragraph">
+<p>Now we can easily iterate <a href="#shot-1259" id="shot-1259" title="close split, write the loop" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: close split, write the loop</a> through the rows and turn them into instances of Person:</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"people are located at"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenPeopleAreLocatedAt</span><span class="p">(</span><span class="n">Table</span> <span class="n">personTable</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">row</span> <span class="k">in</span> <span class="n">personTable</span><span class="p">.</span><span class="n">Rows</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"name"</span><span class="p">],</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"location"</span><span class="p">])));</span>
+            <span class="p">}</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1260" id="shot-1260" title="run tests&#8201;&#8212;&#8201;all green" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run tests&#8201;&#8212;&#8201;all green</a></p>
+</div>
+<div class="paragraph">
+<p>With that done, we can update the other scenario <a href="#shot-1261" id="shot-1261" title="update other scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: update other scenario</a> &#8230;&#8203;</p>
+</div>
+<div class="listingblock">
+<div class="title">HearShout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>  <span class="p">|</span> <span class="nv">location</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Sean</span>  <span class="p">|</span> <span class="n">0</span>        <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Larry</span> <span class="p">|</span> <span class="n">150</span>      <span class="p">|</span>
+    <span class="nf">When </span>Sean shouts
+    <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can check that everything is still green. <a href="#shot-1262" id="shot-1262" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15</a></p>
+</div>
+<div class="paragraph">
+<p>and delete our old step definition, which is now unused.  <a href="#shot-1263" id="shot-1263" title="delete unused step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: delete unused step def</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named {word} is located at {int}"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamedIsLocatedAt</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">,</span> <span class="kt">int</span> <span class="n">location</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">location</span><span class="p">));</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1264" id="shot-1264" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: run tests</a></p>
+</div>
+<div class="paragraph">
+<p>SpecFlow strips all the white space surrounding each cell <a href="#shot-1265" id="shot-1265" title="show lining up of pipe characters" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: show lining up of pipe characters</a>, so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.</p>
+</div>
+<div class="paragraph">
+<p>Notice we’ve still had to convert the location from a string to an integer <a href="#shot-1266" id="shot-1266" title="Conversion in step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: Conversion in step def</a>, because SpecFlow can’t know that’s the type of value in our table.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">                <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"name"</span><span class="p">],</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"location"</span><span class="p">])));</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To improve the readability and maintainability of your step definition you can have SpecFlow automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.</p>
+</div>
+<div class="paragraph">
+<p>Instead, we’ll define a simple Whereabouts class to represent the data in the table. <a href="#shot-1267" id="shot-1267" title="creates the class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: creates the class</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="k">public</span> <span class="k">class</span> <span class="nc">Whereabouts</span>
+        <span class="p">{</span>
+            <span class="k">public</span> <span class="kt">string</span> <span class="n">Name</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+            <span class="k">public</span> <span class="kt">int</span> <span class="n">Location</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We’ve made it a nested type to the step definition class, as it doesn’t form part of our core domain.</p>
+</div>
+<div class="paragraph">
+<p>Then we can <a href="#shot-1268" id="shot-1268" title="write ConvertWhereabouts()" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: write ConvertWhereabouts()</a> create a conversion method similarly to the ones we created in Chapter 3 that converts a Table instance to an array of Whereabouts. <a href="#shot-1269" id="shot-1269" title="add attribute" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: add attribute</a> We have to add the <code>[StepArgumentTransformation]</code> attribute to it so that SpecFlow recognizes this conversion.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="n">StepArgumentTransformation</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">Whereabouts</span><span class="p">[]</span> <span class="nf">ConvertWhereabouts</span><span class="p">(</span><span class="n">Table</span> <span class="n">table</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">table</span><span class="p">.</span><span class="n">Rows</span>
+                <span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">row</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">Whereabouts</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="n">row</span><span class="p">[</span><span class="s">"name"</span><span class="p">],</span>
+                    <span class="n">Location</span> <span class="p">=</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"location"</span><span class="p">])</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="nf">ToArray</span><span class="p">();</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, if you declare your table parameter as a Whereabouts array <a href="#shot-1270" id="shot-1270" title="modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: modify stepdef</a>, SpecFlow will automatically call our conversion method.</p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"people are located at"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenPeopleAreLocatedAt</span><span class="p">(</span><span class="n">Whereabouts</span><span class="p">[]</span> <span class="n">whereaboutsList</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">whereabouts</span> <span class="k">in</span> <span class="n">whereaboutsList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">whereabouts</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">whereabouts</span><span class="p">.</span><span class="n">Location</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1271" id="shot-1271" title="Run Tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: Run Tests</a>
+Let&#8217;s run the scenarios to check that we&#8217;re still green. And we are!</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1272" id="shot-1272" title="hear_shout.feature data tables" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25: hear_shout.feature data tables</a>
+That looks much nicer -  people positioned using a table in the feature file and <a href="#shot-1273" id="shot-1273" title="people_are_located_at()" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26: people_are_located_at()</a> really clean code that creates and positions people according to the data.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions_2">5.3.1. Lesson 3 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_is_the_name_of_the_gherkin_syntax_that_allows_you_to_specify_pipe_separated_tabular_data_for_a_step">What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Array</p>
+</li>
+<li>
+<p>Data Matrix</p>
+</li>
+<li>
+<p>Data Table&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Example Table</p>
+</li>
+<li>
+<p>Table</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, with cell boundaries indicated by pipe characters <code>|</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_value_would_be_retieved_from_cell_1_2_in_the_following_table">What value would be retieved from cell (1, 2) in the following table?</h5>
+<div class="paragraph">
+<p>| 0 | 1 | 2 |
+| 3 | 4 | 5 |
+| 6 | 7 | 8 |</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>0</p>
+</li>
+<li>
+<p>1</p>
+</li>
+<li>
+<p>2</p>
+</li>
+<li>
+<p>3</p>
+</li>
+<li>
+<p>4</p>
+</li>
+<li>
+<p>5&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>6</p>
+</li>
+<li>
+<p>7</p>
+</li>
+<li>
+<p>8</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The data table is indexed, starting from 0. The first coordinate indicates which <em>row</em> to access, the second indicates the <em>column</em>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_java_only">JAVA ONLY</h5>
+<div class="sect5">
+<h6 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_a_list_of_maps_list_mapstring_string">Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List&lt; Map&lt;String, String&gt; &gt; ?</h6>
+<div class="paragraph">
+<p>| A | B | C |
+| D | 0 | 1 |
+| E | 2 | 3 |</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>[{A=A, B=B, C=C}, {A=D, B=0, C=1}, {A=E, B=2, C=3}]</p>
+</li>
+<li>
+<p>[{A=D, B=2, C=1}, {A=E, B=0, C=3}]</p>
+</li>
+<li>
+<p>[{A=B, D=0, E=2}, {A=C, D=1, E=3}]</p>
+</li>
+<li>
+<p>[{A=D, B=0, C=1}, {A=E, B=2, C=3}]&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+When Cucumber converts a Data Table into a list of maps, it treats the first row as the labels (or indexes), and each subsequent row provides the values for the next map within the list.</p>
+</div>
+<div class="paragraph">
+<p>So, in this example, since there are three rows, we end up with two maps in the list&#8201;&#8212;&#8201;the first row providing the indexes into each map, the next two rows providing the values for the two maps that are added to the list.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_which_of_the_following_data_tables_will_this_method_process_successfully">Which of the following Data Tables will this method process successfully?</h6>
+<div class="paragraph">
+<p>@DataTableType
+public OrderLine createOrderLine(Map&lt;String, String&gt; orderItem) {
+    return new OrderLine(entry.get("Item Name"), Integer.parseInt(entry.get("Quantity")));
+}</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>| Item Name       | Quantity |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        |</p>
+</li>
+<li>
+<p>| name            | quantity |
+| Cheese &amp; tomato | 1        |</p>
+</li>
+<li>
+<p>| Item Name       | Quantity |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        |
+| Pepperoni       | 1        |</p>
+</li>
+<li>
+<p>| Item Name       | Quantity |&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>| Item Name       | Quantity | Notes        |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        | Extra cheese |</p>
+</li>
+<li>
+<p>| Cheese &amp; tomato | 1        |
+| Pepperoni       | 1        |</p>
+</li>
+<li>
+<p>| Quantity | Item Name       | &#8201;&#8212;&#8201;TRUE
+| 1        | Cheese &amp; tomato |</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Cucumber attempts to convert each non-header row in the data table into an instance of OrderLine by calling this method. For the conversion to succeed, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and createOrderLine() would not be called and the relavent step definition would be passed an empty list of OrderLine objects.</p>
+</div>
+<div class="paragraph">
+<p>There is more documentation about Data Table conversions at <a href="https://github.com/cucumber/cucumber/tree/master/datatable" class="bare">https://github.com/cucumber/cucumber/tree/master/datatable</a></p>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_ruby_only">RUBY ONLY</h5>
+<div class="sect5">
+<h6 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_symbolic_hashes">Which of the answers correctly shows how Cucumber will convert the following data table into symbolic hashes?</h6>
+<div class="paragraph">
+<p>| A | B | C |
+| D | 0 | 1 |
+| E | 2 | 3 |</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>[{:A="A", :B="B", :C="C"}, {:A="D", :B="0", :C="1"}, {:A="E", :B="2", :C="3"}]</p>
+</li>
+<li>
+<p>[{:A="D", :B="2", :C="1"}, {:A="E", :B="0", :C="3"}]</p>
+</li>
+<li>
+<p>[{:A="B", :D="0", :E="2"}, {:A="C", :D="1", :E="3"}]</p>
+</li>
+<li>
+<p>[{:A="D", :B="0", :C="1"}, {:A="E", :B="2", :C="3"}]&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+DataTable.symbolic_hashes returns an array of hashes. The first row is treated as the symbolic labels (or keys), and each subsequent row provides the values for the next hash within the array.</p>
+</div>
+<div class="paragraph">
+<p>So, in this example, since there are three rows, we end up with two hashes in the list&#8201;&#8212;&#8201;the first row provides the keys into each hash, the next two rows providing the values for the two hashes that are added to the list.</p>
+</div>
+</div>
+<div class="sect5">
+<h6 id="_which_of_the_following_data_tables_will_this_step_definition_process_successfully">Which of the following Data Tables will this step definition process successfully?</h6>
+<div class="paragraph">
+<p>When "Sean orders" do |order|
+  order.symbolic_hashes.each do |name:, quantity: |
+    p "Item #{name} x #{quantity}"
+  end
+end</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        |</p>
+</li>
+<li>
+<p>| Item name            | quantity |
+| Cheese &amp; tomato | 1        |</p>
+</li>
+<li>
+<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        |
+| Pepperoni       | 1        |</p>
+</li>
+<li>
+<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>| Name       | Quantity | Notes        |&#8201;&#8212;&#8201;TRUE
+| Cheese &amp; tomato | 1        | Extra cheese |</p>
+</li>
+<li>
+<p>| Cheese &amp; tomato | 1        |
+| Pepperoni       | 1        |</p>
+</li>
+<li>
+<p>| Quantity | Name       | &#8201;&#8212;&#8201;TRUE
+| 1        | Cheese &amp; tomato |</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+For this method to execute successfully, the header cell text must match the hard coded index strings used in the method. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and symbolic_hashes would return an empty array.</p>
+</div>
+<div class="paragraph">
+<p>There is more documentation about Data Table conversions at <a href="https://github.com/cucumber/cucumber/tree/master/datatable" class="bare">https://github.com/cucumber/cucumber/tree/master/datatable</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_deeper_into_data_tables">5.4. Deeper into Data Tables</h3>
+<div class="paragraph">
+<p><a href="#shot-1274" id="shot-1274" title="open step def" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: open step def</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"people are located at"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">GivenPeopleAreLocatedAt</span><span class="p">(</span><span class="n">Whereabouts</span><span class="p">[]</span> <span class="n">whereaboutsList</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">foreach</span> <span class="p">(</span><span class="kt">var</span> <span class="n">whereabouts</span> <span class="k">in</span> <span class="n">whereaboutsList</span><span class="p">)</span>
+            <span class="p">{</span>
+                <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">whereabouts</span><span class="p">.</span><span class="n">Name</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">whereabouts</span><span class="p">.</span><span class="n">Location</span><span class="p">));</span>
+            <span class="p">}</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We separated the Data Table conversion from the step definition. The step definition is nice and clean now, but out conversion method is still fairly complex as it needs to handle the table headers and the cell data conversion. <a href="#shot-1275" id="shot-1275" title="open conversion" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: open conversion</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="n">StepArgumentTransformation</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">Whereabouts</span><span class="p">[]</span> <span class="nf">ConvertWhereabouts</span><span class="p">(</span><span class="n">Table</span> <span class="n">table</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">table</span><span class="p">.</span><span class="n">Rows</span>
+                <span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">row</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">Whereabouts</span>
+                <span class="p">{</span>
+                    <span class="n">Name</span> <span class="p">=</span> <span class="n">row</span><span class="p">[</span><span class="s">"name"</span><span class="p">],</span>
+                    <span class="n">Location</span> <span class="p">=</span> <span class="kt">int</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s">"location"</span><span class="p">])</span>
+                <span class="p">})</span>
+                <span class="p">.</span><span class="nf">ToArray</span><span class="p">();</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>But even though it is complex, we can notice a pattern in it. We take the "name" cell and update the <code>Name</code> property of the Whereabouts object. We take the "location" cell and update the <code>Location</code> property&#8230;&#8203; This is not a big surprise for us, because we let the domain terms in the scenarios drive our domain model.</p>
+</div>
+<div class="paragraph">
+<p>Anyhow it happens, this sort of consistency allows us to simplify this code further. SpecFlow defines an extension method on the Table class, called <code>CreateSet</code>. <code>CreateSet</code> can do exactly what we need here: create instances of a particular class and update its properties based on the table cells. <a href="#shot-1276" id="shot-1276" title="change DefineWhereabouts to use CreateSet" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: change DefineWhereabouts to use CreateSet</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="n">StepArgumentTransformation</span><span class="p">]</span>
+        <span class="k">public</span> <span class="n">Whereabouts</span><span class="p">[]</span> <span class="nf">ConvertWhereabouts</span><span class="p">(</span><span class="n">Table</span> <span class="n">table</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">table</span><span class="p">.</span><span class="n">CreateSet</span><span class="p">&lt;</span><span class="n">Whereabouts</span><span class="p">&gt;().</span><span class="nf">ToArray</span><span class="p">();</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <code>CreateSet</code> extension method is defined in the <code>TechTalk.SpecFlow.Assist</code> namespace, so we have to add a using statement for that. <a href="#shot-1277" id="shot-1277" title="add using statement" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: add using statement</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1278" id="shot-1278" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: run tests</a> With that change our conversion method is also clean and our tests still pass.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1279" id="shot-1279" title="show data tables in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: show data tables in feature file</a>
+Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
+</div>
+<div class="paragraph">
+<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: <a href="#shot-1280" id="shot-1280" title="write two-shouts scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: write two-shouts scenario</a></p>
+</div>
+<div class="listingblock">
+<div class="title">HearShout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Rule</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">should</span> <span class="err">be</span> <span class="err">able</span> <span class="err">to</span> <span class="err">hear</span> <span class="err">multiple</span> <span class="err">shouts</span>
+
+<span class="kn">Scenario</span><span class="p">:</span> Two shouts
+    <span class="nf">Given </span>a person named Sean
+    <span class="nf">And </span>a person named Lucy
+    <span class="nf">When </span>Sean shouts <span class="s">"Free bagels!"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+    <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">message</span>     <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">bagels</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>See how natural it is to use a Data Table here?</p>
+</div>
+<div class="paragraph">
+<p>So how do we implement this step definition? First, let&#8217;s practice what we have learned about the Table class.</p>
+</div>
+<div class="paragraph">
+<p>For that we first paste the snippet into the StepDefinitions class and rename the parameter. <a href="#shot-1281" id="shot-1281" title="define steps, copy, paste snippet, rename parameter to expectedMessagesTable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: define steps, copy, paste snippet, rename parameter to expectedMessagesTable</a> What we want to have here is the actually heard messages and the messages we expect to hear and then compare them. Getting the expected messages is easy, we just need to call the <code>GetMessagesHeard</code> method. <a href="#shot-1282" id="shot-1282" title="add actualMessages" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: add actualMessages</a> To get the expected messages we need to take the "message" cell from each table row like this. <a href="#shot-1283" id="shot-1283" title="add expectedMessages" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: add expectedMessages</a> And finally we can make sure they are the same using an assert statement. <a href="#shot-1284" id="shot-1284" title="add assert" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: add assert</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucy hears the following messages:"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyHearsTheFollowingMessages</span><span class="p">(</span><span class="n">Table</span> <span class="n">expectedMessagesTable</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">actualMessages</span> <span class="p">=</span> <span class="n">people</span><span class="p">[</span><span class="s">"Lucy"</span><span class="p">].</span><span class="nf">GetMessagesHeard</span><span class="p">();</span>
+            <span class="kt">var</span> <span class="n">expectedMessages</span> <span class="p">=</span> <span class="n">expectedMessagesTable</span><span class="p">.</span><span class="n">Rows</span><span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">r</span> <span class="p">=&gt;</span> <span class="n">r</span><span class="p">[</span><span class="s">"message"</span><span class="p">]);</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="n">expectedMessages</span><span class="p">,</span> <span class="n">actualMessages</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1285" id="shot-1285" title="runs tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: runs tests</a> Oops! It looks like there is a problem. The two lists are different. By checking the error message we would find that there is a typo in our scenario. But let&#8217;s not fix this yet. Instead of that let&#8217;s look at another typical pattern for a data table related assertion.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1286" id="shot-1286" title="show type of actualResults" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: show type of actualResults</a> The <code>GetMessagesHeard</code> method returned a list of strings, but in many cases the list that we want to compare the Data Table with is a list of objects. Let&#8217;s imagine that later we will extend the <code>GetMessagesHeard</code> method to not only return the message but also the person who shouted it. <a href="#shot-1287" id="shot-1287" title="add HeardMessage and GetMessagesHeardEx" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: add HeardMessage and GetMessagesHeardEx</a> To simulate that let&#8217;s add an alternative version of <code>GetMessagesHeard</code>, called <code>GetMessagesHeardEx</code>. The new method returns a list of <code>HeardMessage</code> instances. <a href="#shot-1288" id="shot-1288" title="highlight method return type" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: highlight method return type</a> The HeardMessage class has only one property, the message, <a href="#shot-1289" id="shot-1289" title="highlight Message property" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: highlight Message property</a> but later we might extend it.</p>
+</div>
+<div class="listingblock">
+<div class="title">Person.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="k">public</span> <span class="k">class</span> <span class="nc">HeardMessage</span>
+        <span class="p">{</span>
+            <span class="k">public</span> <span class="kt">string</span> <span class="n">Message</span> <span class="p">{</span> <span class="k">get</span><span class="p">;</span> <span class="k">set</span><span class="p">;</span> <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="k">public</span> <span class="n">IList</span><span class="p">&lt;</span><span class="n">HeardMessage</span><span class="p">&gt;</span> <span class="nf">GetMessagesHeardEx</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="k">return</span> <span class="n">messagesHeard</span>
+                <span class="p">.</span><span class="nf">Select</span><span class="p">(</span><span class="n">m</span> <span class="p">=&gt;</span> <span class="k">new</span> <span class="n">HeardMessage</span> <span class="p">{</span><span class="n">Message</span> <span class="p">=</span> <span class="n">m</span><span class="p">})</span>
+                <span class="p">.</span><span class="nf">ToArray</span><span class="p">();</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s first change the part of the step definition that calculates the actual messages by calling our extended method. <a href="#shot-1290" id="shot-1290" title="change actualMessages calculation, show type of the result" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: change actualMessages calculation, show type of the result</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">            <span class="kt">var</span> <span class="n">actualMessages</span> <span class="p">=</span> <span class="n">people</span><span class="p">[</span><span class="s">"Lucy"</span><span class="p">].</span><span class="nf">GetMessagesHeardEx</span><span class="p">();</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To compare this with the expected messages in the table, we need to check if the "message" cell matches to the <code>Message</code> property for each row. If there would be a "shouter name" cell we would need to match that to a <code>ShouterName</code> property and so on. This is the same consistency that we had when we used CreateSet. For such assertions, we can use another helper method, called <code>CompareToSet</code>.</p>
+</div>
+<div class="paragraph">
+<p>It works similarly to CreateSet. <a href="#shot-1291" id="shot-1291" title="add CreateSet call" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: add CreateSet call</a> The CompareToSet is an extension method on the Table class from the Assist namespace, and you need to pass the list of objects that you would like to compare the table with. <a href="#shot-1292" id="shot-1292" title="highlight actualMessages argument" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: highlight actualMessages argument</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucy hears the following messages:"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyHearsTheFollowingMessages</span><span class="p">(</span><span class="n">Table</span> <span class="n">expectedMessagesTable</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="kt">var</span> <span class="n">actualMessages</span> <span class="p">=</span> <span class="n">people</span><span class="p">[</span><span class="s">"Lucy"</span><span class="p">].</span><span class="nf">GetMessagesHeardEx</span><span class="p">();</span>
+            <span class="n">expectedMessagesTable</span><span class="p">.</span><span class="nf">CompareToSet</span><span class="p">(</span><span class="n">actualMessages</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Both CreateSet and CompareToSet can be further customized, but this is just enough for us. Let&#8217;s run the tests and look at the error message.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1293" id="shot-1293" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run tests</a></p>
+</div>
+<div class="paragraph">
+<p>Oh! We&#8217;ve found the typo: we should have included exclamation marks on the expected messages. <a href="#shot-1294" id="shot-1294" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14</a> Well, at least this gives you a chance to see the nice diff output from CompareToSet when the table and the list are different. We see the expected values prefixed with a minus, and the actual values prefixed with a plus.</p>
+</div>
+<div class="paragraph">
+<p>Let’s fix just one of these <a href="#shot-1295" id="shot-1295" title="add an exclamation mark" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: add an exclamation mark</a> so you can see how the diff output changes.</p>
+</div>
+<div class="listingblock">
+<div class="title">HearShout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1296" id="shot-1296" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run Cucumber</a>
+The matching bagels! line no longer has a minus, and for the mismatched row, the actual value still has a minus, and the expected value has a plus.</p>
+</div>
+<div class="paragraph">
+<p>Let’s fix this last typo <a href="#shot-1297" id="shot-1297" title="add another exclamation mark" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: add another exclamation mark</a>, and we should be green again.</p>
+</div>
+<div class="listingblock">
+<div class="title">HearShout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1298" id="shot-1298" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: run Cucumber</a></p>
+</div>
+<div class="paragraph">
+<p>Great.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_4_questions_3">5.4.1. Lesson 4 - Questions</h4>
+<div class="paragraph">
+<p>JAVA ONLY
+===== Why might you use the @Transpose annotation?</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Transpose has been deprecated and you should not use it</p>
+</li>
+<li>
+<p>Use it if it is more readable to have the headers in the first column&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Use it to ensure that every row in the data table has the same number of columns</p>
+</li>
+<li>
+<p>Use it to reverse the order of the data rows in the table</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The @Transpose annotation (and the transpose method on DataTable) allows you to use tables that have their headers in the first column of a table.</p>
+</div>
+<div class="sect4">
+<h5 id="_what_method_on_datatable_compares_two_datatables_and_produces_a_textual_output_showing_their_differences">What method on DataTable compares two DataTables and produces a textual output showing their differences?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>compare</p>
+</li>
+<li>
+<p>difference</p>
+</li>
+<li>
+<p>contrast</p>
+</li>
+<li>
+<p>diff&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>covariance</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The method that compares two data tables is called <strong>diff</strong></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_docstring">5.5. DocString</h3>
+<div class="paragraph">
+<p>When writing scenarios, occasionally we want to use a really long piece of data. <a href="#shot-1299" id="shot-1299" title="Show feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Show feature file</a></p>
+</div>
+<div class="paragraph">
+<p>For example, let’s introduce a new rule about the maximum length of a message <a href="#shot-1300" id="shot-1300" title="New rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: New rule</a></p>
+</div>
+<div class="listingblock">
+<div class="title">HearShout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Rule</span><span class="p">:</span>  <span class="err">Maximum</span> <span class="err">length</span> <span class="err">of</span> <span class="err">message</span> <span class="err">is</span> <span class="err">180</span> <span class="err">characters</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and add a scenario to illustrate it <a href="#shot-1301" id="shot-1301" title="New scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: New scenario</a>, making the string just over the boundary of the rule:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Message is too long
+    <span class="nf">Given </span>a person named Sean
+    <span class="nf">And </span>a person named Lucy
+    <span class="nf">When </span>Sean shouts <span class="s">"123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890x"</span>
+    <span class="nf">Then </span>Lucy should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s pretty ugly isn’t it!</p>
+</div>
+<div class="paragraph">
+<p>Still, we’ll press on and get it to green, then we’ll show you how to clean it up.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1302" id="shot-1302" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: run Cucumber</a> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition <a href="#shot-1303" id="shot-1303" title="Modify stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: Modify stepdef</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"{word} should not hear a shout"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">ThenPersonShouldNotHearAShout</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">Assert</span><span class="p">.</span><span class="nf">Equal</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="n">people</span><span class="p">[</span><span class="n">name</span><span class="p">].</span><span class="nf">GetMessagesHeard</span><span class="p">().</span><span class="n">Count</span><span class="p">);</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1304" id="shot-1304" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: run cucumber</a></p>
+</div>
+<div class="paragraph">
+<p>OK, so we have a failing acceptance test.<a href="#shot-1305" id="shot-1305" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a> Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests. <a href="#shot-1306" id="shot-1306" title="show NetworkTest" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: show NetworkTest</a> As we explain in more detail in the next lesson, we start by adding a new example to specify this extra responsibility. <a href="#shot-1307" id="shot-1307" title="start creating new unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: start creating new unit test</a></p>
+</div>
+<div class="paragraph">
+<p>We’ll create a 181-character message like this <a href="#shot-1308" id="shot-1308" title="finish implementing unit test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: finish implementing unit test</a> and then assert that the message should not be heard when it’s broadcast.<a href="#shot-1309" id="shot-1309" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a></p>
+</div>
+<div class="listingblock">
+<div class="title">NetworkTests.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="n">Fact</span><span class="p">]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">Does_not_broadcast_a_message_over_180_characters_even_if_listener_is_in_range</span><span class="p">()</span>
+        <span class="p">{</span>
+            <span class="kt">int</span> <span class="n">seanLocation</span> <span class="p">=</span> <span class="m">0</span><span class="p">;</span>
+
+            <span class="kt">var</span> <span class="n">longMessage</span> <span class="p">=</span> <span class="k">new</span> <span class="kt">string</span><span class="p">(</span><span class="sc">'x'</span><span class="p">,</span> <span class="m">181</span><span class="p">);</span>
+
+            <span class="n">Person</span> <span class="n">laura</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="m">0</span><span class="p">);</span>
+            <span class="n">network</span><span class="p">.</span><span class="nf">Broadcast</span><span class="p">(</span><span class="n">longMessage</span><span class="p">,</span> <span class="n">seanLocation</span><span class="p">);</span>
+
+            <span class="n">Assert</span><span class="p">.</span><span class="nf">DoesNotContain</span><span class="p">(</span><span class="n">Message</span><span class="p">,</span> <span class="n">laura</span><span class="p">.</span><span class="nf">GetMessagesHeard</span><span class="p">());</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s run that test. <a href="#shot-1310" id="shot-1310" title="run Cucumber - show the unit test results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: run Cucumber - show the unit test results</a><a href="#shot-1311" id="shot-1311" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13</a> Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
+</div>
+<div class="paragraph">
+<p>It looks like we’re already implementing the proximity rule here in the broadcast method. <a href="#shot-1312" id="shot-1312" title="show Network proximity logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: show Network proximity logic</a> Let’s add another if statement here about the message length. <a href="#shot-1313" id="shot-1313" title="add message length logic" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: add message length logic</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Network.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">                <span class="k">if</span> <span class="p">(</span><span class="n">Math</span><span class="p">.</span><span class="nf">Abs</span><span class="p">(</span><span class="n">listener</span><span class="p">.</span><span class="n">Location</span> <span class="p">-</span> <span class="n">shouterLocation</span><span class="p">)</span> <span class="p">&lt;=</span> <span class="n">range</span><span class="p">)</span>
+                    <span class="k">if</span> <span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="n">Length</span> <span class="p">&lt;=</span> <span class="m">180</span><span class="p">)</span>
+                        <span class="n">listener</span><span class="p">.</span><span class="nf">Hear</span><span class="p">(</span><span class="n">message</span><span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1314" id="shot-1314" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: run cucumber</a>
+Run the unit test again… and it’s passing. Great.</p>
+</div>
+<div class="paragraph">
+<p>The code here has got a little bit messy and hard to read. <a href="#shot-1315" id="shot-1315" title="show the modified logic in the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: show the modified logic in the Network class</a>
+One very basic move we could make to improve it would be to just extract a couple of temporary variables, one for the range rule <a href="#shot-1316" id="shot-1316" title="extract range temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: extract range temporary variable</a> and one for the length rule. <a href="#shot-1317" id="shot-1317" title="extract length temporary variable" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: extract length temporary variable</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Network.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">                <span class="kt">var</span> <span class="n">withinRange</span> <span class="p">=</span> <span class="n">Math</span><span class="p">.</span><span class="nf">Abs</span><span class="p">(</span><span class="n">listener</span><span class="p">.</span><span class="n">Location</span> <span class="p">-</span> <span class="n">shouterLocation</span><span class="p">)</span> <span class="p">&lt;=</span> <span class="n">range</span><span class="p">;</span>
+                <span class="kt">var</span> <span class="n">shortEnough</span> <span class="p">=</span> <span class="n">message</span><span class="p">.</span><span class="n">Length</span> <span class="p">&lt;=</span> <span class="m">180</span><span class="p">;</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">withinRange</span> <span class="p">&amp;&amp;</span> <span class="n">shortEnough</span><span class="p">)</span>
+                    <span class="n">listener</span><span class="p">.</span><span class="nf">Hear</span><span class="p">(</span><span class="n">message</span><span class="p">);</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That’s better. This code could be improved even further of course, but at least we haven’t made it any worse.</p>
+</div>
+<div class="paragraph">
+<p>Let’s just run the tests to check. <a href="#shot-1318" id="shot-1318" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run cucumber</a> Great - everything’s still green.</p>
+</div>
+<div class="paragraph">
+<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. <a href="#shot-1319" id="shot-1319" title="show message length scenario in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: show message length scenario in feature file</a></p>
+</div>
+<div class="paragraph">
+<p>DocStrings allow you to specify a text argument for a step that spans over multiple lines.  We could change our step to look like this instead: <a href="#shot-1320" id="shot-1320" title="convert message to DocString" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: convert message to DocString</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kn">Scenario</span><span class="p">:</span> Message is too long
+    <span class="nf">Given </span>a person named Sean
+    <span class="nf">And </span>a person named Lucy
+    <span class="nf">When </span>Sean shouts the following message
+        <span class="s">"""
+        This is a really long message
+        so long in fact that I am not going to
+        be allowed to send it, at least if I keep
+        typing like this until the length is over
+        the limit of 180 characters.
+        """</span>
+    <span class="nf">Then </span>Lucy should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now the scenario is much more readable.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1321" id="shot-1321" title="show existing stepdef code" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: show existing stepdef code</a>
+We have to add a new step definition too <a href="#shot-1322" id="shot-1322" title="add sean_shouts_the_following_message stepdef" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: add sean_shouts_the_following_message stepdef</a>. It doesn&#8217;t need a parameter in the Cucumber Expression <a href="#shot-1323" id="shot-1323" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25</a>&#8201;&#8212;&#8201;the DocString gets passed as a string argument to the step definition automatically.<a href="#shot-1324" id="shot-1324" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26</a></p>
+</div>
+<div class="paragraph">
+<p>Now we can fill out the rest of our new step definition. <a href="#shot-1325" id="shot-1325" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 27</a><a href="#shot-1326" id="shot-1326" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 28</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts the following message"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShoutsTheFollowingMessage</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">people</span><span class="p">[</span><span class="s">"Sean"</span><span class="p">].</span><span class="nf">Shout</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+            <span class="n">messageFromSean</span> <span class="p">=</span> <span class="n">message</span><span class="p">;</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s check that we&#8217;re still green <a href="#shot-1327" id="shot-1327" title="run cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 29: run cucumber</a>&#8201;&#8212;&#8201;and we are!</p>
+</div>
+<div class="paragraph">
+<p>This two step definitions do the same and they even have the same parameters. So we can keep just one of them and add the When attribute of the other to it. <a href="#shot-1328" id="shot-1328" title="move second When attribute up, delete second method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 30: move second When attribute up, delete second method</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#">        <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts {string}"</span><span class="p">)]</span>
+        <span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts the following message"</span><span class="p">)]</span>
+        <span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShoutsAMessage</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">people</span><span class="p">[</span><span class="s">"Sean"</span><span class="p">].</span><span class="nf">Shout</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+            <span class="n">messageFromSean</span> <span class="p">=</span> <span class="n">message</span><span class="p">;</span>
+        <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1329" id="shot-1329" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 31: run tests</a> Having multiple Given, When or Then attribute on the same method is another way to handle alternates.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1330" id="shot-1330" title="switch back to feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 32: switch back to feature file</a>
+We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_3">5.5.1. Lesson 5 - Questions</h4>
+<div class="sect4">
+<h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Write another scenario to triangulate the new behaviour of the Network class</p>
+</li>
+<li>
+<p>Implement the changed behaviour in the Network class</p>
+</li>
+<li>
+<p>Add a new unit test to NetworkTest that specifies the change in behaviour of the Network class&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+We wrote a new unit test in NetworkTest. We&#8217;ll talk more about this in the next lesson.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_would_we_use_a_docstring">Why would we use a DocString?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It&#8217;s the only way to include multi-line strings in a scenarios</p>
+</li>
+<li>
+<p>It&#8217;s a readable way to include long strings in a scenario&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>DocStrings support multiple languages</p>
+</li>
+<li>
+<p>Cucumber provides a DocString type that provides useful string manipulation features</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The DocString is Gherkin syntax that allows long strings to be readably represented in a scenario.</p>
+</div>
+<div class="paragraph">
+<p>All the magic happens when the DocString is read from the Gherkin. The content of the DocString gets passed to the step definition as a normal String&#8201;&#8212;&#8201;there&#8217;s no corresponding Cucumber type.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_snippets_of_code_are_correct_for_the_step_below">Which of the following snippets of code are correct for the step below?</h5>
+<div class="literalblock">
+<div class="content">
+<pre>Then Simone says
+"""
+Now on that limb there was a branch
+A rare branch and a rattlin' branch
+And the branch on the limb
+And the limb on the tree
+And the tree in the bog
+And the bog down in the valley-o
+"""</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>@Then("Simone says")
+public void simone_says() { }</p>
+</li>
+<li>
+<p>@Then("Simone says")
+public void simone_says(String lyrics) { }&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>@Then("Simone says {string}")
+public void simone_says(String lyrics) { }</p>
+</li>
+<li>
+<p>@Then("Simone says {docstring}")
+public void simone_says(String lyrics) { }</p>
+</li>
+<li>
+<p>@Then("Simone says {docstring}")
+public void simone_says(DocString lyrics) { }</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+When using a DocString in a scenario, you do not add any parameter to the matching Cucumber Expression. You do need to provide a String parameter to the step definition to receive the contents of the DocString.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tdd_loops">5.6. TDD Loops</h3>
+<div class="paragraph">
+<p><a href="#shot-1331" id="shot-1331" title="original animation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: original animation</a></p>
+</div>
+<div class="paragraph">
+<p>You might have noticed that we’ve followed a pattern when we added behaviour to the system during this episode.</p>
+</div>
+<div class="paragraph">
+<p>First we expressed the behaviour we wanted in a Gherkin scenario, wired up the step definitions, then ran SpecFlow to watch it fail.</p>
+</div>
+<div class="paragraph">
+<p>Then, we found the first class in our domain model that needed to change in order to support that new behaviour. In this case, the Network class. We used a unit test to describe how we wanted instances of that class to behave. Then we ran the unit test and watched it fail.</p>
+</div>
+<div class="paragraph">
+<p>We focused in and made changes to the class until its unit tests were passing. When the unit tests were passing, we then made some minor changes to clean up the code and make it more readable. This is the basic test-driven-development cycle: red, green, clean.</p>
+</div>
+<div class="paragraph">
+<p>The technical name for this last clean-up step is refactoring. Refactoring is an ugly name for an extremely valuable activity: improving the design of existing code without changing its behaviour. You can think about it like cleaning up and washing the dishes after you’ve prepared a meal: basic housekeeping. But imagine the state of your kitchen if you never made time to do the dishes.</p>
+</div>
+<div class="paragraph">
+<p>Go on, imagine it for a second.</p>
+</div>
+<div class="paragraph">
+<p>Yuck!</p>
+</div>
+<div class="paragraph">
+<p>Well, that’s how many, many codebase end up. The good thing about taking this course is that we’re teaching you how to write solid automated tests, and the good thing about having solid automated tests is you can refactor with confidence, knowing that if you accidentally change the system’s behaviour, your tests will tell you.</p>
+</div>
+<div class="paragraph">
+<p>Once we’re done refactoring, what do we do next? Run SpecFlow, of course! In this case, our scenario was passing with a single trip round the inner TDD loop, but sometimes you can spend several hours working through all the unit tests you need to get a single scenario to green.</p>
+</div>
+<div class="paragraph">
+<p>Once the acceptance test is passing, we figure out the next most valuable scenario on our todo list, and start the whole thing all over again!</p>
+</div>
+<div class="paragraph">
+<p>Together, these two loops make the BDD cycle. The outer loop, which starts with an acceptance test, keeps us focussed on what the business needs us to do next. The inner loop, where we continuously test, implement then refactor small units of code, is where decide how we’ll implement that behaviour.</p>
+</div>
+<div class="paragraph">
+<p>Both of these levels of feedback are important. It’s sometimes said that your acceptance tests ensure you’re building the right thing, and your unit tests ensure you’re building the thing right.</p>
+</div>
+<div class="paragraph">
+<p>That’s all for this chapter of Cucumber School. See you next time!</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_6_questions_2">5.6.1. Lesson 6 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_is_the_best_definition_of_the_term_refactoring">Which of the following is the best definition of the term "refactoring"?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Improving the efficiency of the code without changing its behaviour</p>
+</li>
+<li>
+<p>Adding new functionality to the application</p>
+</li>
+<li>
+<p>Changing the behaviour of the code</p>
+</li>
+<li>
+<p>Tidying up the code without changing its behaviour&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>Rearchitecting the code to get ready for adding new functionality</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The definition of refactoring is: improve the design (of some code) without changing its behaviour.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_when_can_refactoring_happen">When can refactoring happen?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>When a refactoring story gets prioritised by the Product Owner</p>
+</li>
+<li>
+<p>Whenever all tests are green&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>When at least one test is failing</p>
+</li>
+<li>
+<p>First thing in the morning</p>
+</li>
+<li>
+<p>Before committing code to source control</p>
+</li>
+<li>
+<p>At the end of an iteration</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Refactoring is part of the day-to-day work of every software developer. It&#8217;s when they tidy up the code once they&#8217;ve got it working.</p>
+</div>
+<div class="paragraph">
+<p>Since part of the definition of refactoring is that it shouldn&#8217;t change the behaviour of the code, they will run the tests to make sure nothing was broken. Which means that the tests MUST be passing BEFORE they start refactoring. Otherwise, how can they be sure that the behaviour hasn&#8217;t changed?</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_are_the_acceptance_test_and_unit_test_related">How are the acceptance test and unit test related?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Acceptance tests ensure we "build the right thing"; unit tests ensure we "build the thing right"&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>An acceptance test should be passing before we start writing unit tests</p>
+</li>
+<li>
+<p>We may write many unit tests before the currently failing acceptance test passes&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>All unit tests should be passing before we write an acceptance test</p>
+</li>
+<li>
+<p>BDD consists of two loops: an outer acceptance test loop and an inner unit test loop&#8201;&#8212;&#8201;TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to fail, because we haven&#8217;t added the functionality it specifies to the system yet. This is the beginning of the outer, acceptance test loop, that ensures we&#8217;re building what the Product Owner wants: "build the right thing."</p>
+</div>
+<div class="paragraph">
+<p>We then enter the inner, unit test loop. It&#8217;s unit tests that define the precise behaviour of small units of code&#8201;&#8212;&#8201;and ensure that we "build the thing right." They give us the safety to improve the code&#8217;s design (refactor), because they will fail if we accidentally change the code&#8217;s behaviour while refactoring. We may have to go round the inner loop a number of times, adding several unit tests, before we&#8217;ve added enought functionality to make the outer acceptance test pass.</p>
+</div>
+<div class="paragraph">
+<p>And then we write the next failing acceptance test&#8230;&#8203;</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -3244,7 +4774,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-10-30 17:40:34 UTC
+Last updated 2020-11-03 16:04:55 UTC
 </div>
 </div>
 <style>
