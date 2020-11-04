@@ -29,9 +29,9 @@ shot::[7,"copy snippet, paste into StepDefinitions.cs"]
 include::../code/dotnet/06--step06-table-snippet-added/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41..46]
 ----
 
-As you can see, the step definition implicitly takes a single argument shot::[8,"highlight stepdef parameters"] of type `Table`, which is a representation of a Data Table in SpecFlow. As it represents a table of persons, we can rename it to `presonsTable` shot::[9,"rename parameter"] 
+As you can see, the step definition implicitly takes a single argument shot::[8,"highlight stepdef parameters"] of type `Table`, which is a representation of a Data Table in SpecFlow. As it represents a table of Person objects, we can rename it to `personsTable` shot::[9,"rename parameter"] 
 
-This object has a rich API for using the tabular data. The `Rows` property of the table class can be used to access the data rows of the table -- all rows, except the header row. shot::[10,"split screen"] A particular cell value can be retrieved from a row by the header name. So, Lucy's location can be accessed by getting the "name" cell of the row at index 1. shot::[11,"Add cell value to an exception"]
+This object has a rich API for using the tabular data. The `Rows` property of the table class can be used to access the data rows of the table -- all rows, except the header row. shot::[10,"split screen"] A particular cell value can be retrieved from a row by using the header name. So, Lucy's location can be accessed by getting the "name" cell of the row at index 1. shot::[11,"Add cell value to an exception"]
 
 .StepDefinitions.cs
 [source,c#]
