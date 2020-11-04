@@ -18,7 +18,7 @@ include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/Ste
 
 But even though it is complex, we can notice a pattern in it. We take the "name" cell and update the `Name` property of the Whereabouts object. We take the "location" cell and update the `Location` property... This is not a big surprise for us, because we let the domain terms in the scenarios drive our domain model.
 
-Anyhow it happens, this sort of consistency allows us to simplify this code further. SpecFlow defines an extension method on the Table class, called `CreateSet`. `CreateSet` can do exactly what we need here: create instances of a particular class and update its properties based on the table cells. shot::[3,"change DefineWhereabouts to use CreateSet"]
+However it happens, this sort of consistency allows us to simplify the code further. SpecFlow defines an extension method on the Table class, called `CreateSet`. `CreateSet` can do exactly what we need here: create instances of a particular class and update its properties based on the table cells. shot::[3,"change DefineWhereabouts to use CreateSet"]
 
 .StepDefinitions.cs
 [source,c#]
@@ -45,7 +45,7 @@ See how natural it is to use a Data Table here?
 
 So how do we implement this step definition? First, let's practice what we have learned about the Table class. 
 
-For that we first paste the snippet into the StepDefinitions class and rename the parameter. shot::[7, "define steps, copy, paste snippet, rename parameter to expectedMessagesTable"] What we want to have here is the actually heard messages and the messages we expect to hear and then compare them. Getting the expected messages is easy, we just need to call the `GetMessagesHeard` method. shot::[8, "add actualMessages"] To get the expected messages we need to take the "message" cell from each table row like this. shot::[9, "add expectedMessages"] And finally we can make sure they are the same using an assert statement. shot::[10, "add assert"]
+For that we first paste the snippet into the StepDefinitions class and rename the parameter. shot::[7, "define steps, copy, paste snippet, rename parameter to expectedMessagesTable"] What we want to do here is compare the messages that are actually heard with the messages we expected to hear. Getting the actual messages is easy, we just need to call the `GetMessagesHeard` method. shot::[8, "add actualMessages"] To get the expected messages we need to take the "message" cell from each table row like this. shot::[9, "add expectedMessages"] And finally we can make sure they are the same using an assert statement. shot::[10, "add assert"]
 
 .StepDefinitions.cs
 [source,c#]
@@ -53,7 +53,7 @@ For that we first paste the snippet into the StepDefinitions class and rename th
 include::../code/dotnet/13--step13-use-collection-assert/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=89..95]
 ----
 
-shot::[11,"runs tests"] Oops! It looks like there is a problem. The two lists are different. By checking the error message we would find that there is a typo in our scenario. But let's not fix this yet. Instead of that let's look at another typical pattern for a data table related assertion.
+shot::[11,"runs tests"] Oops! It looks like there is a problem. The two lists are different. By checking the error message we would find that there is a typo in our scenario. But let's not fix this yet. Instead, let's look at another typical pattern for a data table related assertion.
 
 shot::[12,"show type of actualResults"] The `GetMessagesHeard` method returned a list of strings, but in many cases the list that we want to compare the Data Table with is a list of objects. Let's imagine that later we will extend the `GetMessagesHeard` method to not only return the message but also the person who shouted it. shot::[12,"add HeardMessage and GetMessagesHeardEx"] To simulate that let's add an alternative version of `GetMessagesHeard`, called `GetMessagesHeardEx`. The new method returns a list of `HeardMessage` instances. shot::[13,"highlight method return type"] The HeardMessage class has only one property, the message, shot::[14,"highlight Message property"] but later we might extend it. 
 
