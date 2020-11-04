@@ -9,9 +9,9 @@
 * CreateSet can detect the type of the objects to be created based on the Data Table header
 
 Explanation:
-CreateSet is an extension method for the Table class that is defined in the TechTalk.SpecFlow.Assist namespace. The target type has to be specified as a generic type parameter. The fields and properties of the target type are found using case-insensitive match. Whitespaces in the header name are also ignored, so cells of header "shouter name" will update the property ShouterName. CreateSet returns an object for each non-header row in the Data Table. By default it creates the objects using their default constructor, but you can also specify a delegate to create the instance differently.
+CreateSet is an extension method for the Table class that is defined in the TechTalk.SpecFlow.Assist namespace. The target type has to be specified as a generic type parameter. The fields and properties of the target type are found using case-insensitive match. Whitespace in the header name is also ignored, so cells with the header "shouter name" will update the property ShouterName. CreateSet returns an object for each non-header row in the Data Table. By default it creates the objects using their default constructor, but you can also specify a delegate to create the instance differently.
 
-===== What extension method on the Table class compares two the table with a list of objects and produces a textual output showing their differences?
+===== What extension method on the Table class compares the table with a list of objects and produces a textual output showing their differences?
 
 * Compare
 * AssertEqual
