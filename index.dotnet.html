@@ -4154,7 +4154,7 @@ For this method to execute successfully, the header cell text must match the har
 <p>But even though it is complex, we can notice a pattern in it. We take the "name" cell and update the <code>Name</code> property of the Whereabouts object. We take the "location" cell and update the <code>Location</code> property&#8230;&#8203; This is not a big surprise for us, because we let the domain terms in the scenarios drive our domain model.</p>
 </div>
 <div class="paragraph">
-<p>Anyhow it happens, this sort of consistency allows us to simplify this code further. SpecFlow defines an extension method on the Table class, called <code>CreateSet</code>. <code>CreateSet</code> can do exactly what we need here: create instances of a particular class and update its properties based on the table cells. </p>
+<p>However it happens, this sort of consistency allows us to simplify the code further. SpecFlow defines an extension method on the Table class, called <code>CreateSet</code>. <code>CreateSet</code> can do exactly what we need here: create instances of a particular class and update its properties based on the table cells. </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -4202,7 +4202,7 @@ Data tables are very useful for setting up data in Given steps, but you can also
 <p>So how do we implement this step definition? First, let&#8217;s practice what we have learned about the Table class.</p>
 </div>
 <div class="paragraph">
-<p>For that we first paste the snippet into the StepDefinitions class and rename the parameter.  What we want to have here is the actually heard messages and the messages we expect to hear and then compare them. Getting the expected messages is easy, we just need to call the <code>GetMessagesHeard</code> method.  To get the expected messages we need to take the "message" cell from each table row like this.  And finally we can make sure they are the same using an assert statement. </p>
+<p>For that we first paste the snippet into the StepDefinitions class and rename the parameter.  What we want to do here is compare the messages that are actually heard with the messages we expected to hear. Getting the actual messages is easy, we just need to call the <code>GetMessagesHeard</code> method.  To get the expected messages we need to take the "message" cell from each table row like this.  And finally we can make sure they are the same using an assert statement. </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -4217,7 +4217,7 @@ Data tables are very useful for setting up data in Given steps, but you can also
 </div>
 </div>
 <div class="paragraph">
-<p> Oops! It looks like there is a problem. The two lists are different. By checking the error message we would find that there is a typo in our scenario. But let&#8217;s not fix this yet. Instead of that let&#8217;s look at another typical pattern for a data table related assertion.</p>
+<p> Oops! It looks like there is a problem. The two lists are different. By checking the error message we would find that there is a typo in our scenario. But let&#8217;s not fix this yet. Instead, let&#8217;s look at another typical pattern for a data table related assertion.</p>
 </div>
 <div class="paragraph">
 <p> The <code>GetMessagesHeard</code> method returned a list of strings, but in many cases the list that we want to compare the Data Table with is a list of objects. Let&#8217;s imagine that later we will extend the <code>GetMessagesHeard</code> method to not only return the message but also the person who shouted it.  To simulate that let&#8217;s add an alternative version of <code>GetMessagesHeard</code>, called <code>GetMessagesHeardEx</code>. The new method returns a list of <code>HeardMessage</code> instances.  The HeardMessage class has only one property, the message,  but later we might extend it.</p>
@@ -4774,7 +4774,7 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-04 09:37:31 UTC
+Last updated 2020-11-04 10:03:59 UTC
 </div>
 </div>
 <style>
