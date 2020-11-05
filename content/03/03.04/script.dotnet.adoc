@@ -1,0 +1,53 @@
+include::./title.adoc[]
+
+shot::[1, "initial zoom 120%, change step text"]
+One common example is the problem of plurals. Suppose we want to place Lucy and Sean just 1 metre apart:
+
+[source, gherkin]
+----
+include::../code/dotnet/03--step03-use-singular-metre/Shouty/Shouty.Specs/Features/HearShout.feature[lines=4]
+----
+
+shot::[2, "select metre"]
+Because we’ve used the singular `metre` instead of the plural `metres` we don't get a match as you can see from the different step color:
+
+[source, gherkin]
+----
+include::../code/dotnet/03--step03-use-singular-metre/Shouty/Shouty.Specs/Features/HearShout.feature[lines=4]
+----
+
+What a pain!
+
+Fear not. shot::[3, "change expression in step def"] We can just surround the `s` in parentheses to make it optional, like this: 
+
+[source, c#]
+----
+include::../code/dotnet/04--step04-allow-for-singular-or-plural-metres/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=14..15]
+----
+
+shot::[4, "build and show scenario step color changing"]
+We build the project and now our step matches:
+
+[source, gherkin]
+----
+include::../code/dotnet/03--step03-use-singular-metre/Shouty/Shouty.Specs/Features/HearShout.feature[lines=4]
+----
+
+This is one way to smooth off some of the rough edges in your cucumber expressions, and allow your scenarios to be as expressive as possible.
+
+Another is to allow _alternates_ - different ways of saying the same thing. For example, to accept this step: shot::[5, "change located to standing"]
+
+[source, gherkin]
+----
+include::../code/dotnet/05--step05-allow-standing-or-located-as-alternates/Shouty/Shouty.Specs/Features/HearShout.feature[lines=4]
+----
+
+...we can use this Cucumber Expression: shot::[6, "change step def"]
+
+[source, c#]
+----
+include::../code/dotnet/05--step05-allow-standing-or-located-as-alternates/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=14..15]
+----
+
+shot::[7, "build and show 'go to definition'"]
+Now we can use either 'standing' or 'located' in our scenarios, and both will match just fine as you can see...

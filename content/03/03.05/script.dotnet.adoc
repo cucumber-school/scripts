@@ -1,0 +1,39 @@
+include::./title.adoc[]
+
+We can start with the step definition, which would look something like this:  shot::[1]
+
+[source, c#]
+----
+include::../code/dotnet/06--step06-sketch-out-parameter-type/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=14..18]
+----
+
+If we build or run the tests at this point we'll see an error, because we haven't defined the `{Person}` parameter type yet. shot::[2]
+
+[source]
+----
+Undefined parameter type: 'Person'
+----
+
+Here's how we define one.
+
+Let's create a new class called `ParameterTypes` in the `Support` folder: shot::[3]
+
+We're going to create a method, which takes the name of a person as a string, and returns an instance of our `Person` class with that name. shot::[4, Create bare method]
+
+[source, c#]
+----
+include::../code/dotnet/06--step06-sketch-out-parameter-type/Shouty/Shouty.Specs/Support/ParameterTypes.cs[lines=10..13]
+----
+
+SpecFlow will use the name of the return type - `Person` - as the parameter name we use inside the curly brackets in our step definition expressions, as soon as we've wired it up.
+
+To do that, we add the `StepArgumentTransformation` attribute shot::[5, Add empty StepArgumentTransformation attribute to method], that is from the SpecFlow namespace... shot::[6.1, Add using]. We also need to add a `Binding` attribute to the class shot::[6.2, Add Binding], otherwise SpecFlow will not find our conversion method. 
+
+By default, any name is recognized as a person, but we could restrict it to a specific names using - gasp! - a regular expression. shot::[7.1, "add regex filter '(Lucy|Sean)'"]
+
+This is not what we want in this project now, so let's leave it as it was. shot::[7.2, "remove filter"] You can find more examples about using `StepArgumentTransformation` in the https://docs.specflow.org/projects/specflow/en/latest/Bindings/Step-Argument-Conversions.html#step-argument-transformation[SpecFlow documentation].
+
+shot::[8, "Set a breakpoint to step definition; debug; show person details; stop debugger"]
+All of this means that when we run our step, we'll be passed an instance of `Person` into our step definition automatically.
+
+Custom parameters allow you to bring your domain _model_ - the names of the classes and objects in your solution - and your domain _language_ - the words you use in your scenarios and step definitions - closer together.

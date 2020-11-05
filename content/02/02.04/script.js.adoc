@@ -16,10 +16,7 @@ Now we’re ready to create our first feature file. Call the file `hear_shout.fe
 $ touch features/hear_shout.feature
 ----
 
-shot::[3]
-All feature files start with the keyword `Feature:`
-shot::[4]
-followed by a name.
+All feature files start with the keyword `Feature:` shot::[3] followed by a name. shot::[4]
 It’s a good convention to give it a name that matches the file name.
 
 Now let’s write out our first scenario.
@@ -32,27 +29,20 @@ This is the one where the listener is within range, shot::[5] Lucy is located 15
 include::../code/js/02-feature-file-created/features/hear_shout.feature[]
 ----
 
-shot::[9]
-Save the file, switch back to the command-prompt and run `npm test`. You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario,shot::[10] three steps - all undefined.shot::[11]
+Save the file, switch back to the command-prompt and run `npm test`. shot::[9]
+
+You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario,shot::[10] three steps - all undefined.shot::[11]
 
 [source,bash]
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/code/shouty
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Feature: Hear shout
+UUU
 
-  Scenario: Listener is within range
-    Given Lucy is located 15 metres from Sean
-    ? undefined
-    When Sean shouts "free bagels at Sean's"
-    ? undefined
-    Then Lucy hears Sean’s message
-    ? undefined
-
-Warnings:
+Failures:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
    ? Given Lucy is located 15 metres from Sean
@@ -63,7 +53,7 @@ Warnings:
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
-
+       
    ? When Sean shouts "free bagels at Sean's"
        Undefined. Implement with the following snippet:
 
@@ -71,7 +61,7 @@ Warnings:
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
-
+       
    ? Then Lucy hears Sean's message
        Undefined. Implement with the following snippet:
 
@@ -79,17 +69,17 @@ Warnings:
            // Write code here that turns the phrase above into concrete actions
            return 'pending';
          });
-
+       
 
 1 scenario (1 undefined)
 3 steps (3 undefined)
-0m00.000s
+0m00.006s (executing steps: 0m00.000s)
 npm ERR! Test failed.  See above for more details.
 ----
 
 _Undefined_` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
-shot::[11.1, "02.04.animation.mp4"]
+shot::[12, "02.04.animation.mp4"]
 
 Step definitions translate from the plain language you use in Gherkin into JavaScript code.
 
@@ -99,10 +89,10 @@ If it doesn’t find one… well, you’ve just seen what happens. Cucumber help
 
 Let’s copy those to create our first step definitions.
 
-shot::[12]shot::[13]
+shot::[13]shot::[14]
 We’ll paste them into a JavaScript file under a new directory called `step_definitions` underneath the `features` directory. I’ll just call it `steps.js`.
 
-We need to import the `Given`, shot::[13] `When` shot::[14] and `Then` shot::[15] keywords from the `cucumber` package.shot::[16]
+We need to import the `Given`, shot::[15] `When` shot::[16] and `Then` shot::[17] keywords from the `cucumber` package.shot::[18]
 
 .steps.js
 [source,js]
@@ -110,19 +100,19 @@ We need to import the `Given`, shot::[13] `When` shot::[14] and `Then` shot::[15
 include::../code/js/03-pending-steps/features/step_definitions/steps.js[]
 ----
 
-shot::[17]
+shot::[19]
 Now we run Cucumber again.
 
-This time the output is a little different. We now have a pending step shot::[18] and two skipped ones.shot::[19] This means Cucumber found all our step definitions, and executed the first one.
+This time the output is a little different. We now have a pending step shot::[20] and two skipped ones.shot::[21] This means Cucumber found all our step definitions, and executed the first one.
 
-shot::[20]
+shot::[22]
 But that first step definition returns `'pending'`, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
 
 [source,bash]
 ----
 $ npm test
 
-> shouty-js@1.0.0 test /home/fedex/cucumber/shouty-js
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
 > cucumber-js
 
 P--
@@ -130,22 +120,22 @@ P--
 Warnings:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ? Given Lucy is located 15m from Sean # features/step_definitions/steps.js:5
+   ? Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:3
        Pending
-   - When Sean shouts “free bagels at Sean’s” # features/step_definitions/steps.js:10
-   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:15
+   - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:8
+   - Then Lucy hears Sean's message # features/step_definitions/steps.js:13
 
 1 scenario (1 pending)
 3 steps (1 pending, 2 skipped)
-0m00.000s
+0m00.007s (executing steps: 0m00.001s)
 npm ERR! Test failed.  See above for more details.
 ----
 
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
-We'll rename the `int` parameter to something that better reflects its meaning. Let's call it `distance`.shot::[21]
+We'll rename the `int` parameter to something that better reflects its meaning. Let's call it `distance`.shot::[23]
 
-shot::[22]
+shot::[24]
 And we can print it to the terminal to see the captured result
 
 [source,js]
@@ -153,39 +143,31 @@ And we can print it to the terminal to see the captured result
 include::../code/js/04-output-stepdef-argument-to-console/features/step_definitions/steps.js[lines=3..6]
 ----
 
-shot::[23]
+shot::[25]
 If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output.
 
 [source,bash]
 ----
 $ npm test
 
-> shouty@1.0.0 test /home/fedex/code/shouty
-> cucumber-js -f node_modules/cucumber-pretty
+> shouty@1.0.0 test /home/fedex/code/shouty-js/shouty
+> cucumber-js
 
-Feature: Hear shout
-
-  Scenario: Listener is within range
-    Given Lucy is located 15m from Sean
 15
-    ? pending
-    When Sean shouts "free bagels at Sean's"
-    - skipped
-    Then Lucy hears Sean’s message
-    - skipped
+P--
 
 Warnings:
 
 1) Scenario: Listener is within range # features/hear_shout.feature:2
-   ? Given Lucy is located 15m from Sean # features/step_definitions/steps.js:3
+   ? Given Lucy is located 15 metres from Sean # features/step_definitions/steps.js:3
        Pending
    - When Sean shouts "free bagels at Sean's" # features/step_definitions/steps.js:8
-   - Then Lucy hears Sean’s message # features/step_definitions/steps.js:13
+   - Then Lucy hears Sean's message # features/step_definitions/steps.js:13
 
 1 scenario (1 pending)
 3 steps (1 pending, 2 skipped)
-0m00.002s
+0m00.009s (executing steps: 0m00.002s)
 npm ERR! Test failed.  See above for more details.
 ----
 
-Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[24]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[26]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.

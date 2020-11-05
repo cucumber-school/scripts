@@ -1,0 +1,17 @@
+==== Lesson 5 - Questions (SpecFlow)
+
+===== Why should a step definition be short?
+
+* Because the plain-language description of the domain in the Gherkin step should be close to the domain model in the code - TRUE
+* Step definitions don't need to be short
+* SpecFlow limits the length of step definitions to five lines of code
+
+Answer: Step definitions are a thin glue between the plain-language description in a scenario and the software that we're building. If the business domain and the solution domain are aligned, then there should be little translation to do in the step definition.
+
+===== What does it mean when SpecFlow complains about an _ambiguous_ step?
+
+* SpecFlow couldn't find a step definition that matches a step
+* SpecFlow only found one step definition that matches a step
+* SpecFlow found more than one step definition that matches a step - TRUE
+
+Answer: If more than one step definition matches a step, then SpecFlow doesn't know which one to call. When this ambiguity occurs, SpecFlow issues an error, rather than try to choose between the matching step definitions.

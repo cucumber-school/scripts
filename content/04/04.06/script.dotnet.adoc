@@ -1,0 +1,43 @@
+include::./title.adoc[]
+
+shot::[1, "Feature file"]
+Let’s switch back to the feature file to show you one more technique for improving the readability of your scenarios.
+
+[source,gherkin]
+----
+include::../code/dotnet/14--step14-replace-hardcoded-sean-instance/Shouty/Shouty.Specs/Features/HearShout.feature[lines=8..20]
+----
+
+When we have common context steps - the Givens - shot::[2, "highlight Given"] in all the scenarios in our feature, it can sometimes be useful to get those out of the way.
+
+shot::[3, "move Given steps into background"]
+We can literally move them into the background, using a Background keyword, like this:
+
+[source,gherkin]
+----
+include::../code/dotnet/15--step15-move-givens-into-background/Shouty/Shouty.Specs/Features/HearShout.feature[lines=8..10]
+----
+
+shot::[4, "run test"]
+As far as SpecFlow is concerned, these scenarios haven’t changed. It will still create both Lucy and Sean as the first things it does when running each of these scenarios.
+
+But from a readability point of view, we can now see  more clearly what’s important and interesting about these two scenarios - in this case, the message being shouted.
+
+[source,gherkin]
+----
+include::../code/dotnet/15--step15-move-givens-into-background/Shouty/Shouty.Specs/Features/HearShout.feature[lines=12..20]
+----
+
+Notice we just went straight into When steps in our scenarios.shot::[5, "highlight When"] That’s absolutely fine. We still have a context for the scenario, but we’ve chosen to push it off into the background.
+
+shot::[6, "Feature file, showing Background and shortened scenarios"]
+
+Again, it’s debatable whether we’d bother to use a Background to do this on a real project, but this at least illustrates the technique. We rarely use Backgrounds in our projects, because although they can improve readability by removing the duplication of repeated contexts, they also harm readability by requiring people to read the Background in conjunction with each Scenario.
+
+video::https://drive.google.com/uc?id=19VLE9qKbVN4bpMxsIVvPtPqc3RGw4bSW[]
+
+To maintain trust in the BDD process, it’s important to keep your features fresh. Even when you drive the development from BDD scenarios, you’ll still learn lessons from the implementation that might need to be fed back into your Gherkin documentation.
+
+In this case, we discovered that we could find a smaller slice of this story, and defer the business rule about proximity until our next iteration. Splitting stories like this is a powerful agile technique, and one that BDD can help you to master. Now we have a clean codebase and suite of scenarios that reflects the current state of the system’s development.
+
+We’re ready to start the next iteration.

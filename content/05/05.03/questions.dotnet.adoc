@@ -1,0 +1,93 @@
+==== Lesson 3 - Questions (SpecFlow)
+
+===== What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?
+
+* Array
+* Data Matrix
+* Data Table -- TRUE
+* Example Table
+* Table
+
+Explanation:
+The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, with cell boundaries indicated by pipe characters `|`
+
+===== What value would be retrieved from cell Rows[1]["C"] in the following table?
+
+| A | B | C |
+| 0 | 1 | 2 |
+| 3 | 4 | 5 |
+| 6 | 7 | 8 |
+
+* 0
+* 1
+* 2
+* 3
+* 4
+* 5 -- TRUE
+* 6
+* 7
+* 8
+
+Explanation:
+SpecFlow treats the first row as the header, and the Rows property returns each subsequent row indexed, starting from 0. The cells within a row can be retrieved by indexing the row with the header name. We need two pairs of brackets, because the first selects the row and the second selects the cell within the row.
+
+====== Which of the following Data Tables will this method process successfully?
+
+[Given("the order contains the following items")]
+public void GivenTheOrderContainsTheFollowingItems(Table orderItemsTable) 
+{
+    foreach (var row in orderItemsTable.Rows)
+    {
+        order.AddLine(row["Item Name"], int.Parse(row["Quantity"]));
+    }
+}
+
+
+* | Item Name       | Quantity | -- TRUE
+  | Cheese & tomato | 1        |
+
+* | name            | quantity |
+  | Cheese & tomato | 1        |
+
+* | Item Name       | Quantity | -- TRUE
+  | Cheese & tomato | 1        |
+  | Pepperoni       | 1        |
+
+* | Item Name       | Quantity | -- TRUE
+
+* | Item Name       | Quantity | Notes        | -- TRUE
+  | Cheese & tomato | 1        | Extra cheese |
+
+* | Cheese & tomato | 1        |
+  | Pepperoni       | 1        |
+
+* | Quantity | Item Name       |  -- TRUE
+  | 1        | Cheese & tomato |
+
+
+Explanation:
+The Rows property of the Table class contains all non-header rows in the data table. To be able retrieve a cell from the row, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would have an empty Rows collection and hence it would not add any items to the order.
+
+====== How would you need to change the step definition in order to be able to use the OrderItem list converted from a Data Table with the following conversion method
+
+[StepArgumentTransformation]
+public OrderItem[] ConvertOrderItems(Table orderItemsTable) 
+{
+    return orderItemsTable.CreateSet<OrderItem>().ToArray();
+}
+
+* [Given("the order contains the following items {OrderItems[]}")]
+  public void GivenTheOrderContainsTheFollowingItems(OrderItem[] orderItems) { ... }
+
+* [Given("the order contains the following items")] -- TRUE
+  public void GivenTheOrderContainsTheFollowingItems(OrderItem[] orderItems) { ... }
+
+* [Given("the order contains the following items")]
+  public void GivenTheOrderContainsTheFollowingItems(IEnumerable<OrderItem> orderItems) { ... }
+
+* [Given("the order contains the following items")]
+  public void GivenTheOrderContainsTheFollowingItems(Table orderItemsTable) { ... }
+
+
+Explanation:
+In order to access the Data Table attached to the step, you don't have to add parameters to the Cucumber Expression. The parameters of the expression refer to the parts of the step text only. The parameter type of the method should be exactly the same as the return type of the conversion method. So even though that the array implements the IEnumerable interface, SpecFlow will not find that. If the parameter is defined as a Table, the conversion method will not be invoked.

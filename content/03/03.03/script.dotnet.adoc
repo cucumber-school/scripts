@@ -1,0 +1,32 @@
+include::./title.adoc[]
+
+shot::[1, "initial zoom 120%"]
+Sometimes, we want to write step definitions that allow us to use different values in our Gherkin scenarios. For example, we might want to have other scenarios that place Lucy a different distance away from Sean. shot::[2, "change 15 to 100"]
+
+.HearShout.feature
+[source,gherkin]
+----
+include::../code/dotnet/02--step02-capture-int-parameter/Shouty/Shouty.Specs/Features/HearShout.feature[lines=1..6]
+----
+
+To capture interesting values from our step definitions, we can use a feature of Cucumber Expressions called _parameters_.
+
+For example, to capture the number of metres, we can use the `{int}` parameter: shot::[3, "change 15 to {int}"] which is passed as an argument to our step definition: shot::[4, "add parameter"]
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/02--step02-capture-int-parameter/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=14..15]
+----
+
+Now we’re capturing that value as an argument. The value `100` will be passed to our code automatically by SpecFlow.
+
+Because we've used Cucumber Expressions' built-in `{int}` parameter type, the value has been cast to a `int` data type for us automatically, so we can do maths with it if we want.shot::[5, "add text with calculation"]
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/02--step02-capture-int-parameter/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=14..18]
+----
+
+Cucumber Expressions have a bunch of built-in parameter types: `{int}`, `{float}`, `{word}` and `{string}`. You can also define your own, as we'll see later.

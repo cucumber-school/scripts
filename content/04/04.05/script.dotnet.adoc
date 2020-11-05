@@ -1,0 +1,62 @@
+include::./title.adoc[]
+
+shot::[1, "Freeze of stepdef code from end of lesson 4, highlighting a_person_named_Lucy/Sean"]
+
+OK, so we’ve cleaned things up a bit, to bring the scenarios, the code and our current understanding of the problem all into sync. What’s nice to see is how well those new steps that create Lucy and Sean match the code inside the step definition.
+
+When step definitions have to make a big leap to translate between our plain-language description of the domain in the Gherkin scenario, and the code, that’s usually a sign that something is wrong. We like to see step definitions that are only one or two lines long, because that usually indicates our scenarios are doing a good job of reflecting the domain model in the code, and vice-versa.
+
+One problem that we still have with these scenarios is that we’re very fixed to only being able to use these two characters, Lucy and Sean. If we want to introduce anyone else into the scenario, we’re going to be creating quite a lot of duplicate code. In fact, the two step definitions for creating Lucy and Sean are almost identical, apart from those instance fields.shot::[2, "highlight lucy and sean fields"]
+
+On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.
+
+The first problem we’ll need to tackle is these hard-coded instance field names.shot::[3, "highlight lucy and sean fields"]
+
+We can use a `Dictionary` to store all the people involved in the scenario.
+
+Let’s try replacing Lucy first.shot::[4, "highlight lucy"]
+
+We’ll start by creating a new `Dictionary` in the before hook, like this. shot::[5, "Edit Stepdefs.cs, adding private instance field *people*, creating in Before hook"]
+
+[source,c#]
+----
+include::../code/dotnet/12--step12-replace-hardcoded-lucy-instance/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=14..21]
+----
+
+Now we can store Lucy in a key in that Dictionary. We’ll use her name as the key, hard-coding it for now.shot::[6, "modify a_person_named_Lucy, use people.Add"]
+
+[source,c#]
+----
+include::../code/dotnet/12--step12-replace-hardcoded-lucy-instance/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=23..27]
+----
+
+Finally, where we check Lucy’s messages heard here in the assertion, we need to fetch her out of the Dictionary. shot::[7, "modify lucy_hears_Sean_s_message, use indexer" ]
+
+[source,c#]
+----
+include::../code/dotnet/12--step12-replace-hardcoded-lucy-instance/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=42..46]
+----
+
+shot::[8, "run tests"]
+
+With that little refactoring done, we can now try and make this first step generic for any name.shot::[9, "highlight a_person_named_Lucy"]
+
+Using your new found Cucumber expression skills from the last chapter, you’ll know that if we replace the word Lucy here with a parameter expression,shot::[10, "replace 'Lucy' with {word}"] we’ll have the name passed into our step definition as an argument, here.shot::[11.1, modify stepdef name & parameter list] shot::[11.2, "highlight {word}"] {word} is a special parameter type matches to a... word. What else. Now we can use that as the key in the Dictionary.shot::[12, store Person instance in Dictionary]
+
+[source,c#]
+----
+include::../code/dotnet/13--step13-ambiguous-step-definition/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=23..27]
+----
+
+If we try and run the tests now, we get an error from SpecFlow about an ambiguous match. shot::[13, "running tests FAILS"]
+
+Our generic step definition is now matching the step “a person named Sean”,shot::[14, "highlight stepdef a_person_named"] but so is the original one.shot::[15, "highlight stepdef a_person_named_Sean"] In bigger projects, this can be a real issue, so this warning is important.
+
+Let’s remove the old step definition,shot::[16, delete a_person_named_Sean] and fetch Sean from the Dictionary here where he shouts his message.shot::[17, modify sean_shouts]
+
+[source,c#]
+----
+include::../code/dotnet/14--step14-replace-hardcoded-sean-instance/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=28..33]
+----
+
+Great, we’re green again. shot::[18, "run tests"]

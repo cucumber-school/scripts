@@ -1,0 +1,72 @@
+include::./title.adoc[]
+
+shot::[1, "broken implementation"]
+We now have two step definitions to implement,shot::[2, "highlight network"] and that presents us with a bit of a problem. We need the same instance of Network available in both. We could just assume that the Lucy step will always run first and create it there, but that seems fragile.shot::[3, "initialize network in first setpdef"] If someone wrote a new scenario that didn’t create people in the right order, they’d end up with no Network instance, and weird bugs. We want our steps to be as independent as possible, so they can be easily composed into new scenarios.
+
+[source,c#]
+----
+include::../code/dotnet/06--step06-broken-stepdef-implmentation/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=24..35]
+----
+
+There are a couple of different ways to create this network instance in C#. The most straightforward is to use a network field and initialize it in the declaration of the `StepDefinitions` class.shot::[4, "remove create from step, highlight field, initialize it"] Every time SpecFlow runs a scenario it creates a new instance of this class, so we’ll get a fresh instance of the Network for each scenario.
+
+[source,c#]
+----
+include::../code/dotnet/07--step07-network-as-an-instance-field/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=8..13]
+----
+
+As an alternative, that can be useful if you have more complex setup to do, you can use a hook.
+
+We need an instance of Network in every scenario, so we can declare a `BeforeScenario` Hook that creates one before each scenario starts, like this: shot::[5, "add hook"]
+
+Now we can use that Network instance as we create Lucy shot::[6, "highlight network in first stepdef"] and Sean shot::[7, "highlight network in second stepdef"] in these two new steps.
+
+[source,c#]
+----
+include::../code/dotnet/08--step08-using-a-before-hook/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=15..19]
+----
+
+[source,c#]
+----
+include::../code/dotnet/08--step08-using-a-before-hook/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=30..40]
+----
+
+
+It should be working again now. Let’s run the tests to check.shot::[8, "run all"]
+
+
+Good. Let’s do the same with the other scenario. shot::[9, "fix givens of other scenario"]
+
+[source,gherkin]
+----
+include::../code/dotnet/09--step09-change-second-scenario/Shouty/Shouty.Specs/Features/HearShout.feature[lines=16..20]
+----
+
+shot::[10, "run tests"]
+
+Now we can remove this old step definition. shot::[11, "open up olf given step definition"]
+
+[source,c#]
+----
+include::../code/dotnet/09--step09-change-second-scenario/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=21..28]
+----
+
+We know we'll need something like this in the future when we implement the proximity rule, but we don't want to second-guess what that code will look like, so let's clean it out for now.shot::[12, "remove step def"]
+
+[source,c#]
+----
+include::../code/dotnet/10--step10-delete-unused-stepdef/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[]
+----
+
+shot::[13, "run tests"]
+
+Now we have one last bit of dead code left, the `MoveTo` method on Person. shot::[14, "Go to MoveTo method"]
+Let's clean that up too.shot::[15, "delete method"]
+
+[source,c#]
+----
+include::../code/dotnet/11--step11-delete-move_to/Shouty/Shouty/Person.cs[]
+----
+
+shot::[16, "run tests"]
+And we're still green!

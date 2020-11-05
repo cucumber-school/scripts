@@ -1,0 +1,52 @@
+==== Lesson 5 - Questions (SpecFlow)
+
+===== We start implementing the maximum message length rule by writing a scenario and seeing it fail. What did we do next?
+
+* Write another scenario to triangulate the new behaviour of the Network class
+* Implement the changed behaviour in the Network class
+* Add a new unit test to NetworkTest that specifies the change in behaviour of the Network class -- TRUE
+
+Explanation:
+We wrote a new unit test in NetworkTest. We'll talk more about this in the next lesson.
+
+===== Why would we use a DocString?
+
+* It's the only way to include multi-line strings in a scenarios
+* It's a readable way to include long strings in a scenario -- TRUE
+* DocStrings support multiple languages
+* SpecFlow provides a DocString type that provides useful string manipulation features
+
+Explanation:
+The DocString is Gherkin syntax that allows long strings to be readably represented in a scenario.
+
+All the magic happens when the DocString is read from the Gherkin. The content of the DocString gets passed to the step definition as a normal string -- there's no corresponding SpecFlow type.
+
+===== Which of the following snippets of code are correct for the step below?
+
+  Then Simone says
+  """
+  Now on that limb there was a branch
+  A rare branch and a rattlin' branch
+  And the branch on the limb
+  And the limb on the tree
+  And the tree in the bog
+  And the bog down in the valley-o
+  """
+
+* [Then("Simone says")]
+  public void SimoneSays() { }
+
+* [Then("Simone says")]
+  public void SimoneSays(string lyrics) { } -- TRUE
+
+* [Then("Simone says {string}")]
+  public void SimoneSays(string lyrics) { }
+
+* [Then("Simone says {docstring}")]
+  public void SimoneSays(string lyrics) { }
+
+* [Then("Simone says {docstring}")]
+  public void SimoneSays(DocString lyrics) { }
+
+Explanation:
+When using a DocString in a scenario, you do not add any parameter to the matching Cucumber Expression. You do need to provide a string parameter to the step definition to receive the contents of the DocString.

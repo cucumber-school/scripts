@@ -1,0 +1,116 @@
+include::./title.adoc[]
+
+Let's look at the two scenarios that illustrate the rule about range again shot::[1,"show the range rule & scenarios"]. Notice how the steps that create the Sean,shot::[2] Lucy,shot::[3] and Larry shot::[4] are very similar.
+
+[source,c#]
+----
+include::../code/dotnet/04--step04-remove-incidental-details-from-range-scenarios-and-fix-stepdefs/Shouty/Shouty.Specs/Features/HearShout.feature[lines=14..28]
+----
+
+When we see steps like this, Gherkin’s Given When Then syntax starts to feel a bit clunky. Imagine if we could just write out a table, like this:
+
+shot::[5,feature file]
+
+.HearShout.feature
+[source,gherkin]
+----
+include::../code/dotnet/05--step05-location-specified-in-data-table/Shouty/Shouty.Specs/Features/HearShout.feature[lines=18..21]
+----
+
+Well, we’re in luck. You can!
+
+Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells. shot::[6, highlight data table]
+
+shot::[7,"copy snippet, paste into StepDefinitions.cs"]
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/06--step06-table-snippet-added/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41..46]
+----
+
+As you can see, the step definition implicitly takes a single argument shot::[8,"highlight stepdef parameters"] of type `Table`, which is a representation of a Data Table in SpecFlow. As it represents a table of Person objects, we can rename it to `personsTable` shot::[9,"rename parameter"] 
+
+This object has a rich API for using the tabular data. The `Rows` property of the table class can be used to access the data rows of the table -- all rows, except the header row. shot::[10,"split screen"] A particular cell value can be retrieved from a row by using the header name. So, Lucy's location can be accessed by getting the "name" cell of the row at index 1. shot::[11,"Add cell value to an exception"]
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/07--step07-read-cell-value-from-table/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41..46]
+----
+
+shot::[12,"run tests, highlight 'Lucy's location'"]
+
+Now we can easily iterate shot::[12,"close split, write the loop"] through the rows and turn them into instances of Person: 
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/08--step08-iterate-over-people-in-table/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41..49]
+----
+
+shot::[13,"run tests -- all green"]
+
+With that done, we can update the other scenario shot::[14,"update other scenario"] ...
+
+.HearShout.feature
+[source,gherkin]
+----
+include::../code/dotnet/09--step09-changed-other-scenario-and-deleted-unused-stepdef/Shouty/Shouty.Specs/Features/HearShout.feature[lines=25..32]
+----
+
+Now we can check that everything is still green. shot::[15]
+
+and delete our old step definition, which is now unused.  shot::[16,"delete unused step def"]
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/08--step08-iterate-over-people-in-table/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=35..40]
+----
+
+shot::[17,"run tests"]
+
+SpecFlow strips all the white space surrounding each cell shot::[18,"show lining up of pipe characters"], so we can have a nice neat table in the Gherkin but still get clean values in the step definition underneath.
+
+Notice we’ve still had to convert the location from a string to an integer shot::[19,"Conversion in step def"], because SpecFlow can’t know that’s the type of value in our table.
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/09--step09-changed-other-scenario-and-deleted-unused-stepdef/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=41]
+----
+
+To improve the readability and maintainability of your step definition you can have SpecFlow automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.
+
+Instead, we’ll define a simple Whereabouts class to represent the data in the table. shot::[20,"creates the class"]
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=18..22]
+----
+
+We’ve made it a nested type to the step definition class, as it doesn’t form part of our core domain.
+
+Then we can shot::[21,"write ConvertWhereabouts()"] create a conversion method similarly to the ones we created in Chapter 3 that converts a Table instance to an array of Whereabouts. shot::[22,"add attribute"] We have to add the `[StepArgumentTransformation]` attribute to it so that SpecFlow recognizes this conversion. 
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=24..34]
+----
+
+Now, if you declare your table parameter as a Whereabouts array shot::[23,"modify stepdef"], SpecFlow will automatically call our conversion method.
+
+.StepDefinitions.cs
+[source,c#]
+----
+include::../code/dotnet/10--step10-use-whereabouts-class/Shouty/Shouty.Specs/StepDefinitions/StepDefinitions.cs[lines=54..61]
+----
+
+shot::[24,"Run Tests"]
+Let's run the scenarios to check that we're still green. And we are!
+
+shot::[25,"hear_shout.feature data tables"]
+That looks much nicer -  people positioned using a table in the feature file and shot::[26,"people_are_located_at()"] really clean code that creates and positions people according to the data.

@@ -1,0 +1,21 @@
+==== Lesson 6 - Questions (SpecFlow)
+
+===== What does the Gherkin keyword _Background_ do?
+
+* It provides a place to write a description of why the feature is valuable
+* It is treated exactly like a scenario, but is run as soon as SpecFlow starts
+* It is treated exactly like a scenario, but is run once before any other scenario in the feature file
+* The steps from the background are run as if they were inserted at the beginning of every scenario in the feature file - TRUE
+
+Answer: The background is used to reduce duplication in scenarios by moving steps that are common to all scenarios into a single location. The steps in the background are run before every scenario in the feature file.
+
+There can be a maximum of one Background per feature file. A Background only affects scenarios that are in the same feature file as the Background.
+
+===== How might Backgrounds decrease the readability or maintainability of a feature file?
+
+* Backgrounds always improve readability
+* Readability can decrease because the reader must remember the contents of the background even when reading scenarios at the end of the feature file
+* Maintainability can decrease because the maintainer must be aware that there is a background even when adding scenarios to the end of the feature file
+* Maintainability can decrease because the maintainer must be aware of the background when moving a scenario to a different feature file
+
+Answer: Backgrounds were created to aid readability, by reducing duplication in the scenarios. Unfortunately, moving important information out of a scenario means that anyone reading or modifying a feature file must be fully aware that of the existence and content of a background. Since feature files typically contain several scenarios, that means holding two sections of the feature file in your mind at the same time, making a feature file harder to read or maintain.

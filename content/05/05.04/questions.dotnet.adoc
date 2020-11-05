@@ -1,0 +1,23 @@
+==== Lesson 4 - Questions (SpecFlow)
+
+===== Which statements are true for the CreateSet method
+
+* CreateSet is an extension method that extends the Table class -- TRUE
+* CreateSet updates the properties based on the column headers with a case-sensitive exact match
+* When succeeds, CreateSet returns an enumerable that has exactly as many items as many non-header row the Data Table had -- TRUE
+* To be able to use the CreateSet extension method, the TechTalk.SpecFlow.Assist namespace has to be listed among the using statements of the file -- TRUE
+* CreateSet can detect the type of the objects to be created based on the Data Table header
+
+Explanation:
+CreateSet is an extension method for the Table class that is defined in the TechTalk.SpecFlow.Assist namespace. The target type has to be specified as a generic type parameter. The fields and properties of the target type are found using case-insensitive match. Whitespace in the header name is also ignored, so cells with the header "shouter name" will update the property ShouterName. CreateSet returns an object for each non-header row in the Data Table. By default it creates the objects using their default constructor, but you can also specify a delegate to create the instance differently.
+
+===== What extension method on the Table class compares the table with a list of objects and produces a textual output showing their differences?
+
+* Compare
+* AssertEqual
+* CompareToList
+* CompareToSet -- TRUE
+* Covariance
+
+Explanation:
+The method that compares two data tables is called *CompareToSet*. It is defined in the TechTalk.SpecFlow.Assist namespace.
