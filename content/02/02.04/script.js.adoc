@@ -31,7 +31,36 @@ include::../code/js/02-feature-file-created/features/hear_shout.feature[]
 
 Save the file, switch back to the command-prompt and run `npm test`. shot::[9]
 
-You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario,shot::[10] three steps - all undefined.shot::[11]
+shot::[10]
+The first think we notice is a big green box right at the end of the output.
+
+[source,sh]
+----
+┌──────────────────────────────────────────────────────────────────────────┐
+│ Share your Cucumber Report with your team at https://reports.cucumber.io │
+│                                                                          │
+│ Command line option:    --publish                                        │
+│ Environment variable:   CUCUMBER_PUBLISH_ENABLED=true                    │
+│                                                                          │
+│ More information at https://reports.cucumber.io/docs/cucumber-js         │
+│                                                                          │
+│ To disable this message, add this to your ./cucumber.js:                 │
+│ module.exports = { default: '--publish-quiet' }                          │
+└──────────────────────────────────────────────────────────────────────────┘
+----
+
+We don't want this warning to distract us for the moment, so we'll follow the instructions mentioned at the end of the warning and add
+
+[source,js]
+----
+module.exports = { default: '--publish-quiet' }
+----
+
+to the `cucumber.js` file.shot::[11]shot::[12]
+
+Now when we run cucumber again, the warning isn't there anymore. shot::[13]
+
+You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario,shot::[14] three steps - all undefined.shot::[15]
 
 [source,bash]
 ----
@@ -79,7 +108,7 @@ npm ERR! Test failed.  See above for more details.
 
 _Undefined_` means Cucumber doesn’t know what to do for any of the three steps we wrote in our Gherkin scenario. It needs us to provide some _step definitions_.
 
-shot::[12, "02.04.animation.mp4"]
+shot::[16, "02.04.animation.mp4"]
 
 Step definitions translate from the plain language you use in Gherkin into JavaScript code.
 
@@ -87,12 +116,12 @@ When Cucumber runs a step, it looks for a step definition that matches the text 
 
 If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.
 
-Let’s copy those to create our first step definitions.
+Let’s copy those to create our first step definitions. shot::[17]
 
-shot::[13]shot::[14]
+shot::[18]shot::[19]shot::[20]
 We’ll paste them into a JavaScript file under a new directory called `step_definitions` underneath the `features` directory. I’ll just call it `steps.js`.
 
-We need to import the `Given`, shot::[15] `When` shot::[16] and `Then` shot::[17] keywords from the `cucumber` package.shot::[18]
+We need to import the `Given`, shot::[21] `When` shot::[22] and `Then` shot::[23] keywords from the `cucumber` package.shot::[24]
 
 .steps.js
 [source,js]
@@ -100,12 +129,12 @@ We need to import the `Given`, shot::[15] `When` shot::[16] and `Then` shot::[17
 include::../code/js/03-pending-steps/features/step_definitions/steps.js[]
 ----
 
-shot::[19]
+shot::[25]
 Now we run Cucumber again.
 
-This time the output is a little different. We now have a pending step shot::[20] and two skipped ones.shot::[21] This means Cucumber found all our step definitions, and executed the first one.
+This time the output is a little different. We now have a pending step shot::[26] and two skipped ones.shot::[27] This means Cucumber found all our step definitions, and executed the first one.
 
-shot::[22]
+shot::[28]
 But that first step definition returns `'pending'`, which causes Cucumber to stop, skip the rest of the steps, and mark the scenario as pending. 
 
 [source,bash]
@@ -133,9 +162,9 @@ npm ERR! Test failed.  See above for more details.
 
 Now that we've wired up our step definitions to the Gherkin steps, it's almost time to start working on our solution. First though, let's tidy up the generated code.
 
-We'll rename the `int` parameter to something that better reflects its meaning. Let's call it `distance`.shot::[23]
+We'll rename the `int` parameter to something that better reflects its meaning. Let's call it `distance`.shot::[29]
 
-shot::[24]
+shot::[30]
 And we can print it to the terminal to see the captured result
 
 [source,js]
@@ -143,7 +172,7 @@ And we can print it to the terminal to see the captured result
 include::../code/js/04-output-stepdef-argument-to-console/features/step_definitions/steps.js[lines=3..6]
 ----
 
-shot::[25]
+shot::[31]
 If we run `cucumber` again on our terminal, we can see the number 15 pop up in the output.
 
 [source,bash]
@@ -170,4 +199,4 @@ Warnings:
 npm ERR! Test failed.  See above for more details.
 ----
 
-Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[26]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.
+Notice that the number 15 does not appear anywhere in our code. The value is automatically passed from the Gherkin step to the step definition. If you're curious, that’s the shot::[32]`{int}` in the step definition pattern or _cucumber expression_. We’ll explain these patterns in detail in a future lesson.

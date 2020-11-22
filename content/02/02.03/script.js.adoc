@@ -32,7 +32,7 @@ $ cd shouty
 
 shot::[5]
 First we’ll create a `package.json` that describes the NPM packages we need for our project
-shot::[6]
+shot::[6] shot::[7]
 and add the `@cucumber/cucumber` package to it.
 
 [source,bash]
@@ -42,7 +42,7 @@ $ npm install -D @cucumber/cucumber
 ----
 
 
-shot::[7]
+shot::[8]
 We can now run  the `cucumber-js` command to see if everything works:
 
 [source,bash]
@@ -52,15 +52,15 @@ $ ./node_modules/.bin/cucumber-js
 
 There's no output, because we haven't written any scenarios yet, but there are no errors either! Having to remember the full path to Cucumber is not very user friendly, but luckily there's a nicer way.
 
-shot::[8]
-Edit `package.json` and change the `test` line under the `scripts` from it's default to `cucumber-js` shot::[9]
+shot::[9]
+Edit `package.json` and change the `test` line under the `scripts` from it's default to `cucumber-js` shot::[10]
 
 [source,javascript]
 ----
 include::../code/js/01-install-packages/package.json[lines=6..8]
 ----
 
-shot::[10]
+shot::[11]
 Now we’re ready! If we run `npm test` at this point, we’ll again see cucumber pass with no errors:
 
 [source,bash]
@@ -74,7 +74,7 @@ $ npm test
 ----
 
 // TODO: Matt, feel free to change this phrase during VO
-Finally, we're going to install `hamjest` in order to have more expressive assertions shot::[11]
+Finally, we're going to install `hamjest` in order to have more expressive assertions shot::[12]shot::[13]
 
 [source,bash]
 ----
