@@ -771,7 +771,7 @@ Go use cd to go into that directory.</p>
 <div class="paragraph">
 <p>
 First we’ll create a <code>package.json</code> that describes the NPM packages we need for our project
-
+ 
 and add the <code>@cucumber/cucumber</code> package to it.</p>
 </div>
 <div class="listingblock">
@@ -873,6 +873,39 @@ It’s a good convention to give it a name that matches the file name.</p>
 <p>Save the file, switch back to the command-prompt and run <code>npm test</code>. </p>
 </div>
 <div class="paragraph">
+<p>
+The first think we notice is a big green box right at the end of the output.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">┌──────────────────────────────────────────────────────────────────────────┐
+│ Share your Cucumber Report with your team at https://reports.cucumber.io │
+│                                                                          │
+│ Command line option:    <span class="nt">--publish</span>                                        │
+│ Environment variable:   <span class="nv">CUCUMBER_PUBLISH_ENABLED</span><span class="o">=</span><span class="nb">true</span>                    │
+│                                                                          │
+│ More information at https://reports.cucumber.io/docs/cucumber-js         │
+│                                                                          │
+│ To disable this message, add this to your ./cucumber.js:                 │
+│ module.exports <span class="o">=</span> <span class="o">{</span> default: <span class="s1">'--publish-quiet'</span> <span class="o">}</span>                          │
+└──────────────────────────────────────────────────────────────────────────┘</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We don&#8217;t want this warning to distract us for the moment, so we&#8217;ll follow the instructions mentioned at the end of the warning and add</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="dl">'</span><span class="s1">--publish-quiet</span><span class="dl">'</span> <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>to the <code>cucumber.js</code> file.</p>
+</div>
+<div class="paragraph">
+<p>Now when we run cucumber again, the warning isn&#8217;t there anymore. </p>
+</div>
+<div class="paragraph">
 <p>You’ll see Cucumber has found our feature file and read it back to us. We can see a summary of the results at the bottom: one scenario, three steps - all undefined.</p>
 </div>
 <div class="listingblock">
@@ -935,7 +968,7 @@ npm ERR! Test failed.  See above for more details.</span></code></pre>
 <p>If it doesn’t find one… well, you’ve just seen what happens. Cucumber helpfully prints out some code snippets that we can use as a basis for new step definitions.</p>
 </div>
 <div class="paragraph">
-<p>Let’s copy those to create our first step definitions.</p>
+<p>Let’s copy those to create our first step definitions. </p>
 </div>
 <div class="paragraph">
 <p>
@@ -1423,7 +1456,7 @@ In order to send instructions to Sean, we need to store him in an property, whic
 </div>
 <div class="paragraph">
 <p>
-In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using the <code>{string}</code> pattern, and pass an argument to the function. We&#8217;ll call it <code>message</code>.</p>
+In the <code>When</code> step, we&#8217;re capturing Sean&#8217;s message using the <code>{string}</code> pattern, and pass an argument to the function.  We&#8217;ll call it <code>message</code>.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -5519,7 +5552,7 @@ node_modules/.bin/cucumber-js -h</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-05 10:16:47 UTC
+Last updated 2020-11-22 21:35:19 UTC
 </div>
 </div>
 <style>
