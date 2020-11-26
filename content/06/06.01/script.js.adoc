@@ -27,29 +27,29 @@ node_modules/.bin/cucumber-js --name "Message is too long"
 ----
 
 The value of the `--name` option is actually a regular expression, so you can use your imagination here to run more than one scenario.
-Let's use it to run all scenarios with the text "range" in their name. shot::[4, "type mvn command in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
+Let's use it to run all scenarios with the text "range" in their name. shot::[4, "type Cucumber-js command in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
 
 [source]
 ----
 node_modules/.bin/cucumber-js --name "range"
 ----
 
-We can accomplish the same thing by adding some configuration on the `cucumber.js` file, but we'll talk about that in the next lesson.
+We can accomplish the same thing by adding some configuration on the `cucumber.js` file, but we'll talk about that at the end of the lesson.
 
 Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. shot::[6, "in feature file show that 'Message too long' starts on line 44"]
 
-We can use that line number when we run Cucumber. shot::[7, "add entry to property file"]
+We can use that line number when we run Cucumber. shot::[7, "add line number to cucumber-js comand line"]
 
 [source]
 ----
 node_modules/.bin/cucumber-js features/hear_shout.feature:44
 ----
 
-shot::[8, "type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'"]
+shot::[8, "type cucumber-js command in console, show output and highlight that it has only run the scenario called 'Message too long'"]
 
 You can even specify multiple line numbers for each file. Let's run 'Two shouts' as well. [shot::[9, "in feature file, show 'Two shouts' starts on line 33"]
 
-Let's add that line number to the Maven command.shot::[10, "type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'"]
+Let's add that line number to the cucumbner-js command. shot::[10, "type cucumber-js command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'"]
 
 [source]
 ----
@@ -62,14 +62,14 @@ The examples that you've just seen set a Ruby property on the command line. If y
 
 Let's look at using a property file to set the system properties. Create a property file called `cucumber.js` in the root path of the project shot::[11] and add `default: --name range` shot::[12]
 
-When we run `nmp test`, Cucumber picks up the property setting from the file and only runs the "range" scenarios. shot::[13, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
+When we run `npm test`, Cucumber picks up the property setting from the file and only runs the "range" scenarios. shot::[13, "type `npm test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
 
 [source]
 ----
 node_modules/.bin/cucumber-js
 ----
 
-The property file is also picked up if you run Cucumber from within your IDE shot::[14, use IntelliJ to run all scenarios in `hear_shout.feature` and then highlight that only the range scenarios have been run]
+The property file is also picked up if you run Cucumber from within your IDE shot::[14, use IDE to run all scenarios in `hear_shout.feature` and then highlight that only the range scenarios have been run]
 
 The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.
 

@@ -1,14 +1,11 @@
 include::./title.adoc[]
 
 shot::[1]
-In the previous lesson, we modified Cucumber's behavior over the command line.
-
-// SEB: I don't know if this is important in the Ruby version, probably it is
-As you can see, there's not much in the Cucumber Runner class, but you can control how Cucumber runs by using the @CucumberOptions annotation. shot::[2, highlight annotation] We'll use this to show you how to filter using tags.
+In the previous lesson, we modified Cucumber's behavior using scenario names and line numbers. In this lesson I'm going to show you how to filter scenarios using tags.
 
 First, let's delete the contents of `cucumber.js`. shot::[3] Now, Cucumber will run all scenarios. shot::[4, run Cucumber from IntelliJ]
 
-Since Cucumber 1.0, you may notice a comment at the end of the execusion that looks like this
+Since Cucumber 1.0, you may notice a comment at the end of the execution that looks like this
 
 [source,bash]
 ----
