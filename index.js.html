@@ -3948,6 +3948,10 @@ Let&#8217;s ensure that this scenario includes only essential information for th
 <p>
 We&#8217;ll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.</p>
 </div>
+<div class="paragraph">
+<p>
+We&#8217;ll default the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step.</p>
+</div>
 <div class="listingblock">
 <div class="title">steps.js</div>
 <div class="content">
@@ -3958,10 +3962,6 @@ We&#8217;ll need to make changes to the step definitions to make sure that a Net
   <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">(</span><span class="nx">default_range</span><span class="p">)</span>
 <span class="p">})</span></code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>
-We&#8217;ve defaulted the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is &#8230;&#8203;" step.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll also need to add a step definition that can create a person without the scenario needing to specify where they are located. The step definition gives each person  created this way a default location of 0.</p>
@@ -4052,8 +4052,8 @@ And one that allows us to check that Larry hasn&#8217;t heard any messages at al
 <div class="listingblock">
 <div class="title">steps.rb</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span><span class="p">(</span><span class="s1">'Larry should not hear Sean\'s message'</span><span class="p">,</span> <span class="n">function</span> <span class="p">()</span> <span class="p">{</span>
-  <span class="n">assertThat</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="nf">people</span><span class="p">[</span><span class="s1">'Larry'</span><span class="p">].</span><span class="nf">messagesHeard</span><span class="p">(),</span> <span class="n">not</span><span class="p">(</span><span class="n">contains</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="nf">messageFromSean</span><span class="p">)))</span>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span><span class="p">(</span><span class="s1">'Larry should not hear a shout'</span><span class="p">,</span> <span class="n">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="n">assertThat</span><span class="p">(</span><span class="n">this</span><span class="p">.</span><span class="nf">people</span><span class="p">[</span><span class="s1">'Larry'</span><span class="p">].</span><span class="nf">messagesHeard</span><span class="p">().</span><span class="nf">length</span><span class="p">,</span> <span class="n">is</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
 <span class="p">})</span></code></pre>
 </div>
 </div>
@@ -5596,7 +5596,7 @@ node_modules/.bin/cucumber-js -h</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-29 15:39:02 UTC
+Last updated 2020-11-29 16:10:02 UTC
 </div>
 </div>
 <style>
