@@ -18,14 +18,15 @@ include::../code/js/02-edit-first-scenario-to-remove-inessential-details/feature
 shot::[4,"Add Network creation"]
 We'll need to make changes to the step definitions to make sure that a Network class is always created - which we can do using an instance variable.
 
+shot::[5,"DEFAULT_RANGE"]
+We'll default the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is ..." step.
+
 .steps.js
 [source,js]
 ----
 include::../code/js/03-edit-step-definitions-to-get-back-to-green/features/step_definitions/steps.js[lines=6..11]
 ----
 
-shot::[5,"Highlight DEFAULT_RANGE"]
-We've defaulted the range to 100. If a scenario needs to document specific range, that can still be done by explicitly including a "Given the range is ..." step.
 
 We'll also need to add a step definition that can create a person without the scenario needing to specify where they are located.shot::[6] The step definition gives each person shot::[7] created this way a default location of 0.shot::[8]
 
@@ -78,7 +79,7 @@ And one that allows us to check that Larry hasn't heard any messages at all - be
 .steps.rb
 [source,ruby]
 ----
-include::../code/js/04-remove-incidental-details-from-range-scenarios-and-fix-step-defs/features/step_definitions/steps.js[lines=42..44]
+include::../code/js/04-remove-incidental-details-from-range-scenarios-and-fix-step-defs/features/step_definitions/steps.js[lines=46..48]
 ----
 
 shot::[18,"Run Cucumber"]
