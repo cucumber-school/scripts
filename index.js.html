@@ -2581,8 +2581,11 @@ npm ERR! Test failed.  See above for more details.</pre>
 <p> 
 Let&#8217;s create a new JS file in <code>features/support</code> called <code>person_parameter.js</code>:</p>
 </div>
+<div class="paragraph">
+<p>
+.person_parameter.js</p>
+</div>
 <div class="listingblock">
-<div class="title">person_parameter.js</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="js"><span class="kd">const</span> <span class="nx">Person</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">../../src/shouty</span><span class="dl">'</span><span class="p">)</span></code></pre>
 </div>
@@ -2947,13 +2950,13 @@ Let’s dig into the code and see how these steps have been automated.</p>
 <p>In the step definition layer, we can see that a new class has been defined, the Network. We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here. So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.</p>
 </div>
 <div class="paragraph">
-<p>There are also a couple of new unit test classes in the <code>spec</code> directory, one for the Network class, and another one for the Person class.</p>
+<p>There are also a couple of new unit test classes in the <code>test</code> directory, one for the Network class, and another one for the Person class.</p>
 </div>
 <div class="paragraph">
 <p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.</p>
 </div>
 <div class="paragraph">
-<p>The familiar <code>npm test</code>  command will run those unit tests as well as Cucumber.</p>
+<p>The familiar <code>npm test</code>  command will run those unit tests  as well as Cucumber.</p>
 </div>
 <div class="paragraph">
 <p></p>
@@ -3096,7 +3099,7 @@ The step “Given Lucy is 15 metres from Sean” is misleading, since the distan
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">  <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">()</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js">  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="nx">distance</span><span class="p">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3350,7 +3353,7 @@ We now have two step definitions to implement, and that presents us with a bit o
 <p></p>
 </div>
 <div class="paragraph">
-<p>Now we have one last bit of dead code left, the move_to method on Person.
+<p>Now we have one last bit of dead code left, the moveTo method on Person.
 Let&#8217;s clean that up too.</p>
 </div>
 <div class="listingblock">
@@ -3452,8 +3455,49 @@ And we&#8217;re still green!</p>
 <div class="paragraph">
 <p>On a real project we wouldn’t bother about such a tiny amount of duplication at this early stage, but this isn’t a real project! Let’s play with the skills we learned in the last chapter to make a single step definition that can create Lucy or Sean.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Feature</span><span class="p">:</span> <span class="nx">Shout</span>
+
+  <span class="nx">Shouty</span> <span class="nx">allows</span> <span class="nx">users</span> <span class="nx">to</span> <span class="dl">"</span><span class="s2">hear</span><span class="dl">"</span> <span class="nx">other</span> <span class="nx">users</span> <span class="dl">"</span><span class="s2">shouts</span><span class="dl">"</span> <span class="k">as</span> <span class="nx">long</span> <span class="k">as</span> <span class="nx">they</span> <span class="nx">are</span> <span class="nx">close</span> <span class="nx">enough</span> <span class="nx">to</span> <span class="nx">each</span> <span class="nx">other</span><span class="p">.</span>
+
+  <span class="nx">To</span> <span class="k">do</span><span class="p">:</span>
+    <span class="o">-</span> <span class="nx">only</span> <span class="nx">shout</span> <span class="nx">to</span> <span class="nx">people</span> <span class="nx">within</span> <span class="nx">a</span> <span class="nx">certain</span> <span class="nx">distance</span>
+
+  <span class="nx">Rule</span><span class="p">:</span> <span class="nx">Shouts</span> <span class="nx">can</span> <span class="nx">be</span> <span class="nx">heard</span> <span class="nx">by</span> <span class="nx">other</span> <span class="nx">users</span>
+
+    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Listener</span> <span class="nx">within</span> <span class="nx">range</span>
+      <span class="nx">Given</span> <span class="nx">a</span> <span class="nx">person</span> <span class="nx">named</span> <span class="nx">Lucy</span>
+      <span class="nx">And</span> <span class="nx">a</span> <span class="nx">person</span> <span class="nx">named</span> <span class="nx">Sean</span>
+      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">free bagels at Sean's</span><span class="dl">"</span>
+      <span class="nx">Then</span> <span class="nx">Lucy</span> <span class="nx">should</span> <span class="nx">hear</span> <span class="nx">Sean</span><span class="dl">'</span><span class="s1">s message
+
+    Scenario: Listener hears a different mesage
+      Given a person named Lucy
+      And a person named Sean
+      When Sean shouts "Free coffee!"
+      Then Lucy should hear Sean</span><span class="dl">'</span><span class="nx">s</span> <span class="nx">message</span>
+
+  <span class="nx">Rule</span><span class="p">:</span> <span class="nx">Shouts</span> <span class="nx">should</span> <span class="nx">only</span> <span class="nx">be</span> <span class="nx">heard</span> <span class="k">if</span> <span class="nx">listener</span> <span class="nx">is</span> <span class="nx">within</span> <span class="nx">range</span>
+
+    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Listener</span> <span class="nx">is</span> <span class="nx">within</span> <span class="nx">range</span>
+
+    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Listener</span> <span class="nx">is</span> <span class="nx">out</span> <span class="k">of</span> <span class="nx">range</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>The first problem we’ll need to tackle is these hard-coded instance variable names.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">a person named Lucy</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">'</span><span class="s1">a person named Sean</span><span class="dl">'</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>We can use a JavaScript object to store all the people involved in the scenario.</p>
@@ -5552,7 +5596,7 @@ node_modules/.bin/cucumber-js -h</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-11-26 11:45:14 UTC
+Last updated 2020-11-29 15:39:02 UTC
 </div>
 </div>
 <style>
