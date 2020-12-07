@@ -32,7 +32,7 @@ include::../code/js/02-feature-file-created/features/hear_shout.feature[]
 Save the file, switch back to the command-prompt and run `npm test`. shot::[9]
 
 shot::[10]
-The first think we notice is a big green box right at the end of the output.
+The first thing we notice is a big green box right at the end of the output.
 
 [source,sh]
 ----
@@ -49,14 +49,14 @@ The first think we notice is a big green box right at the end of the output.
 └──────────────────────────────────────────────────────────────────────────┘
 ----
 
-We don't want this warning to distract us for the moment, so we'll follow the instructions mentioned at the end of the warning and add
+We don't want this warning to distract us right now, so we'll follow the instructions mentioned at the end of the warning and add the "publish-quiet" option...
 
 [source,js]
 ----
 module.exports = { default: '--publish-quiet' }
 ----
 
-to the `cucumber.js` file.shot::[11]shot::[12]
+...to the `cucumber.js` file.shot::[11]shot::[12]
 
 Now when we run cucumber again, the warning isn't there anymore. shot::[13]
 
