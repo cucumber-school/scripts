@@ -495,7 +495,6 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_formatter_plugins">6.4. Formatter plugins</a></li>
 <li><a href="#_rerun_formatter">6.5. Rerun formatter</a></li>
 <li><a href="#_static_configuration">6.6. Static configuration</a></li>
-<li><a href="#_close">6.7. Close</a></li>
 </ul>
 </li>
 </ul>
@@ -1950,7 +1949,7 @@ Good step definitions are important because they enable the <em>readability</em>
 <p>This chapter is all about Cucumber Expressions.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_1_questions">3.1.1. Lesson 1 - Questions</h4>
+<h4 id="_lesson_1_questions_ruby_java_js">3.1.1. Lesson 1 - Questions (Ruby, Java, JS)</h4>
 <div class="sect4">
 <h5 id="_which_of_the_following_statements_are_true">Which of the following statements are true?</h5>
 <div class="ulist">
@@ -1987,6 +1986,50 @@ Good step definitions are important because they enable the <em>readability</em>
 </div>
 <div class="paragraph">
 <p>Answer: Regular Expressions are a powerful tool that have been in use in computer science for many decades. They can be hard understand and maintain, so the Cucumber team created a simplified mechanism, called Cucumber Expressions. However, Cucumber remains backwards compatible, so you can use both Regular Expressions and Cucumber Expressions with modern releases of Cucumber.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_specflowcdotnet">3.1.2. Lesson 1 - Questions (SpecFlow/C#/Dotnet)</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_statements_are_true_3">Which of the following statements are true?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Step definitions translate human-readable scenarios into concrete actions in code - TRUE</p>
+</li>
+<li>
+<p>BDD practitioners think of "step definitions" and "automation code" as distinct concepts - TRUE</p>
+</li>
+<li>
+<p>SpecFlow only supports automation through the user interface - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: A step definition is a piece of code that is called by SpecFlow in response to a step in a scenario. You can write any code you like inside a step definition, but we&#8217;ve found it easier to maintain if we keep them short. This leads to step definitions calling dedicated automation code to perform concrete actions against the system under construction. That automation code can manipulate the user interface, make a REST call, or drive the domain model directly.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_statements_are_true_4">Which of the following statements are true?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Regular Expressions are exactly the same as Cucumber Expressions - FALSE</p>
+</li>
+<li>
+<p>In modern versions of SpecFlow steps can be defined using Cucumber Expressions but this feature has to be enabled first - TRUE</p>
+</li>
+<li>
+<p>Cucumber Expressions are more intimidating than Regular Expressions - FALSE</p>
+</li>
+<li>
+<p>Regular expressions can still be used even in modern versions of SpecFlow even if Cucumber Expressions are enabled - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Regular Expressions are a powerful tool that have been in use in computer science for many decades. They can be hard understand and maintain, so the Cucumber team created a simplified mechanism, called Cucumber Expressions that is now also available for SpecFlow. SpecFlow remains backwards compatible, so you can use both Regular Expressions and Cucumber Expressions with modern releases of SpecFlow.</p>
 </div>
 </div>
 </div>
@@ -2109,7 +2152,7 @@ Sometimes, we want to write step definitions that allow us to use different valu
 <p>Cucumber has a bunch of built-in parameter types: <code>{int}</code>, <code>{float}</code>, <code>{word}</code> and <code>{string}</code>. You can also define your own, as we&#8217;ll see later.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_3">3.3.1. Lesson 3</h4>
+<h4 id="_lesson_3_ruby_java_js">3.3.1. Lesson 3 )Ruby, Java, JS)</h4>
 <div class="sect4">
 <h5 id="_which_of_the_following_is_not_a_built_in_cucumber_expression_parameter_type">Which of the following is NOT a built in Cucumber Expression parameter type?</h5>
 <div class="ulist">
@@ -2152,6 +2195,53 @@ Sometimes, we want to write step definitions that allow us to use different valu
 </div>
 <div class="paragraph">
 <p>Answer: Cucumber will pass the step definition a parameter for each Cucumber Expression parameter type. Cucumber will attempt to convert the text that matched into a suitable format. Using the <code>{int}</code> parameter type will result in a number being passed to the step definition. You can extend the predefined Cucumber Expression parameter types, by creating your own.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions_specflowcdotnet">3.3.2. Lesson 3 - Questions (SpecFlow/C#/Dotnet)</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_is_not_a_built_in_cucumber_expression_parameter_type_2">Which of the following is NOT a built in Cucumber Expression parameter type?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>float - FALSE</p>
+</li>
+<li>
+<p>integer - TRUE</p>
+</li>
+<li>
+<p>string - FALSE</p>
+</li>
+<li>
+<p>word - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The Cucumber Expression parameter type that matches an integer is <code>{int}</code>, not <code>{integer}</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_statements_is_true_2">Which of the following statements is true?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>You cannot create your own Cucumber Expression parameter types - FALSE</p>
+</li>
+<li>
+<p>Cucumber discards the value that matches a Cucumber Expression parameter type - FALSE</p>
+</li>
+<li>
+<p>Your step definition code will be passed the value that matched the Cucumber Expression parameter type - TRUE</p>
+</li>
+<li>
+<p>SpecFlow always passes the matched parameter as a string - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: SpecFlow will pass the step definition a parameter for each Cucumber Expression parameter type. SpecFlow will attempt to convert the text that matched into a suitable format. Using the <code>{int}</code> parameter type will result in a number being passed to the step definition. You can extend the predefined Cucumber Expression parameter types, by creating your own.</p>
 </div>
 </div>
 </div>
@@ -2587,9 +2677,58 @@ public Status state(String activationState) {
 <p>Answer: The name of a custom Parameter Type is defined by the <code>name</code> parameter passed to the <code>ParameterType</code> method.</p>
 </div>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_specflowcdotnet">3.5.4. Lesson 5 - Questions (SpecFlow/C#/Dotnet)</h4>
 <div class="sect4">
-<h5 id="_c">C#</h5>
-
+<h5 id="_what_role_do_regular_expressions_play_in_cucumber_expressions_4">What role do Regular Expressions play in Cucumber Expressions?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>None</p>
+</li>
+<li>
+<p>Cucumber Expressions provide a subset of Regular Expression syntax</p>
+</li>
+<li>
+<p>Cucumber Expressions are exactly the same as Regular Expressions</p>
+</li>
+<li>
+<p>A Regular Expression is used to restrict the text to be matched when using a custom parameter type (StepArgumentTransformation) - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: We use a Regular Expression to restrict the text that should be matched when a custom parameter type (StepArgumentTransformation) is used in a Cucumber Expression. You can find more examples of how to use <code>StepArgumentTransformation</code> in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/Step-Argument-Conversions.html#step-argument-transformation">SpecFlow documentation</a>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_would_you_use_the_custom_parameter_type_defined_by_the_following_code_4">How would you use the custom Parameter Type defined by the following code?</h5>
+<div class="paragraph">
+<p>public Status ConvertState(string activationState)
+{
+return new Status(activationState);
+}</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>{activated} or {deactivated}</p>
+</li>
+<li>
+<p>{activationState}</p>
+</li>
+<li>
+<p>{Status} - TRUE</p>
+</li>
+<li>
+<p>{ConvertState}</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The name of a custom Parameter Type is defined by the name of the return type in the method that is decorated with the <code>[StepArgumentTransformation]</code> annotation.</p>
+</div>
 </div>
 </div>
 </div>
@@ -2629,7 +2768,7 @@ Your browser does not support the video tag.
 <p>First, let’s catch up with what’s been happening on the Shouty project.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_1_questions_2">4.1.1. Lesson 1 - Questions</h4>
+<h4 id="_lesson_1_questions_ruby_java_js_2">4.1.1. Lesson 1 - Questions (Ruby, Java, JS)</h4>
 <div class="sect4">
 <h5 id="_which_aspects_of_cucumber_help_bridge_the_communication_gap_between_business_domain_experts_and_development_teams">Which aspects of Cucumber help bridge the communication gap between business domain experts and development teams?</h5>
 <div class="ulist">
@@ -2672,6 +2811,54 @@ Your browser does not support the video tag.
 </div>
 <div class="paragraph">
 <p>Answer: BDD is the collaborative approach to developing software that Cucumber was created to support. Although Cucumber scenarios do act as tests when they are automated, this is not their primary purpose. Their primary purpose is to provide a single, shared specification, written in the domain language of your business&#8201;&#8212;&#8201;facilitating collaboration, feedback, and
+reliable documentation. The primary purpose of traditional automated tests, on the other hand, is to check that the software behaves as expected.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_specflowcdotnet_2">4.1.2. Lesson 1 - Questions (SpecFlow/C#/Dotnet)</h4>
+<div class="sect4">
+<h5 id="_which_aspects_of_specflow_help_bridge_the_communication_gap_between_business_domain_experts_and_development_teams">Which aspects of SpecFlow help bridge the communication gap between business domain experts and development teams?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The readability of Gherkin scenarios - TRUE</p>
+</li>
+<li>
+<p>Gherkin scenarios can be automated in different programming languages - FALSE</p>
+</li>
+<li>
+<p>Being able to express scenarios using your own domain language - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The feature files that SpecFlow understands are written using Gherkin, so that you can create scenarios that utilise your own domain language, so that they can be read and understood by everyone involved in specifying and delivering your software.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_do_specflow_feature_files_differ_from_more_traditional_automated_tests">How do SpecFlow feature files differ from more traditional automated tests?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The purpose of feature files is to create readable specifications that can be understood by the whole team, not to provide test coverage</p>
+</li>
+<li>
+<p>Business-readable specifications make it easier to obtain feedback about what you&#8217;re building while you&#8217;re building it, rather than waiting for a later test cycle</p>
+</li>
+<li>
+<p>Feature files become "living documentation" when they are automated, providing a single source of truth for the whole team</p>
+</li>
+<li>
+<p>Feature files should be written collaboratively by business and delivery, not in isolation by testers</p>
+</li>
+<li>
+<p>There is no difference - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: BDD is the collaborative approach to developing software that SpecFlow was created to support. Although SpecFlow scenarios do act as tests when they are automated, this is not their primary purpose. Their primary purpose is to provide a single, shared specification, written in the domain language of your business&#8201;&#8212;&#8201;facilitating collaboration, feedback, and
 reliable documentation. The primary purpose of traditional automated tests, on the other hand, is to check that the software behaves as expected.</p>
 </div>
 </div>
@@ -2758,7 +2945,7 @@ Let’s dig into the code and see how these steps have been automated.</p>
 <p>Let&#8217;s clean up the feature to reflect that current understanding.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_2_questions_3">4.2.1. Lesson 2 - Questions</h4>
+<h4 id="_lesson_2_questions_ruby_java_js">4.2.1. Lesson 2 - Questions (Ruby, Java, JS)</h4>
 <div class="sect4">
 <h5 id="_why_have_the_shouty_developers_created_unit_tests_for_the_person_and_network_classes">Why have the Shouty developers created unit tests for the Person and Network classes?</h5>
 <div class="ulist">
@@ -2783,6 +2970,53 @@ Let’s dig into the code and see how these steps have been automated.</p>
 </div>
 <div class="sect4">
 <h5 id="_why_is_the_distance_between_sean_and_lucy_not_being_used_by_shouty">Why is the distance between Sean and Lucy not being used by Shouty?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The team has decided to defer implementing range functionality until a later iteration - TRUE</p>
+</li>
+<li>
+<p>The developers have misunderstood the specification</p>
+</li>
+<li>
+<p>The specification has changed since the scenarios were written</p>
+</li>
+<li>
+<p>The distance between Sean and Lucy is being used to decide if the shout is "in range"</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Teams often find that the problem is too big to solve all at once, so we split it into thinner slices. Working in smaller steps is a faster, safer way of delivering software. In this case the team has decided that broadcasting messages and calculating if a person is in-range are different problems that they will address separately.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_specflow">4.2.2. Lesson 2 - Questions (SpecFlow)</h4>
+<div class="sect4">
+<h5 id="_why_have_the_shouty_developers_created_unit_tests_for_the_person_and_network_classes_2">Why have the Shouty developers created unit tests for the Person and Network classes?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>They don&#8217;t understand how to do BDD - FALSE</p>
+</li>
+<li>
+<p>Unit tests are fine-grained tests that define the precise behaviour of each of those classes - TRUE</p>
+</li>
+<li>
+<p>Unit tests run faster than Cucumber scenarios - FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Unit tests (also known as programmer tests) are used to define precise behaviour of units of code that may not be interesting to the business&#8201;&#8212;&#8201;and so should not be written in a feature file. Writing unit tests is entirely compatible with BDD.</p>
+</div>
+<div class="paragraph">
+<p>There is no reason for SpecFlow scenarios to run significantly slower than unit tests. The Shouty step definitions that we&#8217;ve seen so far interact directly with the domain layer and run extremely fast.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_is_the_distance_between_sean_and_lucy_not_being_used_by_shouty_2">Why is the distance between Sean and Lucy not being used by Shouty?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -3272,7 +3506,7 @@ If we try and run Cucumber now, we get an error about an ambiguous match. Our ge
 <p>Great, we’re green again.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_5_questions_2">4.5.1. Lesson 5 - Questions</h4>
+<h4 id="_lesson_5_questions_ruby_java_js">4.5.1. Lesson 5 - Questions (Ruby, Java, JS)</h4>
 <div class="sect4">
 <h5 id="_why_should_a_step_definition_be_short">Why should a step definition be short?</h5>
 <div class="ulist">
@@ -3309,6 +3543,47 @@ If we try and run Cucumber now, we get an error about an ambiguous match. Our ge
 </div>
 <div class="paragraph">
 <p>Answer: If more than one step definition matches a step, then Cucumber doesn&#8217;t know which one to call. When this ambiguity occurs, Cucumber issues an error, rather than try to choose between the matching step definitions.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_specflow">4.5.2. Lesson 5 - Questions (SpecFlow)</h4>
+<div class="sect4">
+<h5 id="_why_should_a_step_definition_be_short_2">Why should a step definition be short?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Because the plain-language description of the domain in the Gherkin step should be close to the domain model in the code - TRUE</p>
+</li>
+<li>
+<p>Step definitions don&#8217;t need to be short</p>
+</li>
+<li>
+<p>SpecFlow limits the length of step definitions to five lines of code</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Step definitions are a thin glue between the plain-language description in a scenario and the software that we&#8217;re building. If the business domain and the solution domain are aligned, then there should be little translation to do in the step definition.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_does_it_mean_when_specflow_complains_about_an_ambiguous_step">What does it mean when SpecFlow complains about an <em>ambiguous</em> step?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>SpecFlow couldn&#8217;t find a step definition that matches a step</p>
+</li>
+<li>
+<p>SpecFlow only found one step definition that matches a step</p>
+</li>
+<li>
+<p>SpecFlow found more than one step definition that matches a step - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: If more than one step definition matches a step, then SpecFlow doesn&#8217;t know which one to call. When this ambiguity occurs, SpecFlow issues an error, rather than try to choose between the matching step definitions.</p>
 </div>
 </div>
 </div>
@@ -3394,7 +3669,7 @@ Your browser does not support the video tag.
 <p>We’re ready to start the next iteration.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_6_questions">4.6.1. Lesson 6 - Questions</h4>
+<h4 id="_lesson_6_questions_ruby_java_js">4.6.1. Lesson 6 - Questions (Ruby, Java, JS)</h4>
 <div class="sect4">
 <h5 id="_what_does_the_gherkin_keyword_background_do">What does the Gherkin keyword _Background_do?</h5>
 <div class="ulist">
@@ -3422,6 +3697,56 @@ Your browser does not support the video tag.
 </div>
 <div class="sect4">
 <h5 id="_how_might_backgrounds_decrease_the_readability_or_maintainability_of_a_feature_file">How might Backgrounds decrease the readability or maintainability of a feature file?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Backgrounds always improve readability</p>
+</li>
+<li>
+<p>Readability can decrease because the reader must remember the contents of the background even when reading scenarios at the end of the feature file</p>
+</li>
+<li>
+<p>Maintainability can decrease because the maintainer must be aware that there is a background even when adding scenarios to the end of the feature file</p>
+</li>
+<li>
+<p>Maintainability can decrease because the maintainer must be aware of the background when moving a scenario to a different feature file</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: Backgrounds were created to aid readability, by reducing duplication in the scenarios. Unfortunately, moving important information out of a scenario means that anyone reading or modifying a feature file must be fully aware that of the existence and content of a background. Since feature files typically contain several scenarios, that means holding two sections of the feature file in your mind at the same time, making a feature file harder to read or maintain.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_6_questions_specflow">4.6.2. Lesson 6 - Questions (SpecFlow)</h4>
+<div class="sect4">
+<h5 id="_what_does_the_gherkin_keyword_background_do_2">What does the Gherkin keyword <em>Background</em> do?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It provides a place to write a description of why the feature is valuable</p>
+</li>
+<li>
+<p>It is treated exactly like a scenario, but is run as soon as SpecFlow starts</p>
+</li>
+<li>
+<p>It is treated exactly like a scenario, but is run once before any other scenario in the feature file</p>
+</li>
+<li>
+<p>The steps from the background are run as if they were inserted at the beginning of every scenario in the feature file - TRUE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Answer: The background is used to reduce duplication in scenarios by moving steps that are common to all scenarios into a single location. The steps in the background are run before every scenario in the feature file.</p>
+</div>
+<div class="paragraph">
+<p>There can be a maximum of one Background per feature file. A Background only affects scenarios that are in the same feature file as the Background.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_might_backgrounds_decrease_the_readability_or_maintainability_of_a_feature_file_2">How might Backgrounds decrease the readability or maintainability of a feature file?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -3587,7 +3912,7 @@ Your browser does not support the video tag.
 <p>Keeping excess scenarios is wasteful: they clutter up your feature files, distracting your readers. When you run your features as tests, excess scenarios make them take longer to run than necessary. The one where a "listener hears a "message" is a perfectly good way of checking that the message has been sent correctly.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_1_questions_3">5.1.1. Lesson 1 - Questions</h4>
+<h4 id="_lesson_1_questions">5.1.1. Lesson 1 - Questions</h4>
 <div class="sect4">
 <h5 id="_why_was_it_a_good_idea_to_delete_the_scenario">Why was it a good idea to delete the scenario?</h5>
 <div class="ulist">
@@ -3769,7 +4094,7 @@ That&#8217;s better. We&#8217;ve removed inessential details, so that each scena
 <p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system . So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_2_questions_4">5.2.1. Lesson 2 - Questions</h4>
+<h4 id="_lesson_2_questions_3">5.2.1. Lesson 2 - Questions</h4>
 <div class="sect4">
 <h5 id="_why_did_we_remove_any_reference_to_range_or_location_from_the_first_scenario_listener_hears_a_message">Why did we remove any reference to range or location from the first scenario "Listener hears a message"?</h5>
 <div class="ulist">
@@ -4655,7 +4980,7 @@ We have to add a new step definition too . It doesn&#8217;t need a parameter in 
 <p>We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_5_questions_3">5.5.1. Lesson 5 - Questions</h4>
+<h4 id="_lesson_5_questions_2">5.5.1. Lesson 5 - Questions</h4>
 <div class="sect4">
 <h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
 <div class="ulist">
@@ -4793,7 +5118,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 <p>That’s all for this chapter of Cucumber School. See you next time!</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_6_questions_2">5.6.1. Lesson 6 - Questions</h4>
+<h4 id="_lesson_6_questions">5.6.1. Lesson 6 - Questions</h4>
 <div class="sect4">
 <h5 id="_which_of_the_following_is_the_best_definition_of_the_term_refactoring">Which of the following is the best definition of the term "refactoring"?</h5>
 <div class="ulist">
@@ -5157,13 +5482,18 @@ bundle exec cucumber -h</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.</p>
+<p>
+So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.</p>
 </div>
 <div class="paragraph">
-<p>Let’s try the HTML formatter.</p>
+<p>
+Let’s try the HTML formatter.</p>
 </div>
 <div class="paragraph">
 <p>When we use the html formatter we use dash-dash out to specify the file where the report should be written. Otherwise it will be written directly to the console.</p>
+</div>
+<div class="paragraph">
+<p></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5171,16 +5501,24 @@ bundle exec cucumber -h</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s try another one - JSON.</p>
+<p>
+Let’s try another one - JSON.</p>
 </div>
 <div class="paragraph">
-<p>The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.</p>
+<p>
+The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.</p>
 </div>
 <div class="paragraph">
-<p>There is also a progress formatter, which just prints out a single character for each step. The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.</p>
+<p>
+There is also a progress formatter, which just prints out a single character for each step.</p>
 </div>
 <div class="paragraph">
-<p>We can specify multiple formatters like this. The one without a dash-dash out will be written to the console.</p>
+<p>
+The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.</p>
+</div>
+<div class="paragraph">
+<p>
+We can specify multiple formatters like this. Only one formatter is allowed to output to the console&#8201;&#8212;&#8201;all the others must have a dash-dash out specifying which file their output should be written to.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5203,61 +5541,14 @@ bundle exec cucumber -h</code></pre>
 <div class="paragraph">
 <p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.</p>
 </div>
-<div class="sect3">
-<h4 id="_dry_run">6.5.1. Dry-run</h4>
-<div class="paragraph">
-<p>The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_strict">6.5.2. Strict</h4>
-<div class="paragraph">
-<p>The --strict option affects the exit status of Cucumber. To see how it works, let’s add an undefined step:</p>
-</div>
-<div class="paragraph">
-<p>(Adds “Then we have an undefined step” to the end of shout.feature).</p>
-</div>
-<div class="paragraph">
-<p>Let’s first run it without <code>--strict</code>:</p>
-</div>
-<div class="paragraph">
-<p>That last command tells us that Cucumber didn’t fail - it exited with exit status zero, which means success. Now, let’s run it with strict:</p>
-</div>
-<div class="paragraph">
-<p>This time the exit status was one, which means Cucumber failed.</p>
-</div>
-<div class="paragraph">
-<p>Why is this interesting? Well, if you run Cucumber on a Continuous Integration server it will fail the build if there are undefined or pending steps. That’s pretty handy!</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_i18n">6.5.3. I18n</h4>
-<div class="paragraph">
-<p>Cucumber is first and foremost a tool that facilitates a common understanding between people on a project. Imagine our customers were cats. We could write our features in English, but the cats would obviously not understand that.</p>
-</div>
-<div class="paragraph">
-<p>We all know that cats speak LOLCAT, not English, so our feature would have to look like this in order for cats to understand:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code># language: en-lol</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We tell Cucumber what language to use by adding a language comment at the top of the file. Cucumber supports over 60 different languages, thanks to contributions from people and cats all over the world.</p>
-</div>
-<div class="paragraph">
-<p>You can get a list of all the supported languages with --i18n help. To see the translation of the Gherkin keywords for a particular language, just replace help with the language code. For example --i18n hi for Hindi.</p>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_static_configuration">6.6. Static configuration</h3>
 <div class="paragraph">
-<p>It would be tedious if you had to write out these configuration options every time you run Cucumber. To make this easier you can write the options in a file that Cucumber will pick up.</p>
+<p>It would be tedious if you had to write out these configuration options every time you run Cucumber. To make this easier you can write the options in a file called cucumber.yml that we showed you earlier.</p>
 </div>
 <div class="paragraph">
-<p>You can use the cucumber.yml file to define one or more profiles that describe a set of configuration options for Cucumber.</p>
+<p>In cucumber.yml file you can define one or more profiles that describe a set of configuration options for Cucumber.</p>
 </div>
 <div class="paragraph">
 <p>For example, we can define a <code>dev</code> profile that runs only the @focus scenarios and uses the progress formatter.</p>
@@ -5271,12 +5562,6 @@ bundle exec cucumber -h</code></pre>
 <div class="paragraph">
 <p>It’s common for teams to have a number of profiles defined, usually for the different environments where Cucumber runs. You can have a CI profile that behaves differently to the one you use on your dev machines, for example.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_close">6.7. Close</h3>
-<div class="paragraph">
-<p>To make Cucumber really useful to your team, it’s good to spend time learning the details of how to configure it. In this lesson, we gave you a tour of almost all of Cucumber’s configuration options. You learned how to filter scenarios by name, line number or tag. You learned how to format Cucumber’s output, and you learned how to write your scenarios in different spoken languages. You also learned how to set up different configurations for use by your whole team.</p>
-</div>
 <div class="paragraph">
 <p>Unresolved directive in scripts.ruby.adoc - include::07/index.adoc[]</p>
 </div>
@@ -5286,7 +5571,7 @@ bundle exec cucumber -h</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2020-12-10 11:57:54 UTC
+Last updated 2020-12-10 13:13:57 UTC
 </div>
 </div>
 <style>
