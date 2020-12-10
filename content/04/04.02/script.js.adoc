@@ -17,13 +17,13 @@ include::../code/js/00-initial-commit/features/step_definitions/steps.js[]
 
 In the step definition layer, we can see that a new class has been defined, the Network.shot::[3] We’re creating an instance of the network here. Then we pass that network instance to each of the Person instances we create here.shot::[4] So both instances of Person depend on the same instance of network. The Network is what allows people to send messages to one another.
 
-There are also a couple of new unit test classes in the `spec` directory,shot::[5] one for the Network class,shot::[6] and another one for the Person class.shot::[7]
+There are also a couple of new unit test classes in the `test` directory,shot::[5] one for the Network class,shot::[6] and another one for the Person class.shot::[7]
 
 Unit tests are fine-grained tests that define the precise behaviour of each of those classes. We’ll talk more about this in a future lesson, but feel free to have a poke around in there in the meantime.
 
-The familiar `npm test` shot::[7a] command will run those unit tests as well as Cucumber.shot::[7b]
+The familiar `npm test` shot::[8] command will run those unit tests shot::[9] as well as Cucumber.shot::[10]
 
-shot::[8, "open the feature file"]
+shot::[11, "open the feature file"]
 
 The first thing I notice coming back to the code is that the feature file is still talking about the distance between Lucy and Sean, but we haven’t actually implemented any behaviour around that yet.
 

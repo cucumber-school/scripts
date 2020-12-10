@@ -55,19 +55,20 @@ Here's how we define one.
 shot::[3] shot::[4]
 Let's create a new JS file in `features/support` called `person_parameter.js`:
 
+shot::[5]
 .person_parameter.js
 [source, js]
 ----
 include::../code/js/06-added-person-parameter/features/support/person_parameter.js[lines=3..3]
 ----
 
-We use the `defineParameterType` function from Cucumber to define our new parameter type. shot::[5]
+We use the `defineParameterType` function from Cucumber to define our new parameter type. shot::[6]
 
-We need to give it a `name` which is the name we'll use inside the curly brackets in our step definition expressions. shot::[6]
+We need to give it a `name` which is the name we'll use inside the curly brackets in our step definition expressions. shot::[7]
 
-We also need to define -- gasp! -- a regular expression. shot::[7] This is necessary to tell Cucumber Expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario. shot::[8]
+We also need to define -- gasp! -- a regular expression. shot::[8] This is necessary to tell Cucumber Expressions what text to match when searching for this parameter in a Gherkin step. We won't go into the details of regular expressions in this video, but in this case we're just matching on either of the names of the people we're using in our scenario. shot::[9]
 
-Finally, there's a transformer block, shot::[9] which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) shot::[10] which we can then pass to the `Person` class's constructor. shot::[11]
+Finally, there's a transformer block, shot::[10] which takes the text captured from the Gherkin step that matched the regular expression pattern, and runs some code. The return value of this block is what will be passed to the step definition. In this case, the block is passed the name of the person (as a string) shot::[11] which we can then pass to the `Person` class's constructor. shot::[12]
 
 .person_parameter.rb
 [source, js]
@@ -75,7 +76,7 @@ Finally, there's a transformer block, shot::[9] which takes the text captured fr
 include::../code/js/06-added-person-parameter/features/support/person_parameter.js[]
 ----
 
-shot::[12]
+shot::[13]
 All of this means that when we run our step, an instance of `Person` will be passed into our step definition automatically.
 
 [source]
