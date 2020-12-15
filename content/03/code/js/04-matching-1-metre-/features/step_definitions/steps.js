@@ -12,7 +12,7 @@ When('Sean shouts "free bagels at Sean\'s"', function () {
   return 'pending'
 })
 
-Then('Lucy hears Sean’s message', function () {
+Then('Lucy hears Sean\'s message', function () {
   // Write code here that turns the phrase above into concrete actions
   return 'pending'
 })
