@@ -1,108 +1,113 @@
-=== Controlling Output With Plugins
+=== Dealing with execution results
 
-shot::[1, the plugin section of the help output shown in lesson 3]
-Remember the help information that we got Cucumber to print in the last lesson. In this lesson, we're going to concentrate on configuring Cucumber's output using plugins.
+shot::[1, "show output of the test execution in a command line shell, Hungarian feature file and specflow.json removed from the project"]
 
-[source]
-----
-  -p, --[add-]plugin PLUGIN[:[PATH|[URI [OPTIONS]]]
-                                           Register a plugin.
-                                           Built-in formatter PLUGIN types:
-                                           html, json, junit, message, pretty,
-                                           progress, rerun, teamcity, testng,
-                                           timeline, usage
-----
+In the previous lessons we've learnt how to configure SpecFlow and how to run scenarios from Visual Studio and from the command line. The test output we have seen there contains a brief summary of the execution and the failures. If the test were executed Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will look at in this lesson.
 
-So far, every time we have run Cucumber, it has printed the features back to us - in the console. This is called the `pretty` formatter. Cucumber can report results in other formats, and this is useful for generating reports.
-
-Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.shot::[4, "run maven in console"]
+The `dotnet test` tool outputs the execution results through configurable loggers. The logger can be specified using the `--logger` option. There are multiple logger providers you can choose from. You can even write your onw. But most of the teams use the TRX logger, that saves the execution results into a *Visual Studio Test Results* or TRX file with the `.trx` extension. Let's use this. shot::[2, "type dotnet test --logger trx, run"]
 
 [source]
 ----
-mvn test -Dcucumber.plugin="html:target/my-report"
+C:\...\Shouty\Shouty.Specs>dotnet test --logger trx
 ----
-
-Now, let's take a look at the html that has been generated. shot::[5, "Open target/my-report in the browser"]
-
-You probably noticed that we still got the `pretty` output in the console. That's because we have specified the `pretty` plugin in the @CucumberOptions annotation in `RunCucumberTests.java`. shot::[6, highlight @CucumberOptions]
-
-.RunCucumberTests.java
-[source,java]
-----
-//include::../code/java/00--step00-initial-checkin/shouty/src/test/java/shouty/RunCucumberTests.java[lines=8..10]
-----
-
-Let's delete that. shot::[7, remove pretty plugin]
-[source,java]
-----
-@CucumberOptions()
-----
-
-and run maven again. shot::[8,run maven in console] Notice that this time the only console output is a summary of the number of tests being run. There's no `pretty` output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.
-
-There's also a progress formatter, which just prints out a single character for each step. shot::[9, "run maven in console, show output"]
 
 [source]
 ----
-mvn test -Dcucumber.plugin="progress"
+Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+Results File: W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\TestResults\gaspar_SPECSOL-D01_2021-01-22_15_46_29.trx
+
+Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration: 137 ms - Shouty.Specs.dll (netcoreapp3.1)
 ----
 
-The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. shot::[10, "run maven in console, show output"]
+The execution finished and reported that the results shot::[3, "highlight test result file"] have been saved to a file that has the current timestamp inside the TestResults folder of the project. Let's look at this file. 
+
+shot::[4, "open file explorer by typing `explorer .`, go to TestResults folder, highlight trx file"]
+Visual Studio has been associated to this file extension, so if I open this file from file explorer shot::[5, "double-click on the file"], it opens it in Visual Studio. shot::[6, "show test results"] We can see all the individual test executions and even the details shot::[7, "show details of one of that"] of each of them where we see the step execution results. 
+
+The TRX files are XML files so it is easy to make any tools that processes the results and converts them to another format. It is for example a common expectation to present the execution results as an HTML file that can be checked by all stakeholders even if they don't have Visual Studio.
+
+There are many small open source tools that can do such conversion. shot::[8, "show github project in a browser"] For example the https://github.com/stevencohn/trxer[fork of the Trxer project by @stevencohn] on GitHub is a nice one that provides some dedicated styling for SpecFlow results. 
+
+shot::[9, "back to console"]
+This one is a .NET assembly that I downloaded earlier, so now I can invoke it with the dotnet command we have seen already. shot::[10, "type command and run"]
 
 [source]
 ----
-mvn test -Dcucumber.plugin="junit"
+C:\...\Shouty\Shouty.Specs>dotnet <TrxReporter-path>\TrxReporter\TrxReporter.dll --input TestResults\gaspar_SPECSOL-D01_2021-01-22_15_46_29.trx
 ----
 
-We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the `pretty` plugin and the HTML plugin at the same time. There's a limitation that only one plugin can write to the console at the same time. Let's try to use the `progress` and `junit` plugin together shot::[11, run maven in console]
+The result is a single HTML file that I could publish to my team workspace or just open it locally. shot::[11, "open HTML by typing start path-to-html"] It shows the execution summary shot::[12, "show summary and highlight details"] as well as the individual scenario results grouped by features.
+
+The TRX file format is also understood by most of the Continuous Integration platforms as well, so they can show the details included in the build results or even highlight whether the same tests were failing for the first time.
+
+Processing the TRX file on the build server is not that easy with non-deterministic file names. In this case it is more useful to specify the output file name for the TRX logger. This can be done by specifying the `logfilename` parameter of the TRX logger like this. shot::[13, "type command and run"]
 
 [source]
 ----
-mvn test -Dcucumber.plugin="progress, junit"
+C:\...\Shouty\Shouty.Specs>dotnet test --logger trx;logfilename=shouty-result.trx
 ----
 
-shot::[12, scroll up to show error]
+shot::[14, "show soecflow+ livingdoc page"]
+The https://specflow.org/blog/introducing-the-specflow-plus-livingdoc-generator/[SpecFlow+ LivingDoc Generator] from the Tricentis SpecFlow team uses a slightly different approach. This free tool does not process the TRX file, but produces it's own result file and from that it is able generate a comprehensive documentation of your requirements based on the feature files and the scenarios you defined. Although the generated documentation also contains the test results, the primary focus of its result is to produce a so called *Living Documentation* -- a documentation that shows whether the application currently fulfills the requirements.
+
+In order to setup SpecFlow+ LivingDoc Generator, first of all we need to install the `SpecFlow.Plus.LivingDocPlugin` NuGet package. shot::[15, "invoke dotnet add package command"]
 
 [source]
 ----
-initializationError(shouty.RunCucumberTest)  Time elapsed: 0.003 sec  <<< ERROR!
-io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, now both progress and junit use it. If you use more than one plugin you must specify output path with junit:DIR|FILE|URL
-	at io.cucumber.core.plugin.PluginFactory.defaultOutOrFailIfAlreadyUsed(PluginFactory.java:128)
+C:\...\Shouty\Shouty.Specs>dotnet add package SpecFlow.Plus.LivingDocPlugin
 ----
 
-We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. shot::[13, "run maven in console, show progress output"]
+Now let's run the tests. We don't need the TRX file now, so running `dotnet test` is enough. The SpecFlow+ LivingDoc plugin generates a result file in the output folder, named `TestExecution.json` by default. shot::[16, "make dir, highlight TestExecution.json"]
 
 [source]
 ----
-mvn test -Dcucumber.plugin="progress, junit:target/junit.xml"
+C:\...\Shouty\Shouty.Specs>dir bin\Debug\netcoreapp3.1
 ----
 
-The JUnit XML has been written to a file. shot::[14, open junit.xml in the IDE]
+Here it is!
 
-The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. shot::[15, edit the step When Sean shouts 'Free bagels!' -> 'Free cupcakes!'].
+Now we need to run the actual generator. The generator has to be installed as a .NET Core tool for the project. 
 
-While we're at it, let's put the `pretty` plugin back in @CucumberOptions. shot::[16, undo earlier edit so we're left with @CucumberOptions(plugin = {"pretty"}')
-].
-
-Now let's run Maven again using the `rerun` plugin writing its output to `rerun.txt`. shot::[17, run maven from console]
+Since this is the first .NET Core tool that we install for this project we need to first initialize the .NET Core tool configuration. For that we need to go up to the solution folder in our console window shot::[17, "invoke cd .."] and invoke `dotnet new tool-manifest` shot::[18, "invoke command"]. This creates a file named  `dotnet-tools.json` in the `.config` folder of the solution shot::[19, "dir .config"]. You should add this file to the source control.
 
 [source]
 ----
-mvn test -Dcucumber.plugin="rerun:target/rerun.txt"
+C:\...\Shouty\Shouty.Specs>cd ..
+C:\...\Shouty>dotnet new tool-manifest
+Getting ready...
+The template "Dotnet local tool manifest file" was created successfully.
 ----
 
-We can see in the console that the `Two shouts` scenario has failed. shot::[18, scroll to show failure]
-
-Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! shot::[19, open target/rerun.txt] And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
-
-This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file, preceded by the `@` (at) sign. shot::[20, "run maven from console, highlighting `pretty` output showing only failing scenario"]
+Now we can install the pecFlow+ LivingDoc Generator. This can be done, using the `dotnet tool install SpecFlow.Plus.LivingDoc.CLI` command that pulls the generator from NuGet.org and installs it for this project. shot::[20, "invoke command"]
 
 [source]
 ----
-mvn test -Dcucumber.features="@target/rerun.txt"
+C:\...\Shouty>dotnet tool install SpecFlow.Plus.LivingDoc.CLI
+
+You can invoke the tool from this directory using the following commands: 'dotnet tool run livingdoc' or 'dotnet livingdoc'.
+Tool 'specflow.plus.livingdoc.cli' (version '3.5.286') was successfully installed. Entry is added to the manifest file W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\.config\dotnet-tools.json.
 ----
 
-This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let's fix the scenario shot::[21, undo change in feature file] and rerun the failing scenario again shot::[20, "run maven from console"]
+As the message says, the tools has been installed successfully and can be used with shot::[21, "highlight dotnet livingdoc"] the `dotnet livingdoc` command. Let's use it to generate our result.
 
-Great. We're back to green again.
+First, let's step back to our SpecFlow project folder and start with `dotnet livingdoc`. shot::[22, "cd to specs"] Now we need to specify a couple of settings for the generator. If you get lost, you can always call dotnet livingdoc help or check the https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html[documentation].
 
+We need to say `test-assembly`, shot::[23, "type test-assembly"] because we want to generate the result from an assembly, and we have to shot::[24, "type assembly name"] specify the complied assembly of our Shouty project, the `Shouty.Specs.dll` from our output folder.
+
+Finally we need to shot::[25, "type rest of the command"] provide the path of the generated TestExecution.json file using the `--test-execution-json` option. And run. shot::[26, "run"]
+
+[source]
+----
+C:\...\Shouty\Shouty.Specs>dotnet livingdoc test-assembly bin\Debug\netcoreapp3.1\Shouty.Specs.dll --test-execution-json bin\Debug\netcoreapp3.1\TestExecution.json
+
+W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.html was successfully generated.
+----
+
+We've got the generated HTML file. shot::[27, "open html with start"] As you can see, the result focuses on the feature structure, shot::[28, "open structure, highlight results"] but the results are also displayed. 
+
+Since the result is a single HTML file, it is easy to share it with all stakeholders. If you use Azure DevOps to track your work items, you can use the integrated version of SpecFlow+ LivingDoc as well.
+
+There are more and more tools that can help you to implement living documentation for SpecFlow, shot::[29, "show page"] like https://www.picklesdoc.com/[Pickles Doc], shot::[30, "show page"]https://github.com/Augurk/Augurk[Augurk] or shot::[31, "show page"] https://www.specsolutions.eu/specsync/[SpecSync for Azure DevOps]. The SmartBear Cucumber team works on a platform shot::[32, "show page"] called https://reports.cucumber.io/[Cucumber Reports] that can be use to publish and share living documentation. At the time of the recording this is not yet available for SpecFlow, but hopefully this changes soon.
+
+In this lesson we have enumerated a couple of options to share your results and your living documentation with the entire team. This is essential in order to facilitate a common understanding between people on the project -- which is our ultimate goal.

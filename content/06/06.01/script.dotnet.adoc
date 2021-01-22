@@ -7,69 +7,69 @@ Last time we learned about two very different kinds of loops. First, we used Dat
 
 Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to build the right thing while the inner loop helps you build the thing right.
 
-In this lesson, we’re going to teach you all about how to configure Cucumber.
+In this lesson, we’re going to teach you all about how to run different SpecFlow scenarios.
 
 shot::[2, "Scroll through shout.feature, end by showing scenario 'Message too long'"]
 When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.
 
 If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.
 
-There are several ways to do this in Cucumber - and your IDE may offer other options. We'll start by showing some basic filtering using Maven on the command line, before showing you some alternatives.
+There are several ways to do this. SpecFlow converts the scenarios to tests that can be executed by the test execution framework we configured for the project, which is xUnit in our case. Because of that the SpecFlow scenarios appear as regular coded tests in the test runner tools you use, for example in the Visual Studio Test Explorer window. These tools usually provide several filtering options. 
 
-Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.
+Probably the easiest way to filter is to run only a scenario with a particular name.
 
-shot::[3, "type mvn command in console, show output and highlight that it has only run the one scenario 'Message too long'"]
-We can pass arguments to Cucumber using the property cucumber.options. The name option tells Cucumber to only run scenarios with a name matching "Message is too long".
+shot::[3, "type 'Message too long' into the VS test explorer search box"]
 
-[source]
-----
-mvn test -Dcucumber.filter.name="Message is too long"
-----
+Simply typing the name of the scenario to the Test Explorer window search box filters the list to that particular scenario. shot::[4, "Select test and show context menu"] You can run or debug the selected scenario from the context menu but the easiest is shot::[5, "click run all"] to hit *Run All* that runs all scenarios in the filtered view. It is worth spending a few minutes learning the keyboard shortcut of that, Ctrl R,V by default, as it can speed up your loops drastically. 
 
-The value of the cucumber.filter.name option is actually a regular expression, so you can use your imagination here to run more than one scenario. Let's use it to run all scenarios with the text "range" in their name. shot::[4, "type mvn command in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
+You can filter for the scenario name as you have seen but you can use the search box to filter for keywords as well. Let's use it to run all scenarios with the text "range" in their name. shot::[6, "type 'range' to the search box and run all"]
 
-[source]
-----
-mvn test -Dcucumber.filter.name="range"
-----
+The Test Explorer window can also be used shot::[7, "clear search and hover over failing test filter"] to filter for the outcome, for example if you want to re-run all failing tests, shot::[8, "open up hierarchy nodes"] or you can also run tests based on their hierarchy. Since the feature files appear as a separate node in the hierarchy, shot::[9, "run scenarios from HearShoutyFeature node"] you can use this to run all scenarios from a particular feature file.
 
-Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. shot::[5, "in feature file show that 'Message too long' starts on line 44"]
+The search box can contain complex search expressions. You can discover these options by clicking on the *Add search filter* links or by checking out the documentation. We'll use this to show you how to filter using tags.
 
-We can use that line number when we run Cucumber. shot::[6, "add entry to mvn command"]
+shot::[10, "show 'Listener is out of range' scenario"]
+Let's say we want to work on this scenario in the next couple of hours. First, we’ll put a focus tag right here, above this scenario. shot::[11, "add a @focus tag to the 'Listener is out of range' scenario"] Tags start with an at-sign and are case sensitive.
 
-[source]
-----
-mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:44
-----
+As we said, SpecFlow converts the scenarios to tests. This conversion happens at compile-time, so I need to build my solution to be able to have the changes applied. shot::[12, "build"]
 
-shot::[6, "type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'"]
+SpecFlow converts the tags to test categories or *traits* as the Test Explorer window calls these. So to be able to filter for a particular tag, we have to enter a trait expression. 
 
-You can even specify multiple line numbers for each file. Let's run 'Two shouts' as well. [shot::[7, "in feature file, show 'Two shouts' starts on line 33"]
-
-Let's add that line number to the Maven command.shot::[8, "type mvn command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'"]
+shot::[13, "type Trait:focus into the search box"] Trait expressions start with the word *Trait* followed a colon and the name of the tag without the at sign.
 
 [source]
 ----
-mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:33:44"
+Trait:focus
 ----
 
-You can list several files and lines together like this if you have a specific set of scenarios you want to run.
+Now we can run only the scenarios tagged with focus... shot::[14, "run all"]
 
-The examples that you've just seen use the -D option to set a Java system property on the command line. If you're working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.
+It’s entirely up to you what you name your tags. When we’re working on a particular area of the application it is common to use a temporary tag like this - we’ll remove it before we check our code into source control.
 
-Let's look at using a property file to set the system properties. Create a property file called cucumber.properties in src/test/resource shot::[4a] and add the line `cucumber.filter.name=range` shot::[4b]
-
-When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. shot::[4c, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
+Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. shot::[15, tag first and third scenario with @smoke] Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. shot::[16, "filter for smoke"]
 
 [source]
 ----
-mvn test
+Trait:smoke
 ----
 
-The property file is also picked up if you run Cucumber from within your IDE shot::[4ca, use IntelliJ to run all scenarios in `hear_shout.feature` and then highlight that only the range scenarios have been run]
+We filtered the Test Explorer window but as you can see no scenarios are shown. This is because the list haven't refreshed yet. In fact we haven't even saved the file yet! We could save the file, build the project and run the tests, but the *Run All* command does all of these steps. shot::[17, "run all"]
 
-The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.
+Here it is! Now you probably understand better why learning the keyboard shortcut for this command helps a lot. Ctrl R,V! 
 
-The final thing I want to show you in this lesson is how to run a single scenario is directly from your IDE. In IntelliJ, click on the green triangle to the left of the scenario name and select "Run Scenario:" shot::[9,"click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'"]
+Running the smoke tests gives you a quick feedback. If you’re running SpecFlow on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests.
 
-In this lesson you've learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using property files.
+Tags give you a way to organize your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.
+
+Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. shot::[18, tag feature with @issue:11] All the scenarios within that file now inherit that tag, so if we filter for this tag, Visual Studio will run all the scenarios in the feature file. shot::[19, "filter for issue:11 and run all"]
+
+You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a trait expression to exclude all the scenarios tagged as @slow. Let's mark a few of them as slow... shot::[20, "tag last two scenarios with @slow"] and this time I build the project to show the filtering results. shot::[21, "build"] Then rewrite the trait expression in the search box to filter fow the slow scenarios. shot::[22, "type expression: Trait:slow"] Now if I add a dash ("-") to the front you can see all that are not slow. shot::[23, "change expression: -Trait:slow"] Now when we run the tests, the "@slow" scenarios won't be run. shot::[24, "run all"]
+
+[source]
+----
+-Trait:slow
+----
+
+You can read about how to build more complicated filter expressions in Visual Studio in the https://docs.microsoft.com/en-us/visualstudio/test/run-unit-tests-with-test-explorer?view=vs-2019#search-and-filter-the-test-list[Visual Studio documentation]
+
+There's one more thing to learn about tags. They can be combined with hooks, so that you can be selective about which hooks to run when. We'll cover that in a future chapter.
