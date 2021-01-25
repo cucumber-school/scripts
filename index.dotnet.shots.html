@@ -488,7 +488,15 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_tdd_loops">5.6. TDD Loops</a></li>
 </ul>
 </li>
-<li><a href="#_configuring_cucumber">6. Configuring Cucumber</a></li>
+<li><a href="#_configuring_cucumber">6. Configuring Cucumber</a>
+<ul class="sectlevel2">
+<li><a href="#_basic_filtering">6.1. Basic Filtering</a></li>
+<li><a href="#_running_the_scenarios_from_the_command_line">6.2. Running the scenarios from the command line</a></li>
+<li><a href="#_more_control">6.3. More Control</a></li>
+<li><a href="#_dealing_with_execution_results">6.4. Dealing with execution results</a></li>
+</ul>
+</li>
+<li><a href="#_tbd">7. TBD</a></li>
 </ul>
 </div>
 </div>
@@ -5094,15 +5102,507 @@ Once we have a scenario, we automate it&#8201;&#8212;&#8201;and we expect it to 
 <div class="sect1">
 <h2 id="_configuring_cucumber">6. Configuring Cucumber</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_basic_filtering">6.1. Basic Filtering</h3>
 <div class="paragraph">
-<p>Unresolved directive in scripts.dotnet.adoc - include::07/index.adoc[]</p>
+<p><a href="#shot-1355" id="shot-1355" title="Animation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Animation</a>
+Hello, and welcome back to Cucumber School.</p>
 </div>
+<div class="paragraph">
+<p>Last time we learned about two very different kinds of loops. First, we used DataTables to loop over data in your scenarios.</p>
+</div>
+<div class="paragraph">
+<p>Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to build the right thing while the inner loop helps you build the thing right.</p>
+</div>
+<div class="paragraph">
+<p>In this lesson, we’re going to teach you all about how to run different SpecFlow scenarios.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1356" id="shot-1356" title="Scroll through shout.feature, end by showing scenario 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: Scroll through shout.feature, end by showing scenario 'Message too long'</a>
+When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.</p>
+</div>
+<div class="paragraph">
+<p>If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.</p>
+</div>
+<div class="paragraph">
+<p>There are several ways to do this. SpecFlow converts the scenarios to tests that can be executed by the test execution framework we configured for the project, which is xUnit in our case. Because of that the SpecFlow scenarios appear as regular coded tests in the test runner tools you use, for example in the Visual Studio Test Explorer window. These tools usually provide several filtering options.</p>
+</div>
+<div class="paragraph">
+<p>Probably the easiest way to filter is to run only a scenario with a particular name.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1357" id="shot-1357" title="type 'Message too long' into the VS test explorer search box" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: type 'Message too long' into the VS test explorer search box</a></p>
+</div>
+<div class="paragraph">
+<p>Simply typing the name of the scenario to the Test Explorer window search box filters the list to that particular scenario. <a href="#shot-1358" id="shot-1358" title="Select test and show context menu" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: Select test and show context menu</a> You can run or debug the selected scenario from the context menu but the easiest is <a href="#shot-1359" id="shot-1359" title="click run all" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: click run all</a> to hit <strong>Run All</strong> that runs all scenarios in the filtered view. It is worth spending a few minutes learning the keyboard shortcut of that, Ctrl R,V by default, as it can speed up your loops drastically.</p>
+</div>
+<div class="paragraph">
+<p>You can filter for the scenario name as you have seen but you can use the search box to filter for keywords as well. Let&#8217;s use it to run all scenarios with the text "range" in their name. <a href="#shot-1360" id="shot-1360" title="type 'range' to the search box and run all" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: type 'range' to the search box and run all</a></p>
+</div>
+<div class="paragraph">
+<p>The Test Explorer window can also be used <a href="#shot-1361" id="shot-1361" title="clear search and hover over failing test filter" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: clear search and hover over failing test filter</a> to filter for the outcome, for example if you want to re-run all failing tests, <a href="#shot-1362" id="shot-1362" title="open up hierarchy nodes" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: open up hierarchy nodes</a> or you can also run tests based on their hierarchy. Since the feature files appear as a separate node in the hierarchy, <a href="#shot-1363" id="shot-1363" title="run scenarios from HearShoutyFeature node" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run scenarios from HearShoutyFeature node</a> you can use this to run all scenarios from a particular feature file.</p>
+</div>
+<div class="paragraph">
+<p>The search box can contain complex search expressions. You can discover these options by clicking on the <strong>Add search filter</strong> links or by checking out the documentation. We&#8217;ll use this to show you how to filter using tags.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1364" id="shot-1364" title="show 'Listener is out of range' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: show 'Listener is out of range' scenario</a>
+Let&#8217;s say we want to work on this scenario in the next couple of hours. First, we’ll put a focus tag right here, above this scenario. <a href="#shot-1365" id="shot-1365" title="add a @focus tag to the 'Listener is out of range' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: add a @focus tag to the 'Listener is out of range' scenario</a> Tags start with an at-sign and are case sensitive.</p>
+</div>
+<div class="paragraph">
+<p>As we said, SpecFlow converts the scenarios to tests. This conversion happens at compile-time, so I need to build my solution to be able to have the changes applied. <a href="#shot-1366" id="shot-1366" title="build" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: build</a></p>
+</div>
+<div class="paragraph">
+<p>SpecFlow converts the tags to test categories or <strong>traits</strong> as the Test Explorer window calls these. So to be able to filter for a particular tag, we have to enter a trait expression.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1367" id="shot-1367" title="type Trait:focus into the search box" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: type Trait:focus into the search box</a> Trait expressions start with the word <strong>Trait</strong> followed a colon and the name of the tag without the at sign.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Trait:focus</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can run only the scenarios tagged with focus&#8230;&#8203; <a href="#shot-1368" id="shot-1368" title="run all" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: run all</a></p>
+</div>
+<div class="paragraph">
+<p>It’s entirely up to you what you name your tags. When we’re working on a particular area of the application it is common to use a temporary tag like this - we’ll remove it before we check our code into source control.</p>
+</div>
+<div class="paragraph">
+<p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. <a href="#shot-1369" id="shot-1369" title="tag first and third scenario with @smoke" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: tag first and third scenario with @smoke</a> Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. <a href="#shot-1370" id="shot-1370" title="filter for smoke" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: filter for smoke</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Trait:smoke</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We filtered the Test Explorer window but as you can see no scenarios are shown. This is because the list haven&#8217;t refreshed yet. In fact we haven&#8217;t even saved the file yet! We could save the file, build the project and run the tests, but the <strong>Run All</strong> command does all of these steps. <a href="#shot-1371" id="shot-1371" title="run all" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: run all</a></p>
+</div>
+<div class="paragraph">
+<p>Here it is! Now you probably understand better why learning the keyboard shortcut for this command helps a lot. Ctrl R,V!</p>
+</div>
+<div class="paragraph">
+<p>Running the smoke tests gives you a quick feedback. If you’re running SpecFlow on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests.</p>
+</div>
+<div class="paragraph">
+<p>Tags give you a way to organize your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.</p>
+</div>
+<div class="paragraph">
+<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. <a href="#shot-1372" id="shot-1372" title="tag feature with @issue:11" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: tag feature with @issue:11</a> All the scenarios within that file now inherit that tag, so if we filter for this tag, Visual Studio will run all the scenarios in the feature file. <a href="#shot-1373" id="shot-1373" title="filter for issue:11 and run all" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: filter for issue:11 and run all</a></p>
+</div>
+<div class="paragraph">
+<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a trait expression to exclude all the scenarios tagged as @slow. Let&#8217;s mark a few of them as slow&#8230;&#8203; <a href="#shot-1374" id="shot-1374" title="tag last two scenarios with @slow" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: tag last two scenarios with @slow</a> and this time I build the project to show the filtering results. <a href="#shot-1375" id="shot-1375" title="build" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: build</a> Then rewrite the trait expression in the search box to filter fow the slow scenarios. <a href="#shot-1376" id="shot-1376" title="type expression: Trait:slow" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: type expression: Trait:slow</a> Now if I add a dash ("-") to the front you can see all that are not slow. <a href="#shot-1377" id="shot-1377" title="change expression: -Trait:slow" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: change expression: -Trait:slow</a> Now when we run the tests, the "@slow" scenarios won&#8217;t be run. <a href="#shot-1378" id="shot-1378" title="run all" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: run all</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>-Trait:slow</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You can read about how to build more complicated filter expressions in Visual Studio in the <a href="https://docs.microsoft.com/en-us/visualstudio/test/run-unit-tests-with-test-explorer?view=vs-2019#search-and-filter-the-test-list">Visual Studio documentation</a></p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s one more thing to learn about tags. They can be combined with hooks, so that you can be selective about which hooks to run when. We&#8217;ll cover that in a future chapter.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_running_the_scenarios_from_the_command_line">6.2. Running the scenarios from the command line</h3>
+<div class="paragraph">
+<p><a href="#shot-1379" id="shot-1379" title="show feature file with tagged scenarios" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show feature file with tagged scenarios</a></p>
+</div>
+<div class="paragraph">
+<p>In the previous lesson, we ran the SpecFlow scenarios in Visual Studio. That gives you the quick feedback that you need during development.</p>
+</div>
+<div class="paragraph">
+<p>But we also would like to regularly ensure that the changes we made didn&#8217;t cause any regressions. For that we can kick off the full test execution on a Continuous Integration Server or from a console on your local machine so we can keep working on other things why it&#8217;s finished.</p>
+</div>
+<div class="paragraph">
+<p>It does not matter whether you need to configure your Continuous Integration build or you want to run the test from a console locally, the .NET command line tools have to be used for this. But fortunately it is pretty easy.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s open a CMD console or a PowerShell window and change the directory to the folder of your project. <a href="#shot-1380" id="shot-1380" title="open cmd and cd to project folder" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: open cmd and cd to project folder</a></p>
+</div>
+<div class="paragraph">
+<p>Now use the <code>dotnet test</code> command. <a href="#shot-1381" id="shot-1381" title="type 'dotnet test' and run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: type 'dotnet test' and run</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet test</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The <strong>dotnet test</strong> command is part of the cross-platform .NET framework, so you can do the same on Linux or on macOS as well. And also inside a Docker container of course.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration: 99 ms - Shouty.Specs.dll (netcoreapp3.1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The output is not very verbose but it clearly shows that all of our test were passing, so our changes dod not cause any unwanted side-effects. Good to know.</p>
+</div>
+<div class="paragraph">
+<p>We wanted to perform a full regression testing by running the tests from the command line, therefore we did no apply any filter there. But sometimes we need to. Maybe we just want to run the smoke tests.</p>
+</div>
+<div class="paragraph">
+<p>The <strong>dotnet test</strong> command provides a <code>--filter</code> option where you can specify a filter expression. In the last chapter we discussed that SpecFlow converts tags to test categories or traits. In Visual Studio we used a trait expression, but unfortunately the same expression won&#8217;t work here. The exact expression syntax that has to be used depends on the test execution framework you use. Since we use xUnit now, we have to filter using the <code>Category=smoke</code> expression. <a href="#shot-1382" id="shot-1382" title="type dotnet test --filter Category=smoke" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: type dotnet test --filter Category=smoke</a> In MsTest and NUnit we would have to say <code>TestCategory</code> instead of <code>Category</code>, <a href="#shot-1383" id="shot-1383" title="change to dotnet test --filter TestCategory=smoke" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: change to dotnet test --filter TestCategory=smoke</a> but the expression is otherwise the same. Let&#8217;s fix this for xUnit and run the tests. <a href="#shot-1384" id="shot-1384" title="change back to dotnet test --filter Category=smoke, run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: change back to dotnet test --filter Category=smoke, run</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet test --filter Category=smoke</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 77 ms - Shouty.Specs.dll (netcoreapp3.1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As you can see, not we only got two tests, so the filtering worked.</p>
+</div>
+<div class="paragraph">
+<p>You can also use the filter option to exclude tagged scenarios from the execution. For that you have to use <code>!=</code> the not equal operator. Let&#8217;s exclude the slow tests now. <a href="#shot-1385" id="shot-1385" title="type --filter Category!=slow" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: type --filter Category!=slow</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet test --filter Category!=slow</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Again, with MsTest or NUnit you would need to use TestCategory here. You can compose even more complex filter expressions for dotnet test. It is worth checking out the <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit">documentation</a> for details.</p>
+</div>
+<div class="paragraph">
+<p>Teams often use such filters on the Continuous Integration Server if they write - or we can say formulate - the scenarios some time before the actual implementation work starts. Having these scenarios in the source control would cause the build fail although there is nothing wrong with our quality. We just have tests that do not suppose to pass yet. If the team agrees to tag these scenarios, for example with <code>@formulated</code> than they can easily exclude them on the build server with the <code>Category!=formulated</code> expression. <a href="#shot-1386" id="shot-1386" title="type dotnet test --filter TestCategory!=formulated and run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: type dotnet test --filter TestCategory!=formulated and run</a>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet test --filter Category!=formulated</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration: 99 ms - Shouty.Specs.dll (netcoreapp3.1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Seeing all these scenarios pass means that we are progressing well. Just don&#8217;t forget to remove the @formulated tag once you are done!</p>
+</div>
+<div class="paragraph">
+<p>In this lesson you&#8217;ve learnt how to run scenarios from command line and how to filter the set of scenarios to run using tags. On the Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will see in the next lesson.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_more_control">6.3. More Control</h3>
+<div class="paragraph">
+<p><a href="#shot-1387" id="shot-1387" title="feature file is open" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: feature file is open</a></p>
+</div>
+<div class="paragraph">
+<p>SpecFlow is first and foremost a tool that facilitates a common understanding between people on a project. To be able to express the domain requirements of project implemented specifically for a non-English speaking local market, translating everything to English might be a barrier. In this case it is better to describe the requirements in the spoken language the stakeholders speak.</p>
+</div>
+<div class="paragraph">
+<p>SpecFlow supports over 70 different languages, thanks to contributions from people from all over the world.</p>
+</div>
+<div class="paragraph">
+<p>To see the translation of the Gherkin keywords for a particular language, check out the <a href="https://cucumber.io/docs/gherkin/languages/">Gherkin syntax documentation</a>. This is for example how the keywords translate to Hungarian. <a href="#shot-1388" id="shot-1388" title="scroll to Hungarian" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: scroll to Hungarian</a></p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s see how someone would create a feature file written in a different spoken language. I will do this for Hungarian language, but you can choose another language you speak.</p>
+</div>
+<div class="paragraph">
+<p>For that we can add a new feature file first&#8230;&#8203; and make it empty. <a href="#shot-1389" id="shot-1389" title="add feature file, delete content" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: add feature file, delete content</a></p>
+</div>
+<div class="paragraph">
+<p>The first line tells SpecFlow which language the feature file is written in. <a href="#shot-1390" id="shot-1390" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Hungarian.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="c">#language: hu-HU</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can start writing our feature file. Remember, it should start with a feature keyword. The auto-complete feature of the Visual Studio integration is for your help. <a href="#shot-1391" id="shot-1391" title="invoke auto-complete, choose 'Jellemző'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: invoke auto-complete, choose 'Jellemző'</a> It shows what keyword should I use. <a href="#shot-1392" id="shot-1392" title="finish line" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: finish line</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Hungarian.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="c">#language: hu-HU</span>
+
+<span class="kd">Jellemző</span><span class="p">:</span> <span class="err">Kiáltás</span> <span class="err">meghallása</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can keep editing the file by adding a scenario. In the selected language, of course&#8230;&#8203; <a href="#shot-1393" id="shot-1393" title="add scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: add scenario</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Hungarian.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="c">#language: hu-HU</span>
+
+<span class="kd">Jellemző</span><span class="p">:</span> Kiáltás meghallása
+
+<span class="kn">Forgatókönyv</span><span class="p">:</span> <span class="nf">A </span>hallható meghall egy üzenetet
+	<span class="nf">Adott </span>egy ember Sean
+	<span class="nf">És </span>egy ember Lucy
+	<span class="nf">Ha </span>Sean azt kiáltja, hogy <span class="s">"Ingyen bagel a Sean's-nál"</span>
+	<span class="nf">Akkor </span>Lucynak meg kell hallania Sean üzenetét</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is Cucumber School and not a Hungarian lesson, but you might have guessed that my scenario tells the same story that we described in the "Listener hears a message" scenario earlier. <a href="#shot-1394" id="shot-1394" title="show 'Listener hears a message' scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: show 'Listener hears a message' scenario</a> But if we look at this new scenario <a href="#shot-1395" id="shot-1395" title="switch back to the hungarian, highlight orange steps" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: switch back to the hungarian, highlight orange steps</a> we can see that Visual Studio reports the steps as undefined. This is because we have used the English step texts in our Cucumber Expressions. <a href="#shot-1396" id="shot-1396" title="jump to stepdef GivenAPersonNamed" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: jump to stepdef GivenAPersonNamed</a> In order to make this pass, we would need to add step definitions with Hungarian texts in the expressions or add an additional Given, When or Then attribute to our step definition methods with the Hungarian text, like this. <a href="#shot-1397" id="shot-1397" title="add hun Given attribute to the method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: add hun Given attribute to the method</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#"><span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"egy ember {word}"</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">Given</span><span class="p">(</span><span class="s">"a person named {word}"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">GivenAPersonNamed</span><span class="p">(</span><span class="kt">string</span> <span class="n">name</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">people</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="k">new</span> <span class="nf">Person</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="m">0</span><span class="p">));</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we build the project, the first two step appears to be defined now. <a href="#shot-1398" id="shot-1398" title="build and see the feature file coloring changing" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: build and see the feature file coloring changing</a></p>
+</div>
+<div class="paragraph">
+<p>We can fix the other two step definitions as well&#8230;&#8203; <a href="#shot-1399" id="shot-1399" title="add the two other attributes, run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: add the two other attributes, run tests</a> and we have our first Hungarian shouty scenario pass! <a href="#shot-1400" id="shot-1400" title="show new scenario in the test explorer window" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: show new scenario in the test explorer window</a></p>
+</div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#"><span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean azt kiáltja, hogy {string}"</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts {string}"</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">When</span><span class="p">(</span><span class="s">"Sean shouts the following message"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">WhenSeanShoutsAMessage</span><span class="p">(</span><span class="kt">string</span> <span class="n">message</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">people</span><span class="p">[</span><span class="s">"Sean"</span><span class="p">].</span><span class="nf">Shout</span><span class="p">(</span><span class="n">message</span><span class="p">);</span>
+    <span class="n">messageFromSean</span> <span class="p">=</span> <span class="n">message</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucynak meg kell hallania Sean üzenetét"</span><span class="p">)]</span>
+<span class="p">[</span><span class="nf">Then</span><span class="p">(</span><span class="s">"Lucy should hear Sean's message"</span><span class="p">)]</span>
+<span class="k">public</span> <span class="k">void</span> <span class="nf">ThenLucyShouldHearSeansMessage</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Assert</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="n">messageFromSean</span><span class="p">,</span> <span class="n">people</span><span class="p">[</span><span class="s">"Lucy"</span><span class="p">].</span><span class="nf">GetMessagesHeard</span><span class="p">());</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Usually the feature file languages are not mixed within a project. If you don&#8217;t want to add the same language header line <a href="#shot-1401" id="shot-1401" title="highlight #language" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: highlight #language</a> to all of the feature files, you can also change the default feature language in SpecFlow.</p>
+</div>
+<div class="paragraph">
+<p>For that we need to add a SpecFlow configuration file to our project. The SpecFlow configuration file is a simple JSON file, named <code>specflow.json</code>. <a href="#shot-1402" id="shot-1402" title="add specflow.json" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: add specflow.json</a>. This file needs to be copied to the output directory. <a href="#shot-1403" id="shot-1403" title="set 'copy to output directory' to 'copy if newer'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: set 'copy to output directory' to 'copy if newer'</a></p>
+</div>
+<div class="paragraph">
+<p>As there is no auto-complete support for this file, the easiest is if we check out the <a href="https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html">SpecFlow documentation</a>. <a href="#shot-1404" id="shot-1404" title="open doc" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: open doc</a> The first example here does exactly what we wanted, so we can just copy and paste it into our project, <a href="#shot-1405" id="shot-1405" title="copy paste sample" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: copy paste sample</a> and change the language to the one we have chosen. <a href="#shot-1406" id="shot-1406" title="set lang to hu-hu" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: set lang to hu-hu</a></p>
+</div>
+<div class="listingblock">
+<div class="title">specflow.json</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"feature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hu-HU"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we build the project, <a href="#shot-1407" id="shot-1407" title="build, show errors" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: build, show errors</a> we got a lots of errors from our English feature file. This is because we changed the default and this file does not have a language setting on the top. <a href="#shot-1408" id="shot-1408" title="show eng feature file, fix by adding #language: en-US" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: show eng feature file, fix by adding #language: en-US</a> But the new file works without the language setting now&#8230;&#8203; <a href="#shot-1409" id="shot-1409" title="switch to hun, remove language setting" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: switch to hun, remove language setting</a></p>
+</div>
+<div class="paragraph">
+<p>In Chapter 3 we talked about step definition parameters and that SpecFlow helps you to convert them to a .NET data type. SpecFlow performs these conversions using the feature file language. So for example if you would include a fraction number that needs to be converted to double, SpecFlow will expect the decimal separator character used in the language of your feature file. In Hungarian language for example, they use comma as a decimal separator instead of a dot. This is also important for date conversions.</p>
+</div>
+<div class="paragraph">
+<p>This default behavior can be changed by explicitly declaring what culture setting should SpecFlow use for conversions. For example we can force the conversions to be made using US English culture even in Hungarian feature files. <a href="#shot-1410" id="shot-1410" title="change config file to" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: change config file to</a></p>
+</div>
+<div class="listingblock">
+<div class="title">specflow.json</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="p">{</span><span class="w">
+  </span><span class="nl">"language"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"feature"</span><span class="p">:</span><span class="w"> </span><span class="s2">"hu-HU"</span><span class="w">
+  </span><span class="p">},</span><span class="w">
+  </span><span class="nl">"bindingCulture"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"en-US"</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There are a few other things you can configure that you can find in the documentation. <a href="#shot-1411" id="shot-1411" title="switch to doc, scroll through to the bottom" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25: switch to doc, scroll through to the bottom</a> Probably worth highlighting the one that can instruct SpecFlow to load step definitions from other external projects as well. <a href="#shot-1412" id="shot-1412" title="highlight stepAssemblies" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26: highlight stepAssemblies</a> This is useful in bigger applications with multiple SpecFlow projects.</p>
+</div>
+<div class="paragraph">
+<p>For the rest of this chapter, let&#8217;s remove the non-English feature file and reset the configuration by removing the <code>specflow.json</code> file. <a href="#shot-1413" id="shot-1413" title="remove Hungarian.feature, specflow.json" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 27: remove Hungarian.feature, specflow.json</a></p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s quite a lot to digest, but to make SpecFlow really useful to your team, it’s good to spend some time learning the details of how to configure it. In this lesson, we showcased the SpecFlow configuration options and you learned how to write your scenarios in different spoken languages.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_dealing_with_execution_results">6.4. Dealing with execution results</h3>
+<div class="paragraph">
+<p><a href="#shot-1414" id="shot-1414" title="show output of the test execution in a command line shell, Hungarian feature file and specflow.json removed from the project" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show output of the test execution in a command line shell, Hungarian feature file and specflow.json removed from the project</a></p>
+</div>
+<div class="paragraph">
+<p>In the previous lessons we&#8217;ve learnt how to configure SpecFlow and how to run scenarios from Visual Studio and from the command line. The test output we have seen there contains a brief summary of the execution and the failures. If the test were executed Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will look at in this lesson.</p>
+</div>
+<div class="paragraph">
+<p>The <code>dotnet test</code> tool outputs the execution results through configurable loggers. The logger can be specified using the <code>--logger</code> option. There are multiple logger providers you can choose from. You can even write your onw. But most of the teams use the TRX logger, that saves the execution results into a <strong>Visual Studio Test Results</strong> or TRX file with the <code>.trx</code> extension. Let&#8217;s use this. <a href="#shot-1415" id="shot-1415" title="type dotnet test --logger trx, run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: type dotnet test --logger trx, run</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet test --logger trx</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+Results File: W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\TestResults\gaspar_SPECSOL-D01_2021-01-22_15_46_29.trx
+
+Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration: 137 ms - Shouty.Specs.dll (netcoreapp3.1)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The execution finished and reported that the results <a href="#shot-1416" id="shot-1416" title="highlight test result file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: highlight test result file</a> have been saved to a file that has the current timestamp inside the TestResults folder of the project. Let&#8217;s look at this file.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1417" id="shot-1417" title="open file explorer by typing <code>explorer .</code>, go to TestResults folder, highlight trx file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: open file explorer by typing <code>explorer .</code>, go to TestResults folder, highlight trx file</a>
+Visual Studio has been associated to this file extension, so if I open this file from file explorer <a href="#shot-1418" id="shot-1418" title="double-click on the file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: double-click on the file</a>, it opens it in Visual Studio. <a href="#shot-1419" id="shot-1419" title="show test results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: show test results</a> We can see all the individual test executions and even the details <a href="#shot-1420" id="shot-1420" title="show details of one of that" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: show details of one of that</a> of each of them where we see the step execution results.</p>
+</div>
+<div class="paragraph">
+<p>The TRX files are XML files so it is easy to make any tools that processes the results and converts them to another format. It is for example a common expectation to present the execution results as an HTML file that can be checked by all stakeholders even if they don&#8217;t have Visual Studio.</p>
+</div>
+<div class="paragraph">
+<p>There are many small open source tools that can do such conversion. <a href="#shot-1421" id="shot-1421" title="show github project in a browser" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: show github project in a browser</a> For example the <a href="https://github.com/stevencohn/trxer">fork of the Trxer project by @stevencohn</a> on GitHub is a nice one that provides some dedicated styling for SpecFlow results.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1422" id="shot-1422" title="back to console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: back to console</a>
+This one is a .NET assembly that I downloaded earlier, so now I can invoke it with the dotnet command we have seen already. <a href="#shot-1423" id="shot-1423" title="type command and run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: type command and run</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet &lt;TrxReporter-path&gt;\TrxReporter\TrxReporter.dll --input TestResults\gaspar_SPECSOL-D01_2021-01-22_15_46_29.trx</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The result is a single HTML file that I could publish to my team workspace or just open it locally. <a href="#shot-1424" id="shot-1424" title="open HTML by typing start path-to-html" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: open HTML by typing start path-to-html</a> It shows the execution summary <a href="#shot-1425" id="shot-1425" title="show summary and highlight details" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: show summary and highlight details</a> as well as the individual scenario results grouped by features.</p>
+</div>
+<div class="paragraph">
+<p>The TRX file format is also understood by most of the Continuous Integration platforms as well, so they can show the details included in the build results or even highlight whether the same tests were failing for the first time.</p>
+</div>
+<div class="paragraph">
+<p>Processing the TRX file on the build server is not that easy with non-deterministic file names. In this case it is more useful to specify the output file name for the TRX logger. This can be done by specifying the <code>logfilename</code> parameter of the TRX logger like this. <a href="#shot-1426" id="shot-1426" title="type command and run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: type command and run</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet test --logger trx;logfilename=shouty-result.trx</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1427" id="shot-1427" title="show soecflow+ livingdoc page" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: show soecflow+ livingdoc page</a>
+The <a href="https://specflow.org/blog/introducing-the-specflow-plus-livingdoc-generator/">SpecFlow+ LivingDoc Generator</a> from the Tricentis SpecFlow team uses a slightly different approach. This free tool does not process the TRX file, but produces it&#8217;s own result file and from that it is able generate a comprehensive documentation of your requirements based on the feature files and the scenarios you defined. Although the generated documentation also contains the test results, the primary focus of its result is to produce a so called <strong>Living Documentation</strong>&#8201;&#8212;&#8201;a documentation that shows whether the application currently fulfills the requirements.</p>
+</div>
+<div class="paragraph">
+<p>In order to setup SpecFlow+ LivingDoc Generator, first of all we need to install the <code>SpecFlow.Plus.LivingDocPlugin</code> NuGet package. <a href="#shot-1428" id="shot-1428" title="invoke dotnet add package command" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: invoke dotnet add package command</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet add package SpecFlow.Plus.LivingDocPlugin</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s run the tests. We don&#8217;t need the TRX file now, so running <code>dotnet test</code> is enough. The SpecFlow+ LivingDoc plugin generates a result file in the output folder, named <code>TestExecution.json</code> by default. <a href="#shot-1429" id="shot-1429" title="make dir, highlight TestExecution.json" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16: make dir, highlight TestExecution.json</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dir bin\Debug\netcoreapp3.1</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here it is!</p>
+</div>
+<div class="paragraph">
+<p>Now we need to run the actual generator. The generator has to be installed as a .NET Core tool for the project.</p>
+</div>
+<div class="paragraph">
+<p>Since this is the first .NET Core tool that we install for this project we need to first initialize the .NET Core tool configuration. For that we need to go up to the solution folder in our console window <a href="#shot-1430" id="shot-1430" title="invoke cd .." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: invoke cd ..</a> and invoke <code>dotnet new tool-manifest</code> <a href="#shot-1431" id="shot-1431" title="invoke command" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: invoke command</a>. This creates a file named  <code>dotnet-tools.json</code> in the <code>.config</code> folder of the solution <a href="#shot-1432" id="shot-1432" title="dir .config" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: dir .config</a>. You should add this file to the source control.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;cd ..
+C:\...\Shouty&gt;dotnet new tool-manifest
+Getting ready...
+The template "Dotnet local tool manifest file" was created successfully.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can install the pecFlow+ LivingDoc Generator. This can be done, using the <code>dotnet tool install SpecFlow.Plus.LivingDoc.CLI</code> command that pulls the generator from NuGet.org and installs it for this project. <a href="#shot-1433" id="shot-1433" title="invoke command" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: invoke command</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty&gt;dotnet tool install SpecFlow.Plus.LivingDoc.CLI
+
+You can invoke the tool from this directory using the following commands: 'dotnet tool run livingdoc' or 'dotnet livingdoc'.
+Tool 'specflow.plus.livingdoc.cli' (version '3.5.286') was successfully installed. Entry is added to the manifest file W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\.config\dotnet-tools.json.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>As the message says, the tools has been installed successfully and can be used with <a href="#shot-1434" id="shot-1434" title="highlight dotnet livingdoc" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: highlight dotnet livingdoc</a> the <code>dotnet livingdoc</code> command. Let&#8217;s use it to generate our result.</p>
+</div>
+<div class="paragraph">
+<p>First, let&#8217;s step back to our SpecFlow project folder and start with <code>dotnet livingdoc</code>. <a href="#shot-1435" id="shot-1435" title="cd to specs" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: cd to specs</a> Now we need to specify a couple of settings for the generator. If you get lost, you can always call dotnet livingdoc help or check the <a href="https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html">documentation</a>.</p>
+</div>
+<div class="paragraph">
+<p>We need to say <code>test-assembly</code>, <a href="#shot-1436" id="shot-1436" title="type test-assembly" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: type test-assembly</a> because we want to generate the result from an assembly, and we have to <a href="#shot-1437" id="shot-1437" title="type assembly name" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24: type assembly name</a> specify the complied assembly of our Shouty project, the <code>Shouty.Specs.dll</code> from our output folder.</p>
+</div>
+<div class="paragraph">
+<p>Finally we need to <a href="#shot-1438" id="shot-1438" title="type rest of the command" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25: type rest of the command</a> provide the path of the generated TestExecution.json file using the <code>--test-execution-json</code> option. And run. <a href="#shot-1439" id="shot-1439" title="run" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26: run</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>C:\...\Shouty\Shouty.Specs&gt;dotnet livingdoc test-assembly bin\Debug\netcoreapp3.1\Shouty.Specs.dll --test-execution-json bin\Debug\netcoreapp3.1\TestExecution.json
+
+W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.html was successfully generated.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve got the generated HTML file. <a href="#shot-1440" id="shot-1440" title="open html with start" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 27: open html with start</a> As you can see, the result focuses on the feature structure, <a href="#shot-1441" id="shot-1441" title="open structure, highlight results" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 28: open structure, highlight results</a> but the results are also displayed.</p>
+</div>
+<div class="paragraph">
+<p>Since the result is a single HTML file, it is easy to share it with all stakeholders. If you use Azure DevOps to track your work items, you can use the integrated version of SpecFlow+ LivingDoc as well.</p>
+</div>
+<div class="paragraph">
+<p>There are more and more tools that can help you to implement living documentation for SpecFlow, <a href="#shot-1442" id="shot-1442" title="show page" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 29: show page</a> like <a href="https://www.picklesdoc.com/">Pickles Doc</a>, <a href="#shot-1443" id="shot-1443" title="show page" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 30: show page</a><a href="https://github.com/Augurk/Augurk">Augurk</a> or <a href="#shot-1444" id="shot-1444" title="show page" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 31: show page</a> <a href="https://www.specsolutions.eu/specsync/">SpecSync for Azure DevOps</a>. The SmartBear Cucumber team works on a platform <a href="#shot-1445" id="shot-1445" title="show page" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 32: show page</a> called <a href="https://reports.cucumber.io/">Cucumber Reports</a> that can be use to publish and share living documentation. At the time of the recording this is not yet available for SpecFlow, but hopefully this changes soon.</p>
+</div>
+<div class="paragraph">
+<p>In this lesson we have enumerated a couple of options to share your results and your living documentation with the entire team. This is essential in order to facilitate a common understanding between people on the project&#8201;&#8212;&#8201;which is our ultimate goal.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tbd">7. TBD</h2>
+<div class="sectionbody">
+
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-10 13:12:31 UTC
+Last updated 2021-01-25 12:50:39 UTC
 </div>
 </div>
 <style>
