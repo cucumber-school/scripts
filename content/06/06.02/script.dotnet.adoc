@@ -4,7 +4,7 @@ shot::[1, "show feature file with tagged scenarios"]
 
 In the previous lesson, we ran the SpecFlow scenarios in Visual Studio. That gives you the quick feedback that you need during development.
 
-But we also would like to regularly ensure that the changes we made didn't cause any regressions. For that we can kick off the full test execution on a Continuous Integration Server or from a console on your local machine so we can keep working on other things why it's finished. 
+But we also would like to regularly ensure that the changes we made didn't cause any regressions. For that we can kick off the full test execution on a Continuous Integration Server or from a console on your local machine so we can keep working on other things why it's finished.
 
 It does not matter whether you need to configure your Continuous Integration build or you want to run the test from a console locally, the .NET command line tools have to be used for this. But fortunately it is pretty easy.
 
@@ -27,11 +27,11 @@ A total of 1 test files matched the specified pattern.
 Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration: 99 ms - Shouty.Specs.dll (netcoreapp3.1)
 ----
 
-The output is not very verbose but it clearly shows that all of our test were passing, so our changes dod not cause any unwanted side-effects. Good to know.
+The output is not very verbose but it clearly shows that all of our test were passing, so our changes did not cause any unwanted side-effects. Good to know.
 
-We wanted to perform a full regression testing by running the tests from the command line, therefore we did no apply any filter there. But sometimes we need to. Maybe we just want to run the smoke tests. 
+We wanted to perform a full regression test by running the tests from the command line, therefore we did not apply any filters. But sometimes we need to. Maybe we just want to run the smoke tests.
 
-The *dotnet test* command provides a `--filter` option where you can specify a filter expression. In the last chapter we discussed that SpecFlow converts tags to test categories or traits. In Visual Studio we used a trait expression, but unfortunately the same expression won't work here. The exact expression syntax that has to be used depends on the test execution framework you use. Since we use xUnit now, we have to filter using the `Category=smoke` expression. shot::[4, "type dotnet test --filter Category=smoke"] In MsTest and NUnit we would have to say `TestCategory` instead of `Category`, shot::[5, "change to dotnet test --filter TestCategory=smoke"] but the expression is otherwise the same. Let's fix this for xUnit and run the tests. shot::[6, "change back to dotnet test --filter Category=smoke, run"]
+The *dotnet test* command provides a `--filter` option where you can specify a filter expression. In the last chapter we discussed that SpecFlow converts tags to test categories or traits. In Visual Studio we used a trait expression, but unfortunately the same expression won't work here. The exact expression syntax that has to be used depends on the test execution framework you use. Since we're use xUnit, we have to filter using the `Category=smoke` expression. shot::[4, "type dotnet test --filter Category=smoke"] In MsTest and NUnit we would have to say `TestCategory` instead of `Category`, shot::[5, "change to dotnet test --filter TestCategory=smoke"] but the expression is otherwise the same. Let's fix this for xUnit and run the tests. shot::[6, "change back to dotnet test --filter Category=smoke, run"]
 
 [source]
 ----
@@ -46,7 +46,7 @@ A total of 1 test files matched the specified pattern.
 Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 77 ms - Shouty.Specs.dll (netcoreapp3.1)
 ----
 
-As you can see, not we only got two tests, so the filtering worked.
+As you can see, only two tests ran, so the filtering worked.
 
 You can also use the filter option to exclude tagged scenarios from the execution. For that you have to use `!=` the not equal operator. Let's exclude the slow tests now. shot::[7, "type --filter Category!=slow"]
 
@@ -55,9 +55,9 @@ You can also use the filter option to exclude tagged scenarios from the executio
 C:\...\Shouty\Shouty.Specs>dotnet test --filter Category!=slow
 ----
 
-Again, with MsTest or NUnit you would need to use TestCategory here. You can compose even more complex filter expressions for dotnet test. It is worth checking out the https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit[documentation] for details. 
+Again, with MsTest or NUnit you would need to use TestCategory here. You can compose even more complex filter expressions for dotnet test. It is worth checking out the https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit[documentation] for details.
 
-Teams often use such filters on the Continuous Integration Server if they write - or we can say formulate - the scenarios some time before the actual implementation work starts. Having these scenarios in the source control would cause the build fail although there is nothing wrong with our quality. We just have tests that do not suppose to pass yet. If the team agrees to tag these scenarios, for example with `@formulated` than they can easily exclude them on the build server with the `Category!=formulated` expression. shot::[8, "type dotnet test --filter TestCategory!=formulated and run"]. 
+Teams often use such filters on the Continuous Integration Server if they write - or we can say formulate - the scenarios some time before the actual implementation work starts. Having these scenarios in source control would cause the build fail although there is nothing wrong with the implementation. We just have tests that are not supposed to pass yet. If the team agrees to tag these scenarios, for example with `@formulated` than they can easily exclude them on the build server with the `Category!=formulated` expression. shot::[8, "type dotnet test --filter TestCategory!=formulated and run"].
 
 [source]
 ----
@@ -74,4 +74,4 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 
 Seeing all these scenarios pass means that we are progressing well. Just don't forget to remove the @formulated tag once you are done!
 
-In this lesson you've learnt how to run scenarios from command line and how to filter the set of scenarios to run using tags. On the Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will see in the next lesson.
+In this lesson you've learnt how to run scenarios from the command line and how to filter the set of scenarios to run using tags. On the Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will see in the next lesson.

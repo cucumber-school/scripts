@@ -2,13 +2,13 @@ include::./title.adoc[]
 
 shot::[1, "feature file is open"]
 
-SpecFlow is first and foremost a tool that facilitates a common understanding between people on a project. To be able to express the domain requirements of project implemented specifically for a non-English speaking local market, translating everything to English might be a barrier. In this case it is better to describe the requirements in the spoken language the stakeholders speak. 
+SpecFlow is first and foremost a tool that facilitates a common understanding between people on a project. To be able to express the domain requirements of projects implemented specifically for a non-English speaking local market, translating everything to English might be a barrier. In this case it is better to describe the requirements in the spoken language the stakeholders speak.
 
-SpecFlow supports over 70 different languages, thanks to contributions from people from all over the world. 
+SpecFlow supports over 70 different languages, thanks to contributions from people from all over the world.
 
-To see the translation of the Gherkin keywords for a particular language, check out the https://cucumber.io/docs/gherkin/languages/[Gherkin syntax documentation]. This is for example how the keywords translate to Hungarian. shot::[2, "scroll to Hungarian"]
+To see the translation of the Gherkin keywords for a particular language, check out the https://cucumber.io/docs/gherkin/languages/[Gherkin syntax documentation]. For example, this is how the keywords translate to Hungarian. shot::[2, "scroll to Hungarian"]
 
-Let's see how someone would create a feature file written in a different spoken language. I will do this for Hungarian language, but you can choose another language you speak. 
+Let's see how someone would create a feature file written in a different spoken language. I will do this for the Hungarian language, but you can choose another language you speak.
 
 For that we can add a new feature file first... and make it empty. shot::[3, "add feature file, delete content"]
 
@@ -20,7 +20,7 @@ The first line tells SpecFlow which language the feature file is written in. sho
 #language: hu-HU
 ----
 
-Now we can start writing our feature file. Remember, it should start with a feature keyword. The auto-complete feature of the Visual Studio integration is for your help. shot::[5, "invoke auto-complete, choose 'Jellemző'"] It shows what keyword should I use. shot::[6, "finish line"]
+Now we can start writing our feature file. Remember, it should start with the feature keyword. The auto-complete feature of the Visual Studio integration is for your help. shot::[5, "invoke auto-complete, choose 'Jellemző'"] It shows which keyword I should use. shot::[6, "finish line"]
 
 .Hungarian.feature
 [source, gherkin]
@@ -59,7 +59,7 @@ public void GivenAPersonNamed(string name)
 }
 ----
 
-If we build the project, the first two step appears to be defined now. shot::[12, "build and see the feature file coloring changing"]
+If we build the project, the first two steps appear to be defined now. shot::[12, "build and see the feature file coloring changing"]
 
 We can fix the other two step definitions as well... shot::[13, "add the two other attributes, run tests"] and we have our first Hungarian shouty scenario pass! shot::[14, "show new scenario in the test explorer window"]
 
@@ -84,11 +84,11 @@ public void ThenLucyShouldHearSeansMessage()
 ----
 
 
-Usually the feature file languages are not mixed within a project. If you don't want to add the same language header line shot::[15, "highlight #language"] to all of the feature files, you can also change the default feature language in SpecFlow. 
+Usually the feature file languages are not mixed within a project. If you don't want to add the same language header line shot::[15, "highlight #language"] to all of the feature files, you can also change the default feature language in SpecFlow.
 
 For that we need to add a SpecFlow configuration file to our project. The SpecFlow configuration file is a simple JSON file, named `specflow.json`. shot::[16, "add specflow.json"]. This file needs to be copied to the output directory. shot::[17, "set 'copy to output directory' to 'copy if newer'"]
 
-As there is no auto-complete support for this file, the easiest is if we check out the https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html[SpecFlow documentation]. shot::[18, "open doc"] The first example here does exactly what we wanted, so we can just copy and paste it into our project, shot::[19, "copy paste sample"] and change the language to the one we have chosen. shot::[20, "set lang to hu-hu"]
+As there is no auto-complete support for this file, it's easiest to check out the https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html[SpecFlow documentation]. shot::[18, "open doc"] The first example here does exactly what we want, so we can just copy and paste it into our project, shot::[19, "copy paste sample"] and change the language to the one we have chosen. shot::[20, "set lang to hu-hu"]
 
 .specflow.json
 [source,json]
@@ -100,11 +100,11 @@ As there is no auto-complete support for this file, the easiest is if we check o
 }
 ----
 
-When we build the project, shot::[21, "build, show errors"] we got a lots of errors from our English feature file. This is because we changed the default and this file does not have a language setting on the top. shot::[22, "show eng feature file, fix by adding #language: en-US"] But the new file works without the language setting now... shot::[23, "switch to hun, remove language setting"]
+When we build the project, shot::[21, "build, show errors"] we got lots of errors from our English feature file. This is because we changed the default and this file does not have a language setting at the top. shot::[22, "show eng feature file, fix by adding #language: en-US"] But the new file works without the language setting now... shot::[23, "switch to hun, remove language setting"]
 
-In Chapter 3 we talked about step definition parameters and that SpecFlow helps you to convert them to a .NET data type. SpecFlow performs these conversions using the feature file language. So for example if you would include a fraction number that needs to be converted to double, SpecFlow will expect the decimal separator character used in the language of your feature file. In Hungarian language for example, they use comma as a decimal separator instead of a dot. This is also important for date conversions. 
+In Chapter 3 we talked about step definition parameters and that SpecFlow helps you to convert them to a .NET data type. SpecFlow performs these conversions using the feature file language. So for example if you include a fractional number that needs to be converted to double, SpecFlow will expect the decimal separator character used in the language of your feature file. In the Hungarian language for example, a comma is used as the decimal separator instead of a dot. This is also important for date conversions.
 
-This default behavior can be changed by explicitly declaring what culture setting should SpecFlow use for conversions. For example we can force the conversions to be made using US English culture even in Hungarian feature files. shot::[24, "change config file to"]
+This default behavior can be changed by explicitly declaring what culture setting SpecFlow should use for conversions. For example we can force the conversions to be made using US English culture even in Hungarian feature files. shot::[24, "change config file to"]
 
 .specflow.json
 [source,json]
@@ -119,7 +119,7 @@ This default behavior can be changed by explicitly declaring what culture settin
 }
 ----
 
-There are a few other things you can configure that you can find in the documentation. shot::[25, "switch to doc, scroll through to the bottom"] Probably worth highlighting the one that can instruct SpecFlow to load step definitions from other external projects as well. shot::[26, "highlight stepAssemblies"] This is useful in bigger applications with multiple SpecFlow projects.
+There are a few other things you can configure that you can find in the documentation. shot::[25, "switch to doc, scroll through to the bottom"] It's worth highlighting the one that can instruct SpecFlow to load step definitions from other external projects as well. shot::[26, "highlight stepAssemblies"] This is useful in bigger applications with multiple SpecFlow projects.
 
 For the rest of this chapter, let's remove the non-English feature file and reset the configuration by removing the `specflow.json` file. shot::[27, "remove Hungarian.feature, specflow.json"]
 
