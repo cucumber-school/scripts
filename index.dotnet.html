@@ -5122,16 +5122,16 @@ Hello, and welcome back to Cucumber School.</p>
 </div>
 <div class="paragraph">
 <p>
-When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.</p>
+When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the SpecFlow scenarios to verify whether we have made overall progress or not.</p>
 </div>
 <div class="paragraph">
-<p>If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.</p>
+<p>If we have lots of SpecFlow scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.</p>
 </div>
 <div class="paragraph">
 <p>There are several ways to do this. SpecFlow converts the scenarios to tests that can be executed by the test execution framework we configured for the project, which is xUnit in our case. Because of that the SpecFlow scenarios appear as regular coded tests in the test runner tools you use, for example in the Visual Studio Test Explorer window. These tools usually provide several filtering options.</p>
 </div>
 <div class="paragraph">
-<p>Probably the easiest way to filter is to run only a scenario with a particular name.</p>
+<p>Probably the easiest way to filter is to run only the scenario with a specified name.</p>
 </div>
 <div class="paragraph">
 <p></p>
@@ -5150,7 +5150,7 @@ When we start working on a new scenario we often take a dive down to the inner T
 </div>
 <div class="paragraph">
 <p>
-Let&#8217;s say we want to work on this scenario in the next couple of hours. First, we’ll put a focus tag right here, above this scenario.  Tags start with an at-sign and are case sensitive.</p>
+Let&#8217;s say we want to work on this scenario for the next couple of hours. First, we’ll put a focus tag right here, above this scenario.  Tags start with an at-sign and are case sensitive.</p>
 </div>
 <div class="paragraph">
 <p>As we said, SpecFlow converts the scenarios to tests. This conversion happens at compile-time, so I need to build my solution to be able to have the changes applied. </p>
@@ -5159,7 +5159,7 @@ Let&#8217;s say we want to work on this scenario in the next couple of hours. Fi
 <p>SpecFlow converts the tags to test categories or <strong>traits</strong> as the Test Explorer window calls these. So to be able to filter for a particular tag, we have to enter a trait expression.</p>
 </div>
 <div class="paragraph">
-<p> Trait expressions start with the word <strong>Trait</strong> followed a colon and the name of the tag without the at sign.</p>
+<p> Trait expressions start with the word <strong>Trait</strong> followed by a colon and the name of the tag without the at sign.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5247,13 +5247,13 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 </div>
 </div>
 <div class="paragraph">
-<p>The output is not very verbose but it clearly shows that all of our test were passing, so our changes dod not cause any unwanted side-effects. Good to know.</p>
+<p>The output is not very verbose but it clearly shows that all of our test were passing, so our changes did not cause any unwanted side-effects. Good to know.</p>
 </div>
 <div class="paragraph">
-<p>We wanted to perform a full regression testing by running the tests from the command line, therefore we did no apply any filter there. But sometimes we need to. Maybe we just want to run the smoke tests.</p>
+<p>We wanted to perform a full regression test by running the tests from the command line, therefore we did not apply any filters. But sometimes we need to. Maybe we just want to run the smoke tests.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>dotnet test</strong> command provides a <code>--filter</code> option where you can specify a filter expression. In the last chapter we discussed that SpecFlow converts tags to test categories or traits. In Visual Studio we used a trait expression, but unfortunately the same expression won&#8217;t work here. The exact expression syntax that has to be used depends on the test execution framework you use. Since we use xUnit now, we have to filter using the <code>Category=smoke</code> expression.  In MsTest and NUnit we would have to say <code>TestCategory</code> instead of <code>Category</code>,  but the expression is otherwise the same. Let&#8217;s fix this for xUnit and run the tests. </p>
+<p>The <strong>dotnet test</strong> command provides a <code>--filter</code> option where you can specify a filter expression. In the last chapter we discussed that SpecFlow converts tags to test categories or traits. In Visual Studio we used a trait expression, but unfortunately the same expression won&#8217;t work here. The exact expression syntax that has to be used depends on the test execution framework you use. Since we&#8217;re use xUnit, we have to filter using the <code>Category=smoke</code> expression.  In MsTest and NUnit we would have to say <code>TestCategory</code> instead of <code>Category</code>,  but the expression is otherwise the same. Let&#8217;s fix this for xUnit and run the tests. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5269,7 +5269,7 @@ Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration:
 </div>
 </div>
 <div class="paragraph">
-<p>As you can see, not we only got two tests, so the filtering worked.</p>
+<p>As you can see, only two tests ran, so the filtering worked.</p>
 </div>
 <div class="paragraph">
 <p>You can also use the filter option to exclude tagged scenarios from the execution. For that you have to use <code>!=</code> the not equal operator. Let&#8217;s exclude the slow tests now. </p>
@@ -5283,7 +5283,7 @@ Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration:
 <p>Again, with MsTest or NUnit you would need to use TestCategory here. You can compose even more complex filter expressions for dotnet test. It is worth checking out the <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit">documentation</a> for details.</p>
 </div>
 <div class="paragraph">
-<p>Teams often use such filters on the Continuous Integration Server if they write - or we can say formulate - the scenarios some time before the actual implementation work starts. Having these scenarios in the source control would cause the build fail although there is nothing wrong with our quality. We just have tests that do not suppose to pass yet. If the team agrees to tag these scenarios, for example with <code>@formulated</code> than they can easily exclude them on the build server with the <code>Category!=formulated</code> expression. .</p>
+<p>Teams often use such filters on the Continuous Integration Server if they write - or we can say formulate - the scenarios some time before the actual implementation work starts. Having these scenarios in source control would cause the build fail although there is nothing wrong with the implementation. We just have tests that are not supposed to pass yet. If the team agrees to tag these scenarios, for example with <code>@formulated</code> than they can easily exclude them on the build server with the <code>Category!=formulated</code> expression. .</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5302,7 +5302,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <p>Seeing all these scenarios pass means that we are progressing well. Just don&#8217;t forget to remove the @formulated tag once you are done!</p>
 </div>
 <div class="paragraph">
-<p>In this lesson you&#8217;ve learnt how to run scenarios from command line and how to filter the set of scenarios to run using tags. On the Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will see in the next lesson.</p>
+<p>In this lesson you&#8217;ve learnt how to run scenarios from the command line and how to filter the set of scenarios to run using tags. On the Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will see in the next lesson.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5311,16 +5311,16 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <p></p>
 </div>
 <div class="paragraph">
-<p>SpecFlow is first and foremost a tool that facilitates a common understanding between people on a project. To be able to express the domain requirements of project implemented specifically for a non-English speaking local market, translating everything to English might be a barrier. In this case it is better to describe the requirements in the spoken language the stakeholders speak.</p>
+<p>SpecFlow is first and foremost a tool that facilitates a common understanding between people on a project. To be able to express the domain requirements of projects implemented specifically for a non-English speaking local market, translating everything to English might be a barrier. In this case it is better to describe the requirements in the spoken language the stakeholders speak.</p>
 </div>
 <div class="paragraph">
 <p>SpecFlow supports over 70 different languages, thanks to contributions from people from all over the world.</p>
 </div>
 <div class="paragraph">
-<p>To see the translation of the Gherkin keywords for a particular language, check out the <a href="https://cucumber.io/docs/gherkin/languages/">Gherkin syntax documentation</a>. This is for example how the keywords translate to Hungarian. </p>
+<p>To see the translation of the Gherkin keywords for a particular language, check out the <a href="https://cucumber.io/docs/gherkin/languages/">Gherkin syntax documentation</a>. For example, this is how the keywords translate to Hungarian. </p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s see how someone would create a feature file written in a different spoken language. I will do this for Hungarian language, but you can choose another language you speak.</p>
+<p>Let&#8217;s see how someone would create a feature file written in a different spoken language. I will do this for the Hungarian language, but you can choose another language you speak.</p>
 </div>
 <div class="paragraph">
 <p>For that we can add a new feature file first&#8230;&#8203; and make it empty. </p>
@@ -5335,7 +5335,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can start writing our feature file. Remember, it should start with a feature keyword. The auto-complete feature of the Visual Studio integration is for your help.  It shows what keyword should I use. </p>
+<p>Now we can start writing our feature file. Remember, it should start with the feature keyword. The auto-complete feature of the Visual Studio integration is for your help.  It shows which keyword I should use. </p>
 </div>
 <div class="listingblock">
 <div class="title">Hungarian.feature</div>
@@ -5377,7 +5377,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 </div>
 </div>
 <div class="paragraph">
-<p>If we build the project, the first two step appears to be defined now. </p>
+<p>If we build the project, the first two steps appear to be defined now. </p>
 </div>
 <div class="paragraph">
 <p>We can fix the other two step definitions as well&#8230;&#8203;  and we have our first Hungarian shouty scenario pass! </p>
@@ -5409,7 +5409,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <p>For that we need to add a SpecFlow configuration file to our project. The SpecFlow configuration file is a simple JSON file, named <code>specflow.json</code>. . This file needs to be copied to the output directory. </p>
 </div>
 <div class="paragraph">
-<p>As there is no auto-complete support for this file, the easiest is if we check out the <a href="https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html">SpecFlow documentation</a>.  The first example here does exactly what we wanted, so we can just copy and paste it into our project,  and change the language to the one we have chosen. </p>
+<p>As there is no auto-complete support for this file, it&#8217;s easiest to check out the <a href="https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html">SpecFlow documentation</a>.  The first example here does exactly what we want, so we can just copy and paste it into our project,  and change the language to the one we have chosen. </p>
 </div>
 <div class="listingblock">
 <div class="title">specflow.json</div>
@@ -5422,13 +5422,13 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 </div>
 </div>
 <div class="paragraph">
-<p>When we build the project,  we got a lots of errors from our English feature file. This is because we changed the default and this file does not have a language setting on the top.  But the new file works without the language setting now&#8230;&#8203; </p>
+<p>When we build the project,  we got lots of errors from our English feature file. This is because we changed the default and this file does not have a language setting at the top.  But the new file works without the language setting now&#8230;&#8203; </p>
 </div>
 <div class="paragraph">
-<p>In Chapter 3 we talked about step definition parameters and that SpecFlow helps you to convert them to a .NET data type. SpecFlow performs these conversions using the feature file language. So for example if you would include a fraction number that needs to be converted to double, SpecFlow will expect the decimal separator character used in the language of your feature file. In Hungarian language for example, they use comma as a decimal separator instead of a dot. This is also important for date conversions.</p>
+<p>In Chapter 3 we talked about step definition parameters and that SpecFlow helps you to convert them to a .NET data type. SpecFlow performs these conversions using the feature file language. So for example if you include a fractional number that needs to be converted to double, SpecFlow will expect the decimal separator character used in the language of your feature file. In the Hungarian language for example, a comma is used as the decimal separator instead of a dot. This is also important for date conversions.</p>
 </div>
 <div class="paragraph">
-<p>This default behavior can be changed by explicitly declaring what culture setting should SpecFlow use for conversions. For example we can force the conversions to be made using US English culture even in Hungarian feature files. </p>
+<p>This default behavior can be changed by explicitly declaring what culture setting SpecFlow should use for conversions. For example we can force the conversions to be made using US English culture even in Hungarian feature files. </p>
 </div>
 <div class="listingblock">
 <div class="title">specflow.json</div>
@@ -5444,7 +5444,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 </div>
 </div>
 <div class="paragraph">
-<p>There are a few other things you can configure that you can find in the documentation.  Probably worth highlighting the one that can instruct SpecFlow to load step definitions from other external projects as well.  This is useful in bigger applications with multiple SpecFlow projects.</p>
+<p>There are a few other things you can configure that you can find in the documentation.  It&#8217;s worth highlighting the one that can instruct SpecFlow to load step definitions from other external projects as well.  This is useful in bigger applications with multiple SpecFlow projects.</p>
 </div>
 <div class="paragraph">
 <p>For the rest of this chapter, let&#8217;s remove the non-English feature file and reset the configuration by removing the <code>specflow.json</code> file. </p>
@@ -5462,7 +5462,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <p>In the previous lessons we&#8217;ve learnt how to configure SpecFlow and how to run scenarios from Visual Studio and from the command line. The test output we have seen there contains a brief summary of the execution and the failures. If the test were executed Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will look at in this lesson.</p>
 </div>
 <div class="paragraph">
-<p>The <code>dotnet test</code> tool outputs the execution results through configurable loggers. The logger can be specified using the <code>--logger</code> option. There are multiple logger providers you can choose from. You can even write your onw. But most of the teams use the TRX logger, that saves the execution results into a <strong>Visual Studio Test Results</strong> or TRX file with the <code>.trx</code> extension. Let&#8217;s use this. </p>
+<p>The <code>dotnet test</code> tool outputs the execution results through configurable loggers. The logger can be specified using the <code>--logger</code> option. There are multiple logger providers you can choose from. You can even write your own. But most of the teams use the TRX logger, that saves the execution results into a <strong>Visual Studio Test Results</strong> or TRX file with the <code>.trx</code> extension. Let&#8217;s use this. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5486,10 +5486,10 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 Visual Studio has been associated to this file extension, so if I open this file from file explorer , it opens it in Visual Studio.  We can see all the individual test executions and even the details  of each of them where we see the step execution results.</p>
 </div>
 <div class="paragraph">
-<p>The TRX files are XML files so it is easy to make any tools that processes the results and converts them to another format. It is for example a common expectation to present the execution results as an HTML file that can be checked by all stakeholders even if they don&#8217;t have Visual Studio.</p>
+<p>The TRX files are XML files so it is easy to make any tools that processes the results and converts them to another format. It is, for example, a common expectation to present the execution results as an HTML file that can be checked by all stakeholders even if they don&#8217;t have Visual Studio.</p>
 </div>
 <div class="paragraph">
-<p>There are many small open source tools that can do such conversion.  For example the <a href="https://github.com/stevencohn/trxer">fork of the Trxer project by @stevencohn</a> on GitHub is a nice one that provides some dedicated styling for SpecFlow results.</p>
+<p>There are many small open source tools that can do such a conversion.  For example the <a href="https://github.com/stevencohn/trxer">fork of the Trxer project by @stevencohn</a> on GitHub is a nice one that provides some dedicated styling for SpecFlow results.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -5501,7 +5501,7 @@ This one is a .NET assembly that I downloaded earlier, so now I can invoke it wi
 </div>
 </div>
 <div class="paragraph">
-<p>The result is a single HTML file that I could publish to my team workspace or just open it locally.  It shows the execution summary  as well as the individual scenario results grouped by features.</p>
+<p>The result is a single HTML file that I could publish to my team workspace or just open locally.  It shows the execution summary  as well as the individual scenario results grouped by features.</p>
 </div>
 <div class="paragraph">
 <p>The TRX file format is also understood by most of the Continuous Integration platforms as well, so they can show the details included in the build results or even highlight whether the same tests were failing for the first time.</p>
@@ -5516,10 +5516,10 @@ This one is a .NET assembly that I downloaded earlier, so now I can invoke it wi
 </div>
 <div class="paragraph">
 <p>
-The <a href="https://specflow.org/blog/introducing-the-specflow-plus-livingdoc-generator/">SpecFlow+ LivingDoc Generator</a> from the Tricentis SpecFlow team uses a slightly different approach. This free tool does not process the TRX file, but produces it&#8217;s own result file and from that it is able generate a comprehensive documentation of your requirements based on the feature files and the scenarios you defined. Although the generated documentation also contains the test results, the primary focus of its result is to produce a so called <strong>Living Documentation</strong>&#8201;&#8212;&#8201;a documentation that shows whether the application currently fulfills the requirements.</p>
+The <a href="https://specflow.org/blog/introducing-the-specflow-plus-livingdoc-generator/">SpecFlow+ LivingDoc Generator</a> from the Tricentis SpecFlow team uses a slightly different approach. This free tool does not process the TRX file, but produces its own result file and from that it is able to generate comprehensive documentation of your requirements based on the feature files and the scenarios you defined. Although the generated documentation also contains the test results, its primary focus is to produce the so-called <strong>Living Documentation</strong>&#8201;&#8212;&#8201;documentation that shows whether the application currently fulfills the requirements.</p>
 </div>
 <div class="paragraph">
-<p>In order to setup SpecFlow+ LivingDoc Generator, first of all we need to install the <code>SpecFlow.Plus.LivingDocPlugin</code> NuGet package. </p>
+<p>In order to setup SpecFlow+ LivingDoc Generator, we need to install the <code>SpecFlow.Plus.LivingDocPlugin</code> NuGet package. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5541,7 +5541,7 @@ The <a href="https://specflow.org/blog/introducing-the-specflow-plus-livingdoc-g
 <p>Now we need to run the actual generator. The generator has to be installed as a .NET Core tool for the project.</p>
 </div>
 <div class="paragraph">
-<p>Since this is the first .NET Core tool that we install for this project we need to first initialize the .NET Core tool configuration. For that we need to go up to the solution folder in our console window  and invoke <code>dotnet new tool-manifest</code> . This creates a file named  <code>dotnet-tools.json</code> in the <code>.config</code> folder of the solution . You should add this file to the source control.</p>
+<p>Since this is the first .NET Core tool that we have install for this project, we need to first initialize the .NET Core tool configuration. For that we need to go up to the solution folder in our console window  and invoke <code>dotnet new tool-manifest</code> . This creates a file named  <code>dotnet-tools.json</code> in the <code>.config</code> folder of the solution . You should add this file to your source control.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5552,7 +5552,7 @@ The template "Dotnet local tool manifest file" was created successfully.</code><
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can install the pecFlow+ LivingDoc Generator. This can be done, using the <code>dotnet tool install SpecFlow.Plus.LivingDoc.CLI</code> command that pulls the generator from NuGet.org and installs it for this project. </p>
+<p>Now we can install the SpecFlow+ LivingDoc Generator. This can be done, using the <code>dotnet tool install SpecFlow.Plus.LivingDoc.CLI</code> command that pulls the generator from NuGet.org and installs it for this project. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5563,13 +5563,13 @@ Tool 'specflow.plus.livingdoc.cli' (version '3.5.286') was successfully installe
 </div>
 </div>
 <div class="paragraph">
-<p>As the message says, the tools has been installed successfully and can be used with  the <code>dotnet livingdoc</code> command. Let&#8217;s use it to generate our result.</p>
+<p>As the message says, the tool has been installed successfully and can be used with  the <code>dotnet livingdoc</code> command. Let&#8217;s use it to generate our result.</p>
 </div>
 <div class="paragraph">
 <p>First, let&#8217;s step back to our SpecFlow project folder and start with <code>dotnet livingdoc</code>.  Now we need to specify a couple of settings for the generator. If you get lost, you can always call dotnet livingdoc help or check the <a href="https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html">documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>We need to say <code>test-assembly</code>,  because we want to generate the result from an assembly, and we have to  specify the complied assembly of our Shouty project, the <code>Shouty.Specs.dll</code> from our output folder.</p>
+<p>We need to say <code>test-assembly</code>,  because we want to generate the result from an assembly, and we have to  specify the compiled assembly of our Shouty project, the <code>Shouty.Specs.dll</code> from our output folder.</p>
 </div>
 <div class="paragraph">
 <p>Finally we need to  provide the path of the generated TestExecution.json file using the <code>--test-execution-json</code> option. And run. </p>
@@ -5588,7 +5588,7 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 <p>Since the result is a single HTML file, it is easy to share it with all stakeholders. If you use Azure DevOps to track your work items, you can use the integrated version of SpecFlow+ LivingDoc as well.</p>
 </div>
 <div class="paragraph">
-<p>There are more and more tools that can help you to implement living documentation for SpecFlow,  like <a href="https://www.picklesdoc.com/">Pickles Doc</a>, <a href="https://github.com/Augurk/Augurk">Augurk</a> or  <a href="https://www.specsolutions.eu/specsync/">SpecSync for Azure DevOps</a>. The SmartBear Cucumber team works on a platform  called <a href="https://reports.cucumber.io/">Cucumber Reports</a> that can be use to publish and share living documentation. At the time of the recording this is not yet available for SpecFlow, but hopefully this changes soon.</p>
+<p>There are more and more tools that can help you to implement living documentation for SpecFlow,  like <a href="https://www.picklesdoc.com/">Pickles Doc</a>, <a href="https://github.com/Augurk/Augurk">Augurk</a> or  <a href="https://www.specsolutions.eu/specsync/">SpecSync for Azure DevOps</a>. The SmartBear Cucumber team is working on a platform  called <a href="https://reports.cucumber.io/">Cucumber Reports</a> that can be used to publish and share living documentation. At the time of the recording this is not yet available for SpecFlow, but hopefully it will be soon.</p>
 </div>
 <div class="paragraph">
 <p>In this lesson we have enumerated a couple of options to share your results and your living documentation with the entire team. This is essential in order to facilitate a common understanding between people on the project&#8201;&#8212;&#8201;which is our ultimate goal.</p>
@@ -5605,7 +5605,7 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-28 13:58:19 UTC
+Last updated 2021-01-28 17:37:21 UTC
 </div>
 </div>
 <style>
