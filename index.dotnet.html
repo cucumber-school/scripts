@@ -4466,7 +4466,7 @@ For this method to execute successfully, the header cell text must match the har
 </div>
 </div>
 <div class="paragraph">
-<p>We separated the Data Table conversion from the step definition. The step definition is nice and clean now, but out conversion method is still fairly complex as it needs to handle the table headers and the cell data conversion. </p>
+<p>We separated the Data Table conversion from the step definition. The step definition is nice and clean now, but our conversion method is still fairly complex as it needs to handle the table headers and the cell data conversion. </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -4488,7 +4488,7 @@ For this method to execute successfully, the header cell text must match the har
 <p>But even though it is complex, we can notice a pattern in it. We take the "name" cell and update the <code>Name</code> property of the Whereabouts object. We take the "location" cell and update the <code>Location</code> property&#8230;&#8203; This is not a big surprise for us, because we let the domain terms in the scenarios drive our domain model.</p>
 </div>
 <div class="paragraph">
-<p>However it happens, this sort of consistency allows us to simplify the code further. SpecFlow defines an extension method on the Table class, called <code>CreateSet</code>. <code>CreateSet</code> can do exactly what we need here: create instances of a particular class and update its properties based on the table cells. </p>
+<p>When this happens, this sort of consistency allows us to simplify the code further. SpecFlow defines an extension method on the Table class, called <code>CreateSet</code>. <code>CreateSet</code> can do exactly what we need here: create instances of a particular class and update its properties based on the table cells. </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -4503,6 +4503,12 @@ For this method to execute successfully, the header cell text must match the har
 <div class="paragraph">
 <p>The <code>CreateSet</code> extension method is defined in the <code>TechTalk.SpecFlow.Assist</code> namespace, so we have to add a using statement for that. </p>
 </div>
+<div class="listingblock">
+<div class="title">StepDefinitions.cs</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="c#"><span class="k">using</span> <span class="nn">TechTalk.SpecFlow.Assist</span><span class="p">;</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p> With that change our conversion method is also clean and our tests still pass.</p>
 </div>
@@ -4511,7 +4517,7 @@ For this method to execute successfully, the header cell text must match the har
 Data tables are very useful for setting up data in Given steps, but you can also use them for specifying outcomes.</p>
 </div>
 <div class="paragraph">
-<p>One rule that we’ve been implying but have never actually explored with an example is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: </p>
+<p>One rule that we’ve been implying, but have never actually explored with an example, is that people can hear more than one shout. So far we’ve only specified a single message, so let’s try writing a scenario where Sean shouts more than once: </p>
 </div>
 <div class="listingblock">
 <div class="title">HearShout.feature</div>
@@ -4533,10 +4539,7 @@ Data tables are very useful for setting up data in Given steps, but you can also
 <p>See how natural it is to use a Data Table here?</p>
 </div>
 <div class="paragraph">
-<p>So how do we implement this step definition? First, let&#8217;s practice what we have learned about the Table class.</p>
-</div>
-<div class="paragraph">
-<p>For that we first paste the snippet into the StepDefinitions class and rename the parameter.  What we want to do here is compare the messages that are actually heard with the messages we expected to hear. Getting the actual messages is easy, we just need to call the <code>GetMessagesHeard</code> method.  To get the expected messages we need to take the "message" cell from each table row like this.  And finally we can make sure they are the same using an assert statement. </p>
+<p>So how do we implement this step definition? First, let&#8217;s paste the generated snippet into the StepDefinitions class and rename the parameter.  What we want to do in this step definition is compare the messages that are actually heard with the messages we expected to hear. Getting the actual messages is easy, we just need to call the <code>GetMessagesHeard</code> method.  For the expected messages, we need to take the "message" cell from each table row like this.  And finally we can make sure they are the same using an assert statement. </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -4551,7 +4554,7 @@ Data tables are very useful for setting up data in Given steps, but you can also
 </div>
 </div>
 <div class="paragraph">
-<p> Oops! It looks like there is a problem. The two lists are different. By checking the error message we would find that there is a typo in our scenario. But let&#8217;s not fix this yet. Instead, let&#8217;s look at another typical pattern for a data table related assertion.</p>
+<p> Oops! It looks like there is a problem. The two lists are different. By checking the error message we can see that there is a typo in our scenario.  But let&#8217;s not fix this yet. Instead, let&#8217;s look at another typical pattern for a data table related assertion.</p>
 </div>
 <div class="paragraph">
 <p> The <code>GetMessagesHeard</code> method returned a list of strings, but in many cases the list that we want to compare the Data Table with is a list of objects. Let&#8217;s imagine that later we will extend the <code>GetMessagesHeard</code> method to not only return the message but also the person who shouted it.  To simulate that let&#8217;s add an alternative version of <code>GetMessagesHeard</code>, called <code>GetMessagesHeardEx</code>. The new method returns a list of <code>HeardMessage</code> instances.  The HeardMessage class has only one property, the message,  but later we might extend it.</p>
@@ -4582,7 +4585,7 @@ Data tables are very useful for setting up data in Given steps, but you can also
 </div>
 </div>
 <div class="paragraph">
-<p>To compare this with the expected messages in the table, we need to check if the "message" cell matches to the <code>Message</code> property for each row. If there would be a "shouter name" cell we would need to match that to a <code>ShouterName</code> property and so on. This is the same consistency that we had when we used CreateSet. For such assertions, we can use another helper method, called <code>CompareToSet</code>.</p>
+<p>To compare this with the expected messages in the table, we need to check if the "message" cell matches the <code>Message</code> property for each row. If there was a "shouter name" cell we would have to match that to a <code>ShouterName</code> property and so on. This is the same consistency that we had when we used CreateSet. For such assertions, we can use another helper method, called <code>CompareToSet</code>.</p>
 </div>
 <div class="paragraph">
 <p>It works similarly to CreateSet.  The CompareToSet is an extension method on the Table class from the Assist namespace, and you need to pass the list of objects that you would like to compare the table with. </p>
@@ -5602,7 +5605,7 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-25 12:50:39 UTC
+Last updated 2021-01-28 13:58:19 UTC
 </div>
 </div>
 <style>
