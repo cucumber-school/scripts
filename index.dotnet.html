@@ -4210,7 +4210,7 @@ Let&#8217;s run the scenarios to check that we&#8217;re still green. And we are!
 That looks much nicer -  people positioned using a table in the feature file and  really clean code that creates and positions people according to the data.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_3_questions_2">5.3.1. Lesson 3 - Questions</h4>
+<h4 id="_lesson_3_questions_specflow">5.3.1. Lesson 3 - Questions (SpecFlow)</h4>
 <div class="sect4">
 <h5 id="_what_is_the_name_of_the_gherkin_syntax_that_allows_you_to_specify_pipe_separated_tabular_data_for_a_step">What is the name of the Gherkin syntax that allows you to specify pipe-separated, tabular data for a step?</h5>
 <div class="ulist">
@@ -4238,9 +4238,10 @@ The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, 
 </div>
 </div>
 <div class="sect4">
-<h5 id="_what_value_would_be_retieved_from_cell_1_2_in_the_following_table">What value would be retieved from cell (1, 2) in the following table?</h5>
+<h5 id="_what_value_would_be_retrieved_from_cell_rows1c_in_the_following_table">What value would be retrieved from cell Rows[1]["C"] in the following table?</h5>
 <div class="paragraph">
-<p>| 0 | 1 | 2 |
+<p>| A | B | C |
+| 0 | 1 | 2 |
 | 3 | 4 | 5 |
 | 6 | 7 | 8 |</p>
 </div>
@@ -4277,48 +4278,17 @@ The Gherkin syntax is called a Data Table. It represents a 2-dimensional array, 
 </div>
 <div class="paragraph">
 <p>Explanation:
-The data table is indexed, starting from 0. The first coordinate indicates which <em>row</em> to access, the second indicates the <em>column</em>.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_java_only">JAVA ONLY</h5>
-<div class="sect5">
-<h6 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_a_list_of_maps_list_mapstring_string">Which of the answers correctly shows how Cucumber will convert the following data table into a list of maps: List&lt; Map&lt;String, String&gt; &gt; ?</h6>
-<div class="paragraph">
-<p>| A | B | C |
-| D | 0 | 1 |
-| E | 2 | 3 |</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>[{A=A, B=B, C=C}, {A=D, B=0, C=1}, {A=E, B=2, C=3}]</p>
-</li>
-<li>
-<p>[{A=D, B=2, C=1}, {A=E, B=0, C=3}]</p>
-</li>
-<li>
-<p>[{A=B, D=0, E=2}, {A=C, D=1, E=3}]</p>
-</li>
-<li>
-<p>[{A=D, B=0, C=1}, {A=E, B=2, C=3}]&#8201;&#8212;&#8201;TRUE</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Explanation:
-When Cucumber converts a Data Table into a list of maps, it treats the first row as the labels (or indexes), and each subsequent row provides the values for the next map within the list.</p>
-</div>
-<div class="paragraph">
-<p>So, in this example, since there are three rows, we end up with two maps in the list&#8201;&#8212;&#8201;the first row providing the indexes into each map, the next two rows providing the values for the two maps that are added to the list.</p>
-</div>
+SpecFlow treats the first row as the header, and the Rows property returns each subsequent row indexed, starting from 0. The cells within a row can be retrieved by indexing the row with the header name. We need two pairs of brackets, because the first selects the row and the second selects the cell within the row.</p>
 </div>
 <div class="sect5">
 <h6 id="_which_of_the_following_data_tables_will_this_method_process_successfully">Which of the following Data Tables will this method process successfully?</h6>
 <div class="paragraph">
-<p>@DataTableType
-public OrderLine createOrderLine(Map&lt;String, String&gt; orderItem) {
-    return new OrderLine(entry.get("Item Name"), Integer.parseInt(entry.get("Quantity")));
+<p>public void GivenTheOrderContainsTheFollowingItems(Table orderItemsTable)
+{
+    foreach (var row in orderItemsTable.Rows)
+    {
+        order.AddLine(row["Item Name"], int.Parse(row["Quantity"]));
+    }
 }</p>
 </div>
 <div class="ulist">
@@ -4355,93 +4325,40 @@ public OrderLine createOrderLine(Map&lt;String, String&gt; orderItem) {
 </div>
 <div class="paragraph">
 <p>Explanation:
-Cucumber attempts to convert each non-header row in the data table into an instance of OrderLine by calling this method. For the conversion to succeed, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and createOrderLine() would not be called and the relavent step definition would be passed an empty list of OrderLine objects.</p>
-</div>
-<div class="paragraph">
-<p>There is more documentation about Data Table conversions at <a href="https://github.com/cucumber/cucumber/tree/master/datatable" class="bare">https://github.com/cucumber/cucumber/tree/master/datatable</a></p>
+The Rows property of the Table class contains all non-header rows in the data table. To be able retrieve a cell from the row, the header cell text must match the hard coded index strings used in the method exactly. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would have an empty Rows collection and hence it would not add any items to the order.</p>
 </div>
 </div>
-</div>
-<div class="sect4">
-<h5 id="_ruby_only">RUBY ONLY</h5>
 <div class="sect5">
-<h6 id="_which_of_the_answers_correctly_shows_how_cucumber_will_convert_the_following_data_table_into_symbolic_hashes">Which of the answers correctly shows how Cucumber will convert the following data table into symbolic hashes?</h6>
+<h6 id="_how_would_you_need_to_change_the_step_definition_in_order_to_be_able_to_use_the_orderitem_list_converted_from_a_data_table_with_the_following_conversion_method">How would you need to change the step definition in order to be able to use the OrderItem list converted from a Data Table with the following conversion method</h6>
 <div class="paragraph">
-<p>| A | B | C |
-| D | 0 | 1 |
-| E | 2 | 3 |</p>
+<p>public OrderItem[] ConvertOrderItems(Table orderItemsTable)
+{
+    return orderItemsTable.CreateSet&lt;OrderItem&gt;().ToArray();
+}</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>[{:A="A", :B="B", :C="C"}, {:A="D", :B="0", :C="1"}, {:A="E", :B="2", :C="3"}]</p>
+<p>[Given("the order contains the following items {OrderItems[]}")]
+public void GivenTheOrderContainsTheFollowingItems(OrderItem[] orderItems) { &#8230;&#8203; }</p>
 </li>
 <li>
-<p>[{:A="D", :B="2", :C="1"}, {:A="E", :B="0", :C="3"}]</p>
+<p>[Given("the order contains the following items")]&#8201;&#8212;&#8201;TRUE
+public void GivenTheOrderContainsTheFollowingItems(OrderItem[] orderItems) { &#8230;&#8203; }</p>
 </li>
 <li>
-<p>[{:A="B", :D="0", :E="2"}, {:A="C", :D="1", :E="3"}]</p>
+<p>[Given("the order contains the following items")]
+public void GivenTheOrderContainsTheFollowingItems(IEnumerable&lt;OrderItem&gt; orderItems) { &#8230;&#8203; }</p>
 </li>
 <li>
-<p>[{:A="D", :B="0", :C="1"}, {:A="E", :B="2", :C="3"}]&#8201;&#8212;&#8201;TRUE</p>
+<p>[Given("the order contains the following items")]
+public void GivenTheOrderContainsTheFollowingItems(Table orderItemsTable) { &#8230;&#8203; }</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Explanation:
-DataTable.symbolic_hashes returns an array of hashes. The first row is treated as the symbolic labels (or keys), and each subsequent row provides the values for the next hash within the array.</p>
-</div>
-<div class="paragraph">
-<p>So, in this example, since there are three rows, we end up with two hashes in the list&#8201;&#8212;&#8201;the first row provides the keys into each hash, the next two rows providing the values for the two hashes that are added to the list.</p>
-</div>
-</div>
-<div class="sect5">
-<h6 id="_which_of_the_following_data_tables_will_this_step_definition_process_successfully">Which of the following Data Tables will this step definition process successfully?</h6>
-<div class="paragraph">
-<p>When "Sean orders" do |order|
-  order.symbolic_hashes.each do |name:, quantity: |
-    p "Item #{name} x #{quantity}"
-  end
-end</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE
-| Cheese &amp; tomato | 1        |</p>
-</li>
-<li>
-<p>| Item name            | quantity |
-| Cheese &amp; tomato | 1        |</p>
-</li>
-<li>
-<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE
-| Cheese &amp; tomato | 1        |
-| Pepperoni       | 1        |</p>
-</li>
-<li>
-<p>| Name       | Quantity |&#8201;&#8212;&#8201;TRUE</p>
-</li>
-<li>
-<p>| Name       | Quantity | Notes        |&#8201;&#8212;&#8201;TRUE
-| Cheese &amp; tomato | 1        | Extra cheese |</p>
-</li>
-<li>
-<p>| Cheese &amp; tomato | 1        |
-| Pepperoni       | 1        |</p>
-</li>
-<li>
-<p>| Quantity | Name       | &#8201;&#8212;&#8201;TRUE
-| 1        | Cheese &amp; tomato |</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Explanation:
-For this method to execute successfully, the header cell text must match the hard coded index strings used in the method. The order of the columns is not significant and any extra columns are ignored. A Data Table with only a header row would be considered an empty table and symbolic_hashes would return an empty array.</p>
-</div>
-<div class="paragraph">
-<p>There is more documentation about Data Table conversions at <a href="https://github.com/cucumber/cucumber/tree/master/datatable" class="bare">https://github.com/cucumber/cucumber/tree/master/datatable</a></p>
+In order to access the Data Table attached to the step, you don&#8217;t have to add parameters to the Cucumber Expression. The parameters of the expression refer to the parts of the step text only. The parameter type of the method should be exactly the same as the return type of the conversion method. So even though that the array implements the IEnumerable interface, SpecFlow will not find that. If the parameter is defined as a Table, the conversion method will not be invoked.</p>
 </div>
 </div>
 </div>
@@ -4639,55 +4556,57 @@ The matching bagels! line no longer has a minus, and for the mismatched row, the
 <p>Great.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_4_questions_3">5.4.1. Lesson 4 - Questions</h4>
-<div class="paragraph">
-<p>JAVA ONLY
-===== Why might you use the @Transpose annotation?</p>
-</div>
+<h4 id="_lesson_4_questions_specflow">5.4.1. Lesson 4 - Questions (SpecFlow)</h4>
+<div class="sect4">
+<h5 id="_which_statements_are_true_for_the_createset_method">Which statements are true for the CreateSet method</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Transpose has been deprecated and you should not use it</p>
+<p>CreateSet is an extension method that extends the Table class&#8201;&#8212;&#8201;TRUE</p>
 </li>
 <li>
-<p>Use it if it is more readable to have the headers in the first column&#8201;&#8212;&#8201;TRUE</p>
+<p>CreateSet updates the properties based on the column headers with a case-sensitive exact match</p>
 </li>
 <li>
-<p>Use it to ensure that every row in the data table has the same number of columns</p>
+<p>When succeeds, CreateSet returns an enumerable that has exactly as many items as many non-header row the Data Table had&#8201;&#8212;&#8201;TRUE</p>
 </li>
 <li>
-<p>Use it to reverse the order of the data rows in the table</p>
+<p>To be able to use the CreateSet extension method, the TechTalk.SpecFlow.Assist namespace has to be listed among the using statements of the file&#8201;&#8212;&#8201;TRUE</p>
+</li>
+<li>
+<p>CreateSet can detect the type of the objects to be created based on the Data Table header</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Explanation:
-The @Transpose annotation (and the transpose method on DataTable) allows you to use tables that have their headers in the first column of a table.</p>
+CreateSet is an extension method for the Table class that is defined in the TechTalk.SpecFlow.Assist namespace. The target type has to be specified as a generic type parameter. The fields and properties of the target type are found using case-insensitive match. Whitespace in the header name is also ignored, so cells with the header "shouter name" will update the property ShouterName. CreateSet returns an object for each non-header row in the Data Table. By default it creates the objects using their default constructor, but you can also specify a delegate to create the instance differently.</p>
+</div>
 </div>
 <div class="sect4">
-<h5 id="_what_method_on_datatable_compares_two_datatables_and_produces_a_textual_output_showing_their_differences">What method on DataTable compares two DataTables and produces a textual output showing their differences?</h5>
+<h5 id="_what_extension_method_on_the_table_class_compares_the_table_with_a_list_of_objects_and_produces_a_textual_output_showing_their_differences">What extension method on the Table class compares the table with a list of objects and produces a textual output showing their differences?</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>compare</p>
+<p>Compare</p>
 </li>
 <li>
-<p>difference</p>
+<p>AssertEqual</p>
 </li>
 <li>
-<p>contrast</p>
+<p>CompareToList</p>
 </li>
 <li>
-<p>diff&#8201;&#8212;&#8201;TRUE</p>
+<p>CompareToSet&#8201;&#8212;&#8201;TRUE</p>
 </li>
 <li>
-<p>covariance</p>
+<p>Covariance</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Explanation:
-The method that compares two data tables is called <strong>diff</strong></p>
+The method that compares two data tables is called <strong>CompareToSet</strong>. It is defined in the TechTalk.SpecFlow.Assist namespace.</p>
 </div>
 </div>
 </div>
@@ -4869,9 +4788,9 @@ We have to add a new step definition too . It doesn&#8217;t need a parameter in 
 We don’t use DocStrings very often - having such a lot of data in a test can often make it quite brittle. But when you do need it, it&#8217;s useful to know about.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_5_questions_2">5.5.1. Lesson 5 - Questions</h4>
+<h4 id="_lesson_5_questions_specflow_2">5.5.1. Lesson 5 - Questions (SpecFlow)</h4>
 <div class="sect4">
-<h5 id="_we_start_implementing_the_maximummessage_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximummessage length rule by writing a scenario and seeing it fail. What did we do next?</h5>
+<h5 id="_we_start_implementing_the_maximum_message_length_rule_by_writing_a_scenario_and_seeing_it_fail_what_did_we_do_next">We start implementing the maximum message length rule by writing a scenario and seeing it fail. What did we do next?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -4904,7 +4823,7 @@ We wrote a new unit test in NetworkTest. We&#8217;ll talk more about this in the
 <p>DocStrings support multiple languages</p>
 </li>
 <li>
-<p>Cucumber provides a DocString type that provides useful string manipulation features</p>
+<p>SpecFlow provides a DocString type that provides useful string manipulation features</p>
 </li>
 </ul>
 </div>
@@ -4913,7 +4832,7 @@ We wrote a new unit test in NetworkTest. We&#8217;ll talk more about this in the
 The DocString is Gherkin syntax that allows long strings to be readably represented in a scenario.</p>
 </div>
 <div class="paragraph">
-<p>All the magic happens when the DocString is read from the Gherkin. The content of the DocString gets passed to the step definition as a normal String&#8201;&#8212;&#8201;there&#8217;s no corresponding Cucumber type.</p>
+<p>All the magic happens when the DocString is read from the Gherkin. The content of the DocString gets passed to the step definition as a normal string&#8201;&#8212;&#8201;there&#8217;s no corresponding SpecFlow type.</p>
 </div>
 </div>
 <div class="sect4">
@@ -4934,30 +4853,30 @@ And the bog down in the valley-o
 <div class="ulist">
 <ul>
 <li>
-<p>@Then("Simone says")
-public void simone_says() { }</p>
+<p>[Then("Simone says")]
+public void SimoneSays() { }</p>
 </li>
 <li>
-<p>@Then("Simone says")
-public void simone_says(String lyrics) { }&#8201;&#8212;&#8201;TRUE</p>
+<p>[Then("Simone says")]
+public void SimoneSays(string lyrics) { }&#8201;&#8212;&#8201;TRUE</p>
 </li>
 <li>
-<p>@Then("Simone says {string}")
-public void simone_says(String lyrics) { }</p>
+<p>[Then("Simone says {string}")]
+public void SimoneSays(string lyrics) { }</p>
 </li>
 <li>
-<p>@Then("Simone says {docstring}")
-public void simone_says(String lyrics) { }</p>
+<p>[Then("Simone says {docstring}")]
+public void SimoneSays(string lyrics) { }</p>
 </li>
 <li>
-<p>@Then("Simone says {docstring}")
-public void simone_says(DocString lyrics) { }</p>
+<p>[Then("Simone says {docstring}")]
+public void SimoneSays(DocString lyrics) { }</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Explanation:
-When using a DocString in a scenario, you do not add any parameter to the matching Cucumber Expression. You do need to provide a String parameter to the step definition to receive the contents of the DocString.</p>
+When using a DocString in a scenario, you do not add any parameter to the matching Cucumber Expression. You do need to provide a string parameter to the step definition to receive the contents of the DocString.</p>
 </div>
 </div>
 </div>
@@ -5605,7 +5524,7 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-28 17:37:21 UTC
+Last updated 2021-01-29 10:03:21 UTC
 </div>
 </div>
 <style>
