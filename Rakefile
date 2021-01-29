@@ -23,7 +23,10 @@ task :generate_index_files, [:lang] => [] do |t, args|
           script_files.each { |lesson_script|
             scripts << "include::#{lesson_script}[]\n\n"
 
-            questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
+            questions_file_name = File.join(File.dirname(lesson_script), "questions.#{code}.adoc")
+            if not File.exist?(questions_file_name)
+              questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
+            end
             if File.exist?(questions_file_name)
               scripts << "include::#{questions_file_name}[]\n\n"
             end
