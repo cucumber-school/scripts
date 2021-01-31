@@ -3785,41 +3785,32 @@ Your browser does not support the video tag.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Hear shout
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Shout
 
   Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  <span class="err">To do</span><span class="p">:</span>
+    <span class="err">-</span> <span class="err">only</span> <span class="err">shout</span> <span class="err">to</span> <span class="err">people</span> <span class="err">within</span> <span class="nf">a </span>certain distance
 
   <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
 
     <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
-      <span class="nf">Given </span>the range is 100
-      <span class="nf">And </span>a person named Sean is located at 0
-      <span class="nf">And </span>a person named Lucy is located at 50
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
       <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message
 
-    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different message
-      <span class="nf">Given </span>the range is 100
-      <span class="nf">And </span>a person named Sean is located at 0
-      <span class="nf">And </span>a person named Lucy is located at 50
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a different mesage
+      <span class="nf">Given </span>a person named Lucy
+      <span class="nf">And </span>a person named Sean
       <span class="nf">When </span>Sean shouts <span class="s">"Free coffee!"</span>
       <span class="nf">Then </span>Lucy should hear Sean's message
 
   <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
 
     <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
-      <span class="nf">Given </span>the range is 100
-      <span class="nf">And </span>a person named Sean is located at 0
-      <span class="nf">And </span>a person named Lucy is located at 50
-      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
-      <span class="nf">Then </span>Lucy should hear Sean's message
 
-    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
-      <span class="nf">Given </span>the range is 100
-      <span class="nf">And </span>a person named Sean is located at 0
-      <span class="nf">And </span>a person named Larry is located at 150
-      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
-      <span class="nf">Then </span>Larry should not hear Sean's message</code></pre>
+    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">is</span> <span class="err">out</span> <span class="err">of</span> <span class="err">range</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5575,7 +5566,7 @@ We can specify multiple formatters like this. Only one formatter is allowed to o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-01-29 10:03:21 UTC
+Last updated 2021-01-31 20:47:23 UTC
 </div>
 </div>
 <style>
