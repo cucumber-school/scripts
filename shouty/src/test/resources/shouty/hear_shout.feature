@@ -33,6 +33,7 @@ Feature: Hear shout
 
   Rule: Listener should be able to hear multiple shouts
 
+    @slow
     Scenario: Two shouts
       Given a person named Sean
       And a person named Lucy
@@ -44,6 +45,7 @@ Feature: Hear shout
 
   Rule:  Maximum length of message is 180 characters
 
+    @slow
     Scenario: Message is too long
       Given a person named Sean
       And a person named Lucy

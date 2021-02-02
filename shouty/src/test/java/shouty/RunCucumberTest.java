@@ -5,6 +5,6 @@ import io.cucumber.junit.Cucumber;
 import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(tags="@SHOUTY-11", plugin = {"pretty"}, strict = true)
+@CucumberOptions(tags="not @slow", plugin = {"pretty"}, strict = true)
 public class RunCucumberTest {
 }
