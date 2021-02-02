@@ -5510,25 +5510,46 @@ Hello, and welcome back to Cucumber School.</p>
 <p>In this lesson, we’re going to teach you all about how to configure Cucumber.</p>
 </div>
 <div class="paragraph">
+<p>To start with, let&#8217;s change the output that Cucumber produces to make it easier to see which scenarios have run. Open up package.json and add the pretty-formatter to the dev dependencies. </p>
+</div>
+<div class="listingblock">
+<div class="title">package.json</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="err">Unresolved</span><span class="w"> </span><span class="err">directive</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="mi">06</span><span class="err">/</span><span class="mi">0</span><span class="mf">6.01</span><span class="err">/script.js.adoc</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">include::../code/js/</span><span class="mi">01</span><span class="err">-install-pretty-formatter/package.json</span><span class="p">[</span><span class="err">lines=</span><span class="mi">12</span><span class="err">..</span><span class="mi">17</span><span class="p">]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then, let&#8217;s change the Cucumber script, to tell Cucumber to use the pretty-formatter. </p>
+</div>
+<div class="listingblock">
+<div class="title">package.json</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="err">Unresolved</span><span class="w"> </span><span class="err">directive</span><span class="w"> </span><span class="err">in</span><span class="w"> </span><span class="mi">06</span><span class="err">/</span><span class="mi">0</span><span class="mf">6.01</span><span class="err">/script.js.adoc</span><span class="w"> </span><span class="err">-</span><span class="w"> </span><span class="err">include::../code/js/</span><span class="mi">01</span><span class="err">-install-pretty-formatter/package.json</span><span class="p">[</span><span class="err">lines=</span><span class="mi">7</span><span class="p">]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, let&#8217;s install the pretty-formatter and run Cucumber.  Now every line from the feature file is included in the output, showing which scenarios have been run and the status of every step.</p>
+</div>
+<div class="paragraph">
+<p>When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.</p>
+</div>
+<div class="paragraph">
 <p>
-When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.</p>
+If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.</p>
 </div>
 <div class="paragraph">
-<p>If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.</p>
-</div>
-<div class="paragraph">
-<p>There are several ways to do this in Cucumber - and your IDE may offer other options. We&#8217;ll start by showing some basic filtering on the command line, before showing you some alternatives.</p>
+<p>There are several ways to do this in Cucumber - and your IDE may offer other options. We&#8217;ll start by showing some basic filtering on the command line, before showing you an alternative.</p>
 </div>
 <div class="paragraph">
 <p>Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.</p>
 </div>
 <div class="paragraph">
 <p>
-We can pass arguments to Cucumber using the <code>--name</code> option, which tells Cucumber to only run scenarios with a name matching "Message is too long".</p>
+We can pass arguments to Cucumber using the <code>--name</code> option, which tells Cucumber to only run scenarios with a name that matches the string provided, in this case "Message is too long".</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js --name "Message is too long"</code></pre>
+<pre class="rouge highlight"><code>npm test \-- --name "Message is too long"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5537,11 +5558,8 @@ Let&#8217;s use it to run the two scenarios with the text "range" in their name.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js --name "range"</code></pre>
+<pre class="rouge highlight"><code>npm test \-- --name "range"</code></pre>
 </div>
-</div>
-<div class="paragraph">
-<p>We can accomplish the same thing by adding some configuration to the <code>cucumber.js</code> file, but we&#8217;ll talk about that at the end of the lesson.</p>
 </div>
 <div class="paragraph">
 <p>Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. </p>
@@ -5551,48 +5569,52 @@ Let&#8217;s use it to run the two scenarios with the text "range" in their name.
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js features/hear_shout.feature:44</code></pre>
+<pre class="rouge highlight"><code>npm test \-- features/hear_shout.feature:44</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p></p>
+<p>
+Now Cucumber only runs the "Message is too long" scenario.</p>
 </div>
 <div class="paragraph">
-<p>You can even specify multiple line numbers for each file. Let&#8217;s run 'Two shouts' as well. </p>
+<p>You can also specify multiple line numbers for each file. Let&#8217;s run 'Two shouts' as well. </p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s add that line number to the cucumber-js command. </p>
+<p>Let&#8217;s add that line number to the npm test command. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js features/hear_shout.feature:33:44</code></pre>
+<pre class="rouge highlight"><code>npm test \-- features/hear_shout.feature:33:44</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>You can list several files and lines together like this if you have a specific set of scenarios you want to run.</p>
 </div>
 <div class="paragraph">
-<p>The examples that you&#8217;ve just seen set a Ruby property on the command line. If you&#8217;re working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.</p>
+<p>The examples that you&#8217;ve just seen pass arguments from the command line to the test script defined in package.json. If you&#8217;re working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s look at using a property file to set the system properties. Edit the property file, <code>cucumber.js</code>, that we created in chapter 2  and add <code>default: --name range</code> </p>
 </div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="mi">06</span><span class="o">/</span><span class="mf">06.01</span><span class="o">/</span><span class="nx">script</span><span class="p">.</span><span class="nx">js</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="nx">code</span><span class="o">/</span><span class="nx">js</span><span class="o">/</span><span class="mi">02</span><span class="o">-</span><span class="nx">filter</span><span class="o">-</span><span class="nx">by</span><span class="o">-</span><span class="nx">name</span><span class="o">-</span><span class="nx">using</span><span class="o">-</span><span class="nx">properties</span><span class="o">-</span><span class="nx">file</span><span class="o">/</span><span class="nx">cucumber</span><span class="p">.</span><span class="nx">js</span><span class="p">[</span><span class="nx">lines</span><span class="o">=</span><span class="mi">1</span><span class="p">]</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>When we run Cucumber, it picks up the property setting from the file and only runs the "range" scenarios. </p>
+<p>When we run the tests, it picks up the property setting from the file and only runs the "range" scenarios. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js</code></pre>
+<pre class="rouge highlight"><code>npm test</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The property file is also picked up if you use npm to run Cucumber </p>
+<p>Any argument that can be supplied on the command line can also be provided in the properties file. The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.</p>
 </div>
 <div class="paragraph">
-<p>The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.</p>
-</div>
-<div class="paragraph">
-<p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using property files.</p>
+<p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using the Cucumber property file.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5891,7 +5913,7 @@ node_modules/.bin/cucumber-js -h</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-02 09:40:07 UTC
+Last updated 2021-02-02 10:55:35 UTC
 </div>
 </div>
 <style>
