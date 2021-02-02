@@ -7,22 +7,17 @@ The challenge is making sure that this documentation is easily available. Featur
 
 Since Cucumber-JVM 6.6.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. shot::[2, go to reports.cucumber.io]
 
-Ensure that you're using Cucumber-JVM 6.6.0 or later shot::[3, show pom.xml file] and run Cucumber. shot::[4, run Cucumber]. Cucumber helpfully prints out a banner telling you how to publish your results to Cucumber Reports shot::[5, highlight banner].
+Ensure that you're using Cucumber-JVM 6.6.0 or later shot::[3, show pom.xml file] and run Cucumber. shot::[4, "mvn test"]. At the time of recording, the IntelliJ plugin doesn't support Cucumber 6, so we have to use Maven. Cucumber helpfully prints out a banner telling you how to publish your results to Cucumber Reports shot::[5, highlight banner].
 
 Let's follow the instructions from the Cucumber Reports website and set `cucumber.publish.enabled` to `true` shot::[6]. Now we can run Cucumber again and we get a different banner output shot:[]. The unique URL in this banner is the address of your published report shot::[7, highlight URL].
 
 shot::[8, follow URL]
-Open the URL and you'll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report.
+Open the URL and you'll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered shot::[9]
 
-//CLAIM
-You might have noticed the warning in the banner that says the report will be deleted after 24 hours. shot::[9, highlight warning] To prevent a report from being deleted, it has to be associated with an authenticated account.
+You might have noticed the warning in the banner that says the report will "self-destruct". shot::[10, highlight warning] To prevent a report from being deleted, it has to be associated with an authenticated account.
 
-Follow the link in the report to authenticate your account shot::[10] At the time of writing this lesson, the only supported authentication mechanism is GitHub. You can then retrieve your Cucumber Reports publish token shot::[11]. Reports associated with a publish token will be kept until explicitly deleted. shot::[12]
+Follow the link in the report to authenticate your account shot::[11] You can then retrieve your Cucumber Reports publish token shot::[12]. Reports associated with a publish token will be kept until explicitly deleted.
 
-//CI
-If you publish reports from a recognised CI server, then extra information is gathered shot::[13]
-
-//FUTURE
 And there will be many more useful features coming in the coming months.
 
 

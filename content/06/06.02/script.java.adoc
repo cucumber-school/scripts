@@ -5,7 +5,7 @@ In the previous lesson, we ran Cucumber using Maven. Maven doesn't actually know
 
 As you can see, there's not much in the Cucumber Runner class, but you can control how Cucumber runs by using the @CucumberOptions annotation. shot::[2, highlight annotation] We'll use this to show you how to filter using tags.
 
-First, let's delete the contents if cucumber.properties. shot::[3] Now, Cucumber will run all scenarios. shot::[4, run Cucumber from IntelliJ]
+First, let's delete the contents if cucumber.properties. shot::[3] Now, Cucumber will run all scenarios. shot::[4, run Cucumber from IntelliJ by right clicking on RunCucumberTests]
 
 shot::[5, "show 'Listener is out of range' scenario"]
 We’ll put a focus tag right here, above this scenario. shot::[6, "add a @focus tag to the 'Listener is out of range' scenario"] Tags start with an at-sign and are case sensitive.
@@ -42,6 +42,8 @@ You can use more complex tag expressions to select the scenarios you want to run
 ----
 @CucumberOptions(tags="not @slow")
 ----
+
+Let's tidy up be removing the tag filter from CucumberOptions. shot::[]
 
 You can read about how to build more complicated tag expressions on the https://cucumber.io/docs/cucumber/api/#tag-expressions[Cucumber website] shot::[15, "open the link and show the Cucumber website"]
 

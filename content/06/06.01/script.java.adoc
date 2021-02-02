@@ -7,7 +7,7 @@ Last time we learned about two very different kinds of loops. First, we used Dat
 
 Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to build the right thing while the inner loop helps you build the thing right.
 
-In this lesson, we’re going to teach you all about how to configure Cucumber.
+In this lesson, we’re going to teach you all about how to work effectively with Cucumber.
 
 shot::[2, "Scroll through shout.feature, end by showing scenario 'Message too long'"]
 When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.
@@ -39,7 +39,7 @@ We can use that line number when we run Cucumber. shot::[6, "add entry to mvn co
 
 [source]
 ----
-mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:44
+mvn test -Dcucumber.features="src/test/resources/shouty/hear_shout.feature:44"
 ----
 
 shot::[6, "type mvn command in console, show output and highlight that it has only run the scenario called 'Message too long'"]
