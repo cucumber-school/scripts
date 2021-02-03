@@ -5829,6 +5829,12 @@ We can pass arguments to Cucumber using the property cucumber.options. The name 
 <div class="paragraph">
 <p>Let&#8217;s look at using a property file to set the system properties. Create a property file called cucumber.properties in src/test/resource  and add the line <code>cucumber.filter.name=range</code> </p>
 </div>
+<div class="listingblock">
+<div class="title">cucumber.properties</div>
+<div class="content">
+<pre class="rouge highlight"><code>cucumber.filter.name=range</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. </p>
 </div>
@@ -5860,7 +5866,16 @@ In the previous lesson, we ran Cucumber using Maven. Maven doesn&#8217;t actuall
 <p>As you can see, there&#8217;s not much in the Cucumber Runner class, but you can control how Cucumber runs by using the @CucumberOptions annotation.  We&#8217;ll use this to show you how to filter using tags.</p>
 </div>
 <div class="paragraph">
-<p>First, let&#8217;s delete the contents if cucumber.properties.  Now, Cucumber will run all scenarios. </p>
+<p>First, let&#8217;s delete the contents of cucumber.properties. </p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.properties</div>
+<div class="content">
+<pre class="rouge highlight"><code></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, Cucumber will run all scenarios. </p>
 </div>
 <div class="paragraph">
 <p>
@@ -5870,8 +5885,9 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>Now let&#8217;s add a tag expression to the @CucumberOptions annotation, which Cucumber will use to filter the scenarios run</p>
 </div>
 <div class="listingblock">
+<div class="title">RunCucumberTest.java</div>
 <div class="content">
-<pre class="rouge highlight"><code>@CucumberOptions(tags="@focus")</code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"@focus"</span><span class="o">,</span> <span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5887,8 +5903,9 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control.  Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. </p>
 </div>
 <div class="listingblock">
+<div class="title">RunCucumberTest.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"@smoke"</span><span class="o">)</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"@smoke"</span><span class="o">,</span> <span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5898,18 +5915,82 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>Tags give you a way to organise your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.</p>
 </div>
 <div class="paragraph">
-<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top.  All the scenarios within that file now inherit that tag, so if we change the tag expression in @CucumberOptions, Cucumber will run all the scenarios in the feature file. </p>
-</div>
-<div class="paragraph">
-<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow.  Then rewrite the tag expression in CucumberOptions using the <code>not</code> keyword  Now when you run Cucumber, the "@slow" scenarios won&#8217;t be run. </p>
+<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. </p>
 </div>
 <div class="listingblock">
+<div class="title">hear_shout.feature</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"not @slow"</span><span class="o">)</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="nt">@SHOUTY-11</span>
+<span class="kd">Feature</span><span class="p">:</span> <span class="err">Hear</span> <span class="err">shout</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>All the scenarios within that file now inherit that tag, so if we change the tag expression in @CucumberOptions, </p>
+</div>
+<div class="listingblock">
+<div class="title">RunCucumberTest.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"@SHOUTY-11"</span><span class="o">,</span> <span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cucumber will run all the scenarios in the feature file. </p>
+</div>
+<div class="paragraph">
+<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. </p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">should</span> <span class="err">be</span> <span class="err">able</span> <span class="err">to</span> <span class="err">hear</span> <span class="err">multiple</span> <span class="err">shouts</span>
+
+    <span class="nt">@slow</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free bagels!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast!</span>  <span class="p">|</span>
+
+  <span class="err">Rule</span><span class="p">:</span>  <span class="err">Maximum</span> <span class="err">length</span> <span class="err">of</span> <span class="err">message</span> <span class="err">is</span> <span class="err">180</span> <span class="err">characters</span>
+
+    <span class="nt">@slow</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Message is too long
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts the following message
+        <span class="s">"""
+        This is a really long message
+        so long in fact that I am not going to
+        be allowed to send it, at least if I keep
+        typing like this until the length is over
+        the limit of 180 characters.
+        """</span>
+      <span class="nf">Then </span>Lucy should not hear a shout</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then rewrite the tag expression in CucumberOptions using the <code>not</code> keyword </p>
+</div>
+<div class="listingblock">
+<div class="title">RunCucumberTest.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"not @slow"</span><span class="o">,</span> <span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when you run Cucumber, the "@slow" scenarios won&#8217;t be run. </p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s tidy up be removing the tag filter from CucumberOptions. </p>
+</div>
+<div class="listingblock">
+<div class="title">RunCucumberTest.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>You can read about how to build more complicated tag expressions on the <a href="https://cucumber.io/docs/cucumber/api/#tag-expressions">Cucumber website</a> </p>
@@ -5946,7 +6027,8 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>Now create a new feature file in src/test/resources called cat.feature </p>
 </div>
 <div class="paragraph">
-<p>The first line tells Cucumber which language the feature file is written in. </p>
+<p>The first line tells Cucumber which language the feature file is written in. 
+.cat.feature</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5957,10 +6039,9 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>Cucumber then expects the Gherkin keywords to be in LOLCAT </p>
 </div>
 <div class="listingblock">
+<div class="title">cat.feature</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="c"># language: en-lol</span>
-
-<span class="kd">OH HAI</span><span class="p">:</span> HEAR SHOUT
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">OH HAI</span><span class="p">:</span> HEAR SHOUT
 
   <span class="kn">MISHUN</span><span class="p">:</span> MESAGE IZ 2 LONG
     <span class="nf">I </span>CAN HAZ A KAT CALLD SHOUTR</code></pre>
@@ -5970,8 +6051,9 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>The step is undefined, but we can quickly generate it by running Cucumber  Cucumber has generated a step definition name in 'snake case' - each word separated by an underscore.  Although we prefer this naming convention for test names, it&#8217;s more idiomatic to use camel case naming in Java. Let&#8217;s add a line to our property file. </p>
 </div>
 <div class="listingblock">
+<div class="title">cucumber.properties</div>
 <div class="content">
-<pre class="rouge highlight"><code>cucumber.snippet-type=camelcase</code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="n">cucumber</span><span class="o">.</span><span class="na">snippet</span><span class="o">-</span><span class="n">type</span><span class="o">=</span><span class="n">camelcase</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5987,8 +6069,10 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>To do this, set the cucumber.execution.order propoerty in the property file </p>
 </div>
 <div class="listingblock">
+<div class="title">cucumber.properties</div>
 <div class="content">
-<pre class="rouge highlight"><code>cucumber.execution.order=random</code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="n">cucumber</span><span class="o">.</span><span class="na">snippet</span><span class="o">-</span><span class="n">type</span><span class="o">=</span><span class="n">camelcase</span>
+<span class="n">cucumber</span><span class="o">.</span><span class="na">execution</span><span class="o">.</span><span class="na">order</span><span class="o">=</span><span class="n">random</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6043,15 +6127,20 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 <div class="listingblock">
 <div class="title">RunCucumberTests.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="c1">//include::../code/java/00--step00-initial-checkin/shouty/src/test/java/shouty/RunCucumberTests.java[lines=8..10]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RunCucumberTest</span> <span class="o">{</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s delete that. </p>
 </div>
 <div class="listingblock">
+<div class="title">RunCucumberTests.java</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">()</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RunCucumberTest</span> <span class="o">{</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6105,8 +6194,30 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 <div class="paragraph">
 <p>The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. .</p>
 </div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@slow</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free cupcakes!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>While we&#8217;re at it, let&#8217;s put the <code>pretty</code> plugin back in @CucumberOptions. .</p>
+<p>While we&#8217;re at it, let&#8217;s put the <code>pretty</code> plugin back in @CucumberOptions. </p>
+</div>
+<div class="listingblock">
+<div class="title">RunCucumberTests.java</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RunCucumberTest</span> <span class="o">{</span>
+<span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s run Maven again using the <code>rerun</code> plugin writing its output to <code>rerun.txt</code>. </p>
@@ -6120,7 +6231,8 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 <p>We can see in the console that the <code>Two shouts</code> scenario has failed. </p>
 </div>
 <div class="paragraph">
-<p>Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed!  And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
+<p>
+Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed!  And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
 </div>
 <div class="paragraph">
 <p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file, preceded by the <code>@</code> (at) sign. </p>
@@ -6131,7 +6243,24 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let&#8217;s fix the scenario  and rerun the failing scenario again </p>
+<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let&#8217;s fix the scenario </p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@slow</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free bagels!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and rerun the failing scenario again </p>
 </div>
 <div class="paragraph">
 <p>Great. We&#8217;re back to green again.</p>
@@ -6153,7 +6282,18 @@ In the last lesson we saw the output generated by the HTML plugin. This is a gre
 <p>Ensure that you&#8217;re using Cucumber-JVM 6.6.0 or later  and run Cucumber. . At the time of recording, the IntelliJ plugin doesn&#8217;t support Cucumber 6, so we have to use Maven. Cucumber helpfully prints out a banner telling you how to publish your results to Cucumber Reports .</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s follow the instructions from the Cucumber Reports website and set <code>cucumber.publish.enabled</code> to <code>true</code> . Now we can run Cucumber again and we get a different banner output shot:[]. The unique URL in this banner is the address of your published report .</p>
+<p>Let&#8217;s follow the instructions from the Cucumber Reports website and set <code>cucumber.publish.enabled</code> to <code>true</code> .</p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.properties</div>
+<div class="content">
+<pre class="rouge highlight"><code>cucumber.snippet-type=camelcase
+cucumber.execution.order=random
+cucumber.publish.enabled=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can run Cucumber again and we get a different banner output shot:[]. The unique URL in this banner is the address of your published report .</p>
 </div>
 <div class="paragraph">
 <p>
@@ -6166,7 +6306,22 @@ Open the URL and you&#8217;ll find your report published in the same format as t
 <p>Follow the link in the report to authenticate your account  You can then retrieve your Cucumber Reports publish token . Reports associated with a publish token will be kept until explicitly deleted.</p>
 </div>
 <div class="paragraph">
-<p>And there will be many more useful features coming in the coming months.</p>
+<p>During development you probably won&#8217;t want to publish a report after every build&#8230;&#8203; and you might prefer not to see the banner output telling you about Cucumber Reports. Let&#8217;s fix this in the properties file by removing the cucumber.publish.enable property and adding the cucumber.publish.quiet property:</p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.properties</div>
+<div class="content">
+<pre class="rouge highlight"><code>cucumber.snippet-type=camelcase
+cucumber.execution.order=random
+cucumber.publish.quiet=true</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>
+Now when we run Cucumber, no report is published and no banner advertising Cucumber Reports is output.</p>
+</div>
+<div class="paragraph">
+<p>Cucumber Reports is under active development, so expect to see many more useful features coming in the coming months.</p>
 </div>
 </div>
 </div>
@@ -6180,7 +6335,7 @@ Open the URL and you&#8217;ll find your report published in the same format as t
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-02 15:31:12 UTC
+Last updated 2021-02-03 10:29:47 UTC
 </div>
 </div>
 <style>
