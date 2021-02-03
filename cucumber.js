@@ -1,1 +1,1 @@
-module.exports = { default: '--publish-quiet --tags @focus' }
+module.exports = { default: '--publish-quiet --tags @smoke' }

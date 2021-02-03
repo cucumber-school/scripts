@@ -4,6 +4,7 @@ Feature: Hear shout
 
   Rule: Shouts can be heard by other users
 
+    @smoke
     Scenario: Listener hears a message
       Given a person named Sean
       And a person named Lucy
@@ -12,6 +13,7 @@ Feature: Hear shout
 
   Rule: Shouts should only be heard if listener is within range
 
+    @smoke
     Scenario: Listener is within range
       Given the range is 100
       And people are located at
@@ -20,7 +22,7 @@ Feature: Hear shout
       When Sean shouts
       Then Lucy should hear a shout
 
-    @Focus
+    @smoke @Focus
     Scenario: Listener is out of range
       Given the range is 100
       And people are located at
