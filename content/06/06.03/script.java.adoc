@@ -21,30 +21,26 @@ mvn exec:java -Dexec.mainClass=io.cucumber.core.cli.Main -Dexec.classpathScope=t
 Now create a new feature file in src/test/resources called cat.feature shot::[3]
 
 The first line tells Cucumber which language the feature file is written in. shot::[4]
-[source, gherkin]
+.cat.feature
+[source,gherkin]
 ----
-# language: en-lol
+include::../code/java/08-add-lolcat-feature/shouty/src/test/resources/shouty/cat.feature[lines=1]
 ----
 
 Cucumber then expects the Gherkin keywords to be in LOLCAT shot::[5]
 
-[source, gherkin]
+.cat.feature
+[source,gherkin]
 ----
-# language: en-lol
-
-OH HAI: HEAR SHOUT
-
-  MISHUN: MESAGE IZ 2 LONG
-    I CAN HAZ A KAT CALLD SHOUTR
-
-
+include::../code/java/08-add-lolcat-feature/shouty/src/test/resources/shouty/cat.feature[lines=3..]
 ----
 
 The step is undefined, but we can quickly generate it by running Cucumber shot::[6, run new scenario] Cucumber has generated a step definition name in 'snake case' - each word separated by an underscore. shot::[7, "highlight stepdef name"] Although we prefer this naming convention for test names, it's more idiomatic to use camel case naming in Java. Let's add a line to our property file. shot::[8, "add 'cucumber.snippet-type=camelcase'"]
 
-[source]
+.cucumber.properties
+[source,java]
 ----
-cucumber.snippet-type=camelcase
+include::../code/java/09-choose-camelcase-snippet-generation/shouty/src/test/resources/cucumber.properties[]
 ----
 
 Now when we run Cucumber shot::[9], the snippet method name is generated in CamelCase. Implementing step definitions in non-english languages is exactly the same, so we won't go any further with LOLCAT just now. Let's delete the cat.feature file shot::[10] and check that we're still green shot::[11]
@@ -56,15 +52,13 @@ Each scenario should be isolated - it's result should not depend on the outcome 
 
 To do this, set the cucumber.execution.order propoerty in the property file shot::[13, "add line to cucumber.properties"]
 
-[source]
+.cucumber.properties
+[source,java]
 ----
-cucumber.execution.order=random
+include::../code/java/11-randomise-scenario-execution-order/shouty/src/test/resources/cucumber.properties[]
 ----
 
 Now when we run Cucumber, the scenarios are run in a random order shot::[14, run Cucumber & show new order of scenario execution]. Now there's almost no chance of a dependency between scenarios slipping through without being noticed.
-
-
-
 
 shot::[15, "show 'List configuration options' section of website"]
 A full list of Cucumber's configuration properties can be found on the https://cucumber.io/docs/cucumber/api/#options[Cucumber website]. shot::[16, show list of properties on website] There's also a help page included with Cucumber, which can be printed using Maven. shot::[17, "run maven in console, highlight the OPTIONS help text"]. This lists both the names of the command line options shot::[18, highlight top of output] and the system properties shot::[19, scroll down output]

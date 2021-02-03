@@ -29,13 +29,15 @@ You probably noticed that we still got the `pretty` output in the console. That'
 .RunCucumberTests.java
 [source,java]
 ----
-//include::../code/java/00--step00-initial-checkin/shouty/src/test/java/shouty/RunCucumberTests.java[lines=8..10]
+include::../code/java/11-randomise-scenario-execution-order/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8..10]
 ----
 
 Let's delete that. shot::[7, remove pretty plugin]
+
+.RunCucumberTests.java
 [source,java]
 ----
-@CucumberOptions()
+include::../code/java/12-remove-pretty-formatter/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8..10]
 ----
 
 and run maven again. shot::[8,run maven in console] Notice that this time the only console output is a summary of the number of tests being run. There's no `pretty` output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.
@@ -81,8 +83,19 @@ The JUnit XML has been written to a file. shot::[14, open junit.xml in the IDE]
 
 The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. shot::[15, edit the step When Sean shouts 'Free bagels!' -> 'Free cupcakes!'].
 
-While we're at it, let's put the `pretty` plugin back in @CucumberOptions. shot::[16, undo earlier edit so we're left with @CucumberOptions(plugin = {"pretty"}')
-].
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/13-introduce-an-error/shouty/src/test/resources/shouty/hear_shout.feature[lines=35..44]
+----
+
+While we're at it, let's put the `pretty` plugin back in @CucumberOptions. shot::[16, undo earlier edit]
+
+.RunCucumberTests.java
+[source,java]
+----
+include::../code/java/13-introduce-an-error/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8..10]
+----
 
 Now let's run Maven again using the `rerun` plugin writing its output to `rerun.txt`. shot::[17, run maven from console]
 
@@ -93,7 +106,8 @@ mvn test -Dcucumber.plugin="rerun:target/rerun.txt"
 
 We can see in the console that the `Two shouts` scenario has failed. shot::[18, scroll to show failure]
 
-Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! shot::[19, open target/rerun.txt] And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
+shot::[19, open target/rerun.txt]
+Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed!  And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
 
 This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file, preceded by the `@` (at) sign. shot::[20, "run maven from console, highlighting `pretty` output showing only failing scenario"]
 
@@ -102,7 +116,15 @@ This is really useful when you have a few failing scenarios and you want to re-r
 mvn test -Dcucumber.features="@target/rerun.txt"
 ----
 
-This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let's fix the scenario shot::[21, undo change in feature file] and rerun the failing scenario again shot::[20, "run maven from console"]
+This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let's fix the scenario shot::[21, undo change in feature file]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/14-fix-error/shouty/src/test/resources/shouty/hear_shout.feature[lines=35..44]
+----
+
+and rerun the failing scenario again shot::[20, "run maven from console"]
 
 Great. We're back to green again.
 

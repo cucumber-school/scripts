@@ -59,6 +59,12 @@ The examples that you've just seen use the -D option to set a Java system proper
 
 Let's look at using a property file to set the system properties. Create a property file called cucumber.properties in src/test/resource shot::[4a] and add the line `cucumber.filter.name=range` shot::[4b]
 
+.cucumber.properties
+[source]
+----
+include::../code/java/01-filter-by-name-using-properties-file/shouty/src/test/resources/cucumber.properties[]
+----
+
 When we run maven, Cucumber picks up the property setting from the file and only runs the "range" scenarios. shot::[4c, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
 
 [source]
@@ -69,6 +75,7 @@ mvn test
 The property file is also picked up if you run Cucumber from within your IDE shot::[4ca, use IntelliJ to run all scenarios in `hear_shout.feature` and then highlight that only the range scenarios have been run]
 
 The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.
+
 
 The final thing I want to show you in this lesson is how to run a single scenario directly from IntelliJ. Click on the green triangle to the left of the scenario name and select "Run Scenario:" shot::[9,"click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'"]
 

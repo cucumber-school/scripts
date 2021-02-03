@@ -5,16 +5,25 @@ In the previous lesson, we ran Cucumber using Maven. Maven doesn't actually know
 
 As you can see, there's not much in the Cucumber Runner class, but you can control how Cucumber runs by using the @CucumberOptions annotation. shot::[2, highlight annotation] We'll use this to show you how to filter using tags.
 
-First, let's delete the contents if cucumber.properties. shot::[3] Now, Cucumber will run all scenarios. shot::[4, run Cucumber from IntelliJ by right clicking on RunCucumberTests]
+First, let's delete the contents of cucumber.properties. shot::[3]
+
+.cucumber.properties
+[source]
+----
+include::../code/java/02-remove-properties-filter/shouty/src/test/resources/cucumber.properties[]
+----
+
+Now, Cucumber will run all scenarios. shot::[4, run Cucumber from IntelliJ by right clicking on RunCucumberTests]
 
 shot::[5, "show 'Listener is out of range' scenario"]
 We’ll put a focus tag right here, above this scenario. shot::[6, "add a @focus tag to the 'Listener is out of range' scenario"] Tags start with an at-sign and are case sensitive.
 
 Now let's add a tag expression to the @CucumberOptions annotation, which Cucumber will use to filter the scenarios run
 
-[source]
+.RunCucumberTest.java
+[source,java]
 ----
-@CucumberOptions(tags="@focus")
+include::../code/java/03-filter-by-tag-in-cucumber-options/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8]
 ----
 
 Now we can run only the scenarios tagged with focus - there should be only one... shot::[7, "run RunCucumberTest.java from IntelliJ, then highlight that only 'Listener is out of range' scenario was run"]
@@ -25,25 +34,60 @@ It’s entirely up to you what you name your tags. When we’re working on a par
 
 Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. shot::[8, tag first and third scenario with @smoke] Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. shot::[9, "run RunCucumberTest.java from IntelliJ, then highlight that only first and third scenarios were run"]
 
-[source, java]
+.RunCucumberTest.java
+[source,java]
 ----
-@CucumberOptions(tags="@smoke")
+include::../code/java/04-another-tag-example/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8]
 ----
 
 If you’re running Cucumber on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests.
 
 Tags give you a way to organise your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.
 
-Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. shot::[10, tag feature with @SHOUTY-11] All the scenarios within that file now inherit that tag, so if we change the tag expression in @CucumberOptions, Cucumber will run all the scenarios in the feature file. shot::[11, "run RunCucumberTest.java from IntelliJ, then show that all scenarios were run"]
+Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. shot::[10, tag feature with @SHOUTY-11]
 
-You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. shot::[12, "tag last two scenarios with @slow""] Then rewrite the tag expression in CucumberOptions using the `not` keyword shot::[13, "modify CucumberOptions] Now when you run Cucumber, the "@slow" scenarios won't be run. shot::[14, "run RunCucumberTest.java from IntelliJ, then show that the slow scenarios were not run"]
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/05-tag-whole-feature-file/shouty/src/test/resources/shouty/hear_shout.feature[lines=1..2]
+----
 
-[source, java]
+All the scenarios within that file now inherit that tag, so if we change the tag expression in @CucumberOptions, shot::[10, change CucumberOptions filter to @SHOUTY-11]
+
+.RunCucumberTest.java
+[source,java]
 ----
-@CucumberOptions(tags="not @slow")
+include::../code/java/05-tag-whole-feature-file/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8]
 ----
+
+
+Cucumber will run all the scenarios in the feature file. shot::[11, "run RunCucumberTest.java from IntelliJ, then show that all scenarios were run"]
+
+You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. shot::[12, "tag last two scenarios with @slow""]
+
+.hear_shout.feature
+[source,gherkin]
+----
+include::../code/java/06-logical-tag-expression/shouty/src/test/resources/shouty/hear_shout.feature[lines=34..]
+----
+
+Then rewrite the tag expression in CucumberOptions using the `not` keyword shot::[13, "modify CucumberOptions]
+
+.RunCucumberTest.java
+[source,java]
+----
+include::../code/java/06-logical-tag-expression/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8]
+----
+
+Now when you run Cucumber, the "@slow" scenarios won't be run. shot::[14, "run RunCucumberTest.java from IntelliJ, then show that the slow scenarios were not run"]
 
 Let's tidy up be removing the tag filter from CucumberOptions. shot::[]
+
+.RunCucumberTest.java
+[source,java]
+----
+include::../code/java/07-remove-logical-tag-filter/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8]
+----
 
 You can read about how to build more complicated tag expressions on the https://cucumber.io/docs/cucumber/api/#tag-expressions[Cucumber website] shot::[15, "open the link and show the Cucumber website"]
 
