@@ -1,1 +1,1 @@
-module.exports = { default: '--publish-quiet --name range' }
+module.exports = { default: '--publish-quiet' }
