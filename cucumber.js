@@ -1,1 +1,1 @@
-module.exports = { default: '--publish-quiet --tags "not @slow"' }
+module.exports = { default: '--publish-quiet' }
