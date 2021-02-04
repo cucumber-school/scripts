@@ -3,13 +3,23 @@ include::./title.adoc[]
 shot::[1]
 In the previous lesson, we modified Cucumber's behavior using scenario names and line numbers. In this lesson I'm going to show you how to filter scenarios using tags.
 
-First, let's delete the `--name` parameter from `cucumber.js`. shot::[3] Now, Cucumber will run all scenarios. shot::[4, run Cucumber from IntelliJ]
+First, let's delete the `--name` parameter from `cucumber.js`. shot::[3]
+
+Now, Cucumber will run all scenarios. shot::[4, run Cucumber from IntelliJ]
 
 shot::[6, "show 'Listener is out of range' scenario"]
-We’ll put a focus tag right here, above this scenario. shot::[7, "add a @focus tag to the 'Listener is out of range' scenario"] Tags start with an at-sign and are case sensitive.
+We’ll put a focus tag right here, above this scenario. shot::[7, "add a @focus tag to the 'Listener is out of range' scenario"]
+
+.hear-shout.feature
+[source,gherkin]
+----
+----
+
+Tags start with an at-sign and are case sensitive.
 
 Now let's add a tag expression to the default key, which Cucumber will use to filter the scenarios run
 
+.cucumber.js
 [source,yaml]
 ----
 module.exports = {
@@ -34,13 +44,13 @@ module.exports = {
 }
 ----
 
-If you’re running Cucumber on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests.
+If you’re running Cucumber on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests locally.
 
 Tags give you a way to organise your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.
 
 Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. shot::[11, tag feature with @SHOUTY-11] All the scenarios within that file now inherit that tag, so if we change the tag expression in @CucumberOptions, Cucumber will run all the scenarios in the feature file. shot::[12, "run Cucumber, then show that all scenarios were run"]
 
-You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. shot::[13, "tag last two scenarios with @slow""] Then rewrite the tag expression in CucumberOptions using the `not` keyword shot::[14, "modify Cucumber.JS] Now when you run Cucumber, the "@slow" scenarios won't be run. shot::[15, "run Cucumber, then show that the slow scenarios were not run"]
+You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. shot::[13, "tag last two scenarios with @slow""] Then rewrite the tag expression in cucumber.js using the `not` keyword shot::[14, "modify Cucumber.JS]
 
 
 [source, js]
@@ -48,6 +58,16 @@ You can use more complex tag expressions to select the scenarios you want to run
 module.exports = {
   default: '--publish-quiet --tags not @slow'
 }
+----
+
+Now when you run Cucumber, the "@slow" scenarios won't be run. shot::[15, "run Cucumber, then show that the slow scenarios were not run"]
+
+Let's tidy up be removing the tag filter from cucumber.js. shot::[]
+
+.cucumber.js
+[source,java]
+----
+include::../code/
 ----
 
 You can read about how to build more complicated tag expressions on the https://cucumber.io/docs/cucumber/api/#tag-expressions[Cucumber website] shot::[17, "open the link and show the Cucumber website"]

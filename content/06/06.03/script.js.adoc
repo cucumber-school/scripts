@@ -6,7 +6,7 @@ You can get a list of all the supported languages with --i18n-languages. shot::[
 
 [source]
 ----
-node_modules/.bin/cucumber-js --i18n-languages
+npm test \-- --i18n-languages
 ----
 
 Cucumber supports over 70 different languages, thanks to contributions from people from all over the world.
@@ -15,10 +15,10 @@ To see the translation of the Gherkin keywords for a particular language, just u
 
 [source]
 ----
-node_modules/.bin/cucumber-js --i18n-keywords en-lol
+npm test \-- --i18n-keywords en-lol
 ----
 
-Now create a new feature file in src/test/resources called cat.feature shot::[3]
+Now create a new feature file in the features folder called cat.feature shot::[3]
 
 The first line tells Cucumber which language the feature file is written in. shot::[4]
 [source, gherkin]
@@ -40,9 +40,9 @@ OH HAI: HEAR SHOUT
 
 ----
 
-The step is undefined, but we can quickly generate it by running Cucumber shot::[6, run new scenario] Cucumber has generated a step definition.
+The step is undefined, but we can quickly generate it by running Cucumber shot::[6, npm test] Cucumber has generated a step definition. Implementing step definitions in non-english languages is exactly the same, so we won't go any further with LOLCAT just now. Let's delete the cat.feature file shot::[10] and check that we're still green shot::[11]
 
-Notice that the scenarios have been run in the order that the occur in the feature file shot::[7, expand/highlight the test results] That's fine, but there's a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.
+Notice that the scenarios in hear_shout.feature are being run in the order that the occur in the feature file shot::[7, expand/highlight the test results] That's fine, but there's a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.
 
 Each scenario should be isolated - it's result should not depend on the outcome of any other scenario. To help you catch any dependencies between your scenarios, Cucumber can be told to run your scenarios in a random order.
 

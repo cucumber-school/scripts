@@ -45,7 +45,7 @@ include::../code/java/09-choose-camelcase-snippet-generation/shouty/src/test/res
 
 Now when we run Cucumber shot::[9], the snippet method name is generated in CamelCase. Implementing step definitions in non-english languages is exactly the same, so we won't go any further with LOLCAT just now. Let's delete the cat.feature file shot::[10] and check that we're still green shot::[11]
 
-Notice that the scenarios have been run in the order that the occur in the feature file shot::[12, expand/highlight the test results] That's fine, but there's a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.
+Notice that the scenarios in hear_shout.feature are being run in the order that the occur in the feature file shot::[12, expand/highlight the test results] That's fine, but there's a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.
 
 Each scenario should be isolated - it's result should not depend on the outcome of any other scenario. To help you catch any dependencies between your scenarios, Cucumber can be told to run your scenarios in a random order.
 

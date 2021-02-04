@@ -25,11 +25,20 @@ Then, let's change the Cucumber script, to tell Cucumber to use the pretty-forma
 include::../code/js/01-install-pretty-formatter/package.json[lines=7]
 ----
 
-Finally, let's install the pretty-formatter and run Cucumber. shot::[1c, "npm install then npm test"] Now every line from the feature file is included in the output, showing which scenarios have been run and the status of every step.
+Finally, let's install the pretty-formatter and run Cucumber. shot::[1c, "npm install then npm test"]
+
+[source]
+----
+npm install
+
+npm test
+----
+
+shot::[2, "Scroll slowly through the output to show all scenarios"]
+Now every line from the feature file is included in the output, showing which scenarios have been run and the status of every step.
 
 When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.
 
-shot::[2, "Scroll through the output to show how distracting it can be"]
 If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.
 
 There are several ways to do this in Cucumber - and your IDE may offer other options. We'll start by showing some basic filtering on the command line, before showing you an alternative.
@@ -38,6 +47,8 @@ Probably the easiest way to filter is to tell Cucumber to run only a scenario wi
 
 shot::[3, "type npm test command in console, show output and highlight that it has only run the one scenario 'Message too long'"]
 We can pass arguments to Cucumber using the `--name` option, which tells Cucumber to only run scenarios with a name that matches the string provided, in this case "Message is too long".
+
+// FEDE - the character sequence "\--" used in this adoc script gets rendered as "--" and that is what should be typed in at the command line!
 
 [source]
 ----
