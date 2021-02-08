@@ -5827,7 +5827,7 @@ We can pass arguments to Cucumber using the property cucumber.options. The name 
 <p>The examples that you&#8217;ve just seen use the -D option to set a Java system property on the command line. If you&#8217;re working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s look at using a property file to set the system properties. Create a property file called cucumber.properties in src/test/resource <a href="#shot-960" id="shot-960" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4a</a> and add the line <code>cucumber.filter.name=range</code> <a href="#shot-961" id="shot-961" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4b</a></p>
+<p>Let&#8217;s look at using a property file to set the system properties. Create a property file called cucumber.properties in src/test/resources (or open it if it already exists in your project). <a href="#shot-960" id="shot-960" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4a</a> Add the line <code>cucumber.filter.name=range</code> <a href="#shot-961" id="shot-961" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4b</a></p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.properties</div>
@@ -5850,7 +5850,7 @@ We can pass arguments to Cucumber using the property cucumber.options. The name 
 <p>The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.</p>
 </div>
 <div class="paragraph">
-<p>The final thing I want to show you in this lesson is how to run a single scenario directly from IntelliJ. Click on the green triangle to the left of the scenario name and select "Run Scenario:" <a href="#shot-964" id="shot-964" title="click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'</a></p>
+<p>The final thing I want to show you in this lesson is how to run a single scenario directly from IntelliJ. Right click on the scenario and select "Run Scenario:" <a href="#shot-964" id="shot-964" title="right click, show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: right click, show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'</a></p>
 </div>
 <div class="paragraph">
 <p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using property files.</p>
@@ -5866,7 +5866,7 @@ In the previous lesson, we ran Cucumber using Maven. Maven doesn&#8217;t actuall
 <p>As you can see, there&#8217;s not much in the Cucumber Runner class, but you can control how Cucumber runs by using the @CucumberOptions annotation. <a href="#shot-966" id="shot-966" title="highlight annotation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: highlight annotation</a> We&#8217;ll use this to show you how to filter using tags.</p>
 </div>
 <div class="paragraph">
-<p>First, let&#8217;s delete the contents of cucumber.properties. <a href="#shot-967" id="shot-967" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a></p>
+<p>First, let&#8217;s remove the filter from cucumber.properties. <a href="#shot-967" id="shot-967" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3</a> I&#8217;ll explain the cucumber.publish.quiet property later in this chapter.</p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.properties</div>
@@ -6220,26 +6220,26 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s run Maven again using the <code>rerun</code> plugin writing its output to <code>rerun.txt</code>. <a href="#shot-1015" id="shot-1015" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: run maven from console</a></p>
+<p>Now let&#8217;s run Maven again using the <code>rerun</code> plugin writing its output to a file whose name is preceded by the <code>@</code> (at) sign. Let&#8217;s call it <code>@rerun.txt</code>. <a href="#shot-1015" id="shot-1015" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: run maven from console</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="rerun:target/rerun.txt"</code></pre>
+<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="rerun:target/@rerun.txt"</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>We can see in the console that the <code>Two shouts</code> scenario has failed. <a href="#shot-1016" id="shot-1016" title="scroll to show failure" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: scroll to show failure</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1017" id="shot-1017" title="open target/rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: open target/rerun.txt</a>
+<p><a href="#shot-1017" id="shot-1017" title="open target/@rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: open target/@rerun.txt</a>
 Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed!  And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
 </div>
 <div class="paragraph">
-<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file, preceded by the <code>@</code> (at) sign. <a href="#shot-1018" id="shot-1018" title="run maven from console, highlighting <code>pretty</code> output showing only failing scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console, highlighting <code>pretty</code> output showing only failing scenario</a></p>
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. <a href="#shot-1018" id="shot-1018" title="run maven from console, highlighting <code>pretty</code> output showing only failing scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console, highlighting <code>pretty</code> output showing only failing scenario</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>mvn test -Dcucumber.features="@target/rerun.txt"</code></pre>
+<pre class="rouge highlight"><code>mvn test -Dcucumber.features="@target/@rerun.txt"</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -6335,7 +6335,7 @@ Now when we run Cucumber, no report is published and no banner advertising Cucum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-04 17:28:10 UTC
+Last updated 2021-02-08 16:56:24 UTC
 </div>
 </div>
 <style>
