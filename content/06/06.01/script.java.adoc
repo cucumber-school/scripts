@@ -57,7 +57,7 @@ You can list several files and lines together like this if you have a specific s
 
 The examples that you've just seen use the -D option to set a Java system property on the command line. If you're working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.
 
-Let's look at using a property file to set the system properties. Create a property file called cucumber.properties in src/test/resource shot::[4a] and add the line `cucumber.filter.name=range` shot::[4b]
+Let's look at using a property file to set the system properties. Create a property file called cucumber.properties in src/test/resources (or open it if it already exists in your project). shot::[4a] Add the line `cucumber.filter.name=range` shot::[4b]
 
 .cucumber.properties
 [source]
@@ -77,6 +77,6 @@ The property file is also picked up if you run Cucumber from within your IDE sho
 The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.
 
 
-The final thing I want to show you in this lesson is how to run a single scenario directly from IntelliJ. Click on the green triangle to the left of the scenario name and select "Run Scenario:" shot::[9,"click on green triangle next to 'Message too long', show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'"]
+The final thing I want to show you in this lesson is how to run a single scenario directly from IntelliJ. Right click on the scenario and select "Run Scenario:" shot::[9,"right click, show that there are many options to choose from, click 'Run Scenario' and highlight that it has only run the scenario called 'Message too long'"]
 
 In this lesson you've learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using property files.
