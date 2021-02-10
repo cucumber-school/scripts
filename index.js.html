@@ -5608,7 +5608,7 @@ Now Cucumber only runs the "Message is too long" scenario.</p>
 <p>The examples that you&#8217;ve just seen pass arguments from the command line to the test script defined in package.json. If you&#8217;re working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s look at using a property file to set the system properties. Edit the property file, <code>cucumber.js</code>, that we created in chapter 2  and add <code>default: --name range</code> </p>
+<p>Let&#8217;s look at using cucumber.js to pass arguments to Cucumber. Open <code>cucumber.js</code>  and add <code>default: --name range</code> </p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.js</div>
@@ -5617,7 +5617,7 @@ Now Cucumber only runs the "Message is too long" scenario.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>When we run the tests, it picks up the property setting from the file and only runs the "range" scenarios. </p>
+<p>When we run the tests, it picks up the settings from cucumber.js and only runs the "range" scenarios. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5625,10 +5625,10 @@ Now Cucumber only runs the "Message is too long" scenario.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Any argument that can be supplied on the command line can also be provided in the properties file. The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.</p>
+<p>Any argument that can be supplied on the command line can also be provided in cucumber.js. The benefit of setting arguments in cucumber.js is that it gets checked in with your code, which means that they are shared with all team members.</p>
 </div>
 <div class="paragraph">
-<p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using the Cucumber property file.</p>
+<p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using cucumber.js</p>
 </div>
 </div>
 <div class="sect2">
@@ -5640,6 +5640,12 @@ In the previous lesson, we modified Cucumber&#8217;s behavior using scenario nam
 <div class="paragraph">
 <p>First, let&#8217;s delete the <code>--name</code> parameter from <code>cucumber.js</code>. </p>
 </div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="dl">'</span><span class="s1">--publish-quiet</span><span class="dl">'</span> <span class="p">}</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Now, Cucumber will run all scenarios. </p>
 </div>
@@ -5650,7 +5656,14 @@ We’ll put a focus tag right here, above this scenario. </p>
 <div class="listingblock">
 <div class="title">hear-shout.feature</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@focus</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Larry</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">location</span> <span class="p">|</span>  <span class="n">0</span>   <span class="p">|</span> <span class="n">150</span>   <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5662,9 +5675,7 @@ We’ll put a focus tag right here, above this scenario. </p>
 <div class="listingblock">
 <div class="title">cucumber.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = {</span>
-  <span class="s">default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">@focus'</span>
-<span class="err">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">@focus'</span> <span class="err">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5676,17 +5687,63 @@ We’ll put a focus tag right here, above this scenario. </p>
 <div class="paragraph">
 <p>Remember, tags are case sensitive, so if we change the tag in the feature file to be @Focus  and then run Cucumber  you can see that Cucumber found no scenarios that matched the tag expression.</p>
 </div>
+<div class="listingblock">
+<div class="title">hear-shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@Focus</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Larry</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">location</span> <span class="p">|</span>  <span class="n">0</span>   <span class="p">|</span> <span class="n">150</span>   <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Larry should not hear a shout</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>It’s entirely up to you what you name your tags. When we’re working on a particular area of the application it is common to use a temporary tag like this - we’ll remove it before we check our code into source control.</p>
 </div>
 <div class="paragraph">
-<p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control.  Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. </p>
+<p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. </p>
 </div>
 <div class="listingblock">
+<div class="title">hear-shout.feature</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = {</span>
-  <span class="s">default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">@smoke'</span>
-<span class="err">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">c</span><span class="nf">an </span>be heard by other users
+
+    <span class="nt">@smoke</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"free bagels at Sean's"</span>
+      <span class="nf">Then </span>Lucy should hear Sean's message
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Shouts</span> <span class="err">should</span> <span class="err">only</span> <span class="err">be</span> <span class="err">heard</span> <span class="err">if</span> <span class="err">listener</span> <span class="err">is</span> <span class="err">within</span> <span class="err">range</span>
+
+    <span class="nt">@smoke</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is within range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Lucy</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">location</span> <span class="p">|</span>  <span class="n">0</span>   <span class="p">|</span> <span class="n">50</span>   <span class="p">|</span>
+      <span class="nf">When </span>Sean shouts
+      <span class="nf">Then </span>Lucy should hear a shout
+
+    <span class="nt">@smoke</span> <span class="nt">@Focus</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at
+        <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Larry</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">location</span> <span class="p">|</span>  <span class="n">0</span>   <span class="p">|</span> <span class="n">150</span>   <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. </p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">@smoke'</span> <span class="err">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5696,16 +5753,39 @@ We’ll put a focus tag right here, above this scenario. </p>
 <p>Tags give you a way to organise your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.</p>
 </div>
 <div class="paragraph">
-<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top.  All the scenarios within that file now inherit that tag, so if we change the tag expression in @CucumberOptions, Cucumber will run all the scenarios in the feature file. </p>
-</div>
-<div class="paragraph">
-<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow.  Then rewrite the tag expression in cucumber.js using the <code>not</code> keyword </p>
+<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top. </p>
 </div>
 <div class="listingblock">
+<div class="title">hear-shout.feature</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="na">default</span><span class="p">:</span> <span class="dl">'</span><span class="s1">--publish-quiet --tags not @slow</span><span class="dl">'</span>
-<span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="nt">@SHOUTY-11</span>
+<span class="kd">Feature</span><span class="p">:</span> Hear shout
+
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>All the scenarios within that file now inherit that tag, so if we change the tag expression in cucumber.js, Cucumber will run all the scenarios in the feature file. </p>
+</div>
+<div class="paragraph">
+<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. </p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>.hear-shout.feature
+[source,gherkin]
+----
+include::../code/js/08-boolean-logic-with-tags/features/hear_shout.feature[lines=35..]
+----</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then rewrite the tag expression in cucumber.js using the <code>not</code> keyword </p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">"not</span><span class="nv"> </span><span class="s">@slow"'</span> <span class="err">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5717,7 +5797,7 @@ We’ll put a focus tag right here, above this scenario. </p>
 <div class="listingblock">
 <div class="title">cucumber.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nl">include:</span><span class="o">:../</span><span class="n">code</span><span class="o">/</span></code></pre>
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet'</span> <span class="err">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5737,7 +5817,7 @@ We’ll put a focus tag right here, above this scenario. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- --i18n-languages</code></pre>
+<pre class="rouge highlight"><code>npm test -- --i18n-languages</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5748,14 +5828,15 @@ We’ll put a focus tag right here, above this scenario. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- --i18n-keywords en-lol</code></pre>
+<pre class="rouge highlight"><code>npm test -- --i18n-keywords en-lol</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Now create a new feature file in the features folder called cat.feature </p>
 </div>
 <div class="paragraph">
-<p>The first line tells Cucumber which language the feature file is written in. </p>
+<p>The first line tells Cucumber which language the feature file is written in. 
+.hear-shout.feature</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5766,6 +5847,7 @@ We’ll put a focus tag right here, above this scenario. </p>
 <p>Cucumber then expects the Gherkin keywords to be in LOLCAT </p>
 </div>
 <div class="listingblock">
+<div class="title">hear-shout.feature</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="gherkin"><span class="c"># language: en-lol</span>
 
@@ -5788,8 +5870,9 @@ We’ll put a focus tag right here, above this scenario. </p>
 <p>To do this, we can use the random flag in the profile file. </p>
 </div>
 <div class="listingblock">
+<div class="title">cucumber.js</div>
 <div class="content">
-<pre class="rouge highlight"><code>default: --order random</code></pre>
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--order</span><span class="nv"> </span><span class="s">random'</span> <span class="err">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5801,8 +5884,8 @@ A full list of Cucumber&#8217;s configuration properties can be found by passing
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- --help
-npm test \-- -h</code></pre>
+<pre class="rouge highlight"><code>npm test -- --help
+npm test -- -h</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5812,65 +5895,61 @@ npm test \-- -h</code></pre>
 <div class="sect2">
 <h3 id="_formatter_plugins">6.4. Formatter plugins</h3>
 <div class="paragraph">
-<p>Let’s take a closer look at the <code>--format</code> option.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>npm test \-- --help</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now that we&#8217;re using the @cucumber/pretty-formatter, Cucumber outputs the features - as it runs - in the console. Cucumber can report results in other formats, which can be useful for generating reports.</p>
-</div>
-<div class="paragraph">
-<p>Let’s try the HTML formatter.</p>
+<p>Now that we&#8217;re using the @cucumber/pretty-formatter, Cucumber outputs the features - as it runs - in the console. Cucumber can report results in other formats, which can be useful for generating reports. Let’s take a closer look at some of the formatter plugins that ship with Cucumber - starting with the HTML formatter.</p>
 </div>
 <div class="paragraph">
 <p>When we use the html formatter we append the filename that the report should be written to. Otherwise it will be written directly to the console.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- --format html:report.html</code></pre>
+<pre class="rouge highlight"><code>npm test -- --format html:report.html</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s try another one - JSON.</p>
+<p>Let&#8217;s take a look at the html that has been generated.  As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.</p>
+</div>
+<div class="paragraph">
+<p>
+Next, we&#8217;ll use the JSON formatter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- --format json:report.json</code></pre>
+<pre class="rouge highlight"><code>npm test -- --format json:report.json</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.</p>
+<p>The JSON report outputs the results in a single file.  You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.</p>
+</div>
+<div class="paragraph">
+<p>
+There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in earlier chapters.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- --format progress</code></pre>
+<pre class="rouge highlight"><code>npm test -- --format progress</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in previous chapters.</p>
-</div>
-<div class="paragraph">
-<p>We can specify multiple formatters like this.</p>
+<p>
+We can specify multiple formatters like this.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- -f html:report.html -f json:report.json -f progress</code></pre>
+<pre class="rouge highlight"><code>npm test -- -f html:report.html -f json:report.json -f progress</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output.</p>
+<p>The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output - which is why the pretty formatter has been replaced with progress formatter. </p>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_rerun_formatter">6.5. Rerun formatter</h3>
 <div class="paragraph">
-<p>One of these formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.</p>
+<p>One of the formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.</p>
 </div>
 <div class="paragraph">
-<p></p>
+<p>
+</p>
 </div>
 <div class="paragraph">
 <p>
@@ -5878,22 +5957,22 @@ We choose the rerun formatter and send the output to a file whose name is preced
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- -f rerun:@rerun.txt</code></pre>
+<pre class="rouge highlight"><code>npm test -- -f rerun:@rerun.txt</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s look at what’s in that @rerun.txt file.  It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
+<p>Let’s look at what’s in that @rerun.txt file.  It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.</p>
 </div>
 <div class="paragraph">
 <p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>npm test \-- @rerun.txt</code></pre>
+<pre class="rouge highlight"><code>npm test -- @rerun.txt</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.</p>
+<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and are working yourself back to green.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s fix the scenario </p>
@@ -5924,7 +6003,27 @@ In the last lesson we saw the output generated by the HTML plugin. This is a gre
 <p>Since Cucumber-JS 7.0.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. </p>
 </div>
 <div class="paragraph">
-<p>Ensure that you&#8217;re using Cucumber-JS 7.0.0 or later  and remove publish-quiet from cucumber.js.  Now when we run Cucumber,  it helpfully prints out a banner telling you how to publish your results to Cucumber Reports .</p>
+<p>Ensure that you&#8217;re using Cucumber-JS 7.0.0 or later </p>
+</div>
+<div class="listingblock">
+<div class="title">package-lock.json</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="w">    </span><span class="nl">"@cucumber/cucumber"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="nl">"version"</span><span class="p">:</span><span class="w"> </span><span class="s2">"7.0.0"</span><span class="p">,</span><span class="w">
+</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and remove publish-quiet from cucumber.js. </p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--order</span><span class="nv"> </span><span class="s">random'</span> <span class="err">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when we run Cucumber,  it helpfully prints out a banner telling you how to publish your results to Cucumber Reports .</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s follow the instructions in the banner and add --publish to cucumber.js .</p>
@@ -5932,11 +6031,11 @@ In the last lesson we saw the output generated by the HTML plugin. This is a gre
 <div class="listingblock">
 <div class="title">cucumber.js</div>
 <div class="content">
-<pre class="rouge highlight"><code>//include::../code/java/15-enable-publishing-to-cucumber-reports/shouty/src/test/resources/cucumber.properties[]</code></pre>
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish</span><span class="nv"> </span><span class="s">--order</span><span class="nv"> </span><span class="s">random'</span> <span class="err">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can run Cucumber again and we get a different banner output shot:[]. The unique URL in this banner is the address of your published report .</p>
+<p>Now we can run Cucumber again and we get a different banner output shot:[1, "show published banner"]. The unique URL in this banner is the address of your published report .</p>
 </div>
 <div class="paragraph">
 <p>
@@ -5949,12 +6048,13 @@ Open the URL and you&#8217;ll find your report published in the same format as t
 <p>Follow the link in the report to authenticate your account  You can then retrieve your Cucumber Reports publish token . Reports associated with a publish token will be kept until explicitly deleted.</p>
 </div>
 <div class="paragraph">
-<p>During development you probably won&#8217;t want to publish a report after every build&#8230;&#8203; and you might prefer not to see the banner output telling you about Cucumber Reports. Let&#8217;s fix this in cucumber.js by replacing --publish with --publish-quiet:</p>
+<p>
+During development you probably won&#8217;t want to publish a report after every build&#8230;&#8203; and you might prefer not to see the banner output telling you about Cucumber Reports. Let&#8217;s fix this in cucumber.js by replacing --publish with --publish-quiet:</p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.js</div>
 <div class="content">
-<pre class="rouge highlight"><code>//include::../code/java/16-disable-and-silence-cucumber-reports/shouty/src/test/resources/cucumber.properties[]</code></pre>
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--order</span><span class="nv"> </span><span class="s">random'</span> <span class="err">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5976,7 +6076,7 @@ Now when we run Cucumber, no report is published and no banner advertising Cucum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-10 12:55:08 UTC
+Last updated 2021-02-10 13:41:31 UTC
 </div>
 </div>
 <style>
