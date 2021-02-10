@@ -1,1 +1,1 @@
-module.exports = { default: '--publish-quiet --order random' }
+module.exports = { default: '--order random' }
