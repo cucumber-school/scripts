@@ -97,23 +97,23 @@ While we're at it, let's put the `pretty` plugin back in @CucumberOptions. shot:
 include::../code/java/13-introduce-an-error/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8..10]
 ----
 
-Now let's run Maven again using the `rerun` plugin writing its output to a file whose name is preceded by the `@` (at) sign. Let's call it `@rerun.txt`. shot::[17, run maven from console]
+Now let's run Maven again using the `rerun` plugin writing its output to a text file. Let's call it `rerun.txt`. shot::[17, run maven from console]
 
 [source]
 ----
-mvn test -Dcucumber.plugin="rerun:target/@rerun.txt"
+mvn test -Dcucumber.plugin="rerun:target/rerun.txt"
 ----
 
 We can see in the console that the `Two shouts` scenario has failed. shot::[18, scroll to show failure]
 
-shot::[19, open target/@rerun.txt]
+shot::[19, open target/rerun.txt]
 Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed!  And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
 
 This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[20, "run maven from console, highlighting `pretty` output showing only failing scenario"]
 
 [source]
 ----
-mvn test -Dcucumber.features="@target/@rerun.txt"
+mvn test -Dcucumber.features="@target/rerun.txt"
 ----
 
 This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let's fix the scenario shot::[21, undo change in feature file]

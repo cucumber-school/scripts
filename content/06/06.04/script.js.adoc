@@ -3,28 +3,46 @@ Let’s take a closer look at the `--format` option.
 
 [source]
 ----
-bundle exec cucumber --format help
+npm test \-- --help
 ----
 
-So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.
+Now that we're using the @cucumber/pretty-formatter, Cucumber outputs the features - as it runs - in the console. Cucumber can report results in other formats, which can be useful for generating reports.
 
 Let’s try the HTML formatter.
 
 
-When we use the html formatter we use dash-dash out to specify the file where the report should be written. Otherwise it will be written directly to the console.
+When we use the html formatter we append the filename that the report should be written to. Otherwise it will be written directly to the console.
 
 [source]
 ----
-bundle exec cucumber --format html --out report.html
+npm test \-- --format html:report.html
 ----
 
 Let’s try another one - JSON.
 
-The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.
+[source]
+----
+npm test \-- --format json:report.json
+----
 
-There is also a progress formatter, which just prints out a single character for each step. The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.
+The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.
 
-We can specify multiple formatters like this. The one without a dash-dash out will be written to the console.
+
+[source]
+----
+npm test \-- --format progress
+----
+
+There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in previous chapters.
+
+We can specify multiple formatters like this.
+
+[source]
+----
+npm test \-- -f html:report.html -f json:report.json -f progress
+----
+
+The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output.
 
 === Rerun formatter
 
@@ -32,63 +50,35 @@ One of these formatter plugins is rather special - the rerun formatter. Before w
 
 shot::[1, Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!" ]
 
-We choose the rerun formatter and send the output to a file called rerun.txt.
-
-Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
-
-This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. c:
-
-This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.
-
-==== Dry-run
-
-The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps.
-
-==== Strict
-
-The --strict option affects the exit status of Cucumber. To see how it works, let’s add an undefined step:
-
-(Adds “Then we have an undefined step” to the end of shout.feature).
-
-Let’s first run it without `--strict`:
-
-That last command tells us that Cucumber didn’t fail - it exited with exit status zero, which means success. Now, let’s run it with strict:
-
-This time the exit status was one, which means Cucumber failed.
-
-Why is this interesting? Well, if you run Cucumber on a Continuous Integration server it will fail the build if there are undefined or pending steps. That’s pretty handy!
-
-==== I18n
-
-Cucumber is first and foremost a tool that facilitates a common understanding between people on a project. Imagine our customers were cats. We could write our features in English, but the cats would obviously not understand that.
-
-We all know that cats speak LOLCAT, not English, so our feature would have to look like this in order for cats to understand:
-
+shot::[1, "run npm test and show failing output"]
+We choose the rerun formatter and send the output to a file whose name is preceded by the `@` (at) sign. Let's call it @rerun.txt.
 
 [source]
 ----
-# language: en-lol
+npm test \-- -f rerun:@rerun.txt
 ----
 
-We tell Cucumber what language to use by adding a language comment at the top of the file. Cucumber supports over 60 different languages, thanks to contributions from people and cats all over the world.
+Let’s look at what’s in that @rerun.txt file. shot::[] It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
 
-You can get a list of all the supported languages with --i18n help. To see the translation of the Gherkin keywords for a particular language, just replace help with the language code. For example --i18n hi for Hindi.
+This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[]
 
-=== Static configuration
+[source]
+----
+npm test \-- @rerun.txt
+----
 
-It would be tedious if you had to write out these configuration options every time you run Cucumber. To make this easier you can write the options in a file that Cucumber will pick up.
+This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.
 
-You can use the cucumber.js file to define one or more profiles that describe a set of configuration options for Cucumber.
+Let's fix the scenario shot::[21, undo change in feature file]
 
-For example, we can define a `dev` profile that runs only the @focus scenarios and uses the progress formatter.
+.hear_shout.feature
+[source,gherkin]
+----
+//include::../code/java/14-fix-error/shouty/src/test/resources/shouty/hear_shout.feature[lines=35..44]
+----
 
-We use the `--profile` option to choose this profile when running Cucumber.
+and rerun the failing scenario again shot::[20, "run npm test from console"]
 
-To change the default behaviour of Cucumber, change the default profile. Let’s make Cucumber strict by default.
+Great. We're back to green again.
 
-It’s common for teams to have a number of profiles defined, usually for the different environments where Cucumber runs. You can have a CI profile that behaves differently to the one you use on your dev machines, for example.
-
-=== Close
-
-To make Cucumber really useful to your team, it’s good to spend time learning the details of how to configure it. In this lesson, we gave you a tour of almost all of Cucumber’s configuration options. You learned how to filter scenarios by name, line number or tag. You learned how to format Cucumber’s output, and you learned how to write your scenarios in different spoken languages. You also learned how to set up different configurations for use by your whole team.
 
