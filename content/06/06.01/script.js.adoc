@@ -48,11 +48,10 @@ Probably the easiest way to filter is to tell Cucumber to run only a scenario wi
 shot::[3, "type npm test command in console, show output and highlight that it has only run the one scenario 'Message too long'"]
 We can pass arguments to Cucumber using the `--name` option, which tells Cucumber to only run scenarios with a name that matches the string provided, in this case "Message is too long".
 
-// FEDE - the character sequence "\--" used in this adoc script gets rendered as "--" and that is what should be typed in at the command line!
 
 [source]
 ----
-npm test \-- --name "Message is too long"
+npm test -- --name "Message is too long"
 ----
 
 The value of the `--name` option is actually a regular expression, so you can use your imagination here to run more than one scenario.
@@ -60,7 +59,7 @@ Let's use it to run the two scenarios with the text "range" in their name. shot:
 
 [source]
 ----
-npm test \-- --name "range"
+npm test -- --name "range"
 ----
 
 Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. shot::[6, "in feature file show that 'Message too long' starts on line 44"]
@@ -69,7 +68,7 @@ We can use that line number when we run Cucumber. shot::[7, "add line number to 
 
 [source]
 ----
-npm test \-- features/hear_shout.feature:44
+npm test -- features/hear_shout.feature:44
 ----
 
 shot::[8, "show output and highlight that it has only run the scenario called 'Message too long'"]
@@ -81,7 +80,7 @@ Let's add that line number to the npm test command. shot::[10, "type npm test in
 
 [source]
 ----
-npm test \-- features/hear_shout.feature:33:44
+npm test -- features/hear_shout.feature:33:44
 ----
 
 You can list several files and lines together like this if you have a specific set of scenarios you want to run.
