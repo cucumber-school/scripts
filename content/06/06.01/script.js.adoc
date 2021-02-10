@@ -87,7 +87,7 @@ You can list several files and lines together like this if you have a specific s
 
 The examples that you've just seen pass arguments from the command line to the test script defined in package.json. If you're working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.
 
-Let's look at using a property file to set the system properties. Edit the property file, `cucumber.js`, that we created in chapter 2 shot::[11] and add `default: --name range` shot::[12]
+Let's look at using cucumber.js to pass arguments to Cucumber. Open `cucumber.js` shot::[11] and add `default: --name range` shot::[12]
 
 .cucumber.js
 [source,js]
@@ -95,13 +95,13 @@ Let's look at using a property file to set the system properties. Edit the prope
 include::../code/js/02-filter-by-name-using-properties-file/cucumber.js[lines=1]
 ----
 
-When we run the tests, it picks up the property setting from the file and only runs the "range" scenarios. shot::[13, "type `npm test` in console, show output and highlight that it has run the two scenarios"]
+When we run the tests, it picks up the settings from cucumber.js and only runs the "range" scenarios. shot::[13, "type `npm test` in console, show output and highlight that it has run the two scenarios"]
 
 [source]
 ----
 npm test
 ----
 
-Any argument that can be supplied on the command line can also be provided in the properties file. The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.
+Any argument that can be supplied on the command line can also be provided in cucumber.js. The benefit of setting arguments in cucumber.js is that it gets checked in with your code, which means that they are shared with all team members.
 
-In this lesson you've learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using the Cucumber property file.
+In this lesson you've learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using cucumber.js

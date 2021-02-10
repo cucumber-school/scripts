@@ -1,73 +1,70 @@
 === Formatter plugins
-Let’s take a closer look at the `--format` option.
 
-[source]
-----
-npm test \-- --help
-----
-
-Now that we're using the @cucumber/pretty-formatter, Cucumber outputs the features - as it runs - in the console. Cucumber can report results in other formats, which can be useful for generating reports.
-
-Let’s try the HTML formatter.
-
+Now that we're using the @cucumber/pretty-formatter, Cucumber outputs the features - as it runs - in the console. Cucumber can report results in other formats, which can be useful for generating reports. Let’s take a closer look at some of the formatter plugins that ship with Cucumber - starting with the HTML formatter.
 
 When we use the html formatter we append the filename that the report should be written to. Otherwise it will be written directly to the console.
 
 [source]
 ----
-npm test \-- --format html:report.html
+npm test -- --format html:report.html
 ----
 
-Let’s try another one - JSON.
+Let's take a look at the html that has been generated. shot::[5, "Open target/my-report in the browser"] As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.
+
+shot::[5, "run Cucumber"]
+Next, we'll use the JSON formatter.
 
 [source]
 ----
-npm test \-- --format json:report.json
+npm test -- --format json:report.json
 ----
 
-The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.
+The JSON report outputs the results in a single file. shot::[5, "open the json file"] You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.
 
+
+shot::[6, run Cucumber]
+There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in earlier chapters.
 
 [source]
 ----
-npm test \-- --format progress
+npm test -- --format progress
 ----
 
-There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in previous chapters.
-
+shot::[1, "run cucumber with multiple formatters"]
 We can specify multiple formatters like this.
 
 [source]
 ----
-npm test \-- -f html:report.html -f json:report.json -f progress
+npm test -- -f html:report.html -f json:report.json -f progress
 ----
 
-The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output.
+The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output - which is why the pretty formatter has been replaced with progress formatter. shot::[1, "show the progress output"]
 
 === Rerun formatter
 
-One of these formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.
+One of the formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.
 
 shot::[1, Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!" ]
-
 shot::[1, "run npm test and show failing output"]
+
+shot::[1, "run cucumber using rerun formatter"]
 We choose the rerun formatter and send the output to a file whose name is preceded by the `@` (at) sign. Let's call it @rerun.txt.
 
 [source]
 ----
-npm test \-- -f rerun:@rerun.txt
+npm test -- -f rerun:@rerun.txt
 ----
 
-Let’s look at what’s in that @rerun.txt file. shot::[] It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
+Let’s look at what’s in that @rerun.txt file. shot::[1, "open @rerun.txt"] It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.
 
-This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[]
+This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[1, "run Cucumber using the @rerun.txt file"]
 
 [source]
 ----
-npm test \-- @rerun.txt
+npm test -- @rerun.txt
 ----
 
-This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.
+This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and are working yourself back to green.
 
 Let's fix the scenario shot::[21, undo change in feature file]
 

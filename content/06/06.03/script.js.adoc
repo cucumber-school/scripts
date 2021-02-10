@@ -6,7 +6,7 @@ You can get a list of all the supported languages with --i18n-languages. shot::[
 
 [source]
 ----
-npm test \-- --i18n-languages
+npm test -- --i18n-languages
 ----
 
 Cucumber supports over 70 different languages, thanks to contributions from people from all over the world.
@@ -15,29 +15,25 @@ To see the translation of the Gherkin keywords for a particular language, just u
 
 [source]
 ----
-npm test \-- --i18n-keywords en-lol
+npm test -- --i18n-keywords en-lol
 ----
 
 Now create a new feature file in the features folder called cat.feature shot::[3]
 
 The first line tells Cucumber which language the feature file is written in. shot::[4]
-[source, gherkin]
+.hear-shout.feature
+[source,gherkin]
 ----
-# language: en-lol
+include::../code/js/10-add-lolcat-feature/features/cat.feature[lines=1]
 ----
+
 
 Cucumber then expects the Gherkin keywords to be in LOLCAT shot::[5]
 
-[source, gherkin]
+.hear-shout.feature
+[source,gherkin]
 ----
-# language: en-lol
-
-OH HAI: HEAR SHOUT
-
-  MISHUN: MESAGE IZ 2 LONG
-    I CAN HAZ A KAT CALLD SHOUTR
-
-
+include::../code/js/10-add-lolcat-feature/features/cat.feature[]
 ----
 
 The step is undefined, but we can quickly generate it by running Cucumber shot::[6, npm test] Cucumber has generated a step definition. Implementing step definitions in non-english languages is exactly the same, so we won't go any further with LOLCAT just now. Let's delete the cat.feature file shot::[10] and check that we're still green shot::[11]
@@ -48,9 +44,10 @@ Each scenario should be isolated - it's result should not depend on the outcome 
 
 To do this, we can use the random flag in the profile file. shot::[8]
 
-[source]
+.cucumber.js
+[source,yaml]
 ----
-default: --order random
+include::../code/js/12-execute-in-random-order/cucumber.js[]
 ----
 
 Now when we run Cucumber, the scenarios are run in a random order shot::[9, run Cucumber & show new order of scenario execution]. Now there's almost no chance of a dependency between scenarios slipping through without being noticed.
@@ -60,8 +57,8 @@ A full list of Cucumber's configuration properties can be found by passing the `
 
 [source]
 ----
-npm test \-- --help
-npm test \-- -h
+npm test -- --help
+npm test -- -h
 ----
 
 That's quite a lot to digest, but to make Cucumber really useful to your team, it’s good to spend some time learning the details of how to configure it. In this lesson, we showcased two of Cucumber’s configuration options and you learned how to write your scenarios in different spoken languages.

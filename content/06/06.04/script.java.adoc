@@ -22,9 +22,9 @@ Let’s try the HTML plugin. When we use the HTML plugin we simply append a colo
 mvn test -Dcucumber.plugin="html:target/my-report"
 ----
 
-Now, let's take a look at the html that has been generated. shot::[5, "Open target/my-report in the browser"]
+Now, let's take a look at the html that has been generated. shot::[5, "Open target/my-report in the browser"] As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.
 
-You probably noticed that we still got the `pretty` output in the console. That's because we have specified the `pretty` plugin in the @CucumberOptions annotation in `RunCucumberTests.java`. shot::[6, highlight @CucumberOptions]
+You probably noticed that we still got the `pretty` output in the console. shot::[5, "show the pretty output"] That's because we have specified the `pretty` plugin in the @CucumberOptions annotation in `RunCucumberTests.java`. shot::[6, highlight @CucumberOptions]
 
 .RunCucumberTests.java
 [source,java]
