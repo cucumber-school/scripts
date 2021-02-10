@@ -494,8 +494,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_more_control">6.3. More Control</a></li>
 <li><a href="#_formatter_plugins">6.4. Formatter plugins</a></li>
 <li><a href="#_rerun_formatter">6.5. Rerun formatter</a></li>
-<li><a href="#_static_configuration">6.6. Static configuration</a></li>
-<li><a href="#_close">6.7. Close</a></li>
+<li><a href="#_publishing_results">6.6. Publishing Results</a></li>
 </ul>
 </li>
 <li><a href="#_tbd">7. TBD</a></li>
@@ -5802,8 +5801,8 @@ A full list of Cucumber&#8217;s configuration properties can be found by passing
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>node_modules/.bin/cucumber-js --help
-node_modules/.bin/cucumber-js -h</code></pre>
+<pre class="rouge highlight"><code>npm test \-- --help
+npm test \-- -h</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5817,34 +5816,52 @@ node_modules/.bin/cucumber-js -h</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>bundle exec cucumber --format help</code></pre>
+<pre class="rouge highlight"><code>npm test \-- --help</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.</p>
+<p>Now that we&#8217;re using the @cucumber/pretty-formatter, Cucumber outputs the features - as it runs - in the console. Cucumber can report results in other formats, which can be useful for generating reports.</p>
 </div>
 <div class="paragraph">
 <p>Let’s try the HTML formatter.</p>
 </div>
 <div class="paragraph">
-<p>When we use the html formatter we use dash-dash out to specify the file where the report should be written. Otherwise it will be written directly to the console.</p>
+<p>When we use the html formatter we append the filename that the report should be written to. Otherwise it will be written directly to the console.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>bundle exec cucumber --format html --out report.html</code></pre>
+<pre class="rouge highlight"><code>npm test \-- --format html:report.html</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Let’s try another one - JSON.</p>
 </div>
-<div class="paragraph">
-<p>The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>npm test \-- --format json:report.json</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>There is also a progress formatter, which just prints out a single character for each step. The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.</p>
+<p>The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>npm test \-- --format progress</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>We can specify multiple formatters like this. The one without a dash-dash out will be written to the console.</p>
+<p>There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in previous chapters.</p>
+</div>
+<div class="paragraph">
+<p>We can specify multiple formatters like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>npm test \-- -f html:report.html -f json:report.json -f progress</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5856,90 +5873,96 @@ node_modules/.bin/cucumber-js -h</code></pre>
 <p><a href="#shot-656" id="shot-656" title="Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!"" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!"</a></p>
 </div>
 <div class="paragraph">
-<p>We choose the rerun formatter and send the output to a file called rerun.txt.</p>
+<p><a href="#shot-657" id="shot-657" title="run npm test and show failing output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: run npm test and show failing output</a>
+We choose the rerun formatter and send the output to a file whose name is preceded by the <code>@</code> (at) sign. Let&#8217;s call it @rerun.txt.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>npm test \-- -f rerun:@rerun.txt</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
+<p>Let’s look at what’s in that @rerun.txt file. <a href="#shot-658" id="shot-658" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a> It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
 </div>
 <div class="paragraph">
-<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. c:</p>
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. <a href="#shot-659" id="shot-659" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>npm test \-- @rerun.txt</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.</p>
 </div>
-<div class="sect3">
-<h4 id="_dry_run">6.5.1. Dry-run</h4>
 <div class="paragraph">
-<p>The dry-run option will quickly tell you whether any of your steps are undefined, but it won’t try to run any of them. It can be useful to get quick feedback if you’ve changed the wording in your steps.</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_strict">6.5.2. Strict</h4>
-<div class="paragraph">
-<p>The --strict option affects the exit status of Cucumber. To see how it works, let’s add an undefined step:</p>
-</div>
-<div class="paragraph">
-<p>(Adds “Then we have an undefined step” to the end of shout.feature).</p>
-</div>
-<div class="paragraph">
-<p>Let’s first run it without <code>--strict</code>:</p>
-</div>
-<div class="paragraph">
-<p>That last command tells us that Cucumber didn’t fail - it exited with exit status zero, which means success. Now, let’s run it with strict:</p>
-</div>
-<div class="paragraph">
-<p>This time the exit status was one, which means Cucumber failed.</p>
-</div>
-<div class="paragraph">
-<p>Why is this interesting? Well, if you run Cucumber on a Continuous Integration server it will fail the build if there are undefined or pending steps. That’s pretty handy!</p>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_i18n">6.5.3. I18n</h4>
-<div class="paragraph">
-<p>Cucumber is first and foremost a tool that facilitates a common understanding between people on a project. Imagine our customers were cats. We could write our features in English, but the cats would obviously not understand that.</p>
-</div>
-<div class="paragraph">
-<p>We all know that cats speak LOLCAT, not English, so our feature would have to look like this in order for cats to understand:</p>
+<p>Let&#8217;s fix the scenario <a href="#shot-660" id="shot-660" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: undo change in feature file</a></p>
 </div>
 <div class="listingblock">
+<div class="title">hear_shout.feature</div>
 <div class="content">
-<pre class="rouge highlight"><code># language: en-lol</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">//include</span><span class="p">::</span><span class="err">../code/java/14-fix-error/shouty/src/test/resources/shouty/hear_shout.feature[lines=35..44]</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We tell Cucumber what language to use by adding a language comment at the top of the file. Cucumber supports over 60 different languages, thanks to contributions from people and cats all over the world.</p>
+<p>and rerun the failing scenario again <a href="#shot-661" id="shot-661" title="run npm test from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run npm test from console</a></p>
 </div>
 <div class="paragraph">
-<p>You can get a list of all the supported languages with --i18n help. To see the translation of the Gherkin keywords for a particular language, just replace help with the language code. For example --i18n hi for Hindi.</p>
-</div>
+<p>Great. We&#8217;re back to green again.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_static_configuration">6.6. Static configuration</h3>
+<h3 id="_publishing_results">6.6. Publishing Results</h3>
 <div class="paragraph">
-<p>It would be tedious if you had to write out these configuration options every time you run Cucumber. To make this easier you can write the options in a file that Cucumber will pick up.</p>
+<p><a href="#shot-662" id="shot-662" title="show HTML output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show HTML output</a>
+In the last lesson we saw the output generated by the HTML plugin. This is a great way for your business colleagues and customers to engage with the development of the product. Since the scenarios are written in business language, they act as documentation that everyone interested in the product can understand. And, because the results are colour-coded green (if the system behaves as expected) or red (if it doesn&#8217;t) everyone can see what behaviour has been implemented.</p>
 </div>
 <div class="paragraph">
-<p>You can use the cucumber.js file to define one or more profiles that describe a set of configuration options for Cucumber.</p>
+<p>The challenge is making sure that this documentation is easily available. Feature files are usually checked into source control along with the source code, which isn&#8217;t a great way of making it accessible to less technical team members. The HTML output can be shared, but it needs to be stored somewhere that everyone has access to - such as on your intranet or wiki. That&#8217;s something that your team has to configure themselves.</p>
 </div>
 <div class="paragraph">
-<p>For example, we can define a <code>dev</code> profile that runs only the @focus scenarios and uses the progress formatter.</p>
+<p>Since Cucumber-JS 7.0.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. <a href="#shot-663" id="shot-663" title="go to reports.cucumber.io" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: go to reports.cucumber.io</a></p>
 </div>
 <div class="paragraph">
-<p>We use the <code>--profile</code> option to choose this profile when running Cucumber.</p>
+<p>Ensure that you&#8217;re using Cucumber-JS 7.0.0 or later <a href="#shot-664" id="shot-664" title="show package-lock.json file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: show package-lock.json file</a> and remove publish-quiet from cucumber.js. <a href="#shot-665" id="shot-665" title="cucumber.js" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: cucumber.js</a> Now when we run Cucumber, <a href="#shot-666" id="shot-666" title="npm test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: npm test</a> it helpfully prints out a banner telling you how to publish your results to Cucumber Reports <a href="#shot-667" id="shot-667" title="highlight banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: highlight banner</a>.</p>
 </div>
 <div class="paragraph">
-<p>To change the default behaviour of Cucumber, change the default profile. Let’s make Cucumber strict by default.</p>
+<p>Let&#8217;s follow the instructions in the banner and add --publish to cucumber.js <a href="#shot-668" id="shot-668" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code>//include::../code/java/15-enable-publishing-to-cucumber-reports/shouty/src/test/resources/cucumber.properties[]</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>It’s common for teams to have a number of profiles defined, usually for the different environments where Cucumber runs. You can have a CI profile that behaves differently to the one you use on your dev machines, for example.</p>
+<p>Now we can run Cucumber again and we get a different banner output shot:[]. The unique URL in this banner is the address of your published report <a href="#shot-669" id="shot-669" title="highlight URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: highlight URL</a>.</p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_close">6.7. Close</h3>
 <div class="paragraph">
-<p>To make Cucumber really useful to your team, it’s good to spend time learning the details of how to configure it. In this lesson, we gave you a tour of almost all of Cucumber’s configuration options. You learned how to filter scenarios by name, line number or tag. You learned how to format Cucumber’s output, and you learned how to write your scenarios in different spoken languages. You also learned how to set up different configurations for use by your whole team.</p>
+<p><a href="#shot-670" id="shot-670" title="follow URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8: follow URL</a>
+Open the URL and you&#8217;ll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered <a href="#shot-671" id="shot-671" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9</a></p>
+</div>
+<div class="paragraph">
+<p>You might have noticed the warning in the banner that says the report will "self-destruct". <a href="#shot-672" id="shot-672" title="highlight warning" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: highlight warning</a> To prevent a report from being deleted, it has to be associated with an authenticated account.</p>
+</div>
+<div class="paragraph">
+<p>Follow the link in the report to authenticate your account <a href="#shot-673" id="shot-673" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a> You can then retrieve your Cucumber Reports publish token <a href="#shot-674" id="shot-674" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a>. Reports associated with a publish token will be kept until explicitly deleted.</p>
+</div>
+<div class="paragraph">
+<p>During development you probably won&#8217;t want to publish a report after every build&#8230;&#8203; and you might prefer not to see the banner output telling you about Cucumber Reports. Let&#8217;s fix this in cucumber.js by replacing --publish with --publish-quiet:</p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code>//include::../code/java/16-disable-and-silence-cucumber-reports/shouty/src/test/resources/cucumber.properties[]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-675" id="shot-675" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot </a>
+Now when we run Cucumber, no report is published and no banner advertising Cucumber Reports is output.</p>
+</div>
+<div class="paragraph">
+<p>Cucumber Reports is under active development, so expect to see many more useful features coming in the coming months.</p>
 </div>
 </div>
 </div>
@@ -5953,7 +5976,7 @@ node_modules/.bin/cucumber-js -h</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-08 16:59:38 UTC
+Last updated 2021-02-10 10:53:57 UTC
 </div>
 </div>
 <style>
