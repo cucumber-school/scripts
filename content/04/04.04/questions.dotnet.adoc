@@ -1,0 +1,22 @@
+==== Lesson 4 - Questions
+
+===== When does a BeforeScenario hook run?
+
+* Before every run of SpecFlow
+* Before the first scenario in each feature file
+* Before each scenario - TRUE
+* Before each step in a scenario
+
+Answer: A BeforeScenario hook runs before each scenario. Since there is no way to tell if a hook exists by looking at the feature file, you should only use hooks for performing actions that you don't expect the business to provide feedback on.
+
+You can read more about hooks at https://docs.specflow.org/projects/specflow/en/latest/Bindings/Hooks.html
+
+===== Why isn't it a good idea to create a Network instance in the same step definition where we create Lucy?
+
+* It is a good idea
+* Steps should be independent and composable. If the Network is only created when Lucy is created, future scenarios will be forced to create Lucy - TRUE
+* We'll need to create another Network instance when we create Sean
+
+Answer: Every person needs to share the *same* Network instance, which means we need to create the Network before we create any people. By creating the Network instance in the same step definition that we create Lucy, we are forcing people to:
+* create Lucy -- even if the scenario doesn't need Lucy
+* create Lucy before any other person -- because otherwise Network will not have been created yet
