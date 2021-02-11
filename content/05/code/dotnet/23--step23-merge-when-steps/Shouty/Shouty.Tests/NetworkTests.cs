@@ -49,7 +49,7 @@ namespace Shouty.Tests
             Person laura = new Person(network, 0);
             network.Broadcast(longMessage, seanLocation);
 
-            Assert.DoesNotContain(Message, laura.GetMessagesHeard());
+            Assert.DoesNotContain(longMessage, laura.GetMessagesHeard());
         }
     }
 }
