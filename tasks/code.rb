@@ -4,9 +4,11 @@ require 'awesome_print'
 
 pwd = Dir.pwd
 
-task code: 'code:unroll'
+task :code, [:lang] => ['code:unroll'] do |t, args|
+end
+
 namespace :code do
-  task :unroll => :branches do
+  task :unroll, [:lang] => :branches do |t, args|
     branches_unrolled = 0
     puts "Unrolling code branches..."
     Dir.chdir(Dir.tmpdir) do
@@ -21,7 +23,7 @@ namespace :code do
           puts "Chapter #{chapter.num}"
           puts "=========="
           puts 
-          language_codes.each do |lang|
+          language_codes(args).each do |lang|
             branch = chapter.code_branch(lang)
             cmd = "git ls-remote --exit-code origin #{branch} > /dev/null"
             unless system(cmd)
@@ -75,10 +77,10 @@ namespace :code do
     end
   end
 
-  task :branches do
+  task :branches, [:lang] do |t, args|
     code_branches = `git for-each-ref`.
       split("\n").
-      select { |line| line.match? /chapter-\d\d-code/ }.
+      select { |line| line.match? /chapter-\d\d-code-#{args[:lang]}/ }.
       map { |line|
         rev, _, ref = line.split
         Branch.new(rev, ref)

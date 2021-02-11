@@ -54,7 +54,7 @@ The idea is to create a storyboard for the code in the chapter in the branch, wi
     git add --all
     git commit -m "Initial commit"
 
-Now you can work on the storyboard. If you mess somethign up, use `git rebase` to fix it:
+Now you can work on the storyboard. If you mess something up, use `git rebase` to fix it:
 
     git rebase -i --root
 
@@ -68,6 +68,10 @@ folder, allowing you to include snippets of the code in the AsciiDoc script.
 To unroll the storyboard branches, run this command:
 
     bundle exec rake code
+
+Or only for a specific language:
+
+    bundle exec rake code[ruby]
 
 Don't forget to push your storyboard branch too!
 
