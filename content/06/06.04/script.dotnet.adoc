@@ -2,9 +2,9 @@
 
 shot::[1, "show output of the test execution in a command line shell, Hungarian feature file and specflow.json removed from the project"]
 
-In the previous lessons we've learnt how to configure SpecFlow and how to run scenarios from Visual Studio and from the command line. The test output we have seen there contains a brief summary of the execution and the failures. If the test were executed Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will look at in this lesson.
+In the previous lessons we've learnt how to configure SpecFlow and how to run scenarios from Visual Studio and from the command line. The test output we have seen there contains a brief summary of the execution and the failures. If the test were executed on a Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will look at in this lesson.
 
-The `dotnet test` tool outputs the execution results through configurable loggers. The logger can be specified using the `--logger` option. There are multiple logger providers you can choose from. You can even write your own. But most of the teams use the TRX logger, that saves the execution results into a *Visual Studio Test Results* or TRX file with the `.trx` extension. Let's use this. shot::[2, "type dotnet test --logger trx, run"]
+The `dotnet test` tool outputs the execution results through configurable loggers. The logger can be specified using the `--logger` option. There are multiple logger providers you can choose from. You can even write your own. But most of the teams use the TRX logger, that saves the execution results into a *Visual Studio Test Results* or TRX file. Let's use this. shot::[2, "type dotnet test --logger trx, run"]
 
 [source]
 ----
@@ -51,14 +51,14 @@ C:\...\Shouty\Shouty.Specs>dotnet test --logger trx;logfilename=shouty-result.tr
 shot::[14, "show soecflow+ livingdoc page"]
 The https://specflow.org/blog/introducing-the-specflow-plus-livingdoc-generator/[SpecFlow+ LivingDoc Generator] from the Tricentis SpecFlow team uses a slightly different approach. This free tool does not process the TRX file, but produces its own result file and from that it is able to generate comprehensive documentation of your requirements based on the feature files and the scenarios you defined. Although the generated documentation also contains the test results, its primary focus is to produce the so-called *Living Documentation* -- documentation that shows whether the application currently fulfills the requirements.
 
-In order to setup SpecFlow+ LivingDoc Generator, we need to install the `SpecFlow.Plus.LivingDocPlugin` NuGet package. shot::[15, "invoke dotnet add package command"]
+In order to setup SpecFlow+ LivingDoc Generator, we need to install the `SpecFlow.Plus.LivingDocPlugin` NuGet package. shot::[15.1, "invoke dotnet add package command"]
 
 [source]
 ----
 C:\...\Shouty\Shouty.Specs>dotnet add package SpecFlow.Plus.LivingDocPlugin
 ----
 
-Now let's run the tests. We don't need the TRX file now, so running `dotnet test` is enough. The SpecFlow+ LivingDoc plugin generates a result file in the output folder, named `TestExecution.json` by default. shot::[16, "make dir, highlight TestExecution.json"]
+Now let's run the tests. We don't need the TRX file now, so running `dotnet test` is enough. shot::[15.2, "invoke dotnet test command"] The SpecFlow+ LivingDoc plugin generates a result file in the output folder, named `TestExecution.json` by default. shot::[16, "dir in folder, highlight TestExecution.json"]
 
 [source]
 ----
@@ -67,9 +67,9 @@ C:\...\Shouty\Shouty.Specs>dir bin\Debug\netcoreapp3.1
 
 Here it is!
 
-Now we need to run the actual generator. The generator has to be installed as a .NET Core tool for the project.
+Now we need to run the actual generator. The generator has to be installed as a .NET tool for the project.
 
-Since this is the first .NET Core tool that we have install for this project, we need to first initialize the .NET Core tool configuration. For that we need to go up to the solution folder in our console window shot::[17, "invoke cd .."] and invoke `dotnet new tool-manifest` shot::[18, "invoke command"]. This creates a file named  `dotnet-tools.json` in the `.config` folder of the solution shot::[19, "dir .config"]. You should add this file to your source control.
+Since this is the first .NET tool that we have install for this project, we need to first initialize the .NET tool configuration. For that we need to go up to the solution folder in our console window shot::[17, "invoke cd .."] and invoke `dotnet new tool-manifest` shot::[18, "invoke command"]. This creates a file named  `dotnet-tools.json` in the `.config` folder of the solution. You should add this file to your source control.
 
 [source]
 ----
@@ -79,7 +79,7 @@ Getting ready...
 The template "Dotnet local tool manifest file" was created successfully.
 ----
 
-Now we can install the SpecFlow+ LivingDoc Generator. This can be done, using the `dotnet tool install SpecFlow.Plus.LivingDoc.CLI` command that pulls the generator from NuGet.org and installs it for this project. shot::[20, "invoke command"]
+Now we can install the SpecFlow+ LivingDoc Generator. This can be done, using the `dotnet tool install` command that pulls the generator from NuGet.org and installs it for this project. shot::[20, "invoke command"]
 
 [source]
 ----
@@ -89,11 +89,11 @@ You can invoke the tool from this directory using the following commands: 'dotne
 Tool 'specflow.plus.livingdoc.cli' (version '3.5.286') was successfully installed. Entry is added to the manifest file W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\.config\dotnet-tools.json.
 ----
 
-As the message says, the tool has been installed successfully and can be used with shot::[21, "highlight dotnet livingdoc"] the `dotnet livingdoc` command. Let's use it to generate our result.
+As the message says, the tool has been installed successfully and can be used with shot::[21, "highlight dotnet livingdoc"] the `dotnet livingdoc` command. 
 
-First, let's step back to our SpecFlow project folder and start with `dotnet livingdoc`. shot::[22, "cd to specs"] Now we need to specify a couple of settings for the generator. If you get lost, you can always call dotnet livingdoc help or check the https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html[documentation].
+First, let's step back to our SpecFlow project folder and start with `dotnet livingdoc`. shot::[22.1, "cd to specs"]shot::[22.2, "start typing"] Now we need to specify a couple of settings for the generator. If you get lost, you can always call dotnet livingdoc help or check the https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html[documentation].
 
-We need to say `test-assembly`, shot::[23, "type test-assembly"] because we want to generate the result from an assembly, and we have to shot::[24, "type assembly name"] specify the compiled assembly of our Shouty project, the `Shouty.Specs.dll` from our output folder.
+We need to say `test-assembly`, shot::[23, "type test-assembly"] because we want to generate the result from an assembly, and we have to shot::[24, "type assembly name"] specify the compiled assembly of our Shouty project.
 
 Finally we need to shot::[25, "type rest of the command"] provide the path of the generated TestExecution.json file using the `--test-execution-json` option. And run. shot::[26, "run"]
 
@@ -104,10 +104,12 @@ C:\...\Shouty\Shouty.Specs>dotnet livingdoc test-assembly bin\Debug\netcoreapp3.
 W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.html was successfully generated.
 ----
 
-We've got the generated HTML file. shot::[27, "open html with start"] As you can see, the result focuses on the feature structure, shot::[28, "open structure, highlight results"] but the results are also displayed.
+We've got the generated HTML file. shot::[27, "open html with start"] As you can see, the result focuses on the feature structure, shot::[28, "open structure, highlight results"] but the details are also displayed.
 
 Since the result is a single HTML file, it is easy to share it with all stakeholders. If you use Azure DevOps to track your work items, you can use the integrated version of SpecFlow+ LivingDoc as well.
 
 There are more and more tools that can help you to implement living documentation for SpecFlow, shot::[29, "show page"] like https://www.picklesdoc.com/[Pickles Doc], shot::[30, "show page"]https://github.com/Augurk/Augurk[Augurk] or shot::[31, "show page"] https://www.specsolutions.eu/specsync/[SpecSync for Azure DevOps]. The SmartBear Cucumber team is working on a platform shot::[32, "show page"] called https://reports.cucumber.io/[Cucumber Reports] that can be used to publish and share living documentation. At the time of the recording this is not yet available for SpecFlow, but hopefully it will be soon.
 
 In this lesson we have enumerated a couple of options to share your results and your living documentation with the entire team. This is essential in order to facilitate a common understanding between people on the project -- which is our ultimate goal.
+
+With that we finished this chapter. See you next time!
