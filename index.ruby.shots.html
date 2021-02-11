@@ -3547,47 +3547,6 @@ If we try and run Cucumber now, we get an error about an ambiguous match. Our ge
 </div>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_lesson_5_questions_specflow">4.5.2. Lesson 5 - Questions (SpecFlow)</h4>
-<div class="sect4">
-<h5 id="_why_should_a_step_definition_be_short_2">Why should a step definition be short?</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Because the plain-language description of the domain in the Gherkin step should be close to the domain model in the code - TRUE</p>
-</li>
-<li>
-<p>Step definitions don&#8217;t need to be short</p>
-</li>
-<li>
-<p>SpecFlow limits the length of step definitions to five lines of code</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Answer: Step definitions are a thin glue between the plain-language description in a scenario and the software that we&#8217;re building. If the business domain and the solution domain are aligned, then there should be little translation to do in the step definition.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_what_does_it_mean_when_specflow_complains_about_an_ambiguous_step">What does it mean when SpecFlow complains about an <em>ambiguous</em> step?</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>SpecFlow couldn&#8217;t find a step definition that matches a step</p>
-</li>
-<li>
-<p>SpecFlow only found one step definition that matches a step</p>
-</li>
-<li>
-<p>SpecFlow found more than one step definition that matches a step - TRUE</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Answer: If more than one step definition matches a step, then SpecFlow doesn&#8217;t know which one to call. When this ambiguity occurs, SpecFlow issues an error, rather than try to choose between the matching step definitions.</p>
-</div>
-</div>
-</div>
 </div>
 <div class="sect2">
 <h3 id="_backgrounds">4.6. Backgrounds</h3>
@@ -3698,56 +3657,6 @@ Your browser does not support the video tag.
 </div>
 <div class="sect4">
 <h5 id="_how_might_backgrounds_decrease_the_readability_or_maintainability_of_a_feature_file">How might Backgrounds decrease the readability or maintainability of a feature file?</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Backgrounds always improve readability</p>
-</li>
-<li>
-<p>Readability can decrease because the reader must remember the contents of the background even when reading scenarios at the end of the feature file</p>
-</li>
-<li>
-<p>Maintainability can decrease because the maintainer must be aware that there is a background even when adding scenarios to the end of the feature file</p>
-</li>
-<li>
-<p>Maintainability can decrease because the maintainer must be aware of the background when moving a scenario to a different feature file</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Answer: Backgrounds were created to aid readability, by reducing duplication in the scenarios. Unfortunately, moving important information out of a scenario means that anyone reading or modifying a feature file must be fully aware that of the existence and content of a background. Since feature files typically contain several scenarios, that means holding two sections of the feature file in your mind at the same time, making a feature file harder to read or maintain.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_lesson_6_questions_specflow">4.6.2. Lesson 6 - Questions (SpecFlow)</h4>
-<div class="sect4">
-<h5 id="_what_does_the_gherkin_keyword_background_do_2">What does the Gherkin keyword <em>Background</em> do?</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>It provides a place to write a description of why the feature is valuable</p>
-</li>
-<li>
-<p>It is treated exactly like a scenario, but is run as soon as SpecFlow starts</p>
-</li>
-<li>
-<p>It is treated exactly like a scenario, but is run once before any other scenario in the feature file</p>
-</li>
-<li>
-<p>The steps from the background are run as if they were inserted at the beginning of every scenario in the feature file - TRUE</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Answer: The background is used to reduce duplication in scenarios by moving steps that are common to all scenarios into a single location. The steps in the background are run before every scenario in the feature file.</p>
-</div>
-<div class="paragraph">
-<p>There can be a maximum of one Background per feature file. A Background only affects scenarios that are in the same feature file as the Background.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_how_might_backgrounds_decrease_the_readability_or_maintainability_of_a_feature_file_2">How might Backgrounds decrease the readability or maintainability of a feature file?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -5566,7 +5475,7 @@ We can specify multiple formatters like this. Only one formatter is allowed to o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-10 13:41:31 UTC
+Last updated 2021-02-11 13:31:29 UTC
 </div>
 </div>
 <style>

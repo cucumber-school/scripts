@@ -3152,11 +3152,11 @@ And we&#8217;re still green!</p>
 <div class="sect3">
 <h4 id="_lesson_4_questions_2">4.4.1. Lesson 4 - Questions</h4>
 <div class="sect4">
-<h5 id="_when_does_a_before_hook_run">When does a Before hook run?</h5>
+<h5 id="_when_does_a_beforescenario_hook_run">When does a BeforeScenario hook run?</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Before every run of Cucumber</p>
+<p>Before every run of SpecFlow</p>
 </li>
 <li>
 <p>Before the first scenario in each feature file</p>
@@ -3170,10 +3170,10 @@ And we&#8217;re still green!</p>
 </ul>
 </div>
 <div class="paragraph">
-<p>Answer: A Before hook runs before each scenario. Since there is no way to tell if a hook exists by looking at the feature file, you should only use hooks for performing actions that you don&#8217;t expect the business to provide feedback on.</p>
+<p>Answer: A BeforeScenario hook runs before each scenario. Since there is no way to tell if a hook exists by looking at the feature file, you should only use hooks for performing actions that you don&#8217;t expect the business to provide feedback on.</p>
 </div>
 <div class="paragraph">
-<p>You can read more about hooks at <a href="https://cucumber.io/docs/cucumber/api/#hooks" class="bare">https://cucumber.io/docs/cucumber/api/#hooks</a></p>
+<p>You can read more about hooks at <a href="https://docs.specflow.org/projects/specflow/en/latest/Bindings/Hooks.html" class="bare">https://docs.specflow.org/projects/specflow/en/latest/Bindings/Hooks.html</a></p>
 </div>
 </div>
 <div class="sect4">
@@ -3305,50 +3305,9 @@ And we&#8217;re still green!</p>
 <p>Great, we’re green again. </p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_5_questions_ruby_java_js">4.5.1. Lesson 5 - Questions (Ruby, Java, JS)</h4>
+<h4 id="_lesson_5_questions_specflow">4.5.1. Lesson 5 - Questions (SpecFlow)</h4>
 <div class="sect4">
 <h5 id="_why_should_a_step_definition_be_short">Why should a step definition be short?</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Because the plain-language description of the domain in the Gherkin step should be close to the domain model in the code - TRUE</p>
-</li>
-<li>
-<p>Step definitions don&#8217;t need to be short</p>
-</li>
-<li>
-<p>Cucumber limits the length of step definitions to five lines of code</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Answer: Step definitions are a thin glue between the plain-language description in a scenario and the software that we&#8217;re building. If the business domain and the solution domain are aligned, then there should be little translation to do in the step definition.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_what_does_it_mean_when_cucumber_compains_about_an_ambiguous_step">What does it mean when Cucumber compains about an <em>ambiguous</em> step?</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Cucumber couldn&#8217;t find a step definition that matches a step</p>
-</li>
-<li>
-<p>Cucumber only found one step definition that matches a step</p>
-</li>
-<li>
-<p>Cucumber found more than one step definition that matches a step - TRUE</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Answer: If more than one step definition matches a step, then Cucumber doesn&#8217;t know which one to call. When this ambiguity occurs, Cucumber issues an error, rather than try to choose between the matching step definitions.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_lesson_5_questions_specflow">4.5.2. Lesson 5 - Questions (SpecFlow)</h4>
-<div class="sect4">
-<h5 id="_why_should_a_step_definition_be_short_2">Why should a step definition be short?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -3470,59 +3429,9 @@ Your browser does not support the video tag.
 <p>We’re ready to start the next iteration.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_6_questions_ruby_java_js">4.6.1. Lesson 6 - Questions (Ruby, Java, JS)</h4>
+<h4 id="_lesson_6_questions_specflow">4.6.1. Lesson 6 - Questions (SpecFlow)</h4>
 <div class="sect4">
-<h5 id="_what_does_the_gherkin_keyword_background_do">What does the Gherkin keyword _Background_do?</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>It provides a place to write a description of why the feature is valuable</p>
-</li>
-<li>
-<p>It is treated exactly like a scenario, but is run as soon as Cucumber starts</p>
-</li>
-<li>
-<p>It is treated exactly like a scenario, but is run once before any other scenario in the feature file</p>
-</li>
-<li>
-<p>The steps from the background are run as if they were inserted at the beginning of every scenario in the feature file - TRUE</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Answer: The background is used to reduce duplication in scenarios by moving steps that are common to all scenarios into a single location. The steps in the background are run before every scenario in the feature file.</p>
-</div>
-<div class="paragraph">
-<p>There can be a maximum of one Background per feature file. A Background only affects scenarios that are in the same feature file as the Background.</p>
-</div>
-</div>
-<div class="sect4">
-<h5 id="_how_might_backgrounds_decrease_the_readability_or_maintainability_of_a_feature_file">How might Backgrounds decrease the readability or maintainability of a feature file?</h5>
-<div class="ulist">
-<ul>
-<li>
-<p>Backgrounds always improve readability</p>
-</li>
-<li>
-<p>Readability can decrease because the reader must remember the contents of the background even when reading scenarios at the end of the feature file</p>
-</li>
-<li>
-<p>Maintainability can decrease because the maintainer must be aware that there is a background even when adding scenarios to the end of the feature file</p>
-</li>
-<li>
-<p>Maintainability can decrease because the maintainer must be aware of the background when moving a scenario to a different feature file</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Answer: Backgrounds were created to aid readability, by reducing duplication in the scenarios. Unfortunately, moving important information out of a scenario means that anyone reading or modifying a feature file must be fully aware that of the existence and content of a background. Since feature files typically contain several scenarios, that means holding two sections of the feature file in your mind at the same time, making a feature file harder to read or maintain.</p>
-</div>
-</div>
-</div>
-<div class="sect3">
-<h4 id="_lesson_6_questions_specflow">4.6.2. Lesson 6 - Questions (SpecFlow)</h4>
-<div class="sect4">
-<h5 id="_what_does_the_gherkin_keyword_background_do_2">What does the Gherkin keyword <em>Background</em> do?</h5>
+<h5 id="_what_does_the_gherkin_keyword_background_do">What does the Gherkin keyword <em>Background</em> do?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -3547,7 +3456,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect4">
-<h5 id="_how_might_backgrounds_decrease_the_readability_or_maintainability_of_a_feature_file_2">How might Backgrounds decrease the readability or maintainability of a feature file?</h5>
+<h5 id="_how_might_backgrounds_decrease_the_readability_or_maintainability_of_a_feature_file">How might Backgrounds decrease the readability or maintainability of a feature file?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -5515,7 +5424,7 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-10 13:41:31 UTC
+Last updated 2021-02-11 13:31:29 UTC
 </div>
 </div>
 <style>
