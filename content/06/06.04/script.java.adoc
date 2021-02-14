@@ -15,16 +15,16 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 
 So far, every time we have run Cucumber, it has printed the features back to us - in the console. This is called the `pretty` formatter. Cucumber can report results in other formats, some of which are useful for generating reports.
 
-Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.shot::[4, "run maven in console"]
+Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.shot::[2, "run maven in console"]
 
 [source]
 ----
 mvn test -Dcucumber.plugin="html:target/my-report"
 ----
 
-Now, let's take a look at the html that has been generated. shot::[5, "Open target/my-report in the browser"] As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.
+Now, let's take a look at the html that has been generated. shot::[3, "Open target/my-report in the browser"] As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.
 
-You probably noticed that we still got the `pretty` output in the console. shot::[5, "show the pretty output"] That's because we have specified the `pretty` plugin in the @CucumberOptions annotation in `RunCucumberTests.java`. shot::[6, highlight @CucumberOptions]
+You probably noticed that we still got the `pretty` output in the console. shot::[4, "show the pretty output"] That's because we have specified the `pretty` plugin in the @CucumberOptions annotation in `RunCucumberTests.java`. shot::[5, highlight @CucumberOptions]
 
 .RunCucumberTests.java
 [source,java]
@@ -32,7 +32,7 @@ You probably noticed that we still got the `pretty` output in the console. shot:
 include::../code/java/11-randomise-scenario-execution-order/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8..10]
 ----
 
-Let's delete that. shot::[7, remove pretty plugin]
+Let's delete that. shot::[6, remove pretty plugin]
 
 .RunCucumberTests.java
 [source,java]
@@ -40,30 +40,35 @@ Let's delete that. shot::[7, remove pretty plugin]
 include::../code/java/12-remove-pretty-formatter/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8..10]
 ----
 
-and run maven again. shot::[8,run maven in console] Notice that this time the only console output is a summary of the number of tests being run. There's no `pretty` output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.
+and run maven again. shot::[7,run maven in console] Notice that this time the only console output is a summary of the number of tests being run.shot::[8] There's no `pretty` output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.
 
-There's also a progress formatter, which just prints out a single character for each step. shot::[9, "run maven in console, show output"]
+[source]
+----
+mvn test -Dcucumber.plugin="html:target/my-report"
+----
+
+There's also a progress formatter, which just prints out a single character for each step. shot::[9, "run maven in console, show output"]shot::[10]
 
 [source]
 ----
 mvn test -Dcucumber.plugin="progress"
 ----
 
-The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. shot::[10, "run maven in console, show output"]
+The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. shot::[11, "run maven in console, show output"]shot::[12]
 
 [source]
 ----
 mvn test -Dcucumber.plugin="junit"
 ----
 
-We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the `pretty` plugin and the HTML plugin at the same time. There's a limitation that only one plugin can write to the console at the same time. Let's try to use the `progress` and `junit` plugin together shot::[11, run maven in console]
+We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the `pretty` plugin and the HTML plugin at the same time. There's a limitation that only one plugin can write to the console at the same time. Let's try to use the `progress` and `junit` plugin together shot::[13, run maven in console]
 
 [source]
 ----
 mvn test -Dcucumber.plugin="progress, junit"
 ----
 
-shot::[12, scroll up to show error]
+shot::[14, scroll up to show error]
 
 [source]
 ----
@@ -72,16 +77,16 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 	at io.cucumber.core.plugin.PluginFactory.defaultOutOrFailIfAlreadyUsed(PluginFactory.java:128)
 ----
 
-We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. shot::[13, "run maven in console, show progress output"]
+We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. shot::[15, "run maven in console, show progress output"]shot::[16]
 
 [source]
 ----
 mvn test -Dcucumber.plugin="progress, junit:target/junit.xml"
 ----
 
-The JUnit XML has been written to a file. shot::[14, open junit.xml in the IDE]
+The JUnit XML has been written to a file. shot::[17, open junit.xml in the IDE]
 
-The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. shot::[15, edit the step When Sean shouts 'Free bagels!' -> 'Free cupcakes!'].
+The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. shot::[18, edit the step When Sean shouts 'Free bagels!' -> 'Free cupcakes!'].
 
 .hear_shout.feature
 [source,gherkin]
@@ -89,7 +94,7 @@ The last plugin that I want to show you is rather special - the rerun formatter.
 include::../code/java/13-introduce-an-error/shouty/src/test/resources/shouty/hear_shout.feature[lines=35..44]
 ----
 
-While we're at it, let's put the `pretty` plugin back in @CucumberOptions. shot::[16, undo earlier edit]
+While we're at it, let's put the `pretty` plugin back in @CucumberOptions. shot::[19, undo earlier edit]
 
 .RunCucumberTests.java
 [source,java]
@@ -97,26 +102,26 @@ While we're at it, let's put the `pretty` plugin back in @CucumberOptions. shot:
 include::../code/java/13-introduce-an-error/shouty/src/test/java/shouty/RunCucumberTest.java[lines=8..10]
 ----
 
-Now let's run Maven again using the `rerun` plugin writing its output to a text file. Let's call it `rerun.txt`. shot::[17, run maven from console]
+Now let's run Maven again using the `rerun` plugin writing its output to a text file. Let's call it `rerun.txt`. shot::[20, run maven from console]
 
 [source]
 ----
 mvn test -Dcucumber.plugin="rerun:target/rerun.txt"
 ----
 
-We can see in the console that the `Two shouts` scenario has failed. shot::[18, scroll to show failure]
+We can see in the console that the `Two shouts` scenario has failed. shot::[21, scroll to show failure]
 
-shot::[19, open target/rerun.txt]
+shot::[22, open target/rerun.txt]
 Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed!  And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.
 
-This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[20, "run maven from console, highlighting `pretty` output showing only failing scenario"]
+This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[23, "run maven from console, highlighting `pretty` output showing only failing scenario"]shot::[24]
 
 [source]
 ----
 mvn test -Dcucumber.features="@target/rerun.txt"
 ----
 
-This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let's fix the scenario shot::[21, undo change in feature file]
+This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let's fix the scenario shot::[25, undo change in feature file]
 
 .hear_shout.feature
 [source,gherkin]
@@ -124,7 +129,7 @@ This is a big time saver when you’re in the middle of a refactoring where you 
 include::../code/java/14-fix-error/shouty/src/test/resources/shouty/hear_shout.feature[lines=35..44]
 ----
 
-and rerun the failing scenario again shot::[20, "run maven from console"]
+and rerun the failing scenario again shot::[26, "run maven from console"]
 
 Great. We're back to green again.
 

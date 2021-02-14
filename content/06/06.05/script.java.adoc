@@ -7,9 +7,9 @@ The challenge is making sure that this documentation is easily available. Featur
 
 Since Cucumber-JVM 6.6.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. shot::[2, go to reports.cucumber.io]
 
-Ensure that you're using Cucumber-JVM 6.6.0 or later shot::[3, show pom.xml file] and that cucumber.publish.quiet is set to false. shot::[3, "cucumber.properties"]  At the time of recording, the IntelliJ plugin doesn't support Cucumber 6, so we have to use Maven to run Cucumber. shot::[4, "mvn test"] Cucumber helpfully prints out a banner telling you how to publish your results to Cucumber Reports shot::[5, highlight banner].
+Ensure that you're using Cucumber-JVM 6.6.0 or later shot::[3, show pom.xml file] and that cucumber.publish.quiet is set to false. shot::[4, "cucumber.properties"]  At the time of recording, the IntelliJ plugin doesn't support Cucumber 6, so we have to use Maven to run Cucumber. shot::[5, "mvn test"] Cucumber helpfully prints out a banner telling you how to publish your results to Cucumber Reports shot::[6, highlight banner].
 
-Let's follow the instructions from in the banner and set `cucumber.publish.enabled` to `true` shot::[6].
+Let's follow the instructions from in the banner and set `cucumber.publish.enabled` to `true` shot::[7].
 
 .cucumber.properties
 [source]
@@ -17,16 +17,16 @@ Let's follow the instructions from in the banner and set `cucumber.publish.enabl
 include::../code/java/15-enable-publishing-to-cucumber-reports/shouty/src/test/resources/cucumber.properties[]
 ----
 
-Now we can run Cucumber again and we get a different banner output shot:[]. The unique URL in this banner is the address of your published report shot::[7, highlight URL].
+Now we can run Cucumber again and we get a different banner output shot::[8]. The unique URL in this banner is the address of your published report shot::[9, highlight URL].
 
-shot::[8, follow URL]
-Open the URL and you'll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered shot::[9]
+shot::[10, follow URL]
+Open the URL and you'll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered shot::[11]
 
-You might have noticed the warning in the banner that says the report will "self-destruct". shot::[10, highlight warning] To prevent a report from being deleted, it has to be associated with an authenticated account.
+You might have noticed the warning in the banner that says the report will "self-destruct". shot::[12, highlight warning] To prevent a report from being deleted, it has to be associated with an authenticated account.
 
-Follow the link in the report to authenticate your account shot::[11] You can then retrieve your Cucumber Reports publish token shot::[12]. Reports associated with a publish token will be kept until explicitly deleted.
+Follow the link in the report to authenticate your account shot::[13] You can then retrieve your Cucumber Reports publish token shot::[14]. Reports associated with a publish token will be kept until explicitly deleted.
 
-During development you probably won't want to publish a report after every build... and you might prefer not to see the banner output telling you about Cucumber Reports. Let's fix this in the properties file by removing the cucumber.publish.enable property and adding the cucumber.publish.quiet property:
+During development you probably won't want to publish a report after every build... and you might prefer not to see the banner output telling you about Cucumber Reports. Let's fix this in the properties file by removing the cucumber.publish.enable property and adding the cucumber.publish.quiet property:shot::[15]
 
 .cucumber.properties
 [source]
@@ -34,7 +34,7 @@ During development you probably won't want to publish a report after every build
 include::../code/java/16-disable-and-silence-cucumber-reports/shouty/src/test/resources/cucumber.properties[]
 ----
 
-shot::[]
+shot::[16]
 Now when we run Cucumber, no report is published and no banner advertising Cucumber Reports is output.
 
 Cucumber Reports is under active development, so expect to see many more useful features coming in the coming months.

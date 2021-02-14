@@ -43,14 +43,14 @@ The step is undefined, but we can quickly generate it by running Cucumber shot::
 include::../code/java/09-choose-camelcase-snippet-generation/shouty/src/test/resources/cucumber.properties[]
 ----
 
-Now when we run Cucumber shot::[9], the snippet method name is generated in CamelCase. Implementing step definitions in non-english languages is exactly the same, so we won't go any further with LOLCAT just now. Let's delete the cat.feature file shot::[10] and check that we're still green shot::[11]
+Now when we run Cucumber shot::[9], the snippet method name is generated in CamelCase.shot::[10] Implementing step definitions in non-english languages is exactly the same, so we won't go any further with LOLCAT just now. Let's delete the cat.feature file shot::[11] and check that we're still green shot::[12]
 
-Notice that the scenarios in hear_shout.feature are being run in the order that the occur in the feature file shot::[12, expand/highlight the test results] That's fine, but there's a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.
+Notice that the scenarios in hear_shout.feature are being run in the order that the occur in the feature file shot::[13, expand/highlight the test results] That's fine, but there's a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.
 
 Each scenario should be isolated - it's result should not depend on the outcome of any other scenario. To help you catch any dependencies between your scenarios, Cucumber can be told to run your scenarios in a random order.
 
 
-To do this, set the cucumber.execution.order propoerty in the property file shot::[13, "add line to cucumber.properties"]
+To do this, set the cucumber.execution.order propoerty in the property file shot::[14, "add line to cucumber.properties"]
 
 .cucumber.properties
 [source,java]
@@ -58,10 +58,10 @@ To do this, set the cucumber.execution.order propoerty in the property file shot
 include::../code/java/11-randomise-scenario-execution-order/shouty/src/test/resources/cucumber.properties[]
 ----
 
-Now when we run Cucumber, the scenarios are run in a random order shot::[14, run Cucumber & show new order of scenario execution]. Now there's almost no chance of a dependency between scenarios slipping through without being noticed.
+Now when we run Cucumber, the scenarios are run in a random order shot::[15, run Cucumber & show new order of scenario execution]. Now there's almost no chance of a dependency between scenarios slipping through without being noticed.
 
-shot::[15, "show 'List configuration options' section of website"]
-A full list of Cucumber's configuration properties can be found on the https://cucumber.io/docs/cucumber/api/#options[Cucumber website]. shot::[16, show list of properties on website] There's also a help page included with Cucumber, which can be printed using Maven. shot::[17, "run maven in console, highlight the OPTIONS help text"]. This lists both the names of the command line options shot::[18, highlight top of output] and the system properties shot::[19, scroll down output]
+shot::[16, "show 'List configuration options' section of website"]
+A full list of Cucumber's configuration properties can be found on the https://cucumber.io/docs/cucumber/api/#options[Cucumber website]. shot::[17, show list of properties on website] There's also a help page included with Cucumber, which can be printed using Maven. shot::[18, "run maven in console, highlight the OPTIONS help text"]shot::[19]. This lists both the names of the command line options shot::[20, highlight top of output] and the system properties shot::[21, scroll down output]
 
 [source]
 ----
