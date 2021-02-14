@@ -5791,8 +5791,15 @@ In the previous lesson, we ran Cucumber using Maven. Maven doesn&#8217;t actuall
 <p>
 We’ll put a focus tag right here, above this scenario.  Tags start with an at-sign and are case sensitive.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@focus</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>Now let&#8217;s add a tag expression to the @CucumberOptions annotation, which Cucumber will use to filter the scenarios run</p>
+<p>Now let&#8217;s add a tag expression to the @CucumberOptions annotation, which Cucumber will use to filter the scenarios run </p>
 </div>
 <div class="listingblock">
 <div class="title">RunCucumberTest.java</div>
@@ -5810,7 +5817,25 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>It’s entirely up to you what you name your tags. When we’re working on a particular area of the application it is common to use a temporary tag like this - we’ll remove it before we check our code into source control.</p>
 </div>
 <div class="paragraph">
-<p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control.  Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. </p>
+<p>Tags can be used for other purposes as well. If you have lots of scenarios it can be time-consuming to run them all every time. For example, you can tag a few of them with @smoke and run only those before you check in code to source control. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@smoke</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Listener hears a message
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+
+    <span class="c"># ...</span>
+
+    <span class="nt">@focus</span> <span class="nt">@smoke</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Listener is out of range
+      <span class="nf">Given </span>the range is 100
+      <span class="nf">And </span>people are located at</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. </p>
 </div>
 <div class="listingblock">
 <div class="title">RunCucumberTest.java</div>
@@ -6058,6 +6083,11 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 <div class="paragraph">
 <p>and run maven again.  Notice that this time the only console output is a summary of the number of tests being run. There&#8217;s no <code>pretty</code> output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>mvn test -Dcucumber.plugin="html:target/my-report"</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>There&#8217;s also a progress formatter, which just prints out a single character for each step. </p>
 </div>
@@ -6205,7 +6235,7 @@ cucumber.execution.order=random</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can run Cucumber again and we get a different banner output shot:[]. The unique URL in this banner is the address of your published report .</p>
+<p>Now we can run Cucumber again and we get a different banner output . The unique URL in this banner is the address of your published report .</p>
 </div>
 <div class="paragraph">
 <p>
@@ -6247,7 +6277,7 @@ Now when we run Cucumber, no report is published and no banner advertising Cucum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-14 11:50:09 UTC
+Last updated 2021-02-14 14:47:35 UTC
 </div>
 </div>
 <style>
