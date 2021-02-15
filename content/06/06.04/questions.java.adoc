@@ -1,0 +1,39 @@
+==== Lesson 4 - Questions
+
+
+===== Which or the following plugins ship with Cucumber? ** MULTIPLE-CHOICE **
+
+* AsciiDoc ----FALSE
+* HTML ----TRUE
+* JSON ----TRUE
+* Jira ----FALSE
+* JUnit ----TRUE
+* Pretty ----TRUE
+* Progress ----TRUE
+* Rerun ----TRUE
+* XML ----FALSE
+
+Explanation:
+Cucumber ships with lots of plugins. If the plugin that you want does not exist yet you can create your own or you can post-process the output of one of the standard plugins (JSON is often a starting point).
+
+A newer plugin (that is out of scope for this course) is the *message* plugin. Internally, Cucumber generates messages that are used bu the other plugins to create their output. The message plugin outputs these messages directly.
+
+===== How many plugins can output to the console in any run of Cucumber? ** MULTIPLE-CHOICE **
+
+* Zero ----TRUE
+* One ----TRUE
+* Many ----FALSE
+
+Explanation:
+So that the output remains easy to read, no more than one plugin is allowed to write to the console in any given run of Cucumber. You may choose to write the output of every plugin to file.
+
+===== What does the rerun formatter do?
+
+* It causes Cucumber to rerun each scenario multiple times
+* It causes Cucumber to rerun each failed scenario
+* It creates a file called rerun.txt that documents which scenarios failed
+* It outputs a list of failed scenarios identified by feature file and line number ----TRUE
+* It outputs a running total of how many times each scenario has ever been run
+
+Explanation:
+The rerun formatter keeps track of the feature file and line number of every scenario that fails. This information is output in a feature file/line number format that can be saved to file. When provided to Cucumber as input (with the file name preceded by `@`), the identified scenarios will be run.

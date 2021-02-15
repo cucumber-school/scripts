@@ -1,0 +1,23 @@
+==== Lesson 1 - Questions
+
+===== Which system property sets a regular expression that Cucumber uses to filter the scenarios run by name?
+
+* cucumber.filter.regex
+* cucumber.filter.name    -----TRUE
+* cucumber.name.filter
+* cucumber.regex.name
+
+Explanation:
+You can find a list of supported Cucumber system properties at https://cucumber.io/docs/cucumber/api/#options
+
+===== What are the benefits of using cucumber.properties rather than the command line to set system properties?  **MULTIPLE-CHOICE**
+
+* You can check the property file into source control    -----TRUE
+* The system properties set in the property file will be used by your IDE    -----TRUE
+* The property file is the only way to set system properties when using Maven    -----FALSE
+
+Explanation:
+Because cucumber.properties is a text file that lives within the project, it can be checked into source control and it can be accessed by the Cucumber integration implemented by your IDE.
+
+System properties can also be set on the command line (even when you are using Maven) or by using environment variables. Finally, Cucumber can be controlled via the @CucumberOptions annotation, which will be covered in the next lesson.
+

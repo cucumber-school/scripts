@@ -1,0 +1,58 @@
+==== Lesson 5 - Questions
+
+
+===== Why did the Cucumber team create Cucumber Reports?
+
+* To enable the removal of the HTML formatter
+* To make it easier to share living documentation between stakeholders and team members ----TRUE
+* To provide a chargeable service for Cucumber users
+* To get a chance to play with cloud platforms
+
+Explanation:
+The output from running Cucumber forms the basis of a system's "living documentation". Before the existence of Cucumber Reports each team/organisation had to implement their own mechanism for sharing the living documentation, but now it's as simple as asking Cucumber to publish it.
+
+===== How does the output from the HTML formatter differ from that displayed by Cucumber Reports?
+
+* Cucumber Reports has much less detail that the HTML formatter
+* Cucumber Reports uses animated GIFs and emojis to make the living documentation more business-friendly
+* Cucumber Reports are identical to the HTML output, but include some extra information about the build environment ----TRUE
+
+Explanation:
+The same underlying library generates the output for both Cucumber Reports and the HTML formatter. Cucumber Reports also displays some extra information about that run of Cucumber, summarising the execution context and scenario outcomes.
+
+===== What extra information can be published by Cucumber Reports? ** MULTIPLE_CHOICE **
+
+* Username of last committer ----FALSE
+* Version of Cucumber that generated the report ----TRUE
+* Identifier (SHA) of the last commit ----TRUE
+* Version of operating system that Cucumber ran on ----TRUE
+* Timestamp of when the report was generated ----FALSE
+* Cucumber configuration properties used ----FALSE
+* Number of scenarios that ran ----TRUE
+* Percentage of scenarios that passed ----TRUE
+* Version of CI tool that ran Cucumber ----TRUE
+* Code coverage statistics for run ----FALSE
+
+Explanation:
+Cucumber Reports always publishes:
+* High level statistics of scenarios run and their status
+* Elapsed time since the report was generated
+* The time it took to run the scenarios and generate the report
+* Operating system version
+* Language version used for stepdefs
+* Cucumber version
+
+If Cucumber Reports was run by a supported CI tool, it also publishes:
+* CI tool version
+* Identifier (SHA) of the last commit
+
+===== What happens to reports that are not associated with a "publish token"
+
+* The report is not published
+* The report is published and cannot be deleted
+* The report is published and will be deleted automatically ----TRUE
+
+Explanation:
+Reports that are not associated with a publish token will be deleted approximately 24 hours after being published. Once published, a report can be associated with a publish token, which will then preserve the report until it is explicitly deleted.
+
+For more details on publish tokens, authentication, and association with Github repositories, see reports.cucumber.io
