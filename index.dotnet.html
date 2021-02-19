@@ -3532,7 +3532,7 @@ Your browser does not support the video tag.
 <p>Once again the Shouty developers&#8201;&#8212;&#8201;have been hard at work implementing that proximity rule. Let’s have a look at how they got on. </p>
 </div>
 <div class="paragraph">
-<p>Right, so those two scenarios we just left as just placeholders: the one where the listener is within range, and the one where the listener is out of range  are passing.  Fantastic! If we look at our step definitions, we can see how they have been implemented. </p>
+<p>Right, so those two scenarios we just left as placeholders: the one where the listener is within range, and the one where the listener is out of range  are passing.  Fantastic! If we look at our step definitions, we can see how they have been implemented. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -3674,7 +3674,10 @@ We&#8217;ll need to make changes to the step definitions to make sure that a Net
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="c#">        <span class="k">private</span> <span class="n">Network</span> <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">(</span><span class="n">DEFAULT_RANGE</span><span class="p">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="c#">        <span class="k">private</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">DEFAULT_RANGE</span> <span class="p">=</span> <span class="m">100</span><span class="p">;</span>
+
+        <span class="k">private</span> <span class="kt">string</span> <span class="n">messageFromSean</span><span class="p">;</span>
+        <span class="k">private</span> <span class="n">Network</span> <span class="n">network</span> <span class="p">=</span> <span class="k">new</span> <span class="nf">Network</span><span class="p">(</span><span class="n">DEFAULT_RANGE</span><span class="p">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3744,7 +3747,8 @@ Let&#8217;s remove the details that aren&#8217;t relevant to the range rule.</p>
     <span class="nf">Given </span>the range is 100
     <span class="nf">And </span>a person named Sean is located at 0
     <span class="nf">And </span>a person named Larry is located at 150
-    <span class="nf">When </span>Sean shouts</code></pre>
+    <span class="nf">When </span>Sean shouts
+    <span class="nf">Then </span>Larry should not hear a shout</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -3800,7 +3804,7 @@ That&#8217;s better. We&#8217;ve removed inessential details, so that each scena
 <p>The scenarios would still run green if we removed the steps that set the range of a shout  , because the range already has a default value. We&#8217;re not going to, because since those scenarios are illustrating the rule that deals with the range of a shout, it&#8217;s an essential part of context for anyone reading them.</p>
 </div>
 <div class="paragraph">
-<p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system . So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where we’d hard-coded it.</p>
+<p>A happy side-effect is that, in order to set the range from our scenario, we’ve had to make it a configurable property of the system . So if our business stakeholders ever change their minds about the range, we won’t have to go hunting around in the code for where it&#8217;s been hard-coded.</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_2_questions_3">5.2.1. Lesson 2 - Questions</h4>
@@ -3944,7 +3948,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p>Well, we’re in luck. You can!</p>
+<p>Well, we’re in luck. We can!</p>
 </div>
 <div class="paragraph">
 <p>Gherkin has a special syntax called Data Tables, that allows you to specify tabular data for a step, using pipe characters to mark the boundary between cells. </p>
@@ -3966,7 +3970,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 <p>As you can see, the step definition implicitly takes a single argument  of type <code>Table</code>, which is a representation of a Data Table in SpecFlow. As it represents a table of Person objects, we can rename it to <code>personsTable</code> </p>
 </div>
 <div class="paragraph">
-<p>This object has a rich API for using the tabular data. The <code>Rows</code> property of the table class can be used to access the data rows of the table&#8201;&#8212;&#8201;all rows, except the header row.  A particular cell value can be retrieved from a row by using the header name. So, Lucy&#8217;s location can be accessed by getting the "name" cell of the row at index 1. </p>
+<p>This object has a rich API for using the tabular data.  The <code>Rows</code> property of the table class  can be used to access the data rows of the table&#8201;&#8212;&#8201;all rows, except the header row.  A particular cell value can be retrieved from a row by using the header name. So, Lucy&#8217;s location can be accessed by getting the "name" cell of the row at index 1. </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -4048,7 +4052,7 @@ This scenario is illustrating the rule that the "offer is only valid for Shouty 
 </div>
 </div>
 <div class="paragraph">
-<p>To improve the readability and maintainability of your step definition you can have SpecFlow automatically convert the table into a list of any class you want. If our Person object had a name field we could automatically create instances of Person from this table. But things aren’t always that simple.</p>
+<p>To improve the readability and maintainability of your step definition you can have SpecFlow automatically convert the table into a list of any class you want. If our Person object had a <code>name</code> field we could automatically create instances of Person from this table. But things aren’t always that simple.</p>
 </div>
 <div class="paragraph">
 <p>Instead, we’ll define a simple Whereabouts class to represent the data in the table. </p>
@@ -4544,7 +4548,7 @@ The method that compares two data tables is called <strong>CompareToSet</strong>
 <p>Still, we’ll press on and get it to green, then we’ll show you how to clean it up.</p>
 </div>
 <div class="paragraph">
-<p> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined. We could either add a new step definition, or paramterise "Larry should not hear a shout". Let&#8217;s modify the existing step definition </p>
+<p> Our existing step definition handles that ugly step with the long message just fine, but the last outcome step is undefined . We could either add a new step definition, or parametrize "Larry should not hear a shout". Let&#8217;s modify the existing step definition </p>
 </div>
 <div class="listingblock">
 <div class="title">StepDefinitions.cs</div>
@@ -4560,7 +4564,7 @@ The method that compares two data tables is called <strong>CompareToSet</strong>
 <p></p>
 </div>
 <div class="paragraph">
-<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests.  As we explain in more detail in the next lesson, we start by adding a new example to specify this extra responsibility. </p>
+<p>OK, so we have a failing acceptance test. Let’s dive down into our solution and implement this new rule. It seems like the Network should be responsible for implementing this rule,  so let’s go to its unit tests.  As we explain in more detail in the next lesson, we start by adding a new unit test to specify this extra responsibility. </p>
 </div>
 <div class="paragraph">
 <p>We’ll create a 181-character message like this  and then assert that the message should not be heard when it’s broadcast.</p>
@@ -4583,7 +4587,7 @@ The method that compares two data tables is called <strong>CompareToSet</strong>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run that test.  Good, it fails. Lucy’s still getting the message at the moment. Now how are we going to implement this?</p>
+<p>Let’s run that test.  Good, it fails. Laura’s still getting the message at the moment. Now how are we going to implement this?</p>
 </div>
 <div class="paragraph">
 <p>It looks like we’re already implementing the proximity rule here in the broadcast method.  Let’s add another if statement here about the message length. </p>
@@ -4620,7 +4624,7 @@ One very basic move we could make to improve it would be to just extract a coupl
 <p>Let’s just run the tests to check.  Great - everything’s still green.</p>
 </div>
 <div class="paragraph">
-<p>Now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. </p>
+<p>As now we have everything passing again, we can tidy up the Gherkin to use a new piece of syntax we’ve been wanting to tell you about: a DocString. </p>
 </div>
 <div class="paragraph">
 <p>DocStrings allow you to specify a text argument for a step that spans over multiple lines.  We could change our step to look like this instead: </p>
@@ -4808,7 +4812,7 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 <p>Yuck!</p>
 </div>
 <div class="paragraph">
-<p>Well, that’s how many, many codebase end up. The good thing about taking this course is that we’re teaching you how to write solid automated tests, and the good thing about having solid automated tests is you can refactor with confidence, knowing that if you accidentally change the system’s behaviour, your tests will tell you.</p>
+<p>Well, that’s how many, many codebase end up. The good thing about taking this course is that we’re teaching you how to write solid automated tests, and the good thing about having solid automated tests is that you can refactor with confidence, knowing that if you accidentally change the system’s behaviour, your tests will tell you.</p>
 </div>
 <div class="paragraph">
 <p>Once we’re done refactoring, what do we do next? Run SpecFlow, of course! In this case, our scenario was passing with a single trip round the inner TDD loop, but sometimes you can spend several hours working through all the unit tests you need to get a single scenario to green.</p>
@@ -4817,13 +4821,13 @@ When using a DocString in a scenario, you do not add any parameter to the matchi
 <p>Once the acceptance test is passing, we figure out the next most valuable scenario on our todo list, and start the whole thing all over again!</p>
 </div>
 <div class="paragraph">
-<p>Together, these two loops make the BDD cycle. The outer loop, which starts with an acceptance test, keeps us focussed on what the business needs us to do next. The inner loop, where we continuously test, implement then refactor small units of code, is where decide how we’ll implement that behaviour.</p>
+<p>Together, these two loops make the BDD cycle. The outer loop, which starts with an acceptance test, keeps us focussed on what the business needs us to do next. The inner loop, where we continuously test, implement then refactor small units of code, is where we decide how we’ll implement that behaviour.</p>
 </div>
 <div class="paragraph">
 <p>Both of these levels of feedback are important. It’s sometimes said that your acceptance tests ensure you’re building the right thing, and your unit tests ensure you’re building the thing right.</p>
 </div>
 <div class="paragraph">
-<p>That’s all for this chapter of Cucumber School. See you next time!</p>
+<p>That’s all for this chapter. See you next time!</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_6_questions">5.6.1. Lesson 6 - Questions</h4>
@@ -4934,7 +4938,7 @@ Hello, and welcome back to Cucumber School.</p>
 <p>Last time we learned about two very different kinds of loops. First, we used DataTables to loop over data in your scenarios.</p>
 </div>
 <div class="paragraph">
-<p>Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to build the right thing while the inner loop helps you build the thing right.</p>
+<p>Then we learned about BDD cycles. We saw how the outer loop of BDD helps you to build the right thing while the inner loop helps you build the thing right.</p>
 </div>
 <div class="paragraph">
 <p>In this lesson, we’re going to teach you all about how to run different SpecFlow scenarios.</p>
@@ -4956,7 +4960,7 @@ When we start working on a new scenario we often take a dive down to the inner T
 <p></p>
 </div>
 <div class="paragraph">
-<p>Simply typing the name of the scenario to the Test Explorer window search box filters the list to that particular scenario.  You can run or debug the selected scenario from the context menu but the easiest is  to hit <strong>Run All</strong> that runs all scenarios in the filtered view. It is worth spending a few minutes learning the keyboard shortcut of that, Ctrl R,V by default, as it can speed up your loops drastically.</p>
+<p>Simply typing the name of the scenario to the Test Explorer window search box filters the list to that particular scenario.  You can run or debug the selected scenario from the context menu but the easiest is  to hit <strong>Run All</strong> that runs all scenarios in the filtered view. It is worth spending a few minutes learning the keyboard shortcut of that,  Ctrl R,V by default, as it can speed up your loops drastically.</p>
 </div>
 <div class="paragraph">
 <p>You can filter for the scenario name as you have seen but you can use the search box to filter for keywords as well. Let&#8217;s use it to run all scenarios with the text "range" in their name. </p>
@@ -4965,7 +4969,7 @@ When we start working on a new scenario we often take a dive down to the inner T
 <p>The Test Explorer window can also be used  to filter for the outcome, for example if you want to re-run all failing tests,  or you can also run tests based on their hierarchy. Since the feature files appear as a separate node in the hierarchy,  you can use this to run all scenarios from a particular feature file.</p>
 </div>
 <div class="paragraph">
-<p>The search box can contain complex search expressions. You can discover these options by clicking on the <strong>Add search filter</strong> links or by checking out the documentation. We&#8217;ll use this to show you how to filter using tags.</p>
+<p>The search box can contain complex search expressions. You can discover these options  by clicking on the <strong>Add search filter</strong> links or by checking out the documentation. We&#8217;ll use this to show you how to filter using tags.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -5003,7 +5007,7 @@ Let&#8217;s say we want to work on this scenario for the next couple of hours. F
 <p>We filtered the Test Explorer window but as you can see no scenarios are shown. This is because the list haven&#8217;t refreshed yet. In fact we haven&#8217;t even saved the file yet! We could save the file, build the project and run the tests, but the <strong>Run All</strong> command does all of these steps. </p>
 </div>
 <div class="paragraph">
-<p>Here it is! Now you probably understand better why learning the keyboard shortcut for this command helps a lot. Ctrl R,V!</p>
+<p>Here it is! Now you probably understand better why learning the keyboard shortcut for this command helps a lot.  Ctrl R,V!</p>
 </div>
 <div class="paragraph">
 <p>Running the smoke tests gives you a quick feedback. If you’re running SpecFlow on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests.</p>
@@ -5012,10 +5016,10 @@ Let&#8217;s say we want to work on this scenario for the next couple of hours. F
 <p>Tags give you a way to organize your scenarios that cut across feature files. You can think of them like sticky labels you might put into a book to mark interesting pages that you want to refer back to.</p>
 </div>
 <div class="paragraph">
-<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 11. We could tag the whole feature file with this single line at the top.  All the scenarios within that file now inherit that tag, so if we filter for this tag, Visual Studio will run all the scenarios in the feature file. </p>
+<p>Some teams also use tags to reference external documents, for example, tickets in an issue tracker or planning tool. Let’s pretend we are using an issue tracker while working on Shouty and all the behaviour we built so far is related to the issue number 15. We could tag the whole feature file with this single line at the top.  All the scenarios within that file now inherit that tag, so if we filter for this tag, Visual Studio will run all the scenarios in the feature file. </p>
 </div>
 <div class="paragraph">
-<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a trait expression to exclude all the scenarios tagged as @slow. Let&#8217;s mark a few of them as slow&#8230;&#8203;  and this time I build the project to show the filtering results.  Then rewrite the trait expression in the search box to filter fow the slow scenarios.  Now if I add a dash ("-") to the front you can see all that are not slow.  Now when we run the tests, the "@slow" scenarios won&#8217;t be run. </p>
+<p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a trait expression to exclude all the scenarios tagged as @slow. Let&#8217;s mark a few of them as slow&#8230;&#8203;  and this time I build the project to show the filtering results.  Then rewrite the trait expression in the search box to filter for the slow scenarios.  Now if I add a dash ("-") to the front you can see all that are not slow.  Now when we run the tests, the "@slow" scenarios won&#8217;t be run. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5038,7 +5042,7 @@ Let&#8217;s say we want to work on this scenario for the next couple of hours. F
 <p>In the previous lesson, we ran the SpecFlow scenarios in Visual Studio. That gives you the quick feedback that you need during development.</p>
 </div>
 <div class="paragraph">
-<p>But we also would like to regularly ensure that the changes we made didn&#8217;t cause any regressions. For that we can kick off the full test execution on a Continuous Integration Server or from a console on your local machine so we can keep working on other things why it&#8217;s finished.</p>
+<p>But we also would like to regularly ensure that the changes we made didn&#8217;t cause any regressions. For that we can kick off the full test execution on a Continuous Integration Server or from a console on your local machine so we can keep working on other things while it&#8217;s finished.</p>
 </div>
 <div class="paragraph">
 <p>It does not matter whether you need to configure your Continuous Integration build or you want to run the test from a console locally, the .NET command line tools have to be used for this. But fortunately it is pretty easy.</p>
@@ -5072,7 +5076,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <p>We wanted to perform a full regression test by running the tests from the command line, therefore we did not apply any filters. But sometimes we need to. Maybe we just want to run the smoke tests.</p>
 </div>
 <div class="paragraph">
-<p>The <strong>dotnet test</strong> command provides a <code>--filter</code> option where you can specify a filter expression. In the last chapter we discussed that SpecFlow converts tags to test categories or traits. In Visual Studio we used a trait expression, but unfortunately the same expression won&#8217;t work here. The exact expression syntax that has to be used depends on the test execution framework you use. Since we&#8217;re use xUnit, we have to filter using the <code>Category=smoke</code> expression.  In MsTest and NUnit we would have to say <code>TestCategory</code> instead of <code>Category</code>,  but the expression is otherwise the same. Let&#8217;s fix this for xUnit and run the tests. </p>
+<p>The <strong>dotnet test</strong> command provides a <code>--filter</code> option where you can specify a filter expression. In the previous lesson we discussed that SpecFlow converts tags to test categories or traits. In Visual Studio we used a trait expression, but unfortunately the same expression won&#8217;t work here. The exact expression syntax that has to be used depends on the test execution framework you use. Since we&#8217;re use xUnit, we have to filter using the <code>Category=smoke</code> expression.  In MsTest and NUnit we would have to say <code>TestCategory</code> instead of <code>Category</code>,  but the expression is otherwise the same. Let&#8217;s fix this for xUnit and run the tests. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5091,7 +5095,7 @@ Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration:
 <p>As you can see, only two tests ran, so the filtering worked.</p>
 </div>
 <div class="paragraph">
-<p>You can also use the filter option to exclude tagged scenarios from the execution. For that you have to use <code>!=</code> the not equal operator. Let&#8217;s exclude the slow tests now. </p>
+<p>You can also use the filter expression to exclude tagged scenarios from the execution. For that you have to use the not equal operator. Let&#8217;s exclude the slow tests now. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5099,10 +5103,18 @@ Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration:
 </div>
 </div>
 <div class="paragraph">
-<p>Again, with MsTest or NUnit you would need to use TestCategory here. You can compose even more complex filter expressions for dotnet test. It is worth checking out the <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit">documentation</a> for details.</p>
+<p>Again, with MsTest or NUnit you would need to use TestCategory here.  You can compose even more complex filter expressions for dotnet test. It is worth checking out the <a href="https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests?pivots=xunit">documentation</a> for details.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Starting test execution, please wait...
+A total of 1 test files matched the specified pattern.
+
+Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3, Duration: 99 ms - Shouty.Specs.dll (netcoreapp3.1)</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Teams often use such filters on the Continuous Integration Server if they write - or we can say formulate - the scenarios some time before the actual implementation work starts. Having these scenarios in source control would cause the build fail although there is nothing wrong with the implementation. We just have tests that are not supposed to pass yet. If the team agrees to tag these scenarios, for example with <code>@formulated</code> than they can easily exclude them on the build server with the <code>Category!=formulated</code> expression. .</p>
+<p>Teams often use such filters on the Continuous Integration Server if they write - or we can say formulate - the scenarios some time before the actual implementation work starts. Having these scenarios in source control would cause the build fail although there is nothing wrong with the implementation. We just have tests that are not supposed to pass yet. If the team agree to tag these scenarios, for example with <code>@formulated</code> than they can easily exclude them on the build server with this expression. .</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5121,7 +5133,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <p>Seeing all these scenarios pass means that we are progressing well. Just don&#8217;t forget to remove the @formulated tag once you are done!</p>
 </div>
 <div class="paragraph">
-<p>In this lesson you&#8217;ve learnt how to run scenarios from the command line and how to filter the set of scenarios to run using tags. On the Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will see in the next lesson.</p>
+<p>In this lesson you&#8217;ve learnt how to run scenarios from the command line and how to filter the set of scenarios to run using tags. On the Continuous Integration Server we probably also want to preserve and publish the test results. We&#8217;ll cover that in lesson 4.</p>
 </div>
 </div>
 <div class="sect2">
@@ -5136,7 +5148,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <p>SpecFlow supports over 70 different languages, thanks to contributions from people from all over the world.</p>
 </div>
 <div class="paragraph">
-<p>To see the translation of the Gherkin keywords for a particular language, check out the <a href="https://cucumber.io/docs/gherkin/languages/">Gherkin syntax documentation</a>. For example, this is how the keywords translate to Hungarian. </p>
+<p>To see the translation of the Gherkin keywords for a particular language, check out the <a href="https://cucumber.io/docs/gherkin/languages/">Gherkin syntax documentation</a>.  For example, this is how the keywords translate to Hungarian. </p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s see how someone would create a feature file written in a different spoken language. I will do this for the Hungarian language, but you can choose another language you speak.</p>
@@ -5222,7 +5234,7 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 </div>
 </div>
 <div class="paragraph">
-<p>Usually the feature file languages are not mixed within a project. If you don&#8217;t want to add the same language header line  to all of the feature files, you can also change the default feature language in SpecFlow.</p>
+<p>Usually the feature file languages are not mixed within a project. If you don&#8217;t want to add the same language header line  to all of the feature files, you can also change the default feature file language in SpecFlow.</p>
 </div>
 <div class="paragraph">
 <p>For that we need to add a SpecFlow configuration file to our project. The SpecFlow configuration file is a simple JSON file, named <code>specflow.json</code>. . This file needs to be copied to the output directory. </p>
@@ -5278,10 +5290,10 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <p></p>
 </div>
 <div class="paragraph">
-<p>In the previous lessons we&#8217;ve learnt how to configure SpecFlow and how to run scenarios from Visual Studio and from the command line. The test output we have seen there contains a brief summary of the execution and the failures. If the test were executed Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will look at in this lesson.</p>
+<p>In the previous lessons we&#8217;ve learnt how to configure SpecFlow and how to run scenarios from Visual Studio and from the command line. The test output we have seen there contains a brief summary of the execution and the failures. If the test were executed on a Continuous Integration Server we probably also want to preserve and publish the test results. This is what we will look at in this lesson.</p>
 </div>
 <div class="paragraph">
-<p>The <code>dotnet test</code> tool outputs the execution results through configurable loggers. The logger can be specified using the <code>--logger</code> option. There are multiple logger providers you can choose from. You can even write your own. But most of the teams use the TRX logger, that saves the execution results into a <strong>Visual Studio Test Results</strong> or TRX file with the <code>.trx</code> extension. Let&#8217;s use this. </p>
+<p>The <code>dotnet test</code> tool outputs the execution results through configurable loggers. The logger can be specified using the <code>--logger</code> option. There are multiple logger providers you can choose from. You can even write your own. But most of the teams use the TRX logger, that saves the execution results into a <strong>Visual Studio Test Results</strong> or TRX file. Let&#8217;s use this. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5346,7 +5358,7 @@ The <a href="https://specflow.org/blog/introducing-the-specflow-plus-livingdoc-g
 </div>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s run the tests. We don&#8217;t need the TRX file now, so running <code>dotnet test</code> is enough. The SpecFlow+ LivingDoc plugin generates a result file in the output folder, named <code>TestExecution.json</code> by default. </p>
+<p>Now let&#8217;s run the tests. We don&#8217;t need the TRX file now, so running <code>dotnet test</code> is enough.  The SpecFlow+ LivingDoc plugin generates a result file in the output folder, named <code>TestExecution.json</code> by default. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5357,10 +5369,10 @@ The <a href="https://specflow.org/blog/introducing-the-specflow-plus-livingdoc-g
 <p>Here it is!</p>
 </div>
 <div class="paragraph">
-<p>Now we need to run the actual generator. The generator has to be installed as a .NET Core tool for the project.</p>
+<p>Now we need to run the actual generator. The generator has to be installed as a .NET tool for the project.</p>
 </div>
 <div class="paragraph">
-<p>Since this is the first .NET Core tool that we have install for this project, we need to first initialize the .NET Core tool configuration. For that we need to go up to the solution folder in our console window  and invoke <code>dotnet new tool-manifest</code> . This creates a file named  <code>dotnet-tools.json</code> in the <code>.config</code> folder of the solution . You should add this file to your source control.</p>
+<p>Since this is the first .NET tool that we have install for this project, we need to first initialize the .NET tool configuration. For that we need to go up to the solution folder in our console window  and invoke <code>dotnet new tool-manifest</code> . This creates a file named  <code>dotnet-tools.json</code> in the <code>.config</code> folder of the solution. You should add this file to your source control.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5371,7 +5383,7 @@ The template "Dotnet local tool manifest file" was created successfully.</code><
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can install the SpecFlow+ LivingDoc Generator. This can be done, using the <code>dotnet tool install SpecFlow.Plus.LivingDoc.CLI</code> command that pulls the generator from NuGet.org and installs it for this project. </p>
+<p>Now we can install the SpecFlow+ LivingDoc Generator. This can be done, using the <code>dotnet tool install</code> command that pulls the generator from NuGet.org and installs it for this project. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5382,13 +5394,13 @@ Tool 'specflow.plus.livingdoc.cli' (version '3.5.286') was successfully installe
 </div>
 </div>
 <div class="paragraph">
-<p>As the message says, the tool has been installed successfully and can be used with  the <code>dotnet livingdoc</code> command. Let&#8217;s use it to generate our result.</p>
+<p>As the message says, the tool has been installed successfully and can be used with  the <code>dotnet livingdoc</code> command.</p>
 </div>
 <div class="paragraph">
 <p>First, let&#8217;s step back to our SpecFlow project folder and start with <code>dotnet livingdoc</code>.  Now we need to specify a couple of settings for the generator. If you get lost, you can always call dotnet livingdoc help or check the <a href="https://docs.specflow.org/projects/specflow-livingdoc/en/latest/LivingDocGenerator/Generating-Documentation.html">documentation</a>.</p>
 </div>
 <div class="paragraph">
-<p>We need to say <code>test-assembly</code>,  because we want to generate the result from an assembly, and we have to  specify the compiled assembly of our Shouty project, the <code>Shouty.Specs.dll</code> from our output folder.</p>
+<p>We need to say <code>test-assembly</code>,  because we want to generate the result from an assembly, and we have to  specify the compiled assembly of our Shouty project.</p>
 </div>
 <div class="paragraph">
 <p>Finally we need to  provide the path of the generated TestExecution.json file using the <code>--test-execution-json</code> option. And run. </p>
@@ -5401,7 +5413,7 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;ve got the generated HTML file.  As you can see, the result focuses on the feature structure,  but the results are also displayed.</p>
+<p>We&#8217;ve got the generated HTML file.  As you can see, the result focuses on the feature structure,  but the details are also displayed.</p>
 </div>
 <div class="paragraph">
 <p>Since the result is a single HTML file, it is easy to share it with all stakeholders. If you use Azure DevOps to track your work items, you can use the integrated version of SpecFlow+ LivingDoc as well.</p>
@@ -5411,6 +5423,9 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 </div>
 <div class="paragraph">
 <p>In this lesson we have enumerated a couple of options to share your results and your living documentation with the entire team. This is essential in order to facilitate a common understanding between people on the project&#8201;&#8212;&#8201;which is our ultimate goal.</p>
+</div>
+<div class="paragraph">
+<p>With that we finished this chapter. See you next time!</p>
 </div>
 </div>
 </div>
@@ -5424,7 +5439,7 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-15 17:24:38 UTC
+Last updated 2021-02-19 08:32:47 UTC
 </div>
 </div>
 <style>
