@@ -1,0 +1,16 @@
+==== Lesson 2 - Questions
+
+===== Which of the commands below would run all scenarios NOT tagged with @slow when executed from a SpecFlow project folder that has been configured to use MsTest?
+
+* dotnet test --filter Category!=slow
+* dotnet test --filter TestCategory!=slow ----TRUE
+* dotnet test --filter TestCategory!=@slow
+* dotnet test --filter -Trait:slow
+
+Explanation:
+SpecFlow converts the tags to test categories for the configured test execution framework. When using `dotnet test`, the filter expression syntax to be used to filter for the category depends on the on the test execution framework. With MsTest and NUnit, the `TestCategory` keyword has to be used and xUnit uses 'Category'. 
+
+For the test category expression the `=` and the `!=` operators can be used, but the tag name has to be provided without the `@` character. 
+
+The trait expressions used in Visual Studio Test Explorer cannot be used for `dotnet test`.
+

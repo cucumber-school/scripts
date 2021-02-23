@@ -1,0 +1,44 @@
+==== Lesson 1 - Questions
+
+===== Which of the filter expressions below would cause the scenario "Two" to be included in a Visual Studio Test Explorer run based on this feature file (steps omitted): ** MULTIPLE_CHOICE **
+
+@MVP
+Feature: My feature
+
+  Rule: rule A
+    Scenario: One
+
+    @smoke
+    @slow @regression-pack
+    Scenario: Two
+
+    @regression-pack @pricing
+    Scenario: Three
+
+* Two ----TRUE
+* Scenario: Two ----FALSE
+* Trait:regression-pack ----TRUE
+* Trait:MVP ----TRUE
+* -Trait:pricing ----TRUE
+* Trait:@smoke ----FALSE
+
+Explanation:
+Tags are inherited from the enclosing scope, so a Scenario inherits tags from the Feature. At present Rules cannot be tagged, although we expect this to be fixed in the near future, at which point tags will be inherited like this: Feature->Rule->Scenario.
+
+Tags can be on the same line and on consecutive lines.
+
+The filter expressions can contain the scenario name (without the 'Scenario' keyword) or a trait expression (Trait:smoke) that can filter for tags (without the '@' character). For excluding scenarios tagged with a specific tag, the trait expression has to be prefixed with a '-' (-Trait:pricing).
+
+
+===== Why is it useful to learn the keyboard shortcut of the "Run All" command of Visual Studio? ** MULTIPLE_CHOICE **
+
+* Because the command can be used to quickly re-run the scenarios we want to focus on and configured as a filter expression.  ----TRUE
+* Because it runs all tests regardless of the configured filter expression. ----FALSE
+* Because the run all commands saves the modified files, builds the project and runs the tests in one step. ----TRUE
+* Because it increases the chance to win the 'Who knows more Visual Studio shortcuts' competition. ----FALSE
+
+Explanation:
+Preparing a development environment where you can focus on the current task increases the productivity. Adding a @focus tag on the scenarios you work on
+and filter the the test runner to allow re-running those scenarios easily can help to get fast feedback. The default shortcut of Visuals Studio Test Explorer is Ctrl R,V by default.
+
+These commands ensure that the changes are saved and the necessary projects compiled.

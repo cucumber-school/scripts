@@ -1,0 +1,24 @@
+==== Lesson 3 - Questions
+
+
+===== Which of the following first lines changes the language of a feature file?
+
+* # language: hu-HU ----TRUE
+* ! language: hu-HU
+* language: hu-HU
+* # i18n: hu-HU
+
+Explanation:
+Gherkin supports lots of languages on a per feature file basis. It has to be the first line in the feature file, and has to be a comment with the content `language: <language_identifier>`
+
+===== How can you configure the behavior of SpecFlow? ** MULTIPLE-CHOICE **
+
+* By adding a file 'specflow.json' to the project root and enable "Copy to output folder" ----TRUE
+* By adding a file 'config.json' to the project in any folder
+* By adding a file 'specflow.yaml' to the project root and enable "Copy to output folder"
+* By adding a file 'specflow.json' to the project in any folder
+
+Explanation:
+SpecFlow configuration setting can be provided by adding a JSON file named 'specflow.json' to the project root and enable "Copy to output folder" for the file. A reference guide of the possible settings can be found in the https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html[documentation]. For backwards compatibility you can also specify the settings in an XML configuration file or in the App.config file for older projects.
+
+The test execution framework (MsTest, NUnit, etc.) and other plugins can be enabled by adding the appropriate NuGet package (e.g. SpecFlow.MsTest) to the references.
