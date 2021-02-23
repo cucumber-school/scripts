@@ -5032,6 +5032,94 @@ Let&#8217;s say we want to work on this scenario for the next couple of hours. F
 <div class="paragraph">
 <p>There&#8217;s one more thing to learn about tags. They can be combined with hooks, so that you can be selective about which hooks to run when. We&#8217;ll cover that in a future chapter.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_2">6.1.1. Lesson 1 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_filter_expressions_below_would_cause_the_scenario_two_to_be_included_in_a_visual_studio_test_explorer_run_based_on_this_feature_file_steps_omitted_multiple_choice">Which of the filter expressions below would cause the scenario "Two" to be included in a Visual Studio Test Explorer run based on this feature file (steps omitted): <strong> MULTIPLE_CHOICE </strong></h5>
+<div class="paragraph">
+<p>@MVP
+Feature: My feature</p>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Rule: rule A
+  Scenario: One</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@smoke
+@slow @regression-pack
+Scenario: Two</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>@regression-pack @pricing
+Scenario: Three</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Two ----TRUE</p>
+</li>
+<li>
+<p>Scenario: Two ----FALSE</p>
+</li>
+<li>
+<p>Trait:regression-pack ----TRUE</p>
+</li>
+<li>
+<p>Trait:MVP ----TRUE</p>
+</li>
+<li>
+<p>-Trait:pricing ----TRUE</p>
+</li>
+<li>
+<p>Trait:@smoke ----FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Tags are inherited from the enclosing scope, so a Scenario inherits tags from the Feature. At present Rules cannot be tagged, although we expect this to be fixed in the near future, at which point tags will be inherited like this: Feature&#8594;Rule&#8594;Scenario.</p>
+</div>
+<div class="paragraph">
+<p>Tags can be on the same line and on consecutive lines.</p>
+</div>
+<div class="paragraph">
+<p>The filter expressions can contain the scenario name (without the 'Scenario' keyword) or a trait expression (Trait:smoke) that can filter for tags (without the '@' character). For excluding scenarios tagged with a specific tag, the trait expression has to be prefixed with a '-' (-Trait:pricing).</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_is_it_useful_to_learn_the_keyboard_shortcut_of_the_run_all_command_of_visual_studio_multiple_choice">Why is it useful to learn the keyboard shortcut of the "Run All" command of Visual Studio? <strong> MULTIPLE_CHOICE </strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Because the command can be used to quickly re-run the scenarios we want to focus on and configured as a filter expression.  ----TRUE</p>
+</li>
+<li>
+<p>Because it runs all tests regardless of the configured filter expression. ----FALSE</p>
+</li>
+<li>
+<p>Because the run all commands saves the modified files, builds the project and runs the tests in one step. ----TRUE</p>
+</li>
+<li>
+<p>Because it increases the chance to win the 'Who knows more Visual Studio shortcuts' competition. ----FALSE</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Preparing a development environment where you can focus on the current task increases the productivity. Adding a @focus tag on the scenarios you work on
+and filter the the test runner to allow re-running those scenarios easily can help to get fast feedback. The default shortcut of Visuals Studio Test Explorer is Ctrl R,V by default.</p>
+</div>
+<div class="paragraph">
+<p>These commands ensure that the changes are saved and the necessary projects compiled.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_running_the_scenarios_from_the_command_line">6.2. Running the scenarios from the command line</h3>
@@ -5134,6 +5222,38 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 </div>
 <div class="paragraph">
 <p>In this lesson you&#8217;ve learnt how to run scenarios from the command line and how to filter the set of scenarios to run using tags. On the Continuous Integration Server we probably also want to preserve and publish the test results. We&#8217;ll cover that in lesson 4.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_4">6.2.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_commands_below_would_run_all_scenarios_not_tagged_with_slow_when_executed_from_a_specflow_project_folder_that_has_been_configured_to_use_mstest">Which of the commands below would run all scenarios NOT tagged with @slow when executed from a SpecFlow project folder that has been configured to use MsTest?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>dotnet test --filter Category!=slow</p>
+</li>
+<li>
+<p>dotnet test --filter TestCategory!=slow ----TRUE</p>
+</li>
+<li>
+<p>dotnet test --filter TestCategory!=@slow</p>
+</li>
+<li>
+<p>dotnet test --filter -Trait:slow</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+SpecFlow converts the tags to test categories for the configured test execution framework. When using <code>dotnet test</code>, the filter expression syntax to be used to filter for the category depends on the on the test execution framework. With MsTest and NUnit, the <code>TestCategory</code> keyword has to be used and xUnit uses 'Category'.</p>
+</div>
+<div class="paragraph">
+<p>For the test category expression the <code>=</code> and the <code>!=</code> operators can be used, but the tag name has to be provided without the <code>@</code> character.</p>
+</div>
+<div class="paragraph">
+<p>The trait expressions used in Visual Studio Test Explorer cannot be used for <code>dotnet test</code>.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -5283,6 +5403,58 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 <div class="paragraph">
 <p>That&#8217;s quite a lot to digest, but to make SpecFlow really useful to your team, it’s good to spend some time learning the details of how to configure it. In this lesson, we showcased the SpecFlow configuration options and you learned how to write your scenarios in different spoken languages.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_3_questions_2">6.3.1. Lesson 3 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_first_lines_changes_the_language_of_a_feature_file">Which of the following first lines changes the language of a feature file?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p># language: hu-HU ----TRUE</p>
+</li>
+<li>
+<p>! language: hu-HU</p>
+</li>
+<li>
+<p>language: hu-HU</p>
+</li>
+<li>
+<p># i18n: hu-HU</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+Gherkin supports lots of languages on a per feature file basis. It has to be the first line in the feature file, and has to be a comment with the content <code>language: &lt;language_identifier&gt;</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_can_you_configure_the_behavior_of_specflow_multiple_choice">How can you configure the behavior of SpecFlow? <strong> MULTIPLE-CHOICE </strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>By adding a file 'specflow.json' to the project root and enable "Copy to output folder" ----TRUE</p>
+</li>
+<li>
+<p>By adding a file 'config.json' to the project in any folder</p>
+</li>
+<li>
+<p>By adding a file 'specflow.yaml' to the project root and enable "Copy to output folder"</p>
+</li>
+<li>
+<p>By adding a file 'specflow.json' to the project in any folder</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+SpecFlow configuration setting can be provided by adding a JSON file named 'specflow.json' to the project root and enable "Copy to output folder" for the file. A reference guide of the possible settings can be found in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html">documentation</a>. For backwards compatibility you can also specify the settings in an XML configuration file or in the App.config file for older projects.</p>
+</div>
+<div class="paragraph">
+<p>The test execution framework (MsTest, NUnit, etc.) and other plugins can be enabled by adding the appropriate NuGet package (e.g. SpecFlow.MsTest) to the references.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_dealing_with_execution_results">6.4. Dealing with execution results</h3>
@@ -5427,6 +5599,54 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 <div class="paragraph">
 <p>With that we finished this chapter. See you next time!</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_4_questions_3">6.4.1. Lesson 4 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_commands_below_would_run_all_scenarios_and_save_the_execution_results_to_a_file_result_trx">Which of the commands below would run all scenarios and save the execution results to a file 'result.trx'?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>dotnet test --logger trx</p>
+</li>
+<li>
+<p>dotnet test --out result.trx</p>
+</li>
+<li>
+<p>dotnet test --logger trx;logfilename=result.trx ----TRUE</p>
+</li>
+<li>
+<p>TRX file format is not supported by <code>dotnet test</code></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:
+The test output of the <code>dotnet test</code> command can be configured by specifying a logger. The trx logger can be used for saving the results to a TRX file. By default it saves the result to a file name containing the current timestamp. To use a deterministic filename, the <code>logfilname</code> parameter has to be provided.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_is_it_valuable_to_generate_reports_about_the_specflow_test_execution_results_multiple_choice">Why is it valuable to generate reports about the SpecFlow test execution results? <strong> MULTIPLE-CHOICE </strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The readable report can help the business stakeholders to follow the progress of the implementation and therefore increases the trust. ----TRUE</p>
+</li>
+<li>
+<p>Without HTML reports, the test execution results cannot be checked.</p>
+</li>
+<li>
+<p>It is easier to assess the impact of a test failure when it is connected to the business expectations. ----TRUE</p>
+</li>
+<li>
+<p>It is easier to quickly react on failures coming from the Continuous Integration Server (CI) when you don&#8217;t need special tools, like Visual Studio to view the results. ----TRUE</p>
+</li>
+<li>
+<p>The reports are not directly valuable, they are just required to fulfill the policies of the development process.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -5439,7 +5659,7 @@ W:\CucumberSchool\bdd-with-cucumber-code-dotnet\Shouty\Shouty.Specs\LivingDoc.ht
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-19 08:32:47 UTC
+Last updated 2021-02-23 13:29:27 UTC
 </div>
 </div>
 <style>
