@@ -8,9 +8,9 @@
 * dotnet test --filter -Trait:slow
 
 Explanation:
-SpecFlow converts the tags to test categories for the configured test execution framework. When using `dotnet test`, the filter expression syntax to be used to filter for the category depends on the on the test execution framework. With MsTest and NUnit, the `TestCategory` keyword has to be used and xUnit uses 'Category'. 
+SpecFlow converts Gherkin tags into test categories for the configured test execution framework. When using `dotnet test`, the filter expression syntax you should use depends on the test execution framework. With MsTest and NUnit, the `TestCategory` keyword has to be used, while xUnit uses 'Category'.
 
-For the test category expression the `=` and the `!=` operators can be used, but the tag name has to be provided without the `@` character. 
+For the test category expression the `=` and the `!=` operators can be used. The tag name has to be supplied without the `@` character.
 
 The trait expressions used in Visual Studio Test Explorer cannot be used for `dotnet test`.
 
