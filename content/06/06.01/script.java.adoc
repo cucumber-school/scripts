@@ -19,7 +19,7 @@ There are several ways to do this in Cucumber - and your IDE may offer other opt
 Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.
 
 shot::[3, "type mvn command in console, show output and highlight that it has only run the one scenario 'Message too long'"]
-We can pass arguments to Cucumber using the property cucumber.options. The name option tells Cucumber to only run scenarios with a name that matches the string provided, in this case "Message is too long".
+We can pass arguments to Cucumber using the property cucumber.filter.name. This property tells Cucumber to only run scenarios with a name that matches the string provided, in this case "Message is too long".
 
 [source]
 ----
