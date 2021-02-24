@@ -5106,14 +5106,13 @@ Tags are inherited from the enclosing scope, so a Scenario inherits tags from th
 <p>Because the run all commands saves the modified files, builds the project and runs the tests in one step. ----TRUE</p>
 </li>
 <li>
-<p>Because it increases the chance to win the 'Who knows more Visual Studio shortcuts' competition. ----FALSE</p>
+<p>Because it increases your chance to win the 'Who knows more Visual Studio shortcuts' competition. ----FALSE</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>Explanation:
-Preparing a development environment where you can focus on the current task increases the productivity. Adding a @focus tag on the scenarios you work on
-and filter the the test runner to allow re-running those scenarios easily can help to get fast feedback. The default shortcut of Visuals Studio Test Explorer is Ctrl R,V by default.</p>
+Preparing a development environment where you can focus on the current task increases the productivity. Adding a @focus tag to the scenarios you&#8217;re working allows you to get fast feedback by re-running just those scenarios. The default shortcut of Visual Studio&#8217;s Test Explorer is Ctrl R,V.</p>
 </div>
 <div class="paragraph">
 <p>These commands ensure that the changes are saved and the necessary projects compiled.</p>
@@ -5245,10 +5244,10 @@ Passed!  - Failed:     0, Passed:     5, Skipped:     0, Total:     5, Duration:
 </div>
 <div class="paragraph">
 <p>Explanation:
-SpecFlow converts the tags to test categories for the configured test execution framework. When using <code>dotnet test</code>, the filter expression syntax to be used to filter for the category depends on the on the test execution framework. With MsTest and NUnit, the <code>TestCategory</code> keyword has to be used and xUnit uses 'Category'.</p>
+SpecFlow converts Gherkin tags into test categories for the configured test execution framework. When using <code>dotnet test</code>, the filter expression syntax you should use depends on the test execution framework. With MsTest and NUnit, the <code>TestCategory</code> keyword has to be used, while xUnit uses 'Category'.</p>
 </div>
 <div class="paragraph">
-<p>For the test category expression the <code>=</code> and the <code>!=</code> operators can be used, but the tag name has to be provided without the <code>@</code> character.</p>
+<p>For the test category expression the <code>=</code> and the <code>!=</code> operators can be used. The tag name has to be supplied without the <code>@</code> character.</p>
 </div>
 <div class="paragraph">
 <p>The trait expressions used in Visual Studio Test Explorer cannot be used for <code>dotnet test</code>.</p>
@@ -5448,10 +5447,10 @@ Gherkin supports lots of languages on a per feature file basis. It has to be the
 </div>
 <div class="paragraph">
 <p>Explanation:
-SpecFlow configuration setting can be provided by adding a JSON file named 'specflow.json' to the project root and enable "Copy to output folder" for the file. A reference guide of the possible settings can be found in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html">documentation</a>. For backwards compatibility you can also specify the settings in an XML configuration file or in the App.config file for older projects.</p>
+SpecFlow configuration settings can be provided by adding a JSON file named 'specflow.json' to the project root and enabling "Copy to output folder" for the file. A reference guide of the possible settings can be found in the <a href="https://docs.specflow.org/projects/specflow/en/latest/Installation/Configuration.html">documentation</a>. For backwards compatibility you can also specify the settings in an XML configuration file or in the App.config file for older projects.</p>
 </div>
 <div class="paragraph">
-<p>The test execution framework (MsTest, NUnit, etc.) and other plugins can be enabled by adding the appropriate NuGet package (e.g. SpecFlow.MsTest) to the references.</p>
+<p>The test execution framework (MsTest, NUnit, etc.) and other plugins can be enabled by adding the appropriate NuGet package (e.g. SpecFlow.MsTest) to the project references.</p>
 </div>
 </div>
 </div>
@@ -5629,7 +5628,7 @@ The test output of the <code>dotnet test</code> command can be configured by spe
 <div class="ulist">
 <ul>
 <li>
-<p>The readable report can help the business stakeholders to follow the progress of the implementation and therefore increases the trust. ----TRUE</p>
+<p>The readable report can help the business stakeholders follow the progress of the implementation and therefore increases trust. ----TRUE</p>
 </li>
 <li>
 <p>Without HTML reports, the test execution results cannot be checked.</p>
@@ -5638,7 +5637,7 @@ The test output of the <code>dotnet test</code> command can be configured by spe
 <p>It is easier to assess the impact of a test failure when it is connected to the business expectations. ----TRUE</p>
 </li>
 <li>
-<p>It is easier to quickly react on failures coming from the Continuous Integration Server (CI) when you don&#8217;t need special tools, like Visual Studio to view the results. ----TRUE</p>
+<p>It is easier to quickly react to failures coming from the Continuous Integration Server (CI) when you don&#8217;t need special tools, like Visual Studio to view the results. ----TRUE</p>
 </li>
 <li>
 <p>The reports are not directly valuable, they are just required to fulfill the policies of the development process.</p>
@@ -5659,7 +5658,7 @@ The test output of the <code>dotnet test</code> command can be configured by spe
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-23 13:29:27 UTC
+Last updated 2021-02-24 12:07:40 UTC
 </div>
 </div>
 <style>
