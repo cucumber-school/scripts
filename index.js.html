@@ -493,8 +493,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_filtering_with_tags">6.2. Filtering With Tags</a></li>
 <li><a href="#_more_control">6.3. More Control</a></li>
 <li><a href="#_formatter_plugins">6.4. Formatter plugins</a></li>
-<li><a href="#_rerun_formatter">6.5. Rerun formatter</a></li>
-<li><a href="#_publishing_results">6.6. Publishing Results</a></li>
+<li><a href="#_publishing_results">6.5. Publishing Results</a></li>
 </ul>
 </li>
 <li><a href="#_tbd">7. TBD</a></li>
@@ -5441,7 +5440,7 @@ Hello, and welcome back to Cucumber School.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, let&#8217;s install the pretty-formatter and run Cucumber. </p>
+<p>Finally, let&#8217;s install the pretty-formatter  and run Cucumber.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5647,13 +5646,16 @@ We’ll put a focus tag right here, above this scenario. </p>
 </div>
 </div>
 <div class="paragraph">
-<p>Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. </p>
+<p>And we change the tag in the configuration file. </p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.js</div>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">@smoke'</span> <span class="err">}</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Running just the smoke tests will give you a certain level of confidence that nothing is broken without having to run them all. </p>
 </div>
 <div class="paragraph">
 <p>If you’re running Cucumber on a Continuous Integration Server as well, you could run all the scenarios there, detecting any regressions you might have missed by only running the smoke tests locally.</p>
@@ -5674,18 +5676,50 @@ We’ll put a focus tag right here, above this scenario. </p>
 </div>
 </div>
 <div class="paragraph">
-<p>All the scenarios within that file now inherit that tag, so if we change the tag expression in cucumber.js, Cucumber will run all the scenarios in the feature file. </p>
+<p>All the scenarios within that file now inherit that tag, so if we change the tag expression in cucumber.js,</p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="dl">'</span><span class="s1">--publish-quiet --tags @SHOUTY-11</span><span class="dl">'</span> <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cucumber will run all the scenarios in the feature file. </p>
 </div>
 <div class="paragraph">
 <p>You can use more complex tag expressions to select the scenarios you want to run. For example, you could use a tag expression to exclude all the scenarios tagged as @slow. </p>
 </div>
-<div class="literalblock">
+<div class="listingblock">
+<div class="title">hear-shout.feature</div>
 <div class="content">
-<pre>.hear-shout.feature
-[source,gherkin]
-----
-include::../code/js/08-boolean-logic-with-tags/features/hear_shout.feature[lines=35..]
-----</pre>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Listener</span> <span class="err">should</span> <span class="err">be</span> <span class="err">able</span> <span class="err">to</span> <span class="err">hear</span> <span class="err">multiple</span> <span class="err">shouts</span>
+
+    <span class="nt">@slow</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free bagels!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast!</span>  <span class="p">|</span>
+
+  <span class="err">Rule</span><span class="p">:</span>  <span class="err">Maximum</span> <span class="err">length</span> <span class="err">of</span> <span class="err">message</span> <span class="err">is</span> <span class="err">180</span> <span class="err">characters</span>
+
+    <span class="nt">@slow</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Message is too long
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts the following message
+        <span class="s">"""
+        This is a really long message
+        so long in fact that I am not going to
+        be allowed to send it, at least if I keep
+        typing like this until the length is over
+        the limit of 180 characters.
+        """</span>
+      <span class="nf">Then </span>Lucy should not hear a shout</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5694,7 +5728,7 @@ include::../code/js/08-boolean-logic-with-tags/features/hear_shout.feature[lines
 <div class="listingblock">
 <div class="title">cucumber.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--tags</span><span class="nv"> </span><span class="s">"not</span><span class="nv"> </span><span class="s">@slow"'</span> <span class="err">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="dl">'</span><span class="s1">--publish-quiet --tags "not @slow"</span><span class="dl">'</span> <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5706,7 +5740,7 @@ include::../code/js/08-boolean-logic-with-tags/features/hear_shout.feature[lines
 <div class="listingblock">
 <div class="title">cucumber.js</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet'</span> <span class="err">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span> <span class="na">default</span><span class="p">:</span> <span class="dl">'</span><span class="s1">--publish-quiet</span><span class="dl">'</span> <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5789,7 +5823,7 @@ include::../code/js/08-boolean-logic-with-tags/features/hear_shout.feature[lines
 </div>
 <div class="paragraph">
 <p>
-A full list of Cucumber&#8217;s configuration properties can be found by passing the <code>--help</code> flag on the command line.  Or using the abbreviated version <code>-h</code></p>
+A full list of Cucumber&#8217;s configuration properties can be found by passing the <code>--help</code> flag on the command line.  Or using the abbreviated version <code>-h</code> </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5830,8 +5864,7 @@ Next, we&#8217;ll use the JSON formatter.</p>
 <p>The JSON report outputs the results in a single file.  You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.</p>
 </div>
 <div class="paragraph">
-<p>
-There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in earlier chapters.</p>
+<p>There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in earlier chapters.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5850,19 +5883,33 @@ We can specify multiple formatters like this.</p>
 <div class="paragraph">
 <p>The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output - which is why the pretty formatter has been replaced with progress formatter. </p>
 </div>
-</div>
-<div class="sect2">
-<h3 id="_rerun_formatter">6.5. Rerun formatter</h3>
+<div class="sect3">
+<h4 id="_rerun_formatter">6.4.1. Rerun formatter</h4>
 <div class="paragraph">
-<p>One of the formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.</p>
+<p>One of the formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free cupcakes!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast!</span>  <span class="p">|</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>
-</p>
+<p>And see it fail on the terminal. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>npm test</pre>
+</div>
 </div>
 <div class="paragraph">
-<p>
-We choose the rerun formatter and send the output to a file whose name is preceded by the <code>@</code> (at) sign. Let&#8217;s call it @rerun.txt.</p>
+<p>We choose the rerun formatter  and send the output to a file whose name is preceded by the <code>@</code> (at) sign. Let&#8217;s call it @rerun.txt. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5889,7 +5936,14 @@ We choose the rerun formatter and send the output to a file whose name is preced
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">//include</span><span class="p">::</span><span class="err">../code/java/14-fix-error/shouty/src/test/resources/shouty/hear_shout.feature[lines=35..44]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free bagels!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast!</span>  <span class="p">|</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -5899,8 +5953,9 @@ We choose the rerun formatter and send the output to a file whose name is preced
 <p>Great. We&#8217;re back to green again.</p>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_publishing_results">6.6. Publishing Results</h3>
+<h3 id="_publishing_results">6.5. Publishing Results</h3>
 <div class="paragraph">
 <p>
 In the last lesson we saw the output generated by the HTML plugin. This is a great way for your business colleagues and customers to engage with the development of the product. Since the scenarios are written in business language, they act as documentation that everyone interested in the product can understand. And, because the results are colour-coded green (if the system behaves as expected) or red (if it doesn&#8217;t) everyone can see what behaviour has been implemented.</p>
@@ -5985,7 +6040,7 @@ Now when we run Cucumber, no report is published and no banner advertising Cucum
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-02-24 15:25:34 UTC
+Last updated 2021-03-01 12:37:30 UTC
 </div>
 </div>
 <style>
