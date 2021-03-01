@@ -17,7 +17,7 @@ Ensure that you're using Cucumber-JS 7.0.0 or later shot::[3, show package-lock.
 
 ----
 
-and remove publish-quiet from cucumber.js. shot::[3, cucumber.js]
+and remove publish-quiet from cucumber.js. shot::[4, cucumber.js]
 
 .cucumber.js
 [source,yaml]
@@ -25,9 +25,9 @@ and remove publish-quiet from cucumber.js. shot::[3, cucumber.js]
 include::../code/js/15-remove-publish-quiet/cucumber.js[]
 ----
 
-Now when we run Cucumber, shot::[4, "npm test"] it helpfully prints out a banner telling you how to publish your results to Cucumber Reports shot::[5, highlight banner].
+Now when we run Cucumber, shot::[5, "npm test"] it helpfully prints out a banner telling you how to publish your results to Cucumber Reports shot::[6, highlight banner, ART: Highlight this in post].
 
-Let's follow the instructions in the banner and add --publish to cucumber.js shot::[6].
+Let's follow the instructions in the banner and add --publish to cucumber.js shot::[7].
 
 .cucumber.js
 [source, yaml]
@@ -35,16 +35,16 @@ Let's follow the instructions in the banner and add --publish to cucumber.js sho
 include::../code/js/16-publish-report/cucumber.js[]
 ----
 
-Now we can run Cucumber again and we get a different banner output shot:[1, "show published banner"]. The unique URL in this banner is the address of your published report shot::[7, highlight URL].
+Now we can run Cucumber again and we get a different banner output shot:[1, "show published banner"]. The unique URL in this banner is the address of your published report shot::[8, highlight URL].
 
-shot::[8, follow URL]
-Open the URL and you'll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered shot::[9]
+shot::[9, follow URL]
+Open the URL and you'll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered shot::[10]
 
-You might have noticed the warning in the banner that says the report will "self-destruct". shot::[10, highlight warning] To prevent a report from being deleted, it has to be associated with an authenticated account.
+You might have noticed the warning in the banner that says the report will "self-destruct". shot::[11, highlight warning] To prevent a report from being deleted, it has to be associated with an authenticated account.
 
-Follow the link in the report to authenticate your account shot::[11] You can then retrieve your Cucumber Reports publish token shot::[12]. Reports associated with a publish token will be kept until explicitly deleted.
+Follow the link in the report to authenticate your account shot::[12] You can then retrieve your Cucumber Reports publish token shot::[13]. Reports associated with a publish token will be kept until explicitly deleted.
 
-shot::[13,"publish quiet"]
+shot::[14,"publish quiet"]
 During development you probably won't want to publish a report after every build... and you might prefer not to see the banner output telling you about Cucumber Reports. Let's fix this in cucumber.js by replacing --publish with --publish-quiet:
 
 .cucumber.js
@@ -53,7 +53,7 @@ During development you probably won't want to publish a report after every build
 include::../code/js/17-replace-publish-with-publish-quiet/cucumber.js[]
 ----
 
-shot::[1, "no banner"]
+shot::[15, "no banner"]
 Now when we run Cucumber, no report is published and no banner advertising Cucumber Reports is output.
 
 Cucumber Reports is under active development, so expect to see many more useful features coming in the coming months.
