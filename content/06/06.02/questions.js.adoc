@@ -1,0 +1,33 @@
+==== Lesson 2 - Questions
+
+===== Which of the tag expressions below would cause the scenario "Two" to be included in a Cucumber run based on this feature file (steps omitted): ** MULTIPLE_CHOICE **
+
+@MVP
+Feature: My feature
+
+  Rule: rule A
+    Scenario: One
+
+    @smoke
+    @slow @regression-pack
+    Scenario: Two
+
+    @regression-pack
+    Scenario: Three
+
+* @SLOW ----FALSE
+* @regression-pack ----TRUE
+* @MVP ----TRUE
+* @regression-pack and not @slow ----FALSE
+* @Mvp or @smoke ----TRUE
+* @mvp or not (@smoke and @slow) ----FALSE
+
+Explanation:
+Tags are inherited from the enclosing scope, so a Scenario inherits tags from the Feature. At present Rules cannot be tagged, although we expect this to be fixed in the near future, at which point tags will be inherited like this: Feature->Rule->Scenario.
+
+Tags are case-sensitive, so @SLOW does not match @slow.
+
+Tag expressions can be on the same line and on consecutive lines.
+
+Tag expressions implement the boolean operators: and, not, or.
+

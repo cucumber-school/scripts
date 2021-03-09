@@ -7,14 +7,16 @@
 * HTML ----TRUE
 * JSON ----TRUE
 * Jira ----FALSE
-* JUnit ----TRUE
-* Pretty ----TRUE
+* JUnit ----FALSE
+* Pretty ----FALSE
 * Progress ----TRUE
 * Rerun ----TRUE
 * XML ----FALSE
 
 Explanation:
 Cucumber ships with lots of plugins. If the plugin that you want does not exist yet you can create your own or you can post-process the output of one of the standard plugins (JSON is often a starting point).
+
+The Cucumber team support the @cucumber/pretty-formatter plugin, but it does not ship with cucumber-js and needs to be installed separately.
 
 A newer plugin (that is out of scope for this course) is the *message* plugin. Internally, Cucumber generates messages that are used by the other plugins to create their output. The message plugin outputs these messages directly.
 
@@ -36,4 +38,4 @@ So that the output remains easy to read, no more than one plugin is allowed to w
 * It outputs a running total of how many times each scenario has ever been run
 
 Explanation:
-The rerun formatter keeps track of the feature file and line number of every scenario that fails. This information is output in a feature file/line number format that can be saved to file. When provided to Cucumber as input (with the file name preceded by `@`), the identified scenarios will be run.
+The rerun formatter keeps track of the feature file and line number of every scenario that fails. This information is output in a feature file/line number format that can be saved to file. When provided to Cucumber as input (as long as the file name begins with a `@`), the identified scenarios will be run.
