@@ -2,16 +2,16 @@
 
 Now that we're using the @cucumber/pretty-formatter, Cucumber outputs the features - as it runs - in the console. Cucumber can report results in other formats, which can be useful for generating reports. Let’s take a closer look at some of the formatter plugins that ship with Cucumber - starting with the HTML formatter.
 
-When we use the html formatter we append the filename that the report should be written to. Otherwise it will be written directly to the console.
+When we use the html formatter we append the filename that the report should be written to.shot::[1] Otherwise it will be written directly to the console.
 
 [source]
 ----
 npm test -- --format html:report.html
 ----
 
-Let's take a look at the html that has been generated. shot::[5, "Open target/my-report in the browser"] As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.
+Let's take a look at the html that has been generated. shot::[2, "Open target/my-report in the browser"] As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.
 
-shot::[5, "run Cucumber"]
+shot::[3, "run Cucumber"]
 Next, we'll use the JSON formatter.
 
 [source]
@@ -19,18 +19,17 @@ Next, we'll use the JSON formatter.
 npm test -- --format json:report.json
 ----
 
-The JSON report outputs the results in a single file. shot::[5, "open the json file"] You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.
+The JSON report outputs the results in a single file. shot::[4, "open the json file"] You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.
 
 
-shot::[6, run Cucumber]
-There is also a progress formatter, which just prints out a single character for each step. This is the default formatter, which we used in earlier chapters.
+There is also a progress formatter,shot::[5, run Cucumber] which just prints out a single character for each step.shot::[6] This is the default formatter, which we used in earlier chapters.
 
 [source]
 ----
 npm test -- --format progress
 ----
 
-shot::[1, "run cucumber with multiple formatters"]
+shot::[7, "run cucumber with multiple formatters"]
 We can specify multiple formatters like this.
 
 [source]
@@ -38,26 +37,33 @@ We can specify multiple formatters like this.
 npm test -- -f html:report.html -f json:report.json -f progress
 ----
 
-The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output - which is why the pretty formatter has been replaced with progress formatter. shot::[1, "show the progress output"]
+The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output - which is why the pretty formatter has been replaced with progress formatter. shot::[8, "show the progress output"]
 
-=== Rerun formatter
+==== Rerun formatter
 
-One of the formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.
+One of the formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. shot::[9, Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!" ]
 
-shot::[1, Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!" ]
-shot::[1, "run npm test and show failing output"]
+[source,gherkin]
+----
+include::../code/js/13-introduce-an-error/features/hear_shout.feature[lines=38..46]
+----
 
-shot::[1, "run cucumber using rerun formatter"]
-We choose the rerun formatter and send the output to a file whose name is preceded by the `@` (at) sign. Let's call it @rerun.txt.
+And see it fail on the terminal. shot::[10, "run npm test and show failing output"]
+
+----
+npm test
+----
+
+We choose the rerun formatter shot::[11] and send the output to a file whose name is preceded by the `@` (at) sign.shot::[12] Let's call it @rerun.txt.shot::[13] shot::[14, "run cucumber using rerun formatter"]
 
 [source]
 ----
 npm test -- -f rerun:@rerun.txt
 ----
 
-Let’s look at what’s in that @rerun.txt file. shot::[1, "open @rerun.txt"] It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.
+Let’s look at what’s in that @rerun.txt file. shot::[15, "open @rerun.txt"] It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.
 
-This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[1, "run Cucumber using the @rerun.txt file"]
+This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[16, "run Cucumber using the @rerun.txt file"]
 
 [source]
 ----
@@ -66,15 +72,15 @@ npm test -- @rerun.txt
 
 This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and are working yourself back to green.
 
-Let's fix the scenario shot::[21, undo change in feature file]
+Let's fix the scenario shot::[17, undo change in feature file]
 
 .hear_shout.feature
 [source,gherkin]
 ----
-//include::../code/java/14-fix-error/shouty/src/test/resources/shouty/hear_shout.feature[lines=35..44]
+include::../code/js/14-fix-introduced-error/features/hear_shout.feature[lines=38..46]
 ----
 
-and rerun the failing scenario again shot::[20, "run npm test from console"]
+and rerun the failing scenario again shot::[18, "run npm test from console"]
 
 Great. We're back to green again.
 
