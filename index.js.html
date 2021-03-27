@@ -496,7 +496,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_publishing_results">6.5. Publishing Results</a></li>
 </ul>
 </li>
-<li><a href="#_tbd">7. TBD</a></li>
+<li><a href="#_details">7. Details</a>
+<ul class="sectlevel2">
+<li><a href="#_a_bug_report">7.1. A bug report</a></li>
+<li><a href="#_looking_for_the_behaviour">7.2. Looking for the behaviour</a></li>
+<li><a href="#_clarifying_the_rules">7.3. Clarifying the rules</a></li>
+<li><a href="#_clarifying_the_rules_2">7.4. Clarifying the rules</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -6411,15 +6418,376 @@ Reports that are not associated with a publish token will be deleted approximate
 </div>
 </div>
 <div class="sect1">
-<h2 id="_tbd">7. TBD</h2>
+<h2 id="_details">7. Details</h2>
 <div class="sectionbody">
+<div class="paragraph">
+<p>In the last lesson we took a break from the code to sharpen up your skills with Cucumber’s command-line interface.</p>
+</div>
+<div class="paragraph">
+<p>Now it’s time to dive right back into the code. We’re going to explore one of the hottest topics that teams come across when they start to get to grips with Cucumber and BDD: how much detail to use in your scenarios.</p>
+</div>
+<div class="paragraph">
+<p>Many teams find they can’t easily agree on this. It can often seem like a matter of personal preference. It’s true there are no right and wrong answers, but we’re going to teach you some heuristics you can apply to help you make better decisions.</p>
+</div>
+<div class="sect2">
+<h3 id="_a_bug_report">7.1. A bug report</h3>
+<div class="paragraph">
+<p>Once again, while we were away, the developers of Shouty have been busy. A new hot-shot ninja rock-star subcontractor, Stevie, has built a new feature called <em>premium accounts</em>. We don’t know much about it yet but, our tester Tamsin has reported a bug from their manual exploratory testing, and it’s up to us tofix it.</p>
+</div>
+<div class="paragraph">
+<p>Tamsin has helpfully documented the bug as a failing scenario. Here is it:</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>$ cucumber --tags @todo
 
+Feature: Premium accounts
+
+  @todo
+  Scenario: BUG #2789
+    Given Sean has bought 30 credits
+    When Sean shouts "buy, buy buy!"
+    Then Sean should have 25 credits
+      Expected: 25
+          Got: 15</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hum. So let’s try and figure out what this is all about. Sean starts out with some credits,
+
+presumably that&#8217;s what gives his account premium status?</p>
+</div>
+<div class="paragraph">
+<p>As a result of that shout, he’s obviously supposed to have some credits deducted. Tamsin’s scenario says that the correct behaviour is for 5 credits to be deducted, leaving him with 25 credits. As we can see from running the test, the system is deducting 15 credits instead.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_looking_for_the_behaviour">7.2. Looking for the behaviour</h3>
+<div class="paragraph">
+<p>Let’s read the whole feature file - that should tell us some more about how the system is supposed to behave.</p>
+</div>
+<div class="paragraph">
+<p>
+Oh my.</p>
+</div>
+<div class="paragraph">
+<p>This is very difficult to read.</p>
+</div>
+<div class="paragraph">
+<p>Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long.</p>
+</div>
+<div class="paragraph">
+<p>The scenario has several <code>When</code> steps, which is often a sign that the scenario is trying to test more than one business rule at a time.</p>
+</div>
+<div class="paragraph">
+<p>We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there&#8217;s no <code>Rule</code> keyword and the description section is blank, so we haven’t been left any clues there.</p>
+</div>
+<div class="paragraph">
+<p>Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 credits and ends up with 11, but why?</p>
+</div>
+<div class="paragraph">
+<p>There’s so much detail here. I wonder which bits are important. Could it be the number of words Sean shouts that affects his credits? Or the number of messages? Based on Tamsin’s test case, maybe the word “buy” is important&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p>It’s really hard to tell.</p>
+</div>
+<div class="paragraph">
+<p>It’s interesting that Lucy hears all Sean’s messages - even these ones which look to be over 180 characters and would normally be blocked. Perhaps premium accounts get to send messages over 180 characters in exchange for credits?</p>
+</div>
+<div class="paragraph">
+<p>This is a classic example of a scenario written by someone who is using Cucumber as a <em>testing</em> tool rather than a <em>documentation</em> tool. This scenario may well work as an effective test, but it&#8217;s terrible documentation. We have no clear idea from reading it what the system is supposed to do.</p>
+</div>
+<div class="paragraph">
+<p>Let’s try reading the code instead.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>OK, so we have a <code>deductCredits</code> method here that seems to encapsulate the rules. It looks like over-long messages - messages that are not short enough - cost two credits, and each time the word “buy” is mentioned, we deduct 5 credits.</p>
+</div>
+<div class="paragraph">
+<p>It’s a good job we know how to read code!</p>
+</div>
+<div class="paragraph">
+<p>One of the promises of BDD is that our feature files become the single source of truth for the whole team. Yet here, the scenario does such a poor job of documenting what the system does, we had to go hunting for the truth in the code. That’s fine for us, because we know how to read code, but it’s excluded anyone on our team who isn’t technical. How would they be able to understand the behaviour of premium accounts at the moment?</p>
+</div>
+<div class="paragraph">
+<p>We need to fix this feature file.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_clarifying_the_rules">7.3. Clarifying the rules</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>This seems like a good time to ask our domain experts for clarification about this behaviour. Ideally a three amigos meeting would have done this already, but things don’t always go according to the script. Let’s pay a visit to our product owner.</p>
+</div>
+<div class="paragraph">
+<p>Paula the product owner tells us the rules are as follows:
+</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Mention the word "buy" and you lose 5 credits.</p>
+</li>
+<li>
+<p>Long messages cost 2 credits</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>OK, well that helps us a great deal, but this scenario is still doing a poor job of illustrating those rules. Let’s take a moment to understand why.</p>
+</div>
+<div class="paragraph">
+<p>
+It’s all about the details.</p>
+</div>
+<div class="paragraph">
+<p>When you’re first exploring a new domain problem, details like the exact messages people have shouted are a great way to shine light into the dark corners of your ignorance. They bring examples to life by making them vivid and real. This encourages what we call <em>divergent thinking</em>, which helps you discover even more examples as you explore the behaviour you need to provide.</p>
+</div>
+<div class="paragraph">
+<p>In BDD, we call this <em>deliberate discovery</em>, when we try to explore the domain problem as thoroughly as we can. Details are good here.</p>
+</div>
+<div class="paragraph">
+<p>At some point, however, we need to write a computer program. When that time comes, we need to switch to <em>convergent thinking</em> and try to distill down all that detail into something that clearly communicates the essence of the behaviour. Now, too much detail can be distracting, or even misleading to our future readers. We call these <em>incidental details</em>.</p>
+</div>
+<div class="paragraph">
+<p>Being able to distill down the essence of a scenario with too much detail is a skill you&#8217;ll find yourself practicing time and time again as a BDD practitioner, since we almost always deliberately start with too much detail, then want to refine it afterwards as it becomes more clear which details are relevant, and which are incidental.</p>
+</div>
+<div class="paragraph">
+<p>Distill the “buy” shout step
+Opens the premium account feature
+Let’s try to distill the essence of this scenario by removing the incidental details.
+We can start with this step, When Sean shouts "Come and buy a coffee".
+What’s important here is that the shout contains the word “buy”. So let’s write that:
+Changes step to <code>When Sean shouts a message containing the word "buy"</code>
+Better. We still have a little bit of detail - the word buy - but that’s quite important, in fact it helps to illustrate our business rule.
+We’ll need a new step definition for this, of course.
+Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.
+We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.
+Copies code from step def below, then adds code above to create a test message containing the given word.
+Let’s run Cucumber to check we haven’t made any mistakes…
+Runs <code>cucumber --tags ~@todo</code>. All green.
+Good. Now we can use that same step everywhere else in the scenario, too.
+Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.
+Distill the regular shout step
+We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?
+In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:
+Changes the step from <code>And Sean shouts "My bagels are yummy"</code> to <code>And Sean shouts a message</code>
+Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.
+Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.
+We’ll run Cucumber again just in case&#8230;&#8203;
+Runs <code>cucumber --tags ~@todo</code>. All green.
+And finally, let’s use that new step everywhere we can… and run Cucumber once again.
+Changes two steps to that shout regular messages to use the new step. Runs <code>cucumber --tags ~@todo</code>. All green.
+Distill the long shout step
+Now let’s deal with this next step. What’s the essence here?
+Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now, but push the details about the message content down into the step definition, following the same recipe.
+Changes the step to <code>And Sean shouts a long message</code>
+Runs <code>cucumber --tags ~@todo</code>
+Copies / pastes step def snippet into steps file
+Again, we’ll tolerate the duplication for now, and just generate a 180-character message here.
+Copies shouting code from step def below, then adds code above to create a 180 character test message.
+Runs <code>cucumber --tags ~@todo</code>. All green.
+Distill the over-long shout step
+Now what’s interesting about this next step? This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an over-long message. Let’s update the rule we wrote up earlier to document this evolution of our domain language:
+Changes second rule “Long messages…” to “Over-long messages…”
+Then we can use that term in a new, more abstract step:
+Changes step to <code>And Sean shouts an over-long message</code>
+Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.
+Copies shouting code from step def below, then changes first line to create a 181-character test message.
+Runs <code>cucumber --tags ~@todo</code>. All green.
+Group like steps together
+Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we grouped them together. Let’s do that:
+Re-orders When steps so each type of step is grouped together.
+So now we can clearly see that Sean shouts three regular messages, a long message, two over-long messages, and three messages containing the word “buy”. It’s still a lot to digest, but a clearer picture is starting to emerge.
+Are there any other incidental details remaining in this scenario?
+Remove pointless steps
+Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:
+Removes the first four When steps (remember to change And for When on the next step)
+That’s better.
+Now that we’ve removed all that incidental detail, it’s much easier to see how the figure of 11 credits has been calculated: two over-long messages at 2 credits per message, and three messages containing the word “buy” at 5 credits each makes a total of 19 credits, which subtracted from the initial 30 makes 11.
+Merge repeated steps
+But we can make this even clearer.
+These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
+Replaces two steps with new step: <code>When Sean shouts 2 over-long messages</code>
+We’ll need a new step definition for this one.
+Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.
+The implementation of this step definition is almost exactly the same as the one below, we just need to run a loop around it, based on the number specified in the scenario.
+Copy / paste code from step def below. Add loop around the body of the code.
+Again, we’ll just suffer the duplication for the time being. We have a nice trick up our sleeves to get rid of all of it when the time comes.
+Runs <code>cucumber --tags ~@todo</code>. All green.
+Let’s do the exact same thing with these other three steps.
+Replaces three steps with new step: <code>When Sean shouts 3 messages containing the word “buy”</code>
+Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.
+Again, we have the bulk of this code that we can just copy and paste, adding a loop around the outside.
+Copy / paste code from step def below. Add loop around the body of the code.
+Rename scenario
+Nice!
+Now things are really getting clearer.
+There are still a couple of problems with this scenario. One is the name of the scenario. It really doesn’t tell us anything at all.
+A great way to name your scenarios is to think about how they named episodes of the TV sitcom series, Friends. Remember? They were all called something like the one where ross is fine or the one where phoebe gets married.
+This is the one where… well.. the one where Sean shouts some over-long messages and some containing the word “buy”.
+Updates the name of the scenario
+That’s quite a complicated name isn’t it? Maybe this scenario is doing too much!
+&#8230;&#8203;and that’s the second problem.
+It’s trying to test both business rules at once.
+Split scenario
+Normally you’ll want at least one scenario for each business rule. That way, each scenario clearly illustrates the effect of that rule on the system. Sometimes it’s interesting to also document the effect that multiple rules have when they play out at the same time, but as you’ve already experienced, that can quickly get confusing.
+ Sometimes you’ll need several scenarios to illustrate just one rule. In this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.
+Write out the two new scenarios, leaving the original in place.
+Great. Now the effect of each of these rules is much more clearly documented.
+Remove original scenario
+We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?
+Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. As we talk about it, we realise that while we don’t need this one anymore [removes original long scenario]  there’s a missing scenario - where both rules apply to the same message. The one where there’s a shout that’s both over-long and with the word “buy” in it.
+We’d better document that as a question for now.
+Writes up the question.
+Ask context question
+While we have Paula and Tamsin’s attention, we ask a question we know often helps to discover missing scenarios:
+Is there another context that would result in a different outcome here?
+They both think about this. Tamsin suggests starting Sean out with fewer credits, or shouting lots more messages, so that he runs out of credit. What would happen then?
+Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still have a bug to fix!
+Writes up the other question
+Close
+Well that’s been quite a session. We came in to fix one bug, and ended up having to fix our feature file first. We’re still not done with that, either. By pushing the incidental details down out of the scenario into the step definitions, we’ve made a mess of duplication in the step definitions. There’s a neat fix for that, but we’ll have to save that for next time.
+Let’s reflect on what we’ve learned.
+Cut to GoAnimate
+When scenarios are very heavy in detail, they can be confusing to read. We call these incidental details when they are just noise that detracts from communicating the essence of the scenario.
+Scenarios that are heavy in detail are sometimes said to be written in an imperative style. They contain lots of “how”, and not much “what”. We often use this style when we’re working on a brand new domain problem and are still grasping for an understanding. We just want to write something down.
+As your confidence in your domain knowledge improves, you’d expect to feel comfortable removing some of these details. Scenarios with more abstract steps like this are said to be written in a declarative style.
+Using a more declarative style might mean you’ll need to find names for things, like the way we had to name an over-long message. This discovery of your ubiquitous domain language is a great side-effect of distilling the essence of your scenarios. Now you have a bigger vocabulary that you can use all the way down through your code, and in your future conversations, too.
+One down-side, as you’ve seen, of pushing the “how” down from your scenarios into the step definitions is that the step definition code becomes more complex. Some teams reject this, and prefer to use a simple vocabulary of step definitions, leaving more detail in their scenarios. There are no right and wrong answers here, but if you have sufficient competence with code, you’ll easily be able to handle that extra bit of complexity and keep readability top of your priority list.
+That’s what we’ll work on next time. Bye for now!</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_clarifying_the_rules_2">7.4. Clarifying the rules</h3>
+<div class="paragraph">
+<p>Distill the “buy” shout step
+</p>
+</div>
+<div class="paragraph">
+<p>Let’s try to distill the essence of this scenario by removing the incidental details.</p>
+</div>
+<div class="paragraph">
+<p>We can start with this step, <code>When Sean shouts "Come and buy a coffee".</code></p>
+</div>
+<div class="paragraph">
+<p>From what what we know about the rules, what’s important here is that the shout contains the word “buy”. So let’s write that:</p>
+</div>
+<div class="paragraph">
+<p>Changes step to <code>When Sean shouts a message containing the word "buy"</code>
+Better. We still have a little bit of detail - the word buy - but that’s quite important, in fact it helps to illustrate our business rule.
+We’ll need a new step definition for this, of course.
+Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.
+We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.
+Copies code from step def below, then adds code above to create a test message containing the given word.
+Let’s run Cucumber to check we haven’t made any mistakes…
+Runs <code>cucumber --tags ~@todo</code>. All green.
+Good. Now we can use that same step everywhere else in the scenario, too.
+Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.
+Distill the regular shout step
+We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?
+In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:
+Changes the step from <code>And Sean shouts "My bagels are yummy"</code> to <code>And Sean shouts a message</code>
+Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.
+Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.
+We’ll run Cucumber again just in case&#8230;&#8203;
+Runs <code>cucumber --tags ~@todo</code>. All green.
+And finally, let’s use that new step everywhere we can… and run Cucumber once again.
+Changes two steps to that shout regular messages to use the new step. Runs <code>cucumber --tags ~@todo</code>. All green.
+Distill the long shout step
+Now let’s deal with this next step. What’s the essence here?
+Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now, but push the details about the message content down into the step definition, following the same recipe.
+Changes the step to <code>And Sean shouts a long message</code>
+Runs <code>cucumber --tags ~@todo</code>
+Copies / pastes step def snippet into steps file
+Again, we’ll tolerate the duplication for now, and just generate a 180-character message here.
+Copies shouting code from step def below, then adds code above to create a 180 character test message.
+Runs <code>cucumber --tags ~@todo</code>. All green.
+Distill the over-long shout step
+Now what’s interesting about this next step? This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an over-long message. Let’s update the rule we wrote up earlier to document this evolution of our domain language:
+Changes second rule “Long messages…” to “Over-long messages…”
+Then we can use that term in a new, more abstract step:
+Changes step to <code>And Sean shouts an over-long message</code>
+Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.
+Copies shouting code from step def below, then changes first line to create a 181-character test message.
+Runs <code>cucumber --tags ~@todo</code>. All green.
+Group like steps together
+Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we grouped them together. Let’s do that:
+Re-orders When steps so each type of step is grouped together.
+So now we can clearly see that Sean shouts three regular messages, a long message, two over-long messages, and three messages containing the word “buy”. It’s still a lot to digest, but a clearer picture is starting to emerge.
+Are there any other incidental details remaining in this scenario?
+Remove pointless steps
+Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:
+Removes the first four When steps (remember to change And for When on the next step)
+That’s better.
+Now that we’ve removed all that incidental detail, it’s much easier to see how the figure of 11 credits has been calculated: two over-long messages at 2 credits per message, and three messages containing the word “buy” at 5 credits each makes a total of 19 credits, which subtracted from the initial 30 makes 11.
+Merge repeated steps
+But we can make this even clearer.
+These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
+Replaces two steps with new step: <code>When Sean shouts 2 over-long messages</code>
+We’ll need a new step definition for this one.
+Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.
+The implementation of this step definition is almost exactly the same as the one below, we just need to run a loop around it, based on the number specified in the scenario.
+Copy / paste code from step def below. Add loop around the body of the code.
+Again, we’ll just suffer the duplication for the time being. We have a nice trick up our sleeves to get rid of all of it when the time comes.
+Runs <code>cucumber --tags ~@todo</code>. All green.
+Let’s do the exact same thing with these other three steps.
+Replaces three steps with new step: <code>When Sean shouts 3 messages containing the word “buy”</code>
+Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.
+Again, we have the bulk of this code that we can just copy and paste, adding a loop around the outside.
+Copy / paste code from step def below. Add loop around the body of the code.
+Rename scenario
+Nice!
+Now things are really getting clearer.
+There are still a couple of problems with this scenario. One is the name of the scenario. It really doesn’t tell us anything at all.
+A great way to name your scenarios is to think about how they named episodes of the TV sitcom series, Friends. Remember? They were all called something like the one where ross is fine or the one where phoebe gets married.
+This is the one where… well.. the one where Sean shouts some over-long messages and some containing the word “buy”.
+Updates the name of the scenario
+That’s quite a complicated name isn’t it? Maybe this scenario is doing too much!
+&#8230;&#8203;and that’s the second problem.
+It’s trying to test both business rules at once.
+Split scenario
+Normally you’ll want at least one scenario for each business rule. That way, each scenario clearly illustrates the effect of that rule on the system. Sometimes it’s interesting to also document the effect that multiple rules have when they play out at the same time, but as you’ve already experienced, that can quickly get confusing.
+ Sometimes you’ll need several scenarios to illustrate just one rule. In this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.
+Write out the two new scenarios, leaving the original in place.
+Great. Now the effect of each of these rules is much more clearly documented.
+Remove original scenario
+We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?
+Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. As we talk about it, we realise that while we don’t need this one anymore [removes original long scenario]  there’s a missing scenario - where both rules apply to the same message. The one where there’s a shout that’s both over-long and with the word “buy” in it.
+We’d better document that as a question for now.
+Writes up the question.
+Ask context question
+While we have Paula and Tamsin’s attention, we ask a question we know often helps to discover missing scenarios:
+Is there another context that would result in a different outcome here?
+They both think about this. Tamsin suggests starting Sean out with fewer credits, or shouting lots more messages, so that he runs out of credit. What would happen then?
+Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still have a bug to fix!
+Writes up the other question
+Close
+Well that’s been quite a session. We came in to fix one bug, and ended up having to fix our feature file first. We’re still not done with that, either. By pushing the incidental details down out of the scenario into the step definitions, we’ve made a mess of duplication in the step definitions. There’s a neat fix for that, but we’ll have to save that for next time.
+Let’s reflect on what we’ve learned.
+Cut to GoAnimate
+When scenarios are very heavy in detail, they can be confusing to read. We call these incidental details when they are just noise that detracts from communicating the essence of the scenario.
+Scenarios that are heavy in detail are sometimes said to be written in an imperative style. They contain lots of “how”, and not much “what”. We often use this style when we’re working on a brand new domain problem and are still grasping for an understanding. We just want to write something down.
+As your confidence in your domain knowledge improves, you’d expect to feel comfortable removing some of these details. Scenarios with more abstract steps like this are said to be written in a declarative style.
+Using a more declarative style might mean you’ll need to find names for things, like the way we had to name an over-long message. This discovery of your ubiquitous domain language is a great side-effect of distilling the essence of your scenarios. Now you have a bigger vocabulary that you can use all the way down through your code, and in your future conversations, too.
+One down-side, as you’ve seen, of pushing the “how” down from your scenarios into the step definitions is that the step definition code becomes more complex. Some teams reject this, and prefer to use a simple vocabulary of step definitions, leaving more detail in their scenarios. There are no right and wrong answers here, but if you have sufficient competence with code, you’ll easily be able to handle that extra bit of complexity and keep readability top of your priority list.
+That’s what we’ll work on next time. Bye for now!</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-03-09 13:25:04 UTC
+Last updated 2021-03-27 00:04:10 UTC
 </div>
 </div>
 <style>
