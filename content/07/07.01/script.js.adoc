@@ -1,0 +1,27 @@
+include::./title.adoc[]
+
+Once again, while we were away, the developers of Shouty have been busy. A new hot-shot ninja rock-star subcontractor, Stevie, has built a new feature called _premium accounts_. We don’t know much about it yet but, our tester Tamsin has reported a bug from their manual exploratory testing, and it’s up to us tofix it.
+
+Tamsin has helpfully documented the bug as a failing scenario. Here is it:
+
+shot::[1, "Run cucumber with @todo tag"]
+[source]
+----
+$ cucumber --tags @todo
+
+Feature: Premium accounts
+
+  @todo
+  Scenario: BUG #2789
+    Given Sean has bought 30 credits
+    When Sean shouts "buy, buy buy!"
+    Then Sean should have 25 credits
+      Expected: 25
+          Got: 15
+----
+
+Hum. So let’s try and figure out what this is all about. Sean starts out with some credits, 
+shot::[2, "Highlight first step"]
+presumably that's what gives his account premium status?
+
+As a result of that shout, he’s obviously supposed to have some credits deducted. Tamsin’s scenario says that the correct behaviour is for 5 credits to be deducted, leaving him with 25 credits. As we can see from running the test, the system is deducting 15 credits instead.
