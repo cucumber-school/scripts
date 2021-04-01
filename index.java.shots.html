@@ -6228,7 +6228,7 @@ Scenarios should be isolated from each other - which means that one scenario sho
 <div class="sect2">
 <h3 id="_controlling_output_with_plugins">6.4. Controlling Output With Plugins</h3>
 <div class="paragraph">
-<p><a href="#shot-1066" id="shot-1066" title="the plugin section of the help output shown in lesson 3" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: the plugin section of the help output shown in lesson 3</a>
+<p><a href="#shot-1066" id="shot-1066" title="the plugin section of the help output shown in lesson 3" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: the plugin section of the help output shown in lesson 3</a><a href="#shot-1067" id="shot-1067" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1b</a>
 Remember the help information that we got Cucumber to print in the last lesson. In this lesson, we&#8217;re going to concentrate on configuring Cucumber&#8217;s output using plugins.</p>
 </div>
 <div class="listingblock">
@@ -6242,10 +6242,10 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>So far, every time we have run Cucumber, it has printed the features back to us - in the console. This is called the <code>pretty</code> formatter. Cucumber can report results in other formats, some of which are useful for generating reports.</p>
+<p>So far, every time we have run Cucumber, it has printed the features back to us - in the console.<a href="#shot-1068" id="shot-1068" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1c</a> This is called the <code>pretty</code> formatter. Cucumber can report results in other formats, some of which are useful for generating reports.</p>
 </div>
 <div class="paragraph">
-<p>Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.<a href="#shot-1067" id="shot-1067" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: run maven in console</a></p>
+<p>Let’s try the HTML plugin. When we use the HTML plugin we simply append a colon followed by the file path where we want the report written.<a href="#shot-1069" id="shot-1069" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: run maven in console</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6253,10 +6253,10 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>Now, let&#8217;s take a look at the html that has been generated. <a href="#shot-1068" id="shot-1068" title="Open target/my-report in the browser" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: Open target/my-report in the browser</a> As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.</p>
+<p>Now, let&#8217;s take a look at the html that has been generated. <a href="#shot-1070" id="shot-1070" title="Open target/my-report in the browser" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: Open target/my-report in the browser</a> As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.</p>
 </div>
 <div class="paragraph">
-<p>You probably noticed that we still got the <code>pretty</code> output in the console. <a href="#shot-1069" id="shot-1069" title="show the pretty output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: show the pretty output</a> That&#8217;s because we have specified the <code>pretty</code> plugin in the @CucumberOptions annotation in <code>RunCucumberTests.java</code>. <a href="#shot-1070" id="shot-1070" title="highlight @CucumberOptions" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: highlight @CucumberOptions</a></p>
+<p>You probably noticed that we still got the <code>pretty</code> output in the console. <a href="#shot-1071" id="shot-1071" title="show the pretty output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: show the pretty output</a> That&#8217;s because we have specified the <code>pretty</code> plugin in the @CucumberOptions annotation in <code>RunCucumberTests.java</code>. <a href="#shot-1072" id="shot-1072" title="highlight @CucumberOptions" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: highlight @CucumberOptions</a></p>
 </div>
 <div class="listingblock">
 <div class="title">RunCucumberTests.java</div>
@@ -6267,7 +6267,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s delete that. <a href="#shot-1071" id="shot-1071" title="remove pretty plugin" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: remove pretty plugin</a></p>
+<p>Let&#8217;s delete that. <a href="#shot-1073" id="shot-1073" title="remove pretty plugin" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: remove pretty plugin</a></p>
 </div>
 <div class="listingblock">
 <div class="title">RunCucumberTests.java</div>
@@ -6278,7 +6278,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>and run maven again. <a href="#shot-1072" id="shot-1072" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run maven in console</a> Notice that this time the only console output is a summary of the number of tests being run.<a href="#shot-1073" id="shot-1073" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a> There&#8217;s no <code>pretty</code> output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.</p>
+<p>and run maven again. <a href="#shot-1074" id="shot-1074" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7: run maven in console</a> Notice that this time the only console output is a summary of the number of tests being run.<a href="#shot-1075" id="shot-1075" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a> There&#8217;s no <code>pretty</code> output, because we removed it from @CucumberOptions annotation. Cucumber combines the plugins specified on the command line with those specified in the @CucumberOptions annotation.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6286,7 +6286,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>There&#8217;s also a progress formatter, which just prints out a single character for each step. <a href="#shot-1074" id="shot-1074" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run maven in console, show output</a><a href="#shot-1075" id="shot-1075" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10</a></p>
+<p>There&#8217;s also a progress formatter, which just prints out a single character for each step. <a href="#shot-1076" id="shot-1076" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: run maven in console, show output</a><a href="#shot-1077" id="shot-1077" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6294,7 +6294,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. <a href="#shot-1076" id="shot-1076" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: run maven in console, show output</a><a href="#shot-1077" id="shot-1077" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
+<p>The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report. <a href="#shot-1078" id="shot-1078" title="run maven in console, show output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11: run maven in console, show output</a><a href="#shot-1079" id="shot-1079" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6302,7 +6302,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p>We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the <code>pretty</code> plugin and the HTML plugin at the same time. There&#8217;s a limitation that only one plugin can write to the console at the same time. Let&#8217;s try to use the <code>progress</code> and <code>junit</code> plugin together <a href="#shot-1078" id="shot-1078" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run maven in console</a></p>
+<p>We can ask Cucumber to run with more than one plugin, as we saw earlier when we used the <code>pretty</code> plugin and the HTML plugin at the same time. There&#8217;s a limitation that only one plugin can write to the console at the same time. Let&#8217;s try to use the <code>progress</code> and <code>junit</code> plugin together <a href="#shot-1080" id="shot-1080" title="run maven in console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13: run maven in console</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6310,7 +6310,7 @@ Remember the help information that we got Cucumber to print in the last lesson. 
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1079" id="shot-1079" title="scroll up to show error" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: scroll up to show error</a></p>
+<p><a href="#shot-1081" id="shot-1081" title="scroll up to show error" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14: scroll up to show error</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6320,7 +6320,7 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. <a href="#shot-1080" id="shot-1080" title="run maven in console, show progress output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: run maven in console, show progress output</a><a href="#shot-1081" id="shot-1081" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16</a></p>
+<p>We can still use both plugins at the same time, but we need to tell Cucumber to write one of them to a file, not to the console, by appending a colon and a filepath. <a href="#shot-1082" id="shot-1082" title="run maven in console, show progress output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15: run maven in console, show progress output</a><a href="#shot-1083" id="shot-1083" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6328,10 +6328,10 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>The JUnit XML has been written to a file. <a href="#shot-1082" id="shot-1082" title="open junit.xml in the IDE" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: open junit.xml in the IDE</a></p>
+<p>The JUnit XML has been written to a file. <a href="#shot-1084" id="shot-1084" title="open junit.xml in the IDE" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 17: open junit.xml in the IDE</a></p>
 </div>
 <div class="paragraph">
-<p>The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. <a href="#shot-1083" id="shot-1083" title="edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'</a>.</p>
+<p>The last plugin that I want to show you is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. <a href="#shot-1085" id="shot-1085" title="edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 18: edit the step When Sean shouts 'Free bagels!' &#8594; 'Free cupcakes!'</a>.</p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -6348,7 +6348,7 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>While we&#8217;re at it, let&#8217;s put the <code>pretty</code> plugin back in @CucumberOptions. <a href="#shot-1084" id="shot-1084" title="undo earlier edit" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: undo earlier edit</a></p>
+<p>While we&#8217;re at it, let&#8217;s put the <code>pretty</code> plugin back in @CucumberOptions. <a href="#shot-1086" id="shot-1086" title="undo earlier edit" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 19: undo earlier edit</a></p>
 </div>
 <div class="listingblock">
 <div class="title">RunCucumberTests.java</div>
@@ -6359,7 +6359,7 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s run Maven again using the <code>rerun</code> plugin writing its output to a text file. Let&#8217;s call it <code>rerun.txt</code>. <a href="#shot-1085" id="shot-1085" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console</a></p>
+<p>Now let&#8217;s run Maven again using the <code>rerun</code> plugin writing its output to a text file. Let&#8217;s call it <code>rerun.txt</code>. <a href="#shot-1087" id="shot-1087" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 20: run maven from console</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6367,14 +6367,14 @@ io.cucumber.core.exception.CucumberException: Only one plugin can use STDOUT, no
 </div>
 </div>
 <div class="paragraph">
-<p>We can see in the console that the <code>Two shouts</code> scenario has failed. <a href="#shot-1086" id="shot-1086" title="scroll to show failure" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: scroll to show failure</a></p>
+<p>We can see in the console that the <code>Two shouts</code> scenario has failed. <a href="#shot-1088" id="shot-1088" title="scroll to show failure" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 21: scroll to show failure</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1087" id="shot-1087" title="open target/rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: open target/rerun.txt</a>
+<p><a href="#shot-1089" id="shot-1089" title="open target/rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 22: open target/rerun.txt</a>
 Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed!  And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
 </div>
 <div class="paragraph">
-<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. <a href="#shot-1088" id="shot-1088" title="run maven from console, highlighting <code>pretty</code> output showing only failing scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: run maven from console, highlighting <code>pretty</code> output showing only failing scenario</a><a href="#shot-1089" id="shot-1089" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24</a></p>
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. <a href="#shot-1090" id="shot-1090" title="run maven from console, highlighting <code>pretty</code> output showing only failing scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 23: run maven from console, highlighting <code>pretty</code> output showing only failing scenario</a><a href="#shot-1091" id="shot-1091" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 24</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6382,7 +6382,7 @@ Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios 
 </div>
 </div>
 <div class="paragraph">
-<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let&#8217;s fix the scenario <a href="#shot-1090" id="shot-1090" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25: undo change in feature file</a></p>
+<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green. Let&#8217;s fix the scenario <a href="#shot-1092" id="shot-1092" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 25: undo change in feature file</a></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -6399,7 +6399,7 @@ Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios 
 </div>
 </div>
 <div class="paragraph">
-<p>and rerun the failing scenario again <a href="#shot-1091" id="shot-1091" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26: run maven from console</a></p>
+<p>and rerun the failing scenario again <a href="#shot-1093" id="shot-1093" title="run maven from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 26: run maven from console</a></p>
 </div>
 <div class="paragraph">
 <p>Great. We&#8217;re back to green again.</p>
@@ -6498,20 +6498,20 @@ The rerun formatter keeps track of the feature file and line number of every sce
 <div class="sect2">
 <h3 id="_publishing_results">6.5. Publishing Results</h3>
 <div class="paragraph">
-<p><a href="#shot-1092" id="shot-1092" title="show HTML output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show HTML output</a>
+<p><a href="#shot-1094" id="shot-1094" title="show HTML output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: show HTML output</a>
 In the last lesson we saw the output generated by the HTML plugin. This is a great way for your business colleagues and customers to engage with the development of the product. Since the scenarios are written in business language, they act as documentation that everyone interested in the product can understand. And, because the results are colour-coded green (if the system behaves as expected) or red (if it doesn&#8217;t) everyone can see what behaviour has been implemented.</p>
 </div>
 <div class="paragraph">
 <p>The challenge is making sure that this documentation is easily available. Feature files are usually checked into source control along with the source code, which isn&#8217;t a great way of making it accessible to less technical team members. The HTML output can be shared, but it needs to be stored somewhere that everyone has access to - such as on your intranet or wiki. That&#8217;s something that your team has to configure themselves.</p>
 </div>
 <div class="paragraph">
-<p>Since Cucumber-JVM 6.6.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. <a href="#shot-1093" id="shot-1093" title="go to reports.cucumber.io" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: go to reports.cucumber.io</a></p>
+<p>Since Cucumber-JVM 6.6.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. <a href="#shot-1095" id="shot-1095" title="go to reports.cucumber.io" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: go to reports.cucumber.io</a></p>
 </div>
 <div class="paragraph">
-<p>Ensure that you&#8217;re using Cucumber-JVM 6.6.0 or later <a href="#shot-1094" id="shot-1094" title="show pom.xml file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: show pom.xml file</a> and that cucumber.publish.quiet is set to false. <a href="#shot-1095" id="shot-1095" title="cucumber.properties" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: cucumber.properties</a>  At the time of recording, the IntelliJ plugin doesn&#8217;t support Cucumber 6, so we have to use Maven to run Cucumber. <a href="#shot-1096" id="shot-1096" title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: mvn test</a> Cucumber helpfully prints out a banner telling you how to publish your results to Cucumber Reports <a href="#shot-1097" id="shot-1097" title="highlight banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight banner</a>.</p>
+<p>Ensure that you&#8217;re using Cucumber-JVM 6.6.0 or later <a href="#shot-1096" id="shot-1096" title="show pom.xml file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: show pom.xml file</a> and that cucumber.publish.quiet is set to false. <a href="#shot-1097" id="shot-1097" title="cucumber.properties" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 4: cucumber.properties</a>  At the time of recording, the IntelliJ plugin doesn&#8217;t support Cucumber 6, so we have to use Maven to run Cucumber. <a href="#shot-1098" id="shot-1098" title="mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 5: mvn test</a> Cucumber helpfully prints out a banner telling you how to publish your results to Cucumber Reports <a href="#shot-1099" id="shot-1099" title="highlight banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 6: highlight banner</a>.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s follow the instructions from in the banner and set <code>cucumber.publish.enabled</code> to <code>true</code> <a href="#shot-1098" id="shot-1098" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a>.</p>
+<p>Let&#8217;s follow the instructions from in the banner and set <code>cucumber.publish.enabled</code> to <code>true</code> <a href="#shot-1100" id="shot-1100" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 7</a>.</p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.properties</div>
@@ -6522,20 +6522,20 @@ cucumber.execution.order=random</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can run Cucumber again and we get a different banner output <a href="#shot-1099" id="shot-1099" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a>. The unique URL in this banner is the address of your published report <a href="#shot-1100" id="shot-1100" title="highlight URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: highlight URL</a>.</p>
+<p>Now we can run Cucumber again and we get a different banner output <a href="#shot-1101" id="shot-1101" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 8</a>. The unique URL in this banner is the address of your published report <a href="#shot-1102" id="shot-1102" title="highlight URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 9: highlight URL</a>.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1101" id="shot-1101" title="follow URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: follow URL</a>
-Open the URL and you&#8217;ll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered <a href="#shot-1102" id="shot-1102" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a></p>
+<p><a href="#shot-1103" id="shot-1103" title="follow URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 10: follow URL</a>
+Open the URL and you&#8217;ll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered <a href="#shot-1104" id="shot-1104" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 11</a></p>
 </div>
 <div class="paragraph">
-<p>You might have noticed the warning in the banner that says the report will "self-destruct". <a href="#shot-1103" id="shot-1103" title="highlight warning" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: highlight warning</a> To prevent a report from being deleted, it has to be associated with an authenticated account.</p>
+<p>You might have noticed the warning in the banner that says the report will "self-destruct". <a href="#shot-1105" id="shot-1105" title="highlight warning" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 12: highlight warning</a> To prevent a report from being deleted, it has to be associated with an authenticated account.</p>
 </div>
 <div class="paragraph">
-<p>Follow the link in the report to authenticate your account <a href="#shot-1104" id="shot-1104" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13</a> You can then retrieve your Cucumber Reports publish token <a href="#shot-1105" id="shot-1105" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14</a>. Reports associated with a publish token will be kept until explicitly deleted.</p>
+<p>Follow the link in the report to authenticate your account <a href="#shot-1106" id="shot-1106" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 13</a> You can then retrieve your Cucumber Reports publish token <a href="#shot-1107" id="shot-1107" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 14</a>. Reports associated with a publish token will be kept until explicitly deleted.</p>
 </div>
 <div class="paragraph">
-<p>During development you probably won&#8217;t want to publish a report after every build&#8230;&#8203; and you might prefer not to see the banner output telling you about Cucumber Reports. Let&#8217;s fix this in the properties file by removing the cucumber.publish.enable property and adding the cucumber.publish.quiet property:<a href="#shot-1106" id="shot-1106" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15</a></p>
+<p>During development you probably won&#8217;t want to publish a report after every build&#8230;&#8203; and you might prefer not to see the banner output telling you about Cucumber Reports. Let&#8217;s fix this in the properties file by removing the cucumber.publish.enable property and adding the cucumber.publish.quiet property:<a href="#shot-1108" id="shot-1108" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 15</a></p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.properties</div>
@@ -6546,7 +6546,7 @@ cucumber.execution.order=random</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1107" id="shot-1107" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16</a>
+<p><a href="#shot-1109" id="shot-1109" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 16</a>
 Now when we run Cucumber, no report is published and no banner advertising Cucumber Reports is output.</p>
 </div>
 <div class="paragraph">
@@ -6693,7 +6693,7 @@ Reports that are not associated with a publish token will be deleted approximate
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-03-30 23:56:26 UTC
+Last updated 2021-04-01 15:10:36 UTC
 </div>
 </div>
 <style>
