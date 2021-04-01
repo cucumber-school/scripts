@@ -80,7 +80,7 @@ def shot(number, title="Shot #{number}")
   $shot_id += 1
   suffix = ': ' + title if title
   shot_id = "shot-#{$shot_id}"
-  %(<a href="##{shot_id}" id="#{shot_id}" title="#{title}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot #{number}#{suffix}</a>)
+  %(<a href="##{shot_id}" id="#{shot_id}" title="#{title}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 #{number}#{suffix}</a>)
 end
 
 class ShotInlineMacro < Asciidoctor::Extensions::InlineMacroProcessor
