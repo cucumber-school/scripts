@@ -7,9 +7,14 @@ Oh my.
 
 This is very difficult to read.
 
-Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long.
+[source,gherkin]
+----
+include::../code/js/01-implement-premium-accounts-feature-badly-/features/premium_shouts.feature[]
+----
 
-The scenario has several `When` steps, which is often a sign that the scenario is trying to test more than one business rule at a time.
+Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long, so this is big.
+
+The scenario has several `When` steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.
 
 We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there's no `Rule` keyword and the description section is blank, so we haven’t been left any clues there.
 
@@ -26,6 +31,11 @@ This is a classic example of a scenario written by someone who is using Cucumber
 Let’s try reading the code instead.
 
 shot::[1, "Open Network class"]
+
+[source,javascript]
+----
+include::../code/js/01-implement-premium-accounts-feature-badly-/src/shouty.js[lines=24..50]
+----
 
 OK, so we have a `deductCredits` method here that seems to encapsulate the rules. It looks like over-long messages - messages that are not short enough - cost two credits, and each time the word “buy” is mentioned, we deduct 5 credits.
 
