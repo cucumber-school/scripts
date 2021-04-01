@@ -39,13 +39,13 @@ When("Sean shouts", function () {
 
 When("Sean shouts {string}", function (message) {
   this.people["Sean"].shout(message)
-  this.messagesShoutedBy["Sean"] ||= []
+  if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
   this.messagesShoutedBy["Sean"].push(message)
 })
 
 When("Sean shouts the following message", function (message) {
   this.people["Sean"].shout(message)
-  this.messagesShoutedBy["Sean"] ||= []
+  if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
   this.messagesShoutedBy["Sean"].push(message)
 })
 
@@ -78,9 +78,9 @@ Then("Lucy hears the following messages:", function (expectedMessages) {
 })
 
 Then("Lucy hears all Sean's messages", function () {
-  assertThat(
+  assert.deepEqual(
     this.people["Lucy"].messagesHeard(),
-    containsInAnyOrder(...this.messagesShoutedBy["Sean"])
+    this.messagesShoutedBy["Sean"]
   )
 })
 
