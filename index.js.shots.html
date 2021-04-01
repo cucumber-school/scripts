@@ -501,7 +501,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_a_bug_report">7.1. A bug report</a></li>
 <li><a href="#_looking_for_the_behaviour">7.2. Looking for the behaviour</a></li>
 <li><a href="#_clarifying_the_rules">7.3. Clarifying the rules</a></li>
-<li><a href="#_clarifying_the_rules_2">7.4. Clarifying the rules</a></li>
+<li><a href="#_distilling_the_essence">7.4. Distilling the essence</a></li>
+<li><a href="#_rename_scenario">7.5. Rename scenario</a></li>
 </ul>
 </li>
 </ul>
@@ -6476,11 +6477,62 @@ Oh my.</p>
 <div class="paragraph">
 <p>This is very difficult to read.</p>
 </div>
-<div class="paragraph">
-<p>Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Premium account
+
+  <span class="kn">Background</span><span class="p">:</span>
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>people are located at
+      <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Lucy</span> <span class="p">|</span>
+      <span class="p">|</span> <span class="n">location</span> <span class="p">|</span> <span class="n">0</span>    <span class="p">|</span> <span class="n">100</span>  <span class="p">|</span>
+
+  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts <span class="s">"Come and buy a coffee"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"My bagels are yummy"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Free cookie with your espresso for the next hour"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Who will buy my sweet red muffins?"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Buy my delicious sausage rolls"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      Here are some things you will love about Sean's:
+      - the bagels
+      - the coffee
+      - the chickens
+      Come and visit us today! We'd really love to see you.
+      Pop round anytime, honestly it's fine.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"We have cakes by the dozen"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits
+
+  <span class="nt">@todo</span>
+  <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+    <span class="nf">Then </span>Sean should have 25 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>The scenario has several <code>When</code> steps, which is often a sign that the scenario is trying to test more than one business rule at a time.</p>
+<p>Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long, so this is big.</p>
+</div>
+<div class="paragraph">
+<p>The scenario has several <code>When</code> steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.</p>
 </div>
 <div class="paragraph">
 <p>We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there&#8217;s no <code>Rule</code> keyword and the description section is blank, so we haven’t been left any clues there.</p>
@@ -6505,6 +6557,37 @@ Oh my.</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-704" id="shot-704" title="Open Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Open Network class</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="kd">class</span> <span class="nx">Network</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">range</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">range</span> <span class="o">=</span> <span class="nx">range</span>
+  <span class="p">}</span>
+
+  <span class="nx">subscribe</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="nx">person</span><span class="p">)</span>
+  <span class="p">}</span>
+
+  <span class="nx">broadcast</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">shortEnough</span> <span class="o">=</span> <span class="nx">message</span><span class="p">.</span><span class="nx">length</span> <span class="o">&lt;=</span> <span class="mi">180</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">listeners</span><span class="p">.</span><span class="nx">forEach</span><span class="p">((</span><span class="nx">listener</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">withinRange</span> <span class="o">=</span>
+        <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">listener</span><span class="p">.</span><span class="nx">location</span> <span class="o">-</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">location</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="k">this</span><span class="p">.</span><span class="nx">range</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">withinRange</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="nx">shortEnough</span> <span class="o">||</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">))</span> <span class="p">{</span>
+        <span class="nx">listener</span><span class="p">.</span><span class="nx">hear</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+      <span class="p">}</span>
+    <span class="p">})</span>
+  <span class="p">}</span>
+
+  <span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="mi">2</span>
+    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/gi</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>OK, so we have a <code>deductCredits</code> method here that seems to encapsulate the rules. It looks like over-long messages - messages that are not short enough - cost two credits, and each time the word “buy” is mentioned, we deduct 5 credits.</p>
@@ -6531,28 +6614,39 @@ Oh my.</p>
 <p>Paula the product owner tells us the rules are as follows:
 <a href="#shot-706" id="shot-706" title="Writes the rules up in the feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 2: Writes the rules up in the feature file</a></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Mention the word "buy" and you lose 5 credits.</p>
-</li>
-<li>
-<p>Long messages cost 2 credits</p>
-</li>
-</ul>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Premium account
+
+    <span class="err">Rules</span><span class="p">:</span>
+    <span class="nf">* </span>Mention the word <span class="s">"buy"</span> and you lose 5 credits.
+    <span class="nf">* </span>Long messages cost 2 credits</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve just scribbled these down in the feature description for now, but later, once we&#8217;ve teased this scenario apart, we&#8217;ll be able to use the <code>Rule</code> keyword as we shoed you in chapter 4.</p>
 </div>
 <div class="paragraph">
 <p>OK, well that helps us a great deal, but this scenario is still doing a poor job of illustrating those rules. Let’s take a moment to understand why.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-707" id="shot-707" title="GoAnimate video clip" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: GoAnimate video clip</a>
-It’s all about the details.</p>
+<p><a href="#shot-707" id="shot-707" title="07.03.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 3: 07.03.animation.mp4</a></p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="https://drive.google.com/uc?id=1NxU_CzKngKaGGxnoaxxbmSZngaz9VGDG" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>It’s all about the details.</p>
 </div>
 <div class="paragraph">
 <p>When you’re first exploring a new domain problem, details like the exact messages people have shouted are a great way to shine light into the dark corners of your ignorance. They bring examples to life by making them vivid and real. This encourages what we call <em>divergent thinking</em>, which helps you discover even more examples as you explore the behaviour you need to provide.</p>
 </div>
 <div class="paragraph">
-<p>In BDD, we call this <em>deliberate discovery</em>, when we try to explore the domain problem as thoroughly as we can. Details are good here.</p>
+<p>In BDD, we call this <em>deliberate discovery</em>, when we try to explore the problem domain as thoroughly as we can. Details are good here.</p>
 </div>
 <div class="paragraph">
 <p>At some point, however, we need to write a computer program. When that time comes, we need to switch to <em>convergent thinking</em> and try to distill down all that detail into something that clearly communicates the essence of the behaviour. Now, too much detail can be distracting, or even misleading to our future readers. We call these <em>incidental details</em>.</p>
@@ -6560,121 +6654,54 @@ It’s all about the details.</p>
 <div class="paragraph">
 <p>Being able to distill down the essence of a scenario with too much detail is a skill you&#8217;ll find yourself practicing time and time again as a BDD practitioner, since we almost always deliberately start with too much detail, then want to refine it afterwards as it becomes more clear which details are relevant, and which are incidental.</p>
 </div>
-<div class="paragraph">
-<p>Distill the “buy” shout step
-Opens the premium account feature
-Let’s try to distill the essence of this scenario by removing the incidental details.
-We can start with this step, When Sean shouts "Come and buy a coffee".
-What’s important here is that the shout contains the word “buy”. So let’s write that:
-Changes step to <code>When Sean shouts a message containing the word "buy"</code>
-Better. We still have a little bit of detail - the word buy - but that’s quite important, in fact it helps to illustrate our business rule.
-We’ll need a new step definition for this, of course.
-Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.
-We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.
-Copies code from step def below, then adds code above to create a test message containing the given word.
-Let’s run Cucumber to check we haven’t made any mistakes…
-Runs <code>cucumber --tags ~@todo</code>. All green.
-Good. Now we can use that same step everywhere else in the scenario, too.
-Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.
-Distill the regular shout step
-We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?
-In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:
-Changes the step from <code>And Sean shouts "My bagels are yummy"</code> to <code>And Sean shouts a message</code>
-Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.
-Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.
-We’ll run Cucumber again just in case&#8230;&#8203;
-Runs <code>cucumber --tags ~@todo</code>. All green.
-And finally, let’s use that new step everywhere we can… and run Cucumber once again.
-Changes two steps to that shout regular messages to use the new step. Runs <code>cucumber --tags ~@todo</code>. All green.
-Distill the long shout step
-Now let’s deal with this next step. What’s the essence here?
-Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now, but push the details about the message content down into the step definition, following the same recipe.
-Changes the step to <code>And Sean shouts a long message</code>
-Runs <code>cucumber --tags ~@todo</code>
-Copies / pastes step def snippet into steps file
-Again, we’ll tolerate the duplication for now, and just generate a 180-character message here.
-Copies shouting code from step def below, then adds code above to create a 180 character test message.
-Runs <code>cucumber --tags ~@todo</code>. All green.
-Distill the over-long shout step
-Now what’s interesting about this next step? This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an over-long message. Let’s update the rule we wrote up earlier to document this evolution of our domain language:
-Changes second rule “Long messages…” to “Over-long messages…”
-Then we can use that term in a new, more abstract step:
-Changes step to <code>And Sean shouts an over-long message</code>
-Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.
-Copies shouting code from step def below, then changes first line to create a 181-character test message.
-Runs <code>cucumber --tags ~@todo</code>. All green.
-Group like steps together
-Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we grouped them together. Let’s do that:
-Re-orders When steps so each type of step is grouped together.
-So now we can clearly see that Sean shouts three regular messages, a long message, two over-long messages, and three messages containing the word “buy”. It’s still a lot to digest, but a clearer picture is starting to emerge.
-Are there any other incidental details remaining in this scenario?
-Remove pointless steps
-Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:
-Removes the first four When steps (remember to change And for When on the next step)
-That’s better.
-Now that we’ve removed all that incidental detail, it’s much easier to see how the figure of 11 credits has been calculated: two over-long messages at 2 credits per message, and three messages containing the word “buy” at 5 credits each makes a total of 19 credits, which subtracted from the initial 30 makes 11.
-Merge repeated steps
-But we can make this even clearer.
-These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
-Replaces two steps with new step: <code>When Sean shouts 2 over-long messages</code>
-We’ll need a new step definition for this one.
-Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.
-The implementation of this step definition is almost exactly the same as the one below, we just need to run a loop around it, based on the number specified in the scenario.
-Copy / paste code from step def below. Add loop around the body of the code.
-Again, we’ll just suffer the duplication for the time being. We have a nice trick up our sleeves to get rid of all of it when the time comes.
-Runs <code>cucumber --tags ~@todo</code>. All green.
-Let’s do the exact same thing with these other three steps.
-Replaces three steps with new step: <code>When Sean shouts 3 messages containing the word “buy”</code>
-Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.
-Again, we have the bulk of this code that we can just copy and paste, adding a loop around the outside.
-Copy / paste code from step def below. Add loop around the body of the code.
-Rename scenario
-Nice!
-Now things are really getting clearer.
-There are still a couple of problems with this scenario. One is the name of the scenario. It really doesn’t tell us anything at all.
-A great way to name your scenarios is to think about how they named episodes of the TV sitcom series, Friends. Remember? They were all called something like the one where ross is fine or the one where phoebe gets married.
-This is the one where… well.. the one where Sean shouts some over-long messages and some containing the word “buy”.
-Updates the name of the scenario
-That’s quite a complicated name isn’t it? Maybe this scenario is doing too much!
-&#8230;&#8203;and that’s the second problem.
-It’s trying to test both business rules at once.
-Split scenario
-Normally you’ll want at least one scenario for each business rule. That way, each scenario clearly illustrates the effect of that rule on the system. Sometimes it’s interesting to also document the effect that multiple rules have when they play out at the same time, but as you’ve already experienced, that can quickly get confusing.
- Sometimes you’ll need several scenarios to illustrate just one rule. In this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.
-Write out the two new scenarios, leaving the original in place.
-Great. Now the effect of each of these rules is much more clearly documented.
-Remove original scenario
-We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?
-Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. As we talk about it, we realise that while we don’t need this one anymore [removes original long scenario]  there’s a missing scenario - where both rules apply to the same message. The one where there’s a shout that’s both over-long and with the word “buy” in it.
-We’d better document that as a question for now.
-Writes up the question.
-Ask context question
-While we have Paula and Tamsin’s attention, we ask a question we know often helps to discover missing scenarios:
-Is there another context that would result in a different outcome here?
-They both think about this. Tamsin suggests starting Sean out with fewer credits, or shouting lots more messages, so that he runs out of credit. What would happen then?
-Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still have a bug to fix!
-Writes up the other question
-Close
-Well that’s been quite a session. We came in to fix one bug, and ended up having to fix our feature file first. We’re still not done with that, either. By pushing the incidental details down out of the scenario into the step definitions, we’ve made a mess of duplication in the step definitions. There’s a neat fix for that, but we’ll have to save that for next time.
-Let’s reflect on what we’ve learned.
-Cut to GoAnimate
-When scenarios are very heavy in detail, they can be confusing to read. We call these incidental details when they are just noise that detracts from communicating the essence of the scenario.
-Scenarios that are heavy in detail are sometimes said to be written in an imperative style. They contain lots of “how”, and not much “what”. We often use this style when we’re working on a brand new domain problem and are still grasping for an understanding. We just want to write something down.
-As your confidence in your domain knowledge improves, you’d expect to feel comfortable removing some of these details. Scenarios with more abstract steps like this are said to be written in a declarative style.
-Using a more declarative style might mean you’ll need to find names for things, like the way we had to name an over-long message. This discovery of your ubiquitous domain language is a great side-effect of distilling the essence of your scenarios. Now you have a bigger vocabulary that you can use all the way down through your code, and in your future conversations, too.
-One down-side, as you’ve seen, of pushing the “how” down from your scenarios into the step definitions is that the step definition code becomes more complex. Some teams reject this, and prefer to use a simple vocabulary of step definitions, leaving more detail in their scenarios. There are no right and wrong answers here, but if you have sufficient competence with code, you’ll easily be able to handle that extra bit of complexity and keep readability top of your priority list.
-That’s what we’ll work on next time. Bye for now!</p>
-</div>
 </div>
 <div class="sect2">
-<h3 id="_clarifying_the_rules_2">7.4. Clarifying the rules</h3>
-<div class="paragraph">
-<p>Distill the “buy” shout step
-<a href="#shot-708" id="shot-708" title="Opens the premium account feature" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Opens the premium account feature</a></p>
-</div>
+<h3 id="_distilling_the_essence">7.4. Distilling the essence</h3>
 <div class="paragraph">
 <p>Let’s try to distill the essence of this scenario by removing the incidental details.</p>
 </div>
+<div class="paragraph">
+<p><a href="#shot-708" id="shot-708" title="Opens the premium account feature" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 1: Opens the premium account feature</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts <span class="s">"Come and buy a coffee"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"My bagels are yummy"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Free cookie with your espresso for the next hour"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Who will buy my sweet red muffins?"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Buy my delicious sausage rolls"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      Here are some things you will love about Sean's:
+      - the bagels
+      - the coffee
+      - the chickens
+      Come and visit us today! We'd really love to see you.
+      Pop round anytime, honestly it's fine.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"We have cakes by the dozen"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_the_buy_step">7.4.1. The "buy" step</h4>
 <div class="paragraph">
 <p>We can start with this step, <code>When Sean shouts "Come and buy a coffee".</code></p>
 </div>
@@ -6682,104 +6709,311 @@ That’s what we’ll work on next time. Bye for now!</p>
 <p>From what what we know about the rules, what’s important here is that the shout contains the word “buy”. So let’s write that:</p>
 </div>
 <div class="paragraph">
-<p>Changes step to <code>When Sean shouts a message containing the word "buy"</code>
-Better. We still have a little bit of detail - the word buy - but that’s quite important, in fact it helps to illustrate our business rule.
-We’ll need a new step definition for this, of course.
-Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.
-We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.
-Copies code from step def below, then adds code above to create a test message containing the given word.
-Let’s run Cucumber to check we haven’t made any mistakes…
-Runs <code>cucumber --tags ~@todo</code>. All green.
-Good. Now we can use that same step everywhere else in the scenario, too.
-Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.
-Distill the regular shout step
-We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?
-In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:
-Changes the step from <code>And Sean shouts "My bagels are yummy"</code> to <code>And Sean shouts a message</code>
-Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.
-Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.
-We’ll run Cucumber again just in case&#8230;&#8203;
-Runs <code>cucumber --tags ~@todo</code>. All green.
-And finally, let’s use that new step everywhere we can… and run Cucumber once again.
-Changes two steps to that shout regular messages to use the new step. Runs <code>cucumber --tags ~@todo</code>. All green.
-Distill the long shout step
-Now let’s deal with this next step. What’s the essence here?
-Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now, but push the details about the message content down into the step definition, following the same recipe.
-Changes the step to <code>And Sean shouts a long message</code>
-Runs <code>cucumber --tags ~@todo</code>
-Copies / pastes step def snippet into steps file
-Again, we’ll tolerate the duplication for now, and just generate a 180-character message here.
-Copies shouting code from step def below, then adds code above to create a 180 character test message.
-Runs <code>cucumber --tags ~@todo</code>. All green.
-Distill the over-long shout step
-Now what’s interesting about this next step? This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an over-long message. Let’s update the rule we wrote up earlier to document this evolution of our domain language:
-Changes second rule “Long messages…” to “Over-long messages…”
-Then we can use that term in a new, more abstract step:
-Changes step to <code>And Sean shouts an over-long message</code>
-Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.
-Copies shouting code from step def below, then changes first line to create a 181-character test message.
-Runs <code>cucumber --tags ~@todo</code>. All green.
-Group like steps together
-Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we grouped them together. Let’s do that:
-Re-orders When steps so each type of step is grouped together.
-So now we can clearly see that Sean shouts three regular messages, a long message, two over-long messages, and three messages containing the word “buy”. It’s still a lot to digest, but a clearer picture is starting to emerge.
-Are there any other incidental details remaining in this scenario?
-Remove pointless steps
-Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:
-Removes the first four When steps (remember to change And for When on the next step)
-That’s better.
-Now that we’ve removed all that incidental detail, it’s much easier to see how the figure of 11 credits has been calculated: two over-long messages at 2 credits per message, and three messages containing the word “buy” at 5 credits each makes a total of 19 credits, which subtracted from the initial 30 makes 11.
-Merge repeated steps
-But we can make this even clearer.
-These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
-Replaces two steps with new step: <code>When Sean shouts 2 over-long messages</code>
-We’ll need a new step definition for this one.
-Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.
-The implementation of this step definition is almost exactly the same as the one below, we just need to run a loop around it, based on the number specified in the scenario.
-Copy / paste code from step def below. Add loop around the body of the code.
-Again, we’ll just suffer the duplication for the time being. We have a nice trick up our sleeves to get rid of all of it when the time comes.
-Runs <code>cucumber --tags ~@todo</code>. All green.
-Let’s do the exact same thing with these other three steps.
-Replaces three steps with new step: <code>When Sean shouts 3 messages containing the word “buy”</code>
-Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.
-Again, we have the bulk of this code that we can just copy and paste, adding a loop around the outside.
-Copy / paste code from step def below. Add loop around the body of the code.
-Rename scenario
-Nice!
-Now things are really getting clearer.
-There are still a couple of problems with this scenario. One is the name of the scenario. It really doesn’t tell us anything at all.
-A great way to name your scenarios is to think about how they named episodes of the TV sitcom series, Friends. Remember? They were all called something like the one where ross is fine or the one where phoebe gets married.
-This is the one where… well.. the one where Sean shouts some over-long messages and some containing the word “buy”.
-Updates the name of the scenario
-That’s quite a complicated name isn’t it? Maybe this scenario is doing too much!
-&#8230;&#8203;and that’s the second problem.
-It’s trying to test both business rules at once.
-Split scenario
-Normally you’ll want at least one scenario for each business rule. That way, each scenario clearly illustrates the effect of that rule on the system. Sometimes it’s interesting to also document the effect that multiple rules have when they play out at the same time, but as you’ve already experienced, that can quickly get confusing.
- Sometimes you’ll need several scenarios to illustrate just one rule. In this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.
-Write out the two new scenarios, leaving the original in place.
-Great. Now the effect of each of these rules is much more clearly documented.
-Remove original scenario
-We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?
-Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. As we talk about it, we realise that while we don’t need this one anymore [removes original long scenario]  there’s a missing scenario - where both rules apply to the same message. The one where there’s a shout that’s both over-long and with the word “buy” in it.
-We’d better document that as a question for now.
-Writes up the question.
-Ask context question
-While we have Paula and Tamsin’s attention, we ask a question we know often helps to discover missing scenarios:
-Is there another context that would result in a different outcome here?
-They both think about this. Tamsin suggests starting Sean out with fewer credits, or shouting lots more messages, so that he runs out of credit. What would happen then?
-Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still have a bug to fix!
-Writes up the other question
-Close
-Well that’s been quite a session. We came in to fix one bug, and ended up having to fix our feature file first. We’re still not done with that, either. By pushing the incidental details down out of the scenario into the step definitions, we’ve made a mess of duplication in the step definitions. There’s a neat fix for that, but we’ll have to save that for next time.
-Let’s reflect on what we’ve learned.
-Cut to GoAnimate
-When scenarios are very heavy in detail, they can be confusing to read. We call these incidental details when they are just noise that detracts from communicating the essence of the scenario.
-Scenarios that are heavy in detail are sometimes said to be written in an imperative style. They contain lots of “how”, and not much “what”. We often use this style when we’re working on a brand new domain problem and are still grasping for an understanding. We just want to write something down.
-As your confidence in your domain knowledge improves, you’d expect to feel comfortable removing some of these details. Scenarios with more abstract steps like this are said to be written in a declarative style.
-Using a more declarative style might mean you’ll need to find names for things, like the way we had to name an over-long message. This discovery of your ubiquitous domain language is a great side-effect of distilling the essence of your scenarios. Now you have a bigger vocabulary that you can use all the way down through your code, and in your future conversations, too.
-One down-side, as you’ve seen, of pushing the “how” down from your scenarios into the step definitions is that the step definition code becomes more complex. Some teams reject this, and prefer to use a simple vocabulary of step definitions, leaving more detail in their scenarios. There are no right and wrong answers here, but if you have sufficient competence with code, you’ll easily be able to handle that extra bit of complexity and keep readability top of your priority list.
-That’s what we’ll work on next time. Bye for now!</p>
+<p><a href="#shot-709" id="shot-709" title="buy"" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Changes step to When Sean shouts a message containing the word : buy"</a></p>
+</div>
+<div class="paragraph">
+<p>Better. We still have a little bit of detail - the word buy - but that’s quite important, in fact it helps to illustrate our business rule.</p>
+</div>
+<div class="paragraph">
+<p>We’ll need a new step definition for this, of course.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-710" id="shot-710" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.</a></p>
+</div>
+<div class="paragraph">
+<p>We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-711" id="shot-711" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Copies code from step def below, then adds code above to create a test message containing the given word.</a></p>
+</div>
+<div class="paragraph">
+<p>Let’s run Cucumber to check we haven’t made any mistakes…</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-712" id="shot-712" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>.</a></p>
+</div>
+<div class="paragraph">
+<p>All green. Good.</p>
+</div>
+<div class="paragraph">
+<p>Now we can use that same step everywhere else in the scenario, too.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-713" id="shot-713" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_distill_the_regular_shout_step">7.4.2. Distill the regular shout step</h4>
+<div class="paragraph">
+<p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?</p>
+</div>
+<div class="paragraph">
+<p>In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-714" id="shot-714" title="My bagels are yummy" to And Sean shouts a message"" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Changes the step from And Sean shouts : My bagels are yummy" to And Sean shouts a message"</a></p>
+</div>
+<div class="paragraph">
+<p>Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-715" id="shot-715" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.</a></p>
+</div>
+<div class="paragraph">
+<p>We’ll run Cucumber again just in case&#8230;&#8203;</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-716" id="shot-716" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>.</a></p>
+</div>
+<div class="paragraph">
+<p>All green.</p>
+</div>
+<div class="paragraph">
+<p>And finally, let’s use that new step everywhere we can… and run Cucumber once again.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-717" id="shot-717" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Changes two steps to that shout regular messages to use the new step</a>
+<a href="#shot-718" id="shot-718" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs `cucumber --tags ~@todo`</a></p>
+</div>
+<div class="paragraph">
+<p>All green.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_distill_the_long_shout_step">7.4.3. Distill the long shout step</h4>
+<div class="paragraph">
+<p>Now let’s deal with this next step. What’s the essence here?</p>
+</div>
+<div class="paragraph">
+<p>Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now, but push the details about the message content down into the step definition, following the same recipe.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-719" id="shot-719" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Changes the step to `And Sean shouts a long message`</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-720" id="shot-720" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs `cucumber --tags ~@todo`</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-721" id="shot-721" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Copies / pastes step def snippet into steps file</a></p>
+</div>
+<div class="paragraph">
+<p>Again, we’ll tolerate the duplication for now, and just generate a 180-character message here.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-722" id="shot-722" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Copies shouting code from step def below, then adds code above to create a 180 character test message.</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-723" id="shot-723" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_distill_the_over_long_shout_step">7.4.4. Distill the over-long shout step</h4>
+<div class="paragraph">
+<p>Now what’s interesting about this next step? This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an <em>over-long message</em>. Let’s update the rule we wrote up earlier to document this evolution of our domain language:</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-724" id="shot-724" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Changes second rule “Long messages…” to “Over-long messages…”</a></p>
+</div>
+<div class="paragraph">
+<p>Then we can use that term in a new, more abstract step:</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-725" id="shot-725" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Changes step to `And Sean shouts an over-long message`</a></p>
+</div>
+<div class="paragraph">
+<p>Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-726" id="shot-726" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Copies shouting code from step def below, then changes first line to create a 181-character test message.</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-727" id="shot-727" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_remove_pointless_steps">7.4.5. Remove pointless steps</h4>
+<div class="paragraph">
+<p>Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we grouped them together. Let’s do that:</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-728" id="shot-728" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Re-orders When steps so each type of step is grouped together.</a></p>
+</div>
+<div class="paragraph">
+<p>So now we can clearly see that Sean shouts three regular messages, a long message, two over-long messages, and three messages containing the word “buy”. It’s still a lot to digest, but a clearer picture is starting to emerge.</p>
+</div>
+<div class="paragraph">
+<p>Are there any other incidental details remaining in this scenario?</p>
+</div>
+<div class="paragraph">
+<p>Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-729" id="shot-729" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Removes the first four When steps (remember to change And for When on the next step)</a></p>
+</div>
+<div class="paragraph">
+<p>That’s better.</p>
+</div>
+<div class="paragraph">
+<p>Now that we’ve removed all that incidental detail, it’s much easier to see how the figure of 11 credits has been calculated: two over-long messages at 2 credits per message, and three messages containing the word “buy” at 5 credits each makes a total of 19 credits, which subtracted from the initial 30 makes 11.</p>
+</div>
+<div class="paragraph">
+<p>But we can make this even clearer.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_merge_repeated_steps">7.4.6. Merge repeated steps</h4>
+<div class="paragraph">
+<p>These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
+<a href="#shot-730" id="shot-730" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Replaces two steps with new step: `When Sean shouts 2 over-long messages`</a></p>
+</div>
+<div class="paragraph">
+<p>We’ll need a new step definition for this one.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-731" id="shot-731" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
+</div>
+<div class="paragraph">
+<p>The implementation of this step definition is almost exactly the same as the one below, we just need to run a loop around it, based on the number of messages specified in the scenario.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-732" id="shot-732" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+</div>
+<div class="paragraph">
+<p>Again, we’ll just suffer the duplication for the time being. We have a nice trick up our sleeves to get rid of all of it when the time comes.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-733" id="shot-733" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+</div>
+<div class="paragraph">
+<p>Let’s do the exact same thing with these other three steps.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-734" id="shot-734" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`</a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-735" id="shot-735" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
+</div>
+<div class="paragraph">
+<p>Again, we have the bulk of this code that we can just copy and paste, adding a loop around the outside.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-736" id="shot-736" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+</div>
+<div class="paragraph">
+<p>Nice!</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_rename_scenario">7.5. Rename scenario</h3>
+<div class="paragraph">
+<p>Now things are really getting clearer.</p>
+</div>
+<div class="paragraph">
+<p>There are still a couple of problems with this scenario. One is the name of the scenario. It really doesn’t tell us anything at all.</p>
+</div>
+<div class="paragraph">
+<p>A great way to name your scenarios is to think about how they named episodes of the TV sitcom series, <em>Friends</em>. Remember? They were all called something like <em>The one where Ross is fine</em> or <em>The one where Phoebe gets married</em>.</p>
+</div>
+<div class="paragraph">
+<p>This is the one where… well.. <em>the one where Sean shouts some over-long messages and some containing the word “buy”.</em></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-737" id="shot-737" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Updates the name of the scenario</a></p>
+</div>
+<div class="paragraph">
+<p>That’s quite a complicated name isn’t it? Maybe this scenario is doing too much!</p>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and that’s the second problem.</p>
+</div>
+<div class="paragraph">
+<p>It’s trying to test both business rules at once.</p>
+</div>
+<div class="sect3">
+<h4 id="_split_scenario">7.5.1. Split scenario</h4>
+<div class="paragraph">
+<p>Normally you’ll want at least one scenario for each business rule. That way, each scenario clearly illustrates the effect of that rule on the system. Sometimes it’s interesting to also document the effect that multiple rules have when they play out at the same time, but as you’ve already experienced, that can quickly get confusing.</p>
+</div>
+<div class="paragraph">
+<p>You’ll often need more than one scenario to illustrate each rule, but in this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-738" id="shot-738" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Write out the two new scenarios, leaving the original in place.</a></p>
+</div>
+<div class="paragraph">
+<p>Great. Now the effect of each of these rules is much more clearly documented.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_remove_original_scenario">7.5.2. Remove original scenario</h4>
+<div class="paragraph">
+<p>We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?</p>
+</div>
+<div class="paragraph">
+<p>Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. As we talk about it, we realise that while we don’t need this one anymore
+<a href="#shot-739" id="shot-739" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot removes original long scenario</a>
+there’s a missing scenario - where both rules apply to the <em>same message</em>: <em>The one where there’s a shout that’s both over-long and with the word “buy” in it.</em></p>
+</div>
+<div class="paragraph">
+<p>We’d better document that as a question for now.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-740" id="shot-740" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Writes up the question.</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_ask_context_question">7.5.3. Ask context question</h4>
+<div class="paragraph">
+<p>While we have Paula and Tamsin’s attention, we ask a question we know often helps to discover missing scenarios:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+<div class="paragraph">
+<p>Is there another context that would result in a different outcome here?</p>
+</div>
+</blockquote>
+</div>
+<div class="paragraph">
+<p>They both think about this. Tamsin suggests starting Sean out with fewer credits, or shouting lots more messages, so that he runs out of credit. What would happen then?</p>
+</div>
+<div class="paragraph">
+<p>Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still haven&#8217;t even started fixing that bug yet!</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-741" id="shot-741" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot Writes up the other question</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_close">7.5.4. Close</h4>
+<div class="paragraph">
+<p><a href="#shot-742" id="shot-742" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">Shot 07.closing.common.animation.mp4</a>
+video::https://drive.google.com/uc?id=1FGdj-mN_h0aTk9p7c_sY5aIhuLeZeNkt[]</p>
+</div>
+<div class="paragraph">
+<p>Well that’s been quite a session. We came in to fix one bug, and ended up having to fix our feature file first. We’re still not done with that, either. By pushing the incidental details down out of the scenario into the step definitions, we’ve made a mess of duplication in the step definitions. There’s a neat fix for that, but we’ll have to save that for next time.</p>
+</div>
+<div class="paragraph">
+<p>Let’s reflect on what we’ve learned.</p>
+</div>
+<div class="paragraph">
+<p>When scenarios are very heavy in detail, they can be confusing to read. We call these <em>incidental details</em> when they are just noise that detracts from communicating the essence of the scenario.</p>
+</div>
+<div class="paragraph">
+<p>Scenarios that are heavy in detail are sometimes said to be written in an <em>imperative</em> style. They contain lots of “how”, and not much “what”. We often use this style when we’re working on a brand new domain problem and are still grasping for an understanding. We just want to write <em>something</em> down.</p>
+</div>
+<div class="paragraph">
+<p>As your confidence in your domain knowledge improves, you’d expect to feel comfortable removing some of these details. Scenarios with more abstract steps like this are said to be written in a <em>declarative</em> style.</p>
+</div>
+<div class="paragraph">
+<p>Using a more declarative style might mean you’ll need to find names for things, like the way we had to name an over-long message. This discovery of your ubiquitous domain language is a great side-effect of distilling the essence of your scenarios. Now you have a bigger vocabulary that you can use all the way down through your code, and in your future conversations, too.</p>
+</div>
+<div class="paragraph">
+<p>One down-side, as you’ve seen, of pushing the “how” down from your scenarios into the step definitions is that the step definition code becomes more complex. Some teams reject this, and prefer to use a simple vocabulary of step definitions, leaving more detail in their scenarios. There are no right and wrong answers here, but if you have sufficient competence with code, you’ll easily be able to handle that extra bit of complexity and keep readability top of your priorities.</p>
+</div>
+<div class="paragraph">
+<p>That’s what we’ll work on next time. Bye for now!</p>
+</div>
 </div>
 </div>
 </div>
@@ -6787,7 +7021,7 @@ That’s what we’ll work on next time. Bye for now!</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-04-01 15:10:36 UTC
+Last updated 2021-04-01 23:04:01 UTC
 </div>
 </div>
 <style>
