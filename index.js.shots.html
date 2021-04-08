@@ -498,10 +498,10 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </li>
 <li><a href="#_details">7. Details</a>
 <ul class="sectlevel2">
-<li><a href="#_a_bug_report">7.1. A bug report</a></li>
-<li><a href="#_looking_for_the_behaviour">7.2. Looking for the behaviour</a></li>
-<li><a href="#_clarifying_the_rules">7.3. Clarifying the rules</a></li>
-<li><a href="#_distilling_the_essence">7.4. Distilling the essence</a></li>
+<li><a href="#_premium_accounts_with_a_bug">7.1. Premium Accounts! With a bug!</a></li>
+<li><a href="#_clarifying_the_rules">7.2. Clarifying the rules</a></li>
+<li><a href="#_keeping_your_scenarios_brief">7.3. Keeping your scenarios BRIEF</a></li>
+<li><a href="#_distilling_the_essence_the_buy_step">7.4. Distilling the essence: The "buy" step</a></li>
 <li><a href="#_rename_scenario">7.5. Rename scenario</a></li>
 </ul>
 </li>
@@ -6431,10 +6431,12 @@ Reports that are not associated with a publish token will be deleted approximate
 <p>Many teams find they can’t easily agree on this. It can often seem like a matter of personal preference. It’s true there are no right and wrong answers, but we’re going to teach you some heuristics you can apply to help you make better decisions.</p>
 </div>
 <div class="sect2">
-<h3 id="_a_bug_report">7.1. A bug report</h3>
+<h3 id="_premium_accounts_with_a_bug">7.1. Premium Accounts! With a bug!</h3>
 <div class="paragraph">
 <p>Once again, while we were away, the developers of Shouty have been busy. A new hot-shot ninja rock-star subcontractor, Stevie, has built a new feature called <em>premium accounts</em>. We don’t know much about it yet but, our tester Tamsin has reported a bug from their manual exploratory testing, and it’s up to us tofix it.</p>
 </div>
+<div class="sect3">
+<h4 id="_the_bug">7.1.1. The bug</h4>
 <div class="paragraph">
 <p>Tamsin has helpfully documented the bug as a failing scenario. Here is it:</p>
 </div>
@@ -6465,8 +6467,8 @@ presumably that&#8217;s what gives his account premium status?</p>
 <p>As a result of that shout, he’s obviously supposed to have some credits deducted. Tamsin’s scenario says that the correct behaviour is for 5 credits to be deducted, leaving him with 25 credits. As we can see from running the test, the system is deducting 15 credits instead.</p>
 </div>
 </div>
-<div class="sect2">
-<h3 id="_looking_for_the_behaviour">7.2. Looking for the behaviour</h3>
+<div class="sect3">
+<h4 id="_reading_the_new_feature">7.1.2. Reading the new feature</h4>
 <div class="paragraph">
 <p>Let’s read the whole feature file - that should tell us some more about how the system is supposed to behave.</p>
 </div>
@@ -6602,8 +6604,9 @@ Oh my.</p>
 <p>We need to fix this feature file.</p>
 </div>
 </div>
+</div>
 <div class="sect2">
-<h3 id="_clarifying_the_rules">7.3. Clarifying the rules</h3>
+<h3 id="_clarifying_the_rules">7.2. Clarifying the rules</h3>
 <div class="paragraph">
 <p><a href="#shot-705" id="shot-705" title="Opens the premium accounts feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Opens the premium accounts feature file</a></p>
 </div>
@@ -6624,7 +6627,7 @@ Oh my.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;ve just scribbled these down in the feature description for now, but later, once we&#8217;ve teased this scenario apart, we&#8217;ll be able to use the <code>Rule</code> keyword as we shoed you in chapter 4.</p>
+<p>We&#8217;ve just scribbled these down in the feature description for now, but later, once we&#8217;ve teased this scenario apart, we&#8217;ll be able to use the <code>Rule</code> keyword as we showed you in chapter 4.</p>
 </div>
 <div class="paragraph">
 <p>OK, well that helps us a great deal, but this scenario is still doing a poor job of illustrating those rules. Let’s take a moment to understand why.</p>
@@ -6656,7 +6659,124 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_distilling_the_essence">7.4. Distilling the essence</h3>
+<h3 id="_keeping_your_scenarios_brief">7.3. Keeping your scenarios BRIEF</h3>
+<div class="paragraph">
+<p>Seb Rose came up with a brilliant acronym to help you remember six heuristics or guidelines to think about when reviewing the quality of your scenarios: BRIEF.</p>
+</div>
+<div class="paragraph">
+<p>"B" is for <strong>Business language:</strong> The words used in a scenario should be drawn from the business domain, otherwise you will not be able to engage your business colleagues painlessly. The language you use should use terms that business team members understand unambiguously.</p>
+</div>
+<div class="paragraph">
+<p>"R" is for <strong>Real data:</strong> When you&#8217;re first discussing the details of a story, your examples should use concrete, real data. This helps bring the scenarios to life, and expose boundary conditions and underlying assumptions early in the development process. When writing scenarios, we should also use real data whenever this helps reveal intention and make them move vivid.</p>
+</div>
+<div class="paragraph">
+<p>"I" is for <strong>Intention revealing:</strong> Scenarios should describe the intent of what the actors in the scenario are trying to achieve, rather than describing the mechanics of how they will achieve it. We should start by giving the scenario an intention revealing name, and then follow through by ensuring that every line in the scenario describes intent, not mechanics.</p>
+</div>
+<div class="paragraph">
+<p>"E" is for <strong>Essential:</strong> The purpose of a scenario is to illustrate how a rule should behave. Any parts of a scenario that don&#8217;t directly contribute to this purpose are <em>incidental</em> and should be removed. If they are important to the system, then they will be covered in other scenarios that illustrate other rules. Additionally, any scenarios that do not add to the reader&#8217;s understanding of the expected behaviour have no place in the documentation.</p>
+</div>
+<div class="paragraph">
+<p>"F" is for <strong>Focused:</strong> Most scenarios should be focused on illustrating a single rule.</p>
+</div>
+<div class="paragraph">
+<p>You might have noticed we said "six heuristics" but we only gave you five. That&#8217;s because the word <em>Brief</em> itself is the sixth guideline. We suggest you try to restrict most of your scenarios to five lines or fewer. This makes them easier to read, much easier to reason about, and helps avoid that temptation to test multiple rules, or add incidental details.</p>
+</div>
+<div class="sect3">
+<h4 id="_review_our_new_feature_using_the_brief_heuristics">7.3.1. Review our new feature using the BRIEF heuristics</h4>
+<div class="paragraph">
+<p>Let&#8217;s have a look at this new Premium Accounts scenario and use the BRIEF heuristics to help us look for ways to improve it.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Premium account
+
+  <span class="kn">Background</span><span class="p">:</span>
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>people are located at
+      <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Lucy</span> <span class="p">|</span>
+      <span class="p">|</span> <span class="n">location</span> <span class="p">|</span> <span class="n">0</span>    <span class="p">|</span> <span class="n">100</span>  <span class="p">|</span>
+
+  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts <span class="s">"Come and buy a coffee"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"My bagels are yummy"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Free cookie with your espresso for the next hour"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Who will buy my sweet red muffins?"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Buy my delicious sausage rolls"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      Here are some things you will love about Sean's:
+      - the bagels
+      - the coffee
+      - the chickens
+      Come and visit us today! We'd really love to see you.
+      Pop round anytime, honestly it's fine.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"We have cakes by the dozen"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_b_is_for_business_language">B is for Business Language</h5>
+<div class="paragraph">
+<p>Firstly, does this scenario use business language?</p>
+</div>
+<div class="paragraph">
+<p>Well, we can see words like "credits" and "shout" and "message" which look like terms from our problem domain&#8217;s <em>ubiquitous language</em>, but there are also a lot of words in these scenarios that are nothing to do with our domain - words like "cakes" or "chickens" or "muffins" for example. Granted, all these words are surrounded by quotes, but they&#8217;re still distracting.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_r_is_for_real_data">R is for Real Data</h5>
+<div class="paragraph">
+<p>Do these scenarios use real data? Without seeing the user research, it looks like they do. We&#8217;re not talking about "User A" or "A message", but instead we&#8217;re using realistic examples of the kinds of messages genuine users of our app might send to each other.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_i_is_for_intention_revealing">I is for Intention Revealing</h5>
+<div class="paragraph">
+<p>This one really hits the nail on the head. The intention of this scenario is completely obscured by all the detail. As we said earlier, we have no idea from this Gherkin what is special about these messages, or how they contribute to the final tally of expected credits. We had to go down into the code to start to figure that out.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_e_is_for_essential">E is for Essential</h5>
+<div class="paragraph">
+<p>It&#8217;s hard to know whether every step here is essential to the purpose of this scenario, because we don&#8217;t even know what it&#8217;s purpose is yet! Once we&#8217;ve made the steps more intention revealing it will be easier to see if they&#8217;re all essential.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_f_is_for_focussed">F is for Focussed</h5>
+<div class="paragraph">
+<p>We&#8217;re not quite clear what exactly the rules are that underpin the behaviour in this scenario (yet) but we have a hunch that there&#8217;s more than one rule being played out here. So we&#8217;re not looking good on this heuristic.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_and_is_it_brief">And is it Brief?</h5>
+<div class="paragraph">
+<p>Certainly, this scenario is well over five lines long. So not Brief.</p>
+</div>
+<div class="paragraph">
+<p>So we have some work to do!</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_distilling_the_essence_the_buy_step">7.4. Distilling the essence: The "buy" step</h3>
 <div class="paragraph">
 <p>Let’s try to distill the essence of this scenario by removing the incidental details.</p>
 </div>
@@ -6700,8 +6820,6 @@ Your browser does not support the video tag.
     <span class="nf">And </span>Sean should have 11 credits</code></pre>
 </div>
 </div>
-<div class="sect3">
-<h4 id="_the_buy_step">7.4.1. The "buy" step</h4>
 <div class="paragraph">
 <p>We can start with this step, <code>When Sean shouts "Come and buy a coffee".</code></p>
 </div>
@@ -6711,11 +6829,21 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p><a href="#shot-709" id="shot-709" title="buy"" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Changes step to When Sean shouts a message containing the word : buy"</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Better. We still have a little bit of detail - the word buy - but that’s quite important, in fact it helps to illustrate our business rule.</p>
 </div>
 <div class="paragraph">
 <p>We’ll need a new step definition for this, of course.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">npm <span class="nb">exec </span>cucumber-js <span class="nt">--</span> <span class="nt">--tags</span> <span class="s2">"not @todo"</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p><a href="#shot-710" id="shot-710" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.</a></p>
@@ -6726,24 +6854,75 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p><a href="#shot-711" id="shot-711" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Copies code from step def below, then adds code above to create a test message containing the given word.</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts a message containing the word {string}</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">word</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="s2">`A message containing the word </span><span class="p">${</span><span class="nx">word</span><span class="p">}</span><span class="s2">`</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Let’s run Cucumber to check we haven’t made any mistakes…</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-712" id="shot-712" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>.</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">npm <span class="nb">exec </span>cucumber-js <span class="nt">--</span> <span class="nt">--tags</span> <span class="s2">"not @todo"</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>All green. Good.</p>
 </div>
 <div class="paragraph">
-<p>Now we can use that same step everywhere else in the scenario, too.</p>
+<p>Now we can use that same step everywhere else in the scenario, too, where that is the real intent of the step.</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-713" id="shot-713" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"My bagels are yummy"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Free cookie with your espresso for the next hour"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span>
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span>
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      Here are some things you will love about Sean's:
+      - the bagels
+      - the coffee
+      - the chickens
+      Come and visit us today! We'd really love to see you.
+      Pop round anytime, honestly it's fine.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"We have cakes by the dozen"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
 </div>
 <div class="sect3">
-<h4 id="_distill_the_regular_shout_step">7.4.2. Distill the regular shout step</h4>
+<h4 id="_distill_the_regular_shout_step">7.4.1. Distill the regular shout step</h4>
 <div class="paragraph">
 <p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?</p>
 </div>
@@ -6780,7 +6959,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_distill_the_long_shout_step">7.4.3. Distill the long shout step</h4>
+<h4 id="_distill_the_long_shout_step">7.4.2. Distill the long shout step</h4>
 <div class="paragraph">
 <p>Now let’s deal with this next step. What’s the essence here?</p>
 </div>
@@ -6807,7 +6986,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_distill_the_over_long_shout_step">7.4.4. Distill the over-long shout step</h4>
+<h4 id="_distill_the_over_long_shout_step">7.4.3. Distill the over-long shout step</h4>
 <div class="paragraph">
 <p>Now what’s interesting about this next step? This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an <em>over-long message</em>. Let’s update the rule we wrote up earlier to document this evolution of our domain language:</p>
 </div>
@@ -6831,7 +7010,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_remove_pointless_steps">7.4.5. Remove pointless steps</h4>
+<h4 id="_remove_pointless_steps">7.4.4. Remove pointless steps</h4>
 <div class="paragraph">
 <p>Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we grouped them together. Let’s do that:</p>
 </div>
@@ -6861,7 +7040,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect3">
-<h4 id="_merge_repeated_steps">7.4.6. Merge repeated steps</h4>
+<h4 id="_merge_repeated_steps">7.4.5. Merge repeated steps</h4>
 <div class="paragraph">
 <p>These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
 <a href="#shot-730" id="shot-730" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Replaces two steps with new step: `When Sean shouts 2 over-long messages`</a></p>
@@ -7027,7 +7206,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-04-01 23:27:52 UTC
+Last updated 2021-04-08 22:18:45 UTC
 </div>
 </div>
 <style>
