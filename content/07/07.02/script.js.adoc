@@ -1,46 +1,31 @@
 include::./title.adoc[]
 
-Let’s read the whole feature file - that should tell us some more about how the system is supposed to behave.
+shot::[1, "Opens the premium accounts feature file"]
 
-shot::[1, "Open premium_accounts.feature"]
-Oh my.
+This seems like a good time to ask our domain experts for clarification about this behaviour. Ideally a three amigos meeting would have done this already, but things don’t always go according to the script. Let’s pay a visit to our product owner.
 
-This is very difficult to read.
+Paula the product owner tells us the rules are as follows:
+shot::[2, "Writes the rules up in the feature file"]
 
 [source,gherkin]
 ----
-include::../code/js/01-implement-premium-accounts-feature-badly-/features/premium_shouts.feature[]
+include::../code/js/02-add-rules-to-feature-description/features/premium_shouts.feature[lines=1..5]
 ----
 
-Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long, so this is big.
+We've just scribbled these down in the feature description for now, but later, once we've teased this scenario apart, we'll be able to use the `Rule` keyword as we showed you in chapter 4.
 
-The scenario has several `When` steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.
+OK, well that helps us a great deal, but this scenario is still doing a poor job of illustrating those rules. Let’s take a moment to understand why.
 
-We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there's no `Rule` keyword and the description section is blank, so we haven’t been left any clues there.
+shot::[3, "07.03.animation.mp4"]
 
-Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 credits and ends up with 11, but why?
+video::https://drive.google.com/uc?id=1NxU_CzKngKaGGxnoaxxbmSZngaz9VGDG[]
 
-There’s so much detail here. I wonder which bits are important. Could it be the number of words Sean shouts that affects his credits? Or the number of messages? Based on Tamsin’s test case, maybe the word “buy” is important...
+It’s all about the details.
 
-It’s really hard to tell.
+When you’re first exploring a new domain problem, details like the exact messages people have shouted are a great way to shine light into the dark corners of your ignorance. They bring examples to life by making them vivid and real. This encourages what we call _divergent thinking_, which helps you discover even more examples as you explore the behaviour you need to provide.
 
-It’s interesting that Lucy hears all Sean’s messages - even these ones which look to be over 180 characters and would normally be blocked. Perhaps premium accounts get to send messages over 180 characters in exchange for credits?
+In BDD, we call this _deliberate discovery_, when we try to explore the problem domain as thoroughly as we can. Details are good here.
 
-This is a classic example of a scenario written by someone who is using Cucumber as a _testing_ tool rather than a _documentation_ tool. This scenario may well work as an effective test, but it's terrible documentation. We have no clear idea from reading it what the system is supposed to do.
+At some point, however, we need to write a computer program. When that time comes, we need to switch to _convergent thinking_ and try to distill down all that detail into something that clearly communicates the essence of the behaviour. Now, too much detail can be distracting, or even misleading to our future readers. We call these _incidental details_.
 
-Let’s try reading the code instead.
-
-shot::[1, "Open Network class"]
-
-[source,javascript]
-----
-include::../code/js/01-implement-premium-accounts-feature-badly-/src/shouty.js[lines=24..50]
-----
-
-OK, so we have a `deductCredits` method here that seems to encapsulate the rules. It looks like over-long messages - messages that are not short enough - cost two credits, and each time the word “buy” is mentioned, we deduct 5 credits.
-
-It’s a good job we know how to read code!
-
-One of the promises of BDD is that our feature files become the single source of truth for the whole team. Yet here, the scenario does such a poor job of documenting what the system does, we had to go hunting for the truth in the code. That’s fine for us, because we know how to read code, but it’s excluded anyone on our team who isn’t technical. How would they be able to understand the behaviour of premium accounts at the moment?
-
-We need to fix this feature file.
+Being able to distill down the essence of a scenario with too much detail is a skill you'll find yourself practicing time and time again as a BDD practitioner, since we almost always deliberately start with too much detail, then want to refine it afterwards as it becomes more clear which details are relevant, and which are incidental.

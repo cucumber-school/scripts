@@ -1,31 +1,52 @@
 include::./title.adoc[]
 
-shot::[1, "Opens the premium accounts feature file"]
+Seb Rose came up with a brilliant acronym to help you remember six heuristics or guidelines to think about when reviewing the quality of your scenarios: BRIEF.
 
-This seems like a good time to ask our domain experts for clarification about this behaviour. Ideally a three amigos meeting would have done this already, but things don’t always go according to the script. Let’s pay a visit to our product owner.
+"B" is for *Business language:* The words used in a scenario should be drawn from the business domain, otherwise you will not be able to engage your business colleagues painlessly. The language you use should use terms that business team members understand unambiguously.
 
-Paula the product owner tells us the rules are as follows:
-shot::[2, "Writes the rules up in the feature file"]
+"R" is for *Real data:* When you're first discussing the details of a story, your examples should use concrete, real data. This helps bring the scenarios to life, and expose boundary conditions and underlying assumptions early in the development process. When writing scenarios, we should also use real data whenever this helps reveal intention and make them move vivid.
+
+"I" is for *Intention revealing:* Scenarios should describe the intent of what the actors in the scenario are trying to achieve, rather than describing the mechanics of how they will achieve it. We should start by giving the scenario an intention revealing name, and then follow through by ensuring that every line in the scenario describes intent, not mechanics.
+
+"E" is for *Essential:* The purpose of a scenario is to illustrate how a rule should behave. Any parts of a scenario that don't directly contribute to this purpose are _incidental_ and should be removed. If they are important to the system, then they will be covered in other scenarios that illustrate other rules. Additionally, any scenarios that do not add to the reader's understanding of the expected behaviour have no place in the documentation.
+
+"F" is for *Focused:* Most scenarios should be focused on illustrating a single rule.
+
+You might have noticed we said "six heuristics" but we only gave you five. That's because the word _Brief_ itself is the sixth guideline. We suggest you try to restrict most of your scenarios to five lines or fewer. This makes them easier to read, much easier to reason about, and helps avoid that temptation to test multiple rules, or add incidental details.
+
+==== Review our new feature using the BRIEF heuristics
+
+Let's have a look at this new Premium Accounts scenario and use the BRIEF heuristics to help us look for ways to improve it.
 
 [source,gherkin]
 ----
-include::../code/js/02-add-rules-to-feature-description/features/premium_shouts.feature[lines=1..5]
+include::../code/js/01-implement-premium-accounts-feature-badly-/features/premium_shouts.feature[lines=1..41]
 ----
 
-We've just scribbled these down in the feature description for now, but later, once we've teased this scenario apart, we'll be able to use the `Rule` keyword as we shoed you in chapter 4.
+===== B is for Business Language
 
-OK, well that helps us a great deal, but this scenario is still doing a poor job of illustrating those rules. Let’s take a moment to understand why.
+Firstly, does this scenario use business language?
 
-shot::[3, "07.03.animation.mp4"]
+Well, we can see words like "credits" and "shout" and "message" which look like terms from our problem domain's _ubiquitous language_, but there are also a lot of words in these scenarios that are nothing to do with our domain - words like "cakes" or "chickens" or "muffins" for example. Granted, all these words are surrounded by quotes, but they're still distracting.
 
-video::https://drive.google.com/uc?id=1NxU_CzKngKaGGxnoaxxbmSZngaz9VGDG[]
+===== R is for Real Data
 
-It’s all about the details.
+Do these scenarios use real data? Without seeing the user research, it looks like they do. We're not talking about "User A" or "A message", but instead we're using realistic examples of the kinds of messages genuine users of our app might send to each other.
 
-When you’re first exploring a new domain problem, details like the exact messages people have shouted are a great way to shine light into the dark corners of your ignorance. They bring examples to life by making them vivid and real. This encourages what we call _divergent thinking_, which helps you discover even more examples as you explore the behaviour you need to provide.
+===== I is for Intention Revealing
 
-In BDD, we call this _deliberate discovery_, when we try to explore the problem domain as thoroughly as we can. Details are good here.
+This one really hits the nail on the head. The intention of this scenario is completely obscured by all the detail. As we said earlier, we have no idea from this Gherkin what is special about these messages, or how they contribute to the final tally of expected credits. We had to go down into the code to start to figure that out.
 
-At some point, however, we need to write a computer program. When that time comes, we need to switch to _convergent thinking_ and try to distill down all that detail into something that clearly communicates the essence of the behaviour. Now, too much detail can be distracting, or even misleading to our future readers. We call these _incidental details_.
+===== E is for Essential
 
-Being able to distill down the essence of a scenario with too much detail is a skill you'll find yourself practicing time and time again as a BDD practitioner, since we almost always deliberately start with too much detail, then want to refine it afterwards as it becomes more clear which details are relevant, and which are incidental.
+It's hard to know whether every step here is essential to the purpose of this scenario, because we don't even know what it's purpose is yet! Once we've made the steps more intention revealing it will be easier to see if they're all essential.
+
+===== F is for Focussed
+
+We're not quite clear what exactly the rules are that underpin the behaviour in this scenario (yet) but we have a hunch that there's more than one rule being played out here. So we're not looking good on this heuristic.
+
+===== And is it Brief?
+
+Certainly, this scenario is well over five lines long. So not Brief.
+
+So we have some work to do!

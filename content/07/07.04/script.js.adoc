@@ -9,33 +9,53 @@ shot::[1, "Opens the premium account feature"]
 include::../code/js/02-add-rules-to-feature-description/features/premium_shouts.feature[lines=13..45]
 ----
 
-==== The "buy" step
-
 We can start with this step, `When Sean shouts "Come and buy a coffee".`
 
 From what what we know about the rules, what’s important here is that the shout contains the word “buy”. So let’s write that:
 
 shot::["Changes step to When Sean shouts a message containing the word "buy"]
+[source, gherkin]
+----
+include::../code/js/03-intention-revealing-buy-step/features/premium_shouts.feature[lines=15]
+----
 
 Better. We still have a little bit of detail - the word buy - but that’s quite important, in fact it helps to illustrate our business rule.
 
 We’ll need a new step definition for this, of course.
+
+[source, bash]
+----
+npm exec cucumber-js -- --tags "not @todo"
+----
 
 shot::["Runs `cucumber --tags ~@todo`, copies / pastes step def snippet into steps file."]
 
 We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.
 
 shot::["Copies code from step def below, then adds code above to create a test message containing the given word."]
+[source, js]
+----
+include::../code/js/04-add-step-def-for-intention-revealing-buy-step/features/step_definitions/steps.js[lines=40..45]
+----
 
 Let’s run Cucumber to check we haven’t made any mistakes…
 
 shot::["Runs `cucumber --tags ~@todo`."]
+[source, bash]
+----
+npm exec cucumber-js -- --tags "not @todo"
+----
 
 All green. Good.
 
-Now we can use that same step everywhere else in the scenario, too.
+Now we can use that same step everywhere else in the scenario, too, where that is the real intent of the step.
 
 shot::["Changes the other two steps that mention the word “buy”. Runs `cucumber --tags ~@todo`. All green."]
+
+[source, gherkin]
+----
+include::../code/js/05-use-intention-revealing-step-everywhere/features/premium_shouts.feature[lines=13..45]
+----
 
 ==== Distill the regular shout step
 

@@ -2,6 +2,8 @@ include::./title.adoc[]
 
 Once again, while we were away, the developers of Shouty have been busy. A new hot-shot ninja rock-star subcontractor, Stevie, has built a new feature called _premium accounts_. We don’t know much about it yet but, our tester Tamsin has reported a bug from their manual exploratory testing, and it’s up to us tofix it.
 
+==== The bug
+
 Tamsin has helpfully documented the bug as a failing scenario. Here is it:
 
 shot::[1, "Run cucumber with @todo tag"]
@@ -25,3 +27,50 @@ shot::[2, "Highlight first step"]
 presumably that's what gives his account premium status?
 
 As a result of that shout, he’s obviously supposed to have some credits deducted. Tamsin’s scenario says that the correct behaviour is for 5 credits to be deducted, leaving him with 25 credits. As we can see from running the test, the system is deducting 15 credits instead.
+
+==== Reading the new feature
+
+Let’s read the whole feature file - that should tell us some more about how the system is supposed to behave.
+
+shot::[1, "Open premium_accounts.feature"]
+Oh my.
+
+This is very difficult to read.
+
+[source,gherkin]
+----
+include::../code/js/01-implement-premium-accounts-feature-badly-/features/premium_shouts.feature[]
+----
+
+Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long, so this is big.
+
+The scenario has several `When` steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.
+
+We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there's no `Rule` keyword and the description section is blank, so we haven’t been left any clues there.
+
+Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 credits and ends up with 11, but why?
+
+There’s so much detail here. I wonder which bits are important. Could it be the number of words Sean shouts that affects his credits? Or the number of messages? Based on Tamsin’s test case, maybe the word “buy” is important...
+
+It’s really hard to tell.
+
+It’s interesting that Lucy hears all Sean’s messages - even these ones which look to be over 180 characters and would normally be blocked. Perhaps premium accounts get to send messages over 180 characters in exchange for credits?
+
+This is a classic example of a scenario written by someone who is using Cucumber as a _testing_ tool rather than a _documentation_ tool. This scenario may well work as an effective test, but it's terrible documentation. We have no clear idea from reading it what the system is supposed to do.
+
+Let’s try reading the code instead.
+
+shot::[1, "Open Network class"]
+
+[source,javascript]
+----
+include::../code/js/01-implement-premium-accounts-feature-badly-/src/shouty.js[lines=24..50]
+----
+
+OK, so we have a `deductCredits` method here that seems to encapsulate the rules. It looks like over-long messages - messages that are not short enough - cost two credits, and each time the word “buy” is mentioned, we deduct 5 credits.
+
+It’s a good job we know how to read code!
+
+One of the promises of BDD is that our feature files become the single source of truth for the whole team. Yet here, the scenario does such a poor job of documenting what the system does, we had to go hunting for the truth in the code. That’s fine for us, because we know how to read code, but it’s excluded anyone on our team who isn’t technical. How would they be able to understand the behaviour of premium accounts at the moment?
+
+We need to fix this feature file.
