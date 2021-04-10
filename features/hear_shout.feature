@@ -38,7 +38,7 @@ Feature: Hear shout
     Scenario: Two shouts
       Given a person named Sean
       And a person named Lucy
-      When Sean shouts "Free cupcakes!"
+      When Sean shouts "Free bagels!"
       And Sean shouts "Free toast!"
       Then Lucy hears the following messages:
         | Free bagels! |
