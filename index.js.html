@@ -501,7 +501,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_premium_accounts_with_a_bug">7.1. Premium Accounts! With a bug!</a></li>
 <li><a href="#_clarifying_the_rules">7.2. Clarifying the rules</a></li>
 <li><a href="#_keeping_your_scenarios_brief">7.3. Keeping your scenarios BRIEF</a></li>
-<li><a href="#_distilling_the_essence_the_buy_step">7.4. Distilling the essence: The "buy" step</a></li>
+<li><a href="#_distilling_the_essence_of_each_step">7.4. Distilling the essence of each step</a></li>
 <li><a href="#_rename_scenario">7.5. Rename scenario</a></li>
 </ul>
 </li>
@@ -6776,7 +6776,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_distilling_the_essence_the_buy_step">7.4. Distilling the essence: The "buy" step</h3>
+<h3 id="_distilling_the_essence_of_each_step">7.4. Distilling the essence of each step</h3>
 <div class="paragraph">
 <p>Let’s try to distill the essence of this scenario by removing the incidental details.</p>
 </div>
@@ -6926,11 +6926,21 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts <span class="s">"My bagels are yummy"</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:</p>
 </div>
 <div class="paragraph">
 <p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts a message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.</p>
@@ -6938,21 +6948,83 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts a message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">A message from Sean</span><span class="dl">"</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>We’ll run Cucumber again just in case&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
 <p></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">npm <span class="nb">exec </span>cucumber-js <span class="nt">--</span> <span class="nt">--tags</span> <span class="s2">"not @todo"</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>All green.</p>
 </div>
 <div class="paragraph">
-<p>And finally, let’s use that new step everywhere we can… and run Cucumber once again.</p>
+<p>And finally, let’s use that new step everywhere we can…</p>
 </div>
 <div class="paragraph">
-<p>
-</p>
+<p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span>
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span>
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      Here are some things you will love about Sean's:
+      - the bagels
+      - the coffee
+      - the chickens
+      Come and visit us today! We'd really love to see you.
+      Pop round anytime, honestly it's fine.
+      """</span>
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and run Cucumber once again.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">npm <span class="nb">exec </span>cucumber-js <span class="nt">--</span> <span class="nt">--tags</span> <span class="s2">"not @todo"</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>All green.</p>
@@ -6963,8 +7035,25 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>Now let’s deal with this next step. What’s the essence here?</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now, but push the details about the message content down into the step definition, following the same recipe.</p>
+<p>Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now that there must be <em>some</em> reason it&#8217;s different. So we&#8217;ll push the details about the message content down into the step definition, following the same recipe.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts a long message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p></p>
@@ -6973,13 +7062,22 @@ Your browser does not support the video tag.
 <p></p>
 </div>
 <div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>Again, we’ll tolerate the duplication for now, and just generate a 180-character message here.</p>
+<p>Again, we’ll tolerate the duplication for now, and just generate a long message here.</p>
 </div>
 <div class="paragraph">
 <p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts a long message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">A message from Sean</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">that spans multiple lines</span><span class="dl">"</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span>
+    <span class="dl">"</span><span class="se">\n</span><span class="dl">"</span>
+  <span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p></p>
@@ -6988,10 +7086,33 @@ Your browser does not support the video tag.
 <div class="sect3">
 <h4 id="_distill_the_over_long_shout_step">7.4.3. Distill the over-long shout step</h4>
 <div class="paragraph">
-<p>Now what’s interesting about this next step? This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an <em>over-long message</em>. Let’s update the rule we wrote up earlier to document this evolution of our domain language:</p>
+<p>Now what’s interesting about this next step?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an <em>over-long message</em>. Let’s update the rule we wrote up earlier to document this evolution of our domain language:</p>
 </div>
 <div class="paragraph">
 <p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="err">Rules</span><span class="p">:</span>
+    <span class="nf">* </span>Mention the word <span class="s">"buy"</span> and you lose 5 credits.
+    <span class="nf">* </span>Over-long messages cost 2 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Then we can use that term in a new, more abstract step:</p>
@@ -6999,11 +7120,41 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts an over-long message</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.</p>
 </div>
 <div class="paragraph">
 <p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts an over-long message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">baseMessage</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">A message from Sean that is 181 characters long </span><span class="dl">"</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">baseMessage</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">x</span><span class="dl">"</span><span class="p">.</span><span class="nx">repeat</span><span class="p">(</span><span class="mi">181</span> <span class="o">-</span> <span class="nx">baseMessage</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Again, we have another step we can replace with this more abstract one:</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts an over-long message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p></p>
@@ -7012,22 +7163,52 @@ Your browser does not support the video tag.
 <div class="sect3">
 <h4 id="_remove_pointless_steps">7.4.4. Remove pointless steps</h4>
 <div class="paragraph">
-<p>Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we grouped them together. Let’s do that:</p>
+<p>Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we re-ordered them so they&#8217;re grouped together. Let’s do that:</p>
 </div>
 <div class="paragraph">
 <p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts a long message
+    <span class="nf">And </span>Sean shouts an over-long message
+    <span class="nf">And </span>Sean shouts an over-long message
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>So now we can clearly see that Sean shouts three regular messages, a long message, two over-long messages, and three messages containing the word “buy”. It’s still a lot to digest, but a clearer picture is starting to emerge.</p>
 </div>
 <div class="paragraph">
-<p>Are there any other incidental details remaining in this scenario?</p>
+<p>Are there any other incidental details remaining in this scenario? In BRIEF terms, is every step here <em>essential</em> to the purpose of this particular scenario?</p>
 </div>
 <div class="paragraph">
 <p>Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:</p>
 </div>
 <div class="paragraph">
 <p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts an over-long message
+    <span class="nf">And </span>Sean shouts an over-long message
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>That’s better.</p>
@@ -7045,6 +7226,11 @@ Your browser does not support the video tag.
 <p>These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
 </p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">When </span>Sean shouts 2 over-long messages</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>We’ll need a new step definition for this one.</p>
 </div>
@@ -7052,13 +7238,23 @@ Your browser does not support the video tag.
 <p></p>
 </div>
 <div class="paragraph">
-<p>The implementation of this step definition is almost exactly the same as the one below, we just need to run a loop around it, based on the number of messages specified in the scenario.</p>
+<p>We can re-use the existing step definition, we just need to run a loop around it, based on the number of messages specified in the scenario.</p>
 </div>
 <div class="paragraph">
 <p></p>
 </div>
-<div class="paragraph">
-<p>Again, we’ll just suffer the duplication for the time being. We have a nice trick up our sleeves to get rid of all of it when the time comes.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts {int} over-long messages</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">count</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">baseMessage</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">A message from Sean that is 181 characters long </span><span class="dl">"</span>
+    <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">baseMessage</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">x</span><span class="dl">"</span><span class="p">.</span><span class="nx">repeat</span><span class="p">(</span><span class="mi">181</span> <span class="o">-</span> <span class="nx">baseMessage</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">})</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p></p>
@@ -7069,14 +7265,47 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p></p>
 </div>
 <div class="paragraph">
-<p>Again, we have the bulk of this code that we can just copy and paste, adding a loop around the outside.</p>
+<p>Again, we have the bulk of this code that we can just recycle. We just need to capture the count, then add add a loop around the outside.</p>
 </div>
 <div class="paragraph">
 <p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">Sean shouts {int} messages containing the word {string}</span><span class="dl">"</span><span class="p">,</span>
+  <span class="kd">function</span> <span class="p">(</span><span class="nx">count</span><span class="p">,</span> <span class="nx">word</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="s2">`A message containing the word </span><span class="p">${</span><span class="nx">word</span><span class="p">}</span><span class="s2">`</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s step back and see how BRIEF our scenario reads now:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts 2 over-long messages
+    <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Nice!</p>
@@ -7206,7 +7435,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-04-12 13:08:18 UTC
+Last updated 2021-04-12 19:16:03 UTC
 </div>
 </div>
 <style>

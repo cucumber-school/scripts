@@ -501,7 +501,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_premium_accounts_with_a_bug">7.1. Premium Accounts! With a bug!</a></li>
 <li><a href="#_clarifying_the_rules">7.2. Clarifying the rules</a></li>
 <li><a href="#_keeping_your_scenarios_brief">7.3. Keeping your scenarios BRIEF</a></li>
-<li><a href="#_distilling_the_essence_the_buy_step">7.4. Distilling the essence: The "buy" step</a></li>
+<li><a href="#_distilling_the_essence_of_each_step">7.4. Distilling the essence of each step</a></li>
 <li><a href="#_rename_scenario">7.5. Rename scenario</a></li>
 </ul>
 </li>
@@ -6776,7 +6776,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_distilling_the_essence_the_buy_step">7.4. Distilling the essence: The "buy" step</h3>
+<h3 id="_distilling_the_essence_of_each_step">7.4. Distilling the essence of each step</h3>
 <div class="paragraph">
 <p>Let’s try to distill the essence of this scenario by removing the incidental details.</p>
 </div>
@@ -6926,11 +6926,21 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts <span class="s">"My bagels are yummy"</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-722" id="shot-722" title="My bagels are yummy" to And Sean shouts a message"" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Changes the step from And Sean shouts : My bagels are yummy" to And Sean shouts a message"</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts a message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.</p>
@@ -6938,21 +6948,83 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p><a href="#shot-723" id="shot-723" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts a message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">A message from Sean</span><span class="dl">"</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>We’ll run Cucumber again just in case&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-724" id="shot-724" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>.</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">npm <span class="nb">exec </span>cucumber-js <span class="nt">--</span> <span class="nt">--tags</span> <span class="s2">"not @todo"</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>All green.</p>
 </div>
 <div class="paragraph">
-<p>And finally, let’s use that new step everywhere we can… and run Cucumber once again.</p>
+<p>And finally, let’s use that new step everywhere we can…</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-725" id="shot-725" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Changes two steps to that shout regular messages to use the new step</a>
-<a href="#shot-726" id="shot-726" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs `cucumber --tags ~@todo`</a></p>
+<p><a href="#shot-725" id="shot-725" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Changes two steps to that shout regular messages to use the new step</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span>
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span>
+    <span class="nf">When </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      Here are some things you will love about Sean's:
+      - the bagels
+      - the coffee
+      - the chickens
+      Come and visit us today! We'd really love to see you.
+      Pop round anytime, honestly it's fine.
+      """</span>
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and run Cucumber once again.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-726" id="shot-726" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs `cucumber --tags ~@todo`</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">npm <span class="nb">exec </span>cucumber-js <span class="nt">--</span> <span class="nt">--tags</span> <span class="s2">"not @todo"</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>All green.</p>
@@ -6963,11 +7035,25 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>Now let’s deal with this next step. What’s the essence here?</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now, but push the details about the message content down into the step definition, following the same recipe.</p>
+<p>Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now that there must be <em>some</em> reason it&#8217;s different. So we&#8217;ll push the details about the message content down into the step definition, following the same recipe.</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-727" id="shot-727" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Changes the step to `And Sean shouts a long message`</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts a long message</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p><a href="#shot-728" id="shot-728" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs `cucumber --tags ~@todo`</a></p>
@@ -6976,10 +7062,22 @@ Your browser does not support the video tag.
 <p><a href="#shot-729" id="shot-729" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Copies / pastes step def snippet into steps file</a></p>
 </div>
 <div class="paragraph">
-<p>Again, we’ll tolerate the duplication for now, and just generate a 180-character message here.</p>
+<p>Again, we’ll tolerate the duplication for now, and just generate a long message here.</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-730" id="shot-730" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Copies shouting code from step def below, then adds code above to create a 180 character test message.</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts a long message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="p">[</span><span class="dl">"</span><span class="s2">A message from Sean</span><span class="dl">"</span><span class="p">,</span> <span class="dl">"</span><span class="s2">that spans multiple lines</span><span class="dl">"</span><span class="p">].</span><span class="nx">join</span><span class="p">(</span>
+    <span class="dl">"</span><span class="se">\n</span><span class="dl">"</span>
+  <span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p><a href="#shot-731" id="shot-731" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
@@ -6988,10 +7086,33 @@ Your browser does not support the video tag.
 <div class="sect3">
 <h4 id="_distill_the_over_long_shout_step">7.4.3. Distill the over-long shout step</h4>
 <div class="paragraph">
-<p>Now what’s interesting about this next step? This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an <em>over-long message</em>. Let’s update the rule we wrote up earlier to document this evolution of our domain language:</p>
+<p>Now what’s interesting about this next step?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an <em>over-long message</em>. Let’s update the rule we wrote up earlier to document this evolution of our domain language:</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-732" id="shot-732" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Changes second rule “Long messages…” to “Over-long messages…”</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="err">Rules</span><span class="p">:</span>
+    <span class="nf">* </span>Mention the word <span class="s">"buy"</span> and you lose 5 credits.
+    <span class="nf">* </span>Over-long messages cost 2 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Then we can use that term in a new, more abstract step:</p>
@@ -6999,35 +7120,95 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p><a href="#shot-733" id="shot-733" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Changes step to `And Sean shouts an over-long message`</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts an over-long message</code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.</p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-734" id="shot-734" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Copies shouting code from step def below, then changes first line to create a 181-character test message.</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts an over-long message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">baseMessage</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">A message from Sean that is 181 characters long </span><span class="dl">"</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">baseMessage</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">x</span><span class="dl">"</span><span class="p">.</span><span class="nx">repeat</span><span class="p">(</span><span class="mi">181</span> <span class="o">-</span> <span class="nx">baseMessage</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p><a href="#shot-735" id="shot-735" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+</div>
+<div class="paragraph">
+<p>Again, we have another step we can replace with this more abstract one:</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-736" id="shot-736" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Replace imperative step on line 22 with `Sean shouts an over-long message`</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts an over-long message</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-737" id="shot-737" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_remove_pointless_steps">7.4.4. Remove pointless steps</h4>
 <div class="paragraph">
-<p>Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we grouped them together. Let’s do that:</p>
+<p>Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we re-ordered them so they&#8217;re grouped together. Let’s do that:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-736" id="shot-736" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Re-orders When steps so each type of step is grouped together.</a></p>
+<p><a href="#shot-738" id="shot-738" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Re-orders When steps so each type of step is grouped together.</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts a message
+    <span class="nf">And </span>Sean shouts a long message
+    <span class="nf">And </span>Sean shouts an over-long message
+    <span class="nf">And </span>Sean shouts an over-long message
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>So now we can clearly see that Sean shouts three regular messages, a long message, two over-long messages, and three messages containing the word “buy”. It’s still a lot to digest, but a clearer picture is starting to emerge.</p>
 </div>
 <div class="paragraph">
-<p>Are there any other incidental details remaining in this scenario?</p>
+<p>Are there any other incidental details remaining in this scenario? In BRIEF terms, is every step here <em>essential</em> to the purpose of this particular scenario?</p>
 </div>
 <div class="paragraph">
 <p>Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-737" id="shot-737" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Removes the first four When steps (remember to change And for When on the next step)</a></p>
+<p><a href="#shot-739" id="shot-739" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Removes the first four When steps (remember to change And for When on the next step)</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts an over-long message
+    <span class="nf">And </span>Sean shouts an over-long message
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">And </span>Sean shouts a message containing the word <span class="s">"buy"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>That’s better.</p>
@@ -7043,40 +7224,88 @@ Your browser does not support the video tag.
 <h4 id="_merge_repeated_steps">7.4.5. Merge repeated steps</h4>
 <div class="paragraph">
 <p>These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
-<a href="#shot-738" id="shot-738" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Replaces two steps with new step: `When Sean shouts 2 over-long messages`</a></p>
+<a href="#shot-740" id="shot-740" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Replaces two steps with new step: `When Sean shouts 2 over-long messages`</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">When </span>Sean shouts 2 over-long messages</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>We’ll need a new step definition for this one.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-739" id="shot-739" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
+<p><a href="#shot-741" id="shot-741" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
 </div>
 <div class="paragraph">
-<p>The implementation of this step definition is almost exactly the same as the one below, we just need to run a loop around it, based on the number of messages specified in the scenario.</p>
+<p>We can re-use the existing step definition, we just need to run a loop around it, based on the number of messages specified in the scenario.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-740" id="shot-740" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+<p><a href="#shot-742" id="shot-742" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean shouts {int} over-long messages</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">count</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">baseMessage</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">A message from Sean that is 181 characters long </span><span class="dl">"</span>
+    <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">baseMessage</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">x</span><span class="dl">"</span><span class="p">.</span><span class="nx">repeat</span><span class="p">(</span><span class="mi">181</span> <span class="o">-</span> <span class="nx">baseMessage</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">})</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Again, we’ll just suffer the duplication for the time being. We have a nice trick up our sleeves to get rid of all of it when the time comes.</p>
-</div>
-<div class="paragraph">
-<p><a href="#shot-741" id="shot-741" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-743" id="shot-743" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 <div class="paragraph">
 <p>Let’s do the exact same thing with these other three steps.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-742" id="shot-742" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`</a></p>
+<p><a href="#shot-744" id="shot-744" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-743" id="shot-743" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
+<p><a href="#shot-745" id="shot-745" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
 </div>
 <div class="paragraph">
-<p>Again, we have the bulk of this code that we can just copy and paste, adding a loop around the outside.</p>
+<p>Again, we have the bulk of this code that we can just recycle. We just need to capture the count, then add add a loop around the outside.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-744" id="shot-744" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+<p><a href="#shot-746" id="shot-746" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">Sean shouts {int} messages containing the word {string}</span><span class="dl">"</span><span class="p">,</span>
+  <span class="kd">function</span> <span class="p">(</span><span class="nx">count</span><span class="p">,</span> <span class="nx">word</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="s2">`A message containing the word </span><span class="p">${</span><span class="nx">word</span><span class="p">}</span><span class="s2">`</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+      <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">])</span> <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s step back and see how BRIEF our scenario reads now:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts 2 over-long messages
+    <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Nice!</p>
@@ -7098,7 +7327,7 @@ Your browser does not support the video tag.
 <p>This is the one where… well.. <em>the one where Sean shouts some over-long messages and some containing the word “buy”.</em></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-745" id="shot-745" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Updates the name of the scenario</a></p>
+<p><a href="#shot-747" id="shot-747" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Updates the name of the scenario</a></p>
 </div>
 <div class="paragraph">
 <p>That’s quite a complicated name isn’t it? Maybe this scenario is doing too much!</p>
@@ -7118,7 +7347,7 @@ Your browser does not support the video tag.
 <p>You’ll often need more than one scenario to illustrate each rule, but in this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-746" id="shot-746" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Write out the two new scenarios, leaving the original in place.</a></p>
+<p><a href="#shot-748" id="shot-748" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Write out the two new scenarios, leaving the original in place.</a></p>
 </div>
 <div class="paragraph">
 <p>Great. Now the effect of each of these rules is much more clearly documented.</p>
@@ -7131,14 +7360,14 @@ Your browser does not support the video tag.
 </div>
 <div class="paragraph">
 <p>Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. As we talk about it, we realise that while we don’t need this one anymore
-<a href="#shot-747" id="shot-747" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 removes original long scenario</a>
+<a href="#shot-749" id="shot-749" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 removes original long scenario</a>
 there’s a missing scenario - where both rules apply to the <em>same message</em>: <em>The one where there’s a shout that’s both over-long and with the word “buy” in it.</em></p>
 </div>
 <div class="paragraph">
 <p>We’d better document that as a question for now.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-748" id="shot-748" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Writes up the question.</a></p>
+<p><a href="#shot-750" id="shot-750" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Writes up the question.</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -7160,13 +7389,13 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 <p>Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still haven&#8217;t even started fixing that bug yet!</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-749" id="shot-749" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Writes up the other question</a></p>
+<p><a href="#shot-751" id="shot-751" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Writes up the other question</a></p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_close">7.5.4. Close</h4>
 <div class="paragraph">
-<p><a href="#shot-750" id="shot-750" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 07.closing.common.animation.mp4</a></p>
+<p><a href="#shot-752" id="shot-752" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 07.closing.common.animation.mp4</a></p>
 </div>
 <div class="videoblock">
 <div class="content">
@@ -7206,7 +7435,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-04-12 13:08:18 UTC
+Last updated 2021-04-12 19:16:03 UTC
 </div>
 </div>
 <style>
