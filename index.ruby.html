@@ -5133,8 +5133,15 @@ Hello, and welcome back to Cucumber School.</p>
 <p>In this lesson, we’re going to teach you all about how to configure Cucumber.</p>
 </div>
 <div class="paragraph">
-<p>
-When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.</p>
+<p></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.</p>
 </div>
 <div class="paragraph">
 <p>If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.</p>
@@ -5146,7 +5153,7 @@ When we start working on a new scenario we often take a dive down to the inner T
 <p>Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.</p>
 </div>
 <div class="paragraph">
-<p>
+<p> 
 We can pass arguments to Cucumber using the <code>--name</code> option, which tells Cucumber to only run scenarios with a name matching "Message is too long".</p>
 </div>
 <div class="listingblock">
@@ -5177,7 +5184,7 @@ We can pass arguments to Cucumber using the <code>--name</code> option, which te
 <p>Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. </p>
 </div>
 <div class="paragraph">
-<p>We can use that line number when we run Cucumber. </p>
+<p>We can use that line number when we run Cucumber.  </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5216,9 +5223,6 @@ We can pass arguments to Cucumber using the <code>--name</code> option, which te
 </div>
 </div>
 <div class="paragraph">
-<p>The property file is also picked up if you run Cucumber from within your IDE </p>
-</div>
-<div class="paragraph">
 <p>The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.</p>
 </div>
 <div class="paragraph">
@@ -5232,14 +5236,17 @@ We can pass arguments to Cucumber using the <code>--name</code> option, which te
 In the previous lesson, we modified Cucumber&#8217;s behavior using scenario names and line numbers. In this lesson I&#8217;m going to show you how to filter scenarios using tags.</p>
 </div>
 <div class="paragraph">
-<p>First, let&#8217;s delete the contents of <code>cucumber.yml</code>.  Now, Cucumber will run all scenarios. </p>
+<p>First, let&#8217;s delete the contents of the  <code>cucumber.yml</code> file.  If we run cucumber now, we&#8217;ll get an error indicating that the file is empty. So if we want cucumber to run all the scenarios, we need to remove it. </p>
+</div>
+<div class="paragraph">
+<p>Now, Cucumber will finally run all scenarios. </p>
 </div>
 <div class="paragraph">
 <p>
 We’ll put a focus tag right here, above this scenario.  Tags start with an at-sign and are case sensitive.</p>
 </div>
 <div class="paragraph">
-<p>Now let&#8217;s add a tag expression to the default key, which Cucumber will use to filter the scenarios run</p>
+<p>Now, after re-creating the `cucumber.yml`file, let&#8217;s add a tag expression to the default key, which Cucumber will use to filter the scenarios run </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5315,7 +5322,7 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 </div>
 </div>
 <div class="paragraph">
-<p>Now create a new feature file in src/test/resources called cat.feature </p>
+<p>Now create a new feature file in the <code>features</code> directory called <code>cat.feature</code> </p>
 </div>
 <div class="paragraph">
 <p>The first line tells Cucumber which language the feature file is written in. </p>
@@ -5342,7 +5349,10 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 <p>The step is undefined, but we can quickly generate it by running Cucumber  Cucumber has generated a step definition.</p>
 </div>
 <div class="paragraph">
-<p>Notice that the scenarios have been run in the order that the occur in the feature file  That&#8217;s fine, but there&#8217;s a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.</p>
+<p>We could copy and use this step definition in our <code>steps.rb</code> file the same way we do with regular English. But let&#8217;s remove the <code>cat.feature</code> file and continue.</p>
+</div>
+<div class="paragraph">
+<p>Notice that when we run Cucumber, the scenarios run in the order that the occur in the feature file  That&#8217;s fine, but there&#8217;s a chance that since they always run in the same order we might accidentally make one scenario dependent on some other scenario.</p>
 </div>
 <div class="paragraph">
 <p>Each scenario should be isolated - it&#8217;s result should not depend on the outcome of any other scenario. To help you catch any dependencies between your scenarios, Cucumber can be told to run your scenarios in a random order.</p>
@@ -5360,7 +5370,7 @@ We’ll put a focus tag right here, above this scenario.  Tags start with an at-
 </div>
 <div class="paragraph">
 <p>
-A full list of Cucumber&#8217;s configuration properties can be found by passing the <code>--help</code> flag on the command line.  Or using the abbreviated version <code>-h</code></p>
+A full list of Cucumber&#8217;s configuration properties can be found by passing the <code>--help</code> flag on the command line.  Or using the abbreviated version <code>-h</code> </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5483,7 +5493,7 @@ We can specify multiple formatters like this. Only one formatter is allowed to o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-04-08 22:18:45 UTC
+Last updated 2021-04-12 13:08:18 UTC
 </div>
 </div>
 <style>
