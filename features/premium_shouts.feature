@@ -1,17 +1,14 @@
 Feature: Premium account
 
+    Questions:
+    * What about the one where the same message is both over-long and contains the word "buy"
+    * What happens if Sean runs out of credits?
+
   Background:
     Given the range is 100
     And people are located at
       | name     | Sean | Lucy |
       | location | 0    | 100  |
-
-  Scenario: Sean shouts some over-long messages and some messages containing the word “buy”
-    Given Sean has bought 30 credits
-    When Sean shouts 2 over-long messages
-    And Sean shouts 3 messages containing the word "buy"
-    Then Lucy hears all Sean's messages
-    And Sean should have 11 credits
 
   Rule: Mention the word "buy" and you lose 5 credits.
     Scenario: Sean some messages containing the word “buy”
