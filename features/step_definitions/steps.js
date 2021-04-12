@@ -44,6 +44,13 @@ When("Sean shouts a message containing the word {string}", function (word) {
   this.messagesShoutedBy["Sean"].push(message)
 })
 
+When("Sean shouts a message", function () {
+  const message = "A message from Sean"
+  this.people["Sean"].shout(message)
+  if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
+  this.messagesShoutedBy["Sean"].push(message)
+})
+
 When("Sean shouts {string}", function (message) {
   this.people["Sean"].shout(message)
   if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []

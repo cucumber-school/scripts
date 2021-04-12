@@ -13,7 +13,7 @@ Feature: Premium account
   Scenario: Test premium account features
     Given Sean has bought 30 credits
     When Sean shouts a message containing the word "buy"
-    And Sean shouts "My bagels are yummy"
+    And Sean shouts a message
     And Sean shouts "Free cookie with your espresso for the next hour"
     And Sean shouts the following message
       """
