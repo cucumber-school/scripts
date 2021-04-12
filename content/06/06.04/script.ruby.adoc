@@ -9,38 +9,38 @@ bundle exec cucumber --format help
 shot::[1, show console output]
 So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.
 
-shot::[1, run with html formatter]
+shot::[2, run with html formatter]
 Let’s try the HTML formatter.
 
 When we use the html formatter we use dash-dash out to specify the file where the report should be written. Otherwise it will be written directly to the console.
 
-shot::[1, open html output]
+shot::[3, open html output]
 
 [source]
 ----
 bundle exec cucumber --format html --out report.html
 ----
 
-shot::[1, run with json formatter (although this may be deprecated)]
+shot::[4, run with json formatter (although this may be deprecated)]
 Let’s try another one - JSON.
 
-shot::[1, show json output]
+shot::[5, show json output]
 The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.
 
-shot::[1, run & highlight progress output]
+shot::[6, run & highlight progress output]
 There is also a progress formatter, which just prints out a single character for each step.
 
-shot::[1, run & highlight JUnit output]
+shot::[7, run & highlight JUnit output]
 The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.
 
-shot::[1, multiple formatters]
+shot::[8, multiple formatters]
 We can specify multiple formatters like this. Only one formatter is allowed to output to the console -- all the others must have a dash-dash out specifying which file their output should be written to.
 
 === Rerun formatter
 
 One of these formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.
 
-shot::[1, Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!" ]
+shot::[9, Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!" ]
 
 We choose the rerun formatter and send the output to a file called rerun.txt.
 

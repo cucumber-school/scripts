@@ -10,6 +10,12 @@ Then we learned about TDD cycles. We saw how the outer loop of TDD helps you to 
 In this lesson, we’re going to teach you all about how to configure Cucumber.
 
 shot::[2, "Scroll through shout.feature, end by showing scenario 'Message too long'"]
+
+[source]
+----
+bundle exec cucumber
+----
+
 When we start working on a new scenario we often take a dive down to the inner TDD loop where we use a unit testing tool to drive out new classes or modify the behaviour of existing ones. When our unit tests are green and the new code is implemented we return to the Cucumber scenarios to verify whether we have made overall progress or not.
 
 If we have lots of Cucumber scenarios, it can be distracting to run all of them each time we do this. We often want to focus on a single scenario - or perhaps just a couple - to get feedback on what we’re currently working on.
@@ -18,7 +24,7 @@ There are several ways to do this in Cucumber - and your IDE may offer other opt
 
 Probably the easiest way to filter is to tell Cucumber to run only a scenario with a particular name.
 
-shot::[3, "type bundle exec command in console, show output and highlight that it has only run the one scenario 'Message too long'"]
+shot::[3, "type bundle exec command in console, show output and highlight that it has only run the one scenario 'Message too long'"] shot::[4]
 We can pass arguments to Cucumber using the `--name` option, which tells Cucumber to only run scenarios with a name matching "Message is too long".
 
 [source]
@@ -26,14 +32,14 @@ We can pass arguments to Cucumber using the `--name` option, which tells Cucumbe
 bundle exec cucumber --name "Message is too long"
 ----
 
-The value of the `--name` option is actually a regular expression, so you can use your imagination here to run more than one scenario. Let's use it to run all scenarios with the text "range" in their name. shot::[4, "type bundle exec command in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
+The value of the `--name` option is actually a regular expression, so you can use your imagination here to run more than one scenario. Let's use it to run all scenarios with the text "range" in their name. shot::[5, "type bundle exec command in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
 
 [source]
 ----
 bundle exec cucumber --name "range"
 ----
 
-We can also use the abbreviated form of `--name`, `-n` shot::[5]
+We can also use the abbreviated form of `--name`, `-n` shot::[6]
 
 [source]
 ----
@@ -42,20 +48,20 @@ bundle exec cucumber -n "range"
 
 We can accomplish the same thing by adding some configuration on the `cucumber.yml` file, but we'll talk about that at the end of the lesson.
 
-Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. shot::[6, "in feature file show that 'Message too long' starts on line 44"]
+Another way to tell Cucumber to run a specific scenario is to specify the line number of the scenario within a feature file. The 'Message too long' scenario starts on line 44 in the feature file. shot::[7, "in feature file show that 'Message too long' starts on line 44"]
 
-We can use that line number when we run Cucumber. shot::[7, "use line number on comand line"]
+We can use that line number when we run Cucumber. shot::[8, "use line number on comand line"] shot::[9]
 
 [source]
 ----
 bundle exec cucumber features/hear_shout.feature:44
 ----
 
-shot::[8, "type bundle exec command in console, show output and highlight that it has only run the scenario called 'Message too long'"]
+shot::[10, "type bundle exec command in console, show output and highlight that it has only run the scenario called 'Message too long'"]shot::[11]
 
-You can even specify multiple line numbers for each file. Let's run 'Two shouts' as well. [shot::[9, "in feature file, show 'Two shouts' starts on line 33"]
+You can even specify multiple line numbers for each file. Let's run 'Two shouts' as well. [shot::[12, "in feature file, show 'Two shouts' starts on line 33"]
 
-Let's add that line number when we run Cucumber. shot::[10, "type bundle exec command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'"]
+Let's add that line number when we run Cucumber. shot::[13, "type bundle exec command in console, show output and highlight that it has run two scenarios - 'Two shouts' and 'Message too long'"]shot::[14]
 
 [source]
 ----
@@ -66,16 +72,14 @@ You can list several files and lines together like this if you have a specific s
 
 The examples that you've just seen set a Ruby property on the command line. If you're working in an IDE this is less than ideal, but fortunately there are other ways to achieve exactly the same outcome.
 
-Let's look at using a property file to set the system properties. Create a property file called `cucumber.yml` in the root path of the project shot::[11] and add `default: --name range` shot::[12]
+Let's look at using a property file to set the system properties. Create a property file called `cucumber.yml` in the root path of the project shot::[15] and add `default: --name range` shot::[16]
 
-When we run Cucumber, it picks up the property setting from the file and only runs the "range" scenarios. shot::[13, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
+When we run Cucumber, it picks up the property setting from the file and only runs the "range" scenarios. shot::[17, "type `mvn test` in console, show output and highlight that it has run the two scenarios containing the word 'range'"]
 
 [source]
 ----
 bundle exec cucumber
 ----
-
-The property file is also picked up if you run Cucumber from within your IDE shot::[14, use an IDE to run all scenarios in `hear_shout.feature` and then highlight that only the range scenarios have been run]
 
 The benefit of a properties file is that it gets checked in with your code, which means that any settings can be shared by all team members.
 
