@@ -51,6 +51,15 @@ When("Sean shouts a message", function () {
   this.messagesShoutedBy["Sean"].push(message)
 })
 
+When("Sean shouts a long message", function () {
+  const message = ["A message from Sean", "that spans multiple lines"].join(
+    "\n"
+  )
+  this.people["Sean"].shout(message)
+  if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
+  this.messagesShoutedBy["Sean"].push(message)
+})
+
 When("Sean shouts {string}", function (message) {
   this.people["Sean"].shout(message)
   if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
