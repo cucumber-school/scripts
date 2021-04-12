@@ -37,12 +37,17 @@ When("Sean shouts", function () {
   this.people["Sean"].shout("Hello, world")
 })
 
-When("Sean shouts a message containing the word {string}", function (word) {
-  const message = `A message containing the word ${word}`
-  this.people["Sean"].shout(message)
-  if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
-  this.messagesShoutedBy["Sean"].push(message)
-})
+When(
+  "Sean shouts {int} messages containing the word {string}",
+  function (count, word) {
+    for (let i = 0; i < count; i++) {
+      const message = `A message containing the word ${word}`
+      this.people["Sean"].shout(message)
+      if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
+      this.messagesShoutedBy["Sean"].push(message)
+    }
+  }
+)
 
 When("Sean shouts a message", function () {
   const message = "A message from Sean"
