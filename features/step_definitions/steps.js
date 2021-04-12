@@ -60,12 +60,14 @@ When("Sean shouts a long message", function () {
   this.messagesShoutedBy["Sean"].push(message)
 })
 
-When("Sean shouts an over-long message", function () {
-  const baseMessage = "A message from Sean that is 181 characters long "
-  const message = baseMessage + "x".repeat(181 - baseMessage.length)
-  this.people["Sean"].shout(message)
-  if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
-  this.messagesShoutedBy["Sean"].push(message)
+When("Sean shouts {int} over-long messages", function (count) {
+  for (let i = 0; i < count; i++) {
+    const baseMessage = "A message from Sean that is 181 characters long "
+    const message = baseMessage + "x".repeat(181 - baseMessage.length)
+    this.people["Sean"].shout(message)
+    if (!this.messagesShoutedBy["Sean"]) this.messagesShoutedBy["Sean"] = []
+    this.messagesShoutedBy["Sean"].push(message)
+  }
 })
 
 When("Sean shouts {string}", function (message) {
