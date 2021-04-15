@@ -501,10 +501,14 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_premium_accounts_with_a_bug">7.1. Premium Accounts! With a bug!</a></li>
 <li><a href="#_clarifying_the_rules">7.2. Clarifying the rules</a></li>
 <li><a href="#_keeping_your_scenarios_brief">7.3. Keeping your scenarios BRIEF</a></li>
-<li><a href="#_distilling_the_essence_of_each_step">7.4. Distilling the essence of each step</a></li>
-<li><a href="#_rename_scenario">7.5. Rename scenario</a></li>
+<li><a href="#_distilling_the_essence">7.4. Distilling the essence</a></li>
+<li><a href="#_expressing_the_rules_capturing_questions">7.5. Expressing the rules, capturing questions</a></li>
+<li><a href="#_conclusion">7.6. Conclusion</a></li>
 </ul>
 </li>
+<li><a href="#_problems_and_solutions">8. Problems and Solutions</a></li>
+<li><a href="#_acceptance_tests_vs_unit_tests">9. Acceptance tests vs Unit tests</a></li>
+<li><a href="#_web_automation_with_selenium_webdriver">10. Web automation with Selenium Webdriver</a></li>
 </ul>
 </div>
 </div>
@@ -6776,7 +6780,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_distilling_the_essence_of_each_step">7.4. Distilling the essence of each step</h3>
+<h3 id="_distilling_the_essence">7.4. Distilling the essence</h3>
 <div class="paragraph">
 <p>Let’s try to distill the essence of this scenario by removing the incidental details.</p>
 </div>
@@ -7313,24 +7317,37 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rename_scenario">7.5. Rename scenario</h3>
+<h3 id="_expressing_the_rules_capturing_questions">7.5. Expressing the rules, capturing questions</h3>
 <div class="paragraph">
 <p>Now things are really getting clearer.</p>
 </div>
 <div class="paragraph">
 <p>There are still a couple of problems with this scenario. One is the name of the scenario. It really doesn’t tell us anything at all.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Test</span> <span class="err">premium</span> <span class="err">account</span> <span class="err">features</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>A great way to name your scenarios is to think about how they named episodes of the TV sitcom series, <em>Friends</em>. Remember? They were all called something like <em>The one where Ross is fine</em> or <em>The one where Phoebe gets married</em>.</p>
 </div>
 <div class="paragraph">
-<p>This is the one where… well.. <em>the one where Sean shouts some over-long messages and some containing the word “buy”.</em></p>
+<p>Instead of expressing the outcome, we find it&#8217;s best to keep that out of our scenario, and just descrbe the context and the action.</p>
+</div>
+<div class="paragraph">
+<p>So if this scenario were an epside of Friends, what would it be called? This is the one where… well.. <em>the one where Sean shouts some over-long messages and some containing the word “buy”.</em></p>
 </div>
 <div class="paragraph">
 <p><a href="#shot-747" id="shot-747" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Updates the name of the scenario</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Se</span><span class="nf">an </span>shouts some over-long messages and some messages containing the word “buy”</code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>That’s quite a complicated name isn’t it? Maybe this scenario is doing too much!</p>
+<p>Well, this is better than what we had before, but it&#8217;s s quite a complicated name isn’t it? Maybe this scenario is doing too much!</p>
 </div>
 <div class="paragraph">
 <p>&#8230;&#8203;and that’s the second problem.</p>
@@ -7347,7 +7364,27 @@ Your browser does not support the video tag.
 <p>You’ll often need more than one scenario to illustrate each rule, but in this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.</p>
 </div>
 <div class="paragraph">
+<p>We can tuck each one under a <code>Rule</code> keyword, removing the rules from the feature file&#8217;s free-text description:</p>
+</div>
+<div class="paragraph">
 <p><a href="#shot-748" id="shot-748" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Write out the two new scenarios, leaving the original in place.</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">the</span> <span class="err">word</span> <span class="err">"buy"</span> <span class="err">and</span> <span class="err">you</span> <span class="err">lose</span> <span class="err">5</span> <span class="err">credits.</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Sean some messages containing the word “buy”
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span>
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 15 credits
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 26 credits</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Great. Now the effect of each of these rules is much more clearly documented.</p>
@@ -7359,7 +7396,7 @@ Your browser does not support the video tag.
 <p>We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?</p>
 </div>
 <div class="paragraph">
-<p>Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. As we talk about it, we realise that while we don’t need this one anymore
+<p>Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. That&#8217;s why she likes having a scenario that covers both. As we talk about it, we realise that while we don’t need this one anymore
 <a href="#shot-749" id="shot-749" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 removes original long scenario</a>
 there’s a missing scenario - where both rules apply to the <em>same message</em>: <em>The one where there’s a shout that’s both over-long and with the word “buy” in it.</em></p>
 </div>
@@ -7368,6 +7405,12 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 </div>
 <div class="paragraph">
 <p><a href="#shot-750" id="shot-750" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Writes up the question.</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="err">Questions</span><span class="p">:</span>
+    <span class="nf">* </span>What about the one where the same message is both over-long and contains the word <span class="s">"buy"</span></code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -7391,9 +7434,17 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 <div class="paragraph">
 <p><a href="#shot-751" id="shot-751" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 Writes up the other question</a></p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="err">Questions</span><span class="p">:</span>
+    <span class="nf">* </span>What about the one where the same message is both over-long and contains the word <span class="s">"buy"</span>
+    <span class="nf">* </span>What happens if Sean runs out of credits?</code></pre>
 </div>
-<div class="sect3">
-<h4 id="_close">7.5.4. Close</h4>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_conclusion">7.6. Conclusion</h3>
 <div class="paragraph">
 <p><a href="#shot-752" id="shot-752" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 07.closing.common.animation.mp4</a></p>
 </div>
@@ -7431,11 +7482,43 @@ Your browser does not support the video tag.
 </div>
 </div>
 </div>
+<div class="sect1">
+<h2 id="_problems_and_solutions">8. Problems and Solutions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO: Import the original script.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.google.com/document/d/1groCmXmJZQp03olZB2u_pif_SGn3BTtWp5vx8X80-OM/edit" class="bare">https://docs.google.com/document/d/1groCmXmJZQp03olZB2u_pif_SGn3BTtWp5vx8X80-OM/edit</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_acceptance_tests_vs_unit_tests">9. Acceptance tests vs Unit tests</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO: Import the original script.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://docs.google.com/document/d/1oP9-69yRPEUZw7UE8KKtB4547rJq7GTPjG9gmqC1MA4/edit?usp=drive_web&amp;ouid=111560499095121617888" class="bare">https://docs.google.com/document/d/1oP9-69yRPEUZw7UE8KKtB4547rJq7GTPjG9gmqC1MA4/edit?usp=drive_web&amp;ouid=111560499095121617888</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_web_automation_with_selenium_webdriver">10. Web automation with Selenium Webdriver</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>TODO: Import the original script.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://drive.google.com/drive/u/0/folders/0B1Qgdp5tWFyzZ25NQjloazhjTUk?ths=true" class="bare">https://drive.google.com/drive/u/0/folders/0B1Qgdp5tWFyzZ25NQjloazhjTUk?ths=true</a></p>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-04-12 19:16:03 UTC
+Last updated 2021-04-15 18:25:58 UTC
 </div>
 </div>
 <style>
