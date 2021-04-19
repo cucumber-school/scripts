@@ -493,8 +493,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_filtering_with_tags">6.2. Filtering With Tags</a></li>
 <li><a href="#_more_control">6.3. More Control</a></li>
 <li><a href="#_formatter_plugins">6.4. Formatter plugins</a></li>
-<li><a href="#_rerun_formatter">6.5. Rerun formatter</a></li>
-<li><a href="#_static_configuration">6.6. Static configuration</a></li>
+<li><a href="#_publishing_results">6.5. Publishing Results</a></li>
 </ul>
 </li>
 <li><a href="#_details">7. Details</a></li>
@@ -5389,26 +5388,10 @@ bundle exec cucumber -h</code></pre>
 <div class="sect2">
 <h3 id="_formatter_plugins">6.4. Formatter plugins</h3>
 <div class="paragraph">
-<p>Let’s take a closer look at the <code>--format</code> option.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code>bundle exec cucumber --format help</code></pre>
-</div>
+<p>Cucumber can report results in other formats, which can be useful for generating reports. Let’s take a closer look at some of the formatter plugins that ship with Cucumber - starting with the HTML formatter.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-320" id="shot-320" title="show console output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: show console output</a>
-So far, every time we have run Cucumber, it has printed the features back to us - in the console. Cucumber can report results in other formats, and this is useful for generating reports.</p>
-</div>
-<div class="paragraph">
-<p><a href="#shot-321" id="shot-321" title="run with html formatter" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: run with html formatter</a>
-Let’s try the HTML formatter.</p>
-</div>
-<div class="paragraph">
-<p>When we use the html formatter we use dash-dash out to specify the file where the report should be written. Otherwise it will be written directly to the console.</p>
-</div>
-<div class="paragraph">
-<p><a href="#shot-322" id="shot-322" title="open html output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: open html output</a></p>
+<p>When we use the html formatter we need to specify the filename that the report should be written to using the --out flag.<a href="#shot-320" id="shot-320" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> Otherwise it will be written directly to the console.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5416,66 +5399,182 @@ Let’s try the HTML formatter.</p>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-323" id="shot-323" title="run with json formatter (although this may be deprecated)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4: run with json formatter (although this may be deprecated)</a>
-Let’s try another one - JSON.</p>
+<p>Let&#8217;s take a look at the html that has been generated. <a href="#shot-321" id="shot-321" title="Open target/my-report in the browser" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Open target/my-report in the browser</a> As you can see, this generates a nicely structured HTML page that details what scenarios were run and whether the system behaved as expected.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-324" id="shot-324" title="show json output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: show json output</a>
-The JSON report outputs the results in a single file. You can write your own script or program to post-process this file to generate your own report.</p>
+<p><a href="#shot-322" id="shot-322" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: run Cucumber</a>
+Next, we&#8217;ll use the JSON formatter. We can use the abbreviated version of our <code>--format</code> and <code>--out</code> flags <code>-f</code> and <code>-o</code>.<a href="#shot-323" id="shot-323" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a><a href="#shot-324" id="shot-324" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber -f json -o report.json</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-325" id="shot-325" title="run &amp; highlight progress output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: run &amp; highlight progress output</a>
-There is also a progress formatter, which just prints out a single character for each step.</p>
+<p>The JSON report outputs the results in a single file. <a href="#shot-325" id="shot-325" title="open the json file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: open the json file</a> You can write your own script or program to post-process this file to generate your own report. Additionally,  many continuous integration servers understand the json format and can turn it into a nicely formatted report.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-326" id="shot-326" title="run &amp; highlight JUnit output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: run &amp; highlight JUnit output</a>
-The JUnit formatter outputs results in an XML format, which many continuous integration servers will turn into a nice report.</p>
+<p>There is also a progress formatter,<a href="#shot-326" id="shot-326" title="run Cucumber" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: run Cucumber</a> which just prints out a single character for each step.<a href="#shot-327" id="shot-327" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a> This is the default formatter, which we used in earlier chapters.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber -f progress</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-327" id="shot-327" title="multiple formatters" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: multiple formatters</a>
-We can specify multiple formatters like this. Only one formatter is allowed to output to the console&#8201;&#8212;&#8201;all the others must have a dash-dash out specifying which file their output should be written to.</p>
+<p><a href="#shot-328" id="shot-328" title="run cucumber with multiple formatters" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9: run cucumber with multiple formatters</a>
+We can specify multiple formatters like this.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber -f html -o  report.html -f json -o report.json -f progress</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The one without a path appended will be written to the console. If you ask multiple formatters to output to the console, only the last one mentioned will actually produce any output - which is why the pretty formatter has been replaced with progress formatter. <a href="#shot-329" id="shot-329" title="show the progress output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10: show the progress output</a></p>
+</div>
+<div class="sect3">
+<h4 id="_rerun_formatter">6.4.1. Rerun formatter</h4>
+<div class="paragraph">
+<p>One of the formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail. <a href="#shot-330" id="shot-330" title="Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!"" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11: Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!"</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free cupcakes!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And see it fail on the terminal. <a href="#shot-331" id="shot-331" title="run npm test and show failing output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12: run npm test and show failing output</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>bundle exec cucumber</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We choose the rerun formatter <a href="#shot-332" id="shot-332" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a> and send the output to a file whose name is preceded by the <code>@</code> (at) sign.<a href="#shot-333" id="shot-333" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a> Let&#8217;s call it @rerun.txt.<a href="#shot-334" id="shot-334" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a> <a href="#shot-335" id="shot-335" title="run cucumber using rerun formatter" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16: run cucumber using rerun formatter</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber -f rerun:@rerun.txt</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s look at what’s in that @rerun.txt file. <a href="#shot-336" id="shot-336" title="open @rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17: open @rerun.txt</a> It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.</p>
+</div>
+<div class="paragraph">
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. <a href="#shot-337" id="shot-337" title="run Cucumber using the @rerun.txt file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18: run Cucumber using the @rerun.txt file</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>bundle exec cucumber $(cat @rerun.txt)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and are working yourself back to green.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s fix the scenario <a href="#shot-338" id="shot-338" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19: undo change in feature file</a></p>
+</div>
+<div class="listingblock">
+<div class="title">hear_shout.feature</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Two shouts
+      <span class="nf">Given </span>a person named Sean
+      <span class="nf">And </span>a person named Lucy
+      <span class="nf">When </span>Sean shouts <span class="s">"Free bagels!"</span>
+      <span class="nf">And </span>Sean shouts <span class="s">"Free toast!"</span>
+      <span class="err">Then Lucy hears the following messages</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Free</span> <span class="nv">bagels!</span> <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Free</span> <span class="n">toast!</span>  <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and rerun the failing scenario again <a href="#shot-339" id="shot-339" title="run npm test from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20: run npm test from console</a></p>
+</div>
+<div class="paragraph">
+<p>Great. We&#8217;re back to green again.</p>
+</div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_rerun_formatter">6.5. Rerun formatter</h3>
+<h3 id="_publishing_results">6.5. Publishing Results</h3>
 <div class="paragraph">
-<p>One of these formatter plugins is rather special - the rerun formatter. Before we try it out, let’s make one of our scenarios fail.</p>
+<p><a href="#shot-340" id="shot-340" title="show HTML output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: show HTML output</a>
+In the last lesson we saw the output generated by the HTML plugin. This is a great way for your business colleagues and customers to engage with the development of the product. Since the scenarios are written in business language, they act as documentation that everyone interested in the product can understand. And, because the results are colour-coded green (if the system behaves as expected) or red (if it doesn&#8217;t) everyone can see what behaviour has been implemented.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-328" id="shot-328" title="Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!"" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9: Changes “Two shouts” scenario’s “Sean shouts "Free bagels!"” step to “Sean shouts "Free cupcakes!"</a></p>
+<p>The challenge is making sure that this documentation is easily available. Feature files are usually checked into source control along with the source code, which isn&#8217;t a great way of making it accessible to less technical team members. The HTML output can be shared, but it needs to be stored somewhere that everyone has access to - such as on your intranet or wiki. That&#8217;s something that your team has to configure themselves.</p>
 </div>
 <div class="paragraph">
-<p>We choose the rerun formatter and send the output to a file called rerun.txt.</p>
+<p>Since Cucumber 6.0.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. <a href="#shot-341" id="shot-341" title="go to reports.cucumber.io" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: go to reports.cucumber.io</a></p>
 </div>
 <div class="paragraph">
-<p>Let’s look at what’s in that rerun.txt file. It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format we showed you earlier.</p>
+<p>Ensure that you&#8217;re using Cucumber 6.0.0 or later <a href="#shot-342" id="shot-342" title="show package-lock.json file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: show package-lock.json file</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Gemfile.lock</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="json"><span class="w">    </span><span class="err">cucumber</span><span class="w"> </span><span class="err">(</span><span class="mf">6.0</span><span class="err">.</span><span class="mi">0</span><span class="err">)</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. c:</p>
+<p>and remove publish-quiet from cucumber.js. <a href="#shot-343" id="shot-343" title="cucumber.js" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4: cucumber.js</a></p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--order</span><span class="nv"> </span><span class="s">random'</span> <span class="err">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and you are working yourself back to green.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_static_configuration">6.6. Static configuration</h3>
-<div class="paragraph">
-<p>It would be tedious if you had to write out these configuration options every time you run Cucumber. To make this easier you can write the options in a file called cucumber.yml that we showed you earlier.</p>
+<p>Now when we run Cucumber, <a href="#shot-344" id="shot-344" title="npm test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: npm test</a> it helpfully prints out a banner telling you how to publish your results to Cucumber Reports <a href="#shot-345" id="shot-345" title="highlight banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: highlight banner</a>.</p>
 </div>
 <div class="paragraph">
-<p>In cucumber.yml file you can define one or more profiles that describe a set of configuration options for Cucumber.</p>
+<p>Let&#8217;s follow the instructions in the banner and add --publish to cucumber.js <a href="#shot-346" id="shot-346" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a>.</p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish</span><span class="nv"> </span><span class="s">--order</span><span class="nv"> </span><span class="s">random'</span> <span class="err">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>For example, we can define a <code>dev</code> profile that runs only the @focus scenarios and uses the progress formatter.</p>
+<p>Now we can run Cucumber again and we get a different banner output shot:[1, "show published banner"]. The unique URL in this banner is the address of your published report <a href="#shot-347" id="shot-347" title="highlight URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: highlight URL</a>.</p>
 </div>
 <div class="paragraph">
-<p>We use the <code>--profile</code> option to choose this profile when running Cucumber.</p>
+<p><a href="#shot-348" id="shot-348" title="follow URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9: follow URL</a>
+Open the URL and you&#8217;ll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered <a href="#shot-349" id="shot-349" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
 </div>
 <div class="paragraph">
-<p>To change the default behaviour of Cucumber, change the default profile. Let’s make Cucumber strict by default.</p>
+<p>You might have noticed the warning in the banner that says the report will "self-destruct". <a href="#shot-350" id="shot-350" title="highlight warning" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11: highlight warning</a> To prevent a report from being deleted, it has to be associated with an authenticated account.</p>
 </div>
 <div class="paragraph">
-<p>It’s common for teams to have a number of profiles defined, usually for the different environments where Cucumber runs. You can have a CI profile that behaves differently to the one you use on your dev machines, for example.</p>
+<p>Follow the link in the report to authenticate your account <a href="#shot-351" id="shot-351" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a> You can then retrieve your Cucumber Reports publish token <a href="#shot-352" id="shot-352" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a>. Reports associated with a publish token will be kept until explicitly deleted.</p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-353" id="shot-353" title="publish quiet" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14: publish quiet</a>
+During development you probably won&#8217;t want to publish a report after every build&#8230;&#8203; and you might prefer not to see the banner output telling you about Cucumber Reports. Let&#8217;s fix this in cucumber.js by replacing --publish with --publish-quiet:</p>
+</div>
+<div class="listingblock">
+<div class="title">cucumber.js</div>
+<div class="content">
+<pre class="rouge highlight"><code data-lang="yaml"><span class="s">module.exports = { default</span><span class="pi">:</span> <span class="s1">'</span><span class="s">--publish-quiet</span><span class="nv"> </span><span class="s">--order</span><span class="nv"> </span><span class="s">random'</span> <span class="err">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-354" id="shot-354" title="no banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15: no banner</a>
+Now when we run Cucumber, no report is published and no banner advertising Cucumber Reports is output.</p>
+</div>
+<div class="paragraph">
+<p>Cucumber Reports is under active development, so expect to see many more useful features coming in the coming months.</p>
 </div>
 </div>
 </div>
@@ -5541,7 +5640,7 @@ We can specify multiple formatters like this. Only one formatter is allowed to o
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-04-15 18:43:18 UTC
+Last updated 2021-04-19 12:09:35 UTC
 </div>
 </div>
 <style>
