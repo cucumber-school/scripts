@@ -10,6 +10,7 @@ import io.cucumber.datatable.DataTable;
 
 import java.util.*;
 
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.junit.Assert.assertEquals;
 
 import java.util.HashMap;
@@ -21,9 +22,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class StepDefinitions {
 
     private static final int DEFAULT_RANGE = 100;
-    private String messageFromSean;
     private Network network = new Network(DEFAULT_RANGE);
     private Map<String, Person> people;
+    private Map<String, List<String>> messagesShoutedBy;
 
 
     static class Whereabouts {
@@ -44,6 +45,7 @@ public class StepDefinitions {
     @Before
     public void createNetwork() {
         people = new HashMap<String, Person>();
+        messagesShoutedBy = new HashMap<String, List<String>>();
     }
 
     @Given("the range is {int}")
@@ -63,27 +65,40 @@ public class StepDefinitions {
         }
     }
 
+    @Given("Sean has bought {int} credits")
+    public void sean_has_bought_credits(int credits) {
+        people.get("Sean").setCredits(credits);
+    }
+
     @When("Sean shouts")
     public void sean_shouts() throws Throwable {
-        people.get("Sean").shout("Hello, world");
+        shout("Hello, world");
     }
 
     @When("Sean shouts {string}")
     public void sean_shouts_message(String message) throws Throwable {
-        people.get("Sean").shout(message);
-        messageFromSean = message;
+        shout(message);
     }
 
     @When("Sean shouts the following message")
     public void sean_shouts_the_following_message(String message) throws Throwable {
+        shout(message);
+    }
+
+    private void shout(String message) {
         people.get("Sean").shout(message);
-        messageFromSean = message;
-        System.out.println(message);
+        List<String> messages = messagesShoutedBy.get("Sean");
+        if (messages == null) {
+            messages = new ArrayList<String>();
+            messagesShoutedBy.put("Sean", messages);
+        }
+        messages.add(message);
     }
 
     @Then("Lucy should hear Sean's message")
     public void lucy_hears_Sean_s_message() throws Throwable {
-        assertEquals(Collections.singletonList(messageFromSean), people.get("Lucy").getMessagesHeard());
+        List<String> messages = messagesShoutedBy.get("Sean");
+        assertEquals(messages, people.get("Lucy").getMessagesHeard());
     }
 
     @Then("Lucy should hear a shout")
@@ -104,5 +119,20 @@ public class StepDefinitions {
             actualMessages.add(Collections.singletonList(message));
         }
         expectedMessages.diff(DataTable.create(actualMessages));
+    }
+
+    @Then("Lucy hears all Sean's messages")
+    public void lucy_hears_all_Sean_s_messages() throws Throwable {
+        List<String> heardByLucy = people.get("Lucy").getMessagesHeard();
+        List<String> messagesFromSean = messagesShoutedBy.get("Sean");
+
+        // Hamcrest's hasItems matcher wants an Array, not a List.
+        String[] messagesFromSeanArray = messagesFromSean.toArray(new String[messagesFromSean.size()]);
+        assertThat(heardByLucy, hasItems(messagesFromSeanArray));
+    }
+
+    @Then("Sean should have {int} credits")
+    public void sean_should_have_credits(int expectedCredits) {
+        assertEquals(expectedCredits, people.get("Sean").getCredits());
     }
 }

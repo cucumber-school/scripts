@@ -16,39 +16,39 @@ public class NetworkTest {
 
     @Test
     public void broadcasts_a_message_to_a_listener_within_range() {
-        int seanLocation = 0;
+        Person sean = new Person(network, 0);
         Person lucy = mock(Person.class);
         network.subscribe(lucy);
-        network.broadcast(message, seanLocation);
+        network.broadcast(message, sean);
 
         verify(lucy).hear(message);
     }
 
     @Test
     public void does_not_broadcast_a_message_to_a_listener_out_of_range() {
-        int seanLocation = 0;
+        Person sean = new Person(network, 0);
         Person laura = mock(Person.class);
         when(laura.getLocation()).thenReturn(101);
         network.subscribe(laura);
-        network.broadcast(message, seanLocation);
+        network.broadcast(message, sean);
 
         verify(laura, never()).hear(message);
     }
 
     @Test
     public void does_not_broadcast_a_message_to_a_listener_out_of_range_negative_distance() {
-        int sallyLocation = 101;
+        Person sally = new Person(network, 101);
         Person lionel = mock(Person.class);
         when(lionel.getLocation()).thenReturn(0);
         network.subscribe(lionel);
-        network.broadcast(message, sallyLocation);
+        network.broadcast(message, sally);
 
         verify(lionel, never()).hear(message);
     }
 
     @Test
     public void does_not_broadcast_a_message_over_180_characters_even_if_listener_is_in_range() {
-        int seanLocation = 0;
+        Person sean = new Person(network, 0);
 
         char[] chars = new char[181];
         Arrays.fill(chars, 'x');
@@ -56,7 +56,7 @@ public class NetworkTest {
 
         Person laura = mock(Person.class);
         network.subscribe(laura);
-        network.broadcast(longMessage, seanLocation);
+        network.broadcast(longMessage, sean);
 
         verify(laura, never()).hear(longMessage);
     }

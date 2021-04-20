@@ -27,7 +27,7 @@ public class PersonTest {
         String message = "Free bagels!";
         Person sean = new Person(network, 0);
         sean.shout(message);
-        verify(network).broadcast(message, 0);
+        verify(network).broadcast(message, sean);
     }
 
     @Test
