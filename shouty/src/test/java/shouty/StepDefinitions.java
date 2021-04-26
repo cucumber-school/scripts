@@ -80,9 +80,12 @@ public class StepDefinitions {
         shout(message);
     }
 
-    @When("Sean shouts a message containing the word {string}")
-    public void sean_shouts_a_message_containing_the_word(String word) throws Throwable {
-        shout("a message containing the word " + word);
+    @When("Sean shouts {int} messages containing the word {string}")
+    public void sean_shouts_messages_containing_the_word(int count, String word) throws Throwable {
+        String message = "a message containing the word " + word;
+        for (int i = 0; i < count; i++) {
+            shout(message);
+        }
     }
 
     @When("Sean shouts the following message")
