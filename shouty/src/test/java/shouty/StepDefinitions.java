@@ -95,6 +95,15 @@ public class StepDefinitions {
         shout("here is a message");
     }
 
+    @When("Sean shouts a long message")
+    public void sean_shouts_a_long_message() throws Throwable {
+        String longMessage = String.join(
+                "\n",
+                "A message from Sean",
+                "that spans multiple lines");
+        shout(longMessage);
+    }
+
     private void shout(String message) {
         people.get("Sean").shout(message);
         List<String> messages = messagesShoutedBy.get("Sean");
