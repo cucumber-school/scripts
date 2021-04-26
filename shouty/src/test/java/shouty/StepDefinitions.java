@@ -90,6 +90,11 @@ public class StepDefinitions {
         shout(message);
     }
 
+    @When("Sean shouts a message")
+    public void sean_shouts_a_message() throws Throwable {
+        shout("here is a message");
+    }
+
     private void shout(String message) {
         people.get("Sean").shout(message);
         List<String> messages = messagesShoutedBy.get("Sean");
