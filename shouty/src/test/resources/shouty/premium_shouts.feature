@@ -20,7 +20,7 @@ Feature: Premium account
       You need to come and visit Sean's coffee,
       we have the best bagels in town.
       """
-    And Sean shouts "Who will buy my sweet red muffins?"
+    When Sean shouts a message containing the word "buy"
     And Sean shouts the following message
       """
       This morning I got up early and baked some
@@ -30,7 +30,7 @@ Feature: Premium account
       and I scrambled them just for you. Come on over
       and let's eat breakfast!
       """
-    And Sean shouts "Buy my delicious sausage rolls"
+    When Sean shouts a message containing the word "buy"
     And Sean shouts the following message
       """
       Here are some things you will love about Sean's:
