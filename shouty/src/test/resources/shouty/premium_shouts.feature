@@ -12,8 +12,7 @@ Feature: Premium account
 
   Scenario: Test premium account features
     Given Sean has bought 30 credits
-    When Sean shouts an over-long message
-    And Sean shouts an over-long message
+    When Sean shouts 2 over-long messages
     And Sean shouts a message containing the word "buy"
     And Sean shouts a message containing the word "buy"
     And Sean shouts a message containing the word "buy"
