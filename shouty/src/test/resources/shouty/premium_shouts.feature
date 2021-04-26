@@ -17,15 +17,7 @@ Feature: Premium account
     And Sean shouts a message
     And Sean shouts a long message
     When Sean shouts a message containing the word "buy"
-    And Sean shouts the following message
-      """
-      This morning I got up early and baked some
-      bagels especially for you. Then I fried some
-      sausages. I went out to see my chickens, they
-      had some delicious fresh eggs waiting for me
-      and I scrambled them just for you. Come on over
-      and let's eat breakfast!
-      """
+    And Sean shouts an over-long message
     When Sean shouts a message containing the word "buy"
     And Sean shouts the following message
       """
