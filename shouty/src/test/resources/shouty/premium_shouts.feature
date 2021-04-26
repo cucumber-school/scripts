@@ -15,11 +15,7 @@ Feature: Premium account
     When Sean shouts a message containing the word "buy"
     And Sean shouts a message
     And Sean shouts a message
-    And Sean shouts the following message
-      """
-      You need to come and visit Sean's coffee,
-      we have the best bagels in town.
-      """
+    And Sean shouts a long message
     When Sean shouts a message containing the word "buy"
     And Sean shouts the following message
       """
