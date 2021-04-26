@@ -104,6 +104,14 @@ public class StepDefinitions {
         shout(longMessage);
     }
 
+    @When("Sean shouts an over-long message")
+    public void sean_shouts_an_over_long_message() throws Throwable {
+        String baseMessage = "A message from Sean that is 181 characters long ";
+        String padding = "x";
+        String overlongMessage = baseMessage + padding.repeat(181 - baseMessage.length());
+        shout(overlongMessage);
+    }
+
     private void shout(String message) {
         people.get("Sean").shout(message);
         List<String> messages = messagesShoutedBy.get("Sean");
