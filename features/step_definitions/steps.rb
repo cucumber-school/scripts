@@ -53,6 +53,13 @@ When "Sean shouts a long message" do
   @messages_shouted_by["Sean"] << message
 end
 
+When "Sean shouts an over-long message" do
+  base_message = "A message from Sean that is 181 characters long "
+  message = base_message + "x" * (181 - base_message.size)
+  @people["Sean"].shout(message)
+  @messages_shouted_by["Sean"] << message
+end
+
 When 'Sean shouts a message containing the word {string}' do |word|
   message = "A message containing the word #{word}"
   @people["Sean"].shout(message)
