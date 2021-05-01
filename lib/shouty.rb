@@ -1,17 +1,19 @@
 module Shouty
   class Person
     attr_reader :messages_heard, :location
+    attr_accessor :credits
 
     def initialize(network, location)
       @messages_heard = []
       @network        = network
       @location       = location
+      @credits        = 0
 
       @network.subscribe(self)
     end
 
     def shout(message)
-      @network.broadcast(message, @location)
+      @network.broadcast(message, self)
     end
 
     def hear(message)
@@ -29,17 +31,21 @@ module Shouty
       @listeners << person
     end
 
-    def broadcast(message, shouter_location)
+    def broadcast(message, shouter)
+      short_enough = message.size <= 180
+      deduct_credits(short_enough, message, shouter)
       @listeners.each do |listener|
-        within_range = (listener.location - shouter_location).abs <= @range
-        short_enough = message.size <= 180
+        within_range = (listener.location - shouter.location).abs <= @range
 
-        if within_range
-          if short_enough
-            listener.hear(message)
-          end
+        if within_range && (short_enough || shouter.credits >= 0)
+          listener.hear(message)
         end
       end
+    end
+
+    def deduct_credits(short_enough, message, shouter)
+      shouter.credits -= 2 unless short_enough
+      shouter.credits -= (message.scan(/buy/i) || []).size * 5
     end
   end
 end
