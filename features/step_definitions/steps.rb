@@ -47,6 +47,12 @@ When "Sean shouts a message" do
   @messages_shouted_by["Sean"] << message
 end
 
+When "Sean shouts a long message" do
+  message = ["A message from Sean", "that spans multiple lines"].join("\n")
+  @people["Sean"].shout(message)
+  @messages_shouted_by["Sean"] << message
+end
+
 When 'Sean shouts a message containing the word {string}' do |word|
   message = "A message containing the word #{word}"
   @people["Sean"].shout(message)
