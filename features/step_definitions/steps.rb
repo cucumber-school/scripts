@@ -41,6 +41,12 @@ When 'Sean shouts the following message' do |message|
   @messages_shouted_by["Sean"] << message
 end
 
+When 'Sean shouts a message containing the word {string}' do |word|
+  message = "A message containing the word #{word}"
+  @people["Sean"].shout(message)
+  @messages_shouted_by["Sean"] << message
+end
+
 Then "Lucy should hear Sean's message" do
   expect(@people['Lucy'].messages_heard).to eq [@messages_shouted_by["Sean"][0]]
 end
