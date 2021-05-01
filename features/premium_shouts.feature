@@ -19,15 +19,7 @@ Feature: Premium account
     When Sean shouts a message containing the word "buy"
     And Sean shouts an over-long message
     When Sean shouts a message containing the word "buy"
-    And Sean shouts the following message
-      """
-      Here are some things you will love about Sean's:
-      - the bagels
-      - the coffee
-      - the chickens
-      Come and visit us today! We'd really love to see you.
-      Pop round anytime, honestly it's fine.
-      """
+    And Sean shouts an over-long message
     And Sean shouts a message
     Then Lucy hears all Sean's messages
     And Sean should have 11 credits
