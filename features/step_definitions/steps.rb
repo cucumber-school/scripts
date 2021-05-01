@@ -62,10 +62,12 @@ When "Sean shouts {int} over-long messages" do |count|
   end
 end
 
-When 'Sean shouts a message containing the word {string}' do |word|
-  message = "A message containing the word #{word}"
-  @people["Sean"].shout(message)
-  @messages_shouted_by["Sean"] << message
+When 'Sean shouts {int} messages containing the word {string}' do |count, word|
+  count.times do
+    message = "A message containing the word #{word}"
+    @people["Sean"].shout(message)
+    @messages_shouted_by["Sean"] << message
+  end
 end
 
 Then "Lucy should hear Sean's message" do
