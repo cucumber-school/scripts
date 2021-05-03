@@ -52,13 +52,13 @@ To do this, we can use the random flag in the profile file. shot::[9]
 
 [source]
 ----
-default: --order random
+default: --quiet --order random
 ----
 
 Now when we run Cucumber, the scenarios are run in a random order shot::[10, run Cucumber & show new order of scenario execution]. Now there's almost no chance of a dependency between scenarios slipping through without being noticed.
 
 shot::[11, "show 'List configuration options' section of"]
-A full list of Cucumber's configuration properties can be found by passing the `--help` flag on the command line. shot::[12, highlight top of output] Or using the abbreviated version `-h` shot::[13]
+A full list of Cucumber's configuration properties can be found by passing the `--help` flag on the command line. shot::[12, highlight top of output] The same can be accomblished by using the abbreviated version `-h` shot::[13]
 
 [source]
 ----
