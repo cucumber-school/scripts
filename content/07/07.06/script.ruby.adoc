@@ -1,0 +1,21 @@
+include::./title.adoc[]
+
+shot::["07.closing.common.animation.mp4"]
+
+video::https://drive.google.com/uc?id=1FGdj-mN_h0aTk9p7c_sY5aIhuLeZeNkt[]
+
+Well that’s been quite a session. We came in to fix one bug, and ended up having to fix our feature file first. We’re still not done with that, either. By pushing the incidental details down out of the scenario into the step definitions, we’ve made a mess of duplication in the step definitions. There’s a neat fix for that, but we’ll have to save that for next time.
+
+Let’s reflect on what we’ve learned.
+
+When scenarios are very heavy in detail, they can be confusing to read. We call these _incidental details_ when they are just noise that detracts from communicating the essence of the scenario.
+
+Scenarios that are heavy in detail are sometimes said to be written in an _imperative_ style. They contain lots of “how”, and not much “what”. We often use this style when we’re working on a brand new domain problem and are still grasping for an understanding. We just want to write _something_ down.
+
+As your confidence in your domain knowledge improves, you’d expect to feel comfortable removing some of these details. Scenarios with more abstract steps like this are said to be written in a _declarative_ style.
+
+Using a more declarative style might mean you’ll need to find names for things, like the way we had to name an over-long message. This discovery of your ubiquitous domain language is a great side-effect of distilling the essence of your scenarios. Now you have a bigger vocabulary that you can use all the way down through your code, and in your future conversations, too.
+
+One down-side, as you’ve seen, of pushing the “how” down from your scenarios into the step definitions is that the step definition code becomes more complex. Some teams reject this, and prefer to use a simple vocabulary of step definitions, leaving more detail in their scenarios. There are no right and wrong answers here, but if you have sufficient competence with code, you’ll easily be able to handle that extra bit of complexity and keep readability top of your priorities.
+
+That’s what we’ll work on next time. Bye for now!

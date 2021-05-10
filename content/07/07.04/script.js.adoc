@@ -13,7 +13,7 @@ We can start with this step, `When Sean shouts "Come and buy a coffee".`
 
 From what what we know about the rules, what’s important here is that the shout contains the word “buy”. So let’s write that:
 
-shot::["Changes step to When Sean shouts a message containing the word "buy"]
+shot::[2,"Changes step to When Sean shouts a message containing the word "buy"]
 [source, gherkin]
 ----
 include::../code/js/03-intention-revealing-buy-step/features/premium_shouts.feature[lines=15]
@@ -28,11 +28,11 @@ We’ll need a new step definition for this, of course.
 npm exec cucumber-js -- --tags "not @todo"
 ----
 
-shot::["Runs `cucumber --tags ~@todo`, copies / pastes step def snippet into steps file."]
+shot::[3,"Runs `cucumber --tags ~@todo`, copies / pastes step def snippet into steps file."]
 
 We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.
 
-shot::["Copies code from step def below, then adds code above to create a test message containing the given word."]
+shot::[4,"Copies code from step def below, then adds code above to create a test message containing the given word."]
 
 [source, js]
 ----
@@ -41,7 +41,7 @@ include::../code/js/04-add-step-def-for-intention-revealing-buy-step/features/st
 
 Let’s run Cucumber to check we haven’t made any mistakes…
 
-shot::["Runs `cucumber --tags ~@todo`."]
+shot::[5,"Runs `cucumber --tags ~@todo`."]
 [source, bash]
 ----
 npm exec cucumber-js -- --tags "not @todo"
@@ -51,7 +51,7 @@ All green. Good.
 
 Now we can use that same step everywhere else in the scenario, too, where that is the real intent of the step.
 
-shot::["Changes the other two steps that mention the word “buy”. Runs `cucumber --tags ~@todo`. All green."]
+shot::[6,"Changes the other two steps that mention the word “buy”. Runs `cucumber --tags ~@todo`. All green."]
 
 [source, gherkin]
 ----
@@ -69,7 +69,7 @@ include::../code/js/05-use-intention-revealing-step-everywhere/features/premium_
 
 In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:
 
-shot::["Changes the step from And Sean shouts "My bagels are yummy" to And Sean shouts a message"]
+shot::[7,"Changes the step from And Sean shouts "My bagels are yummy" to And Sean shouts a message"]
 
 [source, gherkin]
 ----
@@ -78,7 +78,7 @@ include::../code/js/06-sean-shouts-a-message/features/premium_shouts.feature[lin
 
 Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.
 
-shot::["Runs `cucumber --tags ~@todo`,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message."]
+shot::[8,"Runs `cucumber --tags ~@todo`,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message."]
 
 [source, js]
 ----
@@ -87,7 +87,7 @@ include::../code/js/06-sean-shouts-a-message/features/step_definitions/steps.js[
 
 We’ll run Cucumber again just in case...
 
-shot::["Runs `cucumber --tags ~@todo`."]
+shot::[9,"Runs `cucumber --tags ~@todo`."]
 [source, bash]
 ----
 npm exec cucumber-js -- --tags "not @todo"
@@ -97,7 +97,7 @@ All green.
 
 And finally, let’s use that new step everywhere we can… 
 
-shot::["Changes two steps to that shout regular messages to use the new step"]
+shot::[10,"Changes two steps to that shout regular messages to use the new step"]
 
 [source, gherkin]
 ----
@@ -106,7 +106,7 @@ include::../code/js/07-shout-a-message-everywhere/features/premium_shouts.featur
 
 ...and run Cucumber once again.
 
-shot::["Runs `cucumber --tags ~@todo`"]
+shot::[11,"Runs `cucumber --tags ~@todo`"]
 
 [source, bash]
 ----
@@ -126,27 +126,27 @@ include::../code/js/07-shout-a-message-everywhere/features/premium_shouts.featur
 
 Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now that there must be _some_ reason it's different. So we'll push the details about the message content down into the step definition, following the same recipe.
 
-shot::["Changes the step to `And Sean shouts a long message`"]
+shot::[12,"Changes the step to `And Sean shouts a long message`"]
 
 [source, gherkin]
 ----
 include::../code/js/08-reword-step/features/premium_shouts.feature[lines=18]
 ----
 
-shot::["Runs `cucumber --tags ~@todo`"]
+shot::[13,"Runs `cucumber --tags ~@todo`"]
 
-shot::["Copies / pastes step def snippet into steps file"]
+shot::[14,"Copies / pastes step def snippet into steps file"]
 
 Again, we’ll tolerate the duplication for now, and just generate a long message here.
 
-shot::["Copies shouting code from step def below, then adds code above to create a 180 character test message."]
+shot::[15,"Copies shouting code from step def below, then adds code above to create a 180 character test message."]
 
 [source, js]
 ----
 include::../code/js/09-define-step/features/step_definitions/steps.js[lines=54..61]
 ----
 
-shot::["Runs `cucumber --tags ~@todo`. All green."]
+shot::[16,"Runs `cucumber --tags ~@todo`. All green."]
 
 ==== Distill the over-long shout step
 
@@ -159,7 +159,7 @@ include::../code/js/08-reword-step/features/premium_shouts.feature[lines=20..28]
 
 This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an _over-long message_. Let’s update the rule we wrote up earlier to document this evolution of our domain language:
 
-shot::["Changes second rule “Long messages…” to “Over-long messages…”"]
+shot::[17,"Changes second rule “Long messages…” to “Over-long messages…”"]
 
 [source, gherkin]
 ----
@@ -168,7 +168,7 @@ include::../code/js/10-document-refined-rule/features/premium_shouts.feature[lin
 
 Then we can use that term in a new, more abstract step:
 
-shot::["Changes step to `And Sean shouts an over-long message`"]
+shot::[18,"Changes step to `And Sean shouts an over-long message`"]
 
 [source, gherkin]
 ----
@@ -177,31 +177,31 @@ include::../code/js/11-reword-step/features/premium_shouts.feature[lines=20]
 
 Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.
 
-shot::["Copies shouting code from step def below, then changes first line to create a 181-character test message."]
+shot::[19,"Copies shouting code from step def below, then changes first line to create a 181-character test message."]
 
 [source, js]
 ----
 include::../code/js/12-implement-over-long-step/features/step_definitions/steps.js[lines=63..69]
 ----
 
-shot::["Runs `cucumber --tags ~@todo`. All green."]
+shot::[20,"Runs `cucumber --tags ~@todo`. All green."]
 
 Again, we have another step we can replace with this more abstract one:
 
-shot::["Replace imperative step on line 22 with `Sean shouts an over-long message`"]
+shot::[21,"Replace imperative step on line 22 with `Sean shouts an over-long message`"]
 
 [source, gherkin]
 ----
 include::../code/js/13-use-over-long-step-everywhere/features/premium_shouts.feature[lines=22]
 ----
 
-shot::["Runs `cucumber --tags ~@todo`. All green."]
+shot::[22,"Runs `cucumber --tags ~@todo`. All green."]
 
 ==== Remove pointless steps
 
 Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we re-ordered them so they're grouped together. Let’s do that:
 
-shot::["Re-orders When steps so each type of step is grouped together."]
+shot::[23,"Re-orders When steps so each type of step is grouped together."]
 
 [source, gherkin]
 ----
@@ -214,7 +214,7 @@ Are there any other incidental details remaining in this scenario? In BRIEF term
 
 Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:
 
-shot::["Removes the first four When steps (remember to change And for When on the next step)"]
+shot::[24,"Removes the first four When steps (remember to change And for When on the next step)"]
 [source, gherkin]
 ----
 include::../code/js/15-remove-pointless-steps/features/premium_shouts.feature[lines=13..21]
@@ -229,7 +229,7 @@ But we can make this even clearer.
 ==== Merge repeated steps
 
 These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
-shot::["Replaces two steps with new step: `When Sean shouts 2 over-long messages`"]
+shot::[25,"Replaces two steps with new step: `When Sean shouts 2 over-long messages`"]
 
 [source, gherkin]
 ----
@@ -238,33 +238,33 @@ include::../code/js/16-merge-repeated-over-long-steps/features/premium_shouts.fe
 
 We’ll need a new step definition for this one.
 
-shot::["Runs `cucumber --tags ~@todo`. Copies step def snippet and pastes into steps file."]
+shot::[26,"Runs `cucumber --tags ~@todo`. Copies step def snippet and pastes into steps file."]
 
 We can re-use the existing step definition, we just need to run a loop around it, based on the number of messages specified in the scenario.
 
-shot::["Copy / paste code from step def below. Add loop around the body of the code."]
+shot::[27,"Copy / paste code from step def below. Add loop around the body of the code."]
 
 [source, js]
 ----
 include::../code/js/16-merge-repeated-over-long-steps/features/step_definitions/steps.js[lines=63..71]
 ----
 
-shot::["Runs `cucumber --tags ~@todo`. All green."]
+shot::[28,"Runs `cucumber --tags ~@todo`. All green."]
 
 Let’s do the exact same thing with these other three steps.
 
-shot::["Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`"]
+shot::[29,"Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`"]
 
 [source, gherkin]
 ----
 include::../code/js/17-merge-repeated-buy-steps/features/premium_shouts.feature[lines=16]
 ----
 
-shot::["Runs `cucumber --tags ~@todo`. Copies step def snippet and pastes into steps file."]
+shot::[30,"Runs `cucumber --tags ~@todo`. Copies step def snippet and pastes into steps file."]
 
 Again, we have the bulk of this code that we can just recycle. We just need to capture the count, then add add a loop around the outside.
 
-shot::["Copy / paste code from step def below. Add loop around the body of the code."]
+shot::[31,"Copy / paste code from step def below. Add loop around the body of the code."]
 
 [source, js]
 ----

@@ -1,0 +1,14 @@
+apply plugin: 'java'
+
+project.ext {
+    cucumberVersion = '5.2.0'
+}
+
+dependencies {
+    testImplementation 'io.cucumber:cucumber-java:' + cucumberVersion
+    testImplementation 'io.cucumber:cucumber-junit:' + cucumberVersion
+}
+
+repositories {
+    mavenCentral()
+}
