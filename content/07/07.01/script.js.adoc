@@ -1,6 +1,6 @@
 include::./title.adoc[]
 
-Once again, while we were away, the developers of Shouty have been busy. A new hot-shot ninja rock-star subcontractor, Stevie, has built a new feature called _premium accounts_. We don’t know much about it yet but, our tester Tamsin has reported a bug from their manual exploratory testing, and it’s up to us tofix it.
+Once again, while we were away, the developers of Shouty have been busy. A new hot-shot ninja rock-star subcontractor, Stevie, has built a new feature called _premium accounts_. We don’t know much about it yet but, our tester Tamsin has reported a bug from their manual exploratory testing, and it’s up to us to fix it.
 
 ==== The bug
 
@@ -9,7 +9,7 @@ Tamsin has helpfully documented the bug as a failing scenario. Here is it:
 shot::[1, "Run cucumber with @todo tag"]
 [source]
 ----
-$ cucumber --tags @todo
+$ npm test -- --tags @todo
 
 Feature: Premium accounts
 
@@ -26,13 +26,13 @@ Hum. So let’s try and figure out what this is all about. Sean starts out with 
 shot::[2, "Highlight first step"]
 presumably that's what gives his account premium status?
 
-As a result of that shout, he’s obviously supposed to have some credits deducted. Tamsin’s scenario says that the correct behaviour is for 5 credits to be deducted, leaving him with 25 credits. As we can see from running the test, the system is deducting 15 credits instead.
+As a result of that shout, he’s obviously supposed to have some credits deducted. Tamsin’s scenario says that the correct behaviour is for 5 credits to be deducted, leaving him with 25 credits.shot::[3] As we can see from running the test, the system is deducting 15 credits instead.shot::[4]
 
 ==== Reading the new feature
 
 Let’s read the whole feature file - that should tell us some more about how the system is supposed to behave.
 
-shot::[1, "Open premium_accounts.feature"]
+shot::[5, "Open premium_accounts.feature"]
 Oh my.
 
 This is very difficult to read.
@@ -44,11 +44,13 @@ include::../code/js/01-implement-premium-accounts-feature-badly-/features/premiu
 
 Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long, so this is big.
 
+shot::[6]
 The scenario has several `When` steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.
 
+shot::[7]
 We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there's no `Rule` keyword and the description section is blank, so we haven’t been left any clues there.
 
-Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 credits and ends up with 11, but why?
+Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 credits shot::[8] and ends up with 11, but why? shot::[9]
 
 There’s so much detail here. I wonder which bits are important. Could it be the number of words Sean shouts that affects his credits? Or the number of messages? Based on Tamsin’s test case, maybe the word “buy” is important...
 
@@ -60,14 +62,14 @@ This is a classic example of a scenario written by someone who is using Cucumber
 
 Let’s try reading the code instead.
 
-shot::[1, "Open Network class"]
+shot::[10, "Open Network class"]
 
 [source,javascript]
 ----
 include::../code/js/01-implement-premium-accounts-feature-badly-/src/shouty.js[lines=24..50]
 ----
 
-OK, so we have a `deductCredits` method here that seems to encapsulate the rules. It looks like over-long messages - messages that are not short enough - cost two credits, and each time the word “buy” is mentioned, we deduct 5 credits.
+OK, so we have a `deductCredits` method here that seems to encapsulate the rules.shot::[11] It looks like over-long messages - messages that are not short enough - cost two credits,shot::[12] and each time the word “buy” is mentioned, we deduct 5 credits.shot::[13]
 
 It’s a good job we know how to read code!
 

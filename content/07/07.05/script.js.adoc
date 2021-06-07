@@ -2,7 +2,7 @@ include::./title.adoc[]
 
 Now things are really getting clearer.
 
-There are still a couple of problems with this scenario. One is the name of the scenario. It really doesn’t tell us anything at all.
+There are still a couple of problems with this scenario. One is the name of the scenario.shot::[1] It really doesn’t tell us anything at all.
 
 [source, gherkin]
 ----
@@ -15,7 +15,7 @@ Instead of expressing the outcome, we find it's best to keep that out of our sce
 
 So if this scenario were an epside of Friends, what would it be called? This is the one where… well.. _the one where Sean shouts some over-long messages and some containing the word “buy”._
 
-shot::["Updates the name of the scenario"]
+shot::[2]
 
 [source, gherkin]
 ----
@@ -36,7 +36,7 @@ You’ll often need more than one scenario to illustrate each rule, but in this 
 
 We can tuck each one under a `Rule` keyword, removing the rules from the feature file's free-text description:
 
-shot::["Write out the two new scenarios, leaving the original in place."]
+shot::[3, leaving the original in place."]shot::[4]
 
 [source, gherkin]
 ----
@@ -50,12 +50,12 @@ Great. Now the effect of each of these rules is much more clearly documented.
 We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?
 
 Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. That's why she likes having a scenario that covers both. As we talk about it, we realise that while we don’t need this one anymore 
-shot::["removes original long scenario"]
+shot::[5] shot::[6]
 there’s a missing scenario - where both rules apply to the _same message_: _The one where there’s a shout that’s both over-long and with the word “buy” in it._
 
 We’d better document that as a question for now.
 
-shot::["Writes up the question."]
+shot::[7]
 
 [source, gherkin]
 ----
@@ -72,7 +72,7 @@ They both think about this. Tamsin suggests starting Sean out with fewer credits
 
 Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still haven't even started fixing that bug yet!
 
-shot::["Writes up the other question"]
+shot::[8]
 
 [source, gherkin]
 ----
