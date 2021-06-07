@@ -503,6 +503,7 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_keeping_your_scenarios_brief">7.3. Keeping your scenarios BRIEF</a></li>
 <li><a href="#_distilling_the_essence">7.4. Distilling the essence</a></li>
 <li><a href="#_expressing_the_rules_capturing_questions">7.5. Expressing the rules, capturing questions</a></li>
+<li><a href="#_conclusion">7.6. Conclusion</a></li>
 </ul>
 </li>
 <li><a href="#_example_mapping">8. Example Mapping</a></li>
@@ -7662,6 +7663,43 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 </div>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_conclusion">7.6. Conclusion</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="videoblock">
+<div class="content">
+<video src="https://drive.google.com/uc?id=1FGdj-mN_h0aTk9p7c_sY5aIhuLeZeNkt" controls>
+Your browser does not support the video tag.
+</video>
+</div>
+</div>
+<div class="paragraph">
+<p>Well that’s been quite a session. We came in to fix one bug, and ended up having to fix our feature file first. We’re still not done with that, either. By pushing the incidental details down out of the scenario into the step definitions, we’ve made a mess of duplication in the step definitions. There’s a neat fix for that, but we’ll have to save that for next time.</p>
+</div>
+<div class="paragraph">
+<p>Let’s reflect on what we’ve learned.</p>
+</div>
+<div class="paragraph">
+<p>When scenarios are very heavy in detail, they can be confusing to read. We call these <em>incidental details</em> when they are just noise that detracts from communicating the essence of the scenario.</p>
+</div>
+<div class="paragraph">
+<p>Scenarios that are heavy in detail are sometimes said to be written in an <em>imperative</em> style. They contain lots of “how”, and not much “what”. We often use this style when we’re working on a brand new domain problem and are still grasping for an understanding. We just want to write <em>something</em> down.</p>
+</div>
+<div class="paragraph">
+<p>As your confidence in your domain knowledge improves, you’d expect to feel comfortable removing some of these details. Scenarios with more abstract steps like this are said to be written in a <em>declarative</em> style.</p>
+</div>
+<div class="paragraph">
+<p>Using a more declarative style might mean you’ll need to find names for things, like the way we had to name an over-long message. This discovery of your ubiquitous domain language is a great side-effect of distilling the essence of your scenarios. Now you have a bigger vocabulary that you can use all the way down through your code, and in your future conversations, too.</p>
+</div>
+<div class="paragraph">
+<p>One down-side, as you’ve seen, of pushing the “how” down from your scenarios into the step definitions is that the step definition code becomes more complex. Some teams reject this, and prefer to use a simple vocabulary of step definitions, leaving more detail in their scenarios. There are no right and wrong answers here, but if you have sufficient competence with code, you’ll easily be able to handle that extra bit of complexity and keep readability top of your priorities.</p>
+</div>
+<div class="paragraph">
+<p>That’s what we’ll work on next time. Bye for now!</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -7711,7 +7749,7 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-07 13:54:06 UTC
+Last updated 2021-06-07 15:28:14 UTC
 </div>
 </div>
 <style>
