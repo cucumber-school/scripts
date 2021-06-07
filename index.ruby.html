@@ -5714,13 +5714,15 @@ Oh my.</p>
 <p>Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long, so this is big.</p>
 </div>
 <div class="paragraph">
-<p>The scenario has several <code>When</code> steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.</p>
+<p>
+The scenario has several <code>When</code> steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.</p>
 </div>
 <div class="paragraph">
-<p>We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there&#8217;s no <code>Rule</code> keyword and the description section is blank, so we haven’t been left any clues there.</p>
+<p>
+We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there&#8217;s no <code>Rule</code> keyword and the description section is blank, so we haven’t been left any clues there.</p>
 </div>
 <div class="paragraph">
-<p>Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 credits and ends up with 11, but why?</p>
+<p>Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30  credits and ends up with 11, but why?</p>
 </div>
 <div class="paragraph">
 <p>There’s so much detail here. I wonder which bits are important. Could it be the number of words Sean shouts that affects his credits? Or the number of messages? Based on Tamsin’s test case, maybe the word “buy” is important&#8230;&#8203;</p>
@@ -5772,7 +5774,7 @@ Oh my.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>OK, so we have a <code>deductCredits</code> method here that seems to encapsulate the rules. It looks like over-long messages - messages that are not short enough - cost two credits, and each time the word “buy” is mentioned, we deduct 5 credits.</p>
+<p>OK, so we have a <code>deduct_credits</code> method here that seems to encapsulate the rules. It looks like over-long messages - messages that are not short enough - cost two credits, and each time the word “buy” is mentioned, we deduct 5 credits.</p>
 </div>
 <div class="paragraph">
 <p>It’s a good job we know how to read code!</p>
@@ -6001,7 +6003,7 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="paragraph">
-<p>We can start with this step, <code>When Sean shouts "Come and buy a coffee".</code></p>
+<p>We can start with this step, <code>When Sean shouts "Come and buy a coffee".</code> </p>
 </div>
 <div class="paragraph">
 <p>From what what we know about the rules, what’s important here is that the shout contains the word “buy”. So let’s write that:</p>
@@ -6020,16 +6022,17 @@ Your browser does not support the video tag.
 <div class="paragraph">
 <p>We’ll need a new step definition for this, of course.</p>
 </div>
+<div class="paragraph">
+<p></p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="bash">bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s2">"not @todo"</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.</p>
+<p>
+We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.</p>
 </div>
 <div class="paragraph">
 <p></p>
@@ -6058,10 +6061,8 @@ Your browser does not support the video tag.
 <p>All green. Good.</p>
 </div>
 <div class="paragraph">
-<p>Now we can use that same step everywhere else in the scenario, too, where that is the real intent of the step.</p>
-</div>
-<div class="paragraph">
-<p></p>
+<p>Now we can use that same step everywhere else in the scenario, too, where that is the real intent of the step.
+</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6100,10 +6101,18 @@ Your browser does not support the video tag.
     <span class="nf">And </span>Sean should have 11 credits</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>And run cucumber again. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="bash">bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s2">"not @todo"</span></code></pre>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_distill_the_regular_shout_step">7.4.1. Distill the regular shout step</h4>
 <div class="paragraph">
-<p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step?</p>
+<p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step? </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6125,7 +6134,8 @@ Your browser does not support the video tag.
 <p>Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.</p>
 </div>
 <div class="paragraph">
-<p></p>
+<p>
+</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6261,7 +6271,7 @@ Your browser does not support the video tag.
 <div class="sect3">
 <h4 id="_distill_the_over_long_shout_step">7.4.3. Distill the over-long shout step</h4>
 <div class="paragraph">
-<p>Now what’s interesting about this next step?</p>
+<p>Now what’s interesting about this next step? </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6462,6 +6472,9 @@ Your browser does not support the video tag.
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>And everything is still green. </p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s step back and see how BRIEF our scenario reads now:</p>
@@ -6694,7 +6707,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-05-17 13:28:58 UTC
+Last updated 2021-06-07 11:19:03 UTC
 </div>
 </div>
 <style>
