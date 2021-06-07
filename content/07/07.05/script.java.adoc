@@ -1,0 +1,80 @@
+include::./title.adoc[]
+
+Now things are really getting clearer.
+
+There are still a couple of problems with this scenario. One is the name of the scenario.shot::[1] It really doesn’t tell us anything at all.
+
+[source, gherkin]
+----
+include::../code/java/17-merge-repeated-buy-steps/shouty/src/test/resources/shouty/premium_shouts.feature[lines=13]
+----
+
+A great way to name your scenarios is to think about how they named episodes of the TV sitcom series, _Friends_. Remember? They were all called something like _The one where Ross is fine_ or _The one where Phoebe gets married_.
+
+Instead of expressing the outcome, we find it's best to keep that out of our scenario, and just descrbe the context and the action.
+
+So if this scenario were an epside of Friends, what would it be called? This is the one where… well.. _the one where Sean shouts some over-long messages and some containing the word “buy”._
+
+shot::[2]
+
+[source, gherkin]
+----
+include::../code/java/18-rename-scenario/shouty/src/test/resources/shouty/premium_shouts.feature[lines=13]
+----
+
+Well, this is better than what we had before, but it's s quite a complicated name isn’t it? Maybe this scenario is doing too much!
+
+...and that’s the second problem.
+
+It’s trying to test both business rules at once.
+
+==== Split scenario
+
+Normally you’ll want at least one scenario for each business rule. That way, each scenario clearly illustrates the effect of that rule on the system. Sometimes it’s interesting to also document the effect that multiple rules have when they play out at the same time, but as you’ve already experienced, that can quickly get confusing.
+
+You’ll often need more than one scenario to illustrate each rule, but in this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.
+
+We can tuck each one under a `Rule` keyword, removing the rules from the feature file's free-text description:
+
+shot::[3, leaving the original in place."]shot::[4]
+
+[source, gherkin]
+----
+include::../code/java/19-split-scenario/shouty/src/test/resources/shouty/premium_shouts.feature[lines=16..28]
+----
+
+Great. Now the effect of each of these rules is much more clearly documented.
+
+==== Remove original scenario
+
+We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?
+
+Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. That's why she likes having a scenario that covers both. As we talk about it, we realise that while we don’t need this one anymore 
+shot::[5] shot::[6]
+there’s a missing scenario - where both rules apply to the _same message_: _The one where there’s a shout that’s both over-long and with the word “buy” in it._
+
+We’d better document that as a question for now.
+
+shot::[7]
+
+[source, gherkin]
+----
+include::../code/js/20-capture-questions/features/premium_shouts.feature[lines=3..4]
+----
+
+==== Ask context question
+
+While we have Paula and Tamsin’s attention, we ask a question we know often helps to discover missing scenarios:
+
+> Is there another context that would result in a different outcome here?
+
+They both think about this. Tamsin suggests starting Sean out with fewer credits, or shouting lots more messages, so that he runs out of credit. What would happen then?
+
+Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still haven't even started fixing that bug yet!
+
+shot::[8]
+
+[source, gherkin]
+----
+include::../code/js/20-capture-questions/features/premium_shouts.feature[lines=3..5]
+----

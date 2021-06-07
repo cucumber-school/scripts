@@ -1,0 +1,52 @@
+include::./title.adoc[]
+
+Seb Rose came up with a brilliant acronym to help you remember six heuristics or guidelines to think about when reviewing the quality of your scenarios: BRIEF.
+
+"B" is for *Business language:* The words used in a scenario should be drawn from the business domain, otherwise you will not be able to engage your business colleagues painlessly. The language you use should use terms that business team members understand unambiguously.
+
+"R" is for *Real data:* When you're first discussing the details of a story, your examples should use concrete, real data. This helps bring the scenarios to life, and expose boundary conditions and underlying assumptions early in the development process. When writing scenarios, we should also use real data whenever this helps reveal intention and make them move vivid.
+
+"I" is for *Intention revealing:* Scenarios should describe the intent of what the actors in the scenario are trying to achieve, rather than describing the mechanics of how they will achieve it. We should start by giving the scenario an intention revealing name, and then follow through by ensuring that every line in the scenario describes intent, not mechanics.
+
+"E" is for *Essential:* The purpose of a scenario is to illustrate how a rule should behave. Any parts of a scenario that don't directly contribute to this purpose are _incidental_ and should be removed. If they are important to the system, then they will be covered in other scenarios that illustrate other rules. Additionally, any scenarios that do not add to the reader's understanding of the expected behaviour have no place in the documentation.
+
+"F" is for *Focused:* Most scenarios should be focused on illustrating a single rule.
+
+You might have noticed we said "six heuristics" but we only gave you five. That's because the word _Brief_ itself is the sixth guideline. We suggest you try to restrict most of your scenarios to five lines or fewer. This makes them easier to read, much easier to reason about, and helps avoid that temptation to test multiple rules, or add incidental details.
+
+==== Review our new feature using the BRIEF heuristics
+
+Let's have a look at this new Premium Accounts scenario shot::[1] and use the BRIEF heuristics to help us look for ways to improve it.
+
+[source,gherkin]
+----
+include::../code/java/02-add-rules-to-feature-description/shouty/src/test/resources/shouty/premium_shouts.feature[lines=7..45]
+----
+
+===== B is for Business Language
+
+Firstly, does this scenario use business language?
+
+Well, we can see words like "credits" and "shout" and "message" which look like terms from our problem domain's _ubiquitous language_, but there are also a lot of words in these scenarios that are nothing to do with our domain - words like "cakes" or "chickens" or "muffins" for example. Granted, all these words are surrounded by quotes, but they're still distracting.
+
+===== R is for Real Data
+
+Do these scenarios use real data? Without seeing the user research, it looks like they do. We're not talking about "User A" or "A message", but instead we're using realistic examples of the kinds of messages genuine users of our app might send to each other.
+
+===== I is for Intention Revealing
+
+This one really hits the nail on the head. The intention of this scenario is completely obscured by all the detail. As we said earlier, we have no idea from this Gherkin what is special about these messages, or how they contribute to the final tally of expected credits. We had to go down into the code to start to figure that out.
+
+===== E is for Essential
+
+It's hard to know whether every step here is essential to the purpose of this scenario, because we don't even know what it's purpose is yet! Once we've made the steps more intention revealing it will be easier to see if they're all essential.
+
+===== F is for Focussed
+
+We're not quite clear what exactly the rules are that underpin the behaviour in this scenario (yet) but we have a hunch that there's more than one rule being played out here. So we're not looking good on this heuristic.
+
+===== And is it Brief?
+
+Certainly, this scenario is well over five lines long. So not Brief.
+
+So we have some work to do!

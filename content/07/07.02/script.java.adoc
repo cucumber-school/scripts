@@ -1,0 +1,31 @@
+include::./title.adoc[]
+
+shot::[1, "Opens the premium accounts feature file"]
+
+This seems like a good time to ask our domain experts for clarification about this behaviour. Ideally a three amigos meeting would have done this already, but things don’t always go according to the script. Let’s pay a visit to our product owner.
+
+Paula the product owner tells us the rules are as follows:
+shot::[2, "Writes the rules up in the feature file"]
+
+[source,gherkin]
+----
+include::../code/java/02-add-rules-to-feature-description/shouty/src/test/resources/shouty/premium_shouts.feature[lines=1..5]
+----
+
+We've just scribbled these down in the feature description for now, but later, once we've teased this scenario apart, we'll be able to use the `Rule` keyword as we showed you in chapter 4.
+
+OK, well that helps us a great deal, but this scenario is still doing a poor job of illustrating those rules. Let’s take a moment to understand why.
+
+shot::[3, "07.03.animation.mp4"]
+
+video::https://drive.google.com/uc?id=1NxU_CzKngKaGGxnoaxxbmSZngaz9VGDG[]
+
+It’s all about the details.
+
+When you’re first exploring a new domain problem, details like the exact messages people have shouted are a great way to shine light into the dark corners of your ignorance. They bring examples to life by making them vivid and real. This encourages what we call _divergent thinking_, which helps you discover even more examples as you explore the behaviour you need to provide.
+
+In BDD, we call this _deliberate discovery_, when we try to explore the problem domain as thoroughly as we can. Details are good here.
+
+At some point, however, we need to write a computer program. When that time comes, we need to switch to _convergent thinking_ and try to distill down all that detail into something that clearly communicates the essence of the behaviour. Now, too much detail can be distracting, or even misleading to our future readers. We call these _incidental details_.
+
+Being able to distill down the essence of a scenario with too much detail is a skill you'll find yourself practicing time and time again as a BDD practitioner, since we almost always deliberately start with too much detail, then want to refine it afterwards as it becomes more clear which details are relevant, and which are incidental.

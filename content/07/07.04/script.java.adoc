@@ -1,0 +1,275 @@
+include::./title.adoc[]
+
+Let’s try to distill the essence of this scenario by removing the incidental details.
+
+shot::[1, "Opens the premium account feature"]
+
+[source,gherkin]
+----
+include::../code/java/02-add-rules-to-feature-description/shouty/src/test/resources/shouty/premium_shouts.feature[lines=13..45]
+----
+
+We can start with this step, `When Sean shouts "Come and buy a coffee".` shot::[2]
+
+From what what we know about the rules, what’s important here is that the shout contains the word “buy”. So let’s write that:
+
+shot::[3,"Changes step to When Sean shouts a message containing the word "buy"]
+[source, gherkin]
+----
+include::../code/java/03-intention-revealing-buy-step/shouty/src/test/resources/shouty/premium_shouts.feature[lines=15]
+----
+
+Better. We still have a little bit of detail - the word buy - but that’s quite important, in fact it helps to illustrate our business rule.
+
+We’ll need a new step definition for this, of course.
+
+We'll add the `--tags "not @todo"` tag to our Cucumber properties file in order to just run the scenarios we are currently refactoring.
+
+[source,java]
+----
+@CucumberOptions(tags="not @todo")
+----
+
+shot::[4,"Runs `cucumber --tags ~@todo`, copies / pastes step def snippet into steps file."]
+
+shot::[5]
+We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.
+
+shot::[6,"Copies code from step def below, then adds code above to create a test message containing the given word."]
+
+[source, java]
+----
+include::../code/java/04-add-step-def-for-intention-revealing-buy-step/shouty/src/test/java/shouty/StepDefinitions.java[lines=83..86]
+----
+
+Let’s run Cucumber to check we haven’t made any mistakes…
+
+shot::[7,"Runs `cucumber --tags ~@todo`."]
+
+All green. Good.
+
+Now we can use that same step everywhere else in the scenario, too, where that is the real intent of the step.
+shot::[8,"Changes the other two steps that mention the word “buy”. Runs `cucumber --tags ~@todo`. All green."]
+
+[source, gherkin]
+----
+include::../code/java/05-use-intention-revealing-step-everywhere/shouty/src/test/resources/shouty/premium_shouts.feature[lines=13..45]
+----
+
+And run cucumber again. shot::[9]
+
+==== Distill the regular shout step
+
+We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step? shot::[10]
+
+[source, gherkin]
+----
+include::../code/java/05-use-intention-revealing-step-everywhere/shouty/src/test/resources/shouty/premium_shouts.feature[lines=16]
+----
+
+In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:
+
+shot::[11,"Changes the step from And Sean shouts "My bagels are yummy" to And Sean shouts a message"]
+
+[source, gherkin]
+----
+include::../code/java/06-sean-shouts-a-message/shouty/src/test/resources/shouty/premium_shouts.feature[lines=16..16]
+----
+
+Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.
+
+shot::[12,"Runs `cucumber --tags ~@todo`,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message."]shot::[13]
+
+[source, java]
+----
+include::../code/java/06-sean-shouts-a-message/shouty/src/test/java/shouty/StepDefinitions.java[lines=93..96]
+----
+
+We’ll run Cucumber again just in case...
+
+shot::[14,"Runs `cucumber --tags ~@todo`."]
+
+All green.
+
+And finally, let’s use that new step everywhere we can… 
+
+shot::[15,"Changes two steps to that shout regular messages to use the new step"]
+
+[source, gherkin]
+----
+include::../code/java/07-shout-a-message-everywhere/shouty/src/test/resources/shouty/premium_shouts.feature[lines=13..45]
+----
+
+...and run Cucumber once again.
+
+shot::[16,"Runs `cucumber --tags ~@todo`"]
+
+
+All green.
+
+==== Distill the long shout step
+
+Now let’s deal with this next step.shot::[17] What’s the essence here?
+
+[source, gherkin]
+----
+include::../code/java/07-shout-a-message-everywhere/shouty/src/test/resources/shouty/premium_shouts.feature[lines=18..22]
+----
+
+Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now that there must be _some_ reason it's different. So we'll push the details about the message content down into the step definition, following the same recipe.
+
+shot::[18,"Changes the step to `And Sean shouts a long message`"]
+
+[source, gherkin]
+----
+include::../code/java/08-reword-step/shouty/src/test/resources/shouty/premium_shouts.feature[lines=18]
+----
+
+shot::[19,"Runs `cucumber --tags ~@todo`"]
+
+shot::[20,"Copies / pastes step def snippet into steps file"]
+
+Again, we’ll tolerate the duplication for now, and just generate a long message here.
+
+shot::[21,"Copies shouting code from step def below, then adds code above to create a 180 character test message."]
+
+[source, java]
+----
+include::../code/java/09-define-step/shouty/src/test/java/shouty/StepDefinitions.java[lines=98..105]
+----
+
+shot::[22,"Runs `cucumber --tags ~@todo`. All green."]
+
+==== Distill the over-long shout step
+
+Now what’s interesting about this next step? shot::[23]
+
+[source, gherkin]
+----
+include::../code/java/09-define-step/shouty/src/test/resources/shouty/premium_shouts.feature[lines=20..28]
+----
+
+This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an _over-long message_. Let’s update the rule we wrote up earlier to document this evolution of our domain language:
+
+shot::[24,"Changes second rule “Long messages…” to “Over-long messages…”"]
+
+[source, gherkin]
+----
+include::../code/java/10-document-refined-rule/shouty/src/test/resources/shouty/premium_shouts.feature[lines=3..5]
+----
+
+Then we can use that term in a new, more abstract step:
+
+shot::[25,"Changes step to `And Sean shouts an over-long message`"]
+
+[source, gherkin]
+----
+include::../code/java/11-reword-step/shouty/src/test/resources/shouty/premium_shouts.feature[lines=20]
+----
+
+Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.
+
+shot::[26,"Copies shouting code from step def below, then changes first line to create a 181-character test message."]
+
+[source, java]
+----
+include::../code/java/12-implement-over-long-step/shouty/src/test/java/shouty/StepDefinitions.java[lines=107..113]
+----
+
+shot::[27,"Runs `cucumber --tags ~@todo`. All green."]
+
+Again, we have another step we can replace with this more abstract one:
+
+shot::[28,"Replace imperative step on line 22 with `Sean shouts an over-long message`"]
+
+[source, gherkin]
+----
+include::../code/java/13-use-over-long-step-everywhere/shouty/src/test/resources/shouty/premium_shouts.feature[lines=22]
+----
+
+shot::[29,"Runs `cucumber --tags ~@todo`. All green."]
+
+==== Remove pointless steps
+
+Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we re-ordered them so they're grouped together. Let’s do that:
+
+shot::[30,"Re-orders When steps so each type of step is grouped together."]
+
+[source, gherkin]
+----
+include::../code/java/14-like-with-like/shouty/src/test/resources/shouty/premium_shouts.feature[lines=13..25]
+----
+
+So now we can clearly see that Sean shouts three regular messages, a long message, two over-long messages, and three messages containing the word “buy”. It’s still a lot to digest, but a clearer picture is starting to emerge.
+
+Are there any other incidental details remaining in this scenario? In BRIEF terms, is every step here _essential_ to the purpose of this particular scenario?
+
+Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:
+
+shot::[31,"Removes the first four When steps (remember to change And for When on the next step)"]
+[source, gherkin]
+----
+include::../code/java/15-remove-pointless-steps/shouty/src/test/resources/shouty/premium_shouts.feature[lines=13..21]
+----
+
+That’s better.
+
+Now that we’ve removed all that incidental detail, it’s much easier to see how the figure of 11 credits has been calculated: two over-long messages at 2 credits per message, and three messages containing the word “buy” at 5 credits each makes a total of 19 credits, which subtracted from the initial 30 makes 11.
+
+But we can make this even clearer.
+
+==== Merge repeated steps
+
+These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
+shot::[32,"Replaces two steps with new step: `When Sean shouts 2 over-long messages`"]
+
+[source, gherkin]
+----
+include::../code/java/16-merge-repeated-over-long-steps/shouty/src/test/resources/shouty/premium_shouts.feature[lines=15]
+----
+
+We’ll need a new step definition for this one.
+
+shot::[33,"Runs `cucumber --tags ~@todo`. Copies step def snippet and pastes into steps file."]
+
+We can re-use the existing step definition, we just need to run a loop around it, based on the number of messages specified in the scenario.
+
+shot::[34,"Copy / paste code from step def below. Add loop around the body of the code."]
+
+[source, java]
+----
+include::../code/java/16-merge-repeated-over-long-steps/shouty/src/test/java/shouty/StepDefinitions.java[lines=107..116]
+----
+
+shot::[35,"Runs `cucumber --tags ~@todo`. All green."]
+
+Let’s do the exact same thing with these other three steps.
+
+shot::[36,"Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`"]
+
+[source, gherkin]
+----
+include::../code/java/17-merge-repeated-buy-steps/shouty/src/test/resources/shouty/premium_shouts.feature[lines=16]
+----
+
+shot::[37,"Runs `cucumber --tags ~@todo`. Copies step def snippet and pastes into steps file."]
+
+Again, we have the bulk of this code that we can just recycle. We just need to capture the count, then add add a loop around the outside.
+
+shot::[38,"Copy / paste code from step def below. Add loop around the body of the code."]
+
+[source, java]
+----
+include::../code/java/17-merge-repeated-buy-steps/shouty/src/test/java/shouty/StepDefinitions.java[lines=83..89]
+----
+
+And everything is still green. shot::[39]
+
+Let's step back and see how BRIEF our scenario reads now:
+
+[source, gherkin]
+----
+include::../code/java/17-merge-repeated-buy-steps/shouty/src/test/resources/shouty/premium_shouts.feature[lines=13..18]
+----
+
+Nice!
