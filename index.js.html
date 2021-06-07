@@ -6438,7 +6438,7 @@ Reports that are not associated with a publish token will be deleted approximate
 <div class="sect2">
 <h3 id="_premium_accounts_with_a_bug">7.1. Premium Accounts! With a bug!</h3>
 <div class="paragraph">
-<p>Once again, while we were away, the developers of Shouty have been busy. A new hot-shot ninja rock-star subcontractor, Stevie, has built a new feature called <em>premium accounts</em>. We don’t know much about it yet but, our tester Tamsin has reported a bug from their manual exploratory testing, and it’s up to us to fix it.</p>
+<p>Once again, while we were away, the developers of Shouty have been busy. A new hot-shot ninja rock-star subcontractor, Stevie, has built a new feature called <em>premium accounts</em>. We don’t know much about it yet but, our tester Tamsin has reported a bug from their manual exploratory testing, and it’s up to us tofix it.</p>
 </div>
 <div class="sect3">
 <h4 id="_the_bug">7.1.1. The bug</h4>
@@ -6450,7 +6450,7 @@ Reports that are not associated with a publish token will be deleted approximate
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>$ npm test -- --tags @todo
+<pre class="rouge highlight"><code>$ cucumber --tags @todo
 
 Feature: Premium accounts
 
@@ -6539,15 +6539,13 @@ Oh my.</p>
 <p>Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long, so this is big.</p>
 </div>
 <div class="paragraph">
-<p>
-The scenario has several <code>When</code> steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.</p>
+<p>The scenario has several <code>When</code> steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.</p>
 </div>
 <div class="paragraph">
-<p>
-We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there&#8217;s no <code>Rule</code> keyword and the description section is blank, so we haven’t been left any clues there.</p>
+<p>We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there&#8217;s no <code>Rule</code> keyword and the description section is blank, so we haven’t been left any clues there.</p>
 </div>
 <div class="paragraph">
-<p>Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 credits  and ends up with 11, but why? </p>
+<p>Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 credits and ends up with 11, but why?</p>
 </div>
 <div class="paragraph">
 <p>There’s so much detail here. I wonder which bits are important. Could it be the number of words Sean shouts that affects his credits? Or the number of messages? Based on Tamsin’s test case, maybe the word “buy” is important&#8230;&#8203;</p>
@@ -7542,7 +7540,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-06-07 11:19:03 UTC
+Last updated 2021-06-07 13:54:06 UTC
 </div>
 </div>
 <style>
