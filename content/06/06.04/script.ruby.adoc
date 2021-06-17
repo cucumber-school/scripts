@@ -54,21 +54,23 @@ And see it fail on the terminal. shot::[13, "run npm test and show failing outpu
 bundle exec cucumber
 ----
 
-We choose the rerun formatter shot::[14] and send the output to a file whose name is preceded by the `@` (at) sign.shot::[15] Let's call it @rerun.txt.shot::[16] shot::[17, "run cucumber using rerun formatter"]
+We choose the rerun formatter shot::[14] and send the output to a file. Let's call it `rerun.txt`.shot::[16] shot::[17, "run cucumber using rerun formatter"]
 
 [source]
 ----
-bundle exec cucumber -f rerun -o @rerun.txt
+bundle exec cucumber -f rerun -o rerun.txt
 ----
 
-Let’s look at what’s in that @rerun.txt file. shot::[18, "open @rerun.txt"] It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.
+Let’s look at what’s in that rerun.txt file. shot::[18, "open rerun.txt"] It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.
 
 This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. shot::[19, "run Cucumber using the @rerun.txt file"]
 
 [source]
 ----
-bundle exec cucumber $(cat @rerun.txt)
+bundle exec cucumber @rerun.txt
 ----
+
+Using the `@`-sign in front of the filename tells Cucumber to read the rerun file's contents as though it was arguments on the command-line, just like we showed you in lesson 1.
 
 This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and are working yourself back to green.
 
