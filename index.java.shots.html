@@ -7097,22 +7097,22 @@ Your browser does not support the video tag.
 <p>We’ll need a new step definition for this, of course.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll add the <code>--tags "not @todo"</code> tag to our Cucumber properties file in order to just run the scenarios we are currently refactoring.</p>
+<p>We&#8217;ll add the <code>--tags "not @todo"</code> tag <a href="#shot-1280" id="shot-1280" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> to our Cucumber properties file in order to just run the scenarios we are currently refactoring.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"not @todo"</span><span class="o">)</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">plugin</span> <span class="o">=</span>  <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">tags</span> <span class="o">=</span> <span class="s">"not @todo"</span><span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1280" id="shot-1280" title="Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4: Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.</a></p>
+<p><a href="#shot-1281" id="shot-1281" title="Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1281" id="shot-1281" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a>
+<p><a href="#shot-1282" id="shot-1282" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a>
 We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1282" id="shot-1282" title="Copies code from step def below, then adds code above to create a test message containing the given word." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: Copies code from step def below, then adds code above to create a test message containing the given word.</a></p>
+<p><a href="#shot-1283" id="shot-1283" title="Copies code from step def below, then adds code above to create a test message containing the given word." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: Copies code from step def below, then adds code above to create a test message containing the given word.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7126,14 +7126,14 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Let’s run Cucumber to check we haven’t made any mistakes…</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1283" id="shot-1283" title="Runs <code>cucumber --tags ~@todo</code>." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: Runs <code>cucumber --tags ~@todo</code>.</a></p>
+<p><a href="#shot-1284" id="shot-1284" title="Runs <code>cucumber --tags ~@todo</code>." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: Runs <code>cucumber --tags ~@todo</code>.</a></p>
 </div>
 <div class="paragraph">
 <p>All green. Good.</p>
 </div>
 <div class="paragraph">
 <p>Now we can use that same step everywhere else in the scenario, too, where that is the real intent of the step.
-<a href="#shot-1284" id="shot-1284" title="Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<a href="#shot-1285" id="shot-1285" title="Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9: Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7173,12 +7173,12 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p>And run cucumber again. <a href="#shot-1285" id="shot-1285" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
+<p>And run cucumber again. <a href="#shot-1286" id="shot-1286" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
 </div>
 <div class="sect3">
 <h4 id="_distill_the_regular_shout_step">7.4.1. Distill the regular shout step</h4>
 <div class="paragraph">
-<p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step? <a href="#shot-1286" id="shot-1286" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
+<p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step? <a href="#shot-1287" id="shot-1287" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7189,7 +7189,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1287" id="shot-1287" title="Changes the step from And Sean shouts " style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11: Changes the step from And Sean shouts </a></p>
+<p><a href="#shot-1288" id="shot-1288" title="Changes the step from And Sean shouts " style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12: Changes the step from And Sean shouts </a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7200,7 +7200,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1288" id="shot-1288" title="Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12: Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.</a><a href="#shot-1289" id="shot-1289" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
+<p><a href="#shot-1289" id="shot-1289" title="Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13: Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.</a><a href="#shot-1290" id="shot-1290" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7214,7 +7214,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>We’ll run Cucumber again just in case&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1290" id="shot-1290" title="Runs <code>cucumber --tags ~@todo</code>." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14: Runs <code>cucumber --tags ~@todo</code>.</a></p>
+<p><a href="#shot-1291" id="shot-1291" title="Runs <code>cucumber --tags ~@todo</code>." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15: Runs <code>cucumber --tags ~@todo</code>.</a></p>
 </div>
 <div class="paragraph">
 <p>All green.</p>
@@ -7223,7 +7223,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>And finally, let’s use that new step everywhere we can…</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1291" id="shot-1291" title="Changes two steps to that shout regular messages to use the new step" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15: Changes two steps to that shout regular messages to use the new step</a></p>
+<p><a href="#shot-1292" id="shot-1292" title="Changes two steps to that shout regular messages to use the new step" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16: Changes two steps to that shout regular messages to use the new step</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7266,7 +7266,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>&#8230;&#8203;and run Cucumber once again.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1292" id="shot-1292" title="Runs `cucumber --tags ~@todo`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16: Runs `cucumber --tags ~@todo`</a></p>
+<p><a href="#shot-1293" id="shot-1293" title="Runs `cucumber --tags ~@todo`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17: Runs `cucumber --tags ~@todo`</a></p>
 </div>
 <div class="paragraph">
 <p>All green.</p>
@@ -7275,7 +7275,7 @@ We can just copy the code for shouting a message from this step down here for no
 <div class="sect3">
 <h4 id="_distill_the_long_shout_step">7.4.2. Distill the long shout step</h4>
 <div class="paragraph">
-<p>Now let’s deal with this next step.<a href="#shot-1293" id="shot-1293" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17</a> What’s the essence here?</p>
+<p>Now let’s deal with this next step.<a href="#shot-1294" id="shot-1294" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18</a> What’s the essence here?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7290,7 +7290,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now that there must be <em>some</em> reason it&#8217;s different. So we&#8217;ll push the details about the message content down into the step definition, following the same recipe.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1294" id="shot-1294" title="Changes the step to `And Sean shouts a long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18: Changes the step to `And Sean shouts a long message`</a></p>
+<p><a href="#shot-1295" id="shot-1295" title="Changes the step to `And Sean shouts a long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19: Changes the step to `And Sean shouts a long message`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7298,16 +7298,16 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1295" id="shot-1295" title="Runs `cucumber --tags ~@todo`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19: Runs `cucumber --tags ~@todo`</a></p>
+<p><a href="#shot-1296" id="shot-1296" title="Runs `cucumber --tags ~@todo`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20: Runs `cucumber --tags ~@todo`</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1296" id="shot-1296" title="Copies / pastes step def snippet into steps file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20: Copies / pastes step def snippet into steps file</a></p>
+<p><a href="#shot-1297" id="shot-1297" title="Copies / pastes step def snippet into steps file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21: Copies / pastes step def snippet into steps file</a></p>
 </div>
 <div class="paragraph">
 <p>Again, we’ll tolerate the duplication for now, and just generate a long message here.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1297" id="shot-1297" title="Copies shouting code from step def below, then adds code above to create a 180 character test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21: Copies shouting code from step def below, then adds code above to create a 180 character test message.</a></p>
+<p><a href="#shot-1298" id="shot-1298" title="Copies shouting code from step def below, then adds code above to create a 180 character test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22: Copies shouting code from step def below, then adds code above to create a 180 character test message.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7322,13 +7322,13 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1298" id="shot-1298" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-1299" id="shot-1299" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_distill_the_over_long_shout_step">7.4.3. Distill the over-long shout step</h4>
 <div class="paragraph">
-<p>Now what’s interesting about this next step? <a href="#shot-1299" id="shot-1299" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23</a></p>
+<p>Now what’s interesting about this next step? <a href="#shot-1300" id="shot-1300" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7347,7 +7347,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an <em>over-long message</em>. Let’s update the rule we wrote up earlier to document this evolution of our domain language:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1300" id="shot-1300" title="Changes second rule “Long messages…” to “Over-long messages…”" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24: Changes second rule “Long messages…” to “Over-long messages…”</a></p>
+<p><a href="#shot-1301" id="shot-1301" title="Changes second rule “Long messages…” to “Over-long messages…”" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 25: Changes second rule “Long messages…” to “Over-long messages…”</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7360,7 +7360,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Then we can use that term in a new, more abstract step:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1301" id="shot-1301" title="Changes step to `And Sean shouts an over-long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 25: Changes step to `And Sean shouts an over-long message`</a></p>
+<p><a href="#shot-1302" id="shot-1302" title="Changes step to `And Sean shouts an over-long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 26: Changes step to `And Sean shouts an over-long message`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7371,7 +7371,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1302" id="shot-1302" title="Copies shouting code from step def below, then changes first line to create a 181-character test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 26: Copies shouting code from step def below, then changes first line to create a 181-character test message.</a></p>
+<p><a href="#shot-1303" id="shot-1303" title="Copies shouting code from step def below, then changes first line to create a 181-character test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 27: Copies shouting code from step def below, then changes first line to create a 181-character test message.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7385,13 +7385,13 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1303" id="shot-1303" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 27: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-1304" id="shot-1304" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 28: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 <div class="paragraph">
 <p>Again, we have another step we can replace with this more abstract one:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1304" id="shot-1304" title="Replace imperative step on line 22 with `Sean shouts an over-long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 28: Replace imperative step on line 22 with `Sean shouts an over-long message`</a></p>
+<p><a href="#shot-1305" id="shot-1305" title="Replace imperative step on line 22 with `Sean shouts an over-long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 29: Replace imperative step on line 22 with `Sean shouts an over-long message`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7399,7 +7399,7 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1305" id="shot-1305" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 29: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-1306" id="shot-1306" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 30: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -7408,7 +7408,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we re-ordered them so they&#8217;re grouped together. Let’s do that:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1306" id="shot-1306" title="Re-orders When steps so each type of step is grouped together." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 30: Re-orders When steps so each type of step is grouped together.</a></p>
+<p><a href="#shot-1307" id="shot-1307" title="Re-orders When steps so each type of step is grouped together." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 31: Re-orders When steps so each type of step is grouped together.</a><a href="#shot-1308" id="shot-1308" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 32</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7437,7 +7437,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1307" id="shot-1307" title="Removes the first four When steps (remember to change And for When on the next step)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 31: Removes the first four When steps (remember to change And for When on the next step)</a></p>
+<p><a href="#shot-1309" id="shot-1309" title="Removes the first four When steps (remember to change And for When on the next step)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 33: Removes the first four When steps (remember to change And for When on the next step)</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7466,7 +7466,7 @@ We can just copy the code for shouting a message from this step down here for no
 <h4 id="_merge_repeated_steps">7.4.5. Merge repeated steps</h4>
 <div class="paragraph">
 <p>These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
-<a href="#shot-1308" id="shot-1308" title="Replaces two steps with new step: `When Sean shouts 2 over-long messages`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 32: Replaces two steps with new step: `When Sean shouts 2 over-long messages`</a></p>
+<a href="#shot-1310" id="shot-1310" title="Replaces two steps with new step: `When Sean shouts 2 over-long messages`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 34: Replaces two steps with new step: `When Sean shouts 2 over-long messages`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7477,13 +7477,13 @@ We can just copy the code for shouting a message from this step down here for no
 <p>We’ll need a new step definition for this one.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1309" id="shot-1309" title="Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 33: Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
+<p><a href="#shot-1311" id="shot-1311" title="Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 35: Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
 </div>
 <div class="paragraph">
 <p>We can re-use the existing step definition, we just need to run a loop around it, based on the number of messages specified in the scenario.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1310" id="shot-1310" title="Copy / paste code from step def below. Add loop around the body of the code." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 34: Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+<p><a href="#shot-1312" id="shot-1312" title="Copy / paste code from step def below. Add loop around the body of the code." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 36: Copy / paste code from step def below. Add loop around the body of the code.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7500,13 +7500,13 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1311" id="shot-1311" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 35: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-1313" id="shot-1313" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 37: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 <div class="paragraph">
 <p>Let’s do the exact same thing with these other three steps.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1312" id="shot-1312" title="Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 36: Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`</a></p>
+<p><a href="#shot-1314" id="shot-1314" title="Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 38: Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7514,13 +7514,13 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1313" id="shot-1313" title="Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 37: Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
+<p><a href="#shot-1315" id="shot-1315" title="Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 39: Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
 </div>
 <div class="paragraph">
 <p>Again, we have the bulk of this code that we can just recycle. We just need to capture the count, then add add a loop around the outside.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1314" id="shot-1314" title="Copy / paste code from step def below. Add loop around the body of the code." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 38: Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+<p><a href="#shot-1316" id="shot-1316" title="Copy / paste code from step def below. Add loop around the body of the code." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 40: Copy / paste code from step def below. Add loop around the body of the code.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7534,7 +7534,7 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p>And everything is still green. <a href="#shot-1315" id="shot-1315" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 39</a></p>
+<p>And everything is still green. <a href="#shot-1317" id="shot-1317" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 41</a></p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s step back and see how BRIEF our scenario reads now:</p>
@@ -7560,7 +7560,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Now things are really getting clearer.</p>
 </div>
 <div class="paragraph">
-<p>There are still a couple of problems with this scenario. One is the name of the scenario.<a href="#shot-1316" id="shot-1316" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> It really doesn’t tell us anything at all.</p>
+<p>There are still a couple of problems with this scenario. One is the name of the scenario.<a href="#shot-1318" id="shot-1318" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> It really doesn’t tell us anything at all.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7577,7 +7577,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>So if this scenario were an epside of Friends, what would it be called? This is the one where… well.. <em>the one where Sean shouts some over-long messages and some containing the word “buy”.</em></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1317" id="shot-1317" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p><a href="#shot-1319" id="shot-1319" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7605,7 +7605,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>We can tuck each one under a <code>Rule</code> keyword, removing the rules from the feature file&#8217;s free-text description:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1318" id="shot-1318" title="leaving the original in place."" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: leaving the original in place."</a><a href="#shot-1319" id="shot-1319" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p><a href="#shot-1320" id="shot-1320" title="leaving the original in place."" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: leaving the original in place."</a><a href="#shot-1321" id="shot-1321" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7635,14 +7635,14 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 <div class="paragraph">
 <p>Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. That&#8217;s why she likes having a scenario that covers both. As we talk about it, we realise that while we don’t need this one anymore
-<a href="#shot-1320" id="shot-1320" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a> <a href="#shot-1321" id="shot-1321" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a>
+<a href="#shot-1322" id="shot-1322" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a> <a href="#shot-1323" id="shot-1323" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a>
 there’s a missing scenario - where both rules apply to the <em>same message</em>: <em>The one where there’s a shout that’s both over-long and with the word “buy” in it.</em></p>
 </div>
 <div class="paragraph">
 <p>We’d better document that as a question for now.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1322" id="shot-1322" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p><a href="#shot-1324" id="shot-1324" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7670,7 +7670,7 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 <p>Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still haven&#8217;t even started fixing that bug yet!</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1323" id="shot-1323" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
+<p><a href="#shot-1325" id="shot-1325" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -7684,7 +7684,7 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 <div class="sect2">
 <h3 id="_conclusion">7.6. Conclusion</h3>
 <div class="paragraph">
-<p><a href="#shot-1324" id="shot-1324" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 07.closing.common.animation.mp4</a></p>
+<p><a href="#shot-1326" id="shot-1326" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 07.closing.common.animation.mp4</a></p>
 </div>
 <div class="videoblock">
 <div class="content">
@@ -7767,7 +7767,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-07-08 20:18:35 UTC
+Last updated 2021-07-11 14:56:27 UTC
 </div>
 </div>
 <style>

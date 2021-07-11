@@ -7097,11 +7097,11 @@ Your browser does not support the video tag.
 <p>We’ll need a new step definition for this, of course.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll add the <code>--tags "not @todo"</code> tag to our Cucumber properties file in order to just run the scenarios we are currently refactoring.</p>
+<p>We&#8217;ll add the <code>--tags "not @todo"</code> tag  to our Cucumber properties file in order to just run the scenarios we are currently refactoring.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">tags</span><span class="o">=</span><span class="s">"not @todo"</span><span class="o">)</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">plugin</span> <span class="o">=</span>  <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">tags</span> <span class="o">=</span> <span class="s">"not @todo"</span><span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -7767,7 +7767,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-07-08 20:18:35 UTC
+Last updated 2021-07-11 14:56:27 UTC
 </div>
 </div>
 <style>
