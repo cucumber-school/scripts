@@ -5496,29 +5496,32 @@ We can specify multiple formatters like this.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We choose the rerun formatter <a href="#shot-335" id="shot-335" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a> and send the output to a file whose name is preceded by the <code>@</code> (at) sign.<a href="#shot-336" id="shot-336" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a> Let&#8217;s call it @rerun.txt.<a href="#shot-337" id="shot-337" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16</a> <a href="#shot-338" id="shot-338" title="run cucumber using rerun formatter" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17: run cucumber using rerun formatter</a></p>
+<p>We choose the rerun formatter <a href="#shot-335" id="shot-335" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a> and send the output to a file. Let&#8217;s call it <code>rerun.txt</code>.<a href="#shot-336" id="shot-336" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16</a> <a href="#shot-337" id="shot-337" title="run cucumber using rerun formatter" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17: run cucumber using rerun formatter</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>bundle exec cucumber -f rerun -o @rerun.txt</code></pre>
+<pre class="rouge highlight"><code>bundle exec cucumber -f rerun -o rerun.txt</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s look at what’s in that @rerun.txt file. <a href="#shot-339" id="shot-339" title="open @rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18: open @rerun.txt</a> It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.</p>
+<p>Let’s look at what’s in that rerun.txt file. <a href="#shot-338" id="shot-338" title="open rerun.txt" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18: open rerun.txt</a> It’s a list of the scenarios that failed! And the format looks familiar doesn’t it? It’s using the line number filtering format that we showed you earlier.</p>
 </div>
 <div class="paragraph">
-<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. <a href="#shot-340" id="shot-340" title="run Cucumber using the @rerun.txt file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19: run Cucumber using the @rerun.txt file</a></p>
+<p>This is really useful when you have a few failing scenarios and you want to re-run only ones that failed. We tell Cucumber to run only the failed scenarios by pointing it at the rerun file. <a href="#shot-339" id="shot-339" title="run Cucumber using the @rerun.txt file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19: run Cucumber using the @rerun.txt file</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code>bundle exec cucumber $(cat @rerun.txt)</code></pre>
+<pre class="rouge highlight"><code>bundle exec cucumber @rerun.txt</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Using the <code>@</code>-sign in front of the filename tells Cucumber to read the rerun file&#8217;s contents as though it was arguments on the command-line, just like we showed you in lesson 1.</p>
 </div>
 <div class="paragraph">
 <p>This is a big time saver when you’re in the middle of a refactoring where you have broken a few scenarios and are working yourself back to green.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s fix the scenario <a href="#shot-341" id="shot-341" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20: undo change in feature file</a></p>
+<p>Let&#8217;s fix the scenario <a href="#shot-340" id="shot-340" title="undo change in feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20: undo change in feature file</a></p>
 </div>
 <div class="listingblock">
 <div class="title">hear_shout.feature</div>
@@ -5534,7 +5537,7 @@ We can specify multiple formatters like this.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>and rerun the failing scenario again <a href="#shot-342" id="shot-342" title="run npm test from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21: run npm test from console</a></p>
+<p>and rerun the failing scenario again <a href="#shot-341" id="shot-341" title="run npm test from console" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21: run npm test from console</a></p>
 </div>
 <div class="paragraph">
 <p>Great. We&#8217;re back to green again.</p>
@@ -5544,17 +5547,17 @@ We can specify multiple formatters like this.</p>
 <div class="sect2">
 <h3 id="_publishing_results">6.5. Publishing Results</h3>
 <div class="paragraph">
-<p><a href="#shot-343" id="shot-343" title="show HTML output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: show HTML output</a>
+<p><a href="#shot-342" id="shot-342" title="show HTML output" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: show HTML output</a>
 In the last lesson we saw the output generated by the HTML plugin. This is a great way for your business colleagues and customers to engage with the development of the product. Since the scenarios are written in business language, they act as documentation that everyone interested in the product can understand. And, because the results are colour-coded green (if the system behaves as expected) or red (if it doesn&#8217;t) everyone can see what behaviour has been implemented.</p>
 </div>
 <div class="paragraph">
 <p>The challenge is making sure that this documentation is easily available. Feature files are usually checked into source control along with the source code, which isn&#8217;t a great way of making it accessible to less technical team members. The HTML output can be shared, but it needs to be stored somewhere that everyone has access to - such as on your intranet or wiki. That&#8217;s something that your team has to configure themselves.</p>
 </div>
 <div class="paragraph">
-<p>Since Cucumber 6.0.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. <a href="#shot-344" id="shot-344" title="go to reports.cucumber.io" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: go to reports.cucumber.io</a></p>
+<p>Since Cucumber 6.0.0 there has been a new feature that allows you to automatically publish the results online to a free service called Cucumber Reports. <a href="#shot-343" id="shot-343" title="go to reports.cucumber.io" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: go to reports.cucumber.io</a></p>
 </div>
 <div class="paragraph">
-<p>Ensure that you&#8217;re using Cucumber 6.0.0 or later <a href="#shot-345" id="shot-345" title="show package-lock.json file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: show package-lock.json file</a></p>
+<p>Ensure that you&#8217;re using Cucumber 6.0.0 or later <a href="#shot-344" id="shot-344" title="show package-lock.json file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: show package-lock.json file</a></p>
 </div>
 <div class="listingblock">
 <div class="title">Gemfile.lock</div>
@@ -5563,7 +5566,7 @@ In the last lesson we saw the output generated by the HTML plugin. This is a gre
 </div>
 </div>
 <div class="paragraph">
-<p>and remove publish-quiet from <code>cucumber.yml</code>. <a href="#shot-346" id="shot-346" title="cucumber.js" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4: cucumber.js</a></p>
+<p>and remove publish-quiet from <code>cucumber.yml</code>. <a href="#shot-345" id="shot-345" title="cucumber.js" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4: cucumber.js</a></p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.yml</div>
@@ -5572,10 +5575,10 @@ In the last lesson we saw the output generated by the HTML plugin. This is a gre
 </div>
 </div>
 <div class="paragraph">
-<p>Now when we run Cucumber, <a href="#shot-347" id="shot-347" title="npm test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: npm test</a> it helpfully prints out a banner telling you how to publish your results to Cucumber Reports <a href="#shot-348" id="shot-348" title="highlight banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: highlight banner</a>.</p>
+<p>Now when we run Cucumber, <a href="#shot-346" id="shot-346" title="npm test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: npm test</a> it helpfully prints out a banner telling you how to publish your results to Cucumber Reports <a href="#shot-347" id="shot-347" title="highlight banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: highlight banner</a>.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s follow the instructions in the banner and add --publish to cucumber.js <a href="#shot-349" id="shot-349" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a>.</p>
+<p>Let&#8217;s follow the instructions in the banner and add --publish to cucumber.js <a href="#shot-348" id="shot-348" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a>.</p>
 </div>
 <div class="listingblock">
 <div class="title">cucumber.yml</div>
@@ -5584,20 +5587,20 @@ In the last lesson we saw the output generated by the HTML plugin. This is a gre
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can run Cucumber again and we get a different banner output <a href="#shot-350" id="shot-350" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a>. The unique URL in this banner is the address of your published report <a href="#shot-351" id="shot-351" title="highlight URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9: highlight URL</a>.</p>
+<p>Now we can run Cucumber again and we get a different banner output <a href="#shot-349" id="shot-349" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a>. The unique URL in this banner is the address of your published report <a href="#shot-350" id="shot-350" title="highlight URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9: highlight URL</a>.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-352" id="shot-352" title="follow URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10: follow URL</a>
+<p><a href="#shot-351" id="shot-351" title="follow URL" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10: follow URL</a>
 Open the URL and you&#8217;ll find your report published in the same format as the HTML plugin. Now you can share the report just by sharing the URL. You also get some extra information about the run that generated the report. If you publish reports from a recognised CI server, then extra information is gathered.</p>
 </div>
 <div class="paragraph">
-<p>You might have noticed the warning in the banner that says the report will "self-destruct". <a href="#shot-353" id="shot-353" title="highlight warning" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12: highlight warning</a> To prevent a report from being deleted, it has to be associated with an authenticated account.</p>
+<p>You might have noticed the warning in the banner that says the report will "self-destruct". <a href="#shot-352" id="shot-352" title="highlight warning" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12: highlight warning</a> To prevent a report from being deleted, it has to be associated with an authenticated account.</p>
 </div>
 <div class="paragraph">
-<p>Follow the link in the report to authenticate your account <a href="#shot-354" id="shot-354" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a><a href="#shot-355" id="shot-355" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a> You can then retrieve your Cucumber Reports publish token <a href="#shot-356" id="shot-356" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a>. Reports associated with a publish token will be kept until explicitly deleted.</p>
+<p>Follow the link in the report to authenticate your account <a href="#shot-353" id="shot-353" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a><a href="#shot-354" id="shot-354" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a> You can then retrieve your Cucumber Reports publish token <a href="#shot-355" id="shot-355" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a>. Reports associated with a publish token will be kept until explicitly deleted.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-357" id="shot-357" title="publish quiet" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16: publish quiet</a>
+<p><a href="#shot-356" id="shot-356" title="publish quiet" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16: publish quiet</a>
 During development you probably won&#8217;t want to publish a report after every build&#8230;&#8203; and you might prefer not to see the banner output telling you about Cucumber Reports. Let&#8217;s fix this in cucumber.js by replacing --publish with --publish-quiet:</p>
 </div>
 <div class="listingblock">
@@ -5607,7 +5610,7 @@ During development you probably won&#8217;t want to publish a report after every
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-358" id="shot-358" title="no banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17: no banner</a>
+<p><a href="#shot-357" id="shot-357" title="no banner" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17: no banner</a>
 Now when we run Cucumber, no report is published and no banner advertising Cucumber Reports is output.</p>
 </div>
 <div class="paragraph">
@@ -5639,7 +5642,7 @@ Now when we run Cucumber, no report is published and no banner advertising Cucum
 <p>Tamsin has helpfully documented the bug as a failing scenario. Here is it:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-359" id="shot-359" title="Run cucumber with @todo tag" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Run cucumber with @todo tag</a></p>
+<p><a href="#shot-358" id="shot-358" title="Run cucumber with @todo tag" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Run cucumber with @todo tag</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5658,11 +5661,11 @@ Feature: Premium accounts
 </div>
 <div class="paragraph">
 <p>Hum. So let’s try and figure out what this is all about. Sean starts out with some credits,
-<a href="#shot-360" id="shot-360" title="Highlight first step" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Highlight first step</a>
+<a href="#shot-359" id="shot-359" title="Highlight first step" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Highlight first step</a>
 presumably that&#8217;s what gives his account premium status?</p>
 </div>
 <div class="paragraph">
-<p>As a result of that shout, he’s obviously supposed to have some credits deducted. Tamsin’s scenario says that the correct behaviour is for 5 credits to be deducted, leaving him with 25 credits.<a href="#shot-361" id="shot-361" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> As we can see from running the test, the system is deducting 15 credits instead.<a href="#shot-362" id="shot-362" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p>As a result of that shout, he’s obviously supposed to have some credits deducted. Tamsin’s scenario says that the correct behaviour is for 5 credits to be deducted, leaving him with 25 credits.<a href="#shot-360" id="shot-360" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> As we can see from running the test, the system is deducting 15 credits instead.<a href="#shot-361" id="shot-361" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -5671,7 +5674,7 @@ presumably that&#8217;s what gives his account premium status?</p>
 <p>Let’s read the whole feature file - that should tell us some more about how the system is supposed to behave.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-363" id="shot-363" title="Open premium_accounts.feature" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: Open premium_accounts.feature</a>
+<p><a href="#shot-362" id="shot-362" title="Open premium_accounts.feature" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: Open premium_accounts.feature</a>
 Oh my.</p>
 </div>
 <div class="paragraph">
@@ -5732,15 +5735,15 @@ Oh my.</p>
 <p>Apart from Tamsin’s new bug report scenario at the bottom, there’s only one scenario, and it’s long! I think I can count twelve steps altogether, excluding the background steps. As a general guideline, we like our scenarios to be no longer than about five steps long, so this is big.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-364" id="shot-364" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a>
+<p><a href="#shot-363" id="shot-363" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a>
 The scenario has several <code>When</code> steps - nine of them in all! - which is often a sign that the scenario is trying to test more than one business rule at a time.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-365" id="shot-365" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a>
+<p><a href="#shot-364" id="shot-364" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a>
 We normally like to document the business rules in the Gherkin, and add a few paragraphs of prose description, but there&#8217;s no <code>Rule</code> keyword and the description section is blank, so we haven’t been left any clues there.</p>
 </div>
 <div class="paragraph">
-<p>Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 <a href="#shot-366" id="shot-366" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a> credits and ends up with 11, but why?<a href="#shot-367" id="shot-367" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
+<p>Let’s see if we can gleam the rules from reading the scenario carefully. Sean starts out with 30 <a href="#shot-365" id="shot-365" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a> credits and ends up with 11, but why?<a href="#shot-366" id="shot-366" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
 </div>
 <div class="paragraph">
 <p>There’s so much detail here. I wonder which bits are important. Could it be the number of words Sean shouts that affects his credits? Or the number of messages? Based on Tamsin’s test case, maybe the word “buy” is important&#8230;&#8203;</p>
@@ -5758,7 +5761,7 @@ We normally like to document the business rules in the Gherkin, and add a few pa
 <p>Let’s try reading the code instead.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-368" id="shot-368" title="Open Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10: Open Network class</a></p>
+<p><a href="#shot-367" id="shot-367" title="Open Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10: Open Network class</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5792,7 +5795,7 @@ We normally like to document the business rules in the Gherkin, and add a few pa
 </div>
 </div>
 <div class="paragraph">
-<p>OK, so we have a <code>deduct_credits</code> method here that seems to encapsulate the rules.<a href="#shot-369" id="shot-369" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a> It looks like over-long messages - messages that are not short enough - cost two credits,<a href="#shot-370" id="shot-370" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a> and each time the word “buy” is mentioned, we deduct 5 credits.<a href="#shot-371" id="shot-371" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
+<p>OK, so we have a <code>deduct_credits</code> method here that seems to encapsulate the rules.<a href="#shot-368" id="shot-368" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a> It looks like over-long messages - messages that are not short enough - cost two credits,<a href="#shot-369" id="shot-369" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a> and each time the word “buy” is mentioned, we deduct 5 credits.<a href="#shot-370" id="shot-370" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
 </div>
 <div class="paragraph">
 <p>It’s a good job we know how to read code!</p>
@@ -5808,14 +5811,14 @@ We normally like to document the business rules in the Gherkin, and add a few pa
 <div class="sect2">
 <h3 id="_clarifying_the_rules">7.2. Clarifying the rules</h3>
 <div class="paragraph">
-<p><a href="#shot-372" id="shot-372" title="Opens the premium accounts feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Opens the premium accounts feature file</a></p>
+<p><a href="#shot-371" id="shot-371" title="Opens the premium accounts feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Opens the premium accounts feature file</a></p>
 </div>
 <div class="paragraph">
 <p>This seems like a good time to ask our domain experts for clarification about this behaviour. Ideally a three amigos meeting would have done this already, but things don’t always go according to the script. Let’s pay a visit to our product owner.</p>
 </div>
 <div class="paragraph">
 <p>Paula the product owner tells us the rules are as follows:
-<a href="#shot-373" id="shot-373" title="Writes the rules up in the feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Writes the rules up in the feature file</a></p>
+<a href="#shot-372" id="shot-372" title="Writes the rules up in the feature file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Writes the rules up in the feature file</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -5833,7 +5836,7 @@ We normally like to document the business rules in the Gherkin, and add a few pa
 <p>OK, well that helps us a great deal, but this scenario is still doing a poor job of illustrating those rules. Let’s take a moment to understand why.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-374" id="shot-374" title="07.03.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: 07.03.animation.mp4</a></p>
+<p><a href="#shot-373" id="shot-373" title="07.03.animation.mp4" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: 07.03.animation.mp4</a></p>
 </div>
 <div class="videoblock">
 <div class="content">
@@ -5981,7 +5984,7 @@ Your browser does not support the video tag.
 <p>Let’s try to distill the essence of this scenario by removing the incidental details.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-375" id="shot-375" title="Opens the premium account feature" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Opens the premium account feature</a></p>
+<p><a href="#shot-374" id="shot-374" title="Opens the premium account feature" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Opens the premium account feature</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6021,13 +6024,13 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="paragraph">
-<p>We can start with this step, <code>When Sean shouts "Come and buy a coffee".</code> <a href="#shot-376" id="shot-376" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>We can start with this step, <code>When Sean shouts "Come and buy a coffee".</code> <a href="#shot-375" id="shot-375" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="paragraph">
 <p>From what what we know about the rules, what’s important here is that the shout contains the word “buy”. So let’s write that:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-377" id="shot-377" title="Changes step to When Sean shouts a message containing the word " style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: Changes step to When Sean shouts a message containing the word </a></p>
+<p><a href="#shot-376" id="shot-376" title="Changes step to When Sean shouts a message containing the word " style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: Changes step to When Sean shouts a message containing the word </a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6041,7 +6044,7 @@ Your browser does not support the video tag.
 <p>We’ll need a new step definition for this, of course.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-378" id="shot-378" title="Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4: Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.</a></p>
+<p><a href="#shot-377" id="shot-377" title="Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4: Runs <code>cucumber --tags ~@todo</code>, copies / pastes step def snippet into steps file.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6049,11 +6052,11 @@ Your browser does not support the video tag.
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-379" id="shot-379" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a>
+<p><a href="#shot-378" id="shot-378" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a>
 We can just copy the code for shouting a message from this step down here for now. We will deal with this duplication, but later.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-380" id="shot-380" title="Copies code from step def below, then adds code above to create a test message containing the given word." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: Copies code from step def below, then adds code above to create a test message containing the given word.</a></p>
+<p><a href="#shot-379" id="shot-379" title="Copies code from step def below, then adds code above to create a test message containing the given word." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: Copies code from step def below, then adds code above to create a test message containing the given word.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6068,7 +6071,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Let’s run Cucumber to check we haven’t made any mistakes…</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-381" id="shot-381" title="Runs <code>cucumber --tags ~@todo</code>." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: Runs <code>cucumber --tags ~@todo</code>.</a></p>
+<p><a href="#shot-380" id="shot-380" title="Runs <code>cucumber --tags ~@todo</code>." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: Runs <code>cucumber --tags ~@todo</code>.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6080,7 +6083,7 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 <div class="paragraph">
 <p>Now we can use that same step everywhere else in the scenario, too, where that is the real intent of the step.
-<a href="#shot-382" id="shot-382" title="Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<a href="#shot-381" id="shot-381" title="Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: Changes the other two steps that mention the word “buy”. Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6120,7 +6123,7 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p>And run cucumber again. <a href="#shot-383" id="shot-383" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
+<p>And run cucumber again. <a href="#shot-382" id="shot-382" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6130,7 +6133,7 @@ We can just copy the code for shouting a message from this step down here for no
 <div class="sect3">
 <h4 id="_distill_the_regular_shout_step">7.4.1. Distill the regular shout step</h4>
 <div class="paragraph">
-<p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step? <a href="#shot-384" id="shot-384" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
+<p>We can apply this same pattern to remove the noisy incidental details from this next step too. What’s the essence of this step? <a href="#shot-383" id="shot-383" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6141,7 +6144,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>In this case, it really doesn’t matter what Sean is shouting - a regular shout doesn’t have any effect on his premium account credits. So we could just re-word it like this:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-385" id="shot-385" title="Changes the step from And Sean shouts " style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11: Changes the step from And Sean shouts </a></p>
+<p><a href="#shot-384" id="shot-384" title="Changes the step from And Sean shouts " style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11: Changes the step from And Sean shouts </a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6152,8 +6155,8 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Again, we’ll need a new step definition, and again, we’ll just duplicate the code for shouting a message for now.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-386" id="shot-386" title="Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12: Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.</a>
-<a href="#shot-387" id="shot-387" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
+<p><a href="#shot-385" id="shot-385" title="Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12: Runs <code>cucumber --tags ~@todo</code>,  copies snippet. Copies shouting code from step def below, then adds code above to create a test message.</a>
+<a href="#shot-386" id="shot-386" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6168,7 +6171,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>We’ll run Cucumber again just in case&#8230;&#8203;</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-388" id="shot-388" title="Runs <code>cucumber --tags ~@todo</code>." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14: Runs <code>cucumber --tags ~@todo</code>.</a></p>
+<p><a href="#shot-387" id="shot-387" title="Runs <code>cucumber --tags ~@todo</code>." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14: Runs <code>cucumber --tags ~@todo</code>.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6182,7 +6185,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>And finally, let’s use that new step everywhere we can…</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-389" id="shot-389" title="Changes two steps to that shout regular messages to use the new step" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15: Changes two steps to that shout regular messages to use the new step</a></p>
+<p><a href="#shot-388" id="shot-388" title="Changes two steps to that shout regular messages to use the new step" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15: Changes two steps to that shout regular messages to use the new step</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6225,7 +6228,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>&#8230;&#8203;and run Cucumber once again.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-390" id="shot-390" title="Runs `cucumber --tags ~@todo`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16: Runs `cucumber --tags ~@todo`</a></p>
+<p><a href="#shot-389" id="shot-389" title="Runs `cucumber --tags ~@todo`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16: Runs `cucumber --tags ~@todo`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6239,7 +6242,7 @@ We can just copy the code for shouting a message from this step down here for no
 <div class="sect3">
 <h4 id="_distill_the_long_shout_step">7.4.2. Distill the long shout step</h4>
 <div class="paragraph">
-<p>Now let’s deal with this next step.<a href="#shot-391" id="shot-391" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17</a> What’s the essence here?</p>
+<p>Now let’s deal with this next step.<a href="#shot-390" id="shot-390" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17</a> What’s the essence here?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6254,7 +6257,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Again, the exact words in the shout don’t have any significance in this scenario. What matters, if anything, is that this is a long message. It’s under 180 characters, but still longer than a regular message. It’s not clear how important this distinction is just yet, but let’s give the authors of this scenario the benefit of the doubt for now that there must be <em>some</em> reason it&#8217;s different. So we&#8217;ll push the details about the message content down into the step definition, following the same recipe.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-392" id="shot-392" title="Changes the step to `And Sean shouts a long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18: Changes the step to `And Sean shouts a long message`</a></p>
+<p><a href="#shot-391" id="shot-391" title="Changes the step to `And Sean shouts a long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18: Changes the step to `And Sean shouts a long message`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6262,16 +6265,16 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-393" id="shot-393" title="Runs `cucumber --tags ~@todo`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19: Runs `cucumber --tags ~@todo`</a></p>
+<p><a href="#shot-392" id="shot-392" title="Runs `cucumber --tags ~@todo`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19: Runs `cucumber --tags ~@todo`</a></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-394" id="shot-394" title="Copies / pastes step def snippet into steps file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20: Copies / pastes step def snippet into steps file</a></p>
+<p><a href="#shot-393" id="shot-393" title="Copies / pastes step def snippet into steps file" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20: Copies / pastes step def snippet into steps file</a></p>
 </div>
 <div class="paragraph">
 <p>Again, we’ll tolerate the duplication for now, and just generate a long message here.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-395" id="shot-395" title="Copies shouting code from step def below, then adds code above to create a 180 character test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21: Copies shouting code from step def below, then adds code above to create a 180 character test message.</a></p>
+<p><a href="#shot-394" id="shot-394" title="Copies shouting code from step def below, then adds code above to create a 180 character test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21: Copies shouting code from step def below, then adds code above to create a 180 character test message.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6283,13 +6286,13 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-396" id="shot-396" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-395" id="shot-395" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_distill_the_over_long_shout_step">7.4.3. Distill the over-long shout step</h4>
 <div class="paragraph">
-<p>Now what’s interesting about this next step? <a href="#shot-397" id="shot-397" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23</a></p>
+<p>Now what’s interesting about this next step? <a href="#shot-396" id="shot-396" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6308,7 +6311,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>This shout is over our 180-character limit. After a quick chat with Paula, we’ve confirmed she wants to call this an <em>over-long message</em>. Let’s update the rule we wrote up earlier to document this evolution of our domain language:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-398" id="shot-398" title="Changes second rule “Long messages…” to “Over-long messages…”" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24: Changes second rule “Long messages…” to “Over-long messages…”</a></p>
+<p><a href="#shot-397" id="shot-397" title="Changes second rule “Long messages…” to “Over-long messages…”" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24: Changes second rule “Long messages…” to “Over-long messages…”</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6321,7 +6324,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Then we can use that term in a new, more abstract step:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-399" id="shot-399" title="Changes step to `And Sean shouts an over-long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 25: Changes step to `And Sean shouts an over-long message`</a></p>
+<p><a href="#shot-398" id="shot-398" title="Changes step to `And Sean shouts an over-long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 25: Changes step to `And Sean shouts an over-long message`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6332,7 +6335,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Again, we’ll make a step definition that duplicates the shouting code, and this time make a 181-character message, just long enough to be over the 180 character limit.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-400" id="shot-400" title="Copies shouting code from step def below, then changes first line to create a 181-character test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 26: Copies shouting code from step def below, then changes first line to create a 181-character test message.</a></p>
+<p><a href="#shot-399" id="shot-399" title="Copies shouting code from step def below, then changes first line to create a 181-character test message." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 26: Copies shouting code from step def below, then changes first line to create a 181-character test message.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6345,13 +6348,13 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-401" id="shot-401" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 27: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-400" id="shot-400" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 27: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 <div class="paragraph">
 <p>Again, we have another step we can replace with this more abstract one:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-402" id="shot-402" title="Replace imperative step on line 22 with `Sean shouts an over-long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 28: Replace imperative step on line 22 with `Sean shouts an over-long message`</a></p>
+<p><a href="#shot-401" id="shot-401" title="Replace imperative step on line 22 with `Sean shouts an over-long message`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 28: Replace imperative step on line 22 with `Sean shouts an over-long message`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6359,7 +6362,7 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-403" id="shot-403" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 29: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-402" id="shot-402" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 29: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -6368,7 +6371,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Right. With the incidental details removed from these steps, it’s starting to become easier to see what’s going on. It would be even easier if we re-ordered them so they&#8217;re grouped together. Let’s do that:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-404" id="shot-404" title="Re-orders When steps so each type of step is grouped together." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 30: Re-orders When steps so each type of step is grouped together.</a></p>
+<p><a href="#shot-403" id="shot-403" title="Re-orders When steps so each type of step is grouped together." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 30: Re-orders When steps so each type of step is grouped together.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6397,7 +6400,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Arguably, the steps that create regular and long messages are incidental, since they have no bearing on the behaviour we’re describing with this scenario. We can remove them altogether, and the behaviour should be exactly the same. So let’s do that:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-405" id="shot-405" title="Removes the first four When steps (remember to change And for When on the next step)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 31: Removes the first four When steps (remember to change And for When on the next step)</a></p>
+<p><a href="#shot-404" id="shot-404" title="Removes the first four When steps (remember to change And for When on the next step)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 31: Removes the first four When steps (remember to change And for When on the next step)</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6426,7 +6429,7 @@ We can just copy the code for shouting a message from this step down here for no
 <h4 id="_merge_repeated_steps">7.4.5. Merge repeated steps</h4>
 <div class="paragraph">
 <p>These repetitive steps aren’t necessary. They make this scenario look more like a computer program than a specification document. Instead of repeating the step “When Sean shouts an over-long message” over and over again, let’s just tell it like it is:
-<a href="#shot-406" id="shot-406" title="Replaces two steps with new step: `When Sean shouts 2 over-long messages`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 32: Replaces two steps with new step: `When Sean shouts 2 over-long messages`</a></p>
+<a href="#shot-405" id="shot-405" title="Replaces two steps with new step: `When Sean shouts 2 over-long messages`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 32: Replaces two steps with new step: `When Sean shouts 2 over-long messages`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6437,13 +6440,13 @@ We can just copy the code for shouting a message from this step down here for no
 <p>We’ll need a new step definition for this one.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-407" id="shot-407" title="Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 33: Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
+<p><a href="#shot-406" id="shot-406" title="Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 33: Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
 </div>
 <div class="paragraph">
 <p>We can re-use the existing step definition, we just need to run a loop around it, based on the number of messages specified in the scenario.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-408" id="shot-408" title="Copy / paste code from step def below. Add loop around the body of the code." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 34: Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+<p><a href="#shot-407" id="shot-407" title="Copy / paste code from step def below. Add loop around the body of the code." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 34: Copy / paste code from step def below. Add loop around the body of the code.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6458,13 +6461,13 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-409" id="shot-409" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 35: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
+<p><a href="#shot-408" id="shot-408" title="Runs <code>cucumber --tags ~@todo</code>. All green." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 35: Runs <code>cucumber --tags ~@todo</code>. All green.</a></p>
 </div>
 <div class="paragraph">
 <p>Let’s do the exact same thing with these other three steps.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-410" id="shot-410" title="Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 36: Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`</a></p>
+<p><a href="#shot-409" id="shot-409" title="Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 36: Replaces three steps with new step: `When Sean shouts 3 messages containing the word “buy”`</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6472,13 +6475,13 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-411" id="shot-411" title="Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 37: Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
+<p><a href="#shot-410" id="shot-410" title="Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 37: Runs <code>cucumber --tags ~@todo</code>. Copies step def snippet and pastes into steps file.</a></p>
 </div>
 <div class="paragraph">
 <p>Again, we have the bulk of this code that we can just recycle. We just need to capture the count, then add add a loop around the outside.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-412" id="shot-412" title="Copy / paste code from step def below. Add loop around the body of the code." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 38: Copy / paste code from step def below. Add loop around the body of the code.</a></p>
+<p><a href="#shot-411" id="shot-411" title="Copy / paste code from step def below. Add loop around the body of the code." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 38: Copy / paste code from step def below. Add loop around the body of the code.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6492,7 +6495,7 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 </div>
 <div class="paragraph">
-<p>And everything is still green. <a href="#shot-413" id="shot-413" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 39</a></p>
+<p>And everything is still green. <a href="#shot-412" id="shot-412" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 39</a></p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s step back and see how BRIEF our scenario reads now:</p>
@@ -6518,7 +6521,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Now things are really getting clearer.</p>
 </div>
 <div class="paragraph">
-<p>There are still a couple of problems with this scenario.<a href="#shot-414" id="shot-414" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> One is the name of the scenario. It really doesn’t tell us anything at all.</p>
+<p>There are still a couple of problems with this scenario.<a href="#shot-413" id="shot-413" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> One is the name of the scenario. It really doesn’t tell us anything at all.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6535,7 +6538,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>So if this scenario were an epside of Friends, what would it be called? This is the one where… well.. <em>the one where Sean shouts some over-long messages and some containing the word “buy”.</em></p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-415" id="shot-415" title="Updates the name of the scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Updates the name of the scenario</a></p>
+<p><a href="#shot-414" id="shot-414" title="Updates the name of the scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Updates the name of the scenario</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6563,7 +6566,7 @@ We can just copy the code for shouting a message from this step down here for no
 <p>We can tuck each one under a <code>Rule</code> keyword, removing the rules from the feature file&#8217;s free-text description:</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-416" id="shot-416" title="Write out the two new scenarios, leaving the original in place." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: Write out the two new scenarios, leaving the original in place.</a><a href="#shot-417" id="shot-417" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p><a href="#shot-415" id="shot-415" title="Write out the two new scenarios, leaving the original in place." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3: Write out the two new scenarios, leaving the original in place.</a><a href="#shot-416" id="shot-416" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6593,14 +6596,14 @@ We can just copy the code for shouting a message from this step down here for no
 </div>
 <div class="paragraph">
 <p>Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. That&#8217;s why she likes having a scenario that covers both. As we talk about it, we realise that while we don’t need this one anymore
-<a href="#shot-418" id="shot-418" title="removes original long scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: removes original long scenario</a><a href="#shot-419" id="shot-419" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a>
+<a href="#shot-417" id="shot-417" title="removes original long scenario" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: removes original long scenario</a><a href="#shot-418" id="shot-418" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a>
 there’s a missing scenario - where both rules apply to the <em>same message</em>: <em>The one where there’s a shout that’s both over-long and with the word “buy” in it.</em></p>
 </div>
 <div class="paragraph">
 <p>We’d better document that as a question for now.</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-420" id="shot-420" title="Writes up the question." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: Writes up the question.</a></p>
+<p><a href="#shot-419" id="shot-419" title="Writes up the question." style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: Writes up the question.</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6628,7 +6631,7 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 <p>Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still haven&#8217;t even started fixing that bug yet!</p>
 </div>
 <div class="paragraph">
-<p><a href="#shot-421" id="shot-421" title="Writes up the other question" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: Writes up the other question</a></p>
+<p><a href="#shot-420" id="shot-420" title="Writes up the other question" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: Writes up the other question</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -6642,7 +6645,7 @@ there’s a missing scenario - where both rules apply to the <em>same message</e
 <div class="sect2">
 <h3 id="_conclusion">7.6. Conclusion</h3>
 <div class="paragraph">
-<p><a href="#shot-422" id="shot-422" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 07.closing.common.animation.mp4</a></p>
+<p><a href="#shot-421" id="shot-421" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 07.closing.common.animation.mp4</a></p>
 </div>
 <div class="videoblock">
 <div class="content">
@@ -6725,7 +6728,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-07-11 14:56:27 UTC
+Last updated 2021-07-12 15:14:43 UTC
 </div>
 </div>
 <style>
