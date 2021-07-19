@@ -30,13 +30,18 @@ It’s trying to test both business rules at once.
 
 ==== Split scenario
 
+
 Normally you’ll want at least one scenario for each business rule. That way, each scenario clearly illustrates the effect of that rule on the system. Sometimes it’s interesting to also document the effect that multiple rules have when they play out at the same time, but as you’ve already experienced, that can quickly get confusing.
 
 You’ll often need more than one scenario to illustrate each rule, but in this case, one scenario for each rule looks like it will be fine for the time being. Let’s split this scenario in two: the one where Sean shouts several over-long messages, and the one where Sean shouts several messages containing the word “buy”.
 
-We can tuck each one under a `Rule` keyword, removing the rules from the feature file's free-text description:
+shot::[3,"a shot where we duplicate the original scenario, twice"]
+shot::[4,"a shot where we change the `Scenario: ` name of each of the duplicated scenarios to match what I say in the audio, then clean up the steps to match that intent"]shot::[5]
 
-shot::[3,"Write out the two new scenarios, leaving the original in place."]shot::[4]
+We can tuck each one under a `Rule` keyword, shot::[6,"a shot where we add a Rule keyword above each one."] removing the rules from the feature file's free-text description:
+shot::[7,""removing the rules from the feature file's free-text description field" we need a shot zooming out to show the whole feature, and deleting the description that we added in the earlier lesson."]
+
+And then we change the scenarios steps accordingly shot::[8]shot::[9]
 
 [source, gherkin]
 ----
@@ -49,13 +54,13 @@ Great. Now the effect of each of these rules is much more clearly documented.
 
 We run these new scenarios past Paula and she’s delighted. She really likes how they read. She asks us - why do we still need the original scenario?
 
-Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. That's why she likes having a scenario that covers both. As we talk about it, we realise that while we don’t need this one anymore 
-shot::[5,"removes original long scenario"]shot::[6]
+Tamsin chimes in and says she has a concern that the rules might conflict with each other in the code somehow. That's why she likes having a scenario that covers both. As we talk about it, we realise that while we don’t need this one anymore
+shot::[10,"removes original long scenario"]shot::[11]
 there’s a missing scenario - where both rules apply to the _same message_: _The one where there’s a shout that’s both over-long and with the word “buy” in it._
 
 We’d better document that as a question for now.
 
-shot::[7,"Writes up the question."]
+shot::[12,"Writes up the question."]
 
 [source, gherkin]
 ----
@@ -72,7 +77,7 @@ They both think about this. Tamsin suggests starting Sean out with fewer credits
 
 Good question! It looks like there’s more to this feature than we’d previously thought. We’ll write that down as a question too. We still haven't even started fixing that bug yet!
 
-shot::[8,"Writes up the other question"]
+shot::[13,"Writes up the other question"]
 
 [source, gherkin]
 ----
