@@ -1,0 +1,26 @@
+==== Lesson 3 - Questions
+
+===== Which of the following first lines changes the language of a feature file?
+
+* # language: en-lol ----TRUE
+* ! language: en-lol
+* language: en-lol
+* # i18n: en-lol
+
+Explanation:
+
+Gherkin supports lots of languages on a per feature file basis. It has to be the first line in the feature file, and has to be a comment with the content `language: <language_identifier>`
+
+===== Why would you choose to execute scenarios in a random order?
+
+* For fun
+* To help discover memory leaks
+* The best documentation is always sorted randomly
+* To ensure scenarios are isolated from each other (*Correct*)
+* Scenarios, when run in parallel, are always executed in a random order
+
+Explanation:
+
+Scenarios should be isolated from each other - which means that one scenario should never rely on the behaviour of any other scenario for it to behave as expected. Cucumber is implemented to facilitate the cleaning of state after each scenario, but cannot guarantee this. Random execution order can help identify unintentional dependencies between scenarios.
+
+See http://xunitpatterns.com/Erratic%20Test.html#Interacting%20Tests for more information.

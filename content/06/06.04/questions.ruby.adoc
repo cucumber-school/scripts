@@ -1,0 +1,41 @@
+==== Lesson 4 - Questions (Ruby)
+
+===== Which or the following formatter plugins ship with Cucumber? (*MULTIPLE-CHOICE*)
+
+* AsciiDoc
+* HTML (*Correct*)
+* JSON (*Correct*)
+* Jira
+* JUnit (*Correct*)
+* Pretty (*Correct*)
+* Progress (*Correct*)
+* Rerun (*Correct*)
+* Message (*Correct*)
+* TAP
+
+Explanation:
+
+Cucumber ships with lots of formatter plugins. If the plugin that you want does not exist yet you can create your own. You can see an example in https://github.com/cucumber/cucumber-ruby/blob/main/features/docs/extending_cucumber/custom_formatter.feature:[this feature file].
+
+A newer plugin (that is out of scope for this course) is the *message* formatter. This emits a stream of JSON documents describing every event that happens during the Cucumber run.
+
+===== How many formatters can output to the console in any run of Cucumber? ** MULTIPLE-CHOICE **
+
+* Zero (*Correct*)
+* One (*Correct*)
+* More than one
+
+Explanation:
+
+So that the output remains easy to read, no more than one formatter is allowed to write to the console in any given run of Cucumber. You may choose to write the output of every plugin to file.
+
+===== What does the rerun formatter do?
+
+* It causes Cucumber to rerun each scenario multiple times
+* It causes Cucumber to rerun each failed scenario
+* It outputs a list of failed scenarios identified by feature file and line number ----TRUE
+* It outputs a running total of how many times each scenario has ever been run
+
+Explanation:
+
+The rerun formatter keeps track of the feature file and line number of every scenario that fails. This information is output in a `<feature file>:<line number>` format that can be saved to a file. You can then use this file to easily run just the scenarios that failed.

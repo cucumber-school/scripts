@@ -1,0 +1,35 @@
+==== Lesson 2 - Questions (Ruby)
+
+===== Look at this feature file, containing three scenarios, and several tags. Which of the tag expressions below would cause the scenario "Two" to be executed?: (*MULTIPLE_CHOICE*)
+
+[source(language=gherkin)]
+----
+@mvp
+Feature: My feature
+
+  Rule: rule A
+    Scenario: One
+
+    @smoke
+    @slow @regression-pack
+    Scenario: Two
+
+    @regression-pack
+    Scenario: Three
+----
+
+* @SLOW 
+* @regression-pack (*Correct*)
+* @mvp (*Correct*)
+* @regression-pack and not @slow
+* @MVP or @smoke (*Correct*)
+
+Explanation:
+
+Tags are inherited from the enclosing scope, so a Scenario inherits tags from the Feature. At present Rules cannot be tagged, although we expect this to be fixed in the near future, at which point tags will be inherited like this: Feature->Rule->Scenario.
+
+Tags are case-sensitive, so @SLOW does not match @slow.
+
+Tags can be on the same line and on consecutive lines.
+
+Tag expressions implement the boolean operators: and, not, or.
