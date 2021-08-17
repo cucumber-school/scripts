@@ -5258,6 +5258,59 @@ We can pass arguments to Cucumber using the <code>--name</code> option, which te
 <div class="paragraph">
 <p>In this lesson you&#8217;ve learnt how to filter the set of scenarios to run using scenario names and line numbers from the command line and using property files.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_ruby">6.1.1. Lesson 1 - Questions (Ruby)</h4>
+<div class="sect4">
+<h5 id="_which_command_line_option_sets_a_regular_expression_to_filter_the_scenarios_run_by_name">Which command-line option sets a regular expression to filter the scenarios run by name?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>--regex</p>
+</li>
+<li>
+<p>--name (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>--filter</p>
+</li>
+<li>
+<p>--name-regex</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>You can find a list of supported Cucumber options by running <code>cucumber --help</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_are_the_benefits_of_using_a_cucumber_yml_config_file_rather_than_using_the_command_line_to_set_cucumber_properties_multiple_choice">What are the benefits of using a <code>cucumber.yml</code> config file rather than using the command line to set Cucumber properties? (<strong>MULTIPLE-CHOICE</strong>)</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>You can check <code>cucumber.yml</code> into source control to share with your team (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>You can set sensible defaults and avoid having to type them in each time (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Using <code>cucumber.yml</code> is more performant. (<strong>Incorrect</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Because <code>cucumber.yml</code> is a file that lives within the project, it can be checked into source control and it can be accessed by all of your team.</p>
+</div>
+<div class="paragraph">
+<p>You can still override these settings with what you specify on the command-line, but this enables to you set sensible defaults.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_filtering_with_tags">6.2. Filtering With Tags</h3>
@@ -5335,6 +5388,62 @@ In the previous lesson, we modified Cucumber&#8217;s behavior using scenario nam
 </div>
 <div class="paragraph">
 <p>There&#8217;s one more thing to learn about tags. They can be combined with hooks, so that you can be selective about which hooks to run when. We&#8217;ll cover that in a future chapter.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_ruby">6.2.1. Lesson 2 - Questions (Ruby)</h4>
+<div class="sect4">
+<h5 id="_look_at_this_feature_file_containing_three_scenarios_and_several_tags_which_of_the_tag_expressions_below_would_cause_the_scenario_two_to_be_executed_multiple_choice">Look at this feature file, containing three scenarios, and several tags. Which of the tag expressions below would cause the scenario "Two" to be executed?: (<strong>MULTIPLE_CHOICE</strong>)</h5>
+<div class="listingblock">
+<div class="content">
+<pre>@mvp
+Feature: My feature
+
+  Rule: rule A
+    Scenario: One
+
+    @smoke
+    @slow @regression-pack
+    Scenario: Two
+
+    @regression-pack
+    Scenario: Three</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>@SLOW</p>
+</li>
+<li>
+<p>@regression-pack (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>@mvp (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>@regression-pack and not @slow</p>
+</li>
+<li>
+<p>@MVP or @smoke (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Tags are inherited from the enclosing scope, so a Scenario inherits tags from the Feature. At present Rules cannot be tagged, although we expect this to be fixed in the near future, at which point tags will be inherited like this: Feature&#8594;Rule&#8594;Scenario.</p>
+</div>
+<div class="paragraph">
+<p>Tags are case-sensitive, so @SLOW does not match @slow.</p>
+</div>
+<div class="paragraph">
+<p>Tags can be on the same line and on consecutive lines.</p>
+</div>
+<div class="paragraph">
+<p>Tag expressions implement the boolean operators: and, not, or.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -5420,6 +5529,65 @@ bundle exec cucumber -h</code></pre>
 </div>
 <div class="paragraph">
 <p>That&#8217;s quite a lot to digest, but to make Cucumber really useful to your team, it’s good to spend some time learning the details of how to configure it. In this lesson, we showcased two of Cucumber’s configuration options and you learned how to write your scenarios in different spoken languages.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions_3">6.3.1. Lesson 3 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_first_lines_changes_the_language_of_a_feature_file">Which of the following first lines changes the language of a feature file?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p># language: en-lol ----TRUE</p>
+</li>
+<li>
+<p>! language: en-lol</p>
+</li>
+<li>
+<p>language: en-lol</p>
+</li>
+<li>
+<p># i18n: en-lol</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Gherkin supports lots of languages on a per feature file basis. It has to be the first line in the feature file, and has to be a comment with the content <code>language: &lt;language_identifier&gt;</code></p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_would_you_choose_to_execute_scenarios_in_a_random_order">Why would you choose to execute scenarios in a random order?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>For fun</p>
+</li>
+<li>
+<p>To help discover memory leaks</p>
+</li>
+<li>
+<p>The best documentation is always sorted randomly</p>
+</li>
+<li>
+<p>To ensure scenarios are isolated from each other (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Scenarios, when run in parallel, are always executed in a random order</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Scenarios should be isolated from each other - which means that one scenario should never rely on the behaviour of any other scenario for it to behave as expected. Cucumber is implemented to facilitate the cleaning of state after each scenario, but cannot guarantee this. Random execution order can help identify unintentional dependencies between scenarios.</p>
+</div>
+<div class="paragraph">
+<p>See <a href="http://xunitpatterns.com/Erratic%20Test.html#Interacting%20Tests" class="bare">http://xunitpatterns.com/Erratic%20Test.html#Interacting%20Tests</a> for more information.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -5543,6 +5711,102 @@ We can specify multiple formatters like this.</p>
 <p>Great. We&#8217;re back to green again.</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_lesson_4_questions_ruby">6.4.2. Lesson 4 - Questions (Ruby)</h4>
+<div class="sect4">
+<h5 id="_which_or_the_following_formatter_plugins_ship_with_cucumber_multiple_choice">Which or the following formatter plugins ship with Cucumber? (<strong>MULTIPLE-CHOICE</strong>)</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>AsciiDoc</p>
+</li>
+<li>
+<p>HTML (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>JSON (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Jira</p>
+</li>
+<li>
+<p>JUnit (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Pretty (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Progress (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Rerun (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Message (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>TAP</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Cucumber ships with lots of formatter plugins. If the plugin that you want does not exist yet you can create your own. You can see an example in <a href="https://github.com/cucumber/cucumber-ruby/blob/main/features/docs/extending_cucumber/custom_formatter.feature:">this feature file</a>.</p>
+</div>
+<div class="paragraph">
+<p>A newer plugin (that is out of scope for this course) is the <strong>message</strong> formatter. This emits a stream of JSON documents describing every event that happens during the Cucumber run.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_many_formatters_can_output_to_the_console_in_any_run_of_cucumber_multiple_choice">How many formatters can output to the console in any run of Cucumber? <strong> MULTIPLE-CHOICE </strong></h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Zero (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>One (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>More than one</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>So that the output remains easy to read, no more than one formatter is allowed to write to the console in any given run of Cucumber. You may choose to write the output of every plugin to file.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_does_the_rerun_formatter_do">What does the rerun formatter do?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It causes Cucumber to rerun each scenario multiple times</p>
+</li>
+<li>
+<p>It causes Cucumber to rerun each failed scenario</p>
+</li>
+<li>
+<p>It outputs a list of failed scenarios identified by feature file and line number ----TRUE</p>
+</li>
+<li>
+<p>It outputs a running total of how many times each scenario has ever been run</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The rerun formatter keeps track of the feature file and line number of every scenario that fails. This information is output in a <code>&lt;feature file&gt;:&lt;line number&gt;</code> format that can be saved to a file. You can then use this file to easily run just the scenarios that failed.</p>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_publishing_results">6.5. Publishing Results</h3>
@@ -5615,6 +5879,159 @@ Now when we run Cucumber, no report is published and no banner advertising Cucum
 </div>
 <div class="paragraph">
 <p>Cucumber Reports is under active development, so expect to see many more useful features coming in the coming months.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_ruby_2">6.5.1. Lesson 5 - Questions (Ruby)</h4>
+<div class="sect4">
+<h5 id="_why_did_the_cucumber_team_create_cucumber_reports">Why did the Cucumber team create Cucumber Reports?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>To enable the removal of the HTML formatter</p>
+</li>
+<li>
+<p>To make it easier to share living documentation between stakeholders and team members (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>To make money from Cucumber users</p>
+</li>
+<li>
+<p>To get a chance to play with cloud platforms</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The output from running Cucumber forms the basis of a system&#8217;s "living documentation". There are lots of tools that let you do publish and share this living documentation, but they require effort to set up and configure. Now it&#8217;s as simple as asking Cucumber to publish it.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_how_does_the_output_from_the_html_formatter_differ_from_that_displayed_by_cucumber_reports">How does the output from the HTML formatter differ from that displayed by Cucumber Reports?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Cucumber Reports has much less detail that the HTML formatter</p>
+</li>
+<li>
+<p>Cucumber Reports uses animated GIFs and emojis to make the living documentation more exciting and fun</p>
+</li>
+<li>
+<p>Cucumber Reports are identical to the HTML output, but include some extra information about the build environment (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The same underlying library generates the output for both Cucumber Reports and the HTML formatter. Cucumber Reports also displays some extra information about that run of Cucumber, summarising the execution context and scenario outcomes.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_extra_information_can_be_published_by_cucumber_reports_multiple_choice">What extra information can be published by Cucumber Reports? (<strong>MULTIPLE_CHOICE</strong>)</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Username of last committer</p>
+</li>
+<li>
+<p>Version of Cucumber that generated the report (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Identifier (SHA) of the last git commit (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Version of operating system that Cucumber ran on (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Timestamp of when the report was generated</p>
+</li>
+<li>
+<p>Cucumber configuration properties used</p>
+</li>
+<li>
+<p>Number of scenarios that ran (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Percentage of scenarios that passed (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Version of CI tool that ran Cucumber (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Code coverage statistics for run</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Cucumber Reports always publishes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>High level statistics of scenarios run and their status</p>
+</li>
+<li>
+<p>Elapsed time since the report was generated</p>
+</li>
+<li>
+<p>The time it took to run the scenarios and generate the report</p>
+</li>
+<li>
+<p>Operating system version</p>
+</li>
+<li>
+<p>Language version used for stepdefs</p>
+</li>
+<li>
+<p>Cucumber version</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>If Cucumber Reports was run by a supported CI tool, it also publishes:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>CI tool version</p>
+</li>
+<li>
+<p>Identifier (SHA) of the last commit</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_happens_to_reports_that_are_not_associated_with_a_publish_token">What happens to reports that are not associated with a "publish token"</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The report is not published</p>
+</li>
+<li>
+<p>The report is published and cannot be deleted</p>
+</li>
+<li>
+<p>The report is published and will be deleted automatically (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Reports that are not associated with a publish token will be deleted approximately 24 hours after being published. Once published, a report can be associated with a publish token, which will then preserve the report until it is explicitly deleted.</p>
+</div>
+<div class="paragraph">
+<p>For more details on publish tokens, authentication, and association with Github repositories, see <a href="https://reports.cucumber.io" class="bare">https://reports.cucumber.io</a></p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -6733,7 +7150,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-07-19 14:31:41 UTC
+Last updated 2021-08-17 23:13:53 UTC
 </div>
 </div>
 <style>
