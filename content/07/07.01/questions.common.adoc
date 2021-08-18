@@ -1,0 +1,52 @@
+==== Lesson 1 - Questions
+
+===== Which do we think are the correct business rules in Shouty problem domain?
+
+* Mentioning the word "buy" costs 5 credits (*Correct*)
+* Mentioning the word "buy" costs 25 credits 
+* A message that's not short enough costs 2 credits (*Correct*)
+* Each message costs 11 credits
+* Each word costs 1 credit
+
+Explanation:
+
+In the end, we discovered that the business rules appear to be:
+
+ * Mention the word "buy" and you lose 5 credits.
+* Long messages cost 2 credits
+
+===== How did we discover the business rules?
+
+* They were clearly documented in the Gherkin
+* We went and talked to the stakeholders
+* We had to read the code (*Correct*)
+
+Explanation:
+
+Talking to the stakeholders would be great if we had easy access to them, but they're often busy and certainly don't want to have to repeat themselves over and over to the delivery team. If we've had them tell us the business rules once, it's a good idea for us to document them clearly in a place that everyone can read.
+
+===== Why is it a problem that the business rules could only be found in the code?
+
+* Not everyone can read code, so not everyone can look up the business rules when they want to (*Correct*)
+* Code is always changing
+* The code could be badly designed and hard to read (*Correct*)
+* Business rules in code can't be validated
+
+Explanation:
+
+The code is the ultimate source of truth for the system's behaviour, but it's often difficult for even experienced developers to read code and know exactly what it will do. Certainly, less technical team memmbers are completely excluded from this source of truth.
+
+The advantage of using Gherkin together with Cucumber to validate it, is that you get a _single source of truth_ that everyone on the team can read.
+
+===== What makes it hard to understand the business rules from Stevie's scenario, "Test premium account features" (*MULTIPLE CHOICE*)
+
+* It's long (*Correct*)
+* It's trying to test multiple business rules at the same time (*Correct*)
+* It doesn't document the business rules that the scenarios are supposed to illustrate (*Correct*)
+* It has too much detail (*Correct*)
+* The name of the scenario does not describe a specific aspect of the system's behaviour (*Correct*)
+* It's designed to be a test, rather than documentation (*Correct*)
+
+Explanation:
+
+We made up this example to showcase some of the classic mistakes we've seen people make with their scenarios. In lesson 3 we'll show you some specific criteria you can use to judge the quality of your team's scenarios.
