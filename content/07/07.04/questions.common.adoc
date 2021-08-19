@@ -1,0 +1,66 @@
+==== Lesson 4 - Questions
+
+===== What are the details in this step?
+
+[source, gherkin]
+----
+When Sean shouts "Come and buy a coffee"
+----
+
+* Sean's name (*Correct*)
+* the fact that Sean is shouting
+* the text "Come and buy a coffee" (*Correct*)
+
+Explanation:
+
+Sean's name, like the text "Come and buy a coffee" are both details in this step. Note that details don't always have to be surrounded by quotes. The action, _shouts_ is not really what we'd call a detail.
+
+===== Which words in the phrase "Come and buy a coffee" are essential to this scenario?
+
+* Come
+* and
+* buy (*Correct*)
+* a
+* coffee
+
+Explanation:
+
+The rule we're illustrating is that a shout containing the word "buy" costs 5 credits. All the other words in the message are _incidental details_.
+
+===== Why did we change the rule "Long messages cost 2 credits" to "Over-long messages cost 2 credits"?
+
+* It just feels better that way
+* We agreed with our product owner that it was the right term to use (*Currect*)
+* It's important to capture our evolving understading of the domain lanaguge (*Correct*)
+* We have to, otherwise the scenarios will fail.
+
+Explanation:
+
+Gherkin makes a great place to capture your emerging understanding of your team's Ubuiquitous Language (see Eric Evans's book, Domain Driven Design). Because it's version controlled, you can keep refining the words in your scenarios as you get a clearer understanding of the domain.
+
+===== Why did we run Cucumber each time we changed the scenario?
+
+* We wanted to capture our latest test results
+* We wanted to catch any mistakes in our refactoring quickly (*Correct*)
+* We wanted to show our product owner we were making progress
+* It keeps us confident that things are working as before (*Correct*)
+
+Explanation:
+
+A great benefit of automated tests is that you can run them while you're refactoring to ensure you haven't made a mistake. The definition of refactoring is that you're improving the maintainability without changing the behaviour. This applies to your test code too, and the best way to check the behaviour hasn't changed is to run the automated tests and check they're all still passing.
+
+====== Which of these statements is true about the trade-offs in what we did when refining the essence of the scenario?
+
+* We had to push some complexity into the step definition code in order to get the scenarios to read how we wanted. (*Correct*)
+* We made our step definition code simpler and more elegant.
+* We ended up with more step definitions than before. (*Correct*)
+* We removed some duplication in the step definitions
+* We removed some duplication in the scenario (*Correct*)
+* The scenario ended up much easier to read (*Correct*)
+* The scenario had a lot more steps
+
+Explanation:
+
+When refining your scenarios like this, there is a trade-off that you need to add a little bit more complexity to your step definition code. This is why it's important to have software engineers working on Cucumber tests, because they'll be confident that they can do this. When Cucumber automation is left to people with less development experience, they may be afraid of pushing additional complexity into the step defintion code, and end up leaving some really ugly scenarios.
+
+The ideal thing is to have testers and developers working together.
