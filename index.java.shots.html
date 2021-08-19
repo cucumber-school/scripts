@@ -7305,7 +7305,10 @@ Your browser does not support the video tag.
 <p>Given a cheque for $19.99 was deposited on 2021-04-01 (<strong>Correct</strong>)</p>
 </li>
 <li>
-<p>Given the book "Zen and the Art of Motorcyle Maintenance" has been on loan since 2021-06-01</p>
+<p>Given the book "Zen and the Art of Motorcyle Maintenance" has been on loan since 2021-06-01 (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Given the book "Book1" has been on loan since 1900-01-01</p>
 </li>
 </ul>
 </div>
@@ -7330,22 +7333,19 @@ Your browser does not support the video tag.
 <p>When I click on ".btn-primary"</p>
 </li>
 <li>
-<p>When I submit the login form (<strong>Correct</strong>)</p>
+<p>When I log in (<strong>Correct</strong>)</p>
 </li>
 <li>
 <p>Then the response should match "data/test_response-4591.json"</p>
 </li>
 <li>
-<p>Then the response should contain an overdraft limit of $50</p>
+<p>Then the response should contain balance of $50 (<strong>Correct</strong>)</p>
 </li>
 <li>
-<p>Given a book ""</p>
+<p>When I fill in "input[type=text].search" with "Zen Motorcycle"</p>
 </li>
 <li>
-<p>When the user changes their PIN to 0000 (<strong>Correct</strong>)</p>
-</li>
-<li>
-<p>Given a cheque for $19.99 was deposited on 1st April 2021 (<strong>Correct</strong>)</p>
+<p>When I search for "Zen Motorcycle" (<strong>Correct</strong>)</p>
 </li>
 </ul>
 </div>
@@ -7353,10 +7353,106 @@ Your browser does not support the video tag.
 <p>Explanation:</p>
 </div>
 <div class="paragraph">
-<p>"R" is for <strong>Real data:</strong> When you&#8217;re first discussing the details of a story, your examples should use concrete, real data. This helps bring the scenarios to life, and expose boundary conditions and underlying assumptions early in the development process. When writing scenarios, we should also use real data whenever this helps reveal intention and make them move vivid.</p>
+<p>"I" is for <strong>Intention revealing:</strong> Scenarios should describe the intent of what the actors in the scenario are trying to achieve, rather than describing the mechanics of how they will achieve it. We should start by giving the scenario an intention revealing name, and then follow through by ensuring that every line in the scenario describes intent, not mechanics.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_e_in_brief_stands_for_essential_look_at_this_scenario_then_select_the_steps_that_are_essential">"E" in BRIEF stands for "Essential". Look at this scenario, then select the steps that are essential.</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Search
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Search</span> <span class="err">result</span> <span class="err">includes</span> <span class="err">any</span> <span class="err">title</span> <span class="err">containing</span> <span class="err">all</span> <span class="err">keywords</span> <span class="err">in</span> <span class="err">the</span> <span class="err">search</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Two keywords, only one book matches both
+      <span class="nf">Given </span>a publisher <span class="s">"Penguin"</span>
+      <span class="nf">And </span>a book <span class="s">"Zen and the Art of Motorcycle Maintenance"</span> is in stock
+      <span class="nf">And </span>a book <span class="s">"The Art of Zen Gardens"</span> is in stock
+      <span class="nf">And </span>I already have three books on loan
+      <span class="nf">When </span>I nagivate to the search page via the main menu
+      <span class="nf">And </span>I search for <span class="s">"Zen Motorcycle"</span>
+      <span class="nf">Then </span>there should be 1 result
+      <span class="err">And the results should include</span><span class="p">:</span>
+        <span class="p">|</span> <span class="nv">Title</span>                                     <span class="p">|</span>
+        <span class="p">|</span> <span class="n">Zen</span> <span class="n">and</span> <span class="n">the</span> <span class="n">Art</span> <span class="n">of</span> <span class="n">Motorcycle</span> <span class="n">Maintenance</span> <span class="p">|</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Given a publisher "Penguin"</p>
+</li>
+<li>
+<p>And a book "Zen and the Art of Motorcycle Maintenance" is in stock (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>And a book "The Art of Zen Gardens" is in stock (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>And I already have three books on loan</p>
+</li>
+<li>
+<p>When I nagivate to the search page via the main menu</p>
+</li>
+<li>
+<p>And I search for "Zen Motorcycle" (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Then there should be 1 result (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>And the results should include: (<strong>Correct</strong>)</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>Arguably, the PIN of 0000 is not very realistic, but if this step is being used in a scenario to describe validation rules for new PIN numbers, this could be entirely appropriate real-world data for an invalid PIN.</p>
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>"E" is for <strong>Essential:</strong> The purpose of a scenario is to illustrate how a rule should behave. Any parts of a scenario that don&#8217;t directly contribute to this purpose are <em>incidental</em> and should be removed. If they are important to the system, then they will be covered in other scenarios that illustrate other rules. Additionally, any scenarios that do not add to the reader&#8217;s understanding of the expected behaviour have no place in the documentation.</p>
+</div>
+<div class="paragraph">
+<p>The step about creating a publisher is incedental as the publisher does not appear anywhere else in the scenario. Perhaps the team added it because there&#8217;s a database relationship between books and publishers, and you can&#8217;t create a book without a publisher. That&#8217;s not a good reason to clutter up your scenario. Instead, you can use patterns like "test data builder" to create your Publisher automatically when you create a Book.</p>
+</div>
+<div class="paragraph">
+<p>The step about having books on load is incidental because the number of books on loan, as far as we can tell, has no bearing on the behaviour of the search, which is what this scenario is focussed on.</p>
+</div>
+<div class="paragraph">
+<p>The step about navigation is incidental. We are describing the business logic here, not the UI navigation.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_f_is_for_focused_most_scenarios_should_be_focused_on_illustrating_a_single_rule_why">"F" is for <strong>Focused:</strong> Most scenarios should be focused on illustrating a single rule. Why?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>If a scenario fails, it&#8217;s difficult to know what&#8217;s broken. (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>It makes it hard to develop the user interface for the feature</p>
+</li>
+<li>
+<p>It encourages you to add behaviour in small increments (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>It helps you to make sure you have good coverage of your business rules (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>It keeps the code clean</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>BDD is an extension of TDD, or Test-Driven Development. In both these practices, we gradually add new behaviour, with each test demanding a little more behaviour from the system. Working like this, it makes sense to work in small increments, adding focussed scenarios so that we can iterate rapidly and keep a good flow going.</p>
+</div>
+<div class="paragraph">
+<p>A pleasant side-effect of working this way is that each test has a single purpose, and so has fewer reasons to fail. So when a regression occurs, you tend to get a clear signal from the failing scenario about what&#8217;s broken. Compare this with having a single huge scenario that covers a lot of behaviour. When that fails, you know something&#8217;s wrong but you don&#8217;t have much idea about where to go to start fixing it.</p>
+</div>
+<div class="paragraph">
+<p>When you&#8217;re concious of the relationship between rules and example, and you want to make sure all of your rules are covered, it&#8217;s much easier to do that and see clearly where you might have gaps if each of your examples covers a single rule.</p>
 </div>
 </div>
 </div>
@@ -8097,7 +8193,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-08-19 19:20:18 UTC
+Last updated 2021-08-19 21:13:29 UTC
 </div>
 </div>
 <style>
