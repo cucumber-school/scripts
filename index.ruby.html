@@ -7357,6 +7357,151 @@ We can just copy the code for shouting a message from this step down here for no
 <p>Nice!</p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_lesson_4_questions_4">7.4.6. Lesson 4 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_are_the_details_in_this_step">What are the details in this step?</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="nf">When </span>Sean shouts <span class="s">"Come and buy a coffee"</span></code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Sean&#8217;s name (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>the fact that Sean is shouting</p>
+</li>
+<li>
+<p>the text "Come and buy a coffee" (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Sean&#8217;s name, like the text "Come and buy a coffee" are both details in this step. Note that details don&#8217;t always have to be surrounded by quotes. The action, <em>shouts</em> is not really what we&#8217;d call a detail.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_words_in_the_phrase_come_and_buy_a_coffee_are_essential_to_this_scenario">Which words in the phrase "Come and buy a coffee" are essential to this scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Come</p>
+</li>
+<li>
+<p>and</p>
+</li>
+<li>
+<p>buy (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>a</p>
+</li>
+<li>
+<p>coffee</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The rule we&#8217;re illustrating is that a shout containing the word "buy" costs 5 credits. All the other words in the message are <em>incidental details</em>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_did_we_change_the_rule_long_messages_cost_2_credits_to_over_long_messages_cost_2_credits">Why did we change the rule "Long messages cost 2 credits" to "Over-long messages cost 2 credits"?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It just feels better that way</p>
+</li>
+<li>
+<p>We agreed with our product owner that it was the right term to use (<strong>Currect</strong>)</p>
+</li>
+<li>
+<p>It&#8217;s important to capture our evolving understading of the domain lanaguge (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>We have to, otherwise the scenarios will fail.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Gherkin makes a great place to capture your emerging understanding of your team&#8217;s Ubuiquitous Language (see Eric Evans&#8217;s book, Domain Driven Design). Because it&#8217;s version controlled, you can keep refining the words in your scenarios as you get a clearer understanding of the domain.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_did_we_run_cucumber_each_time_we_changed_the_scenario">Why did we run Cucumber each time we changed the scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>We wanted to capture our latest test results</p>
+</li>
+<li>
+<p>We wanted to catch any mistakes in our refactoring quickly (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>We wanted to show our product owner we were making progress</p>
+</li>
+<li>
+<p>It keeps us confident that things are working as before (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>A great benefit of automated tests is that you can run them while you&#8217;re refactoring to ensure you haven&#8217;t made a mistake. The definition of refactoring is that you&#8217;re improving the maintainability without changing the behaviour. This applies to your test code too, and the best way to check the behaviour hasn&#8217;t changed is to run the automated tests and check they&#8217;re all still passing.</p>
+</div>
+<div class="sect5">
+<h6 id="_which_of_these_statements_is_true_about_the_trade_offs_in_what_we_did_when_refining_the_essence_of_the_scenario">Which of these statements is true about the trade-offs in what we did when refining the essence of the scenario?</h6>
+<div class="ulist">
+<ul>
+<li>
+<p>We had to push some complexity into the step definition code in order to get the scenarios to read how we wanted. (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>We made our step definition code simpler and more elegant.</p>
+</li>
+<li>
+<p>We ended up with more step definitions than before. (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>We removed some duplication in the step definitions</p>
+</li>
+<li>
+<p>We removed some duplication in the scenario (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>The scenario ended up much easier to read (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>The scenario had a lot more steps</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>When refining your scenarios like this, there is a trade-off that you need to add a little bit more complexity to your step definition code. This is why it&#8217;s important to have software engineers working on Cucumber tests, because they&#8217;ll be confident that they can do this. When Cucumber automation is left to people with less development experience, they may be afraid of pushing additional complexity into the step defintion code, and end up leaving some really ugly scenarios.</p>
+</div>
+<div class="paragraph">
+<p>The ideal thing is to have testers and developers working together.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_expressing_the_rules_capturing_questions">7.5. Expressing the rules, capturing questions</h3>
@@ -7576,7 +7721,7 @@ Your browser does not support the video tag.
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-08-19 21:13:29 UTC
+Last updated 2021-08-19 21:41:04 UTC
 </div>
 </div>
 <style>
