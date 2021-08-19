@@ -28,7 +28,8 @@ Explanation:
 * Given an account with an arranged overdraft of $1
 * When the user changes their PIN to 0000 (*Correct*)
 * Given a cheque for $19.99 was deposited on 2021-04-01 (*Correct*)
-* Given the book "Zen and the Art of Motorcyle Maintenance" has been on loan since 2021-06-01
+* Given the book "Zen and the Art of Motorcyle Maintenance" has been on loan since 2021-06-01 (*Correct*)
+* Given the book "Book1" has been on loan since 1900-01-01
 
 Explanation:
 
@@ -40,15 +41,68 @@ Arguably, the PIN of 0000 is not very realistic, but if this step is being used 
 
 * When Bobby makes a withdrawl of $50 (*Correct*)
 * When I click on ".btn-primary"
-* When I submit the login form (*Correct*)
+* When I log in (*Correct*)
 * Then the response should match "data/test_response-4591.json"
-* Then the response should contain an overdraft limit of $50
-* Given a book ""
-* When the user changes their PIN to 0000 (*Correct*)
-* Given a cheque for $19.99 was deposited on 1st April 2021 (*Correct*)
+* Then the response should contain balance of $50 (*Correct*)
+* When I fill in "input[type=text].search" with "Zen Motorcycle"
+* When I search for "Zen Motorcycle" (*Correct*)
 
 Explanation:
 
-"R" is for *Real data:* When you're first discussing the details of a story, your examples should use concrete, real data. This helps bring the scenarios to life, and expose boundary conditions and underlying assumptions early in the development process. When writing scenarios, we should also use real data whenever this helps reveal intention and make them move vivid.
+"I" is for *Intention revealing:* Scenarios should describe the intent of what the actors in the scenario are trying to achieve, rather than describing the mechanics of how they will achieve it. We should start by giving the scenario an intention revealing name, and then follow through by ensuring that every line in the scenario describes intent, not mechanics.
 
-Arguably, the PIN of 0000 is not very realistic, but if this step is being used in a scenario to describe validation rules for new PIN numbers, this could be entirely appropriate real-world data for an invalid PIN.
+===== "E" in BRIEF stands for "Essential". Look at this scenario, then select the steps that are essential.
+
+[source, gherkin]
+----
+Feature: Search
+
+  Rule: Search result includes any title containing all keywords in the search
+
+    Scenario: Two keywords, only one book matches both
+      Given a publisher "Penguin"
+      And a book "Zen and the Art of Motorcycle Maintenance" is in stock
+      And a book "The Art of Zen Gardens" is in stock
+      And I already have three books on loan
+      When I nagivate to the search page via the main menu
+      And I search for "Zen Motorcycle"
+      Then there should be 1 result
+      And the results should include:
+        | Title                                     |
+        | Zen and the Art of Motorcycle Maintenance |
+----
+
+* Given a publisher "Penguin"
+* And a book "Zen and the Art of Motorcycle Maintenance" is in stock (*Correct*)
+* And a book "The Art of Zen Gardens" is in stock (*Correct*)
+* And I already have three books on loan
+* When I nagivate to the search page via the main menu
+* And I search for "Zen Motorcycle" (*Correct*)
+* Then there should be 1 result (*Correct*)
+* And the results should include: (*Correct*)
+
+Explanation:
+
+"E" is for *Essential:* The purpose of a scenario is to illustrate how a rule should behave. Any parts of a scenario that don't directly contribute to this purpose are _incidental_ and should be removed. If they are important to the system, then they will be covered in other scenarios that illustrate other rules. Additionally, any scenarios that do not add to the reader's understanding of the expected behaviour have no place in the documentation.
+
+The step about creating a publisher is incedental as the publisher does not appear anywhere else in the scenario. Perhaps the team added it because there's a database relationship between books and publishers, and you can't create a book without a publisher. That's not a good reason to clutter up your scenario. Instead, you can use patterns like "test data builder" to create your Publisher automatically when you create a Book.
+
+The step about having books on load is incidental because the number of books on loan, as far as we can tell, has no bearing on the behaviour of the search, which is what this scenario is focussed on.
+
+The step about navigation is incidental. We are describing the business logic here, not the UI navigation.
+
+===== "F" is for *Focused:* Most scenarios should be focused on illustrating a single rule. Why?
+
+* If a scenario fails, it's difficult to know what's broken. (*Correct*)
+* It makes it hard to develop the user interface for the feature
+* It encourages you to add behaviour in small increments (*Correct*)
+* It helps you to make sure you have good coverage of your business rules (*Correct*)
+* It keeps the code clean 
+
+Explanation:
+
+BDD is an extension of TDD, or Test-Driven Development. In both these practices, we gradually add new behaviour, with each test demanding a little more behaviour from the system. Working like this, it makes sense to work in small increments, adding focussed scenarios so that we can iterate rapidly and keep a good flow going.
+
+A pleasant side-effect of working this way is that each test has a single purpose, and so has fewer reasons to fail. So when a regression occurs, you tend to get a clear signal from the failing scenario about what's broken. Compare this with having a single huge scenario that covers a lot of behaviour. When that fails, you know something's wrong but you don't have much idea about where to go to start fixing it.
+
+When you're concious of the relationship between rules and example, and you want to make sure all of your rules are covered, it's much easier to do that and see clearly where you might have gaps if each of your examples covers a single rule.
