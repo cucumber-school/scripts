@@ -1,0 +1,27 @@
+=== Listening to the tests
+One alternative to using mocks would be to use a real instance of Person instead of the mock object. 
+<ruby>
+Alternate approach: Add missing unit test for credit deductions by Network - [show that integration test and then revert back to previous one]
+This has a couple of apparent advantages. First, Person automatically subscribes to the Network as it is constructed, so we wouldn’t need this clutter about Lucy. Also, because we’re testing Person and Network as one integrated lump, we don’t have to fuss about exactly how they communicate about Sean’s credits. All we have to do is check how many credits he has left over at the end.
+</ruby>
+<java>
+This is very tempting. By testing Person and Network as one integrated lump, we don’t have to fuss about exactly how they communicate about Sean’s credits. All we have to do is check how many credits he has left over at the end.
+</java>
+But this seductive solution papers over the cracks in our design.
+When you use mocks, you put the microscope on the interaction between an object and its collaborators. This gives you  feedback about how coupled those objects are. A lot of chatter going back and forth like this suggests they’re getting tangled up together.
+So the fact that it’s awkward to use mocks here is not because mocks are bad, or because we’re bad at using mocks: it’s feedback from the code.
+Let’s listen to the tests and try to respond to this pain instead of ignoring it.
+<ruby>
+
+=== When nobody is listening
+We’ll start with something easy and deal with the situation where the Network is asked to broadcast when it has no listeners. This is an annoying detail about how this object behaves that didn’t show itself in our acceptance tests. Let’s test-drive a fix.
+[write a test for broadcasting to a network with no listeners, watch it fail]
+Isolate a small deficiency in Network's contract.
+To fix it, all we need to do is initialize the collection of listeners in the constructor, which makes more sense anyway.
+[fix the code, watch the test pass]
+Fix the bug when there are no listeners
+Easy! And with that fixed, we can simplify the test we just wrote.
+[remove Lucy from the 5 credits for mentioning buy unit test]
+Now we can clean up the test.
+</ruby>
+

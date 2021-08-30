@@ -1,0 +1,16 @@
+=== Closure
+OK. The code is nice and clean, and all our tests are passing... except for one: that bug! It can’t escape us any longer. Let’s trap it with a unit test.
+We know the responsibility for charging for shouts lies in Person, so that’s where to add the unit test.
+Red: add unit test for the bug
+Have you already spotted where we need to make the change? Here, in the cost_of(message) method, the code will add five credits to the cost each time it finds the word “buy” in the message. If we change the code like this, it should be working as expected.
+Green: fix the bug when charging for "buy" several times
+It is! Great stuff.
+
+=== Epilogue
+Although we’ve called this video series Cucumber School, you’ve probably noticed by now that we’re teaching you a whole range of skills and ideas that we on the Cucumber team use to develop software.
+Not just skills with Cucumber, but skills with the whole of Behaviour-Driven Development.
+BDD blurs the lines between traditional roles like tester and developer. In our ideal world, everyone on the team - not just testers - is responsible for quality, and we all try to test it as much as possible.
+Having good automated tests frees up testers to do more interesting interactive, exploratory testing.
+We use our tests as a guide to help us design a solution that models the problem well. A better model in your solution can make whole categories of bugs go away forever. We saw that in this lesson when we moved the responsibility for charging for shouts from Network to Person, and the issues around what happened when you run out of credit suddenly became easy to resolve.
+Getting the right balance between fine-grained unit tests and broader full-stack tests is critically important to having fast, useful feedback from your test suite. We’ll explore this more in the next lesson.
+See you next time, on Cucumber School.

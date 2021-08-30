@@ -1,0 +1,11 @@
+=== The purpose of mock objects
+Phew. Our test is passing at last. That was hard work, and what we’ve produced is just awful.
+This ugly test is typical of what happens when you use mock objects or test doubles to retro-fit tests to existing code.
+So why use mocks?
+[break to GoAnimate]
+Mock objects are a design tool. They’re intended to be used when constructing new code, to throw together a lightweight sketch of a collaborating object. When you’re focused on building a Network, and you think it needs to collaborate with a Person, it would slow you down to have to stop and go off to build the actual Person class. It’s often quicker to use a mock object to hash out your idea of roughly what Person might look like, leaving you to stay focused on the task at hand.
+As you do this, you’ll find yourself - as we just did - having to specify how you want the two objects to interact. If you think about it, this interaction - the way they talk to each other at runtime - is the true behaviour of these objects.
+Remember back in lesson 5, Loops, where we explained that acceptance tests help you build the right thing, and unit tests help you build the thing right? In other words, acceptance tests help us to explore the problem domain, and unit tests help us to explore the solution.
+When you drive your development from tests, the unit tests can give you feedback about the design of your solution. If it’s easy to take an individual object and plug it into your tests, your design is likely to be nicely modular, which means it will be easier to change in the future. If it’s awkward, that’s a signal there’s a problem with your design.
+We call this listening to the tests.
+

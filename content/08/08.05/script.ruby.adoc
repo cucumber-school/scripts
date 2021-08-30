@@ -1,0 +1,13 @@
+=== Organising the tests by responsibility
+Let’s take stock a little bit. We’re trying to fix that bug about multiple mentions of the word “buy”, but first we’re retrofitting unit tests for the premium account behaviour in the Network class.
+It will be easier to see what tests are missing if we reorganize the unit tests by Network’s responsibilities.
+They basically fall into two categories.
+<ruby>
+These ones here are to do with the responsibility of broadcasting to listeners, so let’s group them up using RSpec’s describe method.
+</ruby>
+<java>
+These ones here are to do with the responsibility of broadcasting to listeners, so let’s group them in a different section of our test class.
+</java>
+Now we have our new test, which is about charging for shouts.
+[puts that test in another describe block / section]
+
