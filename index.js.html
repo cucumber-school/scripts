@@ -8375,7 +8375,7 @@ long messages cost 2 credits]</p>
 <p>As we did that, we <em>pushed the "how" down</em>, making the scenarios themselves more declarative of the desired behaviour, pushing the implementation details of the testing into the code in the step defintions below.</p>
 </div>
 <div class="paragraph">
-<p>This traded off more readable, maintainable and useful scenarios for more complex automation code. In this chapter we&#8217;ll show you how to organise your automation support code so that you won&#8217;t be afraid of making this trade-off.</p>
+<p>In doing this, we got more readable, maintainable and useful scenarios in exchange for more complex automation code. In this chapter we&#8217;ll show you how to organise your automation support code so that you won&#8217;t be afraid of making this trade-off.</p>
 </div>
 <div class="sect2">
 <h3 id="_layers_of_a_cucumber_test_suite">9.1. Layers of a Cucumber Test Suite</h3>
@@ -8429,42 +8429,7 @@ week and show you what we mean.</p>
 <div class="sect2">
 <h3 id="_extracting_support_code">9.2. Extracting Support Code</h3>
 <div class="paragraph">
-<p>We need a new directory to contain our support code. the conventional place to put it is here, in a support directory underneath features.
-[ mkdir features/support ]
-There’s a special file in support that Cucumber always loads first, called E N V or env dot R B. You can use this to boot up the system that you’re testing.
-In this case, our system is just a domain model, but we can load it here instead of from the step definitions.
-[ moves the require statement into env.rb ]
-Extract first helper method &lt;Ruby&gt;
-The most obvious duplication in the step definition code is for Sean shouting a message. Let’s imagine we had a helper method like this, instead. Wouldn’t that be neater?
-[ writes the new code above ]
-Every time Cucumber runs a scenario, it creates a new object called the world. Each step definition runs inside this world, almost  as though it were a method. We can extend the methods available on the world by first defining them on a Ruby module, then registering that module with Cucumber.
-We’ll create a new file in the support directory to contain our extensions to the world.
-[ creates features/support/world.rb ]
-Now we define a module, and tell Cucumber to make it part of the world.
-[ creates ShoutyWorld module and calls World with it ]
-Finally, we define our new helper method on this module and paste in the code from the step definition.
-Let’s run Cucumber to check everything’s still working… Good.
-Now we can use that new method everywhere… and check we haven’t broken anything… done.
-Move instance variables behind helper methods &lt;Ruby&gt;
-Notice that the helper method we extracted still uses those instance variables, people and messages_shouted_by. This works because the helper methods are mixed into the same World object as the step definitions, so they can all see these instance variables.
-However, we don’t like sharing state across the support API boundary like this. Things can get complicated quickly when you have code spread all over your step definitions and support directory that’s depending on these instance variables.
-It’s better to push the state behind the support API. Let’s start with the hash of people. We’ll define a new method on the World that returns the people instance variable, initializing it with an empty hash if it’s never been accessed before.
-Now we can use this method everywhere in the step definitions, and we no longer need to initialize it in this before hook.
-Let’s run cucumber to check we haven’t broken anything….. good.
-Now we can do exactly the same thing with messages_shouted_by. First, create the helper method, then replace the calls from the step definitions. Now we can remove this before hook altogether. And finally, run cucumber to check we’re still green.
-Creating a helper class &lt;Java&gt;
-We need a new class to contain our support code. Let’s create a class called ShoutSupport in the same package as our step definitions.
-Extract first helper method &lt;Java&gt;
-We already have a shout method in our step definition class. Let’s cut that method and paste it into to the support class. We’ll make it public and rename it to seanShout.
-We also need the two maps - people and messagesShoutedBy. Let’s cut and paste those as well. We’ll instantiate these maps where they are declared, and declare them public and final.
-Now that we have a new ShoutSupport class - let’s put it to use in our step definitions. We’ll declare a constructor to pass it in, store the reference in a shoutSupport field and call this method everywhere we used to call shout.
-Since our maps are now moved, we need to access those from the shoutSupport object as well.
-Cucumber now fails with an error complaining that the Stepdefs class doesn’t have an empty constructor. You may not have given it much thought, but Cucumber creates a new instance of every class with step definitions before every scenario.
-Cucumber knows how to instantiate classes with empty constructors. When the classes expect dependencies to be passed in, Cucumber needs to delegate the instantiation of objects to a dependency injection container.
-Cucumber supports half a dozen dependency injection containers. Let’s pick a simple one that doesn’t require any configuration - picocontainer.</p>
-</div>
-<div class="paragraph">
-<p>Now that Cucumber successfully instantiates the objects, let’s finish our refactoring. We’ll know that we’re done when all scenarios are green again.</p>
+<p>TODO</p>
 </div>
 </div>
 <div class="sect2">
@@ -8518,7 +8483,7 @@ Cucumber supports half a dozen dependency injection containers. Let’s pick a s
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-09-08 19:35:00 UTC
+Last updated 2021-09-08 19:53:25 UTC
 </div>
 </div>
 <style>
