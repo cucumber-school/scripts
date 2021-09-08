@@ -1,0 +1,49 @@
+include::./title.adoc[]
+
+=== Create a Support Directory
+
+We need a new directory to contain our support code. the conventional place to put it is here, in a `support` directory underneath `features`.
+
+[ mkdir features/support ]
+
+There’s a special file in support that Cucumber always loads first, called `env.rb`. You can use this to boot up the system that you’re testing.
+
+In this case, our system is just a domain model, but we can load it here instead of from the step definitions.
+
+[ moves the require statement into env.rb ]
+
+The most obvious duplication in the step definition code is for Sean shouting a message. Let’s imagine we had a helper method like this, instead. Wouldn’t that be neater?
+
+[ writes the new code above ]
+
+Every time Cucumber runs a scenario, it creates a new object, called the _World_. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can extend the methods available on the world (and so the methods avaiable to the step defintions) by first defining them on a Ruby module, then registering that module with Cucumber.
+
+We’ll create a new file in the `support` directory to contain our extensions to the world.
+
+[ creates features/support/world.rb ]
+
+Now we define a module, and tell Cucumber to make it part of the world.
+
+[ creates ShoutyWorld module and calls World with it ]
+
+Finally, we define our new helper method on this module and paste in the code from the step definition.
+
+Let’s run Cucumber to check everything’s still working… Good.
+
+Now we can use that new method everywhere… and check we haven’t broken anything… done.
+
+==== Move instance variables behind helper methods
+
+Notice that the helper method we extracted still uses those instance variables, `@people` and `@messages_shouted_by`. This works because the helper methods are mixed into the same World object as the step definitions, so they can all see these instance variables.
+
+However, we don’t like sharing state across the support API boundary like this. Things can get complicated quickly when you have code spread all over your step definitions and support directory that’s depending on these instance variables.
+
+It’s better to push the state behind the support API. Let’s start with the hash of people. We’ll define a new method on the World that returns the people instance variable, initializing it with an empty hash if it’s never been accessed before.
+
+Now we can use this method everywhere in the step definitions, and we no longer need to initialize it in this before hook.
+
+Let’s run cucumber to check we haven’t broken anything….. good.
+
+Now we can do exactly the same thing with `@messages_shouted_by`. First, create the helper method, then replace the calls from the step definitions. Now we can remove this before hook altogether. 
+
+And finally, run cucumber to check we’re still green.
