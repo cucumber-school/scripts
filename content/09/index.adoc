@@ -1,7 +1,92 @@
-== Keeping your automation code maintainable
+== Support Code
 
 In Chapter 7 we refined the Gherkin of the Premium Accounts feature, turning what had started out as nothing more than an automated test into some valuable documentation.
 
 As we did that, we _pushed the "how" down_, making the scenarios themselves more declarative of the desired behaviour, pushing the implementation details of the testing into the code in the step defintions below.
 
-This traded off more readable, maintainable and useful scenarios for more complex automation code. In this chapter we'll show you how to organise your automation code so that you won't be afraid of making this trade-off.
+This traded off more readable, maintainable and useful scenarios for more complex automation code. In this chapter we'll show you how to organise your automation support code so that you won't be afraid of making this trade-off.
+
+=== Layers of a Cucumber Test Suite
+
+When we build software, we’re always working across two domains.
+
+[picture of the two overlapping circles]
+
+There’s the problem domain, where our customers and business stakeholders live, and there’s a solution domain, where we solve those business problems using technology.
+
+Each domain has its own jargon, it’s own dialect. That’s fine: specialized language helps domain experts to communicate. Often though, this jargon can prevent us from understanding one another across the two domains.
+
+As BDD practitioners, we’re focussed on trying to grow this area in the middle, where we have a common or ubiquitous language. We know that the bigger this shared vocabulary is, the quicker the team can communicate ideas between the business and technology-facing sides of the team.
+
+We’ve also heard it said that if you model the problem well enough, the solution will take care of itself.
+
+Certainly, we believe that the better an understanding you have of the problem domain, the better a solution you can build. That’s why Cucumber is so powerful, because it helps you to stay rooted in the problem domain.
+
+So where do your feature files sit on this diagram? Well, we hope they sit right in the middle here, and act as the place where the problem and solution domains come together. Someone from either domain should be able to read a feature file and it will make sense to them.
+
+And how about step definitions?
+
+Step definitions are right on the boundary, here, translating between the problem-domain language we use in our Gherkin scenarios and the concrete actions we take in code to pull and poke at our solution.
+
+We want to prevent solution-domain concepts and language from leaking into our Gherkin scenarios to keep them readable. As we saw in the last lesson, when we remove details from scenarios, we trade-off for increased complexity in our step definitions.
+
+So how do we manage this complexity?
+
+A mature Cucumber test suite will have a layer of support code sitting between the step definitions and the system being automated.
+
+[ show diagram of Gherkin -> Step Definitions -> Support Code -> System layers]
+
+This layer of support code literally supports the step definitions by providing an API for automating your application.
+
+We can extract this API from our step definitions. Let’s pick up the shouty codebase from last 
+week and show you what we mean.
+
+=== Extracting Support Code
+
+We need a new directory to contain our support code. the conventional place to put it is here, in a support directory underneath features.
+[ mkdir features/support ]
+There’s a special file in support that Cucumber always loads first, called E N V or env dot R B. You can use this to boot up the system that you’re testing.
+In this case, our system is just a domain model, but we can load it here instead of from the step definitions.
+[ moves the require statement into env.rb ]
+Extract first helper method <Ruby>
+The most obvious duplication in the step definition code is for Sean shouting a message. Let’s imagine we had a helper method like this, instead. Wouldn’t that be neater?
+[ writes the new code above ]
+Every time Cucumber runs a scenario, it creates a new object called the world. Each step definition runs inside this world, almost  as though it were a method. We can extend the methods available on the world by first defining them on a Ruby module, then registering that module with Cucumber.
+We’ll create a new file in the support directory to contain our extensions to the world.
+[ creates features/support/world.rb ]
+Now we define a module, and tell Cucumber to make it part of the world.
+[ creates ShoutyWorld module and calls World with it ]
+Finally, we define our new helper method on this module and paste in the code from the step definition.
+Let’s run Cucumber to check everything’s still working… Good.
+Now we can use that new method everywhere… and check we haven’t broken anything… done.
+Move instance variables behind helper methods <Ruby>
+Notice that the helper method we extracted still uses those instance variables, people and messages_shouted_by. This works because the helper methods are mixed into the same World object as the step definitions, so they can all see these instance variables.
+However, we don’t like sharing state across the support API boundary like this. Things can get complicated quickly when you have code spread all over your step definitions and support directory that’s depending on these instance variables.
+It’s better to push the state behind the support API. Let’s start with the hash of people. We’ll define a new method on the World that returns the people instance variable, initializing it with an empty hash if it’s never been accessed before.
+Now we can use this method everywhere in the step definitions, and we no longer need to initialize it in this before hook.
+Let’s run cucumber to check we haven’t broken anything….. good.
+Now we can do exactly the same thing with messages_shouted_by. First, create the helper method, then replace the calls from the step definitions. Now we can remove this before hook altogether. And finally, run cucumber to check we’re still green.
+Creating a helper class <Java>
+We need a new class to contain our support code. Let’s create a class called ShoutSupport in the same package as our step definitions.
+Extract first helper method <Java>
+We already have a shout method in our step definition class. Let’s cut that method and paste it into to the support class. We’ll make it public and rename it to seanShout. 
+We also need the two maps - people and messagesShoutedBy. Let’s cut and paste those as well. We’ll instantiate these maps where they are declared, and declare them public and final.
+Now that we have a new ShoutSupport class - let’s put it to use in our step definitions. We’ll declare a constructor to pass it in, store the reference in a shoutSupport field and call this method everywhere we used to call shout.
+Since our maps are now moved, we need to access those from the shoutSupport object as well.
+Cucumber now fails with an error complaining that the Stepdefs class doesn’t have an empty constructor. You may not have given it much thought, but Cucumber creates a new instance of every class with step definitions before every scenario.
+Cucumber knows how to instantiate classes with empty constructors. When the classes expect dependencies to be passed in, Cucumber needs to delegate the instantiation of objects to a dependency injection container.
+Cucumber supports half a dozen dependency injection containers. Let’s pick a simple one that doesn’t require any configuration - picocontainer.
+[Adds PicoContainer to the pom.xml]
+Now that Cucumber successfully instantiates the objects, let’s finish our refactoring. We’ll know that we’re done when all scenarios are green again.
+
+=== Close
+
+We could continue to move code from our step definitions into the support code like this. For example, we could write a support method for generating messages of a certain length.
+
+Ideally, each step definition should only contain one or two lines that delegate to your support code. When you follow this principle, your step definitions become a translation layer from plain language into code. By keeping the vocabulary consistent as you move across the problem-solution boundary, you start to allow the scenarios to drive the design of your domain model. This is what we call modelling by example.
+
+In this way, we create our own API for automating our application. As this API grows, it becomes easier and easier to write new step definitions, because the actions you need to take are already defined on the API.
+
+It might seem like over-engineering on our little Shouty application, but you’ll be surprised out quickly these test suites grow. Taking time to stamp out complexity early  and organise your code to create a good support API is a great investment for the future.
+
+In a future lesson we’ll show you how a well-crafted automation API lets you plug your scenarios into the system at different levels, such as a web front-end.
