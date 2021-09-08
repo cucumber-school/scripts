@@ -497,7 +497,12 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 </ul>
 </li>
 <li><a href="#_details">7. Details</a></li>
-<li><a href="#_example_mapping">8. Example Mapping</a></li>
+<li><a href="#_example_mapping">8. Example Mapping</a>
+<ul class="sectlevel2">
+<li><a href="#_example_mapping_why">8.1. Example Mapping: Why?</a></li>
+<li><a href="#_example_mapping_how">8.2. Example Mapping: How?</a></li>
+</ul>
+</li>
 <li><a href="#_keeping_your_automation_code_maintainable">9. Keeping your automation code maintainable</a></li>
 <li><a href="#_acceptance_tests_vs_unit_tests">10. Acceptance tests vs Unit tests</a></li>
 <li><a href="#_web_automation_with_selenium_webdriver">11. Web automation with Selenium Webdriver</a></li>
@@ -5689,10 +5694,158 @@ The test output of the <code>dotnet test</code> command can be configured by spe
 <h2 id="_example_mapping">8. Example Mapping</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO: Import the original script. Keep only the first half (up to the heading "Problems and solutions"), which talks about the value of example mapping and how to do it.</p>
+<p>In the last lesson we saw how easily incidental details can creep into your scenarios, talked about why they’re a problem, and showed you some techniques for massaging them back out again.
+But, as we pushed the details out of our scenarios, we made the step definition code more complicated. We promised to show you how to deal with that extra complexity, and we&#8217;re going to get to that in Chapter 9.</p>
 </div>
 <div class="paragraph">
-<p><a href="https://docs.google.com/document/d/1groCmXmJZQp03olZB2u_pif_SGn3BTtWp5vx8X80-OM/edit" class="bare">https://docs.google.com/document/d/1groCmXmJZQp03olZB2u_pif_SGn3BTtWp5vx8X80-OM/edit</a></p>
+<p>First though, we want to look at how we could have prevented the Premium Accounts feature from getting into such a mess in the first place.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;re going to learn about a practice called Example Mapping, a way to structure the conversation between the <em>Three Amigos</em> - Tester, Developer and Product Owner - to develop shared understanding before you write any code.</p>
+</div>
+<div class="sect2">
+<h3 id="_example_mapping_why">8.1. Example Mapping: Why?</h3>
+<div class="paragraph">
+<p>In terms of the three practices we introduced in Chapter 1, what went wrong with the Premium Accounts feature?</p>
+</div>
+<div class="paragraph">
+<p>Thinking about it, we can see that the development team jumped straight into <em>Automation</em> - writing the implementation of the feature. They did the bare minimum of <em>Formulation</em> - just enough to automate a test for the feature, but really we did a lot of the Formulation later on as we cleaned it up. Finally, much of the <em>Discovery</em> happened at the end once Tamsin had a chance to test the feature by hand.</p>
+</div>
+<div class="paragraph">
+<p>So in essence, they did everything backwards.</p>
+</div>
+<div class="paragraph">
+<p>In software projects, it’s often the unknown unknowns that can make the biggest difference between success and failure. In BDD, we always try to assume we’re ignorant of some important information and try to <em>deliberately discover</em> those unknown unknowns as early as possible, so they don’t surprise us later on.</p>
+</div>
+<div class="paragraph">
+<p>A team that invests just a little bit extra in Discovery, before they write any code, saves themselves a huge amount of wasted time further down the line.</p>
+</div>
+<div class="paragraph">
+<p>In lesson 1, we showed you an example of the <em>Three Amigos</em> - Tester, Developer and Product owner - having a conversation about a new user story.</p>
+</div>
+<div class="paragraph">
+<p>Nobody likes long meetings, so we’ve developed a simple framework for this conversation that keeps it quick and effective. We call this <em>Example Mapping</em>.</p>
+</div>
+<div class="paragraph">
+<p>An Example Mapping session takes a single User Story, and aims to produce four outputs:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Business Rules, that must be satisified for the story to be implemented correctly</p>
+</li>
+<li>
+<p>Examples of those business rules playing out in real-world scenarios</p>
+</li>
+<li>
+<p>Questions or Assumptions that the group of people in the conversation need to deal with soon, but cannot resolve during the immediate conversation</p>
+</li>
+<li>
+<p>New User Stories, sliced out from the one being discussed in order to simplify it.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>We capture these, as we talk, using index cards, or another virtual equivalent.</p>
+</div>
+<div class="paragraph">
+<p>Working with these simple artefacts rather than trying to go straight to formulating Gherkin, allows us to keep the conversation at the right level - seeing the whole picture of the user story without getting lost in details.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_mapping_how">8.2. Example Mapping: How?</h3>
+<div class="paragraph">
+<p>We first developed example mapping in face-to-face meeting using a simple a multi-colour pack of index cards and some pens. For teams that are working remotely, there are many virtual equivalents of that nowadays. Cucumber Studio has a built-in example mapping tool, so that&#8217;s what we&#8217;re going to use in this lesson.</p>
+</div>
+<div class="paragraph">
+<p>We use the four different coloured cards to represent the four main kinds of information that arise in the conversation.</p>
+</div>
+<div class="paragraph">
+<p>We can start with the easy stuff: Take a yellow card and write down the name of the story.</p>
+</div>
+<div class="paragraph">
+<p>[ writes “Premium Accounts” on yellow card and places it at the top of the table]</p>
+</div>
+<div class="paragraph">
+<p>Now, do we already know any rules or acceptance criteria about this story?</p>
+</div>
+<div class="paragraph">
+<p>Write each rule down on a blue card:</p>
+</div>
+<div class="paragraph">
+<p>[ writes these rules on blue cards:
+mention the word "buy" and you lose 5 credits
+long messages cost 2 credits]</p>
+</div>
+<div class="paragraph">
+<p>They look pretty straightforward, but let’s explore them a bit by coming up with some examples.</p>
+</div>
+<div class="paragraph">
+<p>Darren the developer comes up with a simple scenario to check he understands the basics of the “buy” rule: I start with 10 credits, I shout “buy my muffins” and then “I want to buy some socks”, then I have zero credits. Correct?</p>
+</div>
+<div class="paragraph">
+<p>Yes, says Paula. Darren writes this example up on a green card, and places it underneath the rule that it illustrates.</p>
+</div>
+<div class="paragraph">
+<p>Tammy the tester chimes in: how about the one where you shout a word that contains “buy”, like “buyer” for example. If you were to shout “I need a buyer for my house”. Would that lose credits too?</p>
+</div>
+<div class="paragraph">
+<p>Paula thinks about it for a minute, and decides that no, only the whole word “buy” counts. They’ve discovered a new rule! They write that up on the rule card, and place the example card underneath it.</p>
+</div>
+<div class="paragraph">
+<p>Darren asks: how do the users get these credits? Are we building that functionality as part of this story too?</p>
+</div>
+<div class="paragraph">
+<p>Paula tells him that’s part of another story, and they can assume the user can already purchase credits. They write that down as a rule too.</p>
+</div>
+<div class="paragraph">
+<p>This isn’t a behaviour rule - it’s a rule about the scope of the story. It’s still useful to write it down since we’ve agreed on it. But it won’t need any examples.</p>
+</div>
+<div class="paragraph">
+<p>Still focussed on the “buy” rule, Tammy asks: What if they run out of credit? Say you start with 10 credits and shout “buy” three times. What’s the outcome?</p>
+</div>
+<div class="paragraph">
+<p>Paula looks puzzled. I don’t know. She says. I’ll need to give that some thought.</p>
+</div>
+<div class="paragraph">
+<p>Darren takes a red card and writes this up as a question.</p>
+</div>
+<div class="paragraph">
+<p>They apply the same technique to the other rule about long messages, and pretty soon the table is covered in cards, reflecting the rules, examples and questions that have come up in their conversation. Now they have a picture in front of them that reflects back what they know, and still don’t know, about this story.</p>
+</div>
+<div class="sect3">
+<h4 id="_example_mapping_conclusions">8.2.1. Example Mapping: Conclusions</h4>
+<div class="paragraph">
+<p>The apparent purpose of the three amigos is to take a user story together with its acceptance criteria or business rules and produce examples that illustrate the behaviour. Many people think they need to produce formal Gherkin scenarios from their three amigos conversations, but in our experience that’s only occasionally necessary. In fact, it can often slow the discussion down.</p>
+</div>
+<div class="paragraph">
+<p>As you’ve just seen, an example mapping session should go right across the breadth of the story, trying to get a complete picture of the behaviour.</p>
+</div>
+<div class="paragraph">
+<p>Each time you come up with an example, try to understand what underlying rules are. If you discover an example that doesn’t fit your rules, you’ll need to reconsider your rules. In this way, the scope of the story is refined by the group.</p>
+</div>
+<div class="paragraph">
+<p>Although there’s no doubt of the power of examples for exploring and talking through requirements, it’s the rules that will go into the code. If you understand the rules, you’ll be able to build an elegant solution.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes, you’ll come across questions that nobody can answer. Instead of getting stuck trying to come up with an answer, just write down the question. Congratulations! You’ve just turned an unknown unknown into a known unknown. That’s progress.</p>
+</div>
+<div class="paragraph">
+<p>Deciding what a story is not - and maximising the amount of work not done is one of the most useful things you can do in a three amigos session. Small stories are the secret of a successful agile team.</p>
+</div>
+<div class="paragraph">
+<p>By talking through the details of the behaviour, we ensure that the tester, developer and product owner are all in agreement about what needs to be built. A shared understanding emerges between them. They also learn a little more about one another’s perspective. Some people tell us the three amigos has helped to build empathy within their team!</p>
+</div>
+<div class="paragraph">
+<p>With this goal in mind, make sure the three amigos isn’t just a rubber-stamping exercise, where one person does all the talking. Notice how in our example, everyone in the group was asking questions and writing new cards.</p>
+</div>
+<div class="paragraph">
+<p>One last tip is to run your three amigos sessions in a timebox. When you’re practiced at it, you should be able to analyse a story within 25 minutes. If you can’t, it’s either too big, or you don’t understand it well enough yet. Either way, it’s not ready to play.</p>
+</div>
+<div class="paragraph">
+<p>At the end of the 25 minutes, you can check whether everyone thinks the story is ready to start work on. If lots of questions remain, it would be risky to start work, but people might be comfortable taking on a story with only a few minor questions to clear up. Check this with a quick thumb-vote.</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -5732,7 +5885,7 @@ The test output of the <code>dotnet test</code> command can be configured by spe
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-09-08 16:05:32 UTC
+Last updated 2021-09-08 19:02:12 UTC
 </div>
 </div>
 <style>
