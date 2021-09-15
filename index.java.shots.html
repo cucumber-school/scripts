@@ -6996,7 +6996,53 @@ Oh my.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 07/07.01/script.java.adoc - include</span><span class="p">::</span><span class="err">../code/java/01-implement-premium-accounts-feature-badly-/features/premium_shouts.feature[]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="kd">Feature</span><span class="p">:</span> Premium account
+
+  <span class="kn">Background</span><span class="p">:</span>
+    <span class="nf">Given </span>the range is 100
+    <span class="nf">And </span>people are located at
+      <span class="p">|</span> <span class="nv">name</span>     <span class="p">|</span> <span class="nv">Sean</span> <span class="p">|</span> <span class="nv">Lucy</span> <span class="p">|</span>
+      <span class="p">|</span> <span class="n">location</span> <span class="p">|</span> <span class="n">0</span>    <span class="p">|</span> <span class="n">100</span>  <span class="p">|</span>
+
+  <span class="kn">Scenario</span><span class="p">:</span> Test premium account features
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts <span class="s">"Come and buy a coffee"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"My bagels are yummy"</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Free cookie with your espresso for the next hour"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      You need to come and visit Sean's coffee,
+      we have the best bagels in town.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Who will buy my sweet red muffins?"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      This morning I got up early and baked some
+      bagels especially for you. Then I fried some
+      sausages. I went out to see my chickens, they
+      had some delicious fresh eggs waiting for me
+      and I scrambled them just for you. Come on over
+      and let's eat breakfast!
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"Buy my delicious sausage rolls"</span>
+    <span class="nf">And </span>Sean shouts the following message
+      <span class="s">"""
+      Here are some things you will love about Sean's:
+      - the bagels
+      - the coffee
+      - the chickens
+      Come and visit us today! We'd really love to see you.
+      Pop round anytime, honestly it's fine.
+      """</span>
+    <span class="nf">And </span>Sean shouts <span class="s">"We have cakes by the dozen"</span>
+    <span class="nf">Then </span>Lucy hears all Sean's messages
+    <span class="nf">And </span>Sean should have 11 credits
+
+  <span class="nt">@todo</span>
+  <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+    <span class="nf">Given </span>Sean has bought 30 credits
+    <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+    <span class="nf">Then </span>Sean should have 25 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8932,7 +8978,7 @@ week and show you what we mean.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-09-15 16:57:37 UTC
+Last updated 2021-09-15 17:15:32 UTC
 </div>
 </div>
 </body>
