@@ -27,6 +27,9 @@ guard :shell do
       `rake html[#{lang}]`
     end
   }
+  watch(/index.adoc/) { |m|
+    `rake html`
+  }
 end
 
 guard :livereload do
