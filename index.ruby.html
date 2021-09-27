@@ -8044,7 +8044,7 @@ Your browser does not support the video tag.
 </div>
 <div class="paragraph">
 <p>In the last lesson we saw how easily incidental details can creep into your scenarios, talked about why they’re a problem, and showed you some techniques for massaging them back out again.
-But, as we pushed the details out of our scenarios, we made the step definition code more complicated. We promised to show you how to deal with that extra complexity, and we&#8217;re going to get to that in Chapter 9.</p>
+But, as we pushed the details out of our scenarios, we made the step definition code more complicated. We promised to show you how to deal with that extra complexity, and we&#8217;re going to get to that in the next chapter, Chapter 9.</p>
 </div>
 <div class="paragraph">
 <p>First though, we want to look at how we could have prevented the Premium Accounts feature from getting into such a mess in the first place.</p>
@@ -8088,26 +8088,32 @@ In lesson 1, we showed you an example of the <em>Three Amigos</em> - Tester, Dev
 <em>Example Mapping</em>.</p>
 </div>
 <div class="paragraph">
-<p>
-An Example Mapping session takes a single User Story as input, and aims to produce four outputs:</p>
+<p></p>
 </div>
 <div class="paragraph">
-<p>
-* Business Rules, that must be satisified for the story to be implemented correctly
-</p>
+<p>An Example Mapping session takes a single User Story as input, and aims to produce four outputs:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Examples of those business rules playing out in real-world scenarios
-</p>
+<p>Business Rules,
+
+that must be satisified for the story to be implemented correctly</p>
 </li>
 <li>
-<p>Questions or Assumptions that the group of people in the conversation need to deal with soon, but cannot resolve during the immediate conversation
-</p>
+<p>Examples
+
+of those business rules playing out in real-world scenarios</p>
 </li>
 <li>
-<p>New User Stories, sliced out from the one being discussed in order to simplify it.</p>
+<p>Questions or Assumptions
+
+that the group of people in the conversation need to deal with soon, but cannot resolve during the immediate conversation</p>
+</li>
+<li>
+<p>New User Stories
+
+sliced out from the one being discussed in order to simplify it.</p>
 </li>
 </ul>
 </div>
@@ -8151,10 +8157,10 @@ An Example Mapping session takes a single User Story as input, and aims to produ
 <p></p>
 </div>
 <div class="paragraph">
-<p>Darren the developer comes up with a simple scenario to check he understands the basics of the “buy” rule: I start with 10 credits, I shout “buy my muffins” and then “I want to buy some socks”, then I have zero credits. Correct?</p>
+<p>Darren the developer comes up with a simple scenario to check he understands the basics of the “buy” rule: "I start with 10 credits, I shout <em>buy my muffins</em> and then <em>I want to buy some socks</em>, then I have zero credits. Correct?"</p>
 </div>
 <div class="paragraph">
-<p>Yes, says Paula.
+<p>"Yes", says Paula.
 </p>
 </div>
 <div class="paragraph">
@@ -8162,21 +8168,21 @@ An Example Mapping session takes a single User Story as input, and aims to produ
 </div>
 <div class="paragraph">
 <p>
-Tammy the tester chimes in: how about the one where you shout a word that contains “buy”, like “buyer” for example.
+Tammy the tester chimes in: "How about the one where you shout a word that contains <em>buy</em>, like <em>buyer</em> for example?
 
-If you were to shout “I need a buyer for my house”. Would that lose credits too?</p>
+If you were to shout <em>I need a buyer for my house</em>. Would that lose credits too?"</p>
 </div>
 <div class="paragraph">
 <p>
 Paula thinks about it for a minute, and
 
-decides that no, only the whole word “buy” counts. They’ve discovered a new rule!
+decides that no, only the whole word <em>buy</em> counts. They’ve discovered a new rule!
 
 They write that up on the rule card, and place the example card underneath it.</p>
 </div>
 <div class="paragraph">
 <p>
-Darren asks: how do the users get these credits? Are we building that functionality as part of this story too?</p>
+Darren asks: "How do the users get these credits? Are we building that functionality as part of this story too?"</p>
 </div>
 <div class="paragraph">
 <p>
@@ -8186,14 +8192,14 @@ Paula tells him that’s part of another story, and they can assume the user can
 <p></p>
 </div>
 <div class="paragraph">
-<p>This isn’t a behaviour rule - it’s a rule about the scope of the story. It’s still useful to write it down since we’ve agreed on it. But it won’t need any examples.</p>
+<p>This isn’t a behaviour rule - it’s a rule about the scope of the story. It’s still useful to write it down since we’ve agreed on it. But it won’t need any examples. We could also have chosen to use a red card her to write down our assumption.</p>
 </div>
 <div class="paragraph">
 <p>
-Still focussed on the “buy” rule, Tammy asks: What if they run out of credit? Say you start with 10 credits and shout “buy” three times. What’s the outcome?</p>
+Still focussed on the “buy” rule, Tammy asks: "What if they run out of credit? Say you start with 10 credits and shout <em>buy</em> three times. What’s the outcome?"</p>
 </div>
 <div class="paragraph">
-<p>Paula looks puzzled. I don’t know. She says. I’ll need to give that some thought.</p>
+<p>Paula looks puzzled. "I don’t know". She says. I’ll need to give that some thought.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -8207,40 +8213,60 @@ They apply the same technique to the other rule about long messages, and pretty 
 <div class="sect2">
 <h3 id="_example_mapping_conclusions">8.3. Example Mapping: Conclusions</h3>
 <div class="paragraph">
-<p>The purpose of an example mapping session is to achieve a shared understanding and agreement about the precise scope of a user story.</p>
-</div>
-<div class="paragraph">
-<p>We take a user story, together with some initial idea of the acceptance criteria or business rules, and try to produce examples that illustrate the behaviour. As we do that, we often end up refining the, or even slicing out new user stories to make the current one smaller. We also identify any questions that will need to be answered before the story can be turned into working software.</p>
-</div>
-<div class="paragraph">
-<p>Although there’s no doubt of the power of examples for exploring and talking through requirements, it’s the rules that will go into the code. If you understand the rules, you’ll be able to build an elegant solution.</p>
-</div>
-<div class="paragraph">
 <p></p>
-</div>
-<div class="paragraph">
-<p>Each time you come up with an example, try to understand what underlying rules are. If you discover an example that doesn’t fit your rules, you’ll need to reconsider your rules. In this way, the scope of the story is refined by the group.</p>
-</div>
-<div class="paragraph">
-<p>Many people think they need to produce formal Gherkin scenarios from their three amigos conversations, but in our experience that’s only occasionally necessary. In fact, it can often slow the discussion down.</p>
 </div>
 <div class="paragraph">
 <p>As you’ve just seen, an example mapping session should go right across the breadth of the story, trying to get a complete picture of the behaviour. Inviting all three amigos - product owner, tester and developer - is important because each perspective adds something to the conversation.</p>
 </div>
 <div class="paragraph">
-<p>By talking through the details of the behaviour, we ensure that the tester, developer and product owner are all in agreement about what needs to be built. A shared understanding emerges between them. They also learn a little more about one another’s perspective. Some people tell us the three amigos has helped to build empathy within their team!</p>
+<p></p>
 </div>
 <div class="paragraph">
-<p>Sometimes, you’ll come across questions that nobody can answer. Instead of getting stuck trying to come up with an answer, just write down the question. Congratulations! You’ve just turned an unknown unknown into a known unknown. That’s progress.</p>
-</div>
-<div class="paragraph">
-<p>Deciding what a story is not - and maximising the amount of work not done - is one of the most useful things you can do in a three amigos session. Small stories are the secret of a successful agile team.</p>
+<p>Although the apparent purpose of an example mapping session is to take a user story, and try to produce rules and examples that illustrate the behaviour, the underlying goal is to achieve a
+
+ <em>shared understanding</em> and agreement about the precise scope of a user story. Some people tell us that example mapping has helped to build empathy within their team!</p>
 </div>
 <div class="paragraph">
 <p>With this goal in mind, make sure the session isn’t just a rubber-stamping exercise, where one person does all the talking. Notice how in our example, everyone in the group was asking questions and writing new cards.</p>
 </div>
 <div class="paragraph">
-<p>One last tip is to run your three amigos sessions in a timebox. When you’re practiced at it, you should be able to analyse a story within 25 minutes. If you can’t, it’s either too big, or you don’t understand it well enough yet. Either way, it’s not ready to play.</p>
+<p>In the conversation, we often end up
+
+refining, or even slicing out new user stories
+
+to make the current one smaller.  Deciding what a story is not - and maximising the amount of work not done - is one of the most useful things you can do in a three amigos session. Small stories are the secret of a successful agile team.</p>
+</div>
+<div class="paragraph">
+<p>Each time you come up with an example, try to understand what the underlying rule or rules are. If you discover an example that doesn’t fit your rules, you’ll need to reconsider your rules. In this way, the scope of the story is refined by the group.</p>
+</div>
+<div class="paragraph">
+<p>Although there’s no doubt of the power of examples for exploring and talking through requirements, it’s the rules that will go into the code. If you understand the rules, you’ll be able to build an elegant solution.</p>
+</div>
+<div class="paragraph">
+<p>
+As Dr David West says in his excellent book "Object Thinking", <em>If you problem the solution well enough, the solution will take care of itself</em>.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Sometimes, you’ll come across questions that nobody can answer. Instead of getting stuck trying to come up with an answer, just write down the question.
+</p>
+</div>
+<div class="paragraph">
+<p>Congratulations! You’ve just turned an unknown unknown into a known unknown. That’s progress.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Many people think they need to produce formal Gherkin scenarios from their three amigos conversations, but in our experience that’s only occasionally necessary. In fact, it can often slow the discussion down.</p>
+</div>
+<div class="paragraph">
+<p>The point of an example mapping session is to do the <em>discovery</em> work. You can do <em>formulation</em> as a separate activity, next.</p>
+</div>
+<div class="paragraph">
+<p>One last tip is to run your example mapping sessions in a timebox. When you’re practiced at it, you should be able to analyse a story within 25 minutes. If you can’t, it’s either too big, or you don’t understand it well enough yet. Either way, it’s not ready to play.</p>
 </div>
 <div class="paragraph">
 <p>At the end of the 25 minutes, you can check whether everyone thinks the story is ready to start work on. If lots of questions remain, it would be risky to start work, but people might be comfortable taking on a story with only a few minor questions to clear up. Check this with a quick thumb-vote.</p>
@@ -8760,7 +8786,7 @@ See you next time, on Cucumber School.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-09-15 21:50:57 UTC
+Last updated 2021-09-27 21:25:18 UTC
 </div>
 </div>
 </body>
