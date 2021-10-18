@@ -67,14 +67,16 @@ Working with these simple artefacts rather than trying to go straight to formula
 
 ===== Why did we say the development team's initial attempt at the premium accounts feature was "done backwards"?
 
-* Because Automation should come before Discovery
-* Because Formulation should come before Discovery
+* They did Discovery before Automation
+* They did Discovery before Formulation
 * They started with Automation, without doing enough Discovery or Formulation first (*Correct*)
 * They started with Discovery, then did Formulation and finally Automation
 
 **Explanation:**
 
-The intended order is Discovery, Formulation then Automation. Our observation was that the the team jumped straight into coding (Automation) then retro-fitted some tests later. The discovery only happened when Tamsin tested the feature.
+The intended order is Discovery, Formulation then Automation. Each of these steps teaches us a little more about the problem.
+
+Our observation was that the the team jumped straight into coding (Automation), retro-fitting a scenario later. The discovery only happened when Tamsin tested the feature.
 
 ===== What does "Deliberate Discovery" mean (Multiple choice)
 
@@ -82,13 +84,44 @@ The intended order is Discovery, Formulation then Automation. Our observation wa
 * Discovery is something you can only do in collaboration with others
 * Having the humility to assume there are things you don't yet understand about the problem you're working on (*Correct*)
 * Embracing your ignorance about what you're building (*Correct*)
-* That there are no unknown unknowns on your project
+* There are no unknown unknowns on your project
 
 **Explanation:**
 
 Deliverate Discovery means we assume that there are important things we don't yet know about the project we're working on, and so make a deliberate effort to look for them at every opportunity.
 
+Although we very much encouage doing that collaboratively, it's not the main emphasis here.
+
 Read Daniel Terhorst-North's [original blog post](https://dannorth.net/2010/08/30/introducing-deliberate-discovery/).
+
+===== Why is it a good idea to try and slice a user story?
+
+* Working in smaller pieces allows us to iterate and get feedback faster (*Correct*)
+* We can defer behaviour that's lower priority (*Correct*)
+* Smaller stories are less likely to contain unknown unknowns (*Correct*)
+* Doing TDD and refactoring becomes much easier when we proceed in small steps (*Correct*)
+* Small steps help us keep momentum, which is motivating (*Correct*)
+
+**Explanation:**
+
+Just like grains of sand flow through the neck of a bottle faster than pebbles, the smaller you can slice your stories, the faster they will flow through your development team.
+
+It's important to preserve stories as a _vertical slice_ right through your application, that changes the behaviour of the system from the point of view of a user, even in a very simple way. 
+
+That's why we call it slicing rather than splitting.
+
+===== Why did we discourage doing Formulation as part of an Example Mapping conversation?
+
+* Trying to write Gherkin slows the conversation down, which means you might miss the bigger picture. (*Correct*)
+* It's usually an unneccesary level of detail to go into when you're trying to discover unknown unknowns. (*Correct*)
+* Formulation should be done by a separate team
+* One person should be in charge of the documentation
+
+**Explanation**
+
+This is why we've separated Discovery from Formulation. It's better to stay relatively shallow and go for breadth at this stage - making sure you've looked over the entire user story without getting pulled into rabbit holes.
+
+Product Owners and Domain Experts are often busy people who only have limited time with the team. Make the most of this time by keeping the conversation at the level where the team can learn the maximum amount from them.
 
 === Example Mapping: How?
 
