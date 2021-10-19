@@ -1,11 +1,5 @@
-DEFAULT_RANGE = 0
-
-Before do
-  @network = Shouty::Network.new(DEFAULT_RANGE)
-end
-
 Given "the range is {int}" do |range|
-  @network = Shouty::Network.new(range)
+  self.network = Shouty::Network.new(range)
 end
 
 Given "{person} is located at {int}" do |person, location|
