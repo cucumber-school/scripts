@@ -2,7 +2,6 @@ DEFAULT_RANGE = 0
 
 Before do
   @network = Shouty::Network.new(DEFAULT_RANGE)
-  @messages_shouted_by = Hash.new([])
 end
 
 Given "the range is {int}" do |range|
@@ -59,7 +58,7 @@ Then "{person} hears the following messages:" do |listener, expected_messages|
 end
 
 Then("{person} hears all {person}'s messages") do |listener, shouter|
-  expect(listener.messages_heard).to match(@messages_shouted_by[shouter.name])
+  expect(listener.messages_heard).to match(messages_shouted_by[shouter.name])
 end
 
 Then("{person} should have {int} credits") do |shouter, credits|
