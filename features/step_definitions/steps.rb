@@ -1,5 +1,5 @@
 Given "the range is {int}" do |range|
-  self.network = Shouty::Network.new(range)
+  network.range = range
 end
 
 Given "{person} is located at {int}" do |person, location|
