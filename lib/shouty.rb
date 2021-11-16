@@ -28,6 +28,8 @@ module Shouty
   end
 
   class Network
+    attr_writer :range
+
     def initialize(range)
       @range     = range
       @listeners = []

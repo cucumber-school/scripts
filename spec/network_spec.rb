@@ -43,6 +43,18 @@ RSpec.describe Shouty::Network do
     expect(laura.messages_heard).not_to include(long_message)
   end
 
+  it "can change the range" do
+    sean  = Shouty::Person.new("Sean", network, 0)
+    laura = Shouty::Person.new("Laura", network, 10)
+
+    network.broadcast(message, sean)
+    expect(laura.messages_heard).to eq [message]
+
+    network.range = 5
+    network.broadcast(message, sean)
+    expect(laura.messages_heard).to eq [message]
+  end
+
   context "credits" do
     it "deducts 2 credits for a shout over 180 characters" do
       long_message = 'x' * 181
