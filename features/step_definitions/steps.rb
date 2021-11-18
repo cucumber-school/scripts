@@ -18,8 +18,7 @@ Given('{person} has bought {int} credits') do |person, credits|
 end
 
 When "{person} shouts" do |shouter|
-  shouter.shout("Hello, world")
-  @messages_shouted_by[shouter.name] << "Hello, world"
+  shout from: shouter, message: "Hello, world"
 end
 
 When "{person} shouts {string}" do |shouter, message|
