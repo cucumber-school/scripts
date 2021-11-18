@@ -6,9 +6,8 @@ Feature: Premium account
 
   Background:
     Given the range is 100
-    And people are located at
-      | name     | Sean | Lucy |
-      | location | 0    | 100  |
+    And Sean is located at 0
+    And Lucy is located at 100
 
   Rule: Mention the word "buy" and you lose 5 credits.
     Scenario: Sean some messages containing the word “buy”

@@ -1,9 +1,10 @@
 module Shouty
   class Person
-    attr_reader :messages_heard, :location
+    attr_reader :name, :messages_heard, :location
     attr_accessor :credits
 
-    def initialize(network, location)
+    def initialize(name, network, location)
+      @name           = name
       @messages_heard = []
       @network        = network
       @location       = location
@@ -18,6 +19,11 @@ module Shouty
 
     def hear(message)
       @messages_heard << message
+    end
+
+    def move_to(new_location)
+      @location = new_location
+      self
     end
   end
 
