@@ -8751,11 +8751,16 @@ week and show you what we mean.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">require <span class="s1">'shouty'</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nb">mkdir </span>features/support</code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>There’s a special file in support that Cucumber always loads first, called <code>env.rb</code>. You can use this to boot up the system that you’re testing.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nb">touch </span>features/support/env.rb</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>In this case, our system is just a domain model, but we can load it here instead of from the step definitions.</p>
@@ -8766,19 +8771,47 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The most obvious duplication in the step definition code is for Sean shouting a message. Let’s imagine we had a helper method like this, instead. Wouldn’t that be neater?</p>
+<p>The most obvious duplication in the step definition code is for Sean shouting a message.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span> <span class="s1">'Sean shouts {int} messages containing the word {string}'</span> <span class="k">do</span> <span class="o">|</span><span class="n">count</span><span class="p">,</span> <span class="n">word</span><span class="o">|</span>
+<pre class="rouge highlight"><code data-lang="rb"><span class="no">When</span> <span class="s2">"{person} shouts"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="o">|</span>
+  <span class="n">shouter</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="s2">"Hello, world"</span><span class="p">)</span>
+  <span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s2">"Hello, world"</span>
+<span class="k">end</span>
+
+<span class="no">When</span> <span class="s2">"{person} shouts {string}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">message</span><span class="o">|</span>
+  <span class="n">shouter</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
+<span class="k">end</span>
+
+<span class="no">When</span> <span class="s2">"{person} shouts the following message"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">message</span><span class="o">|</span>
+  <span class="n">shouter</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+  <span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
+<span class="k">end</span>
+
+<span class="no">When</span> <span class="s2">"{person} shouts {int} over-long messages"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">count</span><span class="o">|</span>
   <span class="n">count</span><span class="p">.</span><span class="nf">times</span> <span class="k">do</span>
-    <span class="n">sean_shout</span> <span class="s2">"here is a message containing the word </span><span class="si">#{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">base_message</span> <span class="o">=</span> <span class="s2">"A message from </span><span class="si">#{</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2"> that is 181 characters long "</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">base_message</span> <span class="o">+</span> <span class="s2">"x"</span> <span class="o">*</span> <span class="p">(</span><span class="mi">181</span> <span class="o">-</span> <span class="n">base_message</span><span class="p">.</span><span class="nf">size</span><span class="p">)</span>
+    <span class="n">shouter</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
   <span class="k">end</span>
 <span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Every time Cucumber runs a scenario, it creates a new object, called the <em>World</em>. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can extend the methods available on the world (and so the methods avaiable to the step defintions) by first defining them on a Ruby module, then registering that module with Cucumber.</p>
+<p>Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span> <span class="s2">"{person} shouts"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="o">|</span>
+  <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="s2">"Hello, world"</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Every time Cucumber runs a scenario, it creates a new object, called the <em>World</em>. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can extend the methods available on the world (and so the methods available to the step defintions) by first defining them on a Ruby module, then registering that module with Cucumber.</p>
 </div>
 <div class="paragraph">
 <p>We’ll create a new file in the <code>support</code> directory to contain our extensions to the world.</p>
@@ -8794,11 +8827,6 @@ week and show you what we mean.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby"><span class="k">module</span> <span class="nn">ShoutyWorld</span>
-  <span class="k">def</span> <span class="nf">sean_shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="s2">"A message containing the word </span><span class="si">#{</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span>
-    <span class="vi">@people</span><span class="p">[</span><span class="s2">"Sean"</span><span class="p">].</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="s2">"Sean"</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
-  <span class="k">end</span>
 <span class="k">end</span></code></pre>
 </div>
 </div>
@@ -8813,8 +8841,24 @@ week and show you what we mean.</p>
 <div class="paragraph">
 <p>Finally, we define our new helper method on this module and paste in the code from the step definition.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb"><span class="k">module</span> <span class="nn">ShoutyWorld</span>
+  <span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">from</span><span class="p">:,</span> <span class="n">message</span><span class="p">:)</span>
+    <span class="n">shouter</span> <span class="o">=</span> <span class="n">from</span>
+    <span class="n">shouter</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>Let’s run Cucumber to check everything’s still working… Good.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">RUN CUCUMBER!!!!</code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Now we can use that new method everywhere… and check we haven’t broken anything… done.</p>
@@ -8822,17 +8866,12 @@ week and show you what we mean.</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby"><span class="o">...</span>
-<span class="no">When</span> <span class="s1">'Sean shouts the following message'</span> <span class="k">do</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span>
-  <span class="n">sean_shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+<span class="no">When</span><span class="p">(</span><span class="s1">'{person} shouts {string}'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">message</span><span class="o">|</span>
+  <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="n">message</span>
 <span class="k">end</span>
 
-<span class="no">When</span> <span class="s2">"Sean shouts a message"</span> <span class="k">do</span>
-  <span class="n">sean_shout</span><span class="p">(</span><span class="s2">"A message from Sean"</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="no">When</span> <span class="s2">"Sean shouts a long message"</span> <span class="k">do</span>
-  <span class="n">message</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"A message from Sean"</span><span class="p">,</span> <span class="s2">"that spans multiple lines"</span><span class="p">].</span><span class="nf">join</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="p">)</span>
-  <span class="n">sean_shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+<span class="no">When</span> <span class="s2">"{person} shouts the following message"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">message</span><span class="o">|</span>
+  <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="n">message</span>
 <span class="k">end</span>
 <span class="o">...</span></code></pre>
 </div>
@@ -8840,49 +8879,66 @@ week and show you what we mean.</p>
 <div class="sect3">
 <h4 id="_move_instance_variables_behind_helper_methods">9.2.1. Move instance variables behind helper methods</h4>
 <div class="paragraph">
-<p>Notice that the helper method we extracted still uses those instance variables, <code>@people</code>, <code>@messages_shouted_by</code> and <code>@network</code>.</p>
+<p>Notice that the helper method we extracted uses that <code>@messages_shouted_by</code> instance variable.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">sean_shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="s2">"A message containing the word </span><span class="si">#{</span><span class="n">message</span><span class="si">}</span><span class="s2">"</span>
-    <span class="vi">@people</span><span class="p">[</span><span class="s2">"Sean"</span><span class="p">].</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-    <span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="s2">"Sean"</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
-  <span class="k">end</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">module</span> <span class="nn">ShoutyWorld</span>
+  <span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">from</span><span class="p">:,</span> <span class="n">message</span><span class="p">:)</span>
+    <span class="n">shouter</span> <span class="o">=</span> <span class="n">from</span>
+    <span class="n">shouter</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This works because the helper methods are mixed into the same World object as the step definitions, so they can all see these instance variables.</p>
+<p>We&#8217;re using this instance variable in this assertion step </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span><span class="p">(</span><span class="s2">"{person} hears all {person}'s messages"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">listener</span><span class="p">,</span> <span class="n">shouter</span><span class="o">|</span>
+  <span class="n">expect</span><span class="p">(</span><span class="n">listener</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="n">match</span><span class="p">(</span><span class="vi">@messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">])</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This works because the helper methods are mixed into the same World object as the step definitions, so they can all see the same instance variables.</p>
 </div>
 <div class="paragraph">
 <p>However, we don’t like sharing state across the support API boundary like this. Things can get complicated quickly when you have code spread all over your step definitions and support directory that’s depending on these instance variables.</p>
 </div>
 <div class="paragraph">
-<p>It’s better to push the state behind the support API. Let’s start with the hash of people. We’ll define a new method on the World that returns the people instance variable, initializing it with an empty hash if it’s never been accessed before.</p>
+<p>It’s better to push the state behind the support API.</p>
+</div>
+<div class="paragraph">
+<p>Let’s extract this variable into a new method on the World that returns the instance variable, initializing it with an empty hash if it’s never been accessed before.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">people</span>
-    <span class="vi">@people</span> <span class="o">||=</span> <span class="p">{}</span>
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">messages_shouted_by</span>
+    <span class="vi">@messages_shouted_by</span> <span class="o">||=</span> <span class="no">Hash</span><span class="p">.</span><span class="nf">new</span><span class="p">([])</span>
   <span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can use this method everywhere in the step definitions, and we no longer need to initialize it in this before hook.</p>
+<p>Now we can use this method in the step definitions,</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="o">...</span>
-<span class="no">Given</span> <span class="s2">"a person named {word}"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span>
-  <span class="n">people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
-<span class="k">end</span>
-
-<span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
-  <span class="n">table</span><span class="p">.</span><span class="nf">transpose</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="ss">name: </span><span class="p">,</span> <span class="ss">location: </span><span class="o">|</span>
-    <span class="n">people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="vi">@network</span><span class="p">,</span> <span class="n">location</span><span class="p">.</span><span class="nf">to_i</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span>
-<span class="o">...</span></code></pre>
+<pre class="rouge highlight"><code data-lang="rb"><span class="no">Then</span><span class="p">(</span><span class="s2">"{person} hears all {person}'s messages"</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">listener</span><span class="p">,</span> <span class="n">shouter</span><span class="o">|</span>
+  <span class="n">expect</span><span class="p">(</span><span class="n">listener</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="n">match</span><span class="p">(</span><span class="n">messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">])</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and we no longer need to initialize it in this before hook.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Before</span> <span class="k">do</span>
+  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8894,26 +8950,6 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can do exactly the same thing with <code>@messages_shouted_by</code>. First, create the helper method,</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">messages_shouted_by</span>
-    <span class="vi">@messages_shouted_by</span> <span class="o">||=</span> <span class="no">Hash</span><span class="p">.</span><span class="nf">new</span><span class="p">([])</span>
-  <span class="k">end</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>then replace the calls from the step definitions.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span> <span class="s2">"Lucy should hear Sean's message"</span> <span class="k">do</span>
-  <span class="n">expect</span><span class="p">(</span><span class="n">people</span><span class="p">[</span><span class="s1">'Lucy'</span><span class="p">].</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="p">[</span><span class="n">messages_shouted_by</span><span class="p">[</span><span class="s2">"Sean"</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span>
-<span class="k">end</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
 <p>And run cucumber to check we’re still green.</p>
 </div>
 <div class="listingblock">
@@ -8922,13 +8958,15 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, we can follow the same steps for the <code>@network</code> instance variable. Make the accessor</p>
+<p></p>
+</div>
+<div class="paragraph">
+<p>We can follow the same steps for the <code>@network</code> instance variable. Make the accessor</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">network</span>
-    <span class="vi">@network</span> <span class="o">||=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span>
-  <span class="k">end</span></code></pre>
+    <span class="vi">@network</span> <span class="o">||=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8936,15 +8974,15 @@ week and show you what we mean.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"a person named {word}"</span> <span class="k">do</span> <span class="o">|</span><span class="nb">name</span><span class="o">|</span>
-  <span class="n">people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"{person} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span>
+  <span class="n">person</span><span class="p">.</span><span class="nf">move_to</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
 <span class="k">end</span>
 
-<span class="no">Given</span> <span class="s2">"people are located at"</span> <span class="k">do</span> <span class="o">|</span><span class="n">table</span><span class="o">|</span>
-  <span class="n">table</span><span class="p">.</span><span class="nf">transpose</span><span class="p">.</span><span class="nf">symbolic_hashes</span><span class="p">.</span><span class="nf">each</span> <span class="k">do</span> <span class="o">|</span><span class="ss">name: </span><span class="p">,</span> <span class="ss">location: </span><span class="o">|</span>
-    <span class="n">people</span><span class="p">[</span><span class="nb">name</span><span class="p">]</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">network</span><span class="p">,</span> <span class="n">location</span><span class="p">.</span><span class="nf">to_i</span><span class="p">)</span>
-  <span class="k">end</span>
-<span class="k">end</span></code></pre>
+<span class="no">Given</span><span class="p">(</span><span class="s1">'{person} has bought {int} credits'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">credits</span><span class="o">|</span>
+  <span class="n">person</span><span class="p">.</span><span class="nf">credits</span> <span class="o">=</span> <span class="n">credits</span>
+<span class="k">end</span>
+
+<span class="no">When</span> <span class="s2">"{person} shouts"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="o">|</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -8960,11 +8998,7 @@ week and show you what we mean.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Before</span> <span class="k">do</span>
-  <span class="vi">@people</span> <span class="o">=</span> <span class="p">{}</span>
-  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span>
-  <span class="vi">@messages_shouted_by</span> <span class="o">=</span> <span class="no">Hash</span><span class="p">.</span><span class="nf">new</span><span class="p">([])</span>
-<span class="k">end</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Unresolved</span> <span class="n">directive</span> <span class="k">in</span> <span class="mi">09</span><span class="o">/</span><span class="mf">09.02</span><span class="o">/</span><span class="n">script</span><span class="p">.</span><span class="nf">ruby</span><span class="p">.</span><span class="nf">adoc</span> <span class="o">-</span> <span class="kp">include</span><span class="o">::..</span><span class="sr">/code/</span><span class="n">ruby</span><span class="o">/</span><span class="mo">03</span><span class="o">-</span><span class="n">use</span><span class="o">-</span><span class="n">sean_shout</span><span class="o">-</span><span class="n">everywhere</span><span class="o">/</span><span class="n">features</span><span class="o">/</span><span class="n">step_definitions</span><span class="o">/</span><span class="n">steps</span><span class="p">.</span><span class="nf">rb</span><span class="p">[</span><span class="n">lines</span><span class="o">=</span><span class="mi">3</span><span class="o">..</span><span class="mi">7</span><span class="p">]</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9356,7 +9390,7 @@ See you next time, on Cucumber School.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-11-01 16:22:13 UTC
+Last updated 2021-11-18 17:51:14 UTC
 </div>
 </div>
 </body>
