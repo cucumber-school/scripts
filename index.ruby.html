@@ -732,8 +732,9 @@ pre.rouge {
 <li><a href="#_support_code">9. Support Code</a>
 <ul class="sectlevel2">
 <li><a href="#_layers_of_a_cucumber_test_suite">9.1. Layers of a Cucumber Test Suite</a></li>
-<li><a href="#_extracting_support_code">9.2. Extracting Support Code</a></li>
-<li><a href="#_close">9.3. Close</a></li>
+<li><a href="#_test_all_the_fing_time">9.2. Test all the F***ing time</a></li>
+<li><a href="#_extracting_support_code">9.3. Extracting Support Code</a></li>
+<li><a href="#_close">9.4. Close</a></li>
 </ul>
 </li>
 <li><a href="#_acceptance_tests_vs_unit_tests">10. Acceptance Tests vs Unit Tests</a>
@@ -8745,7 +8746,13 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_extracting_support_code">9.2. Extracting Support Code</h3>
+<h3 id="_test_all_the_fing_time">9.2. Test all the F***ing time</h3>
+<div class="paragraph">
+<p>TODO: create rake task</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_extracting_support_code">9.3. Extracting Support Code</h3>
 <div class="paragraph">
 <p>We need a new directory to contain our support code. the conventional place to put it is here, in a <code>support</code> directory underneath <code>features</code>.</p>
 </div>
@@ -8877,7 +8884,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_move_instance_variables_behind_helper_methods">9.2.1. Move instance variables behind helper methods</h4>
+<h4 id="_move_messages_shouted_by_instance_variable_behind_a_helper_method">9.3.1. Move <code>@messages_shouted_by</code> instance variable behind a helper method</h4>
 <div class="paragraph">
 <p>Notice that the helper method we extracted uses that <code>@messages_shouted_by</code> instance variable.</p>
 </div>
@@ -8942,14 +8949,6 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run cucumber to check we haven’t broken anything….. good.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>cucumber</code></pre>
-</div>
-</div>
-<div class="paragraph">
 <p>And run cucumber to check we’re still green.</p>
 </div>
 <div class="listingblock">
@@ -8957,62 +8956,164 @@ week and show you what we mean.</p>
 <pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>cucumber</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p></p>
 </div>
+<div class="sect3">
+<h4 id="_move_network_instance_variable_behind_a_helper_method">9.3.2. Move <code>@network</code> instance variable behind a helper method</h4>
 <div class="paragraph">
-<p>We can follow the same steps for the <code>@network</code> instance variable. Make the accessor</p>
+<p>We can follow the same steps for the <code>@network</code> instance variable. Make the accessor method:</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">network</span>
-    <span class="vi">@network</span> <span class="o">||=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span></code></pre>
+    <span class="vi">@network</span> <span class="o">||=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span>
+  <span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Replace all the calls.</p>
+<p>This will enable the <code>{person}</code> parameter type transformer to pull a <code>network</code> as soon as it needs one, so we don&#8217;t need to create a <code>Network</code> in a <code>Before</code> hook anymore.</p>
+</div>
+<div class="paragraph">
+<p>So we can delete the <code>Before</code> hook altogether.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"{person} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span>
-  <span class="n">person</span><span class="p">.</span><span class="nf">move_to</span><span class="p">(</span><span class="n">location</span><span class="p">)</span>
-<span class="k">end</span>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Before</span> <span class="k">do</span>
+  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This is changing the behaviour slightly, and for the better. Now we&#8217;re not relying on timing - assuming that the hook has created the <code>Network</code> at a particular point in the scenario&#8217;s lifecycle. We just create the <code>Network</code> as we need it. This is called <em>Lazy loading</em>.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
+  <span class="vi">@network</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">range</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we&#8217;re trying to change the range of the network, and the only way to do that at the moment is to create a brand new instance of <code>Network</code>. This means we have another leak of the <code>@network</code> instance variable into the step definitions.</p>
+</div>
+<div class="paragraph">
+<p>This way of doing it is risky. If someone used this step in the middle of a scenario that already had some <code>Person</code> instances subscribed to a <code>Network</code>, we&#8217;d get some confusing behaviour as the <code>@network</code> would be overwritten with a new instance with nobody subscribed to it.</p>
+</div>
+<div class="paragraph">
+<p>All the way through this lesson, we&#8217;ve been <em>pushing the how down</em>, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.</p>
+</div>
+<div class="paragraph">
+<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
+  <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="n">range</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Isn&#8217;t that better?</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s do it!</p>
+</div>
+<div class="paragraph">
+<p>First, we&#8217;ll add a unit test for the <code>Network</code> class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="n">it</span> <span class="s2">"can change the range"</span> <span class="k">do</span>
+    <span class="n">sean</span>  <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Sean"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">laura</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Laura"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
 
-<span class="no">Given</span><span class="p">(</span><span class="s1">'{person} has bought {int} credits'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">credits</span><span class="o">|</span>
-  <span class="n">person</span><span class="p">.</span><span class="nf">credits</span> <span class="o">=</span> <span class="n">credits</span>
-<span class="k">end</span>
+    <span class="n">network</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sean</span><span class="p">)</span>
+    <span class="n">expect</span><span class="p">(</span><span class="n">laura</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="p">[</span><span class="n">message</span><span class="p">]</span>
 
-<span class="no">When</span> <span class="s2">"{person} shouts"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="o">|</span></code></pre>
+    <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">network</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sean</span><span class="p">)</span>
+    <span class="n">expect</span><span class="p">(</span><span class="n">laura</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span> <span class="p">[</span><span class="n">message</span><span class="p">]</span>
+  <span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And run cucumber.</p>
+<p>First we&#8217;ll create a couple of people on the Network, which defaults to a range of 100, so they&#8217;re going to be close enough to hear each other at the moment.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll broadcast a shout from Sean, which Lucy should be able to hear.</p>
+</div>
+<div class="paragraph">
+<p>Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.</p>
+</div>
+<div class="paragraph">
+<p>Broadcast again, and this time Lucy shouldn&#8217;t have heard anything.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s run the test, and watch it fail like good TDD practitioners.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>cucumber</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rspec
+
+....F......
+
+Failures:
+
+  1<span class="o">)</span> Shouty::Network can change the range
+     Failure/Error: network.range <span class="o">=</span> 5
+
+     NoMethodError:
+       undefined method <span class="sb">`</span><span class="nv">range</span><span class="o">=</span><span class="sb">`</span> <span class="k">for</span> <span class="c">#&lt;Shouty::Network:0x000000013b01bc10 @range=100, @listeners=[#&lt;Shouty::Person:0x000000013b01bbc0 @name="Sean", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=0, @credits=0&gt;, #&lt;Shouty::Person:0x000000013b01bb20 @name="Laura", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=10, @credits=0&gt;]&gt;</span>
+     <span class="c"># ./spec/network_spec.rb:53:in `block (2 levels) in &lt;top (required)&gt;'</span>
+
+Finished <span class="k">in </span>0.01381 seconds <span class="o">(</span>files took 0.13762 seconds to load<span class="o">)</span>
+11 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:46 <span class="c"># Shouty::Network can change the range</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can remove this before hook altogether.</p>
+<p>Now we can add the attribute writer:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Unresolved</span> <span class="n">directive</span> <span class="k">in</span> <span class="mi">09</span><span class="o">/</span><span class="mf">09.02</span><span class="o">/</span><span class="n">script</span><span class="p">.</span><span class="nf">ruby</span><span class="p">.</span><span class="nf">adoc</span> <span class="o">-</span> <span class="kp">include</span><span class="o">::..</span><span class="sr">/code/</span><span class="n">ruby</span><span class="o">/</span><span class="mo">03</span><span class="o">-</span><span class="n">use</span><span class="o">-</span><span class="n">sean_shout</span><span class="o">-</span><span class="n">everywhere</span><span class="o">/</span><span class="n">features</span><span class="o">/</span><span class="n">step_definitions</span><span class="o">/</span><span class="n">steps</span><span class="p">.</span><span class="nf">rb</span><span class="p">[</span><span class="n">lines</span><span class="o">=</span><span class="mi">3</span><span class="o">..</span><span class="mi">7</span><span class="p">]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">class</span> <span class="nc">Network</span>
+    <span class="nb">attr_writer</span> <span class="ss">:range</span>
+    <span class="o">...</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And we run cucumber one last time.</p>
+<p>Let&#8217;s run RSpec again, and everything should be passing. Great!</p>
+</div>
+<div class="paragraph">
+<p>Now we can use that new method in our step:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>cucumber</code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
+  <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="n">range</span>
+<span class="k">end</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>rake</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Great!</p>
 </div>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_close">9.3. Close</h3>
+<h3 id="_close">9.4. Close</h3>
 <div class="paragraph">
 <p>We could continue to move code from our step definitions into the support code like this. For example, we could write a support method for generating messages of a certain length.</p>
 </div>
@@ -9390,7 +9491,7 @@ See you next time, on Cucumber School.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-11-18 17:51:14 UTC
+Last updated 2021-11-22 17:13:03 UTC
 </div>
 </div>
 </body>
