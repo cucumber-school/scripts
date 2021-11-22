@@ -1,21 +1,3 @@
 include::./title.adoc[]
 
-We need a new class to contain our support code. Let’s create a class called `ShoutSupport` in the same package as our step definitions.
-
-We already have a shout method in our step definition class. Let’s cut that method and paste it into to the support class. We’ll make it public and rename it to `seanShout`. 
-
-We also need the two maps - `people` and `messagesShoutedBy`. Let’s cut and paste those as well. We’ll instantiate these maps where they are declared, and declare them `public` and `final`.
-
-Now that we have a new `ShoutSupport` class let’s put it to use in our step definitions. We’ll declare a constructor to pass it in, store the reference in a `shoutSupport` field and call this method everywhere we used to call `shout`.
-
-Since our maps are now moved, we need to access those from the `shoutSupport` object as well.
-
-Cucumber now fails with an error complaining that the `Stepdefs` class doesn’t have an empty constructor. You may not have given it much thought, but Cucumber creates a new instance of every class with step definitions before every scenario.
-
-Cucumber knows how to instantiate classes with empty constructors. When the classes expect dependencies to be passed in, Cucumber needs to delegate the instantiation of objects to a dependency injection container.
-
-Cucumber supports half a dozen dependency injection containers. Let’s pick a simple one that doesn’t require any configuration - picocontainer.
-
-[Adds PicoContainer to the pom.xml]
-
-Now that Cucumber successfully instantiates the objects, let’s finish our refactoring. We’ll know that we’re done when all scenarios are green again.
+TODO: set up mvn task to run all the tests

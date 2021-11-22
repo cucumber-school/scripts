@@ -1,1 +1,242 @@
-include::./script.common.adoc[]
+include::./title.adoc[]
+
+We need a new directory to contain our support code. the conventional place to put it is here, in a `support` directory underneath `features`.
+
+[source, sh]
+----
+mkdir features/support
+----
+
+There’s a special file in support that Cucumber always loads first, called `env.rb`. You can use this to boot up the system that you’re testing.
+
+[source, sh]
+----
+touch features/support/env.rb
+----
+
+In this case, our system is just a domain model, but we can load it here instead of from the step definitions.
+
+[source, ruby]
+----
+include::../code/ruby/01-require-the-app-from-env-rb/features/support/env.rb[lines=1]
+----
+
+The most obvious duplication in the step definition code is for Sean shouting a message.
+
+[source,rb]
+----
+include::../code/ruby/02-create-world-module/features/step_definitions/steps.rb[lines=20..42]
+----
+
+Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater?
+
+[source,ruby]
+----
+include::../code/ruby/03-extract-shout-helper-to-world-module/features/step_definitions/steps.rb[lines=20..22]
+----
+
+Every time Cucumber runs a scenario, it creates a new object, called the _World_. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can extend the methods available on the world (and so the methods available to the step defintions) by first defining them on a Ruby module, then registering that module with Cucumber.
+
+We’ll create a new file in the `support` directory to contain our extensions to the world.shot::[1]
+
+[source,sh]
+----
+touch features/support/world.rb
+----
+
+Now we define a module,
+
+[source,ruby]
+----
+include::../code/ruby/02-create-world-module/features/support/world.rb[lines=1..2]
+----
+
+and tell Cucumber to make it part of the world.
+
+[source,ruby]
+----
+include::../code/ruby/02-create-world-module/features/support/world.rb[lines=4]
+----
+
+Finally, we define our new helper method on this module and paste in the code from the step definition.
+
+[source,rb]
+----
+include::../code/ruby/03-extract-shout-helper-to-world-module/features/support/world.rb[lines=1..7]
+----
+
+Let’s run Cucumber to check everything’s still working… Good.
+
+[source,sh]
+----
+RUN CUCUMBER!!!!
+----
+
+Now we can use that new method everywhere… and check we haven’t broken anything… done.
+
+[source,ruby]
+----
+...
+include::../code/ruby/04-use-shout-helper-everywhere/features/step_definitions/steps.rb[lines=24..30]
+...
+----
+
+==== Move `@messages_shouted_by` instance variable behind a helper method
+
+Notice that the helper method we extracted uses that `@messages_shouted_by` instance variable.
+
+[source,ruby]
+----
+include::../code/ruby/04-use-shout-helper-everywhere/features/support/world.rb[lines=1..7]
+----
+
+We're using this instance variable in this assertion step shot::[2]
+
+[source,ruby]
+----
+include::../code/ruby/04-use-shout-helper-everywhere/features/step_definitions/steps.rb[lines=61..63]
+----
+
+This works because the helper methods are mixed into the same World object as the step definitions, so they can all see the same instance variables.
+
+However, we don’t like sharing state across the support API boundary like this. Things can get complicated quickly when you have code spread all over your step definitions and support directory that’s depending on these instance variables.
+
+It’s better to push the state behind the support API.
+
+Let’s extract this variable into a new method on the World that returns the instance variable, initializing it with an empty hash if it’s never been accessed before.
+
+[source,ruby]
+----
+include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/support/world.rb[lines=8..10]
+----
+
+Now we can use this method in the step definitions,
+
+[source,rb]
+----
+include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=60..62]
+----
+
+and we no longer need to initialize it in this before hook.
+
+[source,ruby]
+----
+include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=3..5]
+----
+
+And run cucumber to check we’re still green.
+
+[source,sh]
+----
+bundle exec cucumber
+----
+
+==== Move `@network` instance variable behind a helper method
+
+We can follow the same steps for the `@network` instance variable. Make the accessor method:
+
+[source,ruby]
+----
+include::../code/ruby/06-move-network-to-an-accessor-in-world/features/support/world.rb[lines=12..14]
+----
+
+This will enable the `{person}` parameter type transformer to pull a `network` as soon as it needs one, so we don't need to create a `Network` in a `Before` hook anymore.
+
+So we can delete the `Before` hook altogether.
+
+[source,ruby]
+----
+include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=3..5]
+----
+
+This is changing the behaviour slightly, and for the better. Now we're not relying on timing - assuming that the hook has created the `Network` at a particular point in the scenario's lifecycle. We just create the `Network` as we need it. This is called _Lazy loading_.
+
+There's one other place where we're using the `Network`, in this step:
+
+[source,ruby]
+----
+include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=7..9]
+----
+
+Here, we're trying to change the range of the network, and the only way to do that at the moment is to create a brand new instance of `Network`. This means we have another leak of the `@network` instance variable into the step definitions.
+
+This way of doing it is risky. If someone used this step in the middle of a scenario that already had some `Person` instances subscribed to a `Network`, we'd get some confusing behaviour as the `@network` would be overwritten with a new instance with nobody subscribed to it.
+
+All the way through this lesson, we've been _pushing the how down_, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.
+
+Imagine we had a `range` setter method on our `Network` that allowed us to modify the range on the fly. Then, our step would just look like this:
+
+[source,ruby]
+----
+include::../code/ruby/08-use-new-network-range-method/features/step_definitions/steps.rb[lines=3..5]
+----
+
+Isn't that better?
+
+Let's do it!
+
+First, we'll add a unit test for the `Network` class:
+
+[source,ruby]
+----
+include::../code/ruby/07-add-a-way-to-change-the-network-s-range/spec/network_spec.rb[lines=46..56]
+----
+
+First we'll create a couple of people on the Network, which defaults to a range of 100, so they're going to be close enough to hear each other at the moment.
+
+We'll broadcast a shout from Sean, which Lucy should be able to hear.
+
+Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.
+
+Broadcast again, and this time Lucy shouldn't have heard anything.
+
+Let's run the test, and watch it fail like good TDD practitioners.
+
+[source,sh]
+----
+$ bundle exec rspec
+
+....F......
+
+Failures:
+
+  1) Shouty::Network can change the range
+     Failure/Error: network.range = 5
+     
+     NoMethodError:
+       undefined method `range=` for #<Shouty::Network:0x000000013b01bc10 @range=100, @listeners=[#<Shouty::Person:0x000000013b01bbc0 @name="Sean", @messages_heard=["Free bagels!"], @network=#<Shouty::Network:0x000000013b01bc10 ...>, @location=0, @credits=0>, #<Shouty::Person:0x000000013b01bb20 @name="Laura", @messages_heard=["Free bagels!"], @network=#<Shouty::Network:0x000000013b01bc10 ...>, @location=10, @credits=0>]>
+     # ./spec/network_spec.rb:53:in `block (2 levels) in <top (required)>'
+
+Finished in 0.01381 seconds (files took 0.13762 seconds to load)
+11 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:46 # Shouty::Network can change the range
+----
+
+Now we can add the attribute writer:
+
+[source,ruby]
+----
+include::../code/ruby/07-add-a-way-to-change-the-network-s-range/lib/shouty.rb[lines=30..31]
+    ...
+----
+
+Let's run RSpec again, and everything should be passing. Great!
+
+Now we can use that new method in our step:
+
+[source,ruby]
+----
+include::../code/ruby/08-use-new-network-range-method/features/step_definitions/steps.rb[lines=3..5]
+----
+
+Let's run all the tests to make sure everything's working again:
+
+[source,sh]
+----
+bundle exec rake
+----
+
+Great!
