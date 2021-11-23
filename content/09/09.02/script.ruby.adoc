@@ -1,3 +1,321 @@
 include::./title.adoc[]
 
-TODO: create rake task
+Up until now, we've been running Cucumber every time we make a change in order to follow the TDD process. When we find a change that's too specific to a particular domain model, we usually drop down to the specs for that model and run them individually, again, following the TDD loop.
+
+But, while reworking the code for this lesson, we found out something that we didn't expect. Our specs were failing, and we didn't actually notice shot::[1]
+
+[source,sh]
+----
+bundle exec rspec
+FFFF..F.
+
+Failures:
+
+  1) Shouty::Network broadcasts a message to a listener within range
+     Failure/Error: shouter.credits -= (message.scan(/buy/i) || []).size * 5
+     
+     NoMethodError:
+       undefined method `credits' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'
+     # ./lib/shouty.rb:36:in `broadcast'
+     # ./spec/network_spec.rb:13:in `block (2 levels) in <top (required)>'
+
+  2) Shouty::Network does not broadcast a message to a listener out of range
+     Failure/Error: shouter.credits -= (message.scan(/buy/i) || []).size * 5
+     
+     NoMethodError:
+       undefined method `credits' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'
+     # ./lib/shouty.rb:36:in `broadcast'
+     # ./spec/network_spec.rb:22:in `block (2 levels) in <top (required)>'
+
+  3) Shouty::Network does not broadcast a message to a listener out of range negative distance
+     Failure/Error: shouter.credits -= (message.scan(/buy/i) || []).size * 5
+     
+     NoMethodError:
+       undefined method `credits' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'
+     # ./lib/shouty.rb:36:in `broadcast'
+     # ./spec/network_spec.rb:31:in `block (2 levels) in <top (required)>'
+
+  4) Shouty::Network does not broadcast a message over 180 characters even if listener is in range
+     Failure/Error: shouter.credits -= 2 unless short_enough
+     
+     NoMethodError:
+       undefined method `credits' for 0:Integer
+     # ./lib/shouty.rb:47:in `deduct_credits'
+     # ./lib/shouty.rb:36:in `broadcast'
+     # ./spec/network_spec.rb:43:in `block (2 levels) in <top (required)>'
+
+  5) Shouty::Network broadcasts shouts to the network
+     Failure/Error: expect(@networkStub).to have_received(:broadcast).with(message, location)
+     
+       #<Double Shouty::Network> received :broadcast with unexpected arguments
+         expected: ("Free bagels!", 0)
+              got: ("Free bagels!", #<Shouty::Person:0x000055a786ad4de0 @messages_heard=[], @network=#<Double Shouty::Network>, @location=0, @credits=0>)
+     # ./spec/person_spec.rb:30:in `block (2 levels) in <top (required)>'
+
+Finished in 0.01732 seconds (files took 0.17248 seconds to load)
+8 examples, 5 failures
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:9 # Shouty::Network broadcasts a message to a listener within range
+rspec ./spec/network_spec.rb:18 # Shouty::Network does not broadcast a message to a listener out of range
+rspec ./spec/network_spec.rb:27 # Shouty::Network does not broadcast a message to a listener out of range negative distance
+rspec ./spec/network_spec.rb:36 # Shouty::Network does not broadcast a message over 180 characters even if listener is in range
+rspec ./spec/person_spec.rb:23 # Shouty::Network broadcasts shouts to the network
+----
+
+This was caused by the fact that we were mostly running cucumber and we hadn't run the specs in a long while.
+
+After dedicating some time to fix the specs shot::[2]
+
+[source,sh]
+----
+$ bundle exec rspec
+..........
+
+Finished in 0.00913 seconds (files took 0.10673 seconds to load)
+10 examples, 0 failures
+----
+
+we decided to solve this problem by creating a strategy for running all of our test cases, including both specs and scenarios. This way, we could keep a closer look on the big picture.
+
+In order to do so, we created a `Rakefile` shot::[3]
+
+[source,sh]
+----
+$ touch Rakefile
+----
+
+In it, we first added a command to run rspec shot::[4], followed by one to run cucumber. shot::[5]
+
+[source,ruby]
+----
+task :default do
+  sh "bundle exec rspec"
+  sh "bundle exec cucumber"
+end
+----
+
+This works, shot::[6] except for two small nitpicks:
+
+[source,sh]
+----
+$ bundle exec rake
+bundle exec rspec
+..........
+
+Finished in 0.00751 seconds (files took 0.10205 seconds to load)
+10 examples, 0 failures
+
+bundle exec cucumber
+Using the default profile...
+Feature: Premium account
+    Questions:
+    * What about the one where the same message is both over-long and contains the word "buy"
+    * What happens if Sean runs out of credits?
+
+  Background:                  # features/premium_shouts.feature:7
+    Given the range is 100     # features/step_definitions/steps.rb:10
+    And Sean is located at 0   # features/step_definitions/steps.rb:14
+    And Lucy is located at 100 # features/step_definitions/steps.rb:14
+
+  Scenario: Sean some messages containing the word “buy” # features/premium_shouts.feature:13
+    Given Sean has bought 30 credits                     # features/step_definitions/steps.rb:18
+    And Sean shouts 3 messages containing the word "buy" # features/step_definitions/steps.rb:46
+    Then Lucy hears all Sean's messages                  # features/step_definitions/steps.rb:68
+    And Sean should have 15 credits                      # features/step_definitions/steps.rb:72
+
+Feature: Hear shout
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  Scenario: Listener is out of range   # features/hear_shout.feature:14
+    Given the range is 100             # features/step_definitions/steps.rb:10
+    And Sean is located at 0           # features/step_definitions/steps.rb:14
+    And Larry is located at 150        # features/step_definitions/steps.rb:14
+    When Sean shouts                   # features/step_definitions/steps.rb:22
+    Then Larry should not hear a shout # features/step_definitions/steps.rb:58
+
+Feature: Premium account
+    Questions:
+    * What about the one where the same message is both over-long and contains the word "buy"
+    * What happens if Sean runs out of credits?
+
+  Background:                  # features/premium_shouts.feature:7
+    Given the range is 100     # features/step_definitions/steps.rb:10
+    And Sean is located at 0   # features/step_definitions/steps.rb:14
+    And Lucy is located at 100 # features/step_definitions/steps.rb:14
+
+  Scenario: Sean shouts some over-long messages # features/premium_shouts.feature:20
+    Given Sean has bought 30 credits            # features/step_definitions/steps.rb:18
+    When Sean shouts 2 over-long messages       # features/step_definitions/steps.rb:37
+    Then Lucy hears all Sean's messages         # features/step_definitions/steps.rb:68
+    And Sean should have 26 credits             # features/step_definitions/steps.rb:72
+
+Feature: Hear shout
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  Scenario: Message is too long            # features/hear_shout.feature:35
+    Given the range is 100                 # features/step_definitions/steps.rb:10
+    And Sean is located at 0               # features/step_definitions/steps.rb:14
+    And Lucy is located at 50              # features/step_definitions/steps.rb:14
+    When Sean shouts the following message # features/step_definitions/steps.rb:32
+      """
+      This is a really long message
+      so long in fact that I am not going to
+      be allowed to send it, at least if I keep
+      typing like this until the length is over
+      the limit of 180 characters.
+      """
+    Then Lucy should not hear a shout      # features/step_definitions/steps.rb:58
+
+  Scenario: Listener is within range # features/hear_shout.feature:7
+    Given the range is 100           # features/step_definitions/steps.rb:10
+    And Sean is located at 0         # features/step_definitions/steps.rb:14
+    And Lucy is located at 50        # features/step_definitions/steps.rb:14
+    When Sean shouts                 # features/step_definitions/steps.rb:22
+    Then Lucy should hear a shout    # features/step_definitions/steps.rb:54
+
+  Scenario: Two shouts                      # features/hear_shout.feature:23
+    Given the range is 100                  # features/step_definitions/steps.rb:10
+    And Sean is located at 0                # features/step_definitions/steps.rb:14
+    And Lucy is located at 50               # features/step_definitions/steps.rb:14
+    When Sean shouts "Free bagels!"         # features/step_definitions/steps.rb:27
+    And Sean shouts "Free toast!"           # features/step_definitions/steps.rb:27
+    Then Lucy hears the following messages: # features/step_definitions/steps.rb:62
+      | Free bagels! |
+      | Free toast!  |
+
+Feature: Premium account
+    Questions:
+    * What about the one where the same message is both over-long and contains the word "buy"
+    * What happens if Sean runs out of credits?
+
+  Background:                  # features/premium_shouts.feature:7
+    Given the range is 100     # features/step_definitions/steps.rb:10
+    And Sean is located at 0   # features/step_definitions/steps.rb:14
+    And Lucy is located at 100 # features/step_definitions/steps.rb:14
+
+  @todo
+  Scenario: BUG #2789                # features/premium_shouts.feature:27
+    Given Sean has bought 30 credits # features/step_definitions/steps.rb:18
+    When Sean shouts "buy, buy buy!" # features/step_definitions/steps.rb:27
+    Then Sean should have 25 credits # features/step_definitions/steps.rb:72
+      
+      expected: 25
+           got: 15
+      
+      (compared using eql?)
+       (RSpec::Expectations::ExpectationNotMetError)
+      ./features/step_definitions/steps.rb:73:in `nil'
+      features/premium_shouts.feature:30:in `Sean should have 25 credits'
+
+Failing Scenarios:
+cucumber features/premium_shouts.feature:27 # Scenario: BUG #2789
+
+7 scenarios (1 failed, 6 passed)
+41 steps (1 failed, 40 passed)
+0m0.091s
+
+Randomized with seed 35929
+rake aborted!
+Command failed with status (1): [bundle exec cucumber...]
+/home/fedex/cucumber/content/content/09/code/ruby/00-initial-commit/Rakefile:3:in `block in <top (required)>'
+/home/fedex/.rvm/gems/ruby-3.0.2/gems/rake-13.0.6/exe/rake:27:in `<top (required)>'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `eval'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `<main>'
+Tasks: TOP => default
+(See full trace by running task with --trace)
+----
+
+The first one is the length of that output. At this point we don't need this level of detail, we just want to know everything worked. And to focus on that, there's no better solution than the `progress` formatter. shot::[7]
+
+[source,ruby]
+----
+task :default do
+  sh "bundle exec rspec"
+  sh "bundle exec cucumber --format progress"
+end
+----
+
+Lets see how it looks like shot::[8]
+
+[source,sh]
+----
+rake
+bundle exec rspec
+..........
+
+Finished in 0.00719 seconds (files took 0.10067 seconds to load)
+10 examples, 0 failures
+
+bundle exec cucumber --format progress
+Using the default profile...
+........................................F
+
+(::) failed steps (::)
+
+
+expected: 25
+     got: 15
+
+(compared using eql?)
+ (RSpec::Expectations::ExpectationNotMetError)
+./features/step_definitions/steps.rb:73:in `nil'
+features/premium_shouts.feature:30:in `Sean should have 25 credits'
+
+Failing Scenarios:
+cucumber features/premium_shouts.feature:27 # Scenario: BUG #2789
+
+7 scenarios (1 failed, 6 passed)
+41 steps (1 failed, 40 passed)
+0m0.054s
+
+Randomized with seed 15282
+rake aborted!
+Command failed with status (1): [bundle exec cucumber --format progress...]
+/home/fedex/cucumber/content/content/09/code/ruby/00-initial-commit/Rakefile:3:in `block in <top (required)>'
+/home/fedex/.rvm/gems/ruby-3.0.2/gems/rake-13.0.6/exe/rake:27:in `<top (required)>'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `eval'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `<main>'
+Tasks: TOP => default
+(See full trace by running task with --trace)
+----
+
+Great, that's ... shorter. But we still see our failing spec, the one we're in the middle of fixing. That's our second nitpick. We don't want to see unfinished work, we only want to know we haven't broken anything that was already working before.
+
+If we take a pick at the failing scenario, we can see that it has the `@todo` tag.shot::[9] It seems that our team is using that tag as a convention to express that the scenarios marked as `@todo` are a Work in Progress. So lets omit this tag from our output. shot::[10]
+
+[source,ruby]
+----
+task :default do
+  sh "bundle exec rspec"
+  sh "bundle exec cucumber --tags 'not @todo' --format progress"
+end
+----
+
+Now, whenever we run our default rake task, we're only checking our actual finished work. shot::[]
+
+[source,sh]
+----
+$ bundle exec rake
+bundle exec rspec
+..........
+
+Finished in 0.0076 seconds (files took 0.10149 seconds to load)
+10 examples, 0 failures
+
+bundle exec cucumber --tags 'not @todo' --format progress
+Using the default profile...
+...................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m0.046s
+
+Randomized with seed 61983
+----
+
+And it looks much cleaner.
