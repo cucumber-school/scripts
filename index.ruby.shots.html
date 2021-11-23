@@ -8755,7 +8755,65 @@ week and show you what we mean.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="c"># run failing specs .... maybe</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>rspec
+FFFF..F.
+
+Failures:
+
+  1<span class="o">)</span> Shouty::Network broadcasts a message to a listener within range
+     Failure/Error: shouter.credits -<span class="o">=</span> <span class="o">(</span>message.scan<span class="o">(</span>/buy/i<span class="o">)</span> <span class="o">||</span> <span class="o">[])</span>.size <span class="k">*</span> 5
+
+     NoMethodError:
+       undefined method <span class="sb">`</span>credits<span class="s1">' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'</span>
+     <span class="c"># ./lib/shouty.rb:36:in `broadcast'</span>
+     <span class="c"># ./spec/network_spec.rb:13:in `block (2 levels) in &lt;top (required)&gt;'</span>
+
+  2<span class="o">)</span> Shouty::Network does not broadcast a message to a listener out of range
+     Failure/Error: shouter.credits -<span class="o">=</span> <span class="o">(</span>message.scan<span class="o">(</span>/buy/i<span class="o">)</span> <span class="o">||</span> <span class="o">[])</span>.size <span class="k">*</span> 5
+
+     NoMethodError:
+       undefined method <span class="sb">`</span>credits<span class="s1">' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'</span>
+     <span class="c"># ./lib/shouty.rb:36:in `broadcast'</span>
+     <span class="c"># ./spec/network_spec.rb:22:in `block (2 levels) in &lt;top (required)&gt;'</span>
+
+  3<span class="o">)</span> Shouty::Network does not broadcast a message to a listener out of range negative distance
+     Failure/Error: shouter.credits -<span class="o">=</span> <span class="o">(</span>message.scan<span class="o">(</span>/buy/i<span class="o">)</span> <span class="o">||</span> <span class="o">[])</span>.size <span class="k">*</span> 5
+
+     NoMethodError:
+       undefined method <span class="sb">`</span>credits<span class="s1">' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'</span>
+     <span class="c"># ./lib/shouty.rb:36:in `broadcast'</span>
+     <span class="c"># ./spec/network_spec.rb:31:in `block (2 levels) in &lt;top (required)&gt;'</span>
+
+  4<span class="o">)</span> Shouty::Network does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+     Failure/Error: shouter.credits -<span class="o">=</span> 2 unless short_enough
+
+     NoMethodError:
+       undefined method <span class="sb">`</span>credits<span class="s1">' for 0:Integer
+     # ./lib/shouty.rb:47:in `deduct_credits'</span>
+     <span class="c"># ./lib/shouty.rb:36:in `broadcast'</span>
+     <span class="c"># ./spec/network_spec.rb:43:in `block (2 levels) in &lt;top (required)&gt;'</span>
+
+  5<span class="o">)</span> Shouty::Network broadcasts shouts to the network
+     Failure/Error: expect<span class="o">(</span>@networkStub<span class="o">)</span>.to have_received<span class="o">(</span>:broadcast<span class="o">)</span>.with<span class="o">(</span>message, location<span class="o">)</span>
+
+       <span class="c">#&lt;Double Shouty::Network&gt; received :broadcast with unexpected arguments</span>
+         expected: <span class="o">(</span><span class="s2">"Free bagels!"</span>, 0<span class="o">)</span>
+              got: <span class="o">(</span><span class="s2">"Free bagels!"</span>, <span class="c">#&lt;Shouty::Person:0x000055a786ad4de0 @messages_heard=[], @network=#&lt;Double Shouty::Network&gt;, @location=0, @credits=0&gt;)</span>
+     <span class="c"># ./spec/person_spec.rb:30:in `block (2 levels) in &lt;top (required)&gt;'</span>
+
+Finished <span class="k">in </span>0.01732 seconds <span class="o">(</span>files took 0.17248 seconds to load<span class="o">)</span>
+8 examples, 5 failures
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:9 <span class="c"># Shouty::Network broadcasts a message to a listener within range</span>
+rspec ./spec/network_spec.rb:18 <span class="c"># Shouty::Network does not broadcast a message to a listener out of range</span>
+rspec ./spec/network_spec.rb:27 <span class="c"># Shouty::Network does not broadcast a message to a listener out of range negative distance</span>
+rspec ./spec/network_spec.rb:36 <span class="c"># Shouty::Network does not broadcast a message over 180 characters even if listener is in range</span>
+rspec ./spec/person_spec.rb:23 <span class="c"># Shouty::Network broadcasts shouts to the network</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9764,7 +9822,7 @@ See you next time, on Cucumber School.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-11-23 14:58:59 UTC
+Last updated 2021-11-23 15:00:16 UTC
 </div>
 </div>
 </body>
