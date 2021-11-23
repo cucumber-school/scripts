@@ -8748,7 +8748,280 @@ week and show you what we mean.</p>
 <div class="sect2">
 <h3 id="_test_all_the_fing_time">9.2. Test all the F***ing time</h3>
 <div class="paragraph">
-<p>TODO: create rake task</p>
+<p>Up until now, we&#8217;ve been running Cucumber every time we make a change in order to follow the TDD process. When we find a change that&#8217;s too specific to a particular domain model, we usually drop down to the specs for that model and run them individually, again, following the TDD loop.</p>
+</div>
+<div class="paragraph">
+<p>But, while reworking the code for this lesson, we found out something that we didn&#8217;t expect. Our specs were failing, and we didn&#8217;t actually notice </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="c"># run failing specs .... maybe</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This was caused by the fact that we were mostly running cucumber and we hadn&#8217;t run the specs in a long while.</p>
+</div>
+<div class="paragraph">
+<p>After dedicating some time to fix the specs </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00913 seconds <span class="o">(</span>files took 0.10673 seconds to load<span class="o">)</span>
+10 examples, 0 failures</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>we decided to solve this problem by creating a strategy for running all of our test cases, including both specs and scenarios. This way, we could keep a closer look on the big picture.</p>
+</div>
+<div class="paragraph">
+<p>In order to do so, we created a <code>Rakefile</code> </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span><span class="nb">touch </span>Rakefile</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In it, we first added a command to run rspec , followed by one to run cucumber. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="n">task</span> <span class="ss">:default</span> <span class="k">do</span>
+  <span class="n">sh</span> <span class="s2">"bundle exec rspec"</span>
+  <span class="n">sh</span> <span class="s2">"bundle exec cucumber"</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This works,  except for two small nitpicks:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00751 seconds <span class="o">(</span>files took 0.10205 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber
+Using the default profile...
+Feature: Premium account
+    Questions:
+    <span class="k">*</span> What about the one where the same message is both over-long and contains the word <span class="s2">"buy"</span>
+    <span class="k">*</span> What happens <span class="k">if </span>Sean runs out of credits?
+
+  Background:                  <span class="c"># features/premium_shouts.feature:7</span>
+    Given the range is 100     <span class="c"># features/step_definitions/steps.rb:10</span>
+    And Sean is located at 0   <span class="c"># features/step_definitions/steps.rb:14</span>
+    And Lucy is located at 100 <span class="c"># features/step_definitions/steps.rb:14</span>
+
+  Scenario: Sean some messages containing the word “buy” <span class="c"># features/premium_shouts.feature:13</span>
+    Given Sean has bought 30 credits                     <span class="c"># features/step_definitions/steps.rb:18</span>
+    And Sean shouts 3 messages containing the word <span class="s2">"buy"</span> <span class="c"># features/step_definitions/steps.rb:46</span>
+    Then Lucy hears all Sean<span class="s1">'s messages                  # features/step_definitions/steps.rb:68
+    And Sean should have 15 credits                      # features/step_definitions/steps.rb:72
+
+Feature: Hear shout
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  Scenario: Listener is out of range   # features/hear_shout.feature:14
+    Given the range is 100             # features/step_definitions/steps.rb:10
+    And Sean is located at 0           # features/step_definitions/steps.rb:14
+    And Larry is located at 150        # features/step_definitions/steps.rb:14
+    When Sean shouts                   # features/step_definitions/steps.rb:22
+    Then Larry should not hear a shout # features/step_definitions/steps.rb:58
+
+Feature: Premium account
+    Questions:
+    * What about the one where the same message is both over-long and contains the word "buy"
+    * What happens if Sean runs out of credits?
+
+  Background:                  # features/premium_shouts.feature:7
+    Given the range is 100     # features/step_definitions/steps.rb:10
+    And Sean is located at 0   # features/step_definitions/steps.rb:14
+    And Lucy is located at 100 # features/step_definitions/steps.rb:14
+
+  Scenario: Sean shouts some over-long messages # features/premium_shouts.feature:20
+    Given Sean has bought 30 credits            # features/step_definitions/steps.rb:18
+    When Sean shouts 2 over-long messages       # features/step_definitions/steps.rb:37
+    Then Lucy hears all Sean'</span>s messages         <span class="c"># features/step_definitions/steps.rb:68</span>
+    And Sean should have 26 credits             <span class="c"># features/step_definitions/steps.rb:72</span>
+
+Feature: Hear shout
+  Shouty allows <span class="nb">users </span>to <span class="s2">"hear"</span> other <span class="nb">users</span> <span class="s2">"shouts"</span> as long as they are close enough to each other.
+
+  Scenario: Message is too long            <span class="c"># features/hear_shout.feature:35</span>
+    Given the range is 100                 <span class="c"># features/step_definitions/steps.rb:10</span>
+    And Sean is located at 0               <span class="c"># features/step_definitions/steps.rb:14</span>
+    And Lucy is located at 50              <span class="c"># features/step_definitions/steps.rb:14</span>
+    When Sean shouts the following message <span class="c"># features/step_definitions/steps.rb:32</span>
+      <span class="s2">"""
+      This is a really long message
+      so long in fact that I am not going to
+      be allowed to send it, at least if I keep
+      typing like this until the length is over
+      the limit of 180 characters.
+      """</span>
+    Then Lucy should not hear a shout      <span class="c"># features/step_definitions/steps.rb:58</span>
+
+  Scenario: Listener is within range <span class="c"># features/hear_shout.feature:7</span>
+    Given the range is 100           <span class="c"># features/step_definitions/steps.rb:10</span>
+    And Sean is located at 0         <span class="c"># features/step_definitions/steps.rb:14</span>
+    And Lucy is located at 50        <span class="c"># features/step_definitions/steps.rb:14</span>
+    When Sean shouts                 <span class="c"># features/step_definitions/steps.rb:22</span>
+    Then Lucy should hear a shout    <span class="c"># features/step_definitions/steps.rb:54</span>
+
+  Scenario: Two shouts                      <span class="c"># features/hear_shout.feature:23</span>
+    Given the range is 100                  <span class="c"># features/step_definitions/steps.rb:10</span>
+    And Sean is located at 0                <span class="c"># features/step_definitions/steps.rb:14</span>
+    And Lucy is located at 50               <span class="c"># features/step_definitions/steps.rb:14</span>
+    When Sean shouts <span class="s2">"Free bagels!"</span>         <span class="c"># features/step_definitions/steps.rb:27</span>
+    And Sean shouts <span class="s2">"Free toast!"</span>           <span class="c"># features/step_definitions/steps.rb:27</span>
+    Then Lucy hears the following messages: <span class="c"># features/step_definitions/steps.rb:62</span>
+      | Free bagels! |
+      | Free toast!  |
+
+Feature: Premium account
+    Questions:
+    <span class="k">*</span> What about the one where the same message is both over-long and contains the word <span class="s2">"buy"</span>
+    <span class="k">*</span> What happens <span class="k">if </span>Sean runs out of credits?
+
+  Background:                  <span class="c"># features/premium_shouts.feature:7</span>
+    Given the range is 100     <span class="c"># features/step_definitions/steps.rb:10</span>
+    And Sean is located at 0   <span class="c"># features/step_definitions/steps.rb:14</span>
+    And Lucy is located at 100 <span class="c"># features/step_definitions/steps.rb:14</span>
+
+  @todo
+  Scenario: BUG <span class="c">#2789                # features/premium_shouts.feature:27</span>
+    Given Sean has bought 30 credits <span class="c"># features/step_definitions/steps.rb:18</span>
+    When Sean shouts <span class="s2">"buy, buy buy!"</span> <span class="c"># features/step_definitions/steps.rb:27</span>
+    Then Sean should have 25 credits <span class="c"># features/step_definitions/steps.rb:72</span>
+
+      expected: 25
+           got: 15
+
+      <span class="o">(</span>compared using eql?<span class="o">)</span>
+       <span class="o">(</span>RSpec::Expectations::ExpectationNotMetError<span class="o">)</span>
+      ./features/step_definitions/steps.rb:73:in <span class="sb">`</span>nil<span class="s1">'
+      features/premium_shouts.feature:30:in `Sean should have 25 credits'</span>
+
+Failing Scenarios:
+cucumber features/premium_shouts.feature:27 <span class="c"># Scenario: BUG #2789</span>
+
+7 scenarios <span class="o">(</span>1 failed, 6 passed<span class="o">)</span>
+41 steps <span class="o">(</span>1 failed, 40 passed<span class="o">)</span>
+0m0.091s
+
+Randomized with seed 35929
+rake aborted!
+Command failed with status <span class="o">(</span>1<span class="o">)</span>: <span class="o">[</span>bundle <span class="nb">exec </span>cucumber...]
+/home/fedex/cucumber/content/content/09/code/ruby/00-initial-commit/Rakefile:3:in <span class="sb">`</span>block <span class="k">in</span> &lt;top <span class="o">(</span>required<span class="o">)&gt;</span><span class="s1">'
+/home/fedex/.rvm/gems/ruby-3.0.2/gems/rake-13.0.6/exe/rake:27:in `&lt;top (required)&gt;'</span>
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in <span class="sb">`</span><span class="nb">eval</span><span class="s1">'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `&lt;main&gt;'</span>
+Tasks: TOP <span class="o">=&gt;</span> default
+<span class="o">(</span>See full trace by running task with <span class="nt">--trace</span><span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The first one is the length of that output. At this point we don&#8217;t need this level of detail, we just want to know everything worked. And to focus on that, there&#8217;s no better solution than the <code>progress</code> formatter. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="n">task</span> <span class="ss">:default</span> <span class="k">do</span>
+  <span class="n">sh</span> <span class="s2">"bundle exec rspec"</span>
+  <span class="n">sh</span> <span class="s2">"bundle exec cucumber --format progress"</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Lets see how it looks like </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00719 seconds <span class="o">(</span>files took 0.10067 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--format</span> progress
+Using the default profile...
+........................................F
+
+<span class="o">(</span>::<span class="o">)</span> failed steps <span class="o">(</span>::<span class="o">)</span>
+
+
+expected: 25
+     got: 15
+
+<span class="o">(</span>compared using eql?<span class="o">)</span>
+ <span class="o">(</span>RSpec::Expectations::ExpectationNotMetError<span class="o">)</span>
+./features/step_definitions/steps.rb:73:in <span class="sb">`</span>nil<span class="s1">'
+features/premium_shouts.feature:30:in `Sean should have 25 credits'</span>
+
+Failing Scenarios:
+cucumber features/premium_shouts.feature:27 <span class="c"># Scenario: BUG #2789</span>
+
+7 scenarios <span class="o">(</span>1 failed, 6 passed<span class="o">)</span>
+41 steps <span class="o">(</span>1 failed, 40 passed<span class="o">)</span>
+0m0.054s
+
+Randomized with seed 15282
+rake aborted!
+Command failed with status <span class="o">(</span>1<span class="o">)</span>: <span class="o">[</span>bundle <span class="nb">exec </span>cucumber <span class="nt">--format</span> progress...]
+/home/fedex/cucumber/content/content/09/code/ruby/00-initial-commit/Rakefile:3:in <span class="sb">`</span>block <span class="k">in</span> &lt;top <span class="o">(</span>required<span class="o">)&gt;</span><span class="s1">'
+/home/fedex/.rvm/gems/ruby-3.0.2/gems/rake-13.0.6/exe/rake:27:in `&lt;top (required)&gt;'</span>
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in <span class="sb">`</span><span class="nb">eval</span><span class="s1">'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `&lt;main&gt;'</span>
+Tasks: TOP <span class="o">=&gt;</span> default
+<span class="o">(</span>See full trace by running task with <span class="nt">--trace</span><span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Great, that&#8217;s &#8230;&#8203; shorter. But we still see our failing spec, the one we&#8217;re in the middle of fixing. That&#8217;s our second nitpick. We don&#8217;t want to see unfinished work, we only want to know we haven&#8217;t broken anything that was already working before.</p>
+</div>
+<div class="paragraph">
+<p>If we take a pick at the failing scenario, we can see that it has the <code>@todo</code> tag. It seems that our team is using that tag as a convention to express that the scenarios marked as <code>@todo</code> are a Work in Progress. So lets omit this tag from our output. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="n">task</span> <span class="ss">:default</span> <span class="k">do</span>
+  <span class="n">sh</span> <span class="s2">"bundle exec rspec"</span>
+  <span class="n">sh</span> <span class="s2">"bundle exec cucumber --tags 'not @todo' --format progress"</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now, whenever we run our default rake task, we&#8217;re only checking our actual finished work. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.0076 seconds <span class="o">(</span>files took 0.10149 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
+Using the default profile...
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m0.046s
+
+Randomized with seed 61983</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And it looks much cleaner.</p>
 </div>
 </div>
 <div class="sect2">
@@ -9491,7 +9764,7 @@ See you next time, on Cucumber School.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2021-11-22 17:13:03 UTC
+Last updated 2021-11-23 14:58:59 UTC
 </div>
 </div>
 </body>
