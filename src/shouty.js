@@ -37,6 +37,10 @@ class Network {
     this._range = range
   }
 
+  set range(newRange) {
+    this._range = newRange
+  }
+
   subscribe(person) {
     this._listeners.push(person)
   }
