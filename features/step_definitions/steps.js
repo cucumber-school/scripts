@@ -32,10 +32,7 @@ When(
   function (shouter, count, word) {
     for (let i = 0; i < count; i++) {
       const message = `A message containing the word ${word}`
-      shouter.shout(message)
-      if (!this.messagesShoutedBy[shouter.name])
-        this.messagesShoutedBy[shouter.name] = []
-      this.messagesShoutedBy[shouter.name].push(message)
+      this.shout({ from: shouter, message })
     }
   }
 )
@@ -44,25 +41,16 @@ When("{person} shouts {int} over-long messages", function (shouter, count) {
   for (let i = 0; i < count; i++) {
     const baseMessage = `A message from ${shouter.name} that is 181 characters long `
     const message = baseMessage + "x".repeat(181 - baseMessage.length)
-    shouter.shout(message)
-    if (!this.messagesShoutedBy[shouter.name])
-      this.messagesShoutedBy[shouter.name] = []
-    this.messagesShoutedBy[shouter.name].push(message)
+    this.shout({ from: shouter, message })
   }
 })
 
 When("{person} shouts {string}", function (shouter, message) {
-  shouter.shout(message)
-  if (!this.messagesShoutedBy[shouter.name])
-    this.messagesShoutedBy[shouter.name] = []
-  this.messagesShoutedBy[shouter.name].push(message)
+  this.shout({ from: shouter, message })
 })
 
 When("{person} shouts the following message", function (shouter, message) {
-  shouter.shout(message)
-  if (!this.messagesShoutedBy[shouter.name])
-    this.messagesShoutedBy[shouter.name] = []
-  this.messagesShoutedBy[shouter.name].push(message)
+  this.shout({ from: shouter, message })
 })
 
 Then("{person} should not hear a shout", function (listener) {
