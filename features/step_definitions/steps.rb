@@ -1,6 +1,6 @@
 require 'shouty'
 
-DEFAULT_RANGE = 100
+DEFAULT_RANGE = 0
 
 Before do
   @network = Shouty::Network.new(DEFAULT_RANGE)
