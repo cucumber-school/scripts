@@ -1,8 +1,19 @@
 const { setWorldConstructor } = require("@cucumber/cucumber")
+const { Network } = require("../../src/shouty")
+
+const DEFAULT_RANGE = 0
 
 class ShoutyWorld {
   get messagesShoutedBy() {
     return (this._messagesShoutedBy = this._messagesShoutedBy || {})
+  }
+
+  get network() {
+    return (this._network = this._network || new Network(DEFAULT_RANGE))
+  }
+
+  set network(newNetwork) {
+    this._network = newNetwork
   }
 
   shout({ from: shouter, message }) {

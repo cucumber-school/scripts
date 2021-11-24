@@ -1,13 +1,7 @@
-const { Given, When, Then, Before } = require("@cucumber/cucumber")
+const { Given, When, Then } = require("@cucumber/cucumber")
 const { assertThat, is, equalTo } = require("hamjest")
 
 const { Network } = require("../../src/shouty")
-
-const DEFAULT_RANGE = 0
-
-Before(function () {
-  this.network = new Network(DEFAULT_RANGE)
-})
 
 Given("the range is {int}", function (range) {
   this.network = new Network(range)
