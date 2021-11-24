@@ -232,6 +232,13 @@ Now we can use that new method in our step:
 include::../code/ruby/08-use-new-network-range-method/features/step_definitions/steps.rb[lines=3..5]
 ----
 
+And remove the `network` attribute writer on the World
+
+[source,ruby]
+----
+include::../code/ruby/08-use-new-network-range-method/features/support/world.rb[lines=16..16]
+----
+
 Let's run all the tests to make sure everything's working again:
 
 [source,sh]
