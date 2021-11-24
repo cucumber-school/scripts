@@ -24,10 +24,7 @@ Given("{person} has bought {int} credits", function (person, credits) {
 
 When("{person} shouts", function (shouter) {
   const message = "Hello, world"
-  shouter.shout(message)
-  if (!this.messagesShoutedBy[shouter.name])
-    this.messagesShoutedBy[shouter.name] = []
-  this.messagesShoutedBy[shouter.name].push(message)
+  this.shout({ from: shouter, message })
 })
 
 When(
