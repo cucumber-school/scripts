@@ -3,7 +3,7 @@ const { assertThat, is, equalTo } = require("hamjest")
 
 const { Network } = require("../../src/shouty")
 
-const DEFAULT_RANGE = 100
+const DEFAULT_RANGE = 0
 
 Before(function () {
   this.messagesShoutedBy = {}
