@@ -12,10 +12,6 @@ class ShoutyWorld {
     return (this._network = this._network || new Network(DEFAULT_RANGE))
   }
 
-  set network(newNetwork) {
-    this._network = newNetwork
-  }
-
   shout({ from: shouter, message }) {
     shouter.shout(message)
     if (!this.messagesShoutedBy[shouter.name])

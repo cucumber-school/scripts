@@ -1,10 +1,8 @@
 const { Given, When, Then } = require("@cucumber/cucumber")
 const { assertThat, is, equalTo } = require("hamjest")
 
-const { Network } = require("../../src/shouty")
-
 Given("the range is {int}", function (range) {
-  this.network = new Network(range)
+  this.network.range = range
 })
 
 Given("{person} is located at {int}", function (person, location) {
