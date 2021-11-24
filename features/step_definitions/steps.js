@@ -6,7 +6,6 @@ const { Network } = require("../../src/shouty")
 const DEFAULT_RANGE = 0
 
 Before(function () {
-  this.messagesShoutedBy = {}
   this.network = new Network(DEFAULT_RANGE)
 })
 
