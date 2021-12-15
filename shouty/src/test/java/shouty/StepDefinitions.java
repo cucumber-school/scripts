@@ -16,8 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 public class StepDefinitions {
 
-    private static final int DEFAULT_RANGE = 100;
-    private Network network = new Network(DEFAULT_RANGE);
     private ShoutyWorld world;
     private Map<String, Person> people;
     private Map<String, List<String>> messagesShoutedBy;
@@ -49,12 +47,12 @@ public class StepDefinitions {
 
     @Given("the range is {int}")
     public void the_range_is(int range) throws Throwable {
-        network = new Network(range);
+        world.network = new Network(range);
     }
 
     @Given("{word} is located at {int}")
     public void person_is_located_at(String name, Integer location) {
-        Person person = new Person(name, network, location);
+        Person person = new Person(name, world.network, location);
         people.put(person.getName(), person);
     }
 
