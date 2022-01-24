@@ -12,25 +12,31 @@ task :generate_index_files, [:lang] => [] do |t, args|
   language_codes(args).each do |code|
     Dir.chdir('content') do
 
-      chapters = Dir.glob('*').select {|f| File.directory? f}.sort
-      File.open("./scripts.#{code}.adoc", "w") do |scripts|
+      courses = Dir.glob('*').select {|f| File.directory? f}.sort
+      courses.each do |course|
+        Dir.chdir(course) do
+      
+          chapters = Dir.glob('*').select {|f| File.directory? f}.sort
+          File.open("./scripts.#{code}.adoc", "w") do |scripts|
 
-        chapters.each do |chapter|
-          scripts << "include::#{chapter}/index.adoc[]\n\n"
+            chapters.each do |chapter|
+              scripts << "include::#{chapter}/index.adoc[]\n\n"
 
-          script_files = FileList["#{chapter}/*/script.#{code}.adoc"]
+              script_files = FileList["#{chapter}/*/script.#{code}.adoc"]
 
-          script_files.each { |lesson_script|
-            scripts << "include::#{lesson_script}[]\n\n"
+              script_files.each { |lesson_script|
+                scripts << "include::#{lesson_script}[]\n\n"
 
-            questions_file_name = File.join(File.dirname(lesson_script), "questions.#{code}.adoc")
-            if not File.exist?(questions_file_name)
-              questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
+                questions_file_name = File.join(File.dirname(lesson_script), "questions.#{code}.adoc")
+                if not File.exist?(questions_file_name)
+                  questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
+                end
+                if File.exist?(questions_file_name)
+                  scripts << "include::#{questions_file_name}[]\n\n"
+                end
+              }
             end
-            if File.exist?(questions_file_name)
-              scripts << "include::#{questions_file_name}[]\n\n"
-            end
-          }
+          end
         end
       end
     end
@@ -42,31 +48,37 @@ task :html, [:lang] => :generate_index_files do |t, args|
 
   FileUtils.rm_rf Dir.glob('public/*.html')
 
-  language_codes(args).each do |code|
-    puts "Generating #{code}"
-    Asciidoctor.convert_file "content/index.#{code}.adoc",
-                             safe: :safe,
-                             to_file: "public/index.#{code}.html",
-                             attributes: { 'shots' => false }
-    Asciidoctor.convert_file "content/index.#{code}.adoc",
-                             safe: :safe,
-                             to_file: "public/index.#{code}.shots.html",
-                             attributes: { 'shots' => true }
+  Course.all.each do |course|
+    puts underline("Course: #{course}")
   end
 
-  Dir.chdir('content') do
-    puts "Generating content/languages.adoc"
-    File.open("./languages.adoc", "w") do |f|
-      LANGUAGES.each do |code, name|
-        f << "- link:./index.#{code}.html[#{name} Version] (link:./index.#{code}.shots.html[Shots])\n"
-      end
-    end
-  end
+  #   language_codes(args).each do |code|
+  #     puts "Generating #{code}"
+  #     Asciidoctor.convert_file "content/#{course}/index.#{code}.adoc",
+  #                             safe: :safe,
+  #                             to_file: "public/index.#{code}.html",
+  #                             attributes: { 'shots' => false }
+  #     Asciidoctor.convert_file "content/#{course}/index.#{code}.adoc",
+  #                             safe: :safe,
+  #                             to_file: "public/index.#{code}.shots.html",
+  #                             attributes: { 'shots' => true }
+  #   end
+
+  #   Dir.chdir("content/#{course}") do
+  #     puts "Generating content/#{course}/languages.adoc"
+  #     File.open("./languages.adoc", "w") do |f|
+  #       LANGUAGES.each do |code, name|
+  #         f << "- link:./index.#{code}.html[#{name} Version] (link:./index.#{code}.shots.html[Shots])\n"
+  #       end
+  #     end
+  #   end
+  # end
 
   puts "Generating main index page"
   Asciidoctor.convert_file "content/index.adoc",
-                           safe: :safe,
-                           to_file: "public/index.html"
+                          safe: :safe,
+                          to_file: "public/index.html"
+
 end
 
 task :default => :html
@@ -97,4 +109,32 @@ end
 
 Asciidoctor::Extensions.register do
   inline_macro ShotInlineMacro if document.basebackend? 'html'
+end
+
+class Course
+  def self.all
+    folders = Dir.glob('content/*').select {|f| File.directory? f}.sort
+    folders.map { |f| Course.new(f) }
+  end
+
+  attr_reader :name
+
+  def initialize(path)
+    @path = path
+    @name = path.split("/")[1]
+  end
+
+  def to_s
+    name
+  end
+
+  def language_codes
+    LANGUAGES.keys.filter { |lang| 
+      Dir.glob('content/*')
+    }
+  end
+end
+
+def underline(string)
+  string + "\n" + ("=" * string.length) + "\n\n"
 end
