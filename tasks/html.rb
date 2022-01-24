@@ -1,5 +1,6 @@
-require_relative './course'
+require_relative './model'
 require_relative './shots'
+require_relative './underline'
 
 task :generate_index_files, [:lang] => [] do |t, args|
   Course.all.each do |course|
@@ -64,8 +65,4 @@ task :html, [:lang] => :generate_index_files do |t, args|
                           safe: :safe,
                           to_file: "public/index.html"
 
-end
-
-def underline(string)
-  string + "\n" + ("=" * string.length) + "\n\n"
 end
