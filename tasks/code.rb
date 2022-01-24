@@ -101,8 +101,9 @@ namespace :code do
           problems +=1
         end
       else
-        puts remote_branch.name.red + ' does not exist locally'
-        problems +=1
+        puts remote_branch.name.red + ' does not exist locally. Fetching...'
+        puts `git fetch origin #{remote_branch.name}:#{remote_branch.name}`
+        puts `git branch --set-upstream-to=origin/#{remote_branch.name} #{remote_branch.name}`
       end
     end
 
