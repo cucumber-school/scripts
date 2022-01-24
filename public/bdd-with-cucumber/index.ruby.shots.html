@@ -3809,7 +3809,7 @@ If we try and run Cucumber now, we get an error about an ambiguous match. Our ge
 </div>
 </div>
 <div class="sect4">
-<h5 id="_what_does_it_mean_when_cucumber_compains_about_an_ambiguous_step">What does it mean when Cucumber compains about an <em>ambiguous</em> step?</h5>
+<h5 id="_what_does_it_mean_when_cucumber_complains_about_an_ambiguous_step">What does it mean when Cucumber complains about an <em>ambiguous</em> step?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -3912,7 +3912,7 @@ Your browser does not support the video tag.
 <div class="sect3">
 <h4 id="_lesson_6_questions_ruby_java_js">4.6.1. Lesson 6 - Questions (Ruby, Java, JS)</h4>
 <div class="sect4">
-<h5 id="_what_does_the_gherkin_keyword_background_do">What does the Gherkin keyword _Background_do?</h5>
+<h5 id="_what_does_the_gherkin_keyword_background_do">What does the Gherkin keyword <em>Background</em> do?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -9295,9 +9295,9 @@ Randomized with seed 61983</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">network</span>
-    <span class="vi">@network</span> <span class="o">||=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span>
-  <span class="k">end</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">network</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9340,9 +9340,9 @@ Randomized with seed 61983</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
-  <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="n">range</span>
-<span class="k">end</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">end</span>
+
+<span class="no">Given</span> <span class="s2">"{person} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9425,9 +9425,9 @@ rspec ./spec/network_spec.rb:46 <span class="c"># Shouty::Network can change the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
-  <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="n">range</span>
-<span class="k">end</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="k">end</span>
+
+<span class="no">Given</span> <span class="s2">"{person} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9435,7 +9435,7 @@ rspec ./spec/network_spec.rb:46 <span class="c"># Shouty::Network can change the
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="nb">attr_writer</span> <span class="ss">:network</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9830,7 +9830,7 @@ See you next time, on Cucumber School.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-24 14:05:59 -0800
+Last updated 2022-01-24 14:53:15 -0800
 </div>
 </div>
 </body>

@@ -18,21 +18,21 @@ In this case, our system is just a domain model, but we can load it here instead
 
 [source, ruby]
 ----
-include::../code/ruby/01-require-the-app-from-env-rb/features/support/env.rb[lines=1]
+include::../code/ruby/02-require-the-app-from-env-rb/features/support/env.rb[lines=1]
 ----
 
 The most obvious duplication in the step definition code is for Sean shouting a message.
 
 [source,rb]
 ----
-include::../code/ruby/02-create-world-module/features/step_definitions/steps.rb[lines=20..42]
+include::../code/ruby/03-create-world-module/features/step_definitions/steps.rb[lines=20..42]
 ----
 
 Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater?
 
 [source,ruby]
 ----
-include::../code/ruby/03-extract-shout-helper-to-world-module/features/step_definitions/steps.rb[lines=20..22]
+include::../code/ruby/04-extract-shout-helper-to-world-module/features/step_definitions/steps.rb[lines=20..22]
 ----
 
 Every time Cucumber runs a scenario, it creates a new object, called the _World_. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can extend the methods available on the world (and so the methods available to the step defintions) by first defining them on a Ruby module, then registering that module with Cucumber.
@@ -48,21 +48,21 @@ Now we define a module,
 
 [source,ruby]
 ----
-include::../code/ruby/02-create-world-module/features/support/world.rb[lines=1..2]
+include::../code/ruby/03-create-world-module/features/support/world.rb[lines=1..2]
 ----
 
 and tell Cucumber to make it part of the world.
 
 [source,ruby]
 ----
-include::../code/ruby/02-create-world-module/features/support/world.rb[lines=4]
+include::../code/ruby/03-create-world-module/features/support/world.rb[lines=4]
 ----
 
 Finally, we define our new helper method on this module and paste in the code from the step definition.
 
 [source,rb]
 ----
-include::../code/ruby/03-extract-shout-helper-to-world-module/features/support/world.rb[lines=1..7]
+include::../code/ruby/04-extract-shout-helper-to-world-module/features/support/world.rb[lines=1..7]
 ----
 
 Let’s run Cucumber to check everything’s still working… Good.
@@ -77,7 +77,7 @@ Now we can use that new method everywhere… and check we haven’t broken anyth
 [source,ruby]
 ----
 ...
-include::../code/ruby/04-use-shout-helper-everywhere/features/step_definitions/steps.rb[lines=24..30]
+include::../code/ruby/05-use-shout-helper-everywhere/features/step_definitions/steps.rb[lines=24..30]
 ...
 ----
 
@@ -87,14 +87,14 @@ Notice that the helper method we extracted uses that `@messages_shouted_by` inst
 
 [source,ruby]
 ----
-include::../code/ruby/04-use-shout-helper-everywhere/features/support/world.rb[lines=1..7]
+include::../code/ruby/05-use-shout-helper-everywhere/features/support/world.rb[lines=1..7]
 ----
 
 We're using this instance variable in this assertion step shot::[2]
 
 [source,ruby]
 ----
-include::../code/ruby/04-use-shout-helper-everywhere/features/step_definitions/steps.rb[lines=61..63]
+include::../code/ruby/05-use-shout-helper-everywhere/features/step_definitions/steps.rb[lines=61..63]
 ----
 
 This works because the helper methods are mixed into the same World object as the step definitions, so they can all see the same instance variables.
@@ -107,21 +107,21 @@ Let’s extract this variable into a new method on the World that returns the in
 
 [source,ruby]
 ----
-include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/support/world.rb[lines=8..10]
+include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/support/world.rb[lines=8..10]
 ----
 
 Now we can use this method in the step definitions,
 
 [source,rb]
 ----
-include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=60..62]
+include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=60..62]
 ----
 
 and we no longer need to initialize it in this before hook.
 
 [source,ruby]
 ----
-include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=3..5]
+include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=3..5]
 ----
 
 And run cucumber to check we’re still green.
@@ -137,7 +137,7 @@ We can follow the same steps for the `@network` instance variable. Make the acce
 
 [source,ruby]
 ----
-include::../code/ruby/06-move-network-to-an-accessor-in-world/features/support/world.rb[lines=12..14]
+include::../code/ruby/07-move-network-to-an-accessor-in-world/features/support/world.rb[lines=12..14]
 ----
 
 This will enable the `{person}` parameter type transformer to pull a `network` as soon as it needs one, so we don't need to create a `Network` in a `Before` hook anymore.
@@ -146,7 +146,7 @@ So we can delete the `Before` hook altogether.
 
 [source,ruby]
 ----
-include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=3..5]
+include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=3..5]
 ----
 
 This is changing the behaviour slightly, and for the better. Now we're not relying on timing - assuming that the hook has created the `Network` at a particular point in the scenario's lifecycle. We just create the `Network` as we need it. This is called _Lazy loading_.
@@ -155,7 +155,7 @@ There's one other place where we're using the `Network`, in this step:
 
 [source,ruby]
 ----
-include::../code/ruby/05-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=7..9]
+include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=7..9]
 ----
 
 Here, we're trying to change the range of the network, and the only way to do that at the moment is to create a brand new instance of `Network`. This means we have another leak of the `@network` instance variable into the step definitions.
@@ -168,7 +168,7 @@ Imagine we had a `range` setter method on our `Network` that allowed us to modif
 
 [source,ruby]
 ----
-include::../code/ruby/08-use-new-network-range-method/features/step_definitions/steps.rb[lines=3..5]
+include::../code/ruby/09-use-new-network-range-method/features/step_definitions/steps.rb[lines=3..5]
 ----
 
 Isn't that better?
@@ -179,7 +179,7 @@ First, we'll add a unit test for the `Network` class:
 
 [source,ruby]
 ----
-include::../code/ruby/07-add-a-way-to-change-the-network-s-range/spec/network_spec.rb[lines=46..56]
+include::../code/ruby/08-add-a-way-to-change-the-network-s-range/spec/network_spec.rb[lines=46..56]
 ----
 
 First we'll create a couple of people on the Network, which defaults to a range of 100, so they're going to be close enough to hear each other at the moment.
@@ -219,7 +219,7 @@ Now we can add the attribute writer:
 
 [source,ruby]
 ----
-include::../code/ruby/07-add-a-way-to-change-the-network-s-range/lib/shouty.rb[lines=30..31]
+include::../code/ruby/08-add-a-way-to-change-the-network-s-range/lib/shouty.rb[lines=30..31]
     ...
 ----
 
@@ -229,14 +229,14 @@ Now we can use that new method in our step:
 
 [source,ruby]
 ----
-include::../code/ruby/08-use-new-network-range-method/features/step_definitions/steps.rb[lines=3..5]
+include::../code/ruby/09-use-new-network-range-method/features/step_definitions/steps.rb[lines=3..5]
 ----
 
 And remove the `network` attribute writer on the World
 
 [source,ruby]
 ----
-include::../code/ruby/08-use-new-network-range-method/features/support/world.rb[lines=16..16]
+include::../code/ruby/09-use-new-network-range-method/features/support/world.rb[lines=16..16]
 ----
 
 Let's run all the tests to make sure everything's working again:
