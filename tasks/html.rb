@@ -2,16 +2,41 @@ require_relative './model'
 require_relative './shots'
 require_relative './underline'
 
-
 task :generate_index_files, [:lang] => [] do |t, args|
   Course.all.each do |course|
     Dir.chdir(course.path) do
   
+      puts "Compiling scripts include files for course #{course}"
+      unless course.language_codes.any?
+        code = "common"
+        File.open("./scripts.#{code}.adoc", "w") do |scripts|
+          course.chapters.each do |chapter|
+            puts chapter
+            scripts << "include::#{chapter}/index.adoc[]\n\n"
+
+            script_files = FileList["#{chapter}/*/script.#{code}.adoc"]
+
+            script_files.each { |lesson_script|
+              scripts << "include::#{lesson_script}[]\n\n"
+
+              questions_file_name = File.join(File.dirname(lesson_script), "questions.#{code}.adoc")
+              if not File.exist?(questions_file_name)
+                questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
+              end
+              if File.exist?(questions_file_name)
+                scripts << "include::#{questions_file_name}[]\n\n"
+              end
+            }
+          end
+        end
+      end
+
       course.language_codes(args).each do |code|
-        chapters = Dir.glob('*').select {|f| File.directory? f}.sort
+        puts code
+
         File.open("./scripts.#{code}.adoc", "w") do |scripts|
 
-          chapters.each do |chapter|
+          course.chapters.each do |chapter|
             scripts << "include::#{chapter}/index.adoc[]\n\n"
 
             script_files = FileList["#{chapter}/*/script.#{code}.adoc"]
@@ -44,14 +69,14 @@ task :html, [:lang] => :generate_index_files do |t, args|
   Course.all.each do |course|
     puts underline("Course: #{course}")
 
-    puts "Generating main index page"
+    puts "Rendering main index.html page for course"
     Asciidoctor.convert_file "#{course.path}/index.adoc",
-                            safe: :safe,
+                            safe: 0,
                             mkdirs: true,
                             to_file: "public/#{course}/index.html"
 
     course.language_codes.each do |code|
-      puts "Generating index page for #{code} language"
+      puts "Rendering index.html page for #{code} language"
       Asciidoctor.convert_file "#{course.path}/index.#{code}.adoc",
                               safe: :safe,
                               to_file: "public/#{course}/index.#{code}.html",
@@ -63,7 +88,7 @@ task :html, [:lang] => :generate_index_files do |t, args|
     end
   end
 
-  puts "Generating main index page"
+  puts "Generating main index.html page for course"
   Asciidoctor.convert_file "content/index.adoc",
                           safe: :safe,
                           to_file: "public/index.html"

@@ -50,4 +50,8 @@ class Chapter
   def code_branch(lang)
     "chapter-#{num}-code-#{lang}"
   end
+
+  def to_s
+    num.to_s
+  end
 end
