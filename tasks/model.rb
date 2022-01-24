@@ -54,4 +54,21 @@ class Chapter
   def to_s
     num.to_s
   end
+
+  def content_to_include(language_code)
+    result = []
+    script_files = FileList["#{num}/*/script.#{language_code}.adoc"]
+    script_files.each { |lesson_script|
+      result << lesson_script
+
+      questions_file_name = File.join(File.dirname(lesson_script), "questions.#{language_code}.adoc")
+      if not File.exist?(questions_file_name)
+        questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
+      end
+      if File.exist?(questions_file_name)
+        result << questions_file_name
+      end
+    }
+    result
+  end
 end

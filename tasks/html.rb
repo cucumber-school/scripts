@@ -11,47 +11,22 @@ task :generate_index_files, [:lang] => [] do |t, args|
         code = "common"
         File.open("./scripts.#{code}.adoc", "w") do |scripts|
           course.chapters.each do |chapter|
-            puts chapter
-            scripts << "include::#{chapter}/index.adoc[]\n\n"
-
-            script_files = FileList["#{chapter}/*/script.#{code}.adoc"]
-
-            script_files.each { |lesson_script|
-              scripts << "include::#{lesson_script}[]\n\n"
-
-              questions_file_name = File.join(File.dirname(lesson_script), "questions.#{code}.adoc")
-              if not File.exist?(questions_file_name)
-                questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
-              end
-              if File.exist?(questions_file_name)
-                scripts << "include::#{questions_file_name}[]\n\n"
-              end
-            }
+            scripts << asciidoc_include("#{chapter}/index.adoc")
+            puts chapter.content_to_include("common")
+            chapter.content_to_include(code).map { |path| asciidoc_include(path) }.each do |line|
+              scripts << line
+            end
           end
         end
       end
 
       course.language_codes(args).each do |code|
-        puts code
-
         File.open("./scripts.#{code}.adoc", "w") do |scripts|
-
           course.chapters.each do |chapter|
-            scripts << "include::#{chapter}/index.adoc[]\n\n"
-
-            script_files = FileList["#{chapter}/*/script.#{code}.adoc"]
-
-            script_files.each { |lesson_script|
-              scripts << "include::#{lesson_script}[]\n\n"
-
-              questions_file_name = File.join(File.dirname(lesson_script), "questions.#{code}.adoc")
-              if not File.exist?(questions_file_name)
-                questions_file_name = File.join(File.dirname(lesson_script), "questions.adoc")
-              end
-              if File.exist?(questions_file_name)
-                scripts << "include::#{questions_file_name}[]\n\n"
-              end
-            }
+            scripts << asciidoc_include("#{chapter}/index.adoc")
+            chapter.content_to_include(code).map { |path| asciidoc_include(path) }.each do |line|
+              scripts << line
+            end
           end
         end
       end
@@ -93,4 +68,8 @@ task :html, [:lang] => :generate_index_files do |t, args|
                           safe: :safe,
                           to_file: "public/index.html"
 
+end
+
+def asciidoc_include(path)
+  "include::#{path}[]\n\n"
 end
