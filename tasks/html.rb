@@ -57,18 +57,6 @@ task :html, [:lang] => :generate_index_files do |t, args|
                               to_file: "public/#{course}/index.#{code}.shots.html",
                               attributes: { 'shots' => true }
     end
-
-    if course.multiple_programming_languages?
-      Dir.chdir(course.path) do
-        puts "Generating languages.adoc"
-        File.open("./languages.adoc", "w") do |f|
-          course.language_codes.each do |code|
-            name = LANGUAGES[code]
-            f << "- link:./index.#{code}.html[#{name} Version] (link:./index.#{code}.shots.html[Shots])\n"
-          end
-        end
-      end
-    end
   end
 
   puts "Generating main index page"
