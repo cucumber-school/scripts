@@ -1,9 +1,10 @@
 require_relative './languages'
 
+ROOT = File.expand_path(File.dirname(__FILE__) + '/..')
+
 class Course
-  def self.all(path = Dir.pwd)
-    puts path
-    folders = Dir.glob("#{path}/content/*").select {|f| File.directory? f}.sort
+  def self.all
+    folders = Dir.glob("#{ROOT}/content/*").select {|f| File.directory? f}.sort
     folders.map { |f| Course.new(f) }
   end
 

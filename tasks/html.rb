@@ -2,6 +2,7 @@ require_relative './model'
 require_relative './shots'
 require_relative './underline'
 
+
 task :generate_index_files, [:lang] => [] do |t, args|
   Course.all.each do |course|
     Dir.chdir(course.path) do
@@ -37,6 +38,8 @@ task :html, [:lang] => :generate_index_files do |t, args|
   require 'asciidoctor'
 
   FileUtils.rm_rf Dir.glob('public/*.html')
+
+  puts Course.all
 
   Course.all.each do |course|
     puts underline("Course: #{course}")

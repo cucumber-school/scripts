@@ -4,8 +4,6 @@ require_relative './languages'
 require_relative './model'
 require_relative './underline'
 
-root = File.expand_path(File.dirname(__FILE__) + '/..')
-
 task :code, [:lang] => ['code:unroll'] do |t, args|
 end
 
@@ -19,7 +17,7 @@ namespace :code do
         `git fetch origin`
         `git config advice.detachedHead false`
 
-        Course.all(root).each do |course|
+        Course.all.each do |course|
           puts
           puts
           puts underline("Course: #{course}")
