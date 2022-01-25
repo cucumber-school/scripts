@@ -6,21 +6,9 @@ task :generate_index_files, [:lang] => [] do |t, args|
   Course.all.each do |course|
     Dir.chdir(course.path) do
   
-      puts "Compiling scripts include files for course #{course}"
-      unless course.language_codes.any?
-        code = "common"
-        File.open("./scripts.#{code}.adoc", "w") do |scripts|
-          course.chapters.each do |chapter|
-            scripts << asciidoc_include("#{chapter}/index.adoc")
-            puts chapter.content_to_include("common")
-            chapter.content_to_include(code).map { |path| asciidoc_include(path) }.each do |line|
-              scripts << line
-            end
-          end
-        end
-      end
-
-      course.language_codes(args).each do |code|
+      puts "Compiling .adoc scripts include files for course #{course.name}"
+      variants = course.language_codes.any? ? course.language_codes(args) : ["common"]
+      variants.each do |code|
         File.open("./scripts.#{code}.adoc", "w") do |scripts|
           course.chapters.each do |chapter|
             scripts << asciidoc_include("#{chapter}/index.adoc")
@@ -39,9 +27,8 @@ task :html, [:lang] => :generate_index_files do |t, args|
 
   FileUtils.rm_rf Dir.glob('public/*.html')
 
-  puts Course.all
-
   Course.all.each do |course|
+    puts
     puts underline("Course: #{course}")
 
     puts "Rendering main index.html page for course"
@@ -63,7 +50,7 @@ task :html, [:lang] => :generate_index_files do |t, args|
     end
   end
 
-  puts "Generating main index.html page for course"
+  puts "Generating main index.html page for site"
   Asciidoctor.convert_file "content/index.adoc",
                           safe: :safe,
                           to_file: "public/index.html"
