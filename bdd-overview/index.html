@@ -5,7 +5,8 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 2.0.16">
-<title>Cucumber School video scripts</title>
+<meta name="author" content="Matt Wynne">
+<title>BDD Overview</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /*! Asciidoctor default stylesheet | MIT License | https://asciidoctor.org */
@@ -437,23 +438,682 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 @media amzn-kf8{#header,#content,#footnotes,#footer{padding:0}}
 </style>
 </head>
-<body class="article">
+<body class="article toc2 toc-left">
 <div id="header">
-<h1>Cucumber School video scripts</h1>
+<h1>BDD Overview</h1>
+<div class="details">
+<span id="author" class="author">Matt Wynne</span><br>
+<span id="email" class="email"><a href="mailto:matt@cucumber.io">matt@cucumber.io</a></span><br>
+</div>
+<div id="toc" class="toc2">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#_discovering_bdd">1. Discovering BDD</a></li>
+<li><a href="#_example_mapping">2. Example Mapping</a>
+<ul class="sectlevel2">
+<li><a href="#_example_mapping_why">2.1. Example Mapping: Why?</a></li>
+<li><a href="#_example_mapping_how">2.2. Example Mapping: How?</a></li>
+<li><a href="#_example_mapping_conclusions">2.3. Example Mapping: Conclusions</a></li>
+</ul>
+</li>
+</ul>
+</div>
 </div>
 <div id="content">
+<div class="sect1">
+<h2 id="_discovering_bdd">1. Discovering BDD</h2>
+<div class="sectionbody">
 <div class="paragraph">
-<p>Courses:</p>
+<p>The script for this chapter is currently in <a href="https://docs.google.com/document/d/1S8eX3lz8-Ys9v94id9atFcX70hpi6XUoBaE5d6jsbHs/edit">Google Docs</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_example_mapping">2. Example Mapping</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>In the last lesson we saw how easily incidental details can creep into your scenarios, talked about why they’re a problem, and showed you some techniques for massaging them back out again.
+But, as we pushed the details out of our scenarios, we made the step definition code more complicated. We promised to show you how to deal with that extra complexity, and we&#8217;re going to get to that in the next chapter, Chapter 9.</p>
+</div>
+<div class="paragraph">
+<p>First though, we want to look at how we could have prevented the Premium Accounts feature from getting into such a mess in the first place.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;re going to learn about a practice called Example Mapping, a way to structure the conversation between the <em>Three Amigos</em> - Tester, Developer and Product Owner - to develop shared understanding before you write any code.</p>
+</div>
+<div class="sect2">
+<h3 id="_example_mapping_why">2.1. Example Mapping: Why?</h3>
+<div class="paragraph">
+<p>
+In terms of the three practices we introduced in Chapter 1 - Discovery, Formulation and Automation - what went wrong with the Premium Accounts feature?</p>
+</div>
+<div class="paragraph">
+<p>Thinking about it, we can see that the development team
+
+jumped straight into <em>Automation</em> - writing the implementation of the feature. They did the bare minimum of
+
+<em>Formulation</em> - just enough to automate a test for the feature, but really we did a lot of the Formulation later on as we cleaned it up. Finally, much of the
+
+<em>Discovery</em> happened at the end once Tamsin had a chance to test the feature by hand.</p>
+</div>
+<div class="paragraph">
+<p>
+So in essence, they did everything backwards.</p>
+</div>
+<div class="paragraph">
+<p>
+In software projects, it’s often the unknown unknowns that can make the biggest difference between success and failure. In BDD, we always try to assume we’re ignorant of some important information and try to <em>deliberately discover</em> those unknown unknowns as early as possible, so they don’t surprise us later on.</p>
+</div>
+<div class="paragraph">
+<p>A team that invests just a little bit extra in Discovery, before they write any code, saves themselves a huge amount of wasted time further down the line.</p>
+</div>
+<div class="paragraph">
+<p>
+In lesson 1, we showed you an example of the <em>Three Amigos</em> - Tester, Developer and Product owner - having a conversation about a new user story.</p>
+</div>
+<div class="paragraph">
+<p>Nobody likes long meetings, so we’ve developed a simple framework for this conversation that keeps it quick and effective. We call this
+
+<em>Example Mapping</em>.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>An Example Mapping session takes a single User Story as input, and aims to produce four outputs:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><a href="./bdd-with-cucumber/index.html">BDD with Cucumber</a></p>
+<p>Business Rules,
+
+that must be satisified for the story to be implemented correctly</p>
 </li>
 <li>
-<p><a href="./bdd-overview/index.html">BDD Overview</a></p>
+<p>Examples
+
+of those business rules playing out in real-world scenarios</p>
+</li>
+<li>
+<p>Questions or Assumptions
+
+that the group of people in the conversation need to deal with soon, but cannot resolve during the immediate conversation</p>
+</li>
+<li>
+<p>New User Stories
+
+sliced out from the one being discussed in order to simplify it.</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>We capture these, as we talk, using index cards, or another virtual equivalent.</p>
+</div>
+<div class="paragraph">
+<p>Working with these simple artefacts rather than trying to go straight to formulating Gherkin, allows us to keep the conversation at the right level - seeing the whole picture of the user story without getting lost in details.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_1_questions">2.1.1. Lesson 1 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_did_we_say_the_development_teams_initial_attempt_at_the_premium_accounts_feature_was_done_backwards">Why did we say the development team&#8217;s initial attempt at the premium accounts feature was "done backwards"?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>They did Discovery before Automation</p>
+</li>
+<li>
+<p>They did Discovery before Formulation</p>
+</li>
+<li>
+<p>They started with Automation, without doing enough Discovery or Formulation first (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>They started with Discovery, then did Formulation and finally Automation</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>The intended order is Discovery, Formulation then Automation. Each of these steps teaches us a little more about the problem.</p>
+</div>
+<div class="paragraph">
+<p>Our observation was that the the team jumped straight into coding (Automation), retro-fitting a scenario later. The discovery only happened when Tamsin tested the feature.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_does_deliberate_discovery_mean_multiple_choice">What does "Deliberate Discovery" mean (Multiple choice)</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>One person is responsible for gathering the requirements</p>
+</li>
+<li>
+<p>Discovery is something you can only do in collaboration with others</p>
+</li>
+<li>
+<p>Having the humility to assume there are things you don&#8217;t yet understand about the problem you&#8217;re working on (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Embracing your ignorance about what you&#8217;re building (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>There are no unknown unknowns on your project</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>Deliverate Discovery means we assume that there are important things we don&#8217;t yet know about the project we&#8217;re working on, and so make a deliberate effort to look for them at every opportunity.</p>
+</div>
+<div class="paragraph">
+<p>Although we very much encouage doing that collaboratively, it&#8217;s not the main emphasis here.</p>
+</div>
+<div class="paragraph">
+<p>Read Daniel Terhorst-North&#8217;s <a href="https://dannorth.net/2010/08/30/introducing-deliberate-discovery/">original blog post</a>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_is_it_a_good_idea_to_try_and_slice_a_user_story">Why is it a good idea to try and slice a user story?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Working in smaller pieces allows us to iterate and get feedback faster (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>We can defer behaviour that&#8217;s lower priority (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Smaller stories are less likely to contain unknown unknowns (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Doing TDD and refactoring becomes much easier when we proceed in small steps (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Small steps help us keep momentum, which is motivating (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>Just like grains of sand flow through the neck of a bottle faster than pebbles, the smaller you can slice your stories, the faster they will flow through your development team.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s important to preserve stories as a <em>vertical slice</em> right through your application, that changes the behaviour of the system from the point of view of a user, even in a very simple way.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s why we call it slicing rather than splitting.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_did_we_discourage_doing_formulation_as_part_of_an_example_mapping_conversation">Why did we discourage doing Formulation as part of an Example Mapping conversation?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Trying to write Gherkin slows the conversation down, which means you might miss the bigger picture. (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>It&#8217;s usually an unneccesary level of detail to go into when you&#8217;re trying to discover unknown unknowns. (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Formulation should be done by a separate team</p>
+</li>
+<li>
+<p>One person should be in charge of the documentation</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation</strong></p>
+</div>
+<div class="paragraph">
+<p>This is why we&#8217;ve separated Discovery from Formulation. It&#8217;s better to stay relatively shallow and go for breadth at this stage - making sure you&#8217;ve looked over the entire user story without getting pulled into rabbit holes.</p>
+</div>
+<div class="paragraph">
+<p>Product Owners and Domain Experts are often busy people who only have limited time with the team. Make the most of this time by keeping the conversation at the level where the team can learn the maximum amount from them.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_mapping_how">2.2. Example Mapping: How?</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>We first developed example mapping in face-to-face meeting using a simple a multi-colour pack of index cards and some pens. For teams that are working remotely, there are many virtual equivalents of that nowadays.</p>
+</div>
+<div class="paragraph">
+<p>We use the four different coloured cards to represent the four main kinds of information that arise in the conversation.</p>
+</div>
+<div class="paragraph">
+<p>We can start with the easy stuff: Take a yellow card and write down the name of the story.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Now, do we already know any rules or acceptance criteria about this story?</p>
+</div>
+<div class="paragraph">
+<p>Write each rule down on a blue card:</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>They look pretty straightforward, but let’s explore them a bit by coming up with some examples.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Darren the developer comes up with a simple scenario to check he understands the basics of the “buy” rule: "I start with 10 credits, I shout <em>buy my muffins</em> and then <em>I want to buy some socks</em>, then I have zero credits. Correct?"</p>
+</div>
+<div class="paragraph">
+<p>"Yes", says Paula.
+</p>
+</div>
+<div class="paragraph">
+<p>Darren writes this example up on a green card, and places it underneath the rule that it illustrates.</p>
+</div>
+<div class="paragraph">
+<p>
+Tammy the tester chimes in: "How about the one where you shout a word that contains <em>buy</em>, like <em>buyer</em> for example?
+
+If you were to shout <em>I need a buyer for my house</em>. Would that lose credits too?"</p>
+</div>
+<div class="paragraph">
+<p>
+Paula thinks about it for a minute, and
+
+decides that no, only the whole word <em>buy</em> counts. They’ve discovered a new rule!
+
+They write that up on the rule card, and place the example card underneath it.</p>
+</div>
+<div class="paragraph">
+<p>
+Darren asks: "How do the users get these credits? Are we building that functionality as part of this story too?"</p>
+</div>
+<div class="paragraph">
+<p>
+Paula tells him that’s part of another story, and they can assume the user can already purchase credits. They write that down as a rule too.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>This isn’t a behaviour rule - it’s a rule about the scope of the story. It’s still useful to write it down since we’ve agreed on it. But it won’t need any examples. We could also have chosen to use a red card her to write down our assumption.</p>
+</div>
+<div class="paragraph">
+<p>
+Still focussed on the “buy” rule, Tammy asks: "What if they run out of credit? Say you start with 10 credits and shout <em>buy</em> three times. What’s the outcome?"</p>
+</div>
+<div class="paragraph">
+<p>Paula looks puzzled. "I don’t know". She says. I’ll need to give that some thought.</p>
+</div>
+<div class="paragraph">
+<p>
+Darren takes a red card and writes this up as a question.</p>
+</div>
+<div class="paragraph">
+<p>
+They apply the same technique to the other rule about long messages, and pretty soon the table is covered in cards, reflecting the rules, examples and questions that have come up in their conversation. Now they have a picture in front of them that reflects back what they know, and still don’t know, about this story.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_2_questions">2.2.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_do_the_green_cards_represent_in_an_example_map">What do the <strong>Green</strong> cards represent in an example map?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Stories</p>
+</li>
+<li>
+<p>Rules</p>
+</li>
+<li>
+<p>Examples (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Questions or assumptions</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>We use the green card to represent examples because when we turn them into tests we want them to go green and pass!</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_do_the_blue_cards_represent_in_an_example_map">What do the <strong>Blue</strong> cards represent in an example map?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Stories</p>
+</li>
+<li>
+<p>Rules (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Examples</p>
+</li>
+<li>
+<p>Questions or assumptions</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>We use the blue cards to represent rules because they&#8217;re fixed, or frozen, like blue ice.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_do_the_red_cards_represent_in_an_example_map">What do the <strong>Red</strong> cards represent in an example map?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Stories</p>
+</li>
+<li>
+<p>Rules</p>
+</li>
+<li>
+<p>Examples</p>
+</li>
+<li>
+<p>Questions or assumptions (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>We use the red cards to represent questions and assumptions because it indicates danger! There&#8217;s still some uncertainty to be resolved here.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_do_the_yellow_cards_represent_in_an_example_map">What do the <strong>Yellow</strong> cards represent in an example map?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Story (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Rule</p>
+</li>
+<li>
+<p>Example</p>
+</li>
+<li>
+<p>Question or assumption</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>We chose the yellow cards to represent stories in our example mapping sessions, mostly because that was the last colour left over in the pack!</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_look_at_the_following_example_map_do_you_think_the_team_is_ready_to_start_coding_yet">Look at the following example map. Do you think the team is ready to start coding yet?</h5>
+<div class="imageblock">
+<div class="content">
+<img src="example-map-1.png" alt="example map 1">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No. There are still a lot of questions to resolve.</p>
+</li>
+<li>
+<p>No. They probably haven&#8217;t explored the story enough yet. More conversation needed. (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>No. There are too many rules. They should try to slice the story first.</p>
+</li>
+<li>
+<p>Yes. There&#8217;s a good number of examples for each rule, and no questions.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>When an example map shows only a few cards, and some rules with no examples at all, it suggests that either the story is very simple, or the discussion hasn&#8217;t gone deep enough yet.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_look_at_the_following_example_map_do_you_think_the_team_is_ready_to_start_coding_yet_2">Look at the following example map. Do you think the team is ready to start coding yet?</h5>
+<div class="imageblock">
+<div class="content">
+<img src="example-map-2.png" alt="example map 2">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No. There are still a lot of questions to resolve.</p>
+</li>
+<li>
+<p>No. They probably haven&#8217;t explored the story enough yet. More conversation needed.</p>
+</li>
+<li>
+<p>No. There are too many rules. They should try to slice the story first.</p>
+</li>
+<li>
+<p>Yes. There&#8217;s a good number of examples for each rule, and no questions. (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>This example map shows a good number of examples for each rule, and no questions. If the team feel like the conversation is finished, then they&#8217;re probably ready to start hacking on this story.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_look_at_the_following_example_map_do_you_think_the_team_is_ready_to_start_coding_yet_3">Look at the following example map. Do you think the team is ready to start coding yet?</h5>
+<div class="imageblock">
+<div class="content">
+<img src="example-map-3.png" alt="example map 3">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No. There are still a lot of questions to resolve. (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>No. They probably haven&#8217;t explored the story enough yet. More conversation needed.</p>
+</li>
+<li>
+<p>No. There are too many rules. They should try to slice the story first.</p>
+</li>
+<li>
+<p>Yes. There&#8217;s a good number of examples for each rule, and no questions.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>The large number of red cards here suggests that the team have encountered a number of questions that they couldn&#8217;t resolve themselves. Often this is an indication that there&#8217;s someone missing from the conversation. It would probably be irresponsible to start coding until at least some of those questions have been resolved.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_look_at_the_following_example_map_do_you_think_the_team_is_ready_to_start_coding_yet_4">Look at the following example map. Do you think the team is ready to start coding yet?</h5>
+<div class="imageblock">
+<div class="content">
+<img src="example-map-4.png" alt="example map 4">
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>No. There are still a lot of questions to resolve.</p>
+</li>
+<li>
+<p>No. They probably haven&#8217;t explored the story enough yet. More conversation needed.</p>
+</li>
+<li>
+<p>No. There are too many rules. They should try to slice the story first. (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Yes. There&#8217;s a good number of examples for each rule, and no questions.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>When an example map is wide like this, with a lot of different rules, it&#8217;s often a signal that there&#8217;s an opportunity to slice the story up by de-scoping some of those rules from the first iteration. Even if it&#8217;s not something that would be high enough quality to ship to a customer, you can often defer some of the rules into another story that you can implement later.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_example_mapping_conclusions">2.3. Example Mapping: Conclusions</h3>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>As you’ve just seen, an example mapping session should go right across the breadth of the story, trying to get a complete picture of the behaviour. Inviting all three amigos - product owner, tester and developer - is important because each perspective adds something to the conversation.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Although the apparent purpose of an example mapping session is to take a user story, and try to produce rules and examples that illustrate the behaviour, the underlying goal is to achieve a
+
+ <em>shared understanding</em> and agreement about the precise scope of a user story. Some people tell us that example mapping has helped to build empathy within their team!</p>
+</div>
+<div class="paragraph">
+<p>With this goal in mind, make sure the session isn’t just a rubber-stamping exercise, where one person does all the talking. Notice how in our example, everyone in the group was asking questions and writing new cards.</p>
+</div>
+<div class="paragraph">
+<p>In the conversation, we often end up
+
+refining, or even slicing out new user stories
+
+to make the current one smaller.  Deciding what a story is not - and maximising the amount of work not done - is one of the most useful things you can do in a three amigos session. Small stories are the secret of a successful agile team.</p>
+</div>
+<div class="paragraph">
+<p>Each time you come up with an example, try to understand what the underlying rule or rules are. If you discover an example that doesn’t fit your rules, you’ll need to reconsider your rules. In this way, the scope of the story is refined by the group.</p>
+</div>
+<div class="paragraph">
+<p>Although there’s no doubt of the power of examples for exploring and talking through requirements, it’s the rules that will go into the code. If you understand the rules, you’ll be able to build an elegant solution.</p>
+</div>
+<div class="paragraph">
+<p>
+As Dr David West says in his excellent book "Object Thinking", <em>If you problem the solution well enough, the solution will take care of itself</em>.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Sometimes, you’ll come across questions that nobody can answer. Instead of getting stuck trying to come up with an answer, just write down the question.
+</p>
+</div>
+<div class="paragraph">
+<p>Congratulations! You’ve just turned an unknown unknown into a known unknown. That’s progress.</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Many people think they need to produce formal Gherkin scenarios from their three amigos conversations, but in our experience that’s only occasionally necessary. In fact, it can often slow the discussion down.</p>
+</div>
+<div class="paragraph">
+<p>The point of an example mapping session is to do the <em>discovery</em> work. You can do <em>formulation</em> as a separate activity, next.</p>
+</div>
+<div class="paragraph">
+<p>One last tip is to run your example mapping sessions in a timebox. When you’re practiced at it, you should be able to analyse a story within 25 minutes. If you can’t, it’s either too big, or you don’t understand it well enough yet. Either way, it’s not ready to play.</p>
+</div>
+<div class="paragraph">
+<p>At the end of the 25 minutes, you can check whether everyone thinks the story is ready to start work on. If lots of questions remain, it would be risky to start work, but people might be comfortable taking on a story with only a few minor questions to clear up. Check this with a quick thumb-vote.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions">2.3.1. Lesson 3 - Questions</h4>
+<div class="sect4">
+<h5 id="_which_of_the_following_are_direct_outcomes_you_could_expect_if_your_team_starts_practcing_example_mapping">Which of the following are direct outcomes you could expect if your team starts practcing Example Mapping?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Less rework due to bugs found in your stories (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Greater empathy and mutual respect between team members (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Amazing Gherkin that reads really well</p>
+</li>
+<li>
+<p>Smaller user stories (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>A shared understanding of what you&#8217;re going to build for the story (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>More predicatable delivery pace (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>A quick sense of whether a story is about the right size and ready to start writing code. (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>We don&#8217;t write Gherkin during an example mapping session, so that&#8217;s not one of the direct outcomes, though a good example mapping session should leave the team ready to write their best Gherkin.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_of_the_following_presents_the_most_risk_to_your_project">Which of the following presents the most risk to your project?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Unknown unknowns (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Known unknowns</p>
+</li>
+<li>
+<p>Known knowns</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Explanation:</strong></p>
+</div>
+<div class="paragraph">
+<p>In project management, there are famously "uknown unknowns", "known unknowns" and "known knowns". The most dangerous are the "unknown unknows" because not only do we not know the answer to them, we have not even realised yet that there&#8217;s a question!</p>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="footer">
