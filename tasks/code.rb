@@ -84,7 +84,7 @@ namespace :code do
     end
   end
 
-  task :rb do
+  task :rename_branches do
     code_branches = `git for-each-ref`.
       split("\n").
       select { |line| line.match? /chapter-\d\d-code-(?:ruby|js|java|dotnet)/ }.
@@ -96,7 +96,6 @@ namespace :code do
       chapter, lang = branch.name.match(/chapter-(\d\d)-code-(\w+)/)[1..2]
       new_name = "code.bdd-with-cucumber.#{chapter}.#{lang}"
       `git branch -m #{branch.name} #{new_name}`
-      `git push origin #{new_name}`
     end
   end
 
