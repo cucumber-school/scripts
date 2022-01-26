@@ -32,11 +32,11 @@ You can use Guard together with a [LiveReload](http://livereload.com/) plugin fo
 
 ### Working on code storyboard branches
 
-The source code for most of the chapters is kept in on [orphan branches](https://git-scm.com/docs/git-checkout/1.7.3.1#git-checkout---orphan) named after the chapter and language, e.g. [`chapter-03-code-ruby`](https://github.com/cucumber-school/scripts/commits/chapter-03-code-ruby)
+The source code for most of the chapters is kept in on [orphan branches](https://git-scm.com/docs/git-checkout/1.7.3.1#git-checkout---orphan) named after the course, chapter and language, e.g. [`code.bdd-with-cucumber.03.ruby`](https://github.com/cucumber-school/scripts/commits/code.bdd-with-cucumber.03,ruby)
 
 The idea is to create a storyboard for the code in the chapter in the branch, with one commit each time something happens. To create a new chapter code branch, use these commands:
 
-    git checkout --orphan chapter-0n-code-<lang> # where n is the chapter number and <lang> is the language
+    git checkout --orphan code.$course.$chapter.$lang # remember to use double digits for the chapter e.g. 05
     rm -rf . # because otherwise all the files you just had in HEAD will get checked in!
     echo "content\npublic\n" > .gitignore
     git add --all
@@ -56,14 +56,6 @@ folder, allowing you to include snippets of the code in the AsciiDoc script.
 To unroll the storyboard branches, run this command:
 
     bundle exec rake code
-
-Or only for a specific language:
-
-    bundle exec rake code[ruby]
-
-Don't forget to push your storyboard branch too!
-
-    git push --force chapter-0n-code-<lang>
 
 ### Workflow tip: iterating between storyboard and script
 
