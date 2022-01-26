@@ -30,12 +30,13 @@ class Course
     Dir.glob("#{path}/*").
       select { |f| File.directory? f}.
       sort.
-      map { |path| Chapter.new(path) }
+      map { |path| Chapter.new(self, path) }
   end
 end
 
 class Chapter
-  def initialize(path)
+  def initialize(course, path)
+    @course = course
     @path = File.expand_path(path)
   end
 
@@ -48,7 +49,7 @@ class Chapter
   end
 
   def code_branch(lang)
-    "chapter-#{num}-code-#{lang}"
+    "code.#{@course.name}.#{num}.#{lang}"
   end
 
   def to_s

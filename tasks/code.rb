@@ -4,6 +4,8 @@ require_relative './languages'
 require_relative './model'
 require_relative './underline'
 
+root = File.expand_path(File.dirname(__FILE__) + '/..')
+
 task :code, [:lang] => ['code:unroll'] do |t, args|
 end
 
@@ -82,10 +84,26 @@ namespace :code do
     end
   end
 
+  task :rb do
+    code_branches = `git for-each-ref`.
+      split("\n").
+      select { |line| line.match? /chapter-\d\d-code-(?:ruby|js|java|dotnet)/ }.
+      map { |line|
+        rev, _, ref = line.split
+        Branch.new(rev, ref)
+      }
+    code_branches.each do |branch|
+      chapter, lang = branch.name.match(/chapter-(\d\d)-code-(\w+)/)[1..2]
+      new_name = "code.bdd-with-cucumber.#{chapter}.#{lang}"
+      `git branch -m #{branch.name} #{new_name}`
+      `git push origin #{new_name}`
+    end
+  end
+
   task :branches, [:lang] do |t, args|
     code_branches = `git for-each-ref`.
       split("\n").
-      select { |line| line.match? /chapter-\d\d-code-#{args[:lang]}/ }.
+      select { |line| line.match? /code\.[a-z-]+.\d\d.#{args[:lang]}/ }.
       map { |line|
         rev, _, ref = line.split
         Branch.new(rev, ref)
