@@ -475,11 +475,19 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <p></p>
 </div>
 <div class="paragraph">
-<p>In the last lesson we saw how easily incidental details can creep into your scenarios, talked about why they’re a problem, and showed you some techniques for massaging them back out again.
-But, as we pushed the details out of our scenarios, we made the step definition code more complicated. We promised to show you how to deal with that extra complexity, and we&#8217;re going to get to that in the next chapter, Chapter 9.</p>
+<p>In his seminal book, The Mythical Man-Month, Fred Brooks said:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+"The hardest single part of building a software system is deciding precisely what to build."
+</blockquote>
+<div class="attribution">
+&#8212; Fred Brooks<br>
+<cite>The Mythical Man-Month</cite>
+</div>
 </div>
 <div class="paragraph">
-<p>First though, we want to look at how we could have prevented the Premium Accounts feature from getting into such a mess in the first place.</p>
+<p>This is where the BDD practice of <em>Discovery</em> comes in.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;re going to learn about a practice called Example Mapping, a way to structure the conversation between the <em>Three Amigos</em> - Tester, Developer and Product Owner - to develop shared understanding before you write any code.</p>
@@ -488,20 +496,42 @@ But, as we pushed the details out of our scenarios, we made the step definition 
 <h3 id="_example_mapping_why">2.1. Example Mapping: Why?</h3>
 <div class="paragraph">
 <p>
-In terms of the three practices we introduced in Chapter 1 - Discovery, Formulation and Automation - what went wrong with the Premium Accounts feature?</p>
+The three practices we introduced in Chapter 1 - <em>Discovery</em>, <em>Formulation</em> and <em>Automation</em> - are meant to be done in a sequence, in a series of rapid iterations.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="bdd-practices-diagram.png" alt="bdd practices diagram">
+</div>
 </div>
 <div class="paragraph">
-<p>Thinking about it, we can see that the development team
+<p>Many teams are not used to working this way, because they think that testing (where a lot of the discovery happens) is something you do at the end.</p>
+</div>
+<div class="paragraph">
+<p>This is what the famous management consultant, W. Edwards Demming, ridiculed as:</p>
+</div>
+<div class="quoteblock">
+<blockquote>
+Let&#8217;s make toast: you burn it, I&#8217;ll scrape it.
+</blockquote>
+<div class="attribution">
+&#8212; W. Edwards Demming
+</div>
+</div>
+<div class="paragraph">
+<p>Teams like this usually jump straight into
 
-jumped straight into <em>Automation</em> - writing the implementation of the feature. They did the bare minimum of
+<em>Automation</em> - writing the implementation of the feature. If they&#8217;re using Cucumber, they do a bit of
 
-<em>Formulation</em> - just enough to automate a test for the feature, but really we did a lot of the Formulation later on as we cleaned it up. Finally, much of the
+<em>Formulation</em> - just enough to automate a test for the feature, but without really thinking very hard about what all the different scenarios are. They probably add these tests <em>after</em> they&#8217;ve done the implementation, or perhaps in parallel. They certainly don&#8217;t use them to <em>drive</em> the development of the implementation.</p>
+</div>
+<div class="paragraph">
+<p>Finally, much of the
 
-<em>Discovery</em> happened at the end once Tamsin had a chance to test the feature by hand.</p>
+<em>Discovery</em> happens at the end once someone has a chance to test the feature by hand, and really starts to think about the edge-cases.</p>
 </div>
 <div class="paragraph">
 <p>
-So in essence, they did everything backwards.</p>
+Viewed from a BDD practitioner&#8217;s eyes, they&#8217;re doing everything backwards.</p>
 </div>
 <div class="paragraph">
 <p>
@@ -1118,7 +1148,7 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-26 07:14:12 UTC
+Last updated 2022-01-27 01:25:41 UTC
 </div>
 </div>
 </body>
