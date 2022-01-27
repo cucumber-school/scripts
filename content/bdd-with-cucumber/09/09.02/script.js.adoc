@@ -1,3 +1,18 @@
 include::./title.adoc[]
 
-TODO: create npm test task
+Up until now, we've been running Cucumber every time we make a change in order to follow the TDD process. When we find a change that's too specific to a particular domain model, we drop down to running the unit tests for that model and run them individually, again, following the TDD loop.
+
+We wanted to take a moment to highlight something that's been in the codebase we're working with for a while, but that we've perhaps taken for granted.
+
+It's here, in our `package.json` file:
+
+[source,javascript]
+include::../code/js/00-initial-commit/package.json[lines=6..8]
+
+What this means, is that every time we run the command `npm test`, we first run our unit tests (using the javascript unit testing tool, `mocha`) and then, if those pass, we run our acceptance tests using Cucumber.
+
+In this case, we're filtering out the scenarios tagged with `@todo` so we only run the ones we'd expect to pass.
+
+Refactoring, the process of improving the design without changing the behaviour of the code, needs us to have a way to quickly check that the behaviour of the code hasn't changed.
+
+Having this `npm test` command to lean on as we refactor is very useful, because we can use a single command to make sure everything is passing.

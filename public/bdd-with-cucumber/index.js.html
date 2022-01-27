@@ -9134,7 +9134,32 @@ week and show you what we mean.</p>
 <div class="sect2">
 <h3 id="_test_all_the_fing_time">9.2. Test all the F***ing time</h3>
 <div class="paragraph">
-<p>TODO: create npm test task</p>
+<p>Up until now, we&#8217;ve been running Cucumber every time we make a change in order to follow the TDD process. When we find a change that&#8217;s too specific to a particular domain model, we drop down to running the unit tests for that model and run them individually, again, following the TDD loop.</p>
+</div>
+<div class="paragraph">
+<p>We wanted to take a moment to highlight something that&#8217;s been in the codebase we&#8217;re working with for a while, but that we&#8217;ve perhaps taken for granted.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s here, in our <code>package.json</code> file:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript">  <span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mocha test &amp;&amp; cucumber-js --tags 'not @todo'</span><span class="dl">"</span>
+  <span class="p">},</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>What this means, is that every time we run the command <code>npm test</code>, we first run our unit tests (using the javascript unit testing tool, <code>mocha</code>) and then, if those pass, we run our acceptance tests using Cucumber.</p>
+</div>
+<div class="paragraph">
+<p>In this case, we&#8217;re filtering out the scenarios tagged with <code>@todo</code> so we only run the ones we&#8217;d expect to pass.</p>
+</div>
+<div class="paragraph">
+<p>Refactoring, the process of improving the design without changing the behaviour of the code, needs us to have a way to quickly check that the behaviour of the code hasn&#8217;t changed.</p>
+</div>
+<div class="paragraph">
+<p>Having this <code>npm test</code> command to lean on as we refactor is very useful, because we can use a single command to make sure everything is passing.</p>
 </div>
 </div>
 <div class="sect2">
