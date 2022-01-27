@@ -1,0 +1,159 @@
+=== Example Mapping: How?
+
+shot::[1, "index cards and pens"]
+
+We first developed example mapping in face-to-face meeting using a simple a multi-colour pack of index cards and some pens. For teams that are working remotely, there are many virtual equivalents of that nowadays.
+
+We use the four different coloured cards to represent the four main kinds of information that arise in the conversation. 
+
+We can start with the easy stuff: Take a yellow card and write down the name of the story.
+
+shot::[2, "write 'premium accounts' on a yellow card"]
+
+Now, do we already know any rules or acceptance criteria about this story?
+
+Write each rule down on a blue card:
+
+shot::[3, "write two rules on blue cards"]
+
+They look pretty straightforward, but let’s explore them a bit by coming up with some examples.
+
+shot::[4, "Show male character, with text appearing on their left"]
+
+Darren the developer comes up with a simple scenario to check he understands the basics of the “buy” rule: "I start with 10 credits, I shout _buy my muffins_ and then _I want to buy some socks_, then I have zero credits. Correct?"
+
+"Yes", says Paula. 
+shot::[5, "Write up Darren's example on a green card"]
+
+Darren writes this example up on a green card, and places it underneath the rule that it illustrates.
+
+shot::[6, "Show female character"]
+Tammy the tester chimes in: "How about the one where you shout a word that contains _buy_, like _buyer_ for example?
+shot::[7, "Show female character with text appearing"]
+If you were to shout _I need a buyer for my house_. Would that lose credits too?"
+
+shot::[8, "Show second female character in foreground"]
+Paula thinks about it for a minute, and 
+shot::[9, "Second female character opens arms and smiles"]
+decides that no, only the whole word _buy_ counts. They’ve discovered a new rule! 
+shot::[10, "Modify text on blue card, add new green card"]
+They write that up on the rule card, and place the example card underneath it.
+
+shot::[11, "Show male character in foreground, talking"]
+Darren asks: "How do the users get these credits? Are we building that functionality as part of this story too?"
+
+shot::[12, "Show female character in foreground, talking"]
+Paula tells him that’s part of another story, and they can assume the user can already purchase credits. They write that down as a rule too.
+
+shot::[13, "Write 'assumption: credit purchase has already been implemented'"]
+
+This isn’t a behaviour rule - it’s a rule about the scope of the story. It’s still useful to write it down since we’ve agreed on it. But it won’t need any examples. We could also have chosen to use a red card her to write down our assumption.
+
+shot::[14, "Female character speaking, blank background; writing appears"]
+Still focussed on the “buy” rule, Tammy asks: "What if they run out of credit? Say you start with 10 credits and shout _buy_ three times. What’s the outcome?"
+
+Paula looks puzzled. "I don’t know". She says. I’ll need to give that some thought.
+
+shot::[15, "Write out red card: 'What should happen when one runs out of credits?"]
+Darren takes a red card and writes this up as a question.
+
+shot::[16, "More (empty) cards appearing"]
+They apply the same technique to the other rule about long messages, and pretty soon the table is covered in cards, reflecting the rules, examples and questions that have come up in their conversation. Now they have a picture in front of them that reflects back what they know, and still don’t know, about this story.
+
+==== Lesson 2 - Questions
+
+===== What do the *Green* cards represent in an example map?
+
+* Stories
+* Rules
+* Examples (*Correct*)
+* Questions or assumptions
+
+**Explanation:**
+
+We use the green card to represent examples because when we turn them into tests we want them to go green and pass!
+
+===== What do the *Blue* cards represent in an example map?
+
+* Stories
+* Rules (*Correct*)
+* Examples
+* Questions or assumptions
+
+**Explanation:**
+
+We use the blue cards to represent rules because they're fixed, or frozen, like blue ice.
+
+===== What do the *Red* cards represent in an example map?
+
+* Stories
+* Rules
+* Examples
+* Questions or assumptions (*Correct*)
+
+**Explanation:**
+
+We use the red cards to represent questions and assumptions because it indicates danger! There's still some uncertainty to be resolved here.
+
+===== What do the *Yellow* cards represent in an example map?
+
+* Story (*Correct*)
+* Rule
+* Example
+* Question or assumption
+
+**Explanation:**
+
+We chose the yellow cards to represent stories in our example mapping sessions, mostly because that was the last colour left over in the pack!
+
+===== Look at the following example map. Do you think the team is ready to start coding yet?
+
+image::example-map-1.png[]
+
+* No. There are still a lot of questions to resolve. 
+* No. They probably haven't explored the story enough yet. More conversation needed. (*Correct*)
+* No. There are too many rules. They should try to slice the story first.
+* Yes. There's a good number of examples for each rule, and no questions.
+
+**Explanation:**
+
+When an example map shows only a few cards, and some rules with no examples at all, it suggests that either the story is very simple, or the discussion hasn't gone deep enough yet.
+
+===== Look at the following example map. Do you think the team is ready to start coding yet?
+
+image::example-map-2.png[]
+
+* No. There are still a lot of questions to resolve. 
+* No. They probably haven't explored the story enough yet. More conversation needed.
+* No. There are too many rules. They should try to slice the story first.
+* Yes. There's a good number of examples for each rule, and no questions. (*Correct*)
+
+**Explanation:**
+
+This example map shows a good number of examples for each rule, and no questions. If the team feel like the conversation is finished, then they're probably ready to start hacking on this story.
+
+===== Look at the following example map. Do you think the team is ready to start coding yet?
+
+image::example-map-3.png[]
+
+* No. There are still a lot of questions to resolve. (*Correct*)
+* No. They probably haven't explored the story enough yet. More conversation needed.
+* No. There are too many rules. They should try to slice the story first.
+* Yes. There's a good number of examples for each rule, and no questions.
+
+**Explanation:**
+
+The large number of red cards here suggests that the team have encountered a number of questions that they couldn't resolve themselves. Often this is an indication that there's someone missing from the conversation. It would probably be irresponsible to start coding until at least some of those questions have been resolved.
+
+===== Look at the following example map. Do you think the team is ready to start coding yet?
+
+image::example-map-4.png[]
+
+* No. There are still a lot of questions to resolve.
+* No. They probably haven't explored the story enough yet. More conversation needed.
+* No. There are too many rules. They should try to slice the story first. (*Correct*)
+* Yes. There's a good number of examples for each rule, and no questions.
+
+**Explanation:**
+
+When an example map is wide like this, with a lot of different rules, it's often a signal that there's an opportunity to slice the story up by de-scoping some of those rules from the first iteration. Even if it's not something that would be high enough quality to ship to a customer, you can often defer some of the rules into another story that you can implement later.

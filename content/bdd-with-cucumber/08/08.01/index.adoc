@@ -1,0 +1,113 @@
+=== Example Mapping: Why?
+
+shot::[2, "BDD circles diagram"]
+In terms of the three practices we introduced in Chapter 1 - Discovery, Formulation and Automation - what went wrong with the Premium Accounts feature?
+
+Thinking about it, we can see that the development team
+shot::[3, "BDD circles diagram - (1) pointing to Automation"]
+jumped straight into _Automation_ - writing the implementation of the feature. They did the bare minimum of 
+shot::[4, "BDD circles diagram - (2) pointing to Formulation"]
+_Formulation_ - just enough to automate a test for the feature, but really we did a lot of the Formulation later on as we cleaned it up. Finally, much of the 
+shot::[5, "BDD circles diagram - (3) pointing to Discovery"]
+_Discovery_ happened at the end once Tamsin had a chance to test the feature by hand.
+
+shot::[6, "BDD circles diagram - draw a red 'X' over the three arrows"]
+So in essence, they did everything backwards.
+
+shot::[7, "Animation ending with 'Deliberate Discovery'"]
+In software projects, it’s often the unknown unknowns that can make the biggest difference between success and failure. In BDD, we always try to assume we’re ignorant of some important information and try to _deliberately discover_ those unknown unknowns as early as possible, so they don’t surprise us later on.
+
+A team that invests just a little bit extra in Discovery, before they write any code, saves themselves a huge amount of wasted time further down the line.
+
+shot::[8, "Animation introducing three people, showing them talking"]
+In lesson 1, we showed you an example of the _Three Amigos_ - Tester, Developer and Product owner - having a conversation about a new user story.
+
+Nobody likes long meetings, so we’ve developed a simple framework for this conversation that keeps it quick and effective. We call this 
+shot::[9, "Example Mapping"]
+_Example Mapping_.
+
+shot::[10, "diagram: User Story -> Example Mapping"]
+
+
+An Example Mapping session takes a single User Story as input, and aims to produce four outputs:
+
+
+* Business Rules, 
+shot::[11, "diagram: -> Rules"]
+that must be satisified for the story to be implemented correctly
+
+* Examples 
+shot::[12, "diagram: -> Examples"]
+of those business rules playing out in real-world scenarios
+
+* Questions or Assumptions 
+shot::[13, "diagram: -> Questions"]
+that the group of people in the conversation need to deal with soon, but cannot resolve during the immediate conversation
+
+* New User Stories
+shot::[14, "diagram: -> New User Stories"]
+sliced out from the one being discussed in order to simplify it.
+
+We capture these, as we talk, using index cards, or another virtual equivalent.
+
+Working with these simple artefacts rather than trying to go straight to formulating Gherkin, allows us to keep the conversation at the right level - seeing the whole picture of the user story without getting lost in details.
+
+==== Lesson 1 - Questions
+
+===== Why did we say the development team's initial attempt at the premium accounts feature was "done backwards"?
+
+* They did Discovery before Automation
+* They did Discovery before Formulation
+* They started with Automation, without doing enough Discovery or Formulation first (*Correct*)
+* They started with Discovery, then did Formulation and finally Automation
+
+**Explanation:**
+
+The intended order is Discovery, Formulation then Automation. Each of these steps teaches us a little more about the problem.
+
+Our observation was that the the team jumped straight into coding (Automation), retro-fitting a scenario later. The discovery only happened when Tamsin tested the feature.
+
+===== What does "Deliberate Discovery" mean (Multiple choice)
+
+* One person is responsible for gathering the requirements
+* Discovery is something you can only do in collaboration with others
+* Having the humility to assume there are things you don't yet understand about the problem you're working on (*Correct*)
+* Embracing your ignorance about what you're building (*Correct*)
+* There are no unknown unknowns on your project
+
+**Explanation:**
+
+Deliverate Discovery means we assume that there are important things we don't yet know about the project we're working on, and so make a deliberate effort to look for them at every opportunity.
+
+Although we very much encouage doing that collaboratively, it's not the main emphasis here.
+
+Read Daniel Terhorst-North's https://dannorth.net/2010/08/30/introducing-deliberate-discovery/[original blog post].
+
+===== Why is it a good idea to try and slice a user story?
+
+* Working in smaller pieces allows us to iterate and get feedback faster (*Correct*)
+* We can defer behaviour that's lower priority (*Correct*)
+* Smaller stories are less likely to contain unknown unknowns (*Correct*)
+* Doing TDD and refactoring becomes much easier when we proceed in small steps (*Correct*)
+* Small steps help us keep momentum, which is motivating (*Correct*)
+
+**Explanation:**
+
+Just like grains of sand flow through the neck of a bottle faster than pebbles, the smaller you can slice your stories, the faster they will flow through your development team.
+
+It's important to preserve stories as a _vertical slice_ right through your application, that changes the behaviour of the system from the point of view of a user, even in a very simple way. 
+
+That's why we call it slicing rather than splitting.
+
+===== Why did we discourage doing Formulation as part of an Example Mapping conversation?
+
+* Trying to write Gherkin slows the conversation down, which means you might miss the bigger picture. (*Correct*)
+* It's usually an unneccesary level of detail to go into when you're trying to discover unknown unknowns. (*Correct*)
+* Formulation should be done by a separate team
+* One person should be in charge of the documentation
+
+**Explanation**
+
+This is why we've separated Discovery from Formulation. It's better to stay relatively shallow and go for breadth at this stage - making sure you've looked over the entire user story without getting pulled into rabbit holes.
+
+Product Owners and Domain Experts are often busy people who only have limited time with the team. Make the most of this time by keeping the conversation at the level where the team can learn the maximum amount from them.
