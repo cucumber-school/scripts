@@ -732,7 +732,7 @@ pre.rouge {
 <li><a href="#_support_code">9. Support Code</a>
 <ul class="sectlevel2">
 <li><a href="#_layers_of_a_cucumber_test_suite">9.1. Layers of a Cucumber Test Suite</a></li>
-<li><a href="#_test_all_the_fing_time">9.2. Test all the F***ing time</a></li>
+<li><a href="#_test_all_the_fing_time">9.2. Test all the f***ing time</a></li>
 <li><a href="#_extracting_support_code">9.3. Extracting Support Code</a></li>
 <li><a href="#_close">9.4. Close</a></li>
 </ul>
@@ -9132,7 +9132,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_test_all_the_fing_time">9.2. Test all the F***ing time</h3>
+<h3 id="_test_all_the_fing_time">9.2. Test all the f***ing time</h3>
 <div class="paragraph">
 <p>Up until now, we&#8217;ve been running Cucumber every time we make a change in order to follow the TDD process. When we find a change that&#8217;s too specific to a particular domain model, we drop down to running the unit tests for that model and run them individually, again, following the TDD loop.</p>
 </div>
@@ -9165,7 +9165,439 @@ week and show you what we mean.</p>
 <div class="sect2">
 <h3 id="_extracting_support_code">9.3. Extracting Support Code</h3>
 <div class="paragraph">
-<p>TODO</p>
+<p>We need a new directory to contain our support code. the conventional place to put it is here, in a <code>support</code> directory underneath <code>features</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nb">mkdir </span>features/support</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There’s a special file in <code>features/support</code> that Cucumber always loads first, called <code>env.js</code> (or <code>env.ts</code>, if you&#8217;re using Typescript). You can use this to boot up the system that you’re testing.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nb">touch </span>features/support/env.js</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In this case, our system is just a domain model, so there isn&#8217;t really anything to do in order to boot it up.</p>
+</div>
+<div class="paragraph">
+<p>Still, it&#8217;s useful to have this <code>env.js</code> file because we can use it to set up one-time configuration that all of our scenarios will need.</p>
+</div>
+<div class="paragraph">
+<p>The most obvious duplication in the step definition code is for shouting a message.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} shouts</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Hello, world</span><span class="dl">"</span>
+  <span class="nx">shouter</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">])</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>First, we call the <code>shouter</code> domain model <code>Person</code> object to send the message, and then we cache that message in <code>this.messagesShoutedBy</code> so that we&#8217;ll be able to use it for validation later on.</p>
+</div>
+<div class="paragraph">
+<p>On it&#8217;s own, this wouldn&#8217;t be a problem, but there are four other step definitions for various kinds of shouts that all duplicate this same code.</p>
+</div>
+<div class="paragraph">
+<p>Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater?</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} shouts</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">Hello, world</span><span class="dl">"</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">shout</span><span class="p">({</span> <span class="na">from</span><span class="p">:</span> <span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span> <span class="p">})</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So how would we add this <code>shout</code> method to <code>this</code>? What even <em>is</em> <code>this</code> in the context of a Cucumber step definition function? In order to understand that, we need to learn about a concept called <em>The World</em>.</p>
+</div>
+<div class="sect3">
+<h4 id="_the_world">9.3.1. The World</h4>
+<div class="paragraph">
+<p>Every time Cucumber runs a scenario, it creates a new object, called the <em>World</em>. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class, then calling Cucumber&#8217;s <code>setWorldConstructor</code> method to tell it to use that class when constructing new instances of the world.</p>
+</div>
+<div class="paragraph">
+<p>We can define the new world class in our <code>env.js</code> support file that we just created.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="kd">const</span> <span class="p">{</span> <span class="nx">setWorldConstructor</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">@cucumber/cucumber</span><span class="dl">'</span><span class="p">)</span>
+
+<span class="kd">class</span> <span class="nx">ShoutyWorld</span> <span class="p">{</span>
+<span class="p">}</span>
+
+<span class="nx">setWorldConstructor</span><span class="p">(</span><span class="nx">ShoutyWorld</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Finally, we define our new helper method on this module and paste in the code from the step definition.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="kd">class</span> <span class="nx">ShoutyWorld</span> <span class="p">{</span>
+  <span class="nx">shout</span><span class="p">({</span> <span class="na">from</span><span class="p">:</span> <span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="nx">shouter</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">])</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let’s run Cucumber to check everything’s still working…</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">RUN CUCUMBER!!!!</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Good.</p>
+</div>
+<div class="paragraph">
+<p>Now we can use that new method everywhere…</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js"><span class="p">...</span>
+<span class="nx">When</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">{person} shouts {int} messages containing the word {string}</span><span class="dl">"</span><span class="p">,</span>
+  <span class="kd">function</span> <span class="p">(</span><span class="nx">shouter</span><span class="p">,</span> <span class="nx">count</span><span class="p">,</span> <span class="nx">word</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="s2">`A message containing the word </span><span class="p">${</span><span class="nx">word</span><span class="p">}</span><span class="s2">`</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">shout</span><span class="p">({</span> <span class="na">from</span><span class="p">:</span> <span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span> <span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} shouts {int} over-long messages</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">shouter</span><span class="p">,</span> <span class="nx">count</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">let</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">count</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">baseMessage</span> <span class="o">=</span> <span class="s2">`A message from </span><span class="p">${</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">}</span><span class="s2"> that is 181 characters long `</span>
+    <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="nx">baseMessage</span> <span class="o">+</span> <span class="dl">"</span><span class="s2">x</span><span class="dl">"</span><span class="p">.</span><span class="nx">repeat</span><span class="p">(</span><span class="mi">181</span> <span class="o">-</span> <span class="nx">baseMessage</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">shout</span><span class="p">({</span> <span class="na">from</span><span class="p">:</span> <span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span> <span class="p">})</span>
+  <span class="p">}</span>
+<span class="p">})</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} shouts {string}</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">shout</span><span class="p">({</span> <span class="na">from</span><span class="p">:</span> <span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span> <span class="p">})</span>
+<span class="p">})</span>
+
+<span class="nx">When</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} shouts the following message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">shout</span><span class="p">({</span> <span class="na">from</span><span class="p">:</span> <span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span> <span class="p">})</span>
+<span class="p">})</span>
+<span class="p">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and check we haven’t broken anything…  Done!</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_move_this_messagesshoutedby_property_behind_a_getter">9.3.2. Move <code>this.messagesShoutedBy</code> property behind a getter</h4>
+<div class="paragraph">
+<p>Notice that the helper method we extracted uses that <code>this.messagesShoutedBy</code> property.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="kd">class</span> <span class="nx">ShoutyWorld</span> <span class="p">{</span>
+  <span class="nx">shout</span><span class="p">({</span> <span class="na">from</span><span class="p">:</span> <span class="nx">shouter</span><span class="p">,</span> <span class="nx">message</span> <span class="p">})</span> <span class="p">{</span>
+    <span class="nx">shouter</span><span class="p">.</span><span class="nx">shout</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">])</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">].</span><span class="nx">push</span><span class="p">(</span><span class="nx">message</span><span class="p">)</span>
+  <span class="p">}</span>
+<span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;re using this instance variable in this assertion step </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="nx">Then</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} hears all {person}'s messages</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">listener</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">assertThat</span><span class="p">(</span>
+    <span class="nx">listener</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">(),</span>
+    <span class="nx">equalTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">])</span>
+  <span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>One problem with the current approach is that we&#8217;re assuming that <code>this.messagesShoutedBy</code> is always initialized as an object. If it wasn&#8217;t, we&#8217;d get errors like <code>cannot read property "Sean" of undefined</code> from our step definitions.</p>
+</div>
+<div class="paragraph">
+<p>Currently, we mitigate this risk by initializing the property in a <code>Before</code> hook:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="nx">Before</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span> <span class="o">=</span> <span class="p">{}</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">(</span><span class="nx">DEFAULT_RANGE</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Instead of doing this, we can explicitly make the <code>messagesHeardBy</code> a property of the <code>World</code>, by defining a getter for it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="kd">class</span> <span class="nx">ShoutyWorld</span> <span class="p">{</span>
+  <span class="kd">get</span> <span class="nx">messagesShoutedBy</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_messagesShoutedBy</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_messagesShoutedBy</span> <span class="o">||</span> <span class="p">{})</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The getter uses a private variable for the value of the property, initializing it with an empty object if it’s never been accessed before.</p>
+</div>
+<div class="paragraph">
+<p>Now we no longer need to initialize it in this before hook.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="nx">Before</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">(</span><span class="nx">DEFAULT_RANGE</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And run cucumber to check we’re still green.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">npm <span class="nb">test</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_move_this_network_property_behind_a_helper_method">9.3.3. Move <code>this.network</code> property behind a helper method</h4>
+<div class="paragraph">
+<p>We can follow the same steps for the <code>this.network</code> property. First, make the accessor method:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript">  <span class="kd">get</span> <span class="nx">network</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">_network</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">_network</span> <span class="o">||</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">(</span><span class="nx">DEFAULT_RANGE</span><span class="p">))</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>This will enable the <code>{person}</code> parameter type transformer to pull a <code>network</code> as soon as it needs one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript">    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">=</span> <span class="k">this</span><span class="p">.</span><span class="nx">people</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span> <span class="o">||</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So we don&#8217;t need to create a <code>Network</code> in a <code>Before</code> hook anymore.</p>
+</div>
+<div class="paragraph">
+<p>In fact, we can delete the <code>Before</code> hook altogether.</p>
+</div>
+<div class="paragraph">
+<p>This is changing the behaviour slightly, and for the better. Now we&#8217;re not relying on timing - assuming that the hook has created the <code>Network</code> at a particular point in the scenario&#8217;s lifecycle. We just create the <code>Network</code> as we need it. This is called <em>Lazy loading</em>.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="nx">Given</span><span class="p">(</span><span class="dl">"</span><span class="s2">the range is {int}</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">range</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Network</span><span class="p">(</span><span class="nx">range</span><span class="p">)</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Here, we&#8217;re trying to change the range of the network, and the only way to do that at the moment is to create a brand new instance of <code>Network</code>. This code won&#8217;t work at the moment, because it&#8217;s trying to set a <code>network</code> property on the World, but we don&#8217;t have a setter for it.</p>
+</div>
+<div class="paragraph">
+<p>All the way through this lesson, we&#8217;ve been <em>pushing the how down</em>, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.</p>
+</div>
+<div class="paragraph">
+<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="nx">Given</span><span class="p">(</span><span class="dl">"</span><span class="s2">the range is {int}</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">range</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">.</span><span class="nx">range</span> <span class="o">=</span> <span class="nx">range</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Isn&#8217;t that better?</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s do it!</p>
+</div>
+<div class="paragraph">
+<p>First, we&#8217;ll add a unit test for the <code>Network</code> class:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript">  <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">can change the range</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">const</span> <span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="kd">const</span> <span class="nx">laura</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Laura</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="nx">network</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">sean</span><span class="p">)</span>
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span><span class="nx">laura</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">(),</span> <span class="p">[</span><span class="nx">message</span><span class="p">])</span>
+
+    <span class="nx">network</span><span class="p">.</span><span class="nx">range</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="nx">network</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">sean</span><span class="p">)</span>
+    <span class="nx">assert</span><span class="p">.</span><span class="nx">deepEqual</span><span class="p">(</span><span class="nx">laura</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">(),</span> <span class="p">[</span><span class="nx">message</span><span class="p">])</span>
+  <span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll create a couple of people on the Network, which defaults to a range of 100, so they&#8217;re going to be close enough to hear each other at the moment.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll broadcast a shout from Sean, which Lucy should be able to hear.</p>
+</div>
+<div class="paragraph">
+<p>Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.</p>
+</div>
+<div class="paragraph">
+<p>Broadcast again, and this time Lucy shouldn&#8217;t have heard anything.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s run the test, and watch it fail like good TDD practitioners.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    1<span class="o">)</span> can change the range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  9 passing <span class="o">(</span>16ms<span class="o">)</span>
+  1 failing
+
+  1<span class="o">)</span> Network
+       can change the range:
+
+      AssertionError <span class="o">[</span>ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+<span class="o">[</span>
+  <span class="s1">'Free bagels!'</span>,
+  <span class="s1">'Free bagels!'</span>
+<span class="o">]</span>
+
+should loosely deep-equal
+
+<span class="o">[</span>
+  <span class="s1">'Free bagels!'</span>
+<span class="o">]</span>
+      + expected - actual
+
+       <span class="o">[</span>
+         <span class="s2">"Free bagels!"</span>
+      -  <span class="s2">"Free bagels!"</span>
+       <span class="o">]</span>
+
+      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:73:12<span class="o">)</span>
+      at processImmediate <span class="o">(</span>node:internal/timers:464:21<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can add the attribute writer:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="kd">class</span> <span class="nx">Network</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(</span><span class="nx">range</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_listeners</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_range</span> <span class="o">=</span> <span class="nx">range</span>
+  <span class="p">}</span>
+
+  <span class="kd">set</span> <span class="nx">range</span><span class="p">(</span><span class="nx">newRange</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">_range</span> <span class="o">=</span> <span class="nx">newRange</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We run the tests again, and everything should be passing. Great!</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"> npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  10 passing <span class="o">(</span>12ms<span class="o">)</span>
+
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can use that new method in our step:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="nx">Given</span><span class="p">(</span><span class="dl">"</span><span class="s2">the range is {int}</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">range</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">.</span><span class="nx">range</span> <span class="o">=</span> <span class="nx">range</span>
+<span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">npm <span class="nb">test</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Hooray!</p>
+</div>
 </div>
 </div>
 <div class="sect2">

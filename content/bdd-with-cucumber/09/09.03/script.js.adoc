@@ -1,3 +1,296 @@
 include::./title.adoc[]
 
-TODO
+We need a new directory to contain our support code. the conventional place to put it is here, in a `support` directory underneath `features`.
+
+[source, sh]
+----
+mkdir features/support
+----
+
+There’s a special file in `features/support` that Cucumber always loads first, called `env.js` (or `env.ts`, if you're using Typescript). You can use this to boot up the system that you’re testing.
+
+[source, sh]
+----
+touch features/support/env.js
+----
+
+In this case, our system is just a domain model, so there isn't really anything to do in order to boot it up.
+
+Still, it's useful to have this `env.js` file because we can use it to set up one-time configuration that all of our scenarios will need.
+
+The most obvious duplication in the step definition code is for shouting a message.
+
+[source,js]
+----
+include::../code/js/03-create-custom-world/features/step_definitions/steps.js[lines=25..31]
+----
+
+First, we call the `shouter` domain model `Person` object to send the message, and then we cache that message in `this.messagesShoutedBy` so that we'll be able to use it for validation later on.
+
+On it's own, this wouldn't be a problem, but there are four other step definitions for various kinds of shouts that all duplicate this same code.
+
+Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater?
+
+[source,js]
+----
+include::../code/js/04-extract-shout-helper-to-world/features/step_definitions/steps.js[lines=25..28]
+----
+
+So how would we add this `shout` method to `this`? What even _is_ `this` in the context of a Cucumber step definition function? In order to understand that, we need to learn about a concept called _The World_.
+
+==== The World
+
+Every time Cucumber runs a scenario, it creates a new object, called the _World_. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class, then calling Cucumber's `setWorldConstructor` method to tell it to use that class when constructing new instances of the world.
+
+We can define the new world class in our `env.js` support file that we just created.shot::[1]
+
+[source,javascript]
+----
+include::../code/js/03-create-custom-world/features/support/env.js[]
+----
+
+Finally, we define our new helper method on this module and paste in the code from the step definition.
+
+[source,javascript]
+----
+include::../code/js/04-extract-shout-helper-to-world/features/support/env.js[lines=3..10]
+----
+
+Let’s run Cucumber to check everything’s still working…
+
+[source,sh]
+----
+RUN CUCUMBER!!!!
+----
+
+Good.
+
+Now we can use that new method everywhere… 
+
+[source,js]
+----
+...
+include::../code/js/05-use-shout-helper-everywhere/features/step_definitions/steps.js[lines=30..54]
+...
+----
+
+...and check we haven’t broken anything… shot::[] Done!
+
+==== Move `this.messagesShoutedBy` property behind a getter
+
+Notice that the helper method we extracted uses that `this.messagesShoutedBy` property.
+
+[source,javascript]
+----
+include::../code/js/05-use-shout-helper-everywhere/features/support/env.js[lines=3..10]
+----
+
+We're using this instance variable in this assertion step shot::[2]
+
+[source,javascript]
+----
+include::../code/js/05-use-shout-helper-everywhere/features/step_definitions/steps.js[lines=68..73]
+----
+
+One problem with the current approach is that we're assuming that `this.messagesShoutedBy` is always initialized as an object. If it wasn't, we'd get errors like `cannot read property "Sean" of undefined` from our step definitions.
+
+Currently, we mitigate this risk by initializing the property in a `Before` hook:
+
+[source,javascript]
+----
+include::../code/js/05-use-shout-helper-everywhere/features/step_definitions/steps.js[lines=8..11]
+----
+
+Instead of doing this, we can explicitly make the `messagesHeardBy` a property of the `World`, by defining a getter for it:
+
+[source,javascript]
+----
+include::../code/js/06-push-messagesshoutedby-behind-a-getter-in-world/features/support/env.js[lines=3..6]
+----
+
+The getter uses a private variable for the value of the property, initializing it with an empty object if it’s never been accessed before.
+
+Now we no longer need to initialize it in this before hook.
+
+[source,javascript]
+----
+include::../code/js/06-push-messagesshoutedby-behind-a-getter-in-world/features/step_definitions/steps.js[lines=8..10]
+----
+
+And run cucumber to check we’re still green.
+
+[source,sh]
+----
+npm test
+----
+
+==== Move `this.network` property behind a helper method
+
+We can follow the same steps for the `this.network` property. First, make the accessor method:
+
+[source,javascript]
+----
+include::../code/js/07-move-network-to-a-getter-in-world/features/support/env.js[lines=11..13]
+----
+
+This will enable the `{person}` parameter type transformer to pull a `network` as soon as it needs one:
+
+[source,javascript]
+----
+include::../code/js/07-move-network-to-a-getter-in-world/features/support/person_parameter.js[lines=10..10]
+----
+
+So we don't need to create a `Network` in a `Before` hook anymore.
+
+In fact, we can delete the `Before` hook altogether.
+
+This is changing the behaviour slightly, and for the better. Now we're not relying on timing - assuming that the hook has created the `Network` at a particular point in the scenario's lifecycle. We just create the `Network` as we need it. This is called _Lazy loading_.
+
+There's one other place where we're using the `Network`, in this step:
+
+[source,javascript]
+----
+include::../code/js/07-move-network-to-a-getter-in-world/features/step_definitions/steps.js[lines=6..8]
+----
+
+Here, we're trying to change the range of the network, and the only way to do that at the moment is to create a brand new instance of `Network`. This code won't work at the moment, because it's trying to set a `network` property on the World, but we don't have a setter for it.
+
+All the way through this lesson, we've been _pushing the how down_, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.
+
+Imagine we had a `range` setter method on our `Network` that allowed us to modify the range on the fly. Then, our step would just look like this:
+
+[source,javascript]
+----
+include::../code/js/09-use-new-network-range-method/features/step_definitions/steps.js[lines=4..6]
+----
+
+Isn't that better?
+
+Let's do it!
+
+First, we'll add a unit test for the `Network` class:
+
+[source,javascript]
+----
+include::../code/js/08-add-a-way-to-change-the-network-s-range/test/network.test.js[lines=64..74]
+----
+
+We'll create a couple of people on the Network, which defaults to a range of 100, so they're going to be close enough to hear each other at the moment.
+
+We'll broadcast a shout from Sean, which Lucy should be able to hear.
+
+Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.
+
+Broadcast again, and this time Lucy shouldn't have heard anything.
+
+Let's run the test, and watch it fail like good TDD practitioners.
+
+[source,sh]
+----
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    1) can change the range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  9 passing (16ms)
+  1 failing
+
+  1) Network
+       can change the range:
+
+      AssertionError [ERR_ASSERTION]: Expected values to be loosely deep-equal:
+
+[
+  'Free bagels!',
+  'Free bagels!'
+]
+
+should loosely deep-equal
+
+[
+  'Free bagels!'
+]
+      + expected - actual
+
+       [
+         "Free bagels!"
+      -  "Free bagels!"
+       ]
+      
+      at Context.<anonymous> (test/network.test.js:73:12)
+      at processImmediate (node:internal/timers:464:21)
+----
+
+Now we can add the attribute writer:
+
+[source,javascript]
+----
+include::../code/js/08-add-a-way-to-change-the-network-s-range/src/shouty.js[lines=34..42]
+----
+
+We run the tests again, and everything should be passing. Great!
+
+[source,sh]
+----
+ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  10 passing (12ms)
+
+...................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+----
+
+Now we can use that new method in our step:
+
+[source,javascript]
+----
+include::../code/js/09-use-new-network-range-method/features/step_definitions/steps.js[lines=4..6]
+----
+
+Let's run all the tests to make sure everything's working again:
+
+[source,sh]
+----
+npm test
+----
+
+Hooray!
