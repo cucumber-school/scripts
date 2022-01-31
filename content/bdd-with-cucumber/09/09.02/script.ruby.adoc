@@ -89,7 +89,7 @@ In order to do so, we created a `Rakefile` shot::[3]
 $ touch Rakefile
 ----
 
-In it, we first added a command to run rspec shot::[4], followed by one to run cucumber. shot::[5]
+In it, we first added a default taskshot::[4] with a command to run rspec shot::[5], followed by one to run cucumber. shot::[6]
 
 [source,ruby]
 ----
@@ -99,7 +99,7 @@ task :default do
 end
 ----
 
-This works, shot::[6] except for two small nitpicks:
+This works, shot::[7] except for two small nitpicks:
 
 [source,sh]
 ----
@@ -230,7 +230,7 @@ Tasks: TOP => default
 (See full trace by running task with --trace)
 ----
 
-The first one is the length of that output. At this point we don't need this level of detail, we just want to know everything worked. And to focus on that, there's no better solution than the `progress` formatter. shot::[7]
+The first one is the length of that output.shot::[8] At this point we don't need this level of detail, we just want to know everything worked. And to focus on that, there's no better solution than the `progress` formatter. shot::[9]
 
 [source,ruby]
 ----
@@ -240,11 +240,11 @@ task :default do
 end
 ----
 
-Lets see how it looks like shot::[8]
+Lets see how it looks like shot::[10]
 
 [source,sh]
 ----
-rake
+$ bundle exec rake
 bundle exec rspec
 ..........
 
@@ -284,9 +284,9 @@ Tasks: TOP => default
 (See full trace by running task with --trace)
 ----
 
-Great, that's ... shorter. But we still see our failing spec, the one we're in the middle of fixing. That's our second nitpick. We don't want to see unfinished work, we only want to know we haven't broken anything that was already working before.
+Great, that's ... shorter. But we still see our failing spec,shot::[11] the one we're in the middle of fixing. That's our second nitpick. We don't want to see unfinished work, we only want to know we haven't broken anything that was already working before.
 
-If we take a pick at the failing scenario, we can see that it has the `@todo` tag.shot::[9] It seems that our team is using that tag as a convention to express that the scenarios marked as `@todo` are a Work in Progress. So lets omit this tag from our output. shot::[10]
+If we take a pick at the failing scenario, we can see that it has the `@todo` tag.shot::[12] It seems that our team is using that tag as a convention to express that the scenarios marked as `@todo` are a Work in Progress. So lets omit this tag from our output. shot::[13]
 
 [source,ruby]
 ----
@@ -296,7 +296,7 @@ task :default do
 end
 ----
 
-Now, whenever we run our default rake task, we're only checking our actual finished work. shot::[]
+Now, whenever we run our default rake task, we're only checking our actual finished work. shot::[14]
 
 [source,sh]
 ----
