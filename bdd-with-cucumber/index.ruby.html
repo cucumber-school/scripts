@@ -8843,7 +8843,7 @@ Finished <span class="k">in </span>0.00913 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>In it, we first added a command to run rspec , followed by one to run cucumber. </p>
+<p>In it, we first added a default task with a command to run rspec , followed by one to run cucumber. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9001,7 +9001,7 @@ Tasks: TOP <span class="o">=&gt;</span> default
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">rake
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
 bundle <span class="nb">exec </span>rspec
 ..........
 
@@ -9177,7 +9177,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, we define our new helper method on this module and paste in the code from the step definition.</p>
+<p>Finally, we define our new helper method on this module  and paste in the code from the step definition.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9195,11 +9195,26 @@ Randomized with seed 61983</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">RUN CUCUMBER!!!!</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00915 seconds <span class="o">(</span>files took 0.11906 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
+Using the default profile...
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m0.028s
+
+Randomized with seed 22636</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can use that new method everywhere… and check we haven’t broken anything… done.</p>
+<p>Now we can use that new method everywhere…</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9212,6 +9227,30 @@ Randomized with seed 61983</code></pre>
   <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="n">message</span>
 <span class="k">end</span>
 <span class="o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and check we haven’t broken anything… done.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files took 0.12051 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
+Using the default profile...
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m0.028s
+
+Randomized with seed 11215
+...................................</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -9250,7 +9289,7 @@ Randomized with seed 61983</code></pre>
 <p>It’s better to push the state behind the support API.</p>
 </div>
 <div class="paragraph">
-<p>Let’s extract this variable into a new method on the World that returns the instance variable, initializing it with an empty hash if it’s never been accessed before.</p>
+<p>Let’s extract this variable into a new method on the World  that returns the instance variable, initializing it with an empty hash if it’s never been accessed before.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9270,6 +9309,18 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
+<p>also in the <code>shout</code> helper </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">  <span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">from</span><span class="p">:,</span> <span class="n">message</span><span class="p">:)</span>
+    <span class="n">shouter</span> <span class="o">=</span> <span class="n">from</span>
+    <span class="n">shouter</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
+  <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>and we no longer need to initialize it in this before hook.</p>
 </div>
 <div class="listingblock">
@@ -9284,20 +9335,35 @@ Randomized with seed 61983</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>cucumber</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00894 seconds <span class="o">(</span>files took 0.11845 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
+Using the default profile...
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m0.030s
+
+Randomized with seed 62819</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_move_network_instance_variable_behind_a_helper_method">9.3.2. Move <code>@network</code> instance variable behind a helper method</h4>
 <div class="paragraph">
-<p>We can follow the same steps for the <code>@network</code> instance variable. Make the accessor method:</p>
+<p>We can follow the same steps for the <code>@network</code> instance variable. Make the accessor method: </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">network</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">network</span>
+    <span class="vi">@network</span> <span class="o">||=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span>
+  <span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9317,7 +9383,7 @@ Randomized with seed 61983</code></pre>
 <p>This is changing the behaviour slightly, and for the better. Now we&#8217;re not relying on timing - assuming that the hook has created the <code>Network</code> at a particular point in the scenario&#8217;s lifecycle. We just create the <code>Network</code> as we need it. This is called <em>Lazy loading</em>.</p>
 </div>
 <div class="paragraph">
-<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step:</p>
+<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step: </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9336,13 +9402,13 @@ Randomized with seed 61983</code></pre>
 <p>All the way through this lesson, we&#8217;ve been <em>pushing the how down</em>, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.</p>
 </div>
 <div class="paragraph">
-<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this:</p>
+<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this: </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="k">end</span>
-
-<span class="no">Given</span> <span class="s2">"{person} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
+  <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="n">range</span>
+<span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9352,7 +9418,7 @@ Randomized with seed 61983</code></pre>
 <p>Let&#8217;s do it!</p>
 </div>
 <div class="paragraph">
-<p>First, we&#8217;ll add a unit test for the <code>Network</code> class:</p>
+<p>First, we&#8217;ll add a unit test for the <code>Network</code> class: </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9392,12 +9458,12 @@ Randomized with seed 61983</code></pre>
 
 Failures:
 
-  1<span class="o">)</span> Shouty::Network can change the range
-     Failure/Error: network.range <span class="o">=</span> 5
+1<span class="o">)</span> Shouty::Network can change the range
+Failure/Error: network.range <span class="o">=</span> 5
 
-     NoMethodError:
-       undefined method <span class="sb">`</span><span class="nv">range</span><span class="o">=</span><span class="sb">`</span> <span class="k">for</span> <span class="c">#&lt;Shouty::Network:0x000000013b01bc10 @range=100, @listeners=[#&lt;Shouty::Person:0x000000013b01bbc0 @name="Sean", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=0, @credits=0&gt;, #&lt;Shouty::Person:0x000000013b01bb20 @name="Laura", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=10, @credits=0&gt;]&gt;</span>
-     <span class="c"># ./spec/network_spec.rb:53:in `block (2 levels) in &lt;top (required)&gt;'</span>
+NoMethodError:
+undefined method <span class="sb">`</span><span class="nv">range</span><span class="o">=</span><span class="sb">`</span> <span class="k">for</span> <span class="c">#&lt;Shouty::Network:0x000000013b01bc10 @range=100, @listeners=[#&lt;Shouty::Person:0x000000013b01bbc0 @name="Sean", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=0, @credits=0&gt;, #&lt;Shouty::Person:0x000000013b01bb20 @name="Laura", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=10, @credits=0&gt;]&gt;</span>
+<span class="c"># ./spec/network_spec.rb:53:in `block (2 levels) in &lt;top (required)&gt;'</span>
 
 Finished <span class="k">in </span>0.01381 seconds <span class="o">(</span>files took 0.13762 seconds to load<span class="o">)</span>
 11 examples, 1 failure
@@ -9414,32 +9480,33 @@ rspec ./spec/network_spec.rb:46 <span class="c"># Shouty::Network can change the
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby">  <span class="k">class</span> <span class="nc">Network</span>
     <span class="nb">attr_writer</span> <span class="ss">:range</span>
-    <span class="o">...</span></code></pre>
+<span class="o">...</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s run RSpec again, and everything should be passing. Great!</p>
 </div>
-<div class="paragraph">
-<p>Now we can use that new method in our step:</p>
-</div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="k">end</span>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rspec
+...........
 
-<span class="no">Given</span> <span class="s2">"{person} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span></code></pre>
+Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files took 0.12129 seconds to load<span class="o">)</span>
+11 examples, 0 failures</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And remove the <code>network</code> attribute writer on the World</p>
+<p>Now we can use that new method in our step: </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">end</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
+  <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="n">range</span>
+<span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again:</p>
+<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again: </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9830,7 +9897,7 @@ See you next time, on Cucumber School.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-28 00:30:34 UTC
+Last updated 2022-01-31 14:18:33 UTC
 </div>
 </div>
 </body>
