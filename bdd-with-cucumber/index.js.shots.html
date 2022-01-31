@@ -9140,7 +9140,7 @@ week and show you what we mean.</p>
 <p>We wanted to take a moment to highlight something that&#8217;s been in the codebase we&#8217;re working with for a while, but that we&#8217;ve perhaps taken for granted.</p>
 </div>
 <div class="paragraph">
-<p>It&#8217;s here, in our <code>package.json</code> file:</p>
+<p>It&#8217;s here, in our <code>package.json</code> file: <a href="#shot-993" id="shot-993" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9150,22 +9150,27 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>What this means, is that every time we run the command <code>npm test</code>, we first run our unit tests (using the javascript unit testing tool, <code>mocha</code>) and then, if those pass, we run our acceptance tests using Cucumber.</p>
+<p>What this means, is that every time we run the command <code>npm test</code>, <a href="#shot-994" id="shot-994" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a> we first run our unit tests (using the javascript unit testing tool, <code>mocha</code>)<a href="#shot-995" id="shot-995" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> and then, if those pass, we run our acceptance tests using Cucumber. <a href="#shot-996" id="shot-996" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="paragraph">
-<p>In this case, we&#8217;re filtering out the scenarios tagged with <code>@todo</code> so we only run the ones we&#8217;d expect to pass.</p>
+<p>In this case, we&#8217;re filtering out the scenarios tagged with <code>@todo</code> <a href="#shot-997" id="shot-997" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a> so we only run the ones we&#8217;d expect to pass.</p>
 </div>
 <div class="paragraph">
 <p>Refactoring, the process of improving the design without changing the behaviour of the code, needs us to have a way to quickly check that the behaviour of the code hasn&#8217;t changed.</p>
 </div>
 <div class="paragraph">
-<p>Having this <code>npm test</code> command to lean on as we refactor is very useful, because we can use a single command to make sure everything is passing.</p>
+<p>Having this <code>npm test</code> command to lean on as we refactor is very useful, because we can use a single command to make sure everything is passing. <a href="#shot-998" id="shot-998" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">RUN NPM TEST!!!!</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_extracting_support_code">9.3. Extracting Support Code</h3>
 <div class="paragraph">
-<p>We need a new directory to contain our support code. the conventional place to put it is here, in a <code>support</code> directory underneath <code>features</code>.</p>
+<p>We need a new directory to contain our support code. the conventional place to put it is here, in a <code>support</code> directory underneath <code>features</code>. <a href="#shot-999" id="shot-999" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9173,7 +9178,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>There’s a special file in <code>features/support</code> that Cucumber always loads first, called <code>env.js</code> (or <code>env.ts</code>, if you&#8217;re using Typescript). You can use this to boot up the system that you’re testing.</p>
+<p>There’s a special file in <code>features/support</code> that Cucumber always loads first, called <code>env.js</code> <a href="#shot-1000" id="shot-1000" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a> (or <code>env.ts</code>, if you&#8217;re using Typescript). You can use this to boot up the system that you’re testing.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9187,7 +9192,7 @@ week and show you what we mean.</p>
 <p>Still, it&#8217;s useful to have this <code>env.js</code> file because we can use it to set up one-time configuration that all of our scenarios will need.</p>
 </div>
 <div class="paragraph">
-<p>The most obvious duplication in the step definition code is for shouting a message.</p>
+<p>The most obvious duplication in the step definition code is for shouting a message. <a href="#shot-1001" id="shot-1001" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9201,13 +9206,13 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>First, we call the <code>shouter</code> domain model <code>Person</code> object to send the message, and then we cache that message in <code>this.messagesShoutedBy</code> so that we&#8217;ll be able to use it for validation later on.</p>
+<p>First, we call the <code>shouter</code> domain model <code>Person</code> object to send the message,<a href="#shot-1002" id="shot-1002" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> and then we cache that message in <code>this.messagesShoutedBy</code> so that we&#8217;ll be able to use it for validation later on.<a href="#shot-1003" id="shot-1003" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="paragraph">
 <p>On it&#8217;s own, this wouldn&#8217;t be a problem, but there are four other step definitions for various kinds of shouts that all duplicate this same code.</p>
 </div>
 <div class="paragraph">
-<p>Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater?</p>
+<p>Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater? <a href="#shot-1004" id="shot-1004" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9218,15 +9223,15 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>So how would we add this <code>shout</code> method to <code>this</code>? What even <em>is</em> <code>this</code> in the context of a Cucumber step definition function? In order to understand that, we need to learn about a concept called <em>The World</em>.</p>
+<p>So how would we add this <code>shout</code> method to <code>this</code>?<a href="#shot-1005" id="shot-1005" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a> What even <em>is</em> <code>this</code> in the context of a Cucumber step definition function? In order to understand that, we need to learn about a concept called <em>The World</em>.</p>
 </div>
 <div class="sect3">
 <h4 id="_the_world">9.3.1. The World</h4>
 <div class="paragraph">
-<p>Every time Cucumber runs a scenario, it creates a new object, called the <em>World</em>. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class, then calling Cucumber&#8217;s <code>setWorldConstructor</code> method to tell it to use that class when constructing new instances of the world.</p>
+<p>Every time Cucumber runs a scenario, it creates a new object, called the <em>World</em>, which we can define the new world class in our <code>env.js</code> support file that we just created.<a href="#shot-1006" id="shot-1006" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a>.</p>
 </div>
 <div class="paragraph">
-<p>We can define the new world class in our <code>env.js</code> support file that we just created.<a href="#shot-993" id="shot-993" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class, then calling Cucumber&#8217;s <code>setWorldConstructor</code> method to tell it to use that class when constructing new instances of the world. <a href="#shot-1007" id="shot-1007" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9239,7 +9244,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, we define our new helper method on this module and paste in the code from the step definition.</p>
+<p>Finally, we define our new helper method on this module and paste in the code from the step definition. <a href="#shot-1008" id="shot-1008" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9254,7 +9259,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run Cucumber to check everything’s still working…</p>
+<p>Let’s run Cucumber to check everything’s still working… <a href="#shot-1009" id="shot-1009" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9265,7 +9270,7 @@ week and show you what we mean.</p>
 <p>Good.</p>
 </div>
 <div class="paragraph">
-<p>Now we can use that new method everywhere…</p>
+<p>Now we can use that new method everywhere… <a href="#shot-1010" id="shot-1010" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9299,13 +9304,13 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;and check we haven’t broken anything… <a href="#shot-994" id="shot-994" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> Done!</p>
+<p>&#8230;&#8203;and check we haven’t broken anything… <a href="#shot-1011" id="shot-1011" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a> Done!</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_move_this_messagesshoutedby_property_behind_a_getter">9.3.2. Move <code>this.messagesShoutedBy</code> property behind a getter</h4>
 <div class="paragraph">
-<p>Notice that the helper method we extracted uses that <code>this.messagesShoutedBy</code> property.</p>
+<p>Notice that the helper method we extracted uses that <code>this.messagesShoutedBy</code> property.<a href="#shot-1012" id="shot-1012" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9320,7 +9325,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;re using this instance variable in this assertion step <a href="#shot-995" id="shot-995" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>We&#8217;re using this instance variable in this assertion step <a href="#shot-1013" id="shot-1013" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9336,7 +9341,7 @@ week and show you what we mean.</p>
 <p>One problem with the current approach is that we&#8217;re assuming that <code>this.messagesShoutedBy</code> is always initialized as an object. If it wasn&#8217;t, we&#8217;d get errors like <code>cannot read property "Sean" of undefined</code> from our step definitions.</p>
 </div>
 <div class="paragraph">
-<p>Currently, we mitigate this risk by initializing the property in a <code>Before</code> hook:</p>
+<p>Currently, we mitigate this risk by initializing the property in a <code>Before</code> hook: <a href="#shot-1014" id="shot-1014" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9347,7 +9352,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Instead of doing this, we can explicitly make the <code>messagesHeardBy</code> a property of the <code>World</code>, by defining a getter for it:</p>
+<p>Instead of doing this, we can explicitly make the <code>messagesHeardBy</code> a property of the <code>World</code>, by defining a getter for it: <a href="#shot-1015" id="shot-1015" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9358,10 +9363,10 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>The getter uses a private variable for the value of the property, initializing it with an empty object if it’s never been accessed before.</p>
+<p>The getter uses a private variable for the value of the property, initializing it with an empty object if it’s never been accessed before. <a href="#shot-1016" id="shot-1016" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18</a></p>
 </div>
 <div class="paragraph">
-<p>Now we no longer need to initialize it in this before hook.</p>
+<p>Now we no longer need to initialize it in this before hook. <a href="#shot-1017" id="shot-1017" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9371,7 +9376,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>And run cucumber to check we’re still green.</p>
+<p>And run cucumber to check we’re still green. <a href="#shot-1018" id="shot-1018" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9382,7 +9387,7 @@ week and show you what we mean.</p>
 <div class="sect3">
 <h4 id="_move_this_network_property_behind_a_helper_method">9.3.3. Move <code>this.network</code> property behind a helper method</h4>
 <div class="paragraph">
-<p>We can follow the same steps for the <code>this.network</code> property. First, make the accessor method:</p>
+<p>We can follow the same steps for the <code>this.network</code> property.<a href="#shot-1019" id="shot-1019" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21</a> First, make the accessor method: <a href="#shot-1020" id="shot-1020" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9392,7 +9397,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>This will enable the <code>{person}</code> parameter type transformer to pull a <code>network</code> as soon as it needs one:</p>
+<p>This will enable the <code>{person}</code> parameter type transformer to pull a <code>network</code> as soon as it needs one: <a href="#shot-1021" id="shot-1021" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9400,16 +9405,16 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>So we don&#8217;t need to create a <code>Network</code> in a <code>Before</code> hook anymore.</p>
+<p>So we don&#8217;t need to create a <code>Network</code> in a <code>Before</code> hook anymore.<a href="#shot-1022" id="shot-1022" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24</a></p>
 </div>
 <div class="paragraph">
-<p>In fact, we can delete the <code>Before</code> hook altogether.</p>
+<p>In fact, we can delete the <code>Before</code> hook altogether.<a href="#shot-1023" id="shot-1023" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 25</a></p>
 </div>
 <div class="paragraph">
 <p>This is changing the behaviour slightly, and for the better. Now we&#8217;re not relying on timing - assuming that the hook has created the <code>Network</code> at a particular point in the scenario&#8217;s lifecycle. We just create the <code>Network</code> as we need it. This is called <em>Lazy loading</em>.</p>
 </div>
 <div class="paragraph">
-<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step:</p>
+<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step: <a href="#shot-1024" id="shot-1024" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 26</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9425,7 +9430,7 @@ week and show you what we mean.</p>
 <p>All the way through this lesson, we&#8217;ve been <em>pushing the how down</em>, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.</p>
 </div>
 <div class="paragraph">
-<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this:</p>
+<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this: <a href="#shot-1025" id="shot-1025" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 27</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9441,7 +9446,7 @@ week and show you what we mean.</p>
 <p>Let&#8217;s do it!</p>
 </div>
 <div class="paragraph">
-<p>First, we&#8217;ll add a unit test for the <code>Network</code> class:</p>
+<p>First, we&#8217;ll add a unit test for the <code>Network</code> class: <a href="#shot-1026" id="shot-1026" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 28</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9459,19 +9464,19 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll create a couple of people on the Network, which defaults to a range of 100, so they&#8217;re going to be close enough to hear each other at the moment.</p>
+<p>We&#8217;ll create a couple of people on the Network, which defaults to a range of 100, so they&#8217;re going to be close enough to hear each other at the moment. <a href="#shot-1027" id="shot-1027" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 29</a></p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll broadcast a shout from Sean, which Lucy should be able to hear.</p>
+<p>We&#8217;ll broadcast a shout from Sean, which Lucy should be able to hear.<a href="#shot-1028" id="shot-1028" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 30</a></p>
 </div>
 <div class="paragraph">
-<p>Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.</p>
+<p>Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.<a href="#shot-1029" id="shot-1029" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 31</a></p>
 </div>
 <div class="paragraph">
-<p>Broadcast again, and this time Lucy shouldn&#8217;t have heard anything.</p>
+<p>Broadcast again, and this time Lucy shouldn&#8217;t have heard anything.<a href="#shot-1030" id="shot-1030" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 32</a></p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run the test, and watch it fail like good TDD practitioners.</p>
+<p>Let&#8217;s run the test, and watch it fail like good TDD practitioners.<a href="#shot-1031" id="shot-1031" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 33</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9527,7 +9532,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can add the attribute writer:</p>
+<p>Now we can add the attribute writer: <a href="#shot-1032" id="shot-1032" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 34</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9543,7 +9548,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>We run the tests again, and everything should be passing. Great!</p>
+<p>We run the tests again, and everything should be passing. Great! <a href="#shot-1033" id="shot-1033" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 35</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9578,7 +9583,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can use that new method in our step:</p>
+<p>Now we can use that new method in our step: <a href="#shot-1034" id="shot-1034" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 36</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9588,7 +9593,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again:</p>
+<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again: <a href="#shot-1035" id="shot-1035" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 37</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9651,7 +9656,7 @@ should loosely deep-equal
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-31 14:18:33 UTC
+Last updated 2022-01-31 14:30:37 UTC
 </div>
 </div>
 </body>
