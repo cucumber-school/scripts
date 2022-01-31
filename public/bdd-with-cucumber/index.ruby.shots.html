@@ -8843,7 +8843,7 @@ Finished <span class="k">in </span>0.00913 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>In it, we first added a command to run rspec <a href="#shot-469" id="shot-469" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a>, followed by one to run cucumber. <a href="#shot-470" id="shot-470" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>In it, we first added a default task<a href="#shot-469" id="shot-469" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> with a command to run rspec <a href="#shot-470" id="shot-470" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a>, followed by one to run cucumber. <a href="#shot-471" id="shot-471" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8854,7 +8854,7 @@ Finished <span class="k">in </span>0.00913 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>This works, <a href="#shot-471" id="shot-471" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a> except for two small nitpicks:</p>
+<p>This works, <a href="#shot-472" id="shot-472" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a> except for two small nitpicks:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8986,7 +8986,7 @@ Tasks: TOP <span class="o">=&gt;</span> default
 </div>
 </div>
 <div class="paragraph">
-<p>The first one is the length of that output. At this point we don&#8217;t need this level of detail, we just want to know everything worked. And to focus on that, there&#8217;s no better solution than the <code>progress</code> formatter. <a href="#shot-472" id="shot-472" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>The first one is the length of that output.<a href="#shot-473" id="shot-473" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a> At this point we don&#8217;t need this level of detail, we just want to know everything worked. And to focus on that, there&#8217;s no better solution than the <code>progress</code> formatter. <a href="#shot-474" id="shot-474" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -8997,11 +8997,11 @@ Tasks: TOP <span class="o">=&gt;</span> default
 </div>
 </div>
 <div class="paragraph">
-<p>Lets see how it looks like <a href="#shot-473" id="shot-473" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
+<p>Lets see how it looks like <a href="#shot-475" id="shot-475" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">rake
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
 bundle <span class="nb">exec </span>rspec
 ..........
 
@@ -9042,10 +9042,10 @@ Tasks: TOP <span class="o">=&gt;</span> default
 </div>
 </div>
 <div class="paragraph">
-<p>Great, that&#8217;s &#8230;&#8203; shorter. But we still see our failing spec, the one we&#8217;re in the middle of fixing. That&#8217;s our second nitpick. We don&#8217;t want to see unfinished work, we only want to know we haven&#8217;t broken anything that was already working before.</p>
+<p>Great, that&#8217;s &#8230;&#8203; shorter. But we still see our failing spec,<a href="#shot-476" id="shot-476" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a> the one we&#8217;re in the middle of fixing. That&#8217;s our second nitpick. We don&#8217;t want to see unfinished work, we only want to know we haven&#8217;t broken anything that was already working before.</p>
 </div>
 <div class="paragraph">
-<p>If we take a pick at the failing scenario, we can see that it has the <code>@todo</code> tag.<a href="#shot-474" id="shot-474" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a> It seems that our team is using that tag as a convention to express that the scenarios marked as <code>@todo</code> are a Work in Progress. So lets omit this tag from our output. <a href="#shot-475" id="shot-475" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
+<p>If we take a pick at the failing scenario, we can see that it has the <code>@todo</code> tag.<a href="#shot-477" id="shot-477" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a> It seems that our team is using that tag as a convention to express that the scenarios marked as <code>@todo</code> are a Work in Progress. So lets omit this tag from our output. <a href="#shot-478" id="shot-478" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9056,7 +9056,7 @@ Tasks: TOP <span class="o">=&gt;</span> default
 </div>
 </div>
 <div class="paragraph">
-<p>Now, whenever we run our default rake task, we&#8217;re only checking our actual finished work. <a href="#shot-476" id="shot-476" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+<p>Now, whenever we run our default rake task, we&#8217;re only checking our actual finished work. <a href="#shot-479" id="shot-479" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9085,7 +9085,7 @@ Randomized with seed 61983</code></pre>
 <div class="sect2">
 <h3 id="_extracting_support_code">9.3. Extracting Support Code</h3>
 <div class="paragraph">
-<p>We need a new directory to contain our support code. the conventional place to put it is here, in a <code>support</code> directory underneath <code>features</code>.</p>
+<p>We need a new directory to contain our support code. the conventional place to put it is here, in a <code>support</code> directory underneath <code>features</code>.<a href="#shot-480" id="shot-480" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9093,7 +9093,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>There’s a special file in support that Cucumber always loads first, called <code>env.rb</code>. You can use this to boot up the system that you’re testing.</p>
+<p>There’s a special file in support that Cucumber always loads first, called <code>env.rb</code>.<a href="#shot-481" id="shot-481" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a> You can use this to boot up the system that you’re testing.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9101,7 +9101,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In this case, our system is just a domain model, but we can load it here instead of from the step definitions.</p>
+<p>In this case, our system is just a domain model, but we can load it here instead of from the step definitions.<a href="#shot-482" id="shot-482" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9109,7 +9109,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The most obvious duplication in the step definition code is for Sean shouting a message.</p>
+<p>The most obvious duplication in the step definition code is for Sean shouting a message.<a href="#shot-483" id="shot-483" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9139,7 +9139,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater?</p>
+<p>Let’s imagine we had a helper method we could call like this,<a href="#shot-484" id="shot-484" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a> instead. Wouldn’t that be neater?</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9152,7 +9152,7 @@ Randomized with seed 61983</code></pre>
 <p>Every time Cucumber runs a scenario, it creates a new object, called the <em>World</em>. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can extend the methods available on the world (and so the methods available to the step defintions) by first defining them on a Ruby module, then registering that module with Cucumber.</p>
 </div>
 <div class="paragraph">
-<p>We’ll create a new file in the <code>support</code> directory to contain our extensions to the world.<a href="#shot-477" id="shot-477" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>We’ll create a new file in the <code>support</code> directory to contain our extensions to the world.<a href="#shot-485" id="shot-485" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9160,7 +9160,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we define a module,</p>
+<p>Now we define a module,<a href="#shot-486" id="shot-486" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9169,7 +9169,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and tell Cucumber to make it part of the world.</p>
+<p>and tell Cucumber to make it part of the world.<a href="#shot-487" id="shot-487" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9177,7 +9177,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, we define our new helper method on this module and paste in the code from the step definition.</p>
+<p>Finally, we define our new helper method on this module <a href="#shot-488" id="shot-488" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a> and paste in the code from the step definition.<a href="#shot-489" id="shot-489" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9191,15 +9191,30 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run Cucumber to check everything’s still working… Good.</p>
+<p>Let’s run Cucumber to check everything’s still working…<a href="#shot-490" id="shot-490" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a> Good.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">RUN CUCUMBER!!!!</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00915 seconds <span class="o">(</span>files took 0.11906 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
+Using the default profile...
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m0.028s
+
+Randomized with seed 22636</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can use that new method everywhere… and check we haven’t broken anything… done.</p>
+<p>Now we can use that new method everywhere…<a href="#shot-491" id="shot-491" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9214,10 +9229,34 @@ Randomized with seed 61983</code></pre>
 <span class="o">...</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>and check we haven’t broken anything… done.<a href="#shot-492" id="shot-492" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files took 0.12051 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
+Using the default profile...
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m0.028s
+
+Randomized with seed 11215
+...................................</code></pre>
+</div>
+</div>
 <div class="sect3">
 <h4 id="_move_messages_shouted_by_instance_variable_behind_a_helper_method">9.3.1. Move <code>@messages_shouted_by</code> instance variable behind a helper method</h4>
 <div class="paragraph">
-<p>Notice that the helper method we extracted uses that <code>@messages_shouted_by</code> instance variable.</p>
+<p>Notice that the helper method we extracted uses that <code>@messages_shouted_by</code> instance variable.<a href="#shot-493" id="shot-493" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9231,7 +9270,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;re using this instance variable in this assertion step <a href="#shot-478" id="shot-478" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>We&#8217;re using this instance variable in this assertion step <a href="#shot-494" id="shot-494" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9250,7 +9289,7 @@ Randomized with seed 61983</code></pre>
 <p>It’s better to push the state behind the support API.</p>
 </div>
 <div class="paragraph">
-<p>Let’s extract this variable into a new method on the World that returns the instance variable, initializing it with an empty hash if it’s never been accessed before.</p>
+<p>Let’s extract this variable into a new method on the World <a href="#shot-495" id="shot-495" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16</a> that returns the instance variable,<a href="#shot-496" id="shot-496" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17</a> initializing it with an empty hash if it’s never been accessed before.<a href="#shot-497" id="shot-497" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9260,7 +9299,7 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can use this method in the step definitions,</p>
+<p>Now we can use this method in the step definitions,<a href="#shot-498" id="shot-498" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9270,7 +9309,19 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>and we no longer need to initialize it in this before hook.</p>
+<p>also in the <code>shout</code> helper <a href="#shot-499" id="shot-499" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">  <span class="k">def</span> <span class="nf">shout</span><span class="p">(</span><span class="n">from</span><span class="p">:,</span> <span class="n">message</span><span class="p">:)</span>
+    <span class="n">shouter</span> <span class="o">=</span> <span class="n">from</span>
+    <span class="n">shouter</span><span class="p">.</span><span class="nf">shout</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+    <span class="n">messages_shouted_by</span><span class="p">[</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="n">message</span>
+  <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and we no longer need to initialize it in this before hook.<a href="#shot-500" id="shot-500" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9280,31 +9331,46 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And run cucumber to check we’re still green.</p>
+<p>And run cucumber to check we’re still green.<a href="#shot-501" id="shot-501" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>cucumber</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake
+bundle <span class="nb">exec </span>rspec
+..........
+
+Finished <span class="k">in </span>0.00894 seconds <span class="o">(</span>files took 0.11845 seconds to load<span class="o">)</span>
+10 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
+Using the default profile...
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m0.030s
+
+Randomized with seed 62819</code></pre>
 </div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_move_network_instance_variable_behind_a_helper_method">9.3.2. Move <code>@network</code> instance variable behind a helper method</h4>
 <div class="paragraph">
-<p>We can follow the same steps for the <code>@network</code> instance variable. Make the accessor method:</p>
+<p>We can follow the same steps for the <code>@network</code> instance variable.<a href="#shot-502" id="shot-502" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23</a> Make the accessor method: <a href="#shot-503" id="shot-503" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">end</span>
-
-  <span class="k">def</span> <span class="nf">network</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">def</span> <span class="nf">network</span>
+    <span class="vi">@network</span> <span class="o">||=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Network</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="no">DEFAULT_RANGE</span><span class="p">)</span>
+  <span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>This will enable the <code>{person}</code> parameter type transformer to pull a <code>network</code> as soon as it needs one, so we don&#8217;t need to create a <code>Network</code> in a <code>Before</code> hook anymore.</p>
 </div>
 <div class="paragraph">
-<p>So we can delete the <code>Before</code> hook altogether.</p>
+<p>So we can delete the <code>Before</code> hook altogether.<a href="#shot-504" id="shot-504" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 25</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9317,7 +9383,7 @@ Randomized with seed 61983</code></pre>
 <p>This is changing the behaviour slightly, and for the better. Now we&#8217;re not relying on timing - assuming that the hook has created the <code>Network</code> at a particular point in the scenario&#8217;s lifecycle. We just create the <code>Network</code> as we need it. This is called <em>Lazy loading</em>.</p>
 </div>
 <div class="paragraph">
-<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step:</p>
+<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step: <a href="#shot-505" id="shot-505" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 26</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9336,13 +9402,13 @@ Randomized with seed 61983</code></pre>
 <p>All the way through this lesson, we&#8217;ve been <em>pushing the how down</em>, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.</p>
 </div>
 <div class="paragraph">
-<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this:</p>
+<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this: <a href="#shot-506" id="shot-506" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 27</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="k">end</span>
-
-<span class="no">Given</span> <span class="s2">"{person} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
+  <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="n">range</span>
+<span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9352,7 +9418,7 @@ Randomized with seed 61983</code></pre>
 <p>Let&#8217;s do it!</p>
 </div>
 <div class="paragraph">
-<p>First, we&#8217;ll add a unit test for the <code>Network</code> class:</p>
+<p>First, we&#8217;ll add a unit test for the <code>Network</code> class: <a href="#shot-507" id="shot-507" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 28</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9370,19 +9436,19 @@ Randomized with seed 61983</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>First we&#8217;ll create a couple of people on the Network, which defaults to a range of 100, so they&#8217;re going to be close enough to hear each other at the moment.</p>
+<p>First we&#8217;ll create a couple of people on the Network, which defaults to a range of 100, so they&#8217;re going to be close enough to hear each other at the moment.<a href="#shot-508" id="shot-508" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 29</a></p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll broadcast a shout from Sean, which Lucy should be able to hear.</p>
+<p>We&#8217;ll broadcast a shout from Sean, which Lucy should be able to hear.<a href="#shot-509" id="shot-509" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 30</a></p>
 </div>
 <div class="paragraph">
-<p>Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.</p>
+<p>Now, we can try setting the range to something much shorter, like 5,<a href="#shot-510" id="shot-510" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 31</a> so that Sean will now be out of range.</p>
 </div>
 <div class="paragraph">
-<p>Broadcast again, and this time Lucy shouldn&#8217;t have heard anything.</p>
+<p>Broadcast again,<a href="#shot-511" id="shot-511" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 32</a> and this time Lucy shouldn&#8217;t have heard anything.<a href="#shot-512" id="shot-512" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 33</a></p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run the test, and watch it fail like good TDD practitioners.</p>
+<p>Let&#8217;s run the test, and watch it fail like good TDD practitioners.<a href="#shot-513" id="shot-513" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 34</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9392,12 +9458,12 @@ Randomized with seed 61983</code></pre>
 
 Failures:
 
-  1<span class="o">)</span> Shouty::Network can change the range
-     Failure/Error: network.range <span class="o">=</span> 5
+1<span class="o">)</span> Shouty::Network can change the range
+Failure/Error: network.range <span class="o">=</span> 5
 
-     NoMethodError:
-       undefined method <span class="sb">`</span><span class="nv">range</span><span class="o">=</span><span class="sb">`</span> <span class="k">for</span> <span class="c">#&lt;Shouty::Network:0x000000013b01bc10 @range=100, @listeners=[#&lt;Shouty::Person:0x000000013b01bbc0 @name="Sean", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=0, @credits=0&gt;, #&lt;Shouty::Person:0x000000013b01bb20 @name="Laura", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=10, @credits=0&gt;]&gt;</span>
-     <span class="c"># ./spec/network_spec.rb:53:in `block (2 levels) in &lt;top (required)&gt;'</span>
+NoMethodError:
+undefined method <span class="sb">`</span><span class="nv">range</span><span class="o">=</span><span class="sb">`</span> <span class="k">for</span> <span class="c">#&lt;Shouty::Network:0x000000013b01bc10 @range=100, @listeners=[#&lt;Shouty::Person:0x000000013b01bbc0 @name="Sean", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=0, @credits=0&gt;, #&lt;Shouty::Person:0x000000013b01bb20 @name="Laura", @messages_heard=["Free bagels!"], @network=#&lt;Shouty::Network:0x000000013b01bc10 ...&gt;, @location=10, @credits=0&gt;]&gt;</span>
+<span class="c"># ./spec/network_spec.rb:53:in `block (2 levels) in &lt;top (required)&gt;'</span>
 
 Finished <span class="k">in </span>0.01381 seconds <span class="o">(</span>files took 0.13762 seconds to load<span class="o">)</span>
 11 examples, 1 failure
@@ -9408,38 +9474,39 @@ rspec ./spec/network_spec.rb:46 <span class="c"># Shouty::Network can change the
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can add the attribute writer:</p>
+<p>Now we can add the attribute writer:<a href="#shot-514" id="shot-514" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 35</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="ruby">  <span class="k">class</span> <span class="nc">Network</span>
     <span class="nb">attr_writer</span> <span class="ss">:range</span>
-    <span class="o">...</span></code></pre>
+<span class="o">...</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run RSpec again, and everything should be passing. Great!</p>
-</div>
-<div class="paragraph">
-<p>Now we can use that new method in our step:</p>
+<p>Let&#8217;s run RSpec again, and everything should be passing.<a href="#shot-515" id="shot-515" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 36</a> Great!</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby"><span class="k">end</span>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rspec
+...........
 
-<span class="no">Given</span> <span class="s2">"{person} is located at {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">person</span><span class="p">,</span> <span class="n">location</span><span class="o">|</span></code></pre>
+Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files took 0.12129 seconds to load<span class="o">)</span>
+11 examples, 0 failures</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And remove the <code>network</code> attribute writer on the World</p>
+<p>Now we can use that new method in our step: <a href="#shot-516" id="shot-516" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 37</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="ruby">  <span class="k">end</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Given</span> <span class="s2">"the range is {int}"</span> <span class="k">do</span> <span class="o">|</span><span class="n">range</span><span class="o">|</span>
+  <span class="n">network</span><span class="p">.</span><span class="nf">range</span> <span class="o">=</span> <span class="n">range</span>
+<span class="k">end</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again:</p>
+<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again: <a href="#shot-517" id="shot-517" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 38</a></p>
 </div>
 <div class="listingblock">
 <div class="content">

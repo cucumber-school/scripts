@@ -40,9 +40,9 @@ So how would we add this `shout` method to `this`?shot::[7] What even _is_ `this
 
 ==== The World
 
-Every time Cucumber runs a scenario, it creates a new object, called the _World_, which we can define the new world class in our `env.js` support file that we just created.shot::[8].
+Every time Cucumber runs a scenario, it creates a new object, called the _World_. We can define the new world class in our `env.js` support file that we just created.shot::[8].
 
-Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class, then calling Cucumber's `setWorldConstructor` method to tell it to use that class when constructing new instances of the world. shot::[9]
+Each step definition function runs in the context of a new instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class, then calling Cucumber's `setWorldConstructor` method to tell it to use that class when constructing new instances of the world. shot::[9]
 
 [source,javascript]
 ----
