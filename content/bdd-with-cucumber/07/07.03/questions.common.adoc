@@ -25,17 +25,18 @@ Explanation:
 
 * When Bobby makes a withdrawl of $50 (*Correct*)
 * Given "User A" has opened an account
-* Given an account with an arranged overdraft of $1
+* Given an account with an arranged overdraft of $123
 * When the user changes their PIN to 0000 (*Correct*)
 * Given a cheque for $19.99 was deposited on 2021-04-01 (*Correct*)
-* Given the book "Zen and the Art of Motorcyle Maintenance" has been on loan since 2021-06-01 (*Correct*)
-* Given the book "Book1" has been on loan since 1900-01-01
+* When Bobby makes a withdrawl of $1
 
 Explanation:
 
 "R" is for *Real data:* When you're first discussing the details of a story, your examples should use concrete, real data. This helps bring the scenarios to life, and expose boundary conditions and underlying assumptions early in the development process. When writing scenarios, we should also use real data whenever this helps reveal intention and make them move vivid.
 
 Arguably, the PIN of 0000 is not very realistic, but if this step is being used in a scenario to describe validation rules for new PIN numbers, this could be entirely appropriate real-world data for an invalid PIN.
+
+It's impossible to withdraw $1 from most ATMs, so this is not real data. Similarly, most banks won't let you set an overdraft of $123. We can be more imaginative than calling our user "User A".
 
 ===== "I" in BRIEF stands for "Intention Revealing". Which of these steps are good at revealing their intention?
 
