@@ -1,311 +1,321 @@
 include::./title.adoc[]
 
-We need a new directory to contain our support code. the conventional place to put it is here, in a `support` directory underneath `features`.shot::[1]
+Up until now, we've been running Cucumber every time we make a change in order to follow the TDD process. When we find a change that's too specific to a particular domain model, we usually drop down to the specs for that model and run them individually, again, following the TDD loop.
 
-[source, sh]
-----
-mkdir features/support
-----
-
-There’s a special file in support that Cucumber always loads first, called `env.rb`.shot::[2] You can use this to boot up the system that you’re testing.
-
-[source, sh]
-----
-touch features/support/env.rb
-----
-
-In this case, our system is just a domain model, but we can load it here instead of from the step definitions.shot::[3]
-
-[source, ruby]
-----
-include::../code/ruby/02-require-the-app-from-env-rb/features/support/env.rb[lines=1]
-----
-
-The most obvious duplication in the step definition code is for Sean shouting a message.shot::[4]
-
-[source,rb]
-----
-include::../code/ruby/03-create-world-module/features/step_definitions/steps.rb[lines=20..42]
-----
-
-Let’s imagine we had a helper method we could call like this,shot::[5] instead. Wouldn’t that be neater?
-
-[source,ruby]
-----
-include::../code/ruby/04-extract-shout-helper-to-world-module/features/step_definitions/steps.rb[lines=20..22]
-----
-
-Every time Cucumber runs a scenario, it creates a new object, called the _World_. Each step definition runs inside this instance of the world, almost as though it were a method on that object. We can extend the methods available on the world (and so the methods available to the step defintions) by first defining them on a Ruby module, then registering that module with Cucumber.
-
-We’ll create a new file in the `support` directory to contain our extensions to the world.shot::[6]
+But, while reworking the code for this lesson, we found out something that we didn't expect. Our specs were failing, and we didn't actually notice shot::[1]
 
 [source,sh]
 ----
-touch features/support/world.rb
-----
-
-Now we define a module,shot::[7]
-
-[source,ruby]
-----
-include::../code/ruby/03-create-world-module/features/support/world.rb[lines=1..2]
-----
-
-and tell Cucumber to make it part of the world.shot::[8]
-
-[source,ruby]
-----
-include::../code/ruby/03-create-world-module/features/support/world.rb[lines=4]
-----
-
-Finally, we define our new helper method on this module shot::[9] and paste in the code from the step definition.shot::[10]
-
-[source,rb]
-----
-include::../code/ruby/04-extract-shout-helper-to-world-module/features/support/world.rb[lines=1..7]
-----
-
-Let’s run Cucumber to check everything’s still working…shot::[11] Good.
-
-[source,sh]
-----
-$ bundle exec rake
 bundle exec rspec
-..........
-
-Finished in 0.00915 seconds (files took 0.11906 seconds to load)
-10 examples, 0 failures
-
-bundle exec cucumber --tags 'not @todo' --format progress
-Using the default profile...
-...................................
-
-6 scenarios (6 passed)
-35 steps (35 passed)
-0m0.028s
-
-Randomized with seed 22636
-----
-
-Now we can use that new method everywhere…shot::[12]
-
-[source,ruby]
-----
-...
-include::../code/ruby/05-use-shout-helper-everywhere/features/step_definitions/steps.rb[lines=24..30]
-...
-----
-
-and check we haven’t broken anything… done.shot::[13]
-
-[source,sh]
-----
-$ bundle exec rake
-bundle exec rspec
-..........
-
-Finished in 0.00854 seconds (files took 0.12051 seconds to load)
-10 examples, 0 failures
-
-bundle exec cucumber --tags 'not @todo' --format progress
-Using the default profile...
-...................................
-
-6 scenarios (6 passed)
-35 steps (35 passed)
-0m0.028s
-
-Randomized with seed 11215
-...................................
-----
-
-==== Move `@messages_shouted_by` instance variable behind a helper method
-
-Notice that the helper method we extracted uses that `@messages_shouted_by` instance variable.shot::[14]
-
-[source,ruby]
-----
-include::../code/ruby/05-use-shout-helper-everywhere/features/support/world.rb[lines=1..7]
-----
-
-We're using this instance variable in this assertion step shot::[15]
-
-[source,ruby]
-----
-include::../code/ruby/05-use-shout-helper-everywhere/features/step_definitions/steps.rb[lines=61..63]
-----
-
-This works because the helper methods are mixed into the same World object as the step definitions, so they can all see the same instance variables.
-
-However, we don’t like sharing state across the support API boundary like this. Things can get complicated quickly when you have code spread all over your step definitions and support directory that’s depending on these instance variables.
-
-It’s better to push the state behind the support API.
-
-Let’s extract this variable into a new method on the World shot::[16] that returns the instance variable,shot::[17] initializing it with an empty hash if it’s never been accessed before.shot::[18]
-
-[source,ruby]
-----
-include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/support/world.rb[lines=8..10]
-----
-
-Now we can use this method in the step definitions,shot::[19]
-
-[source,rb]
-----
-include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=60..62]
-----
-
-also in the `shout` helper shot::[20]
-
-[source,rb]
-----
-include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/support/world.rb[lines=2..6]
-----
-
-and we no longer need to initialize it in this before hook.shot::[21]
-
-[source,ruby]
-----
-include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=3..5]
-----
-
-And run cucumber to check we’re still green.shot::[22]
-
-[source,sh]
-----
-$ bundle exec rake
-bundle exec rspec
-..........
-
-Finished in 0.00894 seconds (files took 0.11845 seconds to load)
-10 examples, 0 failures
-
-bundle exec cucumber --tags 'not @todo' --format progress
-Using the default profile...
-...................................
-
-6 scenarios (6 passed)
-35 steps (35 passed)
-0m0.030s
-
-Randomized with seed 62819
-----
-
-==== Move `@network` instance variable behind a helper method
-
-We can follow the same steps for the `@network` instance variable.shot::[23] Make the accessor method: shot::[24]
-
-[source,ruby]
-----
-include::../code/ruby/07-move-network-to-an-accessor-in-world/features/support/world.rb[lines=14..16]
-----
-
-This will enable the `{person}` parameter type transformer to pull a `network` as soon as it needs one, so we don't need to create a `Network` in a `Before` hook anymore.
-
-So we can delete the `Before` hook altogether.shot::[25]
-
-[source,ruby]
-----
-include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=3..5]
-----
-
-This is changing the behaviour slightly, and for the better. Now we're not relying on timing - assuming that the hook has created the `Network` at a particular point in the scenario's lifecycle. We just create the `Network` as we need it. This is called _Lazy loading_.
-
-There's one other place where we're using the `Network`, in this step: shot::[26]
-
-[source,ruby]
-----
-include::../code/ruby/06-push-messages_shouted_by-behind-a-method-in-world/features/step_definitions/steps.rb[lines=7..9]
-----
-
-Here, we're trying to change the range of the network, and the only way to do that at the moment is to create a brand new instance of `Network`. This means we have another leak of the `@network` instance variable into the step definitions.
-
-This way of doing it is risky. If someone used this step in the middle of a scenario that already had some `Person` instances subscribed to a `Network`, we'd get some confusing behaviour as the `@network` would be overwritten with a new instance with nobody subscribed to it.
-
-All the way through this lesson, we've been _pushing the how down_, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.
-
-Imagine we had a `range` setter method on our `Network` that allowed us to modify the range on the fly. Then, our step would just look like this: shot::[27]
-
-[source,ruby]
-----
-include::../code/ruby/09-use-new-network-range-method/features/step_definitions/steps.rb[lines=1..3]
-----
-
-Isn't that better?
-
-Let's do it!
-
-First, we'll add a unit test for the `Network` class: shot::[28]
-
-[source,ruby]
-----
-include::../code/ruby/08-add-a-way-to-change-the-network-s-range/spec/network_spec.rb[lines=46..56]
-----
-
-First we'll create a couple of people on the Network, which defaults to a range of 100, so they're going to be close enough to hear each other at the moment.shot::[29]
-
-We'll broadcast a shout from Sean, which Lucy should be able to hear.shot::[30]
-
-Now, we can try setting the range to something much shorter, like 5,shot::[31] so that Sean will now be out of range.
-
-Broadcast again,shot::[32] and this time Lucy shouldn't have heard anything.shot::[33]
-
-Let's run the test, and watch it fail like good TDD practitioners.shot::[34]
-
-[source,sh]
-----
-$ bundle exec rspec
-
-....F......
+FFFF..F.
 
 Failures:
 
-1) Shouty::Network can change the range
-Failure/Error: network.range = 5
+  1) Shouty::Network broadcasts a message to a listener within range
+     Failure/Error: shouter.credits -= (message.scan(/buy/i) || []).size * 5
+     
+     NoMethodError:
+       undefined method `credits' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'
+     # ./lib/shouty.rb:36:in `broadcast'
+     # ./spec/network_spec.rb:13:in `block (2 levels) in <top (required)>'
 
-NoMethodError:
-undefined method `range=` for #<Shouty::Network:0x000000013b01bc10 @range=100, @listeners=[#<Shouty::Person:0x000000013b01bbc0 @name="Sean", @messages_heard=["Free bagels!"], @network=#<Shouty::Network:0x000000013b01bc10 ...>, @location=0, @credits=0>, #<Shouty::Person:0x000000013b01bb20 @name="Laura", @messages_heard=["Free bagels!"], @network=#<Shouty::Network:0x000000013b01bc10 ...>, @location=10, @credits=0>]>
-# ./spec/network_spec.rb:53:in `block (2 levels) in <top (required)>'
+  2) Shouty::Network does not broadcast a message to a listener out of range
+     Failure/Error: shouter.credits -= (message.scan(/buy/i) || []).size * 5
+     
+     NoMethodError:
+       undefined method `credits' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'
+     # ./lib/shouty.rb:36:in `broadcast'
+     # ./spec/network_spec.rb:22:in `block (2 levels) in <top (required)>'
 
-Finished in 0.01381 seconds (files took 0.13762 seconds to load)
-11 examples, 1 failure
+  3) Shouty::Network does not broadcast a message to a listener out of range negative distance
+     Failure/Error: shouter.credits -= (message.scan(/buy/i) || []).size * 5
+     
+     NoMethodError:
+       undefined method `credits' for 0:Integer
+     # ./lib/shouty.rb:48:in `deduct_credits'
+     # ./lib/shouty.rb:36:in `broadcast'
+     # ./spec/network_spec.rb:31:in `block (2 levels) in <top (required)>'
+
+  4) Shouty::Network does not broadcast a message over 180 characters even if listener is in range
+     Failure/Error: shouter.credits -= 2 unless short_enough
+     
+     NoMethodError:
+       undefined method `credits' for 0:Integer
+     # ./lib/shouty.rb:47:in `deduct_credits'
+     # ./lib/shouty.rb:36:in `broadcast'
+     # ./spec/network_spec.rb:43:in `block (2 levels) in <top (required)>'
+
+  5) Shouty::Network broadcasts shouts to the network
+     Failure/Error: expect(@networkStub).to have_received(:broadcast).with(message, location)
+     
+       #<Double Shouty::Network> received :broadcast with unexpected arguments
+         expected: ("Free bagels!", 0)
+              got: ("Free bagels!", #<Shouty::Person:0x000055a786ad4de0 @messages_heard=[], @network=#<Double Shouty::Network>, @location=0, @credits=0>)
+     # ./spec/person_spec.rb:30:in `block (2 levels) in <top (required)>'
+
+Finished in 0.01732 seconds (files took 0.17248 seconds to load)
+8 examples, 5 failures
 
 Failed examples:
 
-rspec ./spec/network_spec.rb:46 # Shouty::Network can change the range
+rspec ./spec/network_spec.rb:9 # Shouty::Network broadcasts a message to a listener within range
+rspec ./spec/network_spec.rb:18 # Shouty::Network does not broadcast a message to a listener out of range
+rspec ./spec/network_spec.rb:27 # Shouty::Network does not broadcast a message to a listener out of range negative distance
+rspec ./spec/network_spec.rb:36 # Shouty::Network does not broadcast a message over 180 characters even if listener is in range
+rspec ./spec/person_spec.rb:23 # Shouty::Network broadcasts shouts to the network
 ----
 
-Now we can add the attribute writer:shot::[35]
+This was caused by the fact that we were mostly running cucumber and we hadn't run the specs in a long while.
 
-[source,ruby]
-----
-include::../code/ruby/08-add-a-way-to-change-the-network-s-range/lib/shouty.rb[lines=30..31]
-...
-----
-
-Let's run RSpec again, and everything should be passing.shot::[36] Great!
+After dedicating some time to fix the specs shot::[2]
 
 [source,sh]
 ----
 $ bundle exec rspec
-...........
+..........
 
-Finished in 0.00935 seconds (files took 0.12129 seconds to load)
-11 examples, 0 failures
+Finished in 0.00913 seconds (files took 0.10673 seconds to load)
+10 examples, 0 failures
 ----
 
-Now we can use that new method in our step: shot::[37]
+we decided to solve this problem by creating a strategy for running all of our test cases, including both specs and scenarios. This way, we could keep a closer look on the big picture.
 
-[source,ruby]
-----
-include::../code/ruby/09-use-new-network-range-method/features/step_definitions/steps.rb[lines=1..3]
-----
-
-Let's run all the tests to make sure everything's working again: shot::[38]
+In order to do so, we created a `Rakefile` shot::[3]
 
 [source,sh]
 ----
-bundle exec rake
+$ touch Rakefile
 ----
 
-Great!
+In it, we first added a default taskshot::[4] with a command to run rspec shot::[5], followed by one to run cucumber. shot::[6]
+
+[source,ruby]
+----
+task :default do
+  sh "bundle exec rspec"
+  sh "bundle exec cucumber"
+end
+----
+
+This works, shot::[7] except for two small nitpicks:
+
+[source,sh]
+----
+$ bundle exec rake
+bundle exec rspec
+..........
+
+Finished in 0.00751 seconds (files took 0.10205 seconds to load)
+10 examples, 0 failures
+
+bundle exec cucumber
+Using the default profile...
+Feature: Premium account
+    Questions:
+    * What about the one where the same message is both over-long and contains the word "buy"
+    * What happens if Sean runs out of credits?
+
+  Background:                  # features/premium_shouts.feature:7
+    Given the range is 100     # features/step_definitions/steps.rb:10
+    And Sean is located at 0   # features/step_definitions/steps.rb:14
+    And Lucy is located at 100 # features/step_definitions/steps.rb:14
+
+  Scenario: Sean some messages containing the word “buy” # features/premium_shouts.feature:13
+    Given Sean has bought 30 credits                     # features/step_definitions/steps.rb:18
+    And Sean shouts 3 messages containing the word "buy" # features/step_definitions/steps.rb:46
+    Then Lucy hears all Sean's messages                  # features/step_definitions/steps.rb:68
+    And Sean should have 15 credits                      # features/step_definitions/steps.rb:72
+
+Feature: Hear shout
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  Scenario: Listener is out of range   # features/hear_shout.feature:14
+    Given the range is 100             # features/step_definitions/steps.rb:10
+    And Sean is located at 0           # features/step_definitions/steps.rb:14
+    And Larry is located at 150        # features/step_definitions/steps.rb:14
+    When Sean shouts                   # features/step_definitions/steps.rb:22
+    Then Larry should not hear a shout # features/step_definitions/steps.rb:58
+
+Feature: Premium account
+    Questions:
+    * What about the one where the same message is both over-long and contains the word "buy"
+    * What happens if Sean runs out of credits?
+
+  Background:                  # features/premium_shouts.feature:7
+    Given the range is 100     # features/step_definitions/steps.rb:10
+    And Sean is located at 0   # features/step_definitions/steps.rb:14
+    And Lucy is located at 100 # features/step_definitions/steps.rb:14
+
+  Scenario: Sean shouts some over-long messages # features/premium_shouts.feature:20
+    Given Sean has bought 30 credits            # features/step_definitions/steps.rb:18
+    When Sean shouts 2 over-long messages       # features/step_definitions/steps.rb:37
+    Then Lucy hears all Sean's messages         # features/step_definitions/steps.rb:68
+    And Sean should have 26 credits             # features/step_definitions/steps.rb:72
+
+Feature: Hear shout
+  Shouty allows users to "hear" other users "shouts" as long as they are close enough to each other.
+
+  Scenario: Message is too long            # features/hear_shout.feature:35
+    Given the range is 100                 # features/step_definitions/steps.rb:10
+    And Sean is located at 0               # features/step_definitions/steps.rb:14
+    And Lucy is located at 50              # features/step_definitions/steps.rb:14
+    When Sean shouts the following message # features/step_definitions/steps.rb:32
+      """
+      This is a really long message
+      so long in fact that I am not going to
+      be allowed to send it, at least if I keep
+      typing like this until the length is over
+      the limit of 180 characters.
+      """
+    Then Lucy should not hear a shout      # features/step_definitions/steps.rb:58
+
+  Scenario: Listener is within range # features/hear_shout.feature:7
+    Given the range is 100           # features/step_definitions/steps.rb:10
+    And Sean is located at 0         # features/step_definitions/steps.rb:14
+    And Lucy is located at 50        # features/step_definitions/steps.rb:14
+    When Sean shouts                 # features/step_definitions/steps.rb:22
+    Then Lucy should hear a shout    # features/step_definitions/steps.rb:54
+
+  Scenario: Two shouts                      # features/hear_shout.feature:23
+    Given the range is 100                  # features/step_definitions/steps.rb:10
+    And Sean is located at 0                # features/step_definitions/steps.rb:14
+    And Lucy is located at 50               # features/step_definitions/steps.rb:14
+    When Sean shouts "Free bagels!"         # features/step_definitions/steps.rb:27
+    And Sean shouts "Free toast!"           # features/step_definitions/steps.rb:27
+    Then Lucy hears the following messages: # features/step_definitions/steps.rb:62
+      | Free bagels! |
+      | Free toast!  |
+
+Feature: Premium account
+    Questions:
+    * What about the one where the same message is both over-long and contains the word "buy"
+    * What happens if Sean runs out of credits?
+
+  Background:                  # features/premium_shouts.feature:7
+    Given the range is 100     # features/step_definitions/steps.rb:10
+    And Sean is located at 0   # features/step_definitions/steps.rb:14
+    And Lucy is located at 100 # features/step_definitions/steps.rb:14
+
+  @todo
+  Scenario: BUG #2789                # features/premium_shouts.feature:27
+    Given Sean has bought 30 credits # features/step_definitions/steps.rb:18
+    When Sean shouts "buy, buy buy!" # features/step_definitions/steps.rb:27
+    Then Sean should have 25 credits # features/step_definitions/steps.rb:72
+      
+      expected: 25
+           got: 15
+      
+      (compared using eql?)
+       (RSpec::Expectations::ExpectationNotMetError)
+      ./features/step_definitions/steps.rb:73:in `nil'
+      features/premium_shouts.feature:30:in `Sean should have 25 credits'
+
+Failing Scenarios:
+cucumber features/premium_shouts.feature:27 # Scenario: BUG #2789
+
+7 scenarios (1 failed, 6 passed)
+41 steps (1 failed, 40 passed)
+0m0.091s
+
+Randomized with seed 35929
+rake aborted!
+Command failed with status (1): [bundle exec cucumber...]
+/home/fedex/cucumber/content/content/09/code/ruby/00-initial-commit/Rakefile:3:in `block in <top (required)>'
+/home/fedex/.rvm/gems/ruby-3.0.2/gems/rake-13.0.6/exe/rake:27:in `<top (required)>'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `eval'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `<main>'
+Tasks: TOP => default
+(See full trace by running task with --trace)
+----
+
+The first one is the length of that output.shot::[8] At this point we don't need this level of detail, we just want to know everything worked. And to focus on that, there's no better solution than the `progress` formatter. shot::[9]
+
+[source,ruby]
+----
+task :default do
+  sh "bundle exec rspec"
+  sh "bundle exec cucumber --format progress"
+end
+----
+
+Lets see how it looks like shot::[10]
+
+[source,sh]
+----
+$ bundle exec rake
+bundle exec rspec
+..........
+
+Finished in 0.00719 seconds (files took 0.10067 seconds to load)
+10 examples, 0 failures
+
+bundle exec cucumber --format progress
+Using the default profile...
+........................................F
+
+(::) failed steps (::)
+
+
+expected: 25
+     got: 15
+
+(compared using eql?)
+ (RSpec::Expectations::ExpectationNotMetError)
+./features/step_definitions/steps.rb:73:in `nil'
+features/premium_shouts.feature:30:in `Sean should have 25 credits'
+
+Failing Scenarios:
+cucumber features/premium_shouts.feature:27 # Scenario: BUG #2789
+
+7 scenarios (1 failed, 6 passed)
+41 steps (1 failed, 40 passed)
+0m0.054s
+
+Randomized with seed 15282
+rake aborted!
+Command failed with status (1): [bundle exec cucumber --format progress...]
+/home/fedex/cucumber/content/content/09/code/ruby/00-initial-commit/Rakefile:3:in `block in <top (required)>'
+/home/fedex/.rvm/gems/ruby-3.0.2/gems/rake-13.0.6/exe/rake:27:in `<top (required)>'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `eval'
+/home/fedex/.rvm/gems/ruby-3.0.2/bin/ruby_executable_hooks:22:in `<main>'
+Tasks: TOP => default
+(See full trace by running task with --trace)
+----
+
+Great, that's ... shorter. But we still see our failing spec,shot::[11] the one we're in the middle of fixing. That's our second nitpick. We don't want to see unfinished work, we only want to know we haven't broken anything that was already working before.
+
+If we take a pick at the failing scenario, we can see that it has the `@todo` tag.shot::[12] It seems that our team is using that tag as a convention to express that the scenarios marked as `@todo` are a Work in Progress. So lets omit this tag from our output. shot::[13]
+
+[source,ruby]
+----
+task :default do
+  sh "bundle exec rspec"
+  sh "bundle exec cucumber --tags 'not @todo' --format progress"
+end
+----
+
+Now, whenever we run our default rake task, we're only checking our actual finished work. shot::[14]
+
+[source,sh]
+----
+$ bundle exec rake
+bundle exec rspec
+..........
+
+Finished in 0.0076 seconds (files took 0.10149 seconds to load)
+10 examples, 0 failures
+
+bundle exec cucumber --tags 'not @todo' --format progress
+Using the default profile...
+...................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m0.046s
+
+Randomized with seed 61983
+----
+
+And it looks much cleaner.

@@ -1,0 +1,20 @@
+=== Layers of a Cucumber Test Suite
+
+So where do your feature files sit on this diagram of problem and solution domains?
+
+Well, we hope they sit right in the middle here, and act as the place where the problem and solution domains come together. Someone from either domain should be able to read a feature file and it will make sense to them.
+
+And how about step definitions?
+
+Step definitions are right on the boundary, here, translating between the problem-domain language we use in our Gherkin scenarios and the concrete actions we take in code to pull and poke at our solution.
+
+We want to prevent solution-domain concepts and language from leaking into our Gherkin scenarios to keep them readable. As we saw in the last lesson, when we remove details from scenarios, we trade-off for increased complexity in our step definitions.
+
+So how do we manage this complexity?
+
+A mature Cucumber test suite will have a layer of support code sitting between the step definitions and the system being automated.
+
+This layer of support code literally supports the step definitions by providing an API for automating your application.
+
+We can extract this API from our step definitions. Let’s pick up the shouty codebase from last 
+week and show you what we mean.

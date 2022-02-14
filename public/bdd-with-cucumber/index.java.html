@@ -731,10 +731,11 @@ pre.rouge {
 </li>
 <li><a href="#_support_code">9. Support Code</a>
 <ul class="sectlevel2">
-<li><a href="#_layers_of_a_cucumber_test_suite">9.1. Layers of a Cucumber Test Suite</a></li>
-<li><a href="#_test_all_the_fing_time">9.2. Test all the f***ing time</a></li>
-<li><a href="#_extracting_support_code">9.3. Extracting Support Code</a></li>
-<li><a href="#_close">9.4. Close</a></li>
+<li><a href="#_problem_and_solution_domains">9.1. Problem and Solution Domains</a></li>
+<li><a href="#_layers_of_a_cucumber_test_suite">9.2. Layers of a Cucumber Test Suite</a></li>
+<li><a href="#_test_all_the_time">9.3. Test all the time</a></li>
+<li><a href="#_extracting_support_code">9.4. Extracting Support Code</a></li>
+<li><a href="#_close">9.5. Close</a></li>
 </ul>
 </li>
 <li><a href="#_acceptance_tests_vs_unit_tests">10. Acceptance Tests vs Unit Tests</a></li>
@@ -7571,7 +7572,7 @@ Your browser does not support the video tag.
 <p>Given "User A" has opened an account</p>
 </li>
 <li>
-<p>Given an account with an arranged overdraft of $1</p>
+<p>Given an account with an arranged overdraft of $123</p>
 </li>
 <li>
 <p>When the user changes their PIN to 0000 (<strong>Correct</strong>)</p>
@@ -7580,10 +7581,7 @@ Your browser does not support the video tag.
 <p>Given a cheque for $19.99 was deposited on 2021-04-01 (<strong>Correct</strong>)</p>
 </li>
 <li>
-<p>Given the book "Zen and the Art of Motorcyle Maintenance" has been on loan since 2021-06-01 (<strong>Correct</strong>)</p>
-</li>
-<li>
-<p>Given the book "Book1" has been on loan since 1900-01-01</p>
+<p>When Bobby makes a withdrawl of $1</p>
 </li>
 </ul>
 </div>
@@ -7595,6 +7593,9 @@ Your browser does not support the video tag.
 </div>
 <div class="paragraph">
 <p>Arguably, the PIN of 0000 is not very realistic, but if this step is being used in a scenario to describe validation rules for new PIN numbers, this could be entirely appropriate real-world data for an invalid PIN.</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s impossible to withdraw $1 from most ATMs, so this is not real data. Similarly, most banks won&#8217;t let you set an overdraft of $123. We can be more imaginative than calling our user "User A".</p>
 </div>
 </div>
 <div class="sect4">
@@ -9338,7 +9339,7 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <p>In doing this, we got more readable, maintainable and useful scenarios in exchange for more complex automation code. In this chapter we&#8217;ll show you how to organise your automation support code so that you won&#8217;t be afraid of making this trade-off.</p>
 </div>
 <div class="sect2">
-<h3 id="_layers_of_a_cucumber_test_suite">9.1. Layers of a Cucumber Test Suite</h3>
+<h3 id="_problem_and_solution_domains">9.1. Problem and Solution Domains</h3>
 <div class="paragraph">
 <p>When we build software, we’re always working across two domains.</p>
 </div>
@@ -9357,8 +9358,14 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <div class="paragraph">
 <p>Certainly, we believe that the better an understanding you have of the problem domain, the better a solution you can build. That’s why Cucumber is so powerful, because it helps you to stay rooted in the problem domain.</p>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_layers_of_a_cucumber_test_suite">9.2. Layers of a Cucumber Test Suite</h3>
 <div class="paragraph">
-<p>So where do your feature files sit on this diagram? Well, we hope they sit right in the middle here, and act as the place where the problem and solution domains come together. Someone from either domain should be able to read a feature file and it will make sense to them.</p>
+<p>So where do your feature files sit on this diagram of problem and solution domains?</p>
+</div>
+<div class="paragraph">
+<p>Well, we hope they sit right in the middle here, and act as the place where the problem and solution domains come together. Someone from either domain should be able to read a feature file and it will make sense to them.</p>
 </div>
 <div class="paragraph">
 <p>And how about step definitions?</p>
@@ -9376,9 +9383,6 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <p>A mature Cucumber test suite will have a layer of support code sitting between the step definitions and the system being automated.</p>
 </div>
 <div class="paragraph">
-<p>[ show diagram of Gherkin &#8594; Step Definitions &#8594; Support Code &#8594; System layers]</p>
-</div>
-<div class="paragraph">
 <p>This layer of support code literally supports the step definitions by providing an API for automating your application.</p>
 </div>
 <div class="paragraph">
@@ -9387,13 +9391,13 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_test_all_the_fing_time">9.2. Test all the f***ing time</h3>
+<h3 id="_test_all_the_time">9.3. Test all the time</h3>
 <div class="paragraph">
 <p>TODO: set up mvn task to run all the tests</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_extracting_support_code">9.3. Extracting Support Code</h3>
+<h3 id="_extracting_support_code">9.4. Extracting Support Code</h3>
 <div class="paragraph">
 <p>We need a new class to contain our support code. Let’s create a class called <code>ShoutSupport</code> in the same package as our step definitions.</p>
 </div>
@@ -9423,7 +9427,7 @@ week and show you what we mean.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_close">9.4. Close</h3>
+<h3 id="_close">9.5. Close</h3>
 <div class="paragraph">
 <p>We could continue to move code from our step definitions into the support code like this. For example, we could write a support method for generating messages of a certain length.</p>
 </div>

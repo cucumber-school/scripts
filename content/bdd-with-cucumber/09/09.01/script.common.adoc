@@ -1,4 +1,4 @@
-=== Layers of a Cucumber Test Suite
+=== Problem and Solution Domains
 
 When we build software, we’re always working across two domains.
 
@@ -13,22 +13,3 @@ As BDD practitioners, we’re focussed on trying to grow this area in the middle
 We’ve also heard it said that if you model the problem well enough, the solution will take care of itself.
 
 Certainly, we believe that the better an understanding you have of the problem domain, the better a solution you can build. That’s why Cucumber is so powerful, because it helps you to stay rooted in the problem domain.
-
-So where do your feature files sit on this diagram? Well, we hope they sit right in the middle here, and act as the place where the problem and solution domains come together. Someone from either domain should be able to read a feature file and it will make sense to them.
-
-And how about step definitions?
-
-Step definitions are right on the boundary, here, translating between the problem-domain language we use in our Gherkin scenarios and the concrete actions we take in code to pull and poke at our solution.
-
-We want to prevent solution-domain concepts and language from leaking into our Gherkin scenarios to keep them readable. As we saw in the last lesson, when we remove details from scenarios, we trade-off for increased complexity in our step definitions.
-
-So how do we manage this complexity?
-
-A mature Cucumber test suite will have a layer of support code sitting between the step definitions and the system being automated.
-
-[ show diagram of Gherkin -> Step Definitions -> Support Code -> System layers]
-
-This layer of support code literally supports the step definitions by providing an API for automating your application.
-
-We can extract this API from our step definitions. Let’s pick up the shouty codebase from last 
-week and show you what we mean.
