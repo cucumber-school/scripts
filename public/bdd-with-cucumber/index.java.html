@@ -9585,6 +9585,71 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <p>We can extract this API from our step definitions. Let’s pick up the shouty codebase from last
 week and show you what we mean.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_7">9.2.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_language_should_be_used_in_feature_files">What language should be used in Feature files?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Problem domain language (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Solution domain language</p>
+</li>
+<li>
+<p>Language from both problem and solution domains</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Feature files should try to avoid using solution domain language, because that will exclude anyone who doesn&#8217;t write code from being able to read them and give you feedback.</p>
+</div>
+<div class="paragraph">
+<p>It can sometimes be hard, because we have to really learn the way our users and customers talk about their problems. But in the end that&#8217;s one of the most beneficial things you can do for your project.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_examine_the_following_scenarios_which_is_using_more_problem_domain_language">Examine the following scenarios. Which is using more problem domain language?</h5>
+<div class="paragraph">
+<p>Scenario A:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Given database table "tblTasks" has data "Pay rent,Fetch milk"
+When I visit "/"
+And I click "ui.todos input[type='checkbox' value='Pay rent']"
+Then there should be 1 item in "ul.done input[type='checkbox' value='Pay rent']"
+Then there should be 1 item in "ul.not-done input[type='checkbox' value='Fetch milk']"</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Scenario B:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code>Given a task "Pay rent"
+And a task "Fetch milk"
+When I complete the task "Pay rent"
+Then the task "Pay rent" should be complete
+Then the task "Fetch milk" should be incomplete</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Scenario A is using problem domain language</p>
+</li>
+<li>
+<p>Secnario B is using problem domain language (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_test_all_the_time">9.3. Test all the time</h3>

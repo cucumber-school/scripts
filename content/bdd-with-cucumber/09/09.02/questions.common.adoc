@@ -1,0 +1,38 @@
+==== Lesson 2 - Questions
+
+===== What language should be used in Feature files?
+
+* Problem domain language (*Correct*)
+* Solution domain language
+* Language from both problem and solution domains
+
+Explanation:
+
+Feature files should try to avoid using solution domain language, because that will exclude anyone who doesn't write code from being able to read them and give you feedback.
+
+It can sometimes be hard, because we have to really learn the way our users and customers talk about their problems. But in the end that's one of the most beneficial things you can do for your project.
+
+===== Examine the following scenarios. Which is using more problem domain language?
+
+Scenario A:
+
+```
+Given database table "tblTasks" has data "Pay rent,Fetch milk"
+When I visit "/"
+And I click "ui.todos input[type='checkbox' value='Pay rent']"
+Then there should be 1 item in "ul.done input[type='checkbox' value='Pay rent']"
+Then there should be 1 item in "ul.not-done input[type='checkbox' value='Fetch milk']"
+```
+
+Scenario B:
+
+```
+Given a task "Pay rent"
+And a task "Fetch milk"
+When I complete the task "Pay rent"
+Then the task "Pay rent" should be complete
+Then the task "Fetch milk" should be incomplete
+```
+
+* Scenario A is using problem domain language
+* Secnario B is using problem domain language (*Correct*)
