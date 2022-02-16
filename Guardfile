@@ -19,7 +19,7 @@
 #   watch(%r{file/path}) { `command(s)` }
 #
 guard :shell do
-  watch(/script\.(\w+)\.adoc/) { |m|
+  watch(/(?:script|questions)\.(\w+)\.adoc/) { |m|
     lang = m[1]
     if lang == 'common'
       `rake html`
