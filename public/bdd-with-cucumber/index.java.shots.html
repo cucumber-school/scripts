@@ -9606,7 +9606,7 @@ week and show you what we mean.</p>
 <p>Explanation:</p>
 </div>
 <div class="paragraph">
-<p>Feature files should try to avoid using solution domain language, because that will exclude anyone who doesn&#8217;t write code from being able to read them and give you feedback.</p>
+<p>Feature files should try to avoid using language from the <em>solution</em> domain, because that will exclude anyone who doesn&#8217;t write code from being able to read them and give you feedback.</p>
 </div>
 <div class="paragraph">
 <p>It can sometimes be hard, because we have to really learn the way our users and customers talk about their problems. But in the end that&#8217;s one of the most beneficial things you can do for your project.</p>
@@ -9648,6 +9648,12 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The first scenario has details like the name of a database table, a browser URL, some CSS selectors. All of these are solution domain artefacts.</p>
+</div>
 </div>
 </div>
 </div>
@@ -9655,6 +9661,31 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <h3 id="_test_all_the_time">9.3. Test all the time</h3>
 <div class="paragraph">
 <p>TODO: set up mvn task to run all the tests</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_4_questions_6">9.3.1. Lesson 4 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_do_we_run_the_unit_tests_before_the_acceptance_tests">Why do we run the unit tests before the acceptance tests?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>If the unit tests are failing, there&#8217;s no way the acceptance tests will pass (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Unit tests are better than acceptance tests</p>
+</li>
+<li>
+<p>Acceptance tests are always faster so we leave them until the end</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve heard it said that acceptance tests help you build the right thing, and unit tests help you build the thing right. We run the unit tests first to get feedback about whether the pieces of our solution (the <em>units</em>) are fundamentally working. Then, if they are, we can find out whether they play together to deliver the overall system behaviour that we&#8217;re looking for.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -9685,6 +9716,31 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="paragraph">
 <p>Now that Cucumber successfully instantiates the objects, let’s finish our refactoring. We’ll know that we’re done when all scenarios are green again.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions_6">9.4.1. Lesson 3 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_do_we_run_the_unit_tests_before_the_acceptance_tests_2">Why do we run the unit tests before the acceptance tests?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>If the unit tests are failing, there&#8217;s no way the acceptance tests will pass (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Unit tests are better than acceptance tests</p>
+</li>
+<li>
+<p>Acceptance tests are always faster so we leave them until the end</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ve heard it said that acceptance tests help you build the right thing, and unit tests help you build the thing right. We run the unit tests first to get feedback about whether the pieces of our solution (the <em>units</em>) are fundamentally working. Then, if they are, we can find out whether they play together to deliver the overall system behaviour that we&#8217;re looking for.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
