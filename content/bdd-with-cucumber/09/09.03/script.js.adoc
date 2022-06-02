@@ -19,5 +19,32 @@ Having this `npm test` command to lean on as we refactor is very useful, because
 
 [source,sh]
 ----
-RUN NPM TEST!!!!
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  9 passing (24ms)
+
+.........................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m00.099s (executing steps: 0m00.014s)
 ----

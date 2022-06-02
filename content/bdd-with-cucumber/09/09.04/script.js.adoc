@@ -42,30 +42,57 @@ So how would we add this `shout` method to `this`?shot::[7] What even _is_ `this
 
 Every time Cucumber runs a scenario, it creates a new object, called the _World_. We can define the new world class in our `env.js` support file that we just created.shot::[8].
 
-Each step definition function runs in the context of a new instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class, then calling Cucumber's `setWorldConstructor` method to tell it to use that class when constructing new instances of the world. shot::[9]
+Each step definition function runs in the context of a new instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class,shot::[9] then calling Cucumber's `setWorldConstructor` method to tell it to use that class when constructing new instances of the world. shot::[10]
 
 [source,javascript]
 ----
 include::../code/js/03-create-custom-world/features/support/env.js[]
 ----
 
-Finally, we define our new helper method on this module and paste in the code from the step definition. shot::[10]
+Finally, we define our new helper method on this module and paste in the code from the step definition. shot::[11]
 
 [source,javascript]
 ----
 include::../code/js/04-extract-shout-helper-to-world/features/support/env.js[lines=3..10]
 ----
 
-Let’s run Cucumber to check everything’s still working… shot::[11]
+Let’s run Cucumber to check everything’s still working… shot::[12]
 
 [source,sh]
 ----
-RUN CUCUMBER!!!!
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  9 passing (26ms)
+
+.........................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m00.087s (executing steps: 0m00.008s)
 ----
 
 Good.
 
-Now we can use that new method everywhere… shot::[12]
+Now we can use that new method everywhere… shot::[13]
 
 [source,js]
 ----
@@ -74,18 +101,18 @@ include::../code/js/05-use-shout-helper-everywhere/features/step_definitions/ste
 ...
 ----
 
-...and check we haven’t broken anything… shot::[13] Done!
+...and check we haven’t broken anything… shot::[14] Done!
 
 ==== Move `this.messagesShoutedBy` property behind a getter
 
-Notice that the helper method we extracted uses that `this.messagesShoutedBy` property.shot::[14]
+Notice that the helper method we extracted uses that `this.messagesShoutedBy` property.shot::[15]
 
 [source,javascript]
 ----
 include::../code/js/05-use-shout-helper-everywhere/features/support/env.js[lines=3..10]
 ----
 
-We're using this instance variable in this assertion step shot::[15]
+We're using this instance variable in this assertion step shot::[16]
 
 [source,javascript]
 ----
@@ -94,7 +121,7 @@ include::../code/js/05-use-shout-helper-everywhere/features/step_definitions/ste
 
 One problem with the current approach is that we're assuming that `this.messagesShoutedBy` is always initialized as an object. If it wasn't, we'd get errors like `cannot read property "Sean" of undefined` from our step definitions.
 
-Currently, we mitigate this risk by initializing the property in a `Before` hook: shot::[16]
+Currently, we mitigate this risk by initializing the property in a `Before` hook: shot::[17]
 
 [source,javascript]
 ----
@@ -108,16 +135,16 @@ Instead of doing this, we can explicitly make `messagesShoutedBy` a property of 
 include::../code/js/06-push-messagesshoutedby-behind-a-getter-in-world/features/support/env.js[lines=3..6]
 ----
 
-The getter uses a private variable for the value of the property, initializing it with an empty object if it’s never been accessed before. shot::[18]
+The getter uses a private variable for the value of the property, initializing it with an empty object if it’s never been accessed before. shot::[19]
 
-Now we no longer need to initialize it in this before hook. shot::[19]
+Now we no longer need to initialize it in this before hook. shot::[20]
 
 [source,javascript]
 ----
 include::../code/js/06-push-messagesshoutedby-behind-a-getter-in-world/features/step_definitions/steps.js[lines=8..10]
 ----
 
-And run cucumber to check we’re still green. shot::[20]
+And run cucumber to check we’re still green. shot::[21]
 
 [source,sh]
 ----
@@ -126,27 +153,27 @@ npm test
 
 ==== Move `this.network` property behind a helper method
 
-We can follow the same steps for the `this.network` property.shot::[21] First, make the accessor method: shot::[22]
+We can follow the same steps for the `this.network` property.shot::[22] First, make the accessor method: shot::[23]
 
 [source,javascript]
 ----
 include::../code/js/07-move-network-to-a-getter-in-world/features/support/env.js[lines=11..13]
 ----
 
-This will enable the `{person}` parameter type transformer to pull a `network` as soon as it needs one: shot::[23]
+This will enable the `{person}` parameter type transformer to pull a `network` as soon as it needs one: shot::[24]
 
 [source,javascript]
 ----
 include::../code/js/07-move-network-to-a-getter-in-world/features/support/person_parameter.js[lines=10..10]
 ----
 
-So we don't need to create a `Network` in a `Before` hook anymore.shot::[24]
+So we don't need to create a `Network` in a `Before` hook anymore.shot::[25]
 
-In fact, we can delete the `Before` hook altogether.shot::[25]
+In fact, we can delete the `Before` hook altogether.shot::[26]
 
 This is changing the behaviour slightly, and for the better. Now we're not relying on timing - assuming that the hook has created the `Network` at a particular point in the scenario's lifecycle. We just create the `Network` as we need it. This is called _Lazy loading_.
 
-There's one other place where we're using the `Network`, in this step: shot::[26]
+There's one other place where we're using the `Network`, in this step: shot::[27]
 
 [source,javascript]
 ----
@@ -157,7 +184,7 @@ Here, we're trying to change the range of the network, and the only way to do th
 
 All the way through this lesson, we've been _pushing the how down_, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.
 
-Imagine we had a `range` setter method on our `Network` that allowed us to modify the range on the fly. Then, our step would just look like this: shot::[27]
+Imagine we had a `range` setter method on our `Network` that allowed us to modify the range on the fly. Then, our step would just look like this: shot::[28]
 
 [source,javascript]
 ----
@@ -168,22 +195,22 @@ Isn't that better?
 
 Let's do it!
 
-First, we'll add a unit test for the `Network` class: shot::[28]
+First, we'll add a unit test for the `Network` class: shot::[29]
 
 [source,javascript]
 ----
 include::../code/js/08-add-a-way-to-change-the-network-s-range/test/network.test.js[lines=64..74]
 ----
 
-We'll create a couple of people on the Network, which defaults to a range of 100, so they're going to be close enough to hear each other at the moment. shot::[29]
+We'll create a couple of people on the Network, which defaults to a range of 100, so they're going to be close enough to hear each other at the moment. shot::[30]
 
-We'll broadcast a shout from Sean, which Lucy should be able to hear.shot::[30]
+We'll broadcast a shout from Sean, which Lucy should be able to hear.shot::[31]
 
-Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.shot::[31]
+Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.shot::[32]
 
-Broadcast again, and this time Lucy shouldn't have heard anything.shot::[32]
+Broadcast again, and this time Lucy shouldn't have heard anything.shot::[33]
 
-Let's run the test, and watch it fail like good TDD practitioners.shot::[33]
+Let's run the test, and watch it fail like good TDD practitioners.shot::[34]
 
 [source,sh]
 ----
@@ -238,14 +265,14 @@ should loosely deep-equal
       at processImmediate (node:internal/timers:464:21)
 ----
 
-Now we can add the attribute writer: shot::[34]
+Now we can add the attribute writer: shot::[35]
 
 [source,javascript]
 ----
 include::../code/js/08-add-a-way-to-change-the-network-s-range/src/shouty.js[lines=34..42]
 ----
 
-We run the tests again, and everything should be passing. Great! shot::[35]
+We run the tests again, and everything should be passing. Great! shot::[36]
 
 [source,sh]
 ----
@@ -279,14 +306,14 @@ We run the tests again, and everything should be passing. Great! shot::[35]
 35 steps (35 passed)
 ----
 
-Now we can use that new method in our step: shot::[36]
+Now we can use that new method in our step: shot::[37]
 
 [source,javascript]
 ----
 include::../code/js/09-use-new-network-range-method/features/step_definitions/steps.js[lines=4..6]
 ----
 
-Let's run all the tests to make sure everything's working again: shot::[37]
+Let's run all the tests to make sure everything's working again: shot::[38]
 
 [source,sh]
 ----
