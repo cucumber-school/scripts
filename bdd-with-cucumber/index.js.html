@@ -9434,7 +9434,34 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">RUN NPM TEST!!!!</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  9 passing <span class="o">(</span>24ms<span class="o">)</span>
+
+.........................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.099s <span class="o">(</span>executing steps: 0m00.014s<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -9559,7 +9586,34 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">RUN CUCUMBER!!!!</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  9 passing <span class="o">(</span>26ms<span class="o">)</span>
+
+.........................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.087s <span class="o">(</span>executing steps: 0m00.008s<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9977,7 +10031,7 @@ should loosely deep-equal
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-04-05 19:30:52 UTC
+Last updated 2022-06-02 14:37:02 UTC
 </div>
 </div>
 </body>

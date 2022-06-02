@@ -9434,7 +9434,34 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">RUN NPM TEST!!!!</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  9 passing <span class="o">(</span>24ms<span class="o">)</span>
+
+.........................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.099s <span class="o">(</span>executing steps: 0m00.014s<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -9527,7 +9554,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <p>Every time Cucumber runs a scenario, it creates a new object, called the <em>World</em>. We can define the new world class in our <code>env.js</code> support file that we just created.<a href="#shot-1006" id="shot-1006" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a>.</p>
 </div>
 <div class="paragraph">
-<p>Each step definition function runs in the context of a new instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class, then calling Cucumber&#8217;s <code>setWorldConstructor</code> method to tell it to use that class when constructing new instances of the world. <a href="#shot-1007" id="shot-1007" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
+<p>Each step definition function runs in the context of a new instance of the world, almost as though it were a method on that object. We can customise the methods available on the world (and so the methods available to the step defintions) by first defining them on a JavaScript class,<a href="#shot-1007" id="shot-1007" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a> then calling Cucumber&#8217;s <code>setWorldConstructor</code> method to tell it to use that class when constructing new instances of the world. <a href="#shot-1008" id="shot-1008" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9540,7 +9567,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Finally, we define our new helper method on this module and paste in the code from the step definition. <a href="#shot-1008" id="shot-1008" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
+<p>Finally, we define our new helper method on this module and paste in the code from the step definition. <a href="#shot-1009" id="shot-1009" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9555,18 +9582,45 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Let’s run Cucumber to check everything’s still working… <a href="#shot-1009" id="shot-1009" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a></p>
+<p>Let’s run Cucumber to check everything’s still working… <a href="#shot-1010" id="shot-1010" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">RUN CUCUMBER!!!!</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  9 passing <span class="o">(</span>26ms<span class="o">)</span>
+
+.........................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.087s <span class="o">(</span>executing steps: 0m00.008s<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Good.</p>
 </div>
 <div class="paragraph">
-<p>Now we can use that new method everywhere… <a href="#shot-1010" id="shot-1010" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a></p>
+<p>Now we can use that new method everywhere… <a href="#shot-1011" id="shot-1011" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9600,13 +9654,13 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>&#8230;&#8203;and check we haven’t broken anything… <a href="#shot-1011" id="shot-1011" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a> Done!</p>
+<p>&#8230;&#8203;and check we haven’t broken anything… <a href="#shot-1012" id="shot-1012" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a> Done!</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_move_this_messagesshoutedby_property_behind_a_getter">9.4.2. Move <code>this.messagesShoutedBy</code> property behind a getter</h4>
 <div class="paragraph">
-<p>Notice that the helper method we extracted uses that <code>this.messagesShoutedBy</code> property.<a href="#shot-1012" id="shot-1012" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a></p>
+<p>Notice that the helper method we extracted uses that <code>this.messagesShoutedBy</code> property.<a href="#shot-1013" id="shot-1013" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9621,7 +9675,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;re using this instance variable in this assertion step <a href="#shot-1013" id="shot-1013" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a></p>
+<p>We&#8217;re using this instance variable in this assertion step <a href="#shot-1014" id="shot-1014" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9637,7 +9691,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <p>One problem with the current approach is that we&#8217;re assuming that <code>this.messagesShoutedBy</code> is always initialized as an object. If it wasn&#8217;t, we&#8217;d get errors like <code>cannot read property "Sean" of undefined</code> from our step definitions.</p>
 </div>
 <div class="paragraph">
-<p>Currently, we mitigate this risk by initializing the property in a <code>Before</code> hook: <a href="#shot-1014" id="shot-1014" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16</a></p>
+<p>Currently, we mitigate this risk by initializing the property in a <code>Before</code> hook: <a href="#shot-1015" id="shot-1015" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9648,7 +9702,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Instead of doing this, we can explicitly make <code>messagesShoutedBy</code> a property of the <code>World</code>, by defining a getter for it: <a href="#shot-1015" id="shot-1015" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17</a></p>
+<p>Instead of doing this, we can explicitly make <code>messagesShoutedBy</code> a property of the <code>World</code>, by defining a getter for it: <a href="#shot-1016" id="shot-1016" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9659,10 +9713,10 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The getter uses a private variable for the value of the property, initializing it with an empty object if it’s never been accessed before. <a href="#shot-1016" id="shot-1016" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18</a></p>
+<p>The getter uses a private variable for the value of the property, initializing it with an empty object if it’s never been accessed before. <a href="#shot-1017" id="shot-1017" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19</a></p>
 </div>
 <div class="paragraph">
-<p>Now we no longer need to initialize it in this before hook. <a href="#shot-1017" id="shot-1017" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19</a></p>
+<p>Now we no longer need to initialize it in this before hook. <a href="#shot-1018" id="shot-1018" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9672,7 +9726,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And run cucumber to check we’re still green. <a href="#shot-1018" id="shot-1018" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20</a></p>
+<p>And run cucumber to check we’re still green. <a href="#shot-1019" id="shot-1019" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9683,7 +9737,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="sect3">
 <h4 id="_move_this_network_property_behind_a_helper_method">9.4.3. Move <code>this.network</code> property behind a helper method</h4>
 <div class="paragraph">
-<p>We can follow the same steps for the <code>this.network</code> property.<a href="#shot-1019" id="shot-1019" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21</a> First, make the accessor method: <a href="#shot-1020" id="shot-1020" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22</a></p>
+<p>We can follow the same steps for the <code>this.network</code> property.<a href="#shot-1020" id="shot-1020" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22</a> First, make the accessor method: <a href="#shot-1021" id="shot-1021" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9693,7 +9747,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>This will enable the <code>{person}</code> parameter type transformer to pull a <code>network</code> as soon as it needs one: <a href="#shot-1021" id="shot-1021" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23</a></p>
+<p>This will enable the <code>{person}</code> parameter type transformer to pull a <code>network</code> as soon as it needs one: <a href="#shot-1022" id="shot-1022" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9701,16 +9755,16 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>So we don&#8217;t need to create a <code>Network</code> in a <code>Before</code> hook anymore.<a href="#shot-1022" id="shot-1022" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24</a></p>
+<p>So we don&#8217;t need to create a <code>Network</code> in a <code>Before</code> hook anymore.<a href="#shot-1023" id="shot-1023" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 25</a></p>
 </div>
 <div class="paragraph">
-<p>In fact, we can delete the <code>Before</code> hook altogether.<a href="#shot-1023" id="shot-1023" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 25</a></p>
+<p>In fact, we can delete the <code>Before</code> hook altogether.<a href="#shot-1024" id="shot-1024" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 26</a></p>
 </div>
 <div class="paragraph">
 <p>This is changing the behaviour slightly, and for the better. Now we&#8217;re not relying on timing - assuming that the hook has created the <code>Network</code> at a particular point in the scenario&#8217;s lifecycle. We just create the <code>Network</code> as we need it. This is called <em>Lazy loading</em>.</p>
 </div>
 <div class="paragraph">
-<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step: <a href="#shot-1024" id="shot-1024" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 26</a></p>
+<p>There&#8217;s one other place where we&#8217;re using the <code>Network</code>, in this step: <a href="#shot-1025" id="shot-1025" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 27</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9726,7 +9780,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <p>All the way through this lesson, we&#8217;ve been <em>pushing the how down</em>, moving the implementation details down from step defintions into our automation support code. Here, we can move the implementation right down into our domain model.</p>
 </div>
 <div class="paragraph">
-<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this: <a href="#shot-1025" id="shot-1025" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 27</a></p>
+<p>Imagine we had a <code>range</code> setter method on our <code>Network</code> that allowed us to modify the range on the fly. Then, our step would just look like this: <a href="#shot-1026" id="shot-1026" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 28</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9742,7 +9796,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <p>Let&#8217;s do it!</p>
 </div>
 <div class="paragraph">
-<p>First, we&#8217;ll add a unit test for the <code>Network</code> class: <a href="#shot-1026" id="shot-1026" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 28</a></p>
+<p>First, we&#8217;ll add a unit test for the <code>Network</code> class: <a href="#shot-1027" id="shot-1027" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 29</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9760,19 +9814,19 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll create a couple of people on the Network, which defaults to a range of 100, so they&#8217;re going to be close enough to hear each other at the moment. <a href="#shot-1027" id="shot-1027" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 29</a></p>
+<p>We&#8217;ll create a couple of people on the Network, which defaults to a range of 100, so they&#8217;re going to be close enough to hear each other at the moment. <a href="#shot-1028" id="shot-1028" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 30</a></p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll broadcast a shout from Sean, which Lucy should be able to hear.<a href="#shot-1028" id="shot-1028" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 30</a></p>
+<p>We&#8217;ll broadcast a shout from Sean, which Lucy should be able to hear.<a href="#shot-1029" id="shot-1029" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 31</a></p>
 </div>
 <div class="paragraph">
-<p>Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.<a href="#shot-1029" id="shot-1029" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 31</a></p>
+<p>Now, we can try setting the range to something much shorter, like 5, so that Sean will now be out of range.<a href="#shot-1030" id="shot-1030" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 32</a></p>
 </div>
 <div class="paragraph">
-<p>Broadcast again, and this time Lucy shouldn&#8217;t have heard anything.<a href="#shot-1030" id="shot-1030" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 32</a></p>
+<p>Broadcast again, and this time Lucy shouldn&#8217;t have heard anything.<a href="#shot-1031" id="shot-1031" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 33</a></p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run the test, and watch it fail like good TDD practitioners.<a href="#shot-1031" id="shot-1031" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 33</a></p>
+<p>Let&#8217;s run the test, and watch it fail like good TDD practitioners.<a href="#shot-1032" id="shot-1032" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 34</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9828,7 +9882,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can add the attribute writer: <a href="#shot-1032" id="shot-1032" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 34</a></p>
+<p>Now we can add the attribute writer: <a href="#shot-1033" id="shot-1033" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 35</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9844,7 +9898,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>We run the tests again, and everything should be passing. Great! <a href="#shot-1033" id="shot-1033" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 35</a></p>
+<p>We run the tests again, and everything should be passing. Great! <a href="#shot-1034" id="shot-1034" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 36</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9879,7 +9933,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can use that new method in our step: <a href="#shot-1034" id="shot-1034" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 36</a></p>
+<p>Now we can use that new method in our step: <a href="#shot-1035" id="shot-1035" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 37</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9889,7 +9943,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again: <a href="#shot-1035" id="shot-1035" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 37</a></p>
+<p>Let&#8217;s run all the tests to make sure everything&#8217;s working again: <a href="#shot-1036" id="shot-1036" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 38</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9977,7 +10031,7 @@ should loosely deep-equal
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-04-05 19:30:52 UTC
+Last updated 2022-06-02 14:37:02 UTC
 </div>
 </div>
 </body>
