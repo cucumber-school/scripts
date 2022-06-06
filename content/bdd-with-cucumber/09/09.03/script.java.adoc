@@ -47,5 +47,27 @@ shot::[1, "Run mvn test - should be green"]. Great. Now we can start moving code
 
 ===== Move Network onto World
 
+In order to be able to access the same `Network` instance everywhere, let's move that field onto our new `ShoutyWorld`.
+
+We can start by writing the code we want to have. Imagine we already had a `network` field on the World, and we could just set it here like this: shot::[]
+
+[source,java]
+----
+include::../code/java/04-move-network-onto-the-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=56]
+----
+
+We don't have that field yet, so let's create it. shot::[]
+and we need to add the default range here too. shot::[]
+
+[source,java]
+----
+include::../code/java/04-move-network-onto-the-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..8]
+----
+
+
+
+
+
+
 - move network field onto context class
 - introduce person parameter type
