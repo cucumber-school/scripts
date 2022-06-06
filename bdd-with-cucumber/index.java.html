@@ -9697,9 +9697,8 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">;</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Person</span><span class="o">&gt;</span> <span class="n">people</span><span class="o">;</span>
     <span class="o">...</span>
-    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
     <span class="o">}</span></code></pre>
 </div>
@@ -9742,7 +9741,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">        <span class="n">world</span><span class="o">.</span><span class="na">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="n">range</span><span class="o">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9766,8 +9765,7 @@ and we need to add the default range here too. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">));</span>
+<pre class="rouge highlight"><code data-lang="java">        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">));</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -9776,8 +9774,8 @@ and we need to add the default range here too. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">DEFAULT_RANGE</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
-    <span class="kd">private</span> <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="no">DEFAULT_RANGE</span><span class="o">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="no">DEFAULT_RANGE</span><span class="o">);</span>
+    <span class="kd">private</span> <span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9900,7 +9898,7 @@ and we need to add the default range here too. </p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-06 18:38:10 UTC
+Last updated 2022-06-06 23:12:32 UTC
 </div>
 </div>
 </body>
