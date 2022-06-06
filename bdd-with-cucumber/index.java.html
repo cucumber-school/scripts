@@ -9660,7 +9660,52 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="sect2">
 <h3 id="_dependency_injection">9.3. Dependency Injection</h3>
 <div class="paragraph">
+<p>A fundamental concept for organising your support code in a Cucumber-JVM project is dependency injection.</p>
+</div>
+<div class="paragraph">
+<p>Dependency injection is how you access other objects from your step defintion classes. In particular, it allows you to share those objects between multiple step definition classes, so that if you&#8217;ve started to organise your step definitions into different classes, they can still access the same objects.</p>
+</div>
+<div class="paragraph">
+<p>This gives you a similar capability as you get with the "World" in Ruby or JavaScript Cucumbers - you can inject an object to store context state through the life of a scenario, or to contain useful helper methods.</p>
+</div>
+<div class="paragraph">
+<p>In this lesson we&#8217;ll show you how to introduce dependency injection into your Cucumber-JVM project, and use a simple World object to share some state with a parameter type class.</p>
+</div>
+<div class="sect3">
+<h4 id="_exclude_todo_scenarios">9.3.1. Exclude <code>@todo</code> scenarios</h4>
+<div class="paragraph">
+<p>When we refactor, we want to make sure our tests are all green. Since we have one scenario that&#8217;s not currently finished, let&#8217;s change our <code>RunWith</code> configuration to exclude any scenarios tagged as <code>@todo</code>:
+</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="nd">@RunWith</span><span class="o">(</span><span class="nc">Cucumber</span><span class="o">.</span><span class="na">class</span><span class="o">)</span>
+<span class="nd">@CucumberOptions</span><span class="o">(</span><span class="n">plugin</span> <span class="o">=</span> <span class="o">{</span><span class="s">"pretty"</span><span class="o">},</span> <span class="n">strict</span> <span class="o">=</span> <span class="kc">true</span><span class="o">,</span> <span class="n">tags</span> <span class="o">=</span> <span class="s">"not @todo"</span><span class="o">)</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RunCucumberTest</span> <span class="o">{</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Good, now when we run Cucumber we should expect to see everything pass.
+</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>introduce ShoutyContext class
+&#8594; explain dependency injection</p>
+</li>
+<li>
+<p>move network field onto context class</p>
+</li>
+<li>
+<p>introduce person parameter type</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
 <p>TODO: Write questions about DI</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -9769,7 +9814,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-06 17:02:51 UTC
+Last updated 2022-06-06 17:35:25 UTC
 </div>
 </div>
 </body>
