@@ -9697,7 +9697,10 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">;</span>
+    <span class="o">...</span>
+    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -9728,8 +9731,9 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="paragraph">
 <p>. Great. Now we can start moving code onto the World.</p>
 </div>
-<div class="sect4">
-<h5 id="_move_network_onto_world">Move Network onto World</h5>
+</div>
+<div class="sect3">
+<h4 id="_move_network_onto_world">9.3.3. Move Network onto World</h4>
 <div class="paragraph">
 <p>In order to be able to access the same <code>Network</code> instance everywhere, let&#8217;s move that field onto our new <code>ShoutyWorld</code>.</p>
 </div>
@@ -9757,19 +9761,30 @@ and we need to add the default range here too. </p>
 <span class="o">}</span></code></pre>
 </div>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>move network field onto context class</p>
-</li>
-<li>
-<p>introduce person parameter type</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>We should also use the same <code>network</code> in this step where we create a new <code>Person</code> instance: </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">));</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>TODO: Write questions about DI</p>
+<p>Now we can delete the old <code>network</code> field on the <code>StepDefintions class</code> .</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">DEFAULT_RANGE</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="no">DEFAULT_RANGE</span><span class="o">);</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_introduce_person_parameter_type">9.3.4. Introduce person parameter type</h4>
+<div class="paragraph">
+<p>TODO: Write questions about DI</p>
 </div>
 </div>
 </div>

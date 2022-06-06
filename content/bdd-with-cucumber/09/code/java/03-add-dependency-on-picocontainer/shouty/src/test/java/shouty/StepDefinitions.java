@@ -24,10 +24,12 @@ public class StepDefinitions {
 
     private static final int DEFAULT_RANGE = 100;
     private Network network = new Network(DEFAULT_RANGE);
+    private ShoutyWorld world;
     private Map<String, Person> people;
     private Map<String, List<String>> messagesShoutedBy;
 
     public StepDefinitions(ShoutyWorld world) {
+        this.world = world;
     }
 
     static class Whereabouts {

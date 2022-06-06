@@ -26,7 +26,9 @@ Let's start by trying to inject a `ShoutyWorld` class into the contructor of our
 
 [source,java]
 ----
-include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=30..31]
+include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=27]
+    ...
+include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=31..33]
 ----
 
 We don't have one yet, so we can let the IDE help us to create one. shot::[]
@@ -45,7 +47,7 @@ include::../code/java/03-add-dependency-on-picocontainer/shouty/pom.xml[lines=49
 
 shot::[1, "Run mvn test - should be green"]. Great. Now we can start moving code onto the World.
 
-===== Move Network onto World
+==== Move Network onto World
 
 In order to be able to access the same `Network` instance everywhere, let's move that field onto our new `ShoutyWorld`.
 
@@ -64,10 +66,17 @@ and we need to add the default range here too. shot::[]
 include::../code/java/04-move-network-onto-the-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..8]
 ----
 
+We should also use the same `network` in this step where we create a new `Person` instance: shot::[]
 
+[source,java]
+----
+include::../code/java/04-move-network-onto-the-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=60..62]
+----
 
+Now we can delete the old `network` field on the `StepDefintions class` shot::[].
+[source,java]
+----
+include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=25..26]
+----
 
-
-
-- move network field onto context class
-- introduce person parameter type
+==== Introduce person parameter type
