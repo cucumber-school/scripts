@@ -27,6 +27,8 @@ include::../code/js/03-create-custom-world/features/step_definitions/steps.js[li
 
 First, we call the `shouter` domain model `Person` object to send the message,shot::[4] and then we cache that message in `this.messagesShoutedBy` so that we'll be able to use it for validation later on.shot::[5]
 
+shot::[5.1]
+
 On it's own, this wouldn't be a problem, but there are four other step definitions for various kinds of shouts that all duplicate this same code.
 
 Let’s imagine we had a helper method we could call like this, instead. Wouldn’t that be neater? shot::[6]
