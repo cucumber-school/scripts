@@ -20,8 +20,32 @@ include::../code/java/01-only-run-tests-we-expect-to-pass/shouty/src/test/java/s
 Good, now when we run Cucumber we should expect to see everything pass. 
 shot::[1, "Run Cucumber"]
 
-==== 
-- introduce ShoutyContext class
-	-> explain dependency injection
+==== Adding a World class
+
+Let's start by trying to inject a `ShoutyWorld` class into the contructor of our `StepDefinitions` class. shot::[]
+
+[source,java]
+----
+include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=30..31]
+----
+
+We don't have one yet, so we can let the IDE help us to create one. shot::[]
+
+[source,java]
+----
+include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..4]
+----
+
+If we run Cucumber now, we'll see an error,shot::[] because we need to let Cucumber know which framework we want to use for Dependency Injection. You can choose your project's own DI framework here, or you can use Cucumber's own lightweight `picocontainer` framework. shot::[]
+
+[source,xml]
+----
+include::../code/java/03-add-dependency-on-picocontainer/shouty/pom.xml[lines=49..54]
+----
+
+shot::[1, "Run mvn test - should be green"]. Great. Now we can start moving code onto the World.
+
+===== Move Network onto World
+
 - move network field onto context class
 - introduce person parameter type

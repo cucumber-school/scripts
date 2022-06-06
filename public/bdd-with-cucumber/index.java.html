@@ -734,8 +734,12 @@ pre.rouge {
 <li><a href="#_problem_and_solution_domains">9.1. Problem and Solution Domains</a></li>
 <li><a href="#_layers_of_a_cucumber_test_suite">9.2. Layers of a Cucumber Test Suite</a></li>
 <li><a href="#_dependency_injection">9.3. Dependency Injection</a></li>
+<li><a href="#_extracting_support_code">9.4. Extracting Support Code</a></li>
+<li><a href="#_close">9.5. Close</a></li>
 </ul>
 </li>
+<li><a href="#_acceptance_tests_vs_unit_tests">10. Acceptance Tests vs Unit Tests</a></li>
+<li><a href="#_web_automation_with_selenium_webdriver">11. Web automation with Selenium Webdriver</a></li>
 </ul>
 </div>
 </div>
@@ -9685,14 +9689,49 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <p>Good, now when we run Cucumber we should expect to see everything pass.
 </p>
 </div>
-<div class="exampleblock">
+</div>
+<div class="sect3">
+<h4 id="_adding_a_world_class">9.3.2. Adding a World class</h4>
+<div class="paragraph">
+<p>Let&#8217;s start by trying to inject a <code>ShoutyWorld</code> class into the contructor of our <code>StepDefinitions</code> class. </p>
+</div>
+<div class="listingblock">
 <div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We don&#8217;t have one yet, so we can let the IDE help us to create one. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">shouty.support</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShoutyWorld</span><span class="o">{</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>If we run Cucumber now, we&#8217;ll see an error, because we need to let Cucumber know which framework we want to use for Dependency Injection. You can choose your project&#8217;s own DI framework here, or you can use Cucumber&#8217;s own lightweight <code>picocontainer</code> framework. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="xml">        <span class="nt">&lt;dependency&gt;</span>
+            <span class="nt">&lt;groupId&gt;</span>io.cucumber<span class="nt">&lt;/groupId&gt;</span>
+            <span class="nt">&lt;artifactId&gt;</span>cucumber-picocontainer<span class="nt">&lt;/artifactId&gt;</span>
+            <span class="nt">&lt;version&gt;</span>${cucumber.version}<span class="nt">&lt;/version&gt;</span>
+            <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+        <span class="nt">&lt;/dependency&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>. Great. Now we can start moving code onto the World.</p>
+</div>
+<div class="sect4">
+<h5 id="_move_network_onto_world">Move Network onto World</h5>
 <div class="ulist">
 <ul>
-<li>
-<p>introduce ShoutyContext class
-&#8594; explain dependency injection</p>
-</li>
 <li>
 <p>move network field onto context class</p>
 </li>
@@ -9704,9 +9743,11 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="paragraph">
 <p>TODO: Write questions about DI</p>
 </div>
-<div class="paragraph">
-<p>=== Extracting Support Code</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_extracting_support_code">9.4. Extracting Support Code</h3>
 <div class="paragraph">
 <p>We need a new class to contain our support code. Let’s create a class called <code>ShoutSupport</code> in the same package as our step definitions.</p>
 </div>
@@ -9734,12 +9775,10 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="paragraph">
 <p>Now that Cucumber successfully instantiates the objects, let’s finish our refactoring. We’ll know that we’re done when all scenarios are green again.</p>
 </div>
-<div class="paragraph">
-<p>==== Lesson 3 - Questions</p>
-</div>
-<div class="paragraph">
-<p>===== Why do we run the unit tests before the acceptance tests?</p>
-</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions_6">9.4.1. Lesson 3 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_do_we_run_the_unit_tests_before_the_acceptance_tests">Why do we run the unit tests before the acceptance tests?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -9759,9 +9798,11 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="paragraph">
 <p>We&#8217;ve heard it said that acceptance tests help you build the right thing, and unit tests help you build the thing right. We run the unit tests first to get feedback about whether the pieces of our solution (the <em>units</em>) are fundamentally working. Then, if they are, we can find out whether they play together to deliver the overall system behaviour that we&#8217;re looking for.</p>
 </div>
-<div class="paragraph">
-<p>=== Close</p>
 </div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_close">9.5. Close</h3>
 <div class="paragraph">
 <p>We could continue to move code from our step definitions into the support code like this. For example, we could write a support method for generating messages of a certain length.</p>
 </div>
@@ -9777,9 +9818,12 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="paragraph">
 <p>In a future lesson we’ll show you how a well-crafted automation API lets you plug your scenarios into the system at different levels, such as a web front-end.</p>
 </div>
-<div class="paragraph">
-<p>== Acceptance Tests vs Unit Tests</p>
 </div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_acceptance_tests_vs_unit_tests">10. Acceptance Tests vs Unit Tests</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>In the last chapter, we extracted a layer of support code from your step definitions to keep your Cucumber code easy - and cost-effective - to maintain.</p>
 </div>
@@ -9792,18 +9836,16 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="paragraph">
 <p>If you’re someone who doesn’t normally dive deep into code, try not to worry. We’ll keep the example from moving too fast, and we hope you’ll find it educational to see how different kinds of tests complement each other in helping you to build a quality product.</p>
 </div>
-<div class="paragraph">
-<p>== Web automation with Selenium Webdriver</p>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_web_automation_with_selenium_webdriver">11. Web automation with Selenium Webdriver</h2>
+<div class="sectionbody">
 <div class="paragraph">
 <p>TODO: Import the original script.</p>
 </div>
 <div class="paragraph">
 <p><a href="https://drive.google.com/drive/u/0/folders/0B1Qgdp5tWFyzZ25NQjloazhjTUk?ths=true" class="bare">https://drive.google.com/drive/u/0/folders/0B1Qgdp5tWFyzZ25NQjloazhjTUk?ths=true</a></p>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </div>
