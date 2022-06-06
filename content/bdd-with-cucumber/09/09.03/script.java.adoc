@@ -1,2 +1,27 @@
 === Dependency Injection
 
+A fundamental concept for organising your support code in a Cucumber-JVM project is dependency injection.
+
+Dependency injection is how you access other objects from your step defintion classes. In particular, it allows you to share those objects between multiple step definition classes, so that if you've started to organise your step definitions into different classes, they can still access the same objects.
+
+This gives you a similar capability as you get with the "World" in Ruby or JavaScript Cucumbers - you can inject an object to store context state through the life of a scenario, or to contain useful helper methods.
+
+In this lesson we'll show you how to introduce dependency injection into your Cucumber-JVM project, and use a simple World object to share some state with a parameter type class.
+
+==== Exclude `@todo` scenarios
+
+When we refactor, we want to make sure our tests are all green. Since we have one scenario that's not currently finished, let's change our `RunWith` configuration to exclude any scenarios tagged as `@todo`:
+shot::[1, "Add `tags = \"not @todo\"`"]
+
+[source,java]
+include::../code/java/01-only-run-tests-we-expect-to-pass/shouty/src/test/java/shouty/RunCucumberTest.java[lines=7..10]
+
+
+Good, now when we run Cucumber we should expect to see everything pass. 
+shot::[1, "Run Cucumber"]
+
+
+- introduce ShoutyContext class
+	-> explain dependency injection
+- move network field onto context class
+- introduce person parameter type

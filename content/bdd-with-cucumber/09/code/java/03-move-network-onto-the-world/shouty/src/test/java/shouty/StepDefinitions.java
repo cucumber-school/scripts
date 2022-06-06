@@ -7,7 +7,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import io.cucumber.datatable.DataTable;
-import shouty.support.ShoutyContext;
+import shouty.support.ShoutyWorld;
 
 import java.util.*;
 
@@ -22,12 +22,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 public class StepDefinitions {
 
-    private ShoutyContext context;
+    private ShoutyWorld world;
     private Map<String, Person> people;
     private Map<String, List<String>> messagesShoutedBy;
 
-    public StepDefinitions(ShoutyContext context) {
-        this.context = context;
+    public StepDefinitions(ShoutyWorld world) {
+        this.world = world;
     }
 
     static class Whereabouts {
@@ -53,12 +53,12 @@ public class StepDefinitions {
 
     @Given("the range is {int}")
     public void the_range_is(int range) throws Throwable {
-        context.network = new Network(range);
+        world.network = new Network(range);
     }
 
     @Given("{word} is located at {int}")
     public void person_is_located_at(String name, Integer location) {
-        people.put(name, new Person(name, context.network, location));
+        people.put(name, new Person(world.network, location));
     }
 
     @Given("Sean has bought {int} credits")

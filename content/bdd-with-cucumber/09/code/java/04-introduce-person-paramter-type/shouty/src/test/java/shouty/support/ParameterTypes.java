@@ -4,14 +4,14 @@ import io.cucumber.java.ParameterType;
 import shouty.Person;
 
 public class ParameterTypes {
-    private final ShoutyContext context;
+    private final ShoutyWorld world;
 
-    public ParameterTypes(ShoutyContext context) {
-        this.context = context;
+    public ParameterTypes(ShoutyWorld world) {
+        this.world = world;
     }
 
     @ParameterType("Lucy|Sean|Larry")
     public Person person(String name) {
-        return new Person(name, context.network, 0);
+        return new Person(name, world.network, 0);
     }
 }
