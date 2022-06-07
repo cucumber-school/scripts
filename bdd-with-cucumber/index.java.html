@@ -9697,8 +9697,9 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Person</span><span class="o">&gt;</span> <span class="n">people</span><span class="o">;</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">;</span>
     <span class="o">...</span>
+    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
     <span class="o">}</span></code></pre>
 </div>
@@ -9741,11 +9742,14 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="o">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"the range is {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">the_range_is</span><span class="o">(</span><span class="kt">int</span> <span class="n">range</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">world</span><span class="o">.</span><span class="na">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We don&#8217;t have that field yet, so let&#8217;s create it. 
+<p>We don&#8217;t have that field on our World object yet, so let&#8217;s create it. 
 and we need to add the default range here too. </p>
 </div>
 <div class="listingblock">
@@ -9765,8 +9769,10 @@ and we need to add the default range here too. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">));</span>
-    <span class="o">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">person</span><span class="o">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9786,6 +9792,71 @@ and we need to add the default range here too. </p>
 <h4 id="_introduce_person_parameter_type">9.3.4. Introduce person parameter type</h4>
 <div class="paragraph">
 <p>Now that we have moved the <code>network</code> onto our shared <code>ShoutyWorld</code> object, we can create a custom parameter type for <code>Person</code>, as we demonstrated in Chapter 3.</p>
+</div>
+<div class="paragraph">
+<p>In order to do that, we&#8217;ll first need to make a couple of "pre-factoring" changes to our <code>Person</code> class.</p>
+</div>
+<div class="paragraph">
+<p>First, we&#8217;ll need the <code>Person</code> to be aware of (and expose) its own <code>name</code> so that, once we get handed it in our step definition, we can easily put it into our <code>people</code> Map for later retrieval.</p>
+</div>
+<div class="paragraph">
+<p>Secondly, we&#8217;ll need a way to be able to move the location of a <code>Person</code> after it&#8217;s been created, since our step defintion will be passed an existing instance of a <code>Person</code> from the step definition.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start by adding the <code>name</code> to <code>Person</code>. We can start at the outside by modifying the step definition to  take the name on the constructor, and  expose it via a getter.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">person</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We can  lean on the IDE to add the <code>name</code> as the first constructor parameter for <code>Person</code>, and to  create a stub of the <code>getName</code> method.</p>
+</div>
+<div class="paragraph">
+<p>Next we need to actually  add the <code>name</code> field to the <code>Person</code> class,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
+    <span class="o">...</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+    <span class="o">...</span>
+    <span class="kd">public</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Network</span> <span class="n">network</span><span class="o">,</span> <span class="kt">int</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
+        <span class="o">...</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>and  make it accessible via the <code>getName</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">name</span><span class="o">;</span> <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Great. We have a few unit tests we need to update with the new API  and then things should be passing again. </p>
+</div>
+<div class="paragraph">
+<p>Next let&#8217;s add that <code>moveTo</code> method. This time, since we&#8217;re adding some behaviour to the <code>Person</code> we&#8217;ll  add a unit test for it first.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">can_be_moved_to_new_location</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"Lucy"</span><span class="o">,</span> <span class="n">network</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+        <span class="n">lucy</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="n">lucy</span><span class="o">.</span><span class="na">getLocation</span><span class="o">(),</span> <span class="mi">100</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>TODO: finish the narrative</p>
 </div>
 <div class="paragraph">
 <p>TODO: Write questions about DI</p>
@@ -9898,7 +9969,7 @@ and we need to add the default range here too. </p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-06 23:12:32 UTC
+Last updated 2022-06-07 00:31:41 UTC
 </div>
 </div>
 </body>
