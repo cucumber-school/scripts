@@ -55,9 +55,9 @@ public class StepDefinitions {
         world.network = new Network(range);
     }
 
-    @Given("{word} is located at {int}")
-    public void person_is_located_at(String name, Integer location) {
-        people.put(name, new Person(name, world.network, location));
+    @Given("{person} is located at {int}")
+    public void person_is_located_at(Person person, Integer location) {
+        people.put(person.getName(), person.moveTo(location));
     }
 
     @Given("Sean has bought {int} credits")

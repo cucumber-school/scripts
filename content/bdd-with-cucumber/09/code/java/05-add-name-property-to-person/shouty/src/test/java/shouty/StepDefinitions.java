@@ -57,7 +57,8 @@ public class StepDefinitions {
 
     @Given("{word} is located at {int}")
     public void person_is_located_at(String name, Integer location) {
-        people.put(name, new Person(name, world.network, location));
+        Person person = new Person(name, world.network, location);
+        people.put(person.getName(), person);
     }
 
     @Given("Sean has bought {int} credits")
