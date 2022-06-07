@@ -9772,7 +9772,8 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 <pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
         <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
-        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">person</span><span class="o">);</span></code></pre>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">person</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9797,13 +9798,22 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 <p>In order to do that, we&#8217;ll first need to make a couple of "pre-factoring" changes to our <code>Person</code> class.</p>
 </div>
 <div class="paragraph">
-<p>First, we&#8217;ll need the <code>Person</code> to be aware of (and expose) its own <code>name</code> so that, once we get handed it in our step definition, we can easily put it into our <code>people</code> Map for later retrieval.</p>
+<p>First, we&#8217;ll need the <code>Person</code> to be aware of (and expose) its own <code>name</code> so that, when we are receive it in our step definition, we can easily put it into our <code>people</code> Map for later retrieval. <a href="#shot-1558" id="shot-1558" title="Highlight line 61: `name`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Highlight line 61: `name`</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">person</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Secondly, we&#8217;ll need a way to be able to move the location of a <code>Person</code> after it&#8217;s been created, since our step defintion will be passed an existing instance of a <code>Person</code> from the step definition.</p>
+<p>Secondly, we&#8217;ll need a way to be able to move the location of a <code>Person</code> after it&#8217;s been created, since our step defintion will be passed an existing instance of a <code>Person</code> <a href="#shot-1559" id="shot-1559" title="Highlight line 61: `person`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Highlight line 61: `person`</a> from the step definition, and currently the only way to set the location is when the object is constructed. <a href="#shot-1560" id="shot-1560" title="Highlight line 60: `location`" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Highlight line 60: `location`</a></p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start by adding the <code>name</code> to <code>Person</code>. We can start at the outside by modifying the step definition to <a href="#shot-1558" id="shot-1558" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> take the name on the constructor, and <a href="#shot-1559" id="shot-1559" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> expose it via a getter.</p>
+<p>Let&#8217;s start by adding the <code>name</code> to <code>Person</code>. We can start at the outside by modifying the step definition to <a href="#shot-1561" id="shot-1561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> take the name on the constructor, and <a href="#shot-1562" id="shot-1562" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> expose it via a getter.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9815,10 +9825,10 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 </div>
 </div>
 <div class="paragraph">
-<p>We can <a href="#shot-1560" id="shot-1560" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> lean on the IDE to add the <code>name</code> as the first constructor parameter for <code>Person</code>, and to <a href="#shot-1561" id="shot-1561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> create a stub of the <code>getName</code> method.</p>
+<p>We can <a href="#shot-1563" id="shot-1563" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> lean on the IDE to add the <code>name</code> as the first constructor parameter for <code>Person</code>, and to <a href="#shot-1564" id="shot-1564" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> create a stub of the <code>getName</code> method.</p>
 </div>
 <div class="paragraph">
-<p>Next we need to actually <a href="#shot-1562" id="shot-1562" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> add the <code>name</code> field to the <code>Person</code> class,</p>
+<p>Next we need to actually <a href="#shot-1565" id="shot-1565" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> add the <code>name</code> field to the <code>Person</code> class,</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9832,7 +9842,7 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 </div>
 </div>
 <div class="paragraph">
-<p>and <a href="#shot-1563" id="shot-1563" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> make it accessible via the <code>getName</code> method.</p>
+<p>and <a href="#shot-1566" id="shot-1566" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> make it accessible via the <code>getName</code> method.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9840,21 +9850,131 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 </div>
 </div>
 <div class="paragraph">
-<p>Great. We have a few unit tests we need to update with the new API <a href="#shot-1564" id="shot-1564" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> and then things should be passing again. <a href="#shot-1565" id="shot-1565" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+<p>Great. We have a <a href="https://github.com/cucumber-school/scripts/commit/cfe85f85618df2bd7205f1d2b99bb5a1cead09df#diff-dab10880d225d0385ffb5ae4563a44d2b0a89386a5840df11a20c592163a6e7a">few</a> <a href="https://github.com/cucumber-school/scripts/commit/cfe85f85618df2bd7205f1d2b99bb5a1cead09df#diff-b1c0d2d321361d1e1f0dc443e7068874614337888455ec07877fef456b918863">unit tests</a> we need to update with the new API <a href="#shot-1567" id="shot-1567" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> and then things should be passing again. <a href="#shot-1568" id="shot-1568" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
 </div>
 <div class="paragraph">
-<p>Next let&#8217;s add that <code>moveTo</code> method. This time, since we&#8217;re adding some behaviour to the <code>Person</code> we&#8217;ll <a href="#shot-1566" id="shot-1566" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> add a unit test for it first.</p>
+<p>Next let&#8217;s add that <code>moveTo</code> method. This time, since we&#8217;re adding some behaviour to the <code>Person</code> we&#8217;ll <a href="#shot-1569" id="shot-1569" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> add a unit test for it first.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Test</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">can_be_moved_to_new_location</span><span class="o">()</span> <span class="o">{</span>
         <span class="nc">Person</span> <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"Lucy"</span><span class="o">,</span> <span class="n">network</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
-        <span class="n">lucy</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="mi">100</span><span class="o">);</span>
-        <span class="n">assertEquals</span><span class="o">(</span><span class="n">lucy</span><span class="o">.</span><span class="na">getLocation</span><span class="o">(),</span> <span class="mi">100</span><span class="o">);</span>
+        <span class="n">assertEquals</span><span class="o">(</span><span class="n">lucy</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="mi">100</span><span class="o">).</span><span class="na">getLocation</span><span class="o">(),</span> <span class="mi">100</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1570" id="shot-1570" title="Generate stub method" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Generate stub method</a> Let&#8217;s use the IDE to fix the compilation errors, and now we can run the failing test. <a href="#shot-1571" id="shot-1571" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+</div>
+<div class="paragraph">
+<p><a href="#shot-1572" id="shot-1572" title="Add implementation" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Add implementation</a> Now let&#8217;s implement the method, mutating the value of the <code>location</code> field.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">moveTo</span><span class="o">(</span><span class="kt">int</span> <span class="n">newLocation</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">location</span> <span class="o">=</span> <span class="n">newLocation</span><span class="o">;</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>We need to make the field mutable too. <a href="#shot-1573" id="shot-1573" title="remove <code>final</code> from field" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: remove <code>final</code> from field</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">location</span><span class="o">;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now our unit test should pass. <a href="#shot-1574" id="shot-1574" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+</div>
+<div class="paragraph">
+<p>With that prefactoring done, we can create a parameter type for a person.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start at the step definition and write the code we wish we had.</p>
+</div>
+<div class="paragraph">
+<p>We won&#8217;t be using just a <code>{word}</code> anymore, we&#8217;ll use a <code>{person}</code>, and instead of receiving a plain <code>String</code> we&#8217;ll receive an instance of <code>Person</code>. Now we can use this <code>person</code> parameter in our step definition.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} is located at {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">location</span><span class="o">));</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When we <a href="#shot-1575" id="shot-1575" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> run Cucumber now, it tells us we need to register a parameter type:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[ERROR] Errors:
+[ERROR]   Could not create a cucumber expression for '{person} is located at {int}'.
+It appears you did not register a parameter type.</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>So let&#8217;s start by creating a new class in the <code>support</code> directory with some boilerplate in it:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">shouty.support</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.cucumber.java.ParameterType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">shouty.Person</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonParameterType</span> <span class="o">{</span>
+    <span class="nd">@ParameterType</span><span class="o">(</span><span class="s">"Lucy|Sean|Larry"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>That should be enough to satisfy Cucumber that there&#8217;s a <code>{person}</code> parameter type, but we <a href="#shot-1576" id="shot-1576" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> get these errors because it&#8217;s return <code>null</code> instead of a <code>Person</code> instance like we&#8217;d expect.</p>
+</div>
+<div class="paragraph">
+<p>So let&#8217;s return a valid <code>Person</code>. <a href="#shot-1577" id="shot-1577" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonParameterType</span> <span class="o">{</span>
+    <span class="nd">@ParameterType</span><span class="o">(</span><span class="s">"Lucy|Sean|Larry"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We need an instance of <code>network</code> to create the Person, and the same way as we can use Dependency Injection from a Step Definition class, we can use it from a Parameter Type too. That gives us an instance of the <code>world</code> which we can use to get hold of the same instance of <code>network</code> as we&#8217;re using everywhere else in our scenarios.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonParameterType</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">PersonParameterType</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
+    <span class="o">}</span>
+    <span class="o">...</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when we run the tests <a href="#shot-1578" id="shot-1578" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> everything should work again.</p>
+</div>
+<div class="paragraph">
+<p>Great! We&#8217;ve added our first parameter type. Now we want to use it everywhere we can.</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_move_people_map_into_the_world">9.3.5. Move people Map into the World</h4>
 <div class="paragraph">
 <p>TODO: finish the narrative</p>
 </div>
