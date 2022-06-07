@@ -12,7 +12,12 @@ public class PersonParameterType {
 
     @ParameterType("Lucy|Sean|Larry")
     public Person person(String name) {
-        return null;
+        if (world.people.containsKey(name)) {
+            return world.people.get(name);
+        }
+        Person person = new Person(name, world.network, 0);
+        world.people.put(name, person);
+        return person;
     }
 }
 
