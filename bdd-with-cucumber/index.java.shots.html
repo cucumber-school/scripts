@@ -9820,15 +9820,24 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 <div class="paragraph">
 <p>Let&#8217;s start at the step definition and write the code we wish we had.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
+        <span class="n">world</span><span class="o">.</span><span class="na">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">person</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
-<p>We won&#8217;t be using just a <code>{word}</code> anymore <a href="#shot-1561" id="shot-1561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, we&#8217;ll use a <code>{person}</code> <a href="#shot-1562" id="shot-1562" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, and instead of receiving a plain <code>String</code> <a href="#shot-1563" id="shot-1563" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> we&#8217;ll receive an instance of <code>Person</code>. Now we can use <a href="#shot-1564" id="shot-1564" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> this <code>Person</code> object in the body of our step.</p>
+<p>We won&#8217;t be using just a <code>{word}</code> anymore <a href="#shot-1561" id="shot-1561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, we&#8217;ll use a <code>{person}</code> <a href="#shot-1562" id="shot-1562" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, and instead of receiving a plain <code>String</code> <a href="#shot-1563" id="shot-1563" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> we&#8217;ll receive an instance of <code>Person</code>. Now we can use <a href="#shot-1564" id="shot-1564" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> this <code>Person</code> object in the body of our step, with no need to create them here, or store them in the <code>people</code> map. Our parameter type will take care of all of that!</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="o">}</span>
-
-    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} has bought {int} credits"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_has_bought_credits</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">credits</span><span class="o">)</span> <span class="o">{</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} is located at {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">location</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10027,7 +10036,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-13 20:14:05 UTC
+Last updated 2022-06-13 20:19:54 UTC
 </div>
 </div>
 </body>
