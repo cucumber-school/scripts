@@ -9693,14 +9693,15 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="sect3">
 <h4 id="_adding_a_world_class">9.3.2. Adding a World class</h4>
 <div class="paragraph">
-<p>Let&#8217;s start by trying to inject a <code>ShoutyWorld</code> class into the contructor of our <code>StepDefinitions</code> class. <a href="#shot-1547" id="shot-1547" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+<p>Let&#8217;s start by trying to inject a <code>ShoutyWorld</code> instance into the contructor of our <code>StepDefinitions</code> class. <a href="#shot-1547" id="shot-1547" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
     <span class="o">...</span>
-        <span class="kd">public</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
-        <span class="kd">public</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">;</span></code></pre>
+    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9741,10 +9742,10 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
-        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
-        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">person</span><span class="o">);</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"the range is {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">the_range_is</span><span class="o">(</span><span class="kt">int</span> <span class="n">range</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">world</span><span class="o">.</span><span class="na">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9768,9 +9769,10 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} has bought {int} credits"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_has_bought_credits</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">credits</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">name</span><span class="o">).</span><span class="na">setCredits</span><span class="o">(</span><span class="n">credits</span><span class="o">);</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">person</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -9779,8 +9781,10 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StepDefinitions</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">DEFAULT_RANGE</span> <span class="o">=</span> <span class="mi">100</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="no">DEFAULT_RANGE</span><span class="o">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10023,7 +10027,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-13 20:03:00 UTC
+Last updated 2022-06-13 20:14:05 UTC
 </div>
 </div>
 </body>
