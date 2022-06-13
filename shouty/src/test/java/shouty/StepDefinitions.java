@@ -17,7 +17,6 @@ import static org.junit.Assert.assertEquals;
 public class StepDefinitions {
 
     private ShoutyWorld world;
-    private Map<String, List<String>> messagesShoutedBy;
 
     public StepDefinitions(ShoutyWorld world) {
         this.world = world;
@@ -40,7 +39,6 @@ public class StepDefinitions {
 
     @Before
     public void setup() {
-        messagesShoutedBy = new HashMap<String, List<String>>();
     }
 
     @Given("the range is {int}")
@@ -100,17 +98,17 @@ public class StepDefinitions {
 
     private void shout(Person person, String message) {
         person.shout(message);
-        List<String> messages = messagesShoutedBy.get(person.getName());
+        List<String> messages = world.messagesShoutedBy.get(person.getName());
         if (messages == null) {
             messages = new ArrayList<String>();
-            messagesShoutedBy.put(person.getName(), messages);
+            world.messagesShoutedBy.put(person.getName(), messages);
         }
         messages.add(message);
     }
 
     @Then("{word} should hear Sean's message")
     public void person_hears_Sean_s_message(String name) throws Throwable {
-        List<String> messages = messagesShoutedBy.get("Sean");
+        List<String> messages = world.messagesShoutedBy.get("Sean");
         assertEquals(messages, world.people.get(name).getMessagesHeard());
     }
 
@@ -132,7 +130,7 @@ public class StepDefinitions {
     @Then("{word} hears all Sean's messages")
     public void person_hears_all_Sean_s_messages(String name) throws Throwable {
         List<String> heardByLucy = world.people.get(name).getMessagesHeard();
-        List<String> messagesFromSean = messagesShoutedBy.get("Sean");
+        List<String> messagesFromSean = world.messagesShoutedBy.get("Sean");
 
         // Hamcrest's hasItems matcher wants an Array, not a List.
         String[] messagesFromSeanArray = messagesFromSean.toArray(new String[messagesFromSean.size()]);
