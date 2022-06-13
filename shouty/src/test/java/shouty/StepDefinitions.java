@@ -49,41 +49,36 @@ public class StepDefinitions {
         person.moveTo(location);
     }
 
-    @Given("{word} has bought {int} credits")
-    public void person_has_bought_credits(String name, int credits) {
-        world.people.get(name).setCredits(credits);
+    @Given("{person} has bought {int} credits")
+    public void person_has_bought_credits(Person person, int credits) {
+        person.setCredits(credits);
     }
 
-    @When("{word} shouts")
-    public void person_shouts(String name) throws Throwable {
-        Person person = world.people.get(name);
+    @When("{person} shouts")
+    public void person_shouts(Person person) throws Throwable {
         shout(person, "Hello, world");
     }
 
-    @When("{word} shouts {string}")
-    public void person_shouts_message(String name, String message) throws Throwable {
-        Person person = world.people.get(name);
+    @When("{person} shouts {string}")
+    public void person_shouts_message(Person person, String message) throws Throwable {
         shout(person, message);
     }
 
-    @When("{word} shouts {int} messages containing the word {string}")
-    public void person_shouts_messages_containing_the_word(String name, int count, String word) throws Throwable {
-        Person person = world.people.get(name);
+    @When("{person} shouts {int} messages containing the word {string}")
+    public void person_shouts_messages_containing_the_word(Person person, int count, String word) throws Throwable {
         String message = "a message containing the word " + word;
         for (int i = 0; i < count; i++) {
             shout(person, message);
         }
     }
 
-    @When("{word} shouts the following message")
-    public void person_shouts_the_following_message(String name, String message) throws Throwable {
-        Person person = world.people.get(name);
+    @When("{person} shouts the following message")
+    public void person_shouts_the_following_message(Person person, String message) throws Throwable {
         shout(person, message);
     }
 
-    @When("{word} shouts {int} over-long messages")
-    public void person_shouts_some_over_long_messages(String name, int count) throws Throwable {
-        Person person = world.people.get(name);
+    @When("{person} shouts {int} over-long messages")
+    public void person_shouts_some_over_long_messages(Person person, int count) throws Throwable {
         String baseMessage = "A message from Sean that is 181 characters long ";
         String padding = "x";
         String overlongMessage = baseMessage + padding.repeat(181 - baseMessage.length());
@@ -103,30 +98,30 @@ public class StepDefinitions {
         messages.add(message);
     }
 
-    @Then("{word} should hear Sean's message")
-    public void person_hears_Sean_s_message(String name) throws Throwable {
+    @Then("{person} should hear Sean's message")
+    public void person_hears_Sean_s_message(Person person) throws Throwable {
         List<String> messages = world.messagesShoutedBy.get("Sean");
-        assertEquals(messages, world.people.get(name).getMessagesHeard());
+        assertEquals(messages, person.getMessagesHeard());
     }
 
-    @Then("{word} should not hear a shout")
-    public void person_should_not_hear_a_shout(String name) throws Throwable {
-        assertEquals(0, world.people.get(name).getMessagesHeard().size());
+    @Then("{person} should not hear a shout")
+    public void person_should_not_hear_a_shout(Person person) throws Throwable {
+        assertEquals(0, person.getMessagesHeard().size());
     }
 
-    @Then("{word} hears the following messages:")
-    public void person_hears_the_following_messages(String name, DataTable expectedMessages) {
+    @Then("{person} hears the following messages:")
+    public void person_hears_the_following_messages(Person person, DataTable expectedMessages) {
         List<List<String>> actualMessages = new ArrayList<List<String>>();
-        List<String> heard = world.people.get(name).getMessagesHeard();
+        List<String> heard = person.getMessagesHeard();
         for (String message : heard) {
             actualMessages.add(Collections.singletonList(message));
         }
         expectedMessages.diff(DataTable.create(actualMessages));
     }
 
-    @Then("{word} hears all Sean's messages")
-    public void person_hears_all_Sean_s_messages(String name) throws Throwable {
-        List<String> heardByLucy = world.people.get(name).getMessagesHeard();
+    @Then("{person} hears all Sean's messages")
+    public void person_hears_all_Sean_s_messages(Person person) throws Throwable {
+        List<String> heardByLucy = person.getMessagesHeard();
         List<String> messagesFromSean = world.messagesShoutedBy.get("Sean");
 
         // Hamcrest's hasItems matcher wants an Array, not a List.
@@ -134,8 +129,8 @@ public class StepDefinitions {
         assertThat(heardByLucy, hasItems(messagesFromSeanArray));
     }
 
-    @Then("{word} should have {int} credits")
-    public void person_should_have_credits(String name, int expectedCredits) {
-        assertEquals(expectedCredits, world.people.get(name).getCredits());
+    @Then("{person} should have {int} credits")
+    public void person_should_have_credits(Person person, int expectedCredits) {
+        assertEquals(expectedCredits, person.getCredits());
     }
 }
