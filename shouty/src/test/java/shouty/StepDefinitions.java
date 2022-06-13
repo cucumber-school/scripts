@@ -56,25 +56,25 @@ public class StepDefinitions {
 
     @When("{person} shouts")
     public void person_shouts(Person person) throws Throwable {
-        shout(person, "Hello, world");
+        world.shout(person, "Hello, world");
     }
 
     @When("{person} shouts {string}")
     public void person_shouts_message(Person person, String message) throws Throwable {
-        shout(person, message);
+        world.shout(person, message);
     }
 
     @When("{person} shouts {int} messages containing the word {string}")
     public void person_shouts_messages_containing_the_word(Person person, int count, String word) throws Throwable {
         String message = "a message containing the word " + word;
         for (int i = 0; i < count; i++) {
-            shout(person, message);
+            world.shout(person, message);
         }
     }
 
     @When("{person} shouts the following message")
     public void person_shouts_the_following_message(Person person, String message) throws Throwable {
-        shout(person, message);
+        world.shout(person, message);
     }
 
     @When("{person} shouts {int} over-long messages")
@@ -84,18 +84,8 @@ public class StepDefinitions {
         String overlongMessage = baseMessage + padding.repeat(181 - baseMessage.length());
 
         for (int i = 0; i < count; i++) {
-            shout(person, overlongMessage);
+            world.shout(person, overlongMessage);
         }
-    }
-
-    private void shout(Person person, String message) {
-        person.shout(message);
-        List<String> messages = world.messagesShoutedBy.get(person.getName());
-        if (messages == null) {
-            messages = new ArrayList<String>();
-            world.messagesShoutedBy.put(person.getName(), messages);
-        }
-        messages.add(message);
     }
 
     @Then("{person} should hear Sean's message")
