@@ -22,13 +22,13 @@ shot::[1, "Run Cucumber"]
 
 ==== Adding a World class
 
-Let's start by trying to inject a `ShoutyWorld` class into the contructor of our `StepDefinitions` class. shot::[]
+Let's start by trying to inject a `ShoutyWorld` instance into the contructor of our `StepDefinitions` class. shot::[]
 
 [source,java]
 ----
-include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=26]
+include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=17]
     ...
-include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=30..32]
+include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=25..27]
 ----
 
 We don't have one yet, so we can let the IDE help us to create one. shot::[]
@@ -55,7 +55,7 @@ We can start by writing the code we want to have. Imagine we already had a `netw
 
 [source,java]
 ----
-include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=53..56]
+include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=48..51]
 ----
 
 We don't have that field on our World object yet, so let's create it. shot::[]
@@ -70,13 +70,13 @@ We should also use the same `network` in this step where we create a new `Person
 
 [source,java]
 ----
-include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
+include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=53..57]
 ----
 
 Now we can delete the old `network` field on the `StepDefintions class` shot::[].
 [source,java]
 ----
-include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=25..26]
+include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=17..20]
 ----
 
 Let's check everything is still green. shot::[1, "run mvn test"]. Good.
