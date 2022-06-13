@@ -9697,11 +9697,10 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">;</span>
+<pre class="rouge highlight"><code data-lang="java">        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
     <span class="o">...</span>
-    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
-    <span class="o">}</span></code></pre>
+        <span class="kd">public</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+        <span class="kd">public</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9742,10 +9741,10 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"the range is {int}"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">the_range_is</span><span class="o">(</span><span class="kt">int</span> <span class="n">range</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
-        <span class="n">world</span><span class="o">.</span><span class="na">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">person</span><span class="o">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9769,10 +9768,9 @@ and we need to add the default range here too. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
-        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
-        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">person</span><span class="o">);</span>
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} has bought {int} credits"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_has_bought_credits</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">credits</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">name</span><span class="o">).</span><span class="na">setCredits</span><span class="o">(</span><span class="n">credits</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
 </div>
 </div>
@@ -9781,130 +9779,52 @@ and we need to add the default range here too. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="nc">Network</span> <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="no">DEFAULT_RANGE</span><span class="o">);</span>
-    <span class="kd">private</span> <span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">;</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nf">StepDefinitions</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s check everything is still green. . Good.</p>
 </div>
+<div class="paragraph">
+<p>TODO: Write questions about DI</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_extracting_support_code">9.4. Extracting Support Code</h3>
+<div class="paragraph">
+<p>Now that we have our World in place, we can use it to encapsulate common code that we need to run from our step defintiions in order to automate our app.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;re going to start by creating a custom parameter type for <code>Person</code>, then we&#8217;ll create a helper method on the World for shouting, which is something we do a lot in our step definitions.</p>
 </div>
 <div class="sect3">
-<h4 id="_introduce_person_parameter_type">9.3.4. Introduce person parameter type</h4>
+<h4 id="_move_other_fields_to_world">9.4.1. Move other fields to World</h4>
 <div class="paragraph">
-<p>Now that we have moved the <code>network</code> onto our shared <code>ShoutyWorld</code> object, we can create a custom parameter type for <code>Person</code>, as we demonstrated in Chapter 3.</p>
-</div>
-<div class="paragraph">
-<p>In order to do that, we&#8217;ll first need to make a couple of "pre-factoring" changes to our <code>Person</code> class.</p>
+<p>Just like the <code>network</code>, we can also move the <code>people</code> and <code>messagesShoutedBy</code> fields from the <code>StepDefinition</code> class to the <code>World</code>. These fields contain state about the people and messages that have been active in a given scenario, so it&#8217;s important that we can access that state from anywhere in our test automation code.</p>
 </div>
 <div class="paragraph">
-<p>First, we&#8217;ll need the <code>Person</code> to be aware of (and expose) its own <code>name</code> so that, when we are receive it in our step definition, we can easily put it into our <code>people</code> Map for later retrieval. </p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
-        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
-        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">person</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
+<p>We&#8217;ll start with the people hashmap , then do the  <code>messagesShoutedBy</code> hashmap. And now we can remove this empty <code>Before</code> hook. </p>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_introduce_person_parameter_type">9.4.2. Introduce person parameter type</h4>
 <div class="paragraph">
-<p>Secondly, we&#8217;ll need a way to be able to move the location of a <code>Person</code> after it&#8217;s been created, since our step defintion will be passed an existing instance of a <code>Person</code>  from the step definition, and currently the only way to set the location is when the object is constructed. </p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s start by adding the <code>name</code> to <code>Person</code>. We can start at the outside by modifying the step definition to  take the name on the constructor, and  expose it via a getter.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} is located at {int}"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
-        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="n">location</span><span class="o">);</span>
-        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">person</span><span class="o">);</span>
-    <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We can  lean on the IDE to add the <code>name</code> as the first constructor parameter for <code>Person</code>, and to  create a stub of the <code>getName</code> method.</p>
-</div>
-<div class="paragraph">
-<p>Next we need to actually  add the <code>name</code> field to the <code>Person</code> class,</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Person</span> <span class="o">{</span>
-    <span class="o">...</span>
-    <span class="kd">private</span> <span class="kd">final</span> <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
-    <span class="o">...</span>
-    <span class="kd">public</span> <span class="nf">Person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="nc">Network</span> <span class="n">network</span><span class="o">,</span> <span class="kt">int</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">name</span> <span class="o">=</span> <span class="n">name</span><span class="o">;</span>
-        <span class="o">...</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>and  make it accessible via the <code>getName</code> method.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="n">name</span><span class="o">;</span> <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Great. We have a <a href="https://github.com/cucumber-school/scripts/commit/cfe85f85618df2bd7205f1d2b99bb5a1cead09df#diff-dab10880d225d0385ffb5ae4563a44d2b0a89386a5840df11a20c592163a6e7a">few</a> <a href="https://github.com/cucumber-school/scripts/commit/cfe85f85618df2bd7205f1d2b99bb5a1cead09df#diff-b1c0d2d321361d1e1f0dc443e7068874614337888455ec07877fef456b918863">unit tests</a> we need to update with the new API  and then things should be passing again. </p>
-</div>
-<div class="paragraph">
-<p>Next let&#8217;s add that <code>moveTo</code> method. This time, since we&#8217;re adding some behaviour to the <code>Person</code> we&#8217;ll  add a unit test for it first.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Test</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">can_be_moved_to_new_location</span><span class="o">()</span> <span class="o">{</span>
-        <span class="nc">Person</span> <span class="n">lucy</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="s">"Lucy"</span><span class="o">,</span> <span class="n">network</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
-        <span class="n">assertEquals</span><span class="o">(</span><span class="n">lucy</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="mi">100</span><span class="o">).</span><span class="na">getLocation</span><span class="o">(),</span> <span class="mi">100</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p> Let&#8217;s use the IDE to fix the compilation errors, and now we can run the failing test. </p>
-</div>
-<div class="paragraph">
-<p> Now let&#8217;s implement the method, mutating the value of the <code>location</code> field.</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">moveTo</span><span class="o">(</span><span class="kt">int</span> <span class="n">newLocation</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">this</span><span class="o">.</span><span class="na">location</span> <span class="o">=</span> <span class="n">newLocation</span><span class="o">;</span>
-        <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
-    <span class="o">}</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>We need to make the field mutable too. </p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="kt">int</span> <span class="n">location</span><span class="o">;</span></code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Now our unit test should pass. </p>
-</div>
-<div class="paragraph">
-<p>With that prefactoring done, we can create a parameter type for a person.</p>
+<p>Now that we&#8217;ve moved these fields onto our shared <code>ShoutyWorld</code> object, we can create a custom parameter type for <code>Person</code>, as we demonstrated in Chapter 3.</p>
 </div>
 <div class="paragraph">
 <p>Let&#8217;s start at the step definition and write the code we wish we had.</p>
 </div>
 <div class="paragraph">
-<p>We won&#8217;t be using just a <code>{word}</code> anymore, we&#8217;ll use a <code>{person}</code>, and instead of receiving a plain <code>String</code> we&#8217;ll receive an instance of <code>Person</code>. Now we can use this <code>person</code> parameter in our step definition.</p>
+<p>We won&#8217;t be using just a <code>{word}</code> anymore , we&#8217;ll use a <code>{person}</code> , and instead of receiving a plain <code>String</code>  we&#8217;ll receive an instance of <code>Person</code>. Now we can use  this <code>Person</code> object in the body of our step.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} is located at {int}"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_is_located_at</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">Integer</span> <span class="n">location</span><span class="o">)</span> <span class="o">{</span>
-        <span class="n">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">person</span><span class="o">.</span><span class="na">moveTo</span><span class="o">(</span><span class="n">location</span><span class="o">));</span>
-    <span class="o">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java">    <span class="o">}</span>
+
+    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{word} has bought {int} credits"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_has_bought_credits</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">,</span> <span class="kt">int</span> <span class="n">credits</span><span class="o">)</span> <span class="o">{</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -9918,7 +9838,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s start by creating a new class in the <code>support</code> directory with some boilerplate in it:</p>
+<p>So let&#8217;s start by creating a new class in the <code>support</code> directory with some boilerplate in it to register the <code>{person}</code> parameter type with Cucumber. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9936,23 +9856,13 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>That should be enough to satisfy Cucumber that there&#8217;s a <code>{person}</code> parameter type, but we  get these errors because it&#8217;s return <code>null</code> instead of a <code>Person</code> instance like we&#8217;d expect.</p>
+<p>That should be enough to satisfy Cucumber that there&#8217;s a <code>{person}</code> parameter type, but we  get these errors because it&#8217;s returning <code>null</code> instead of a <code>Person</code> instance like we&#8217;d expect.</p>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s return a valid <code>Person</code>. </p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">PersonParameterType</span> <span class="o">{</span>
-    <span class="nd">@ParameterType</span><span class="o">(</span><span class="s">"Lucy|Sean|Larry"</span><span class="o">)</span>
-    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">return</span> <span class="k">new</span> <span class="nf">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
-</div>
+<p>So let&#8217;s return a valid <code>Person</code>.</p>
 </div>
 <div class="paragraph">
-<p>We need an instance of <code>network</code> to create the Person, and the same way as we can use Dependency Injection from a Step Definition class, we can use it from a Parameter Type too. That gives us an instance of the <code>world</code> which we can use to get hold of the same instance of <code>network</code> as we&#8217;re using everywhere else in our scenarios.</p>
+<p>We&#8217;re going to need the <code>ShoutyWorld</code> to be available  to us in this context so that we have access to the <code>network</code> and <code>people</code> fields. Luckily, the exact same Dependency Injection pattern works in ParameterType classes just the same way it does in a step definition class.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9967,53 +9877,77 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
+<p>The parameter type should return an instance of Sean, which we store in the <code>people</code> hashmap for other steps to reference.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@ParameterType</span><span class="o">(</span><span class="s">"Lucy|Sean|Larry"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+        <span class="n">world</span><span class="o">.</span><span class="na">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">person</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">person</span><span class="o">;</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In fact, we want any subsequent steps in a scenario to also be able to use this parameter type, so we can check if an instance of a person with this name already exists, and just return that if it does.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@ParameterType</span><span class="o">(</span><span class="s">"Lucy|Sean|Larry"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="nc">Person</span> <span class="nf">person</span><span class="o">(</span><span class="nc">String</span> <span class="n">name</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">world</span><span class="o">.</span><span class="na">people</span><span class="o">.</span><span class="na">containsKey</span><span class="o">(</span><span class="n">name</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">world</span><span class="o">.</span><span class="na">people</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="nc">Person</span> <span class="n">person</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Person</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">world</span><span class="o">.</span><span class="na">network</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+        <span class="n">world</span><span class="o">.</span><span class="na">people</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">name</span><span class="o">,</span> <span class="n">person</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">person</span><span class="o">;</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Cucumber will create a new instance of this <code>ShoutyWorld</code> class for every scenario that it runs, so we don&#8217;t need to worry about state leaking between our scenarios, but we do want to use this mechanism to share state between the steps of a scenario.</p>
+</div>
+<div class="paragraph">
 <p>Now when we run the tests  everything should work again.</p>
 </div>
 <div class="paragraph">
-<p>Great! We&#8217;ve added our first parameter type. Now we want to use it everywhere we can.</p>
+<p>Great! We&#8217;ve added our first parameter type. Now we want to use it everywhere we can. </p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_move_people_map_into_the_world">9.3.5. Move people Map into the World</h4>
+<h4 id="_moving_our_shout_helper_to_the_world">9.4.3. Moving our <code>shout</code> helper to the World</h4>
 <div class="paragraph">
-<p>TODO: finish the narrative</p>
-</div>
-<div class="paragraph">
-<p>TODO: Write questions about DI</p>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_extracting_support_code">9.4. Extracting Support Code</h3>
-<div class="paragraph">
-<p>We need a new class to contain our support code. Let’s create a class called <code>ShoutSupport</code> in the same package as our step definitions.</p>
+<p>The World isn&#8217;t just for storing state. We can also use it to contain helper methods for common actions against the system that we want to be able to re-use across our steps.</p>
 </div>
 <div class="paragraph">
-<p>We already have a shout method in our step definition class. Let’s cut that method and paste it into to the support class. We’ll make it public and rename it to <code>seanShout</code>.</p>
+<p>The <code>shout</code> method that&#8217;s already been extracted in our <code>StepDefinitions</code> class is a good candidate for this. If we look at it carefullly, we can see that it&#8217;s exhibiting the code smell known as "feature envy": the method is basically all about manipulating the <code>messagesShoutedBy</code> hashmap, to keep a record of who has shouted what messages. It would make more sense to have this method on our World so that our step defintion code becomes simpler.</p>
 </div>
 <div class="paragraph">
-<p>We also need the two maps - <code>people</code> and <code>messagesShoutedBy</code>. Let’s cut and paste those as well. We’ll instantiate these maps where they are declared, and declare them <code>public</code> and <code>final</code>.</p>
+<p>We can start by  duplicating the method, copying it to the World and making it public. The references  to <code>messagesShoutedBy</code> no longer need to go through the <code>world</code> as we are on the <code>world</code> now.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShoutyWorld</span><span class="o">{</span>
+    <span class="o">...</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shout</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="n">messagesShoutedBy</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">messages</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;();</span>
+            <span class="n">messagesShoutedBy</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">messages</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">messages</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Now that we have a new <code>ShoutSupport</code> class let’s put it to use in our step definitions. We’ll declare a constructor to pass it in, store the reference in a <code>shoutSupport</code> field and call this method everywhere we used to call <code>shout</code>.</p>
+<p>We can  replace all the usages of the local <code>shout</code> method with the new one, and then finally  delete the old method.</p>
 </div>
-<div class="paragraph">
-<p>Since our maps are now moved, we need to access those from the <code>shoutSupport</code> object as well.</p>
-</div>
-<div class="paragraph">
-<p>Cucumber now fails with an error complaining that the <code>Stepdefs</code> class doesn’t have an empty constructor. You may not have given it much thought, but Cucumber creates a new instance of every class with step definitions before every scenario.</p>
-</div>
-<div class="paragraph">
-<p>Cucumber knows how to instantiate classes with empty constructors. When the classes expect dependencies to be passed in, Cucumber needs to delegate the instantiation of objects to a dependency injection container.</p>
-</div>
-<div class="paragraph">
-<p>Cucumber supports half a dozen dependency injection containers. Let’s pick a simple one that doesn’t require any configuration - picocontainer.</p>
-</div>
-<div class="paragraph">
-<p>Now that Cucumber successfully instantiates the objects, let’s finish our refactoring. We’ll know that we’re done when all scenarios are green again.</p>
 </div>
 <div class="sect3">
-<h4 id="_lesson_3_questions_6">9.4.1. Lesson 3 - Questions</h4>
+<h4 id="_lesson_3_questions_6">9.4.4. Lesson 3 - Questions</h4>
 <div class="sect4">
 <h5 id="_why_do_we_run_the_unit_tests_before_the_acceptance_tests">Why do we run the unit tests before the acceptance tests?</h5>
 <div class="ulist">

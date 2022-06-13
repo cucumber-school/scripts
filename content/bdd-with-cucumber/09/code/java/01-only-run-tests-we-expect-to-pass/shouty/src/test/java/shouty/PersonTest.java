@@ -12,20 +12,20 @@ public class PersonTest {
 
     @Test
     public void it_subscribes_to_the_network() {
-        Person person = new Person(network, 100);
+        Person person = new Person("A Person:", network, 100);
         verify(network).subscribe(person);
     }
 
     @Test
     public void it_has_a_location() {
-        Person person = new Person(network, 100);
+        Person person = new Person("A Person", network, 100);
         assertEquals(100, person.getLocation());
     }
 
     @Test
     public void broadcasts_shouts_to_the_network() {
         String message = "Free bagels!";
-        Person sean = new Person(network, 0);
+        Person sean = new Person("Sean", network, 0);
         sean.shout(message);
         verify(network).broadcast(message, sean);
     }
@@ -33,8 +33,14 @@ public class PersonTest {
     @Test
     public void remembers_messages_heard() {
         String message = "Free bagels!";
-        Person lucy = new Person(network, 100);
+        Person lucy = new Person("Lucy", network, 100);
         lucy.hear(message);
         assertEquals(asList(message), lucy.getMessagesHeard());
+    }
+
+    @Test
+    public void can_be_moved_to_new_location() {
+        Person lucy = new Person("Lucy", network, 0);
+        assertEquals(lucy.moveTo(100).getLocation(), 100);
     }
 }

@@ -12,7 +12,7 @@ public class PersonParameterType {
 
     @ParameterType("Lucy|Sean|Larry")
     public Person person(String name) {
-        return new Person(name, world.network, 0);
+        return null;
     }
 }
 

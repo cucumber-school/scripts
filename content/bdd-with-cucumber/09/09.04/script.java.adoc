@@ -1,21 +1,91 @@
 include::./title.adoc[]
 
-We need a new class to contain our support code. Let’s create a class called `ShoutSupport` in the same package as our step definitions.
+Now that we have our World in place, we can use it to encapsulate common code that we need to run from our step defintiions in order to automate our app.
 
-We already have a shout method in our step definition class. Let’s cut that method and paste it into to the support class. We’ll make it public and rename it to `seanShout`. 
+We're going to start by creating a custom parameter type for `Person`, then we'll create a helper method on the World for shouting, which is something we do a lot in our step definitions.
 
-We also need the two maps - `people` and `messagesShoutedBy`. Let’s cut and paste those as well. We’ll instantiate these maps where they are declared, and declare them `public` and `final`.
+==== Move other fields to World
 
-Now that we have a new `ShoutSupport` class let’s put it to use in our step definitions. We’ll declare a constructor to pass it in, store the reference in a `shoutSupport` field and call this method everywhere we used to call `shout`.
+Just like the `network`, we can also move the `people` and `messagesShoutedBy` fields from the `StepDefinition` class to the `World`. These fields contain state about the people and messages that have been active in a given scenario, so it's important that we can access that state from anywhere in our test automation code.
 
-Since our maps are now moved, we need to access those from the `shoutSupport` object as well.
 
-Cucumber now fails with an error complaining that the `Stepdefs` class doesn’t have an empty constructor. You may not have given it much thought, but Cucumber creates a new instance of every class with step definitions before every scenario.
+We'll start with the people hashmap shot::[1, "move people hashmap (fast)"], then do the shot::[1, "move messagesShoutedBy hashmap (fast)"] `messagesShoutedBy` hashmap. And now we can remove this empty `Before` hook. shot::[]
 
-Cucumber knows how to instantiate classes with empty constructors. When the classes expect dependencies to be passed in, Cucumber needs to delegate the instantiation of objects to a dependency injection container.
+==== Introduce person parameter type
 
-Cucumber supports half a dozen dependency injection containers. Let’s pick a simple one that doesn’t require any configuration - picocontainer.
+Now that we've moved these fields onto our shared `ShoutyWorld` object, we can create a custom parameter type for `Person`, as we demonstrated in Chapter 3.
 
-[Adds PicoContainer to the pom.xml]
+Let's start at the step definition and write the code we wish we had.
 
-Now that Cucumber successfully instantiates the objects, let’s finish our refactoring. We’ll know that we’re done when all scenarios are green again.
+We won't be using just a `{word}` anymore shot::[], we'll use a `{person}` shot::[], and instead of receiving a plain `String` shot::[] we'll receive an instance of `Person`. Now we can use shot::[] this `Person` object in the body of our step.
+
+[source,java]
+----
+include::../code/java/08-use-parameter-type-in-one-step-fails-/shouty/src/test/java/shouty/StepDefinitions.java[lines=50..53]
+----
+
+When we shot::[] run Cucumber now, it tells us we need to register a parameter type:
+
+----
+[ERROR] Errors: 
+[ERROR]   Could not create a cucumber expression for '{person} is located at {int}'.
+It appears you did not register a parameter type.
+----
+
+So let's start by creating a new class in the `support` directory with some boilerplate in it to register the `{person}` parameter type with Cucumber. shot::[]
+
+[source,java]
+----
+include::../code/java/09-add-boilerplate-for-person-parameter-type/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=1..11]
+----
+
+That should be enough to satisfy Cucumber that there's a `{person}` parameter type, but we shot::[] get these errors because it's returning `null` instead of a `Person` instance like we'd expect.
+
+So let's return a valid `Person`. 
+
+We're going to need the `ShoutyWorld` to be available shot::[] to us in this context so that we have access to the `network` and `people` fields. Luckily, the exact same Dependency Injection pattern works in ParameterType classes just the same way it does in a step definition class.
+
+[source,java]
+----
+include::../code/java/10-inject-world-into-parameter-type-class/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=6..11]
+    ...
+}
+----
+
+The parameter type should return an instance of Sean, which we store in the `people` hashmap for other steps to reference.
+
+[source,java]
+----
+include::../code/java/11-return-a-person-from-parameter-type/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=13..14]
+include::../code/java/11-return-a-person-from-parameter-type/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=18..21]
+----
+
+In fact, we want any subsequent steps in a scenario to also be able to use this parameter type, so we can check if an instance of a person with this name already exists, and just return that if it does.
+
+[source,java]
+----
+include::../code/java/11-return-a-person-from-parameter-type/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=13..21]
+----
+
+Cucumber will create a new instance of this `ShoutyWorld` class for every scenario that it runs, so we don't need to worry about state leaking between our scenarios, but we do want to use this mechanism to share state between the steps of a scenario.
+
+Now when we run the tests shot::[] everything should work again.
+
+Great! We've added our first parameter type. Now we want to use it everywhere we can. shot::[1, "Fast montage of changing all the steps to use {person}"]
+
+==== Moving our `shout` helper to the World
+
+The World isn't just for storing state. We can also use it to contain helper methods for common actions against the system that we want to be able to re-use across our steps.
+
+The `shout` method that's already been extracted in our `StepDefinitions` class is a good candidate for this. If we look at it carefullly, we can see that it's exhibiting the code smell known as "feature envy": the method is basically all about manipulating the `messagesShoutedBy` hashmap, to keep a record of who has shouted what messages. It would make more sense to have this method on our World so that our step defintion code becomes simpler.
+
+We can start by shot::[] duplicating the method, copying it to the World and making it public. The references shot::[] to `messagesShoutedBy` no longer need to go through the `world` as we are on the `world` now.
+
+[source,java]
+----
+include::../code/java/13-move-shout-method-to-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=11]
+    ...
+include::../code/java/13-move-shout-method-to-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=17..26]
+----
+
+We can shot::[] replace all the usages of the local `shout` method with the new one, and then finally shot::[] delete the old method.

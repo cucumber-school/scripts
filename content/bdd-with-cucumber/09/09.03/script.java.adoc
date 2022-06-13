@@ -55,7 +55,7 @@ We can start by writing the code we want to have. Imagine we already had a `netw
 
 [source,java]
 ----
-include::../code/java/04-move-network-onto-the-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=53..56]
+include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=53..56]
 ----
 
 We don't have that field on our World object yet, so let's create it. shot::[]
@@ -63,14 +63,14 @@ and we need to add the default range here too. shot::[]
 
 [source,java]
 ----
-include::../code/java/04-move-network-onto-the-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..8]
+include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..8]
 ----
 
 We should also use the same `network` in this step where we create a new `Person` instance: shot::[]
 
 [source,java]
 ----
-include::../code/java/04-move-network-onto-the-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
+include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
 ----
 
 Now we can delete the old `network` field on the `StepDefintions class` shot::[].
@@ -80,125 +80,3 @@ include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepD
 ----
 
 Let's check everything is still green. shot::[1, "run mvn test"]. Good.
-
-==== Introduce person parameter type
-
-Now that we have moved the `network` onto our shared `ShoutyWorld` object, we can create a custom parameter type for `Person`, as we demonstrated in Chapter 3.
-
-In order to do that, we'll first need to make a couple of "pre-factoring" changes to our `Person` class.
-
-First, we'll need the `Person` to be aware of (and expose) its own `name` so that, when we are receive it in our step definition, we can easily put it into our `people` Map for later retrieval. shot::[1, "Highlight line 61: `name`"]
-
-[source,java]
-----
-include::../code/java/04-move-network-onto-the-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
-----
-
-Secondly, we'll need a way to be able to move the location of a `Person` after it's been created, since our step defintion will be passed an existing instance of a `Person` shot::[1, "Highlight line 61: `person`"] from the step definition, and currently the only way to set the location is when the object is constructed. shot::[1, "Highlight line 60: `location`"]
-
-Let's start by adding the `name` to `Person`. We can start at the outside by modifying the step definition to shot::[] take the name on the constructor, and shot::[] expose it via a getter. 
-
-[source,java]
-----
-include::../code/java/05-add-name-property-to-person/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..62]
-----
-
-We can shot::[] lean on the IDE to add the `name` as the first constructor parameter for `Person`, and to shot::[] create a stub of the `getName` method.
-
-Next we need to actually shot::[] add the `name` field to the `Person` class, 
-
-[source,java]
-----
-include::../code/java/05-add-name-property-to-person/shouty/src/main/java/shouty/Person.java[lines=6]
-    ...
-include::../code/java/05-add-name-property-to-person/shouty/src/main/java/shouty/Person.java[lines=10]
-    ...
-include::../code/java/05-add-name-property-to-person/shouty/src/main/java/shouty/Person.java[lines=13..14]
-        ...
-----
-
-and shot::[] make it accessible via the `getName` method.
-
-[source,java]
-----
-include::../code/java/05-add-name-property-to-person/shouty/src/main/java/shouty/Person.java[lines=45]
-----
-
-Great. We have a link:https://github.com/cucumber-school/scripts/commit/cfe85f85618df2bd7205f1d2b99bb5a1cead09df#diff-dab10880d225d0385ffb5ae4563a44d2b0a89386a5840df11a20c592163a6e7a[few] link:https://github.com/cucumber-school/scripts/commit/cfe85f85618df2bd7205f1d2b99bb5a1cead09df#diff-b1c0d2d321361d1e1f0dc443e7068874614337888455ec07877fef456b918863[unit tests] we need to update with the new API shot::[] and then things should be passing again. shot::[]
-
-Next let's add that `moveTo` method. This time, since we're adding some behaviour to the `Person` we'll shot::[] add a unit test for it first.
-
-[source,java]
-----
-include::../code/java/06-introduce-person-moveto-method/shouty/src/test/java/shouty/PersonTest.java[lines=41..46]
-----
-
-shot::[1, "Generate stub method"] Let's use the IDE to fix the compilation errors, and now we can run the failing test. shot::[]
-
-shot::[1, "Add implementation"] Now let's implement the method, mutating the value of the `location` field.
-
-[source,java]
-----
-include::../code/java/06-introduce-person-moveto-method/shouty/src/main/java/shouty/Person.java[lines=41..44]
-----
-
-We need to make the field mutable too. shot::[1, "remove `final` from field"]
-
-[source,java]
-----
-include::../code/java/06-introduce-person-moveto-method/shouty/src/main/java/shouty/Person.java[lines=10]
-----
-
-Now our unit test should pass. shot::[]
-
-With that prefactoring done, we can create a parameter type for a person.
-
-Let's start at the step definition and write the code we wish we had.
-
-We won't be using just a `{word}` anymore, we'll use a `{person}`, and instead of receiving a plain `String` we'll receive an instance of `Person`. Now we can use this `person` parameter in our step definition.
-
-[source,java]
-----
-include::../code/java/07-use-parameter-type-in-one-step/shouty/src/test/java/shouty/StepDefinitions.java[lines=58..61]
-----
-
-When we shot::[] run Cucumber now, it tells us we need to register a parameter type:
-
-----
-[ERROR] Errors: 
-[ERROR]   Could not create a cucumber expression for '{person} is located at {int}'.
-It appears you did not register a parameter type.
-----
-
-So let's start by creating a new class in the `support` directory with some boilerplate in it:
-
-[source,java]
-----
-include::../code/java/08-add-boilerplate-for-person-parameter-type/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=1..11]
-----
-
-That should be enough to satisfy Cucumber that there's a `{person}` parameter type, but we shot::[] get these errors because it's return `null` instead of a `Person` instance like we'd expect.
-
-So let's return a valid `Person`. shot::[]
-
-[source,java]
-----
-include::../code/java/09-return-a-person-from-parameter-type/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=6..11]
-----
-
-We need an instance of `network` to create the Person, and the same way as we can use Dependency Injection from a Step Definition class, we can use it from a Parameter Type too. That gives us an instance of the `world` which we can use to get hold of the same instance of `network` as we're using everywhere else in our scenarios.
-
-[source,java]
-----
-include::../code/java/10-inject-world-into-parameter-type-class/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=6..11]
-    ...
-}
-----
-
-Now when we run the tests shot::[] everything should work again.
-
-Great! We've added our first parameter type. Now we want to use it everywhere we can.
-
-==== Move people Map into the World
-
-TODO: finish the narrative
