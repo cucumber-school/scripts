@@ -1,14 +1,16 @@
 package shouty;
 
 import io.cucumber.datatable.DataTable;
-import io.cucumber.java.Before;
 import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import shouty.support.ShoutyWorld;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -35,10 +37,6 @@ public class StepDefinitions {
     @DataTableType
     public Whereabouts defineWhereabouts(Map<String, String> entry) {
         return new Whereabouts(entry.get("name"), Integer.parseInt(entry.get("location")));
-    }
-
-    @Before
-    public void setup() {
     }
 
     @Given("the range is {int}")
