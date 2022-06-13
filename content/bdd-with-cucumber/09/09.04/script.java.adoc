@@ -17,11 +17,16 @@ Now that we've moved these fields onto our shared `ShoutyWorld` object, we can c
 
 Let's start at the step definition and write the code we wish we had.
 
-We won't be using just a `{word}` anymore shot::[], we'll use a `{person}` shot::[], and instead of receiving a plain `String` shot::[] we'll receive an instance of `Person`. Now we can use shot::[] this `Person` object in the body of our step.
+[source,java]
+----
+include::../code/java/07-remove-before-hook/shouty/src/test/java/shouty/StepDefinitions.java[lines=47..51]
+----
+
+We won't be using just a `{word}` anymore shot::[], we'll use a `{person}` shot::[], and instead of receiving a plain `String` shot::[] we'll receive an instance of `Person`. Now we can use shot::[] this `Person` object in the body of our step, with no need to create them here, or store them in the `people` map. Our parameter type will take care of all of that!
 
 [source,java]
 ----
-include::../code/java/08-use-parameter-type-in-one-step-fails-/shouty/src/test/java/shouty/StepDefinitions.java[lines=50..53]
+include::../code/java/08-use-parameter-type-in-one-step-fails-/shouty/src/test/java/shouty/StepDefinitions.java[lines=47..50]
 ----
 
 When we shot::[] run Cucumber now, it tells us we need to register a parameter type:
