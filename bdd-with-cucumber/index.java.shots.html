@@ -9582,8 +9582,7 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <p>This layer of support code literally supports the step definitions by providing an API for automating your application.</p>
 </div>
 <div class="paragraph">
-<p>We can extract this API from our step definitions. Let’s pick up the shouty codebase from last
-week and show you what we mean.</p>
+<p>We can extract this API from our step definitions. Let’s pick up the shouty codebase from Chapter 8 and show you what we mean.</p>
 </div>
 <div class="sect3">
 <h4 id="_lesson_2_questions_7">9.2.1. Lesson 2 - Questions</h4>
@@ -9660,13 +9659,16 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="sect2">
 <h3 id="_dependency_injection">9.3. Dependency Injection</h3>
 <div class="paragraph">
-<p>A fundamental concept for organising your support code in a Cucumber-JVM project is dependency injection.</p>
+<p>A fundamental concept for organising your support code in a Cucumber-JVM project is <strong>dependency injection</strong>.</p>
 </div>
 <div class="paragraph">
-<p>Dependency injection is how you access other objects from your step defintion classes. In particular, it allows you to share those objects between multiple step definition classes, so that if you&#8217;ve started to organise your step definitions into different classes, they can still access the same objects.</p>
+<p>Dependency injection is how you access other objects from your step defintion classes. They could be objects from the system under test, or objects from your support layer.</p>
 </div>
 <div class="paragraph">
-<p>This gives you a similar capability as you get with the "World" in Ruby or JavaScript Cucumbers - you can inject an object to store context state through the life of a scenario, or to contain useful helper methods.</p>
+<p>Dependency injection allows you to share the same collaborator objects between multiple step definition classes (or other Cucumber utility classes, like those defining a custom parameter type). When you ask dependency injection to give you an instance of a particular object, you&#8217;ll always get the same instance of that object for the duration of each scenario.</p>
+</div>
+<div class="paragraph">
+<p>This gives you a similar capability as you get with the "World" in Ruby or JavaScript Cucumbers - you can inject an object to contain context state through the life of a scenario, or to contain useful helper methods.</p>
 </div>
 <div class="paragraph">
 <p>In this lesson we&#8217;ll show you how to introduce dependency injection into your Cucumber-JVM project, and use a simple World object to share some state with a parameter type class.</p>
@@ -9875,7 +9877,7 @@ It appears you did not register a parameter type.</pre>
 <p>So let&#8217;s return a valid <code>Person</code>.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;re going to need the <code>ShoutyWorld</code> to be available <a href="#shot-1568" id="shot-1568" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> to us in this context so that we have access to the <code>network</code> and <code>people</code> fields. Luckily, the exact same Dependency Injection pattern works in ParameterType classes just the same way it does in a step definition class.</p>
+<p>We&#8217;re going to need the <code>ShoutyWorld</code> to be available <a href="#shot-1568" id="shot-1568" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> to us in this context so that we have access to the <code>network</code> and <code>people</code> fields. Picocontainer&#8217;s dependency injection pattern works in classes with the <code>@ParameterType</code> annotation just the same as it does in a step definition class. If you&#8217;re using Spring for dependency injection, you&#8217;ll need to add the <code>@ScenarioScope</code> annotation to the class. See <a href="https://github.com/cucumber/cucumber-jvm/tree/main/spring">Cucumber-JVM&#8217;s Spring documentation</a> for details.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9890,7 +9892,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The parameter type should return an instance of Sean, which we store in the <code>people</code> hashmap for other steps to reference.</p>
+<p>The parameter type should return an instance of the person, which we store in the <code>people</code> hashmap for other steps to reference.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9919,13 +9921,16 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Cucumber will create a new instance of this <code>ShoutyWorld</code> class for every scenario that it runs, so we don&#8217;t need to worry about state leaking between our scenarios, but we do want to use this mechanism to share state between the steps of a scenario.</p>
+<p>Now we have a parameter type that will either create a new person if this is the first time they&#8217;ve been mentioned in the scenario, or return an existing instance if they&#8217;ve already been mentioned before.</p>
+</div>
+<div class="paragraph">
+<p>Cucumber will create a new instance of this <code>ShoutyWorld</code> class for every scenario that it runs, so we don&#8217;t need to worry about this state leaking <em>between</em> our scenarios.</p>
 </div>
 <div class="paragraph">
 <p>Now when we run the tests <a href="#shot-1569" id="shot-1569" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> everything should work again.</p>
 </div>
 <div class="paragraph">
-<p>Great! We&#8217;ve added our first parameter type. Now we want to use it everywhere we can. <a href="#shot-1570" id="shot-1570" title="Fast montage of changing all the steps to use {person}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Fast montage of changing all the steps to use {person}</a></p>
+<p>Great! We&#8217;ve added our first parameter type. Now we want to use it everywhere we can. <a href="#shot-1570" id="shot-1570" title="Fast montage of changing all the steps from {word} to {person}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Fast montage of changing all the steps from {word} to {person}</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -9935,6 +9940,9 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="paragraph">
 <p>The <code>shout</code> method that&#8217;s already been extracted in our <code>StepDefinitions</code> class is a good candidate for this. If we look at it carefullly, we can see that it&#8217;s exhibiting the code smell known as "feature envy": the method is basically all about manipulating the <code>messagesShoutedBy</code> hashmap, to keep a record of who has shouted what messages. It would make more sense to have this method on our World so that our step defintion code becomes simpler.</p>
+</div>
+<div class="paragraph">
+<p>This will also mean that, if we want to split our StepDefinition class and organise our step definitions into different classes, they&#8217;ll all be able to use the <code>shout</code> method.</p>
 </div>
 <div class="paragraph">
 <p>We can start by <a href="#shot-1571" id="shot-1571" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> duplicating the method, copying it to the World and making it public. The references <a href="#shot-1572" id="shot-1572" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> to <code>messagesShoutedBy</code> no longer need to go through the <code>world</code> as we are on the <code>world</code> now.</p>
@@ -9957,6 +9965,9 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="paragraph">
 <p>We can <a href="#shot-1573" id="shot-1573" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> replace all the usages of the local <code>shout</code> method with the new one, and then finally <a href="#shot-1574" id="shot-1574" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> delete the old method.</p>
+</div>
+<div class="paragraph">
+<p>Great. In this way you can start to move complexity out of your step definitions, into support clasess that take responsibilty for the details of how to invoke actions against your application. You can probably imagine how, for a more complex project, this would be really useful for keeping your step definitions maintainable.</p>
 </div>
 </div>
 <div class="sect3">
@@ -10036,7 +10047,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-13 20:19:54 UTC
+Last updated 2022-06-14 17:48:19 UTC
 </div>
 </div>
 </body>
