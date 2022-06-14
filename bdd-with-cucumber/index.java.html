@@ -735,7 +735,7 @@ pre.rouge {
 <li><a href="#_layers_of_a_cucumber_test_suite">9.2. Layers of a Cucumber Test Suite</a></li>
 <li><a href="#_dependency_injection">9.3. Dependency Injection</a></li>
 <li><a href="#_extracting_support_code">9.4. Extracting Support Code</a></li>
-<li><a href="#_close">9.5. Close</a></li>
+<li><a href="#_organizing_step_definitions_into_multiple_classes">9.5. Organizing step definitions into multiple classes</a></li>
 </ul>
 </li>
 <li><a href="#_acceptance_tests_vs_unit_tests">10. Acceptance Tests vs Unit Tests</a></li>
@@ -10031,21 +10031,105 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_close">9.5. Close</h3>
+<h3 id="_organizing_step_definitions_into_multiple_classes">9.5. Organizing step definitions into multiple classes</h3>
 <div class="paragraph">
-<p>We could continue to move code from our step definitions into the support code like this. For example, we could write a support method for generating messages of a certain length.</p>
+<p>As your test suite grows, you can end up with hundreds of step defintiions, and keeping them all in a single file becomes a maintenance nightmare.</p>
 </div>
 <div class="paragraph">
-<p>Ideally, each step definition should only contain one or two lines that delegate to your support code. When you follow this principle, your step definitions become a translation layer from plain language into code. By keeping the vocabulary consistent as you move across the problem-solution boundary, you start to allow the scenarios to drive the design of your domain model. This is what we call modelling by example.</p>
+<p>A great benefit of delegating to a support layer is that we can start to organise our step definitions into multiple files, with any step function being able to access the same state and methods on the World, or other support layer objects.</p>
+</div>
+<div class="paragraph">
+<p>To show you how this works, we can move all the steps to do with shouting over to a separate class.</p>
+</div>
+<div class="paragraph">
+<p>First, create an empty class called <code>ShoutSteps.java</code>, and add a constructor that injects the <code>ShoutyWorld</code> dependency.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">shouty</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">shouty.support.ShoutyWorld</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShoutSteps</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">ShoutSteps</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can cut and paste those steps from the existing <code>StepDefinitions</code> class into this new one:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShoutSteps</span> <span class="o">{</span>
+    <span class="o">...</span>
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"{person} shouts"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_shouts</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">world</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">person</span><span class="o">,</span> <span class="s">"Hello, world"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"{person} shouts {string}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_shouts_message</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">world</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">person</span><span class="o">,</span> <span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"{person} shouts {int} messages containing the word {string}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_shouts_messages_containing_the_word</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">,</span> <span class="nc">String</span> <span class="n">word</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">message</span> <span class="o">=</span> <span class="s">"a message containing the word "</span> <span class="o">+</span> <span class="n">word</span><span class="o">;</span>
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">world</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">person</span><span class="o">,</span> <span class="n">message</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"{person} shouts the following message"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_shouts_the_following_message</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">world</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">person</span><span class="o">,</span> <span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="nd">@When</span><span class="o">(</span><span class="s">"{person} shouts {int} over-long messages"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_shouts_some_over_long_messages</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">baseMessage</span> <span class="o">=</span> <span class="s">"A message from Sean that is 181 characters long "</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">padding</span> <span class="o">=</span> <span class="s">"x"</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">overlongMessage</span> <span class="o">=</span> <span class="n">baseMessage</span> <span class="o">+</span> <span class="n">padding</span><span class="o">.</span><span class="na">repeat</span><span class="o">(</span><span class="mi">181</span> <span class="o">-</span> <span class="n">baseMessage</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">world</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">person</span><span class="o">,</span> <span class="n">overlongMessage</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll need to  import the <code>@When</code> annotation, and now the tests should  run just as they did before.</p>
+</div>
+<div class="paragraph">
+<p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have it&#8217;s own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this mapping doesn&#8217;t work very well. We find it&#8217;s better to organise your steps by <em>domain concept</em>. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you&#8217;re working on your own projects.</p>
+</div>
+<div class="paragraph">
+<p>We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length, or a method for asserting that a person has heard certain messages.</p>
+</div>
+<div class="paragraph">
+<p>Ideally, each step definition  should only contain one or two lines that delegate to your support code.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"{person} has bought {int} credits"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_has_bought_credits</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="kt">int</span> <span class="n">credits</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">setCredits</span><span class="o">(</span><span class="n">credits</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When you follow this principle, your step definitions become a translation layer from plain language into code. By keeping the vocabulary consistent as you move across the problem-solution boundary, you start to allow the scenarios to drive the design of your domain model. This is what we call modelling by example.</p>
 </div>
 <div class="paragraph">
 <p>In this way, we create our own API for automating our application. As this API grows, it becomes easier and easier to write new step definitions, because the actions you need to take are already defined on the API.</p>
 </div>
 <div class="paragraph">
 <p>It might seem like over-engineering on our little Shouty application, but you’ll be surprised out quickly these test suites grow. Taking time to stamp out complexity early  and organise your code to create a good support API is a great investment for the future.</p>
-</div>
-<div class="paragraph">
-<p>In a future lesson we’ll show you how a well-crafted automation API lets you plug your scenarios into the system at different levels, such as a web front-end.</p>
 </div>
 </div>
 </div>
@@ -10081,7 +10165,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-14 18:36:52 UTC
+Last updated 2022-06-14 18:53:09 UTC
 </div>
 </div>
 </body>
