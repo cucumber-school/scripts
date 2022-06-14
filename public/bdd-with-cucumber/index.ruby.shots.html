@@ -9886,13 +9886,16 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
+<p>And run Cucumber <a href="#shot-520" id="shot-520" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> to check everything&#8217;s still working. Great.</p>
+</div>
+<div class="paragraph">
 <p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have it&#8217;s own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this mapping doesn&#8217;t work very well. We find it&#8217;s better to organise your steps by <em>domain concept</em>. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you&#8217;re working on your own projects.</p>
 </div>
 <div class="paragraph">
 <p>We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length, or a method for asserting that a person has heard certain messages.</p>
 </div>
 <div class="paragraph">
-<p>Ideally, each step definition <a href="#shot-520" id="shot-520" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> should only contain one or two lines that delegate to your support code.</p>
+<p>Ideally, each step definition <a href="#shot-521" id="shot-521" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> should only contain one or two lines that delegate to your support code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
