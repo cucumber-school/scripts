@@ -10109,7 +10109,37 @@ It appears you did not register a parameter type.</pre>
 <p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have it&#8217;s own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this mapping doesn&#8217;t work very well. We find it&#8217;s better to organise your steps by <em>domain concept</em>. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you&#8217;re working on your own projects.</p>
 </div>
 <div class="paragraph">
-<p>We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length, or a method for asserting that a person has heard certain messages.</p>
+<p>We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length ,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@When</span><span class="o">(</span><span class="s">"{person} shouts {int} over-long messages"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_shouts_some_over_long_messages</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="kt">int</span> <span class="n">count</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="nc">String</span> <span class="n">baseMessage</span> <span class="o">=</span> <span class="s">"A message from Sean that is 181 characters long "</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">padding</span> <span class="o">=</span> <span class="s">"x"</span><span class="o">;</span>
+        <span class="nc">String</span> <span class="n">overlongMessage</span> <span class="o">=</span> <span class="n">baseMessage</span> <span class="o">+</span> <span class="n">padding</span><span class="o">.</span><span class="na">repeat</span><span class="o">(</span><span class="mi">181</span> <span class="o">-</span> <span class="n">baseMessage</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">count</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">world</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">person</span><span class="o">,</span> <span class="n">overlongMessage</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>or a method for asserting that a person has heard certain messages. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Then</span><span class="o">(</span><span class="s">"{person} hears the following messages:"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">person_hears_the_following_messages</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">DataTable</span> <span class="n">expectedMessages</span><span class="o">)</span> <span class="o">{</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;</span> <span class="n">actualMessages</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;();</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">heard</span> <span class="o">=</span> <span class="n">person</span><span class="o">.</span><span class="na">getMessagesHeard</span><span class="o">();</span>
+        <span class="k">for</span> <span class="o">(</span><span class="nc">String</span> <span class="n">message</span> <span class="o">:</span> <span class="n">heard</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">actualMessages</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="nc">Collections</span><span class="o">.</span><span class="na">singletonList</span><span class="o">(</span><span class="n">message</span><span class="o">));</span>
+        <span class="o">}</span>
+        <span class="n">expectedMessages</span><span class="o">.</span><span class="na">diff</span><span class="o">(</span><span class="nc">DataTable</span><span class="o">.</span><span class="na">create</span><span class="o">(</span><span class="n">actualMessages</span><span class="o">));</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Ideally, each step definition  should only contain one or two lines that delegate to your support code.</p>

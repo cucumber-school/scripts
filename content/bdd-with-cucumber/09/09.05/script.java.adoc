@@ -26,7 +26,19 @@ We'll need to shot::[1] import the `@When` annotation, and now the tests should 
 
 Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We've seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have it's own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this mapping doesn't work very well. We find it's better to organise your steps by _domain concept_. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you're working on your own projects.
 
-We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length, or a method for asserting that a person has heard certain messages.
+We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length shot::[1, "Highlight lines 38-40"], 
+
+[source,java]
+----
+include::../code/java/14-extract-shout-steps/shouty/src/test/java/shouty/ShoutSteps.java[lines=36..45]
+----
+
+or a method for asserting that a person has heard certain messages. shot::[1, "Highlight lines 70-75"]
+
+[source,java]
+----
+include::../code/java/14-extract-shout-steps/shouty/src/test/java/shouty/StepDefinitions.java[lines=68..76]
+----
 
 Ideally, each step definition shot::[3] should only contain one or two lines that delegate to your support code. 
 
