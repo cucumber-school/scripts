@@ -9731,13 +9731,21 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p><a href="#shot-1551" id="shot-1551" title="Run mvn test - should be green" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Run mvn test - should be green</a>. Great. Now we can start moving code onto the World.</p>
+<p><a href="#shot-1551" id="shot-1551" title="Run mvn test - should be green" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Run mvn test - should be green</a>Ok, so we&#8217;ve now introduced an empty World object which we can access from a field in our step definition class, but it doesn&#8217;t do anything yet.. Now we can start moving code out of the step definitions and onto the World.</p>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_move_network_onto_world">9.3.3. Move Network onto World</h4>
 <div class="paragraph">
 <p>In order to be able to access the same <code>Network</code> instance everywhere, let&#8217;s move that field onto our new <code>ShoutyWorld</code>.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"the range is {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">the_range_is</span><span class="o">(</span><span class="kt">int</span> <span class="n">range</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>We can start by writing the code we want to have. Imagine we already had a <code>network</code> field on the World, and we could just set it here like this: <a href="#shot-1552" id="shot-1552" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
@@ -9752,7 +9760,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="paragraph">
 <p>We don&#8217;t have that field on our World object yet, so let&#8217;s create it. <a href="#shot-1553" id="shot-1553" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>
-and we need to add the default range here too. <a href="#shot-1554" id="shot-1554" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+and we need to move the default range here too. <a href="#shot-1554" id="shot-1554" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9800,7 +9808,7 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 <div class="sect2">
 <h3 id="_extracting_support_code">9.4. Extracting Support Code</h3>
 <div class="paragraph">
-<p>Now that we have our World in place, we can use it to encapsulate common code that we need to run from our step defintiions in order to automate our app.</p>
+<p>Now that we have our World in place, we can use it to encapsulate common code that we need to run from our step defintions in order to automate our app.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;re going to start by creating a custom parameter type for <code>Person</code>, then we&#8217;ll create a helper method on the World for shouting, which is something we do a lot in our step definitions.</p>
@@ -9811,16 +9819,23 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 <p>Just like the <code>network</code>, we can also move the <code>people</code> and <code>messagesShoutedBy</code> fields from the <code>StepDefinition</code> class to the <code>World</code>. These fields contain state about the people and messages that have been active in a given scenario, so it&#8217;s important that we can access that state from anywhere in our test automation code.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll start with the people hashmap <a href="#shot-1558" id="shot-1558" title="move people hashmap (fast)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: move people hashmap (fast)</a>, then do the <a href="#shot-1559" id="shot-1559" title="move messagesShoutedBy hashmap (fast)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: move messagesShoutedBy hashmap (fast)</a> <code>messagesShoutedBy</code> hashmap. And now we can remove this empty <code>Before</code> hook. <a href="#shot-1560" id="shot-1560" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+<p>We&#8217;ll start with the people hashmap <a href="#shot-1558" id="shot-1558" title="move people hashmap (fast)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: move people hashmap (fast)</a>, then do the <a href="#shot-1559" id="shot-1559" title="move messagesShoutedBy hashmap (fast)" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: move messagesShoutedBy hashmap (fast)</a> <code>messagesShoutedBy</code> hashmap. And now we can remove this empty <code>Before</code> hook. <a href="#shot-1560" id="shot-1560" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Before</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
 <h4 id="_introduce_person_parameter_type">9.4.2. Introduce person parameter type</h4>
 <div class="paragraph">
-<p>Now that we&#8217;ve moved these fields onto our shared <code>ShoutyWorld</code> object, we can create a custom parameter type for <code>Person</code>, as we demonstrated in Chapter 3.</p>
+<p>Now that we&#8217;ve moved these fields onto our shared <code>ShoutyWorld</code> object, we can create a custom parameter type for <code>Person</code>, as we demonstrated in <a href="https://school.cucumber.io/courses/take/bdd-with-cucumber-java/lessons/9615437-custom-parameters">Chapter 3</a>.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start at the step definition and write the code we wish we had.</p>
+<p>Let&#8217;s start at the step definition where we&#8217;re using a built in <code>{word}</code> parameter type.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9832,7 +9847,10 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 </div>
 </div>
 <div class="paragraph">
-<p>We won&#8217;t be using just a <code>{word}</code> anymore <a href="#shot-1561" id="shot-1561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, we&#8217;ll use a <code>{person}</code> <a href="#shot-1562" id="shot-1562" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, and instead of receiving a plain <code>String</code> <a href="#shot-1563" id="shot-1563" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> we&#8217;ll receive an instance of <code>Person</code>. Now we can use <a href="#shot-1564" id="shot-1564" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> this <code>Person</code> object in the body of our step, with no need to create them here, or store them in the <code>people</code> map. Our parameter type will take care of all of that!</p>
+<p>We can start by  writing the code we wish we had. <a href="#shot-1561" id="shot-1561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+</div>
+<div class="paragraph">
+<p>We won&#8217;t be using just a <code>{word}</code> anymore <a href="#shot-1562" id="shot-1562" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a>, we&#8217;ll use a <code>{person}</code> <a href="#shot-1563" id="shot-1563" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a>, and instead of receiving a plain <code>String</code> <a href="#shot-1564" id="shot-1564" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a> we&#8217;ll receive an instance of <code>Person</code>. Now we can use <a href="#shot-1565" id="shot-1565" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a> this  object in the body of our step, with no need to create them here, or store them in the <code>people</code> map. Our parameter type will take care of all of that!</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9843,7 +9861,7 @@ and we need to add the default range here too. <a href="#shot-1554" id="shot-155
 </div>
 </div>
 <div class="paragraph">
-<p>When we <a href="#shot-1565" id="shot-1565" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> run Cucumber now, it tells us we need to register a parameter type:</p>
+<p>When we <a href="#shot-1566" id="shot-1566" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a> run Cucumber now, it tells us we need to register a parameter type:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9853,7 +9871,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s start by creating a new class in the <code>support</code> directory with some boilerplate in it to register the <code>{person}</code> parameter type with Cucumber. <a href="#shot-1566" id="shot-1566" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a></p>
+<p>So let&#8217;s start by creating a new class in the <code>support</code> directory with some boilerplate in it to register the <code>{person}</code> parameter type with Cucumber. <a href="#shot-1567" id="shot-1567" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9871,13 +9889,13 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>That should be enough to satisfy Cucumber that there&#8217;s a <code>{person}</code> parameter type, but we <a href="#shot-1567" id="shot-1567" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> get these errors because it&#8217;s returning <code>null</code> instead of a <code>Person</code> instance like we&#8217;d expect.</p>
+<p>That should be enough to satisfy Cucumber that there&#8217;s a <code>{person}</code> parameter type, but now we <a href="#shot-1568" id="shot-1568" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a> get these errors because it&#8217;s returning <code>null</code> instead of a <code>Person</code> instance like we&#8217;d expect.</p>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s return a valid <code>Person</code>.</p>
+<p>So let&#8217;s fix that.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;re going to need the <code>ShoutyWorld</code> to be available <a href="#shot-1568" id="shot-1568" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> to us in this context so that we have access to the <code>network</code> and <code>people</code> fields. Picocontainer&#8217;s dependency injection pattern works in classes with the <code>@ParameterType</code> annotation just the same as it does in a step definition class. If you&#8217;re using Spring for dependency injection, you&#8217;ll need to add the <code>@ScenarioScope</code> annotation to the class. See <a href="https://github.com/cucumber/cucumber-jvm/tree/main/spring">Cucumber-JVM&#8217;s Spring documentation</a> for details.</p>
+<p>In order to construct a <code>Person</code> instance, we need a reference to the <code>network</code>. Happily, we just moved that to the <code>ShoutyWorld</code>, so let&#8217;s add that to our constructor.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9887,12 +9905,15 @@ It appears you did not register a parameter type.</pre>
     <span class="kd">public</span> <span class="nf">PersonParameterType</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
     <span class="o">}</span>
-    <span class="o">...</span>
+<span class="o">...</span>
 <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The parameter type should return an instance of the person, which we store in the <code>people</code> hashmap for other steps to reference.</p>
+<p>Picocontainer&#8217;s dependency injection pattern works in classes with the <code>@ParameterType</code> annotation just the same as it does in a step definition class. If you&#8217;re using Spring for dependency injection, you&#8217;ll need to add the <code>@ScenarioScope</code> annotation to the class. See <a href="https://github.com/cucumber/cucumber-jvm/tree/main/spring">Cucumber-JVM&#8217;s Spring documentation</a> for details.</p>
+</div>
+<div class="paragraph">
+<p>The parameter type should return an instance of the person, <a href="#shot-1569" id="shot-1569" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a> which we store in the <code>people</code> hashmap for other steps to reference.<a href="#shot-1570" id="shot-1570" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9905,7 +9926,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>In fact, we want any subsequent steps in a scenario to also be able to use this parameter type, so we can check if an instance of a person with this name already exists, and just return that if it does.</p>
+<p>In fact, we want any subsequent steps in a scenario to also be able to use this parameter type, so we can check if an instance of a person with this name already exists, <a href="#shot-1571" id="shot-1571" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 14</a>and just return that if it does.<a href="#shot-1572" id="shot-1572" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 15</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9927,10 +9948,10 @@ It appears you did not register a parameter type.</pre>
 <p>Cucumber will create a new instance of this <code>ShoutyWorld</code> class for every scenario that it runs, so we don&#8217;t need to worry about this state leaking <em>between</em> our scenarios.</p>
 </div>
 <div class="paragraph">
-<p>Now when we run the tests <a href="#shot-1569" id="shot-1569" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> everything should work again.</p>
+<p>Now when we run the tests <a href="#shot-1573" id="shot-1573" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 16</a> everything should work again.</p>
 </div>
 <div class="paragraph">
-<p>Great! We&#8217;ve added our first parameter type. Now we want to use it everywhere we can. <a href="#shot-1570" id="shot-1570" title="Fast montage of changing all the steps from {word} to {person}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Fast montage of changing all the steps from {word} to {person}</a></p>
+<p>Great! We&#8217;ve added our first parameter type. Now we want to use it everywhere we can. <a href="#shot-1574" id="shot-1574" title="Fast montage of changing all the steps from {word} to {person}" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 17: Fast montage of changing all the steps from {word} to {person}</a></p>
 </div>
 </div>
 <div class="sect3">
@@ -9939,18 +9960,31 @@ It appears you did not register a parameter type.</pre>
 <p>The World isn&#8217;t just for storing state. We can also use it to contain helper methods for common actions against the system that we want to be able to re-use across our steps.</p>
 </div>
 <div class="paragraph">
-<p>The <code>shout</code> method that&#8217;s already been extracted in our <code>StepDefinitions</code> class is a good candidate for this. If we look at it carefullly, we can see that it&#8217;s exhibiting the code smell known as "feature envy": the method is basically all about manipulating the <code>messagesShoutedBy</code> hashmap, to keep a record of who has shouted what messages. It would make more sense to have this method on our World so that our step defintion code becomes simpler.</p>
+<p>The <code>shout</code> method that&#8217;s already been extracted in our <code>StepDefinitions</code> class is a good candidate for this. If we look at it <a href="#shot-1575" id="shot-1575" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 18</a> carefullly, we can see that it&#8217;s exhibiting the code smell known as "feature envy": the method is basically all about manipulating the <code>messagesShoutedBy</code> hashmap,<a href="#shot-1576" id="shot-1576" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 19</a> to keep a record of who has shouted what messages.<a href="#shot-1577" id="shot-1577" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 20</a> It would make more sense to have this method on our World so that our step defintion code becomes simpler.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">shout</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="na">messagesShoutedBy</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">messages</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;();</span>
+            <span class="n">world</span><span class="o">.</span><span class="na">messagesShoutedBy</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">messages</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">messages</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>This will also mean that, if we want to split our StepDefinition class and organise our step definitions into different classes, they&#8217;ll all be able to use the <code>shout</code> method.</p>
 </div>
 <div class="paragraph">
-<p>We can start by <a href="#shot-1571" id="shot-1571" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> duplicating the method, copying it to the World and making it public. The references <a href="#shot-1572" id="shot-1572" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> to <code>messagesShoutedBy</code> no longer need to go through the <code>world</code> as we are on the <code>world</code> now.</p>
+<p>We can start by <a href="#shot-1578" id="shot-1578" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 21</a> duplicating the method, copying it to the World and making it public. The references <a href="#shot-1579" id="shot-1579" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 22</a> to <code>messagesShoutedBy</code> no longer need to go through the <code>world</code> as we are on the <code>world</code> now.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShoutyWorld</span><span class="o">{</span>
-    <span class="o">...</span>
+<span class="o">...</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shout</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">person</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
         <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="n">messagesShoutedBy</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
@@ -9964,7 +9998,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We can <a href="#shot-1573" id="shot-1573" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> replace all the usages of the local <code>shout</code> method with the new one, and then finally <a href="#shot-1574" id="shot-1574" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> delete the old method.</p>
+<p>We can <a href="#shot-1580" id="shot-1580" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 23</a> replace all the usages of the local <code>shout</code> method with the new one, and then finally <a href="#shot-1581" id="shot-1581" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 24</a> delete the old method.</p>
 </div>
 <div class="paragraph">
 <p>Great. In this way you can start to move complexity out of your step definitions, into support clasess that take responsibilty for the details of how to invoke actions against your application. You can probably imagine how, for a more complex project, this would be really useful for keeping your step definitions maintainable.</p>
@@ -10047,7 +10081,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-25 10:50:43 -0800
+Last updated 2022-06-14 14:46:41 -0300
 </div>
 </div>
 </body>
