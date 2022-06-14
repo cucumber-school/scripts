@@ -9847,7 +9847,43 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>A great benefit of delegating to a support layer is that we can start to organise our step definitions into multiple files, with any step function being able to access the same state and methods on the World, or other support layer objects.</p>
 </div>
 <div class="paragraph">
-<p>TODO: narrative of adding the shout_steps file</p>
+<p>To show you how this works, we can move all the steps to do with shouting over to a separate class.</p>
+</div>
+<div class="paragraph">
+<p>First, create a file called <code>shout_steps.rb</code> <a href="#shot-518" id="shot-518" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+</div>
+<div class="paragraph">
+<p>Now we can cut and paste those steps from the existing <code>steps.rb</code> file into this new one: <a href="#shot-519" id="shot-519" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span> <span class="s2">"{person} shouts"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="o">|</span>
+  <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="s2">"Hello, world"</span>
+<span class="k">end</span>
+
+<span class="no">When</span><span class="p">(</span><span class="s1">'{person} shouts {string}'</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">message</span><span class="o">|</span>
+  <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="n">message</span>
+<span class="k">end</span>
+
+<span class="no">When</span> <span class="s2">"{person} shouts the following message"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">message</span><span class="o">|</span>
+  <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="n">message</span>
+<span class="k">end</span>
+
+<span class="no">When</span> <span class="s2">"{person} shouts {int} over-long messages"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">count</span><span class="o">|</span>
+  <span class="n">count</span><span class="p">.</span><span class="nf">times</span> <span class="k">do</span>
+    <span class="n">base_message</span> <span class="o">=</span> <span class="s2">"A message from </span><span class="si">#{</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2"> that is 181 characters long "</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">base_message</span> <span class="o">+</span> <span class="s2">"x"</span> <span class="o">*</span> <span class="p">(</span><span class="mi">181</span> <span class="o">-</span> <span class="n">base_message</span><span class="p">.</span><span class="nf">size</span><span class="p">)</span>
+    <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="n">message</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="no">When</span> <span class="s1">'{person} shouts {int} messages containing the word {string}'</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">count</span><span class="p">,</span> <span class="n">word</span><span class="o">|</span>
+  <span class="n">count</span><span class="p">.</span><span class="nf">times</span> <span class="k">do</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="s2">"A message containing the word </span><span class="si">#{</span><span class="n">word</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="n">message</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have it&#8217;s own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this mapping doesn&#8217;t work very well. We find it&#8217;s better to organise your steps by <em>domain concept</em>. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you&#8217;re working on your own projects.</p>
@@ -9856,7 +9892,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length, or a method for asserting that a person has heard certain messages.</p>
 </div>
 <div class="paragraph">
-<p>Ideally, each step definition <a href="#shot-518" id="shot-518" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a> should only contain one or two lines that delegate to your support code.</p>
+<p>Ideally, each step definition <a href="#shot-520" id="shot-520" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> should only contain one or two lines that delegate to your support code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10236,7 +10272,7 @@ See you next time, on Cucumber School.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-25 10:50:43 -0800
+Last updated 2022-06-14 14:46:41 -0300
 </div>
 </div>
 </body>

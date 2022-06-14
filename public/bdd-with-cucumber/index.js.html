@@ -9991,7 +9991,64 @@ should loosely deep-equal
 <p>A great benefit of delegating to a support layer is that we can start to organise our step definitions into multiple files, with any step function being able to access the same state and methods on the World, or other support layer objects.</p>
 </div>
 <div class="paragraph">
-<p>TODO: narrative of adding the shout_steps file</p>
+<p>To show you how this works, we can move all the steps to do with shouting over to a separate class.</p>
+</div>
+<div class="paragraph">
+<p>First, create an empty class called <code>shout_steps.js</code> </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="kd">const</span> <span class="p">{</span> <span class="nx">Given</span><span class="p">,</span> <span class="nx">When</span><span class="p">,</span> <span class="nx">Then</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">@cucumber/cucumber</span><span class="dl">"</span><span class="p">)</span>
+<span class="kd">const</span> <span class="p">{</span> <span class="nx">assertThat</span><span class="p">,</span> <span class="nx">is</span><span class="p">,</span> <span class="nx">equalTo</span> <span class="p">}</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">hamjest</span><span class="dl">"</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we can cut and paste those steps from the existing <code>step_definitions</code> class into this new one: </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="javascript"><span class="nx">Given</span><span class="p">(</span><span class="dl">"</span><span class="s2">the range is {int}</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">range</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">this</span><span class="p">.</span><span class="nx">network</span><span class="p">.</span><span class="nx">range</span> <span class="o">=</span> <span class="nx">range</span>
+<span class="p">})</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} is located at {int}</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="nx">location</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">moveTo</span><span class="p">(</span><span class="nx">location</span><span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nx">Given</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} has bought {int} credits</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="nx">credits</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">person</span><span class="p">.</span><span class="nx">credits</span> <span class="o">=</span> <span class="nx">credits</span>
+<span class="p">})</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} should not hear a shout</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">listener</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">assertThat</span><span class="p">(</span><span class="nx">listener</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">().</span><span class="nx">length</span><span class="p">,</span> <span class="nx">is</span><span class="p">(</span><span class="mi">0</span><span class="p">))</span>
+<span class="p">})</span>
+
+<span class="nx">Then</span><span class="p">(</span>
+  <span class="dl">"</span><span class="s2">{person} hears the following messages:</span><span class="dl">"</span><span class="p">,</span>
+  <span class="kd">function</span> <span class="p">(</span><span class="nx">listener</span><span class="p">,</span> <span class="nx">expectedMessages</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">let</span> <span class="nx">actualMessages</span> <span class="o">=</span> <span class="nx">listener</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">().</span><span class="nx">map</span><span class="p">((</span><span class="nx">message</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">[</span><span class="nx">message</span><span class="p">])</span>
+    <span class="nx">assertThat</span><span class="p">(</span><span class="nx">actualMessages</span><span class="p">,</span> <span class="nx">equalTo</span><span class="p">(</span><span class="nx">expectedMessages</span><span class="p">.</span><span class="nx">raw</span><span class="p">()))</span>
+  <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} hears all {person}'s messages</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">listener</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">assertThat</span><span class="p">(</span>
+    <span class="nx">listener</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">(),</span>
+    <span class="nx">equalTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">])</span>
+  <span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} should hear {person}'s message</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">listener</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">assertThat</span><span class="p">(</span>
+    <span class="nx">listener</span><span class="p">.</span><span class="nx">messagesHeard</span><span class="p">()[</span><span class="mi">0</span><span class="p">],</span>
+    <span class="nx">equalTo</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">messagesShoutedBy</span><span class="p">[</span><span class="nx">shouter</span><span class="p">.</span><span class="nx">name</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+  <span class="p">)</span>
+<span class="p">})</span>
+
+<span class="nx">Then</span><span class="p">(</span><span class="dl">"</span><span class="s2">{person} should have {int} credits</span><span class="dl">"</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">person</span><span class="p">,</span> <span class="nx">expectedCredits</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">assertThat</span><span class="p">(</span><span class="nx">person</span><span class="p">.</span><span class="nx">credits</span><span class="p">,</span> <span class="nx">is</span><span class="p">(</span><span class="nx">expectedCredits</span><span class="p">))</span>
+<span class="p">})</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have it&#8217;s own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this mapping doesn&#8217;t work very well. We find it&#8217;s better to organise your steps by <em>domain concept</em>. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you&#8217;re working on your own projects.</p>
@@ -10052,7 +10109,7 @@ should loosely deep-equal
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-25 10:50:43 -0800
+Last updated 2022-06-14 14:46:41 -0300
 </div>
 </div>
 </body>

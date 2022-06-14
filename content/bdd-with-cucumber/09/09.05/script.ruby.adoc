@@ -4,9 +4,9 @@ include::./script.common-intro.adoc[]
 
 To show you how this works, we can move all the steps to do with shouting over to a separate class.
 
-First, create a file called `shout_steps.rb`
+First, create a file called `shout_steps.rb` shot::[1]
 
-Now we can cut and paste those steps from the existing `steps.rb` file into this new one:
+Now we can cut and paste those steps from the existing `steps.rb` file into this new one: shot::[2]
 
 [source,ruby]
 ----
@@ -17,7 +17,7 @@ Breaking apart your step definitions into multiple files is more of an art than 
 
 We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length, or a method for asserting that a person has heard certain messages.
 
-Ideally, each step definition shot::[] should only contain one or two lines that delegate to your support code. 
+Ideally, each step definition shot::[3] should only contain one or two lines that delegate to your support code. 
 
 [source,ruby]
 ----
