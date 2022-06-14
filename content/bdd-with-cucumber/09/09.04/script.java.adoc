@@ -48,7 +48,7 @@ That should be enough to satisfy Cucumber that there's a `{person}` parameter ty
 
 So let's return a valid `Person`. 
 
-We're going to need the `ShoutyWorld` to be available shot::[] to us in this context so that we have access to the `network` and `people` fields. Luckily, the exact same Dependency Injection pattern works in ParameterType classes just the same way it does in a step definition class.
+We're going to need the `ShoutyWorld` to be available shot::[] to us in this context so that we have access to the `network` and `people` fields. Picocontainer's dependency injection pattern works in classes with the `@ParameterType` annotation just the same as it does in a step definition class. If you're using Spring for dependency injection, you'll need to add the `@ScenarioScope` annotation to the class. See https://github.com/cucumber/cucumber-jvm/tree/main/spring[Cucumber-JVM's Spring documentation] for details.
 
 [source,java]
 ----
@@ -57,7 +57,7 @@ include::../code/java/10-inject-world-into-parameter-type-class/shouty/src/test/
 }
 ----
 
-The parameter type should return an instance of Sean, which we store in the `people` hashmap for other steps to reference.
+The parameter type should return an instance of the person, which we store in the `people` hashmap for other steps to reference.
 
 [source,java]
 ----
@@ -72,17 +72,21 @@ In fact, we want any subsequent steps in a scenario to also be able to use this 
 include::../code/java/11-return-a-person-from-parameter-type/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=13..21]
 ----
 
-Cucumber will create a new instance of this `ShoutyWorld` class for every scenario that it runs, so we don't need to worry about state leaking between our scenarios, but we do want to use this mechanism to share state between the steps of a scenario.
+Now we have a parameter type that will either create a new person if this is the first time they've been mentioned in the scenario, or return an existing instance if they've already been mentioned before.
+
+Cucumber will create a new instance of this `ShoutyWorld` class for every scenario that it runs, so we don't need to worry about this state leaking _between_ our scenarios.
 
 Now when we run the tests shot::[] everything should work again.
 
-Great! We've added our first parameter type. Now we want to use it everywhere we can. shot::[1, "Fast montage of changing all the steps to use {person}"]
+Great! We've added our first parameter type. Now we want to use it everywhere we can. shot::[1, "Fast montage of changing all the steps from {word} to {person}"]
 
 ==== Moving our `shout` helper to the World
 
 The World isn't just for storing state. We can also use it to contain helper methods for common actions against the system that we want to be able to re-use across our steps.
 
 The `shout` method that's already been extracted in our `StepDefinitions` class is a good candidate for this. If we look at it carefullly, we can see that it's exhibiting the code smell known as "feature envy": the method is basically all about manipulating the `messagesShoutedBy` hashmap, to keep a record of who has shouted what messages. It would make more sense to have this method on our World so that our step defintion code becomes simpler.
+
+This will also mean that, if we want to split our StepDefinition class and organise our step definitions into different classes, they'll all be able to use the `shout` method.
 
 We can start by shot::[] duplicating the method, copying it to the World and making it public. The references shot::[] to `messagesShoutedBy` no longer need to go through the `world` as we are on the `world` now.
 
@@ -94,3 +98,5 @@ include::../code/java/13-move-shout-method-to-world/shouty/src/test/java/shouty/
 ----
 
 We can shot::[] replace all the usages of the local `shout` method with the new one, and then finally shot::[] delete the old method.
+
+Great. In this way you can start to move complexity out of your step definitions, into support clasess that take responsibilty for the details of how to invoke actions against your application. You can probably imagine how, for a more complex project, this would be really useful for keeping your step definitions maintainable.

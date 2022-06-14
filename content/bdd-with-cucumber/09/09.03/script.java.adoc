@@ -1,10 +1,12 @@
 === Dependency Injection
 
-A fundamental concept for organising your support code in a Cucumber-JVM project is dependency injection.
+A fundamental concept for organising your support code in a Cucumber-JVM project is *dependency injection*.
 
-Dependency injection is how you access other objects from your step defintion classes. In particular, it allows you to share those objects between multiple step definition classes, so that if you've started to organise your step definitions into different classes, they can still access the same objects.
+Dependency injection is how you access other objects from your step defintion classes. They could be objects from the system under test, or objects from your support layer.
 
-This gives you a similar capability as you get with the "World" in Ruby or JavaScript Cucumbers - you can inject an object to store context state through the life of a scenario, or to contain useful helper methods.
+Dependency injection allows you to share the same collaborator objects between multiple step definition classes (or other Cucumber utility classes, like those defining a custom parameter type). When you ask dependency injection to give you an instance of a particular object, you'll always get the same instance of that object for the duration of each scenario.
+
+This gives you a similar capability as you get with the "World" in Ruby or JavaScript Cucumbers - you can inject an object to contain context state through the life of a scenario, or to contain useful helper methods.
 
 In this lesson we'll show you how to introduce dependency injection into your Cucumber-JVM project, and use a simple World object to share some state with a parameter type class.
 
