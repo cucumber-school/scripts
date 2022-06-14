@@ -9760,7 +9760,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 </div>
 <div class="paragraph">
 <p>We don&#8217;t have that field on our World object yet, so let&#8217;s create it. 
-and we need to add the default range here too. </p>
+and we need to move the default range here too. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9808,7 +9808,7 @@ and we need to add the default range here too. </p>
 <div class="sect2">
 <h3 id="_extracting_support_code">9.4. Extracting Support Code</h3>
 <div class="paragraph">
-<p>Now that we have our World in place, we can use it to encapsulate common code that we need to run from our step defintiions in order to automate our app.</p>
+<p>Now that we have our World in place, we can use it to encapsulate common code that we need to run from our step defintions in order to automate our app.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;re going to start by creating a custom parameter type for <code>Person</code>, then we&#8217;ll create a helper method on the World for shouting, which is something we do a lot in our step definitions.</p>
@@ -9821,14 +9821,21 @@ and we need to add the default range here too. </p>
 <div class="paragraph">
 <p>We&#8217;ll start with the people hashmap , then do the  <code>messagesShoutedBy</code> hashmap. And now we can remove this empty <code>Before</code> hook. </p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Before</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
 </div>
 <div class="sect3">
 <h4 id="_introduce_person_parameter_type">9.4.2. Introduce person parameter type</h4>
 <div class="paragraph">
-<p>Now that we&#8217;ve moved these fields onto our shared <code>ShoutyWorld</code> object, we can create a custom parameter type for <code>Person</code>, as we demonstrated in Chapter 3.</p>
+<p>Now that we&#8217;ve moved these fields onto our shared <code>ShoutyWorld</code> object, we can create a custom parameter type for <code>Person</code>, as we demonstrated in <a href="https://school.cucumber.io/courses/take/bdd-with-cucumber-java/lessons/9615437-custom-parameters">Chapter 3</a>.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start at the step definition and write the code we wish we had.</p>
+<p>Let&#8217;s start at the step definition where we&#8217;re using a built in <code>{word}</code> parameter type.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9840,7 +9847,10 @@ and we need to add the default range here too. </p>
 </div>
 </div>
 <div class="paragraph">
-<p>We won&#8217;t be using just a <code>{word}</code> anymore , we&#8217;ll use a <code>{person}</code> , and instead of receiving a plain <code>String</code>  we&#8217;ll receive an instance of <code>Person</code>. Now we can use  this <code>Person</code> object in the body of our step, with no need to create them here, or store them in the <code>people</code> map. Our parameter type will take care of all of that!</p>
+<p>We can start by  writing the code we wish we had. </p>
+</div>
+<div class="paragraph">
+<p>We won&#8217;t be using just a <code>{word}</code> anymore , we&#8217;ll use a <code>{person}</code> , and instead of receiving a plain <code>String</code>  we&#8217;ll receive an instance of <code>Person</code>. Now we can use  this  object in the body of our step, with no need to create them here, or store them in the <code>people</code> map. Our parameter type will take care of all of that!</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9879,13 +9889,13 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>That should be enough to satisfy Cucumber that there&#8217;s a <code>{person}</code> parameter type, but we  get these errors because it&#8217;s returning <code>null</code> instead of a <code>Person</code> instance like we&#8217;d expect.</p>
+<p>That should be enough to satisfy Cucumber that there&#8217;s a <code>{person}</code> parameter type, but now we  get these errors because it&#8217;s returning <code>null</code> instead of a <code>Person</code> instance like we&#8217;d expect.</p>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s return a valid <code>Person</code>.</p>
+<p>So let&#8217;s fix that.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;re going to need the <code>ShoutyWorld</code> to be available  to us in this context so that we have access to the <code>network</code> and <code>people</code> fields. Picocontainer&#8217;s dependency injection pattern works in classes with the <code>@ParameterType</code> annotation just the same as it does in a step definition class. If you&#8217;re using Spring for dependency injection, you&#8217;ll need to add the <code>@ScenarioScope</code> annotation to the class. See <a href="https://github.com/cucumber/cucumber-jvm/tree/main/spring">Cucumber-JVM&#8217;s Spring documentation</a> for details.</p>
+<p>In order to construct a <code>Person</code> instance, we need a reference to the <code>network</code>. Happily, we just moved that to the <code>ShoutyWorld</code>, so let&#8217;s add that to our constructor.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9895,12 +9905,15 @@ It appears you did not register a parameter type.</pre>
     <span class="kd">public</span> <span class="nf">PersonParameterType</span><span class="o">(</span><span class="nc">ShoutyWorld</span> <span class="n">world</span><span class="o">)</span> <span class="o">{</span>
         <span class="k">this</span><span class="o">.</span><span class="na">world</span> <span class="o">=</span> <span class="n">world</span><span class="o">;</span>
     <span class="o">}</span>
-    <span class="o">...</span>
+<span class="o">...</span>
 <span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>The parameter type should return an instance of the person, which we store in the <code>people</code> hashmap for other steps to reference.</p>
+<p>Picocontainer&#8217;s dependency injection pattern works in classes with the <code>@ParameterType</code> annotation just the same as it does in a step definition class. If you&#8217;re using Spring for dependency injection, you&#8217;ll need to add the <code>@ScenarioScope</code> annotation to the class. See <a href="https://github.com/cucumber/cucumber-jvm/tree/main/spring">Cucumber-JVM&#8217;s Spring documentation</a> for details.</p>
+</div>
+<div class="paragraph">
+<p>The parameter type should return an instance of the person,  which we store in the <code>people</code> hashmap for other steps to reference.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9947,7 +9960,20 @@ It appears you did not register a parameter type.</pre>
 <p>The World isn&#8217;t just for storing state. We can also use it to contain helper methods for common actions against the system that we want to be able to re-use across our steps.</p>
 </div>
 <div class="paragraph">
-<p>The <code>shout</code> method that&#8217;s already been extracted in our <code>StepDefinitions</code> class is a good candidate for this. If we look at it carefullly, we can see that it&#8217;s exhibiting the code smell known as "feature envy": the method is basically all about manipulating the <code>messagesShoutedBy</code> hashmap, to keep a record of who has shouted what messages. It would make more sense to have this method on our World so that our step defintion code becomes simpler.</p>
+<p>The <code>shout</code> method that&#8217;s already been extracted in our <code>StepDefinitions</code> class is a good candidate for this. If we look at it  carefullly, we can see that it&#8217;s exhibiting the code smell known as "feature envy": the method is basically all about manipulating the <code>messagesShoutedBy</code> hashmap, to keep a record of who has shouted what messages. It would make more sense to have this method on our World so that our step defintion code becomes simpler.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">shout</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">person</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+        <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="n">world</span><span class="o">.</span><span class="na">messagesShoutedBy</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
+        <span class="k">if</span> <span class="o">(</span><span class="n">messages</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">messages</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;();</span>
+            <span class="n">world</span><span class="o">.</span><span class="na">messagesShoutedBy</span><span class="o">.</span><span class="na">put</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">(),</span> <span class="n">messages</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="n">messages</span><span class="o">.</span><span class="na">add</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>This will also mean that, if we want to split our StepDefinition class and organise our step definitions into different classes, they&#8217;ll all be able to use the <code>shout</code> method.</p>
@@ -9958,7 +9984,7 @@ It appears you did not register a parameter type.</pre>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">ShoutyWorld</span><span class="o">{</span>
-    <span class="o">...</span>
+<span class="o">...</span>
     <span class="kd">public</span> <span class="kt">void</span> <span class="nf">shout</span><span class="o">(</span><span class="nc">Person</span> <span class="n">person</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">)</span> <span class="o">{</span>
         <span class="n">person</span><span class="o">.</span><span class="na">shout</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
         <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">messages</span> <span class="o">=</span> <span class="n">messagesShoutedBy</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">person</span><span class="o">.</span><span class="na">getName</span><span class="o">());</span>
@@ -10055,7 +10081,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-14 18:03:36 UTC
+Last updated 2022-06-14 18:36:52 UTC
 </div>
 </div>
 </body>
