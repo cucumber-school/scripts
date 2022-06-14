@@ -9739,6 +9739,14 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="paragraph">
 <p>In order to be able to access the same <code>Network</code> instance everywhere, let&#8217;s move that field onto our new <code>ShoutyWorld</code>.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="java">    <span class="nd">@Given</span><span class="o">(</span><span class="s">"the range is {int}"</span><span class="o">)</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">the_range_is</span><span class="o">(</span><span class="kt">int</span> <span class="n">range</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">Throwable</span> <span class="o">{</span>
+        <span class="n">network</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Network</span><span class="o">(</span><span class="n">range</span><span class="o">);</span>
+    <span class="o">}</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>We can start by writing the code we want to have. Imagine we already had a <code>network</code> field on the World, and we could just set it here like this: </p>
 </div>
@@ -10047,7 +10055,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-06-14 17:58:04 UTC
+Last updated 2022-06-14 18:03:36 UTC
 </div>
 </div>
 </body>
