@@ -20,11 +20,11 @@ include::../code/java/01-only-run-tests-we-expect-to-pass/shouty/src/test/java/s
 
 
 Good, now when we run Cucumber we should expect to see everything pass. 
-shot::[1, "Run Cucumber"]
+shot::[2, "Run Cucumber"]
 
 ==== Adding a World class
 
-Let's start by trying to inject a `ShoutyWorld` instance into the contructor of our `StepDefinitions` class. shot::[]
+Let's start by trying to inject a `ShoutyWorld` instance into the contructor of our `StepDefinitions` class. shot::[3]
 
 [source,java]
 ----
@@ -33,21 +33,21 @@ include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepD
 include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=25..27]
 ----
 
-We don't have one yet, so we can let the IDE help us to create one. shot::[]
+We don't have one yet, so we can let the IDE help us to create one. shot::[4]
 
 [source,java]
 ----
 include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..4]
 ----
 
-If we run Cucumber now, we'll see an error,shot::[] because we need to let Cucumber know which framework we want to use for Dependency Injection. You can choose your project's own DI framework here, or you can use Cucumber's own lightweight `picocontainer` framework. shot::[]
+If we run Cucumber now, we'll see an error,shot::[5] because we need to let Cucumber know which framework we want to use for Dependency Injection. You can choose your project's own DI framework here, or you can use Cucumber's own lightweight `picocontainer` framework. shot::[6]
 
 [source,xml]
 ----
 include::../code/java/03-add-dependency-on-picocontainer/shouty/pom.xml[lines=49..54]
 ----
 
-shot::[1, "Run mvn test - should be green"]Ok, so we've now introduced an empty World object which we can access from a field in our step definition class, but it doesn't do anything yet.. Now we can start moving code out of the step definitions and onto the World.
+shot::[7, "Run mvn test - should be green"]Ok, so we've now introduced an empty World object which we can access from a field in our step definition class, but it doesn't do anything yet.. Now we can start moving code out of the step definitions and onto the World.
 
 ==== Move Network onto World
 
@@ -58,32 +58,32 @@ In order to be able to access the same `Network` instance everywhere, let's move
 include::../code/java/00-initial-commit/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
 ----
 
-We can start by writing the code we want to have. Imagine we already had a `network` field on the World, and we could just set it here like this: shot::[]
+We can start by writing the code we want to have. Imagine we already had a `network` field on the World, and we could just set it here like this: shot::[8]
 
 [source,java]
 ----
 include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=48..51]
 ----
 
-We don't have that field on our World object yet, so let's create it. shot::[]
-and we need to move the default range here too. shot::[]
+We don't have that field on our World object yet, so let's create it. shot::[9]
+and we need to move the default range here too. shot::[10]
 
 [source,java]
 ----
 include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..8]
 ----
 
-We should also use the same `network` in this step where we create a new `Person` instance: shot::[]
+We should also use the same `network` in this step where we create a new `Person` instance: shot::[11]
 
 [source,java]
 ----
 include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=53..57]
 ----
 
-Now we can delete the old `network` field on the `StepDefintions class` shot::[].
+Now we can delete the old `network` field on the `StepDefintions class` shot::[12].
 [source,java]
 ----
 include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=17..20]
 ----
 
-Let's check everything is still green. shot::[1, "run mvn test"]. Good.
+Let's check everything is still green. shot::[13, "run mvn test"]. Good.
