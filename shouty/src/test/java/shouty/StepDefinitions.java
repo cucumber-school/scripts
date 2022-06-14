@@ -54,40 +54,6 @@ public class StepDefinitions {
         person.setCredits(credits);
     }
 
-    @When("{person} shouts")
-    public void person_shouts(Person person) throws Throwable {
-        world.shout(person, "Hello, world");
-    }
-
-    @When("{person} shouts {string}")
-    public void person_shouts_message(Person person, String message) throws Throwable {
-        world.shout(person, message);
-    }
-
-    @When("{person} shouts {int} messages containing the word {string}")
-    public void person_shouts_messages_containing_the_word(Person person, int count, String word) throws Throwable {
-        String message = "a message containing the word " + word;
-        for (int i = 0; i < count; i++) {
-            world.shout(person, message);
-        }
-    }
-
-    @When("{person} shouts the following message")
-    public void person_shouts_the_following_message(Person person, String message) throws Throwable {
-        world.shout(person, message);
-    }
-
-    @When("{person} shouts {int} over-long messages")
-    public void person_shouts_some_over_long_messages(Person person, int count) throws Throwable {
-        String baseMessage = "A message from Sean that is 181 characters long ";
-        String padding = "x";
-        String overlongMessage = baseMessage + padding.repeat(181 - baseMessage.length());
-
-        for (int i = 0; i < count; i++) {
-            world.shout(person, overlongMessage);
-        }
-    }
-
     @Then("{person} should hear Sean's message")
     public void person_hears_Sean_s_message(Person person) throws Throwable {
         List<String> messages = world.messagesShoutedBy.get("Sean");
