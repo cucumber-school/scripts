@@ -9892,10 +9892,33 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have it&#8217;s own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this mapping doesn&#8217;t work very well. We find it&#8217;s better to organise your steps by <em>domain concept</em>. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you&#8217;re working on your own projects.</p>
 </div>
 <div class="paragraph">
-<p>We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length, or a method for asserting that a person has heard certain messages.</p>
+<p>We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length <a href="#shot-521" id="shot-521" title="Highlight lines 15-16" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Highlight lines 15-16</a>,</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">When</span> <span class="s2">"{person} shouts {int} over-long messages"</span> <span class="k">do</span> <span class="o">|</span><span class="n">shouter</span><span class="p">,</span> <span class="n">count</span><span class="o">|</span>
+  <span class="n">count</span><span class="p">.</span><span class="nf">times</span> <span class="k">do</span>
+    <span class="n">base_message</span> <span class="o">=</span> <span class="s2">"A message from </span><span class="si">#{</span><span class="n">shouter</span><span class="p">.</span><span class="nf">name</span><span class="si">}</span><span class="s2"> that is 181 characters long "</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="n">base_message</span> <span class="o">+</span> <span class="s2">"x"</span> <span class="o">*</span> <span class="p">(</span><span class="mi">181</span> <span class="o">-</span> <span class="n">base_message</span><span class="p">.</span><span class="nf">size</span><span class="p">)</span>
+    <span class="n">shout</span> <span class="ss">from: </span><span class="n">shouter</span><span class="p">,</span> <span class="ss">message: </span><span class="n">message</span>
+  <span class="k">end</span>
+<span class="k">end</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>Ideally, each step definition <a href="#shot-521" id="shot-521" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> should only contain one or two lines that delegate to your support code.</p>
+<p>or a method for asserting that a person has heard certain messages. <a href="#shot-522" id="shot-522" title="Highlight lines 22-24" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Highlight lines 22-24</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="ruby"><span class="no">Then</span> <span class="s2">"{person} hears the following messages:"</span> <span class="k">do</span> <span class="o">|</span><span class="n">listener</span><span class="p">,</span> <span class="n">expected_messages</span><span class="o">|</span>
+  <span class="n">actual_messages</span> <span class="o">=</span> <span class="n">listener</span><span class="p">.</span><span class="nf">messages_heard</span><span class="p">.</span><span class="nf">map</span> <span class="p">{</span> <span class="o">|</span><span class="n">message</span><span class="o">|</span> <span class="p">[</span> <span class="n">message</span> <span class="p">]</span> <span class="p">}</span>
+
+  <span class="n">expected_messages</span><span class="p">.</span><span class="nf">diff!</span><span class="p">(</span><span class="n">actual_messages</span><span class="p">)</span>
+<span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Ideally, each step definition <a href="#shot-523" id="shot-523" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> should only contain one or two lines that delegate to your support code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9911,7 +9934,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>In this way, we create our own API for automating our application. As this API grows, it becomes easier and easier to write new step definitions, because the actions you need to take are already defined on the API.</p>
 </div>
 <div class="paragraph">
-<p>It might seem like over-engineering on our little Shouty application, but you’ll be surprised out quickly these test suites grow. Taking time to stamp out complexity early  and organise your code to create a good support API is a great investment for the future.</p>
+<p>It might seem like over-engineering on our little Shouty application, but you’ll be surprised how quickly these test suites grow. Taking time to stamp out complexity early  and organise your code to create a good support API is a great investment for the future.</p>
 </div>
 </div>
 </div>
