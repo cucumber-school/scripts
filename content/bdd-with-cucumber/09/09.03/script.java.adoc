@@ -53,6 +53,11 @@ shot::[1, "Run mvn test - should be green"]Ok, so we've now introduced an empty 
 
 In order to be able to access the same `Network` instance everywhere, let's move that field onto our new `ShoutyWorld`.
 
+[source,java]
+----
+include::../code/java/00-initial-commit/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
+----
+
 We can start by writing the code we want to have. Imagine we already had a `network` field on the World, and we could just set it here like this: shot::[]
 
 [source,java]
