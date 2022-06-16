@@ -9411,6 +9411,9 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <p>Message broker (<strong>Correct</strong>)</p>
 </li>
 <li>
+<p>Flight</p>
+</li>
+<li>
 <p>Medicine</p>
 </li>
 <li>
@@ -9423,6 +9426,9 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <p>JavaScript (<strong>Correct</strong>)</p>
 </li>
 <li>
+<p>Airport</p>
+</li>
+<li>
 <p>Blood pressure</p>
 </li>
 <li>
@@ -9433,6 +9439,9 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 </li>
 <li>
 <p>JSON (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Air miles</p>
 </li>
 <li>
 <p>Availability</p>
@@ -9472,6 +9481,9 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <p>Doctor (<strong>Correct</strong>)</p>
 </li>
 <li>
+<p>Flight</p>
+</li>
+<li>
 <p>Message broker</p>
 </li>
 <li>
@@ -9487,6 +9499,9 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 <p>JavaScript</p>
 </li>
 <li>
+<p>Airport</p>
+</li>
+<li>
 <p>Blood pressure (<strong>Correct</strong>)</p>
 </li>
 <li>
@@ -9497,6 +9512,9 @@ As Dr David West says in his excellent book "Object Thinking", <em>If you proble
 </li>
 <li>
 <p>JSON</p>
+</li>
+<li>
+<p>Air miles</p>
 </li>
 <li>
 <p>Availability (<strong>Correct</strong>)</p>
@@ -9654,6 +9672,40 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <p>The first scenario has details like the name of a database table, a browser URL, some CSS selectors. All of these are solution domain artefacts.</p>
 </div>
 </div>
+<div class="sect4">
+<h5 id="_when_you_use_problem_domain_language_in_your_scenarios_what_is_the_trade_off">When you use problem-domain language in your scenarios, what is the trade-off?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>You may end up with more complex step definition code behind the features (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>You may alienate business people who prefer to read scenarios written in solution-domain language</p>
+</li>
+<li>
+<p>You end up having to write more scenarios</p>
+</li>
+<li>
+<p>Your scenarios can&#8217;t be read by everyone on the team anymore</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>When you really think of your feature files as documentation first, tests second, you will prioritise readability over everything else. As a consequence, sometimes you&#8217;ll end up needing to push some complexity down into your step definitions.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s why building a support API can be useful, to help you manage this complexity.</p>
+</div>
+<div class="paragraph">
+<p>The whole reason for using problem-domain language is that your whole team can understand them, meaning they can act as a shared source of truth.</p>
+</div>
+<div class="paragraph">
+<p>You shouldn&#8217;t need any more scenarios just because you use problem-domain language.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -9800,8 +9852,30 @@ and we need to move the default range here too. <a href="#shot-1566" id="shot-15
 <div class="paragraph">
 <p>Let&#8217;s check everything is still green. <a href="#shot-1569" id="shot-1569" title="run mvn test" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13: run mvn test</a>. Good.</p>
 </div>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions_6">9.3.4. Lesson 3 - Questions</h4>
+<div class="sect4">
+<h5 id="_when_we_ask_dependency_injection_for_an_instance_of_an_object">When we ask dependency injection for an instance of an object:</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>We get a brand new instance every time</p>
+</li>
+<li>
+<p>We get one new instance for every scenario (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>We get the same instance for the whole test suite</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>TODO: Write questions about DI</p>
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Assuming everything is configured correctly, your dependency injection framework will create new instances of objects for each scenario. Every class that uses dependency injection will get the same instance of a given class during the lifetime of that scenario.</p>
+</div>
 </div>
 </div>
 </div>
@@ -10005,19 +10079,22 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="sect3">
-<h4 id="_lesson_3_questions_6">9.4.4. Lesson 3 - Questions</h4>
+<h4 id="_lesson_4_questions_6">9.4.4. Lesson 4 - Questions</h4>
 <div class="sect4">
-<h5 id="_why_do_we_run_the_unit_tests_before_the_acceptance_tests">Why do we run the unit tests before the acceptance tests?</h5>
+<h5 id="_where_can_you_use_a_world_object">Where can you use a World object?</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>If the unit tests are failing, there&#8217;s no way the acceptance tests will pass (<strong>Correct</strong>)</p>
+<p>In your step definitions (<strong>Correct</strong>)</p>
 </li>
 <li>
-<p>Unit tests are better than acceptance tests</p>
+<p>In a custom parameter type (<strong>Correct</strong>)</p>
 </li>
 <li>
-<p>Acceptance tests are always faster so we leave them until the end</p>
+<p>In a <code>Before</code> / <code>After</code> hook (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>In your application code</p>
 </li>
 </ul>
 </div>
@@ -10025,7 +10102,50 @@ It appears you did not register a parameter type.</pre>
 <p>Explanation:</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ve heard it said that acceptance tests help you build the right thing, and unit tests help you build the thing right. We run the unit tests first to get feedback about whether the pieces of our solution (the <em>units</em>) are fundamentally working. Then, if they are, we can find out whether they play together to deliver the overall system behaviour that we&#8217;re looking for.</p>
+<p>Support code, like the World, is created by Cucumber and made available to your step definitions, parameter types and hooks. It doesn&#8217;t make sense to have your application code depend on it.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_would_we_put_code_into_a_world_object">Why would we put code into a World object?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Move complexity out of our step definitions (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Hide duplication</p>
+</li>
+<li>
+<p>Share code (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Increase the readability of our step definitions (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Optimizing performance</p>
+</li>
+<li>
+<p>To share state between steps (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Reduce the coupling from the step defintions to the system under test (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>There are many reasons to move code into a support layer!</p>
+</div>
+<div class="paragraph">
+<p>Adding fields to store state allows us to pass context between steps, so we can make them feel more natural to read.</p>
+</div>
+<div class="paragraph">
+<p>If we have step definitions spread across multiple files, they can all access the same fields and methods on a shared World object.</p>
+</div>
+<div class="paragraph">
+<p>Creating an API of methods on the World for interacting with our system makes the step definitions simpler, have less duplication between them, and easier to read. You&#8217;ll end up being happy to have many similar step definitions - to match the wording you want to use in your scenarios - because they all delegate to the same underlying code.</p>
 </div>
 </div>
 </div>
@@ -10106,7 +10226,10 @@ It appears you did not register a parameter type.</pre>
 <p>We&#8217;ll need to <a href="#shot-1594" id="shot-1594" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> import the <code>@When</code> annotation, and now the tests should <a href="#shot-1595" id="shot-1595" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a> run just as they did before.</p>
 </div>
 <div class="paragraph">
-<p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have it&#8217;s own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this mapping doesn&#8217;t work very well. We find it&#8217;s better to organise your steps by <em>domain concept</em>. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you&#8217;re working on your own projects.</p>
+<p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have its own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this leaves us with low cohesion: step definitions that sit together in the same file, but don&#8217;t have much in common with each other.</p>
+</div>
+<div class="paragraph">
+<p>We find it&#8217;s better to organise your steps by which part of the system they act on. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you&#8217;re working on your own projects.</p>
 </div>
 <div class="paragraph">
 <p>We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length <a href="#shot-1596" id="shot-1596" title="Highlight lines 38-40" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1: Highlight lines 38-40</a>,</p>
@@ -10160,6 +10283,40 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="paragraph">
 <p>It might seem like over-engineering on our little Shouty application, but you’ll be surprised how quickly these test suites grow. Taking time to stamp out complexity early  and organise your code to create a good support API is a great investment for the future.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_5">9.5.1. Lesson 5 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_is_a_good_heuristic_for_breaking_up_step_definitions_into_multiple_files">What is a good heuristic for breaking up step definitions into multiple files?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Name each step definition file after the feature where the steps are used</p>
+</li>
+<li>
+<p>No more than 2 step definitions in any file</p>
+</li>
+<li>
+<p>Have three files: one for all the `Given`s, one for all the `When`s, and one for all the `Then`s</p>
+</li>
+<li>
+<p>Keep them all in the same file until you see patterns emerge (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Try to maintain cohesion by keeping steps that act on the same part of the system in the same file (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s hard to give you a rule of thumb for how many step definitions should be in the same file. What&#8217;s more important is to look for how cohesive they are: if there&#8217;s a cluster of steps that are all acting on the same fields or methods in the World, or the same part of the system itself, they probably belong together in one file.</p>
+</div>
+<div class="paragraph">
+<p>We would always start out by lumping them in to a single file at first, then looking for patterns.</p>
+</div>
+</div>
 </div>
 </div>
 </div>

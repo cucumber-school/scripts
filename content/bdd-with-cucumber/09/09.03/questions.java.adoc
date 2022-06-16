@@ -1,1 +1,11 @@
-TODO: Write questions about DI
+==== Lesson 3 - Questions
+
+===== When we ask dependency injection for an instance of an object:
+
+* We get a brand new instance every time
+* We get one new instance for every scenario (*Correct*)
+* We get the same instance for the whole test suite
+
+Explanation:
+
+Assuming everything is configured correctly, your dependency injection framework will create new instances of objects for each scenario. Every class that uses dependency injection will get the same instance of a given class during the lifetime of that scenario.

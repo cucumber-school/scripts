@@ -1,1 +1,11 @@
 include::./questions.common.adoc[]
+
+===== When is the state of the World reset?
+
+* We get a brand new instance of the World every time a step definition is invoked
+* We get one new instance for every scenario (*Correct*)
+* We get the same instance for the whole test suite
+
+Explanation:
+
+Cucumber will create new instances of the World for each scenario. Every step defininition, parameter type or hook will receive the same instance during that scenario.

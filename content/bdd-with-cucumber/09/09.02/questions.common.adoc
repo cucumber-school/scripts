@@ -40,3 +40,20 @@ Then the task "Fetch milk" should be incomplete
 Explanation:
 
 The first scenario has details like the name of a database table, a browser URL, some CSS selectors. All of these are solution domain artefacts.
+
+===== When you use problem-domain language in your scenarios, what is the trade-off?
+
+* You may end up with more complex step definition code behind the features (*Correct*)
+* You may alienate business people who prefer to read scenarios written in solution-domain language
+* You end up having to write more scenarios
+* Your scenarios can't be read by everyone on the team anymore
+
+Explanation:
+
+When you really think of your feature files as documentation first, tests second, you will prioritise readability over everything else. As a consequence, sometimes you'll end up needing to push some complexity down into your step definitions.
+
+That's why building a support API can be useful, to help you manage this complexity.
+
+The whole reason for using problem-domain language is that your whole team can understand them, meaning they can act as a shared source of truth.
+
+You shouldn't need any more scenarios just because you use problem-domain language.

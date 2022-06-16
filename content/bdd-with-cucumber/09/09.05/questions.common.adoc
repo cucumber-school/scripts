@@ -1,0 +1,15 @@
+==== Lesson 5 - Questions
+
+===== What is a good heuristic for breaking up step definitions into multiple files?
+
+* Name each step definition file after the feature where the steps are used
+* No more than 2 step definitions in any file
+* Have three files: one for all the `Given`s, one for all the `When`s, and one for all the `Then`s
+* Keep them all in the same file until you see patterns emerge (*Correct*)
+* Try to maintain cohesion by keeping steps that act on the same part of the system in the same file (*Correct*)
+
+Explanation:
+
+It's hard to give you a rule of thumb for how many step definitions should be in the same file. What's more important is to look for how cohesive they are: if there's a cluster of steps that are all acting on the same fields or methods in the World, or the same part of the system itself, they probably belong together in one file.
+
+We would always start out by lumping them in to a single file at first, then looking for patterns.

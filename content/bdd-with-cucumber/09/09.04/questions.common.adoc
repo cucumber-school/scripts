@@ -1,11 +1,32 @@
-==== Lesson 3 - Questions
+==== Lesson 4 - Questions
 
-===== Why do we run the unit tests before the acceptance tests?
+===== Where can you use a World object?
 
-* If the unit tests are failing, there's no way the acceptance tests will pass (*Correct*)
-* Unit tests are better than acceptance tests
-* Acceptance tests are always faster so we leave them until the end
+* In your step definitions (*Correct*)
+* In a custom parameter type (*Correct*)
+* In a `Before` / `After` hook (*Correct*)
+* In your application code
 
 Explanation:
 
-We've heard it said that acceptance tests help you build the right thing, and unit tests help you build the thing right. We run the unit tests first to get feedback about whether the pieces of our solution (the _units_) are fundamentally working. Then, if they are, we can find out whether they play together to deliver the overall system behaviour that we're looking for.
+Support code, like the World, is created by Cucumber and made available to your step definitions, parameter types and hooks. It doesn't make sense to have your application code depend on it.
+
+===== Why would we put code into a World object?
+
+* Move complexity out of our step definitions (*Correct*)
+* Hide duplication
+* Share code (*Correct*)
+* Increase the readability of our step definitions (*Correct*)
+* Optimizing performance
+* To share state between steps (*Correct*)
+* Reduce the coupling from the step defintions to the system under test (*Correct*)
+
+Explanation:
+
+There are many reasons to move code into a support layer!
+
+Adding fields to store state allows us to pass context between steps, so we can make them feel more natural to read. 
+
+If we have step definitions spread across multiple files, they can all access the same fields and methods on a shared World object.
+
+Creating an API of methods on the World for interacting with our system makes the step definitions simpler, have less duplication between them, and easier to read. You'll end up being happy to have many similar step definitions - to match the wording you want to use in your scenarios - because they all delegate to the same underlying code.
