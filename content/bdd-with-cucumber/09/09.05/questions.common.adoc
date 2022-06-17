@@ -13,3 +13,22 @@ Explanation:
 It's hard to give you a rule of thumb for how many step definitions should be in the same file. What's more important is to look for how cohesive they are: if there's a cluster of steps that are all acting on the same fields or methods in the World, or the same part of the system itself, they probably belong together in one file.
 
 We would always start out by lumping them in to a single file at first, then looking for patterns.
+
+==== What are some advantages of a well-organised support layer?
+
+* It makes it easier to use problem-domain language in your scenarios because writing step defintion code is easier (*Correct*)
+* It keeps step defintions down to one or two lines, so you can easily see whether the language used in the code is consistent with that used in the scenarios (*Correct*)
+* Business stakeholders will love reading your support code API and giving you feedback on it
+* It enables you to write new scenarios increasingly quickly, since you have invested in the infrastructure for automating your application (*Correct*)
+* Newcomers should be able to start contributing to your test suite sooner, since complexity is abstracted away into the support layer (*Correct*)
+* You'll eliminate the chances of bugs in your test code
+
+Explanation:
+
+Although it would be great to think we can eliminate bugs, this is impossible. Still, the more you apply good software engineering principles (like short methods) to your test code as well as your production code, the easier it will be to maintain.
+
+There's a chance that, if you've really put the work into creating a readable API on your support layer, some of your more technical stakeholders will be able to read it and give you feedback, but that's really not the main purpose.
+
+By pushing re-usable code down into a support layer, you're investing in the future by building the scaffolding around your system to make adding more automation easier in the future. Think of it like adding handrails and ladders on a construction site, rather than having people scale the walls with ropes to work on the building.
+
+As you do this, a lovely side-effect is that with neater code it becomes easier to see when you're using consistent domain language from the scenarios and into the code.
