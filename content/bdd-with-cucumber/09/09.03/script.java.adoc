@@ -37,55 +37,57 @@ include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepD
 
 We don't have one yet, so we can let the IDE help us to create one. shot::[4]
 
+And now we can let our IDE help us add the right field to our step definitions class. shot::[5]
+
 [source,java]
 ----
 include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..4]
 ----
 
-If we run Cucumber now, we'll see an error,shot::[5] because we need to let Cucumber know which framework we want to use for Dependency Injection. You can choose your project's own DI framework here, or you can use Cucumber's own lightweight `picocontainer` framework. shot::[6]
+If we run Cucumber now, we'll see an error,shot::[6] because we need to let Cucumber know which framework we want to use for Dependency Injection.shot::[7] You can choose your project's own DI framework here, or you can use Cucumber's own lightweight `picocontainer` framework. shot::[8]
 
 [source,xml]
 ----
 include::../code/java/03-add-dependency-on-picocontainer/shouty/pom.xml[lines=49..54]
 ----
 
-shot::[7, "Run mvn test - should be green"]Ok, so we've now introduced an empty World object which we can access from a field in our step definition class, but it doesn't do anything yet.. Now we can start moving code out of the step definitions and onto the World.
+shot::[9, "Run mvn test - should be green"]Ok, so we've now introduced an empty World object which we can access from a field in our step definition class, but it doesn't do anything yet.. Now we can start moving code out of the step definitions and onto the World.
 
 ==== Move Network onto World
 
-In order to be able to access the same `Network` instance everywhere, let's move that field onto our new `ShoutyWorld`.
+In order to be able to access the same `Network` instance everywhere, let's move that field onto our new `ShoutyWorld`. shot::[10]
 
 [source,java]
 ----
 include::../code/java/00-initial-commit/shouty/src/test/java/shouty/StepDefinitions.java[lines=45..48]
 ----
 
-We can start by writing the code we want to have. Imagine we already had a `network` field on the World, and we could just set it here like this: shot::[8]
+We can start by writing the code we want to have. Imagine we already had a `network` field on the World, and we could just set it here like this: shot::[11]
 
 [source,java]
 ----
 include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=48..51]
 ----
 
-We don't have that field on our World object yet, so let's create it. shot::[9]
-and we need to move the default range here too. shot::[10]
+We don't have that field on our World object yet, so let's create it. shot::[12]
+and we need to move the default range here too. shot::[13]
 
 [source,java]
 ----
 include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=1..8]
 ----
 
-We should also use the same `network` in this step where we create a new `Person` instance: shot::[11]
+We should also use the same `network` in this step where we create a new `Person` instance: shot::[14]
 
 [source,java]
 ----
 include::../code/java/04-move-network-onto-world/shouty/src/test/java/shouty/StepDefinitions.java[lines=53..57]
 ----
 
-Now we can delete the old `network` field on the `StepDefintions class` shot::[12].
+Now we can delete the old `network` field on the `StepDefintions class` shot::[15].
 [source,java]
 ----
 include::../code/java/02-introduce-world-class/shouty/src/test/java/shouty/StepDefinitions.java[lines=17..20]
 ----
 
-Let's check everything is still green. shot::[13, "run mvn test"]. Good.
+Let's check everything is still green. shot::[16, "run mvn test"]. Good.

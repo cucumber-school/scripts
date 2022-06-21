@@ -4,41 +4,41 @@ include::./script.common-intro.adoc[]
 
 To show you how this works, we can move all the steps to do with shouting over to a separate class.
 
-First, create an empty file called `shout_steps.js` shot::[1], and import the `When` method for defining steps.
+First, create an empty file called `shout_steps.js` shot::[1], and import the `When` method for defining steps.shot::[2]
 
 [source,javascript]
 ----
 include::../code/js/10-extract-shout-steps/features/step_definitions/shout_steps.js[lines=1..2]
 ----
 
-Now we can cut and paste those steps from the existing `steps.js` file into this new one: shot::[2]
+Now we can cut shot::[3] and paste those steps from the existing `steps.js` file into this new one: shot::[4]
 
 [source,javascript]
 ----
 include::../code/js/10-extract-shout-steps/features/step_definitions/shout_steps.js[lines=2..44]
 ----
 
-And run Cucumber shot::[] to check everything's still working. Great.
+And run Cucumber shot::[5] to check everything's still working. Great.
 
 Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We've seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have its own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this leaves us with low cohesion: step definitions that sit together in the same file, but don't have much in common with each other.
 
 We find it's better to organise your steps by which part of the system they act on. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you're working on your own projects.
 
-We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length shot::[1, "Highlight lines 20-21"], 
+We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length shot::[6, "Highlight lines 20-21"], 
 
 [source,javascript]
 ----
 include::../code/js/10-extract-shout-steps/features/step_definitions/shout_steps.js[lines=18..24]
 ----
 
-or a method for asserting that a person has heard certain messages. shot::[1, "Highlight lines 23-24"]
+or a method for asserting that a person has heard certain messages. shot::[7, "Highlight lines 23-24"]
 
 [source,javascript]
 ----
 include::../code/js/10-extract-shout-steps/features/step_definitions/steps.js[lines=20..26]
 ----
 
-Ideally, each step definition shot::[3] should only contain one or two lines that delegate to your support code.
+Ideally, each step definition shot::[8] should only contain one or two lines that delegate to your support code.
 
 [source,javascript]
 ----

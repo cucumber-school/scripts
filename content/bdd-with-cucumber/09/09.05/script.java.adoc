@@ -4,7 +4,7 @@ include::./script.common-intro.adoc[]
 
 To show you how this works, we can move all the steps to do with shouting over to a separate class.
 
-First, create an empty class called `ShoutSteps.java`, and add a constructor that injects the `ShoutyWorld` dependency.
+First, create an empty class called `ShoutSteps.java`,shot::[1] and add a constructor that injects the `ShoutyWorld` dependency.shot::[2]
 
 [source,java]
 ----
@@ -13,7 +13,7 @@ include::../code/java/14-extract-shout-steps/shouty/src/test/java/shouty/ShoutSt
 }
 ----
 
-Now we can cut and paste those steps from the existing `StepDefinitions` class into this new one:
+Now we can cut  shot::[3] and paste those steps from the existing `StepDefinitions` class into this new one: shot::[4]
 
 [source,java]
 ----
@@ -22,27 +22,27 @@ include::../code/java/14-extract-shout-steps/shouty/src/test/java/shouty/ShoutSt
 include::../code/java/14-extract-shout-steps/shouty/src/test/java/shouty/ShoutSteps.java[lines=13..46]
 ----
 
-We'll need to shot::[1] import the `@When` annotation, and now the tests should shot::[2] run just as they did before.
+And now the tests should run just as they did before.shot::[5]
 
 Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We've seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have its own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this leaves us with low cohesion: step definitions that sit together in the same file, but don't have much in common with each other.
 
 We find it's better to organise your steps by which part of the system they act on. This is a bit hard to illustrate in a tiny solution like Shouty, but bear this in mind when you're working on your own projects.
 
-We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length shot::[1, "Highlight lines 38-40"], 
+We could continue to move code from our step definitions into the support layer. For example, we could write a support method for generating messages of a certain length shot::[6, "Highlight lines 38-40"], 
 
 [source,java]
 ----
 include::../code/java/14-extract-shout-steps/shouty/src/test/java/shouty/ShoutSteps.java[lines=36..45]
 ----
 
-or a method for asserting that a person has heard certain messages. shot::[1, "Highlight lines 70-75"]
+or a method for asserting that a person has heard certain messages. shot::[7, "Highlight lines 70-75"]
 
 [source,java]
 ----
 include::../code/java/14-extract-shout-steps/shouty/src/test/java/shouty/StepDefinitions.java[lines=68..76]
 ----
 
-Ideally, each step definition shot::[3] should only contain one or two lines that delegate to your support code. 
+Ideally, each step definition should only contain one or two lines that delegate to your support code. shot::[8]
 
 [source,java]
 ----

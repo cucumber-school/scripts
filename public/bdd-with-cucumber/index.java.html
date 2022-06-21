@@ -9764,6 +9764,9 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="paragraph">
 <p>We don&#8217;t have one yet, so we can let the IDE help us to create one. </p>
 </div>
+<div class="paragraph">
+<p>And now we can let our IDE help us add the right field to our step definitions class. </p>
+</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="java"><span class="kn">package</span> <span class="nn">shouty.support</span><span class="o">;</span>
@@ -9792,7 +9795,7 @@ Then the task "Fetch milk" should be incomplete</code></pre>
 <div class="sect3">
 <h4 id="_move_network_onto_world">9.3.3. Move Network onto World</h4>
 <div class="paragraph">
-<p>In order to be able to access the same <code>Network</code> instance everywhere, let&#8217;s move that field onto our new <code>ShoutyWorld</code>.</p>
+<p>In order to be able to access the same <code>Network</code> instance everywhere, let&#8217;s move that field onto our new <code>ShoutyWorld</code>. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -9924,7 +9927,7 @@ and we need to move the default range here too. </p>
 </div>
 </div>
 <div class="paragraph">
-<p>We can start by  writing the code we wish we had. </p>
+<p>We can start by  writing the code we wish we had.</p>
 </div>
 <div class="paragraph">
 <p>We won&#8217;t be using just a <code>{word}</code> anymore , we&#8217;ll use a <code>{person}</code> , and instead of receiving a plain <code>String</code>  we&#8217;ll receive an instance of <code>Person</code>. Now we can use  this  object in the body of our step, with no need to create them here, or store them in the <code>people</code> map. Our parameter type will take care of all of that!</p>
@@ -10078,6 +10081,9 @@ It appears you did not register a parameter type.</pre>
 <p>We can  replace all the usages of the local <code>shout</code> method with the new one, and then finally  delete the old method.</p>
 </div>
 <div class="paragraph">
+<p>And everything should still work.</p>
+</div>
+<div class="paragraph">
 <p>Great. In this way you can start to move complexity out of your step definitions, into support clasess that take responsibilty for the details of how to invoke actions against your application. You can probably imagine how, for a more complex project, this would be really useful for keeping your step definitions maintainable.</p>
 </div>
 </div>
@@ -10183,7 +10189,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can cut and paste those steps from the existing <code>StepDefinitions</code> class into this new one:</p>
+<p>Now we can cut   and paste those steps from the existing <code>StepDefinitions</code> class into this new one: </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10226,7 +10232,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll need to  import the <code>@When</code> annotation, and now the tests should  run just as they did before.</p>
+<p>And now the tests should run just as they did before.</p>
 </div>
 <div class="paragraph">
 <p>Breaking apart your step definitions into multiple files is more of an art than a science, but we can give you a couple of pieces of advice. We&#8217;ve seen teams try to organise their step definitions by feature so that, for example, the premium accounts feature would have its own steps file. We find that tends to work out badly, since while feature files live in the problem domain, step definitions are closer to the solution domain. Usually multiple features will need to carry out common actions against the system (think of logging in, for example), so this leaves us with low cohesion: step definitions that sit together in the same file, but don&#8217;t have much in common with each other.</p>
@@ -10268,7 +10274,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Ideally, each step definition  should only contain one or two lines that delegate to your support code.</p>
+<p>Ideally, each step definition should only contain one or two lines that delegate to your support code. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10395,7 +10401,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-01-25 10:50:43 -0800
+Last updated 2022-06-20 17:24:06 -0300
 </div>
 </div>
 </body>

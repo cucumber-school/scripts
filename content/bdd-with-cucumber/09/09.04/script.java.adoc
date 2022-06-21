@@ -20,14 +20,14 @@ include::../code/java/06-move-messagesshoutedby-onto-world/shouty/src/test/java/
 
 Now that we've moved these fields onto our shared `ShoutyWorld` object, we can create a custom parameter type for `Person`, as we demonstrated in link:https://school.cucumber.io/courses/take/bdd-with-cucumber-java/lessons/9615437-custom-parameters[Chapter 3].
 
-Let's start at the step definition where we're using a built in `{word}` parameter type.
+Let's start at the step definition where we're using a built in `{word}` parameter type.shot::[4]
 
 [source,java]
 ----
 include::../code/java/07-remove-before-hook/shouty/src/test/java/shouty/StepDefinitions.java[lines=47..51]
 ----
 
-We can start by  writing the code we wish we had. shot::[4]
+We can start by  writing the code we wish we had. 
 
 We won't be using just a `{word}` anymore shot::[5], we'll use a `{person}` shot::[6], and instead of receiving a plain `String` shot::[7] we'll receive an instance of `Person`. Now we can use shot::[8] this  object in the body of our step, with no need to create them here, or store them in the `people` map. Our parameter type will take care of all of that!
 
@@ -55,7 +55,7 @@ That should be enough to satisfy Cucumber that there's a `{person}` parameter ty
 
 So let's fix that.
 
-In order to construct a `Person` instance, we need a reference to the `network`. Happily, we just moved that to the `ShoutyWorld`, so let's add that to our constructor.
+In order to construct a `Person` instance, we need a reference to the `network`. Happily, we just moved that to the `ShoutyWorld`, so let's add that to our constructor.shot::[12]shot::[13]
 
 [source,java]
 ----
@@ -66,7 +66,7 @@ include::../code/java/10-inject-world-into-parameter-type-class/shouty/src/test/
 
 Picocontainer's dependency injection pattern works in classes with the `@ParameterType` annotation just the same as it does in a step definition class. If you're using Spring for dependency injection, you'll need to add the `@ScenarioScope` annotation to the class. See https://github.com/cucumber/cucumber-jvm/tree/main/spring[Cucumber-JVM's Spring documentation] for details.
 
-The parameter type should return an instance of the person, shot::[12] which we store in the `people` hashmap for other steps to reference.shot::[13]
+The parameter type should return an instance of the person, shot::[14] which we store in the `people` hashmap for other steps to reference.shot::[15]
 
 [source,java]
 ----
@@ -74,7 +74,7 @@ include::../code/java/11-return-a-person-from-parameter-type/shouty/src/test/jav
 include::../code/java/11-return-a-person-from-parameter-type/shouty/src/test/java/shouty/support/PersonParameterType.java[lines=18..21]
 ----
 
-In fact, we want any subsequent steps in a scenario to also be able to use this parameter type, so we can check if an instance of a person with this name already exists, shot::[14]and just return that if it does.shot::[15]
+In fact, we want any subsequent steps in a scenario to also be able to use this parameter type, so we can check if an instance of a person with this name already exists, shot::[16]and just return that if it does.shot::[17]
 
 [source,java]
 ----
@@ -85,15 +85,15 @@ Now we have a parameter type that will either create a new person if this is the
 
 Cucumber will create a new instance of this `ShoutyWorld` class for every scenario that it runs, so we don't need to worry about this state leaking _between_ our scenarios.
 
-Now when we run the tests shot::[16] everything should work again.
+Now when we run the tests shot::[18] everything should work again.
 
-Great! We've added our first parameter type. Now we want to use it everywhere we can. shot::[17, "Fast montage of changing all the steps from {word} to {person}"]
+Great! We've added our first parameter type. Now we want to use it everywhere we can. shot::[19, "Fast montage of changing all the steps from {word} to {person}"]
 
 ==== Moving our `shout` helper to the World
 
 The World isn't just for storing state. We can also use it to contain helper methods for common actions against the system that we want to be able to re-use across our steps.
 
-The `shout` method that's already been extracted in our `StepDefinitions` class is a good candidate for this. If we look at it shot::[18] carefullly, we can see that it's exhibiting the code smell known as "feature envy": the method is basically all about manipulating the `messagesShoutedBy` hashmap,shot::[19] to keep a record of who has shouted what messages.shot::[20] It would make more sense to have this method on our World so that our step defintion code becomes simpler.
+The `shout` method that's already been extracted in our `StepDefinitions` class is a good candidate for this. If we look at it shot::[20] carefullly, we can see that it's exhibiting the code smell known as "feature envy": the method is basically all about manipulating the `messagesShoutedBy` hashmap,shot::[21] to keep a record of who has shouted what messages.shot::[22] It would make more sense to have this method on our World so that our step defintion code becomes simpler.
 
 [source,java]
 ----
@@ -102,7 +102,7 @@ include::../code/java/12-use-person-parameter-everywhere/shouty/src/test/java/sh
 
 This will also mean that, if we want to split our StepDefinition class and organise our step definitions into different classes, they'll all be able to use the `shout` method.
 
-We can start by shot::[21] duplicating the method, copying it to the World and making it public. The references shot::[22] to `messagesShoutedBy` no longer need to go through the `world` as we are on the `world` now.
+We can start by shot::[23] duplicating the method, copying it to the World and making it public. The references shot::[24] to `messagesShoutedBy` no longer need to go through the `world` as we are on the `world` now.
 
 [source,java]
 ----
@@ -111,6 +111,8 @@ include::../code/java/13-move-shout-method-to-world/shouty/src/test/java/shouty/
 include::../code/java/13-move-shout-method-to-world/shouty/src/test/java/shouty/support/ShoutyWorld.java[lines=17..26]
 ----
 
-We can shot::[23] replace all the usages of the local `shout` method with the new one, and then finally shot::[24] delete the old method.
+We can shot::[25] replace all the usages of the local `shout` method with the new one, and then finally shot::[26] delete the old method.
+
+And everything should still work.shot::[27]
 
 Great. In this way you can start to move complexity out of your step definitions, into support clasess that take responsibilty for the details of how to invoke actions against your application. You can probably imagine how, for a more complex project, this would be really useful for keeping your step definitions maintainable.
