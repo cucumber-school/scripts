@@ -53,7 +53,7 @@ module Shouty
 
     def deduct_credits(short_enough, message, shouter)
       shouter.credits -= 2 unless short_enough
-      shouter.credits -= (message.scan(/buy/) || []).size * 5
+      shouter.credits -= 5 if message.match(/buy/)
     end
   end
 end
