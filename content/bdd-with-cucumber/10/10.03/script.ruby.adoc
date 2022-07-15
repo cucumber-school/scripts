@@ -1,11 +1,51 @@
-=== The purpose of mock objects
+=== Using Mock Objects to write the Unit Test
+
+So the responsible thing to do at this point is to retrofit some unit tests for the Network class.  We'll start with its existing behaviour, then go on to test-drive the behaviour we need to fix our bug.
+
+Let's write a unit test for deducting five credits when the word “buy” is mentioned once.
+
+Some of these existing tests use a test double or mock object to represent the instances of `Person` that the `Network` collaborates with. So let's go with that style, and try to do the same here.
+
+First, we need a mock object to represent Sean.
+
+shot::[4, create test double for Sean]
+
+And we'll need to broadcast a message containing the word “buy”.
+
+shot::[1, write code to broadcast a message]
+
+What next?
+
+Well we need to assert that Sean is told to reduce his credits. In the `deduct_credits` method here, we're calling the credits setter, setting it to five less than the current value. So we need to stub the attribute getter with, say 100 credits, and then check that the setter is called with 95. 
+Here's how we do that.
+[writes the ugly stub & mock assertion]
+RED: Add missing unit test for credit deductions by Network
+<java>
+This test is a real pain to write
+</java>
+<ruby>
+This test is a real pain to write, and we're still not done! 
+Now it's failing with this error. 
+[run the tests, highlight the error message caused by listeners being nil / null]
+Following the stack trace, it looks like the problem is that our list of listeners hasn't been initialised. The Network class has been built with the assumption that there's always going to be at least one listener subscribed.
+So even though it's not relevant to our test, we'll need to create a Lucy, and subscribe her to the Network. She'll also need to be ready to receive a call to hear when the message is broadcast.
+Fix spec
+</ruby>
+
+==== The purpose of mock objects
 Phew. Our test is passing at last. That was hard work, and what we’ve produced is just awful.
+
 This ugly test is typical of what happens when you use mock objects or test doubles to retro-fit tests to existing code.
+
 So why use mocks?
+
 [break to GoAnimate]
+
 Mock objects are a design tool. They’re intended to be used when constructing new code, to throw together a lightweight sketch of a collaborating object. When you’re focused on building a Network, and you think it needs to collaborate with a Person, it would slow you down to have to stop and go off to build the actual Person class. It’s often quicker to use a mock object to hash out your idea of roughly what Person might look like, leaving you to stay focused on the task at hand.
+
 As you do this, you’ll find yourself - as we just did - having to specify how you want the two objects to interact. If you think about it, this interaction - the way they talk to each other at runtime - is the true behaviour of these objects.
+
 Remember back in lesson 5, Loops, where we explained that acceptance tests help you build the right thing, and unit tests help you build the thing right? In other words, acceptance tests help us to explore the problem domain, and unit tests help us to explore the solution.
 When you drive your development from tests, the unit tests can give you feedback about the design of your solution. If it’s easy to take an individual object and plug it into your tests, your design is likely to be nicely modular, which means it will be easier to change in the future. If it’s awkward, that’s a signal there’s a problem with your design.
-We call this listening to the tests.
 
+We call this listening to the tests.

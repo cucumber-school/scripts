@@ -1,32 +1,30 @@
-=== The value of unit tests
+
+=== Hunt for the bug
+Good. Now let's run our improved scenario, using the `@todo` tag, and go hunting for that bug:
+
+shot::[1, run `cucumber --tags @todo`]
+
+OK, well we can see our scenario failing, but where do we need to go to fix it?
+
+Luckily, our system is pretty small, and we remember that all the premium account behaviour is implemented in the `Network` class, so let's go and look there.
+
+shot::[2, open the Network class]
+
+Well, that `broadcast` method is pretty complex, but I suppose the bug must be in there somewhere. Let's try to pin it down with a unit test.
+
+shot::[3, open the unit tests for Network]
+
+Oh dear, oh dear: This file hardly contains any tests for the premium account behaviour! There's a test here for the behaviour around charging for long messages, but nothing for what happens when you mention the word "buy".
+
+It looks like when that so-called "hot-shot ninja rockstar" subcontractor, Stevie, hacked in the first version of premium accounts, he tested almost everything from that one great big Cucumber scenario - the one we refactored in Chapter 7 - and didn't write enough unit tests.
+
+==== The value of unit tests
 [GoAnimate]
 Why is this a problem?
-Think about each automated test you write as warning light that you’re fitting to your system. Acceptance tests are warning lights that make sense to business people: when they fail, they tell you what functionality a user will not be able to enjoy because of the bug.
-What a unit test does is give the programmers an indication about why the bug has occurred. Ideally, whenever you see an acceptance test’s warning light flash, there should be at least one corresponding unit test flashing too, pointing the developers to the source of the problem.
-If you don’t have any unit tests, you’re left guessing where the problem lies. In a big system, this can be a serious waste of time.
 
-=== Retrofit unit tests for existing behaviour
-So the responsible thing to do at this point is to retrofit some unit tests for the Network class.  We’ll start with its existing behaviour, then go on to test-drive the behaviour we need to fix our bug.
-Let’s write a test case for deducting five credits when the word “buy” is mentioned once.
-All our existing tests use a test double or mock object to represent the instances of Person that the Network collaborates with. So let’s go with that and try to do the same here.
-First we need a mock object to represent Sean.
-[create test double for Sean]
-And we’ll need to broadcast a message containing the word “buy”.
-[write code to broadcast a message]
-What next?
-Well we need to assert that Sean is told to reduce his credits. In the deduct_credits method here, we’re calling the credits setter, setting it to five less than the current value. So we need to stub the attribute getter with, say 100 credits, and then check that the setter is called with 95. 
-Here’s how we do that.
-[writes the ugly stub & mock assertion]
-RED: Add missing unit test for credit deductions by Network
-<java>
-This test is a real pain to write
-</java>
-<ruby>
-This test is a real pain to write, and we’re still not done! 
-Now it’s failing with this error. 
-[run the tests, highlight the error message caused by listeners being nil / null]
-Following the stack trace, it looks like the problem is that our list of listeners hasn’t been initialised. The Network class has been built with the assumption that there’s always going to be at least one listener subscribed.
-So even though it’s not relevant to our test, we’ll need to create a Lucy, and subscribe her to the Network. She’ll also need to be ready to receive a call to hear when the message is broadcast.
-Fix spec
-</ruby>
+Think about each automated test you write as warning light that you're fitting to your system. Acceptance tests are warning lights that make sense to business people: when they fail, they tell you what functionality a user will not be able to enjoy because of the bug.
+
+What a unit test does is give the programmers an indication about why the bug has occurred. Ideally, whenever you see an acceptance test's warning light flash, there should be at least one corresponding unit test flashing too, pointing the developers to the source of the problem.
+
+If you don't have any unit tests, you're left guessing where the problem lies. In a big system, this can be a serious waste of time.
 

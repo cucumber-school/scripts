@@ -1,23 +1,15 @@
-
 === Tidy up the bug report Gherkin
-Let’s work outside-in and start by tidying up the Gherkin specification. Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system. This doesn’t make for very good documentation about the intended behaviour.
+
+Let's work outside-in and start by tidying up the Gherkin specification. Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system. This doesn't make for very good documentation about the intended behaviour.
 Using our Friends Episode naming convention that we introduced in lesson 7, we can come up with a more expressive name for this scenario.
 How about: the one where Sean mentions “buy” several times in the same shout?
 [changes the scenario title]
+
 You might be worried about losing this bug ID. We could keep it in a comment, a tag, or in the description of the Scenario if we wanted to. If your team likes to keep track of such things, feel free to do that. We’d prefer to consign the bug to history - what matters to us is how the software behaves today, not how it got to be that way.
+
 We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits, and end him with 95, it more clearly illustrates the rule that only five credits should be deducted.
+
 [changes the scenario body]
 Talking of which, let’s also update the rule to make it explicit that you lose 5 credits per shout.
-RED: Improve failing scenario content and related rule
 
-=== Hunt for the bug
-Good. Now let’s run our improved scenario, using the @todo tag, and go hunting for that bug:
-[runs cucumber --tags @todo]
-OK, well we can see our scenario failing, but where do we need to go to fix it?
-Luckily, our system is pretty small, and we remember that all the premium account behaviour is implemented in the Network class, so let’s go and look there.
-[opens the Network class]
-Well, that broadcast method is pretty complex, but I suppose the bug must be in there somewhere. Let’s try to pin it down with a unit test.
-[opens the unit tests for Network]
-Oh dear, oh dear: This file does not contain any tests for the premium account behaviour!
-It looks like when that so-called hot-shot ninja rockstar subcontractor, Stevie, hacked in the first version of premium accounts, he drove everything from that one great big Cucumber scenario, and never wrote any unit tests.
-
+*RED: Improve failing scenario content and related rule*
