@@ -741,24 +741,12 @@ pre.rouge {
 <li><a href="#_acceptance_tests_vs_unit_tests">10. Acceptance Tests vs Unit Tests</a>
 <ul class="sectlevel2">
 <li><a href="#_tidy_up_the_bug_report_gherkin">10.1. Tidy up the bug report Gherkin</a></li>
-<li><a href="#_hunt_for_the_bug">10.2. Hunt for the bug</a></li>
-<li><a href="#_using_mock_objects_to_write_the_unit_test">10.3. Using Mock Objects to write the Unit Test</a></li>
-<li><a href="#_listening_to_the_tests_using_collaborator_objects_to_write_the_unit_test">10.4. Listening to the tests: Using collaborator objects to write the Unit Test</a></li>
-<li><a href="#_organising_the_tests_by_responsibility">10.5. Organising the tests by responsibility</a></li>
-<li><a href="#_split_the_obscure_unit_test_into_new_pending_independent_tests">Split the obscure unit test into new, pending, independent tests</a></li>
-<li><a href="#_decide_to_split_networks_responsibilities">10.6. Decide to split Network’s responsibilities</a></li>
-<li><a href="#_beginning_the_refactoring">10.7. Beginning the refactoring</a></li>
-<li><a href="#_clean_up_person_unit_tests">10.8. Clean up Person unit tests</a></li>
-<li><a href="#_discuss_the_remaining_network_unit_tests">10.9. Discuss the remaining Network unit tests</a></li>
-<li><a href="#_document_the_rule_about_running_out_of_credit">10.10. Document the Rule about Running out of Credit</a></li>
-<li><a href="#_automate_the_scenario">10.11. Automate the scenario</a></li>
-<li><a href="#_refactor_the_tests">10.12. Refactor the tests</a></li>
-<li><a href="#_refactor_network">10.13. Refactor Network</a></li>
-<li><a href="#_closure">10.14. Closure</a></li>
-<li><a href="#_epilogue">10.15. Epilogue</a></li>
+<li><a href="#_testing_ice_cream_cone">10.2. Testing ice cream cone</a></li>
+<li><a href="#_retrofit_unit_test">10.3. Retrofit unit test</a></li>
+<li><a href="#_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</a></li>
+<li><a href="#_another_edge_case">10.5. Another edge case</a></li>
 </ul>
 </li>
-<li><a href="#_web_automation_with_selenium_webdriver">11. Web automation with Selenium Webdriver</a></li>
 </ul>
 </div>
 </div>
@@ -10154,409 +10142,148 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <div class="sect2">
 <h3 id="_tidy_up_the_bug_report_gherkin">10.1. Tidy up the bug report Gherkin</h3>
 <div class="paragraph">
-<p>Let&#8217;s work outside-in and start by tidying up the Gherkin specification. Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system. This doesn&#8217;t make for very good documentation about the intended behaviour.
-Using our Friends Episode naming convention that we introduced in lesson 7, we can come up with a more expressive name for this scenario.
-How about: the one where Sean mentions “buy” several times in the same shout?</p>
+<p>Let&#8217;s start by running our failing scenario. We have it marked with a <code>@todo</code> tag on it, so we can use that to run it in isolation:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> @todo</code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p>You might be worried about losing this bug ID. We could keep it in a comment, a tag, or in the description of the Scenario if we wanted to. If your team likes to keep track of such things, feel free to do that. We’d prefer to consign the bug to history - what matters to us is how the software behaves today, not how it got to be that way.</p>
+<p>OK. We&#8217;ll work outside-in and start by tidying up the Gherkin specification.</p>
+</div>
+<div class="paragraph">
+<p>Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system. This doesn&#8217;t make for very good documentation about the intended behaviour.</p>
+</div>
+<div class="paragraph">
+<p>It also isn&#8217;t sitting under the right rule.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start by moving it here, under the rule about charging for mentioning the word "buy"</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s find a better name for the scenario.</p>
+</div>
+<div class="paragraph">
+<p>Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"?</p>
+</div>
+<div class="paragraph">
+<p></p>
+</div>
+<div class="paragraph">
+<p>You might be worried about losing this bug ID. We could keep it in a comment, a tag, or in the description of the Scenario.</p>
+</div>
+<div class="paragraph">
+<p>Just like under a <code>Feature</code> keyword, you can write any arbitrary text you want beneath a <code>Scenario</code> keyword, before the first <code>Given</code>, <code>When</code> or <code>Then</code> keyword.</p>
+</div>
+<div class="paragraph">
+<p>So let&#8217;s do that.</p>
+</div>
+<div class="paragraph">
+<p></p>
 </div>
 <div class="paragraph">
 <p>We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits, and end him with 95, it more clearly illustrates the rule that only five credits should be deducted.</p>
 </div>
 <div class="paragraph">
-<p>Talking of which, let’s also update the rule to make it explicit that you lose 5 credits per shout.</p>
-</div>
-<div class="paragraph">
-<p><strong>RED: Improve failing scenario content and related rule</strong></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_hunt_for_the_bug">10.2. Hunt for the bug</h3>
-<div class="paragraph">
-<p>Good. Now let&#8217;s run our improved scenario, using the <code>@todo</code> tag, and go hunting for that bug:</p>
-</div>
-<div class="paragraph">
 <p></p>
 </div>
 <div class="paragraph">
-<p>OK, well we can see our scenario failing, but where do we need to go to fix it?</p>
+<p>OK great, so now we have a failing test we&#8217;re more happy with.</p>
 </div>
 <div class="paragraph">
-<p>Luckily, our system is pretty small, and we remember that all the premium account behaviour is implemented in the <code>Network</code> class, so let&#8217;s go and look there.</p>
+<p>The trouble is, although this test tells us what&#8217;s wrong with the behaviour of the system - the wrong number of credits are being deducted - it doesn&#8217;t give us any clues as to <strong>why</strong>.</p>
 </div>
-<div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>Well, that <code>broadcast</code> method is pretty complex, but I suppose the bug must be in there somewhere. Let&#8217;s try to pin it down with a unit test.</p>
-</div>
-<div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>Oh dear, oh dear: This file hardly contains any tests for the premium account behaviour! There&#8217;s a test here for the behaviour around charging for long messages, but nothing for what happens when you mention the word "buy".</p>
-</div>
-<div class="paragraph">
-<p>It looks like when that so-called "hot-shot ninja rockstar" subcontractor, Stevie, hacked in the first version of premium accounts, he tested almost everything from that one great big Cucumber scenario - the one we refactored in Chapter 7 - and didn&#8217;t write enough unit tests.</p>
-</div>
-<div class="sect3">
-<h4 id="_the_value_of_unit_tests">10.2.1. The value of unit tests</h4>
-<div class="paragraph">
-<p>Why is this a problem?</p>
-</div>
-<div class="paragraph">
-<p>Think about each automated test you write as warning light that you&#8217;re fitting to your system. Acceptance tests are warning lights that make sense to business people: when they fail, they tell you what functionality a user will not be able to enjoy because of the bug.</p>
-</div>
-<div class="paragraph">
-<p>What a unit test does is give the programmers an indication about why the bug has occurred. Ideally, whenever you see an acceptance test&#8217;s warning light flash, there should be at least one corresponding unit test flashing too, pointing the developers to the source of the problem.</p>
-</div>
-<div class="paragraph">
-<p>If you don&#8217;t have any unit tests, you&#8217;re left guessing where the problem lies. In a big system, this can be a serious waste of time.</p>
-</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>unit tests vs acceptance tests &#8230;&#8203;</p>
+</li>
+</ol>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_using_mock_objects_to_write_the_unit_test">10.3. Using Mock Objects to write the Unit Test</h3>
-<div class="paragraph">
-<p>So the responsible thing to do at this point is to retrofit some unit tests for the Network class.  We&#8217;ll start with its existing behaviour, then go on to test-drive the behaviour we need to fix our bug.</p>
-</div>
-<div class="paragraph">
-<p>Let&#8217;s write a unit test for deducting five credits when the word “buy” is mentioned once.</p>
-</div>
-<div class="paragraph">
-<p>Some of these existing tests use a test double or mock object to represent the instances of <code>Person</code> that the <code>Network</code> collaborates with. So let&#8217;s go with that style, and try to do the same here.</p>
-</div>
-<div class="paragraph">
-<p>First, we need a mock object to represent Sean.</p>
-</div>
-<div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>And we&#8217;ll need to broadcast a message containing the word “buy”.</p>
-</div>
-<div class="paragraph">
-<p></p>
-</div>
-<div class="paragraph">
-<p>What next?</p>
-</div>
-<div class="paragraph">
-<p>Well we need to assert that Sean is told to reduce his credits. In the <code>deduct_credits</code> method here, we&#8217;re calling the credits setter, setting it to five less than the current value. So we need to stub the attribute getter with, say 100 credits, and then check that the setter is called with 95.
-Here&#8217;s how we do that.</p>
-</div>
-<div class="paragraph">
-<p>RED: Add missing unit test for credit deductions by Network
-&lt;java&gt;
-This test is a real pain to write
-&lt;/java&gt;
-&lt;ruby&gt;
-This test is a real pain to write, and we&#8217;re still not done!
-Now it&#8217;s failing with this error.</p>
-</div>
-<div class="paragraph">
-<p>Following the stack trace, it looks like the problem is that our list of listeners hasn&#8217;t been initialised. The Network class has been built with the assumption that there&#8217;s always going to be at least one listener subscribed.
-So even though it&#8217;s not relevant to our test, we&#8217;ll need to create a Lucy, and subscribe her to the Network. She&#8217;ll also need to be ready to receive a call to hear when the message is broadcast.
-Fix spec
-&lt;/ruby&gt;</p>
-</div>
-<div class="sect3">
-<h4 id="_the_purpose_of_mock_objects">10.3.1. The purpose of mock objects</h4>
-<div class="paragraph">
-<p>Phew. Our test is passing at last. That was hard work, and what we’ve produced is just awful.</p>
-</div>
-<div class="paragraph">
-<p>This ugly test is typical of what happens when you use mock objects or test doubles to retro-fit tests to existing code.</p>
-</div>
-<div class="paragraph">
-<p>So why use mocks?</p>
-</div>
-<div class="paragraph">
-<p>Mock objects are a design tool. They’re intended to be used when constructing new code, to throw together a lightweight sketch of a collaborating object. When you’re focused on building a Network, and you think it needs to collaborate with a Person, it would slow you down to have to stop and go off to build the actual Person class. It’s often quicker to use a mock object to hash out your idea of roughly what Person might look like, leaving you to stay focused on the task at hand.</p>
-</div>
-<div class="paragraph">
-<p>As you do this, you’ll find yourself - as we just did - having to specify how you want the two objects to interact. If you think about it, this interaction - the way they talk to each other at runtime - is the true behaviour of these objects.</p>
-</div>
-<div class="paragraph">
-<p>Remember back in lesson 5, Loops, where we explained that acceptance tests help you build the right thing, and unit tests help you build the thing right? In other words, acceptance tests help us to explore the problem domain, and unit tests help us to explore the solution.
-When you drive your development from tests, the unit tests can give you feedback about the design of your solution. If it’s easy to take an individual object and plug it into your tests, your design is likely to be nicely modular, which means it will be easier to change in the future. If it’s awkward, that’s a signal there’s a problem with your design.</p>
-</div>
-<div class="paragraph">
-<p>We call this listening to the tests.</p>
-</div>
+<h3 id="_testing_ice_cream_cone">10.2. Testing ice cream cone</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Go find the source of the bug</p>
+</li>
+<li>
+<p>Look! There&#8217;s hardly any unit tests for premium accounts</p>
+</li>
+<li>
+<p>Talk about testing pyramid vs testing ice cream cone</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_listening_to_the_tests_using_collaborator_objects_to_write_the_unit_test">10.4. Listening to the tests: Using collaborator objects to write the Unit Test</h3>
-<div class="paragraph">
-<p>One alternative to using mocks would be to use a real instance of Person instead of the mock object.</p>
-</div>
-<div class="paragraph">
-<p>&lt;ruby&gt;
-Alternate approach: Add missing unit test for credit deductions by Network - [show that integration test and then revert back to previous one]
-This has a couple of apparent advantages. First, Person automatically subscribes to the Network as it is constructed, so we wouldn’t need this clutter about Lucy. Also, because we’re testing Person and Network as one integrated lump, we don’t have to fuss about exactly how they communicate about Sean’s credits. All we have to do is check how many credits he has left over at the end.
-&lt;/ruby&gt;
-&lt;java&gt;
-This is very tempting. By testing Person and Network as one integrated lump, we don’t have to fuss about exactly how they communicate about Sean’s credits. All we have to do is check how many credits he has left over at the end.
-&lt;/java&gt;
-But this seductive solution papers over the cracks in our design.
-When you use mocks, you put the microscope on the interaction between an object and its collaborators. This gives you  feedback about how coupled those objects are. A lot of chatter going back and forth like this suggests they’re getting tangled up together.
-So the fact that it’s awkward to use mocks here is not because mocks are bad, or because we’re bad at using mocks: it’s feedback from the code.
-Let’s listen to the tests and try to respond to this pain instead of ignoring it.
-&lt;ruby&gt;</p>
-</div>
-<div class="sect3">
-<h4 id="_when_nobody_is_listening">10.4.1. When nobody is listening</h4>
-<div class="paragraph">
-<p>We’ll start with something easy and deal with the situation where the Network is asked to broadcast when it has no listeners. This is an annoying detail about how this object behaves that didn’t show itself in our acceptance tests. Let’s test-drive a fix.</p>
-</div>
-<div class="paragraph">
-<p>Isolate a small deficiency in Network&#8217;s contract.
-To fix it, all we need to do is initialize the collection of listeners in the constructor, which makes more sense anyway.</p>
-</div>
-<div class="paragraph">
-<p>Fix the bug when there are no listeners
-Easy! And with that fixed, we can simplify the test we just wrote.</p>
-</div>
-<div class="paragraph">
-<p>Now we can clean up the test.
-&lt;/ruby&gt;</p>
-</div>
+<h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Add a test</p>
+</li>
+<li>
+<p>Watch it pass. Talk about how that gives us no confidence.</p>
+</li>
+<li>
+<p>Make it fail. Make it pass again.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_organising_the_tests_by_responsibility">10.5. Organising the tests by responsibility</h3>
-<div class="paragraph">
-<p>Let’s take stock a little bit. We’re trying to fix that bug about multiple mentions of the word “buy”, but first we’re retrofitting unit tests for the premium account behaviour in the Network class.
-It will be easier to see what tests are missing if we reorganize the unit tests by Network’s responsibilities.
-They basically fall into two categories.
-&lt;ruby&gt;
-These ones here are to do with the responsibility of broadcasting to listeners, so let’s group them up using RSpec’s describe method.
-&lt;/ruby&gt;
-&lt;java&gt;
-These ones here are to do with the responsibility of broadcasting to listeners, so let’s group them in a different section of our test class.
-&lt;/java&gt;
-Now we have our new test, which is about charging for shouts.</p>
+<h3 id="_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Add a test for multiple "buy" mentions in one shout. Watch it fail.</p>
+</li>
+<li>
+<p>Fix the bug</p>
+</li>
+<li>
+<p>Remove @todo tag and BUG reference.</p>
+</li>
+<li>
+<p>Discuss with Paula &amp; Tammy; Remove the scenario altogether since we have a unit test for this now.</p>
+</li>
+</ul>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_split_the_obscure_unit_test_into_new_pending_independent_tests">Split the obscure unit test into new, pending, independent tests</h3>
-<div class="paragraph">
-<p>This last one here is a bit weird. It’s sort of about broadcasting to listeners, but it has this odd hack in it which needs further investigation [highlight the comment on the first line] . This test is quite obscure, and seems to be attempting to cover several aspects of Network’s behaviour all at once. Let’s document those individual behaviours as new tests and we can come back to deal with this one later.
-Re-organise the unit tests for Person around responsibilities
-&lt;ruby&gt;
-We can see we’ll need something under the responsibility of broadcasting to listeners to ensure long messages aren’t broadcast for people with no credits, so we can express that using a pending RSpec example. We can fill this out later.
-&lt;/ruby&gt;
-&lt;java&gt;
-We can see we’ll need something similar under the responsibility of broadcasting to listeners, to ensure long messages aren’t broadcast for people with no credits, so we can express that using a test annotated with @Ignore for the time being. We can fill this out later.
-&lt;/java&gt;</p>
+<h3 id="_another_edge_case">10.5. Another edge case</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>We spotted that the regex is case sensitive - what if the word "buy" is capitalized?</p>
+</li>
+<li>
+<p>Quick conversation with Paula - yes we should charge even if the word is capitalized. Do we need it as a scenario? No.</p>
+</li>
+<li>
+<p>Add a unit test</p>
+</li>
+<li>
+<p>Make it pass</p>
+</li>
+<li>
+<p>Done</p>
+</li>
+</ul>
 </div>
-<div class="paragraph">
-<p>It’s clear we’ll also need to test that we charge two credits for an over-long message.
-&lt;ruby&gt;Let’s add another pending example for that.&lt;/ruby&gt;
-&lt;java&gt;Let’s add another ignored test for that.&lt;/java&gt;</p>
-</div>
-<div class="paragraph">
-<p>Write out two pending specs for the behaviour in the gnarly spec
-Once those two tests are implemented, we won’t need this obscure one any more. We’re not confident enough to just remove it until we’ve seen those tests fleshed out, so we can mark it as &lt;ruby&gt;pending&lt;/ruby&gt;&lt;java&gt;ignore&lt;/java&gt; for now. That will remind us we need to come back and clean this up soon.
-Disable the gnarly test - we&#8217;ll remove it soon</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_decide_to_split_networks_responsibilities">10.6. Decide to split Network’s responsibilities</h3>
-<div class="paragraph">
-<p>At this point it is becoming clear that Network has too many responsibilities. We have two different sources of feedback telling us this:
-With the unit tests laid out by responsibility, we can see more clearly that while broadcasting to listeners is a responsibility that fits, there’s no real reason why the Network needs be responsible for charging for shouts.</p>
-</div>
-<div class="paragraph">
-<p>Secondly, the communication protocol between Network and Person, exposed by the mocks, is very noisy: we’re making lots of method calls to Person in order to determine whether they can afford the shout and to deduct payment:
-First Sean calls Network#broadcast
-then Network asks Sean how many credits he has
-then Network tells Sean the new value of his credits, with the fee for the message deducted
-then Network asks Sean how many credits he has again, in order to check whether he can afford to send the message!
-We could get all sad and angry that if only we’d test-driven this code in the first place we might have got this feedback sooner, but that would be futile: it’s not too late to clean this code up!
-How about we make Sean responsible for organising his own payment?</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_beginning_the_refactoring">10.7. Beginning the refactoring</h3>
-<div class="paragraph">
-<p>Instead of rewriting this code, let’s see if we can refactor it. When refactoring, it’s crucial not to break existing functionality, so we’ll rely on our tests to warn us if we make a mistake.
-&lt;ruby&gt;
-cucumber --tags ~@todo &amp;&amp; rspec -f doc
-&lt;/ruby&gt;
-&lt;java&gt;
-mvn test -Dcucumber.options=”--tags ~@todo”
-&lt;/java&gt;
-We’ll work in small steps. We may temporarily break some unit tests as the implementation shifts, but the acceptance tests should be passing all the way through if everything goes according to plan.
-Ready? We’ll start by moving the deduct_credits method onto Person.
-As a baby-step, we’ll make it public, so we can just continue to call it from Network’s broadcast method for now. That should keep the acceptance tests passing&#8230;&#8203; Good.</p>
-</div>
-<div class="paragraph">
-<p>Now let’s make Sean responsible for deducting his own credits, as he shouts. We can move over this whole responsibility of charging for shouts from the network specs to the person specs.</p>
-</div>
-<div class="paragraph">
-<p>We’ll need to adjust the test like this…</p>
-</div>
-<div class="paragraph">
-<p>Move <code>deduct_credits</code> onto Person
-&#8230;&#8203;and we’re back to green!
-Green: move the call to deduct credits over to the shouter.
-Let’s refactor some more.
-Because all this code is running within the shouter object now, we don’t need to pass around this instance of Person anymore, and we can access the credits instance variable here, directly.
-We can make deduct credits private now.
-Make Person#deduct_credits private
-We don’t need to pass short enough around as a variable, we can just do the logic inline here.
-Refactor: inline <code>short_enough</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_clean_up_person_unit_tests">10.8. Clean up Person unit tests</h3>
-<div class="paragraph">
-<p>Great, now the code in Network#broadcast is much cleaner.
-We still have these pending unit tests we need to sort out. Let’s start in Person, by fleshing out this test about charging for long messages.
-Retro-fit unit test for charging for long messages
-That’s better. Let’s just make it fail quickly, to check that we can trust it.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_discuss_the_remaining_network_unit_tests">10.9. Discuss the remaining Network unit tests</h3>
-<div class="paragraph">
-<p>OK, now we can tackle these two &lt;ruby&gt;pending&lt;/ruby&gt;&lt;java&gt;ignored&lt;/java&gt; unit tests in Network.
-Let’s step back for a second and consider the rule we’re implementing here. This original unit test was simply there to ensure that long messages were not broadcast: remember we originally started out without premium accounts.
-With the addition of premium accounts, the rule has changed: We will broadcast long messages, but only if the person shouting has sufficient credits.
-To implement it, we’ve ended up with this mind-bending boolean logic in the broadcast method.  It doesn’t have to be like this. This complexity is a sign that we haven’t modelled the problem well enough yet.
-Recall that right at the end of lesson 7, we discovered a known unknown in our problem domain and documented it with this question: what happens when you run out of credits?
-We know you can’t send a long message when you run out of credits, but what about a message containing the word ‘buy’? Perhaps having a complete answer to this question will help us to resolve this complexity.
-Let’s check with our product owner.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_document_the_rule_about_running_out_of_credit">10.10. Document the Rule about Running out of Credit</h3>
-<div class="paragraph">
-<p>We use a scenario to frame the discussion with Paula, our product owner.</p>
-</div>
-<div class="paragraph">
-<p>Given Lucy and Sean are within range of each other - that’s what these background steps do - and Sean has bought 4 credits, when Sean shouts a message containing the word “buy” then… what?
-Sean doesn’t have enough credits, so presumably Lucy does not hear his message, is that right?
-Right, says Paula.</p>
-</div>
-<div class="paragraph">
-<p>And so in that case, Sean should still have his four credits, correct?
-Right again, says Paula.</p>
-</div>
-<div class="paragraph">
-<p>OK, thanks Paula. So the rule is that we’ll only send shouts that you can afford. Is that right?</p>
-</div>
-<div class="paragraph">
-<p>Correct! says Paula. A person can’t send a premium shout unless they have enough credits to pay for it.
-Now we understand the business rule, let’s automate this scenario and drive out the behaviour.
-Decide what happens when you run out of credit</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_automate_the_scenario">10.11. Automate the scenario</h3>
-<div class="paragraph">
-<p>First we need to match this new step where we check Lucy does not hear Sean’s message.
-We have a very similar one here for Larry. We can use a capture group to make it more generic. Instead of a wildcard though, we can use pipes to specify the alternative values we expect here.
-We capture the listener name, then use that here when fetching the instance of Person.
-Make step more generic
-Right, now we have a failing acceptance test which should be passing once we’ve resolved this. Let’s have a think about where this behaviour should go.
-Only shout what you can afford: Failing unit test
-If we give the responsibility for checking affordability to the Person doing the shouting, then Network doesn’t need to care about credits at all, which will simplify things nicely.
-Let’s start with a new unit test for Person then.
-We’ll set up Sean with only one credit - not enough to afford to send a long message - and assert that the broadcast method is not called on Network. Then we try to shout the long message.
-This fails of course, because at the moment Person doesn’t make this check, so the broadcast method is called every time.
-We’re at Red in the TDD cycle. Next stop: green!
-COMMIT
-Only shout what you can afford: Green
-To make this pass we need to know how much the shout is going to cost before we send it. That knowledge is in the deduct_credits method, which actually does two tasks at the same time: it works out the cost of the message, and it deducts that cost from the person’s balance.
-Let’s tease those two tasks apart, first calculating the cost of the shout, then deducting that cost from the credits.
-Red: split responsibilities in Person#deduct_credits
-Now we can extract a method that calculates the cost of the message.
-Red: Extract method to calculate cost of message
-Then finally we can use that method to check whether the message is affordable.
-Green: Use cost_of to check message is affordable
-&#8230;&#8203;and our unit test is passing. Great.
-And I suppose our acceptance test for the affordability rule should be passing now too. It is!</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_refactor_the_tests">10.12. Refactor the tests</h3>
-<div class="paragraph">
-<p>Refactor: Clean up dead tests and code for Network
-We’re green, so it’s refactoring time again!
-Now we can give that messy old test in Network’s unit tests the treatment it deserves [deletes it] because this behaviour is now on Person. We won’t be needing this pending test.  [deletes it] &lt;ruby&gt; and we don’t need to stub credits here anymore. &lt;/ruby&gt;
-Refactor: delete redundant unit tests
-Deleting code is my favourite kind of refactoring! Let’s keep going and strip back all that crazy boolean login in Network#broadcast. I think we can just remove this whole clause about the message being too short or having enough credits or whatever. Let’s try it and see what the tests tell us.
-Refactor: remove dead code
-Excellent, much better!</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_refactor_network">10.13. Refactor Network</h3>
-<div class="paragraph">
-<p>Now, can we do any refactoring in Network?
-This method would read a lot better if we extract a method that returns only the listeners within range of the shouter. Let’s do that.</p>
-</div>
-<div class="paragraph">
-<p>We don’t need to use this shouter_location temporary variable either. Let’s inline it.
-Refactor: Extract method to simplify Network#broadcast</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_closure">10.14. Closure</h3>
-<div class="paragraph">
-<p>OK. The code is nice and clean, and all our tests are passing&#8230;&#8203; except for one: that bug! It can’t escape us any longer. Let’s trap it with a unit test.
-We know the responsibility for charging for shouts lies in Person, so that’s where to add the unit test.
-Red: add unit test for the bug
-Have you already spotted where we need to make the change? Here, in the cost_of(message) method, the code will add five credits to the cost each time it finds the word “buy” in the message. If we change the code like this, it should be working as expected.
-Green: fix the bug when charging for "buy" several times
-It is! Great stuff.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_epilogue">10.15. Epilogue</h3>
-<div class="paragraph">
-<p>Although we’ve called this video series Cucumber School, you’ve probably noticed by now that we’re teaching you a whole range of skills and ideas that we on the Cucumber team use to develop software.
-Not just skills with Cucumber, but skills with the whole of Behaviour-Driven Development.
-BDD blurs the lines between traditional roles like tester and developer. In our ideal world, everyone on the team - not just testers - is responsible for quality, and we all try to test it as much as possible.
-Having good automated tests frees up testers to do more interesting interactive, exploratory testing.
-We use our tests as a guide to help us design a solution that models the problem well. A better model in your solution can make whole categories of bugs go away forever. We saw that in this lesson when we moved the responsibility for charging for shouts from Network to Person, and the issues around what happened when you run out of credit suddenly became easy to resolve.
-Getting the right balance between fine-grained unit tests and broader full-stack tests is critically important to having fast, useful feedback from your test suite. We’ll explore this more in the next lesson.
-See you next time, on Cucumber School.</p>
-</div>
-<div class="paragraph">
-<p>Phew. Our test is passing at last. That was hard work, and what we’ve produced is just awful.
-This ugly test is typical of what happens when you use mock objects or test doubles to retro-fit tests to existing code.
-So why use mocks?</p>
-</div>
-<div class="paragraph">
-<p>Mock objects are a design tool. They’re intended to be used when constructing new code, to throw together a lightweight sketch of a collaborating object. When you’re focused on building a Network, and you think it needs to collaborate with a Person, it would slow you down to have to stop and go off to build the actual Person class. It’s often quicker to use a mock object to hash out your idea of roughly what Person might look like, leaving you to stay focused on the task at hand.
-As you do this, you’ll find yourself - as we just did - having to specify how you want the two objects to interact. If you think about it, this interaction - the way they talk to each other at runtime - is the true behaviour of these objects.
-Remember back in lesson 5, Loops, where we explained that acceptance tests help you build the right thing, and unit tests help you build the thing right? In other words, acceptance tests help us to explore the problem domain, and unit tests help us to explore the solution.
-When you drive your development from tests, the unit tests can give you feedback about the design of your solution. If it’s easy to take an individual object and plug it into your tests, your design is likely to be nicely modular, which means it will be easier to change in the future. If it’s awkward, that’s a signal there’s a problem with your design.
-We call this listening to the tests.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_web_automation_with_selenium_webdriver">11. Web automation with Selenium Webdriver</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>TODO: Import the original script.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://drive.google.com/drive/u/0/folders/0B1Qgdp5tWFyzZ25NQjloazhjTUk?ths=true" class="bare">https://drive.google.com/drive/u/0/folders/0B1Qgdp5tWFyzZ25NQjloazhjTUk?ths=true</a></p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-07-11 12:23:53 -0700
+Last updated 2022-07-15 11:21:42 -0700
 </div>
 </div>
 </body>
