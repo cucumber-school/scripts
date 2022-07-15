@@ -80,5 +80,17 @@ RSpec.describe Shouty::Network do
       expect(sean.credits).to eq(95)
     end
 
+    it "deducts 5 credits even if you mention the word 'buy' several times" do
+      message = 'Come buy buy buy these awesome croissants'
+
+      sean  = Shouty::Person.new("Sean", network, 0, 100)
+      laura = Shouty::Person.new("Laura", network, 10)
+
+      network.subscribe(laura)
+      network.broadcast(message, sean)
+
+      expect(sean.credits).to eq(95)
+    end
+
   end
 end
