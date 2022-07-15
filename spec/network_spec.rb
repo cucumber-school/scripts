@@ -92,5 +92,17 @@ RSpec.describe Shouty::Network do
       expect(sean.credits).to eq(95)
     end
 
+    it "deducts 5 credits if the word buy is capitalized" do
+      message = 'Come Buy these awesome croissants'
+
+      sean  = Shouty::Person.new("Sean", network, 0, 30)
+      laura = Shouty::Person.new("Laura", network, 10)
+
+      network.subscribe(laura)
+      network.broadcast(message, sean)
+
+      expect(sean.credits).to eq(25)
+    end
+
   end
 end
