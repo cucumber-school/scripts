@@ -10142,7 +10142,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <div class="sect2">
 <h3 id="_tidy_up_the_bug_report_gherkin">10.1. Tidy up the bug report Gherkin</h3>
 <div class="paragraph">
-<p>Let&#8217;s start by running our failing scenario. We have it marked with a <code>@todo</code> tag on it, so we can use that to run it in isolation:</p>
+<p>Let&#8217;s start by running our failing scenario. We have it marked with a <code>@todo</code> tag on it, so we can use that to run it in isolation: </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10155,23 +10155,56 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <div class="paragraph">
 <p>Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system. This doesn&#8217;t make for very good documentation about the intended behaviour.</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="vi">@todo</span>
+    <span class="no">Scenario</span><span class="p">:</span> <span class="no">BUG</span> <span class="c1">#2789</span>
+      <span class="no">Given</span> <span class="no">Sean</span> <span class="n">has</span> <span class="n">bought</span> <span class="mi">30</span> <span class="n">credits</span>
+      <span class="no">When</span> <span class="no">Sean</span> <span class="n">shouts</span> <span class="s2">"buy, buy buy!"</span>
+      <span class="no">Then</span> <span class="no">Sean</span> <span class="n">should</span> <span class="n">have</span> <span class="mi">25</span> <span class="n">credits</span></code></pre>
+</div>
+</div>
 <div class="paragraph">
 <p>It also isn&#8217;t sitting under the right rule.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start by moving it here, under the rule about charging for mentioning the word "buy"</p>
+<p>Let&#8217;s start by moving it here, under the rule about charging for mentioning the word "buy" </p>
 </div>
-<div class="paragraph">
-<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">  <span class="no">Rule</span><span class="p">:</span> <span class="no">Mention</span> <span class="n">the</span> <span class="n">word</span> <span class="s2">"buy"</span> <span class="n">and</span> <span class="n">you</span> <span class="n">lose</span> <span class="mi">5</span> <span class="n">credits</span><span class="o">.</span>
+
+    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Shout</span> <span class="n">several</span> <span class="n">messages</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">word</span> <span class="err">“</span><span class="n">buy</span><span class="err">”</span>
+      <span class="no">Given</span> <span class="no">Sean</span> <span class="n">has</span> <span class="n">bought</span> <span class="mi">30</span> <span class="n">credits</span>
+      <span class="no">And</span> <span class="no">Sean</span> <span class="n">shouts</span> <span class="mi">3</span> <span class="n">messages</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">word</span> <span class="s2">"buy"</span>
+      <span class="no">Then</span> <span class="no">Lucy</span> <span class="n">hears</span> <span class="n">all</span> <span class="no">Sean</span><span class="s1">'s messages
+      And Sean should have 15 credits
+
+    @todo
+    Scenario: BUG #2789
+      Given Sean has bought 30 credits
+      When Sean shouts "buy, buy buy!"
+      Then Sean should have 25 credits
+
+  Rule: Over-long messages cost 2 credits
+
+    Scenario: Sean shouts some over-long messages
+      Given Sean has bought 30 credits
+      When Sean shouts 2 over-long messages
+      Then Lucy hears all Sean'</span><span class="n">s</span> <span class="n">messages</span>
+      <span class="no">And</span> <span class="no">Sean</span> <span class="n">should</span> <span class="n">have</span> <span class="mi">26</span> <span class="n">credits</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>Now let&#8217;s find a better name for the scenario.</p>
 </div>
 <div class="paragraph">
-<p>Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"?</p>
+<p>Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"? </p>
 </div>
-<div class="paragraph">
-<p></p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Mention</span> <span class="s2">"buy"</span> <span class="n">multiple</span> <span class="n">times</span> <span class="k">in</span> <span class="n">one</span> <span class="n">shout</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
 <p>You might be worried about losing this bug ID. We could keep it in a comment, a tag, or in the description of the Scenario.</p>
@@ -10180,16 +10213,28 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>Just like under a <code>Feature</code> keyword, you can write any arbitrary text you want beneath a <code>Scenario</code> keyword, before the first <code>Given</code>, <code>When</code> or <code>Then</code> keyword.</p>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s do that.</p>
+<p>So let&#8217;s do that. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="vi">@todo</span>
+    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Mention</span> <span class="s2">"buy"</span> <span class="n">multiple</span> <span class="n">times</span> <span class="k">in</span> <span class="n">one</span> <span class="n">shout</span>
+      <span class="no">BUG</span> <span class="c1">#2789</span>
+      <span class="no">Given</span> <span class="no">Sean</span> <span class="n">has</span> <span class="n">bought</span> <span class="mi">30</span> <span class="n">credits</span></code></pre>
+</div>
 </div>
 <div class="paragraph">
-<p></p>
+<p>We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits, and end him with 95, it more clearly illustrates the rule that only five credits should be deducted. </p>
 </div>
-<div class="paragraph">
-<p>We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits, and end him with 95, it more clearly illustrates the rule that only five credits should be deducted.</p>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="vi">@todo</span>
+    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Mention</span> <span class="s2">"buy"</span> <span class="n">multiple</span> <span class="n">times</span> <span class="k">in</span> <span class="n">one</span> <span class="n">shout</span>
+      <span class="no">BUG</span> <span class="c1">#2789</span>
+      <span class="no">Given</span> <span class="no">Sean</span> <span class="n">has</span> <span class="n">bought</span> <span class="mi">100</span> <span class="n">credits</span>
+      <span class="no">When</span> <span class="no">Sean</span> <span class="n">shouts</span> <span class="s2">"buy, buy buy!"</span>
+      <span class="no">Then</span> <span class="no">Sean</span> <span class="n">should</span> <span class="n">have</span> <span class="mi">95</span> <span class="n">credits</span></code></pre>
 </div>
-<div class="paragraph">
-<p></p>
 </div>
 <div class="paragraph">
 <p>OK great, so now we have a failing test we&#8217;re more happy with.</p>
@@ -10207,34 +10252,141 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="sect2">
 <h3 id="_testing_ice_cream_cone">10.2. Testing ice cream cone</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Go find the source of the bug</p>
-</li>
-<li>
-<p>Look! There&#8217;s hardly any unit tests for premium accounts</p>
-</li>
-<li>
-<p>Talk about testing pyramid vs testing ice cream cone</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Now we need to find the source cause of our bug. We have a passing test suite. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh">rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+...........
+
+Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files took 0.06097 seconds to load<span class="o">)</span>
+11 examples, 0 failures</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since we know there&#8217;s a bug, we should have at least one test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests.</p>
+</div>
+<div class="paragraph">
+<p>Oh my! we have absolutely no tests for this feature on our unit test suite. We&#8217;ll need to remedy this in order to triage our problem.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">  <span class="n">context</span> <span class="s2">"credits"</span> <span class="k">do</span>
+    <span class="n">it</span> <span class="s2">"deducts 2 credits for a shout over 180 characters"</span> <span class="k">do</span>
+      <span class="n">long_message</span> <span class="o">=</span> <span class="s1">'x'</span> <span class="o">*</span> <span class="mi">181</span>
+
+      <span class="n">sean</span>  <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Sean"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="n">laura</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Laura"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+      <span class="n">network</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="n">laura</span><span class="p">)</span>
+      <span class="n">network</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="n">long_message</span><span class="p">,</span> <span class="n">sean</span><span class="p">)</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">sean</span><span class="p">.</span><span class="nf">credits</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span></code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Add a test</p>
-</li>
-<li>
-<p>Watch it pass. Talk about how that gives us no confidence.</p>
-</li>
-<li>
-<p>Make it fail. Make it pass again.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Lets add a test where sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="n">it</span> <span class="s2">"deducts 5 credits for mentioning the word 'buy'"</span> <span class="k">do</span>
+      <span class="n">message</span> <span class="o">=</span> <span class="s1">'Come buy these awesome croissants'</span>
+
+      <span class="n">sean</span>  <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Sean"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="n">laura</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Laura"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+      <span class="n">network</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="n">laura</span><span class="p">)</span>
+      <span class="n">network</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sean</span><span class="p">)</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">sean</span><span class="p">.</span><span class="nf">credits</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">95</span><span class="p">)</span>
+    <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We run our unit test suite  and &#8230;&#8203; it passes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+............
+
+Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files took 0.06116 seconds to load<span class="o">)</span>
+12 examples, 0 failures</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="k">def</span> <span class="nf">deduct_credits</span><span class="p">(</span><span class="n">short_enough</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">shouter</span><span class="p">)</span>
+      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="mi">2</span> <span class="k">unless</span> <span class="n">short_enough</span>
+      <span class="c1"># shouter.credits -= (message.scan(/buy/) || []).size * 5</span>
+    <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we run the unit tests and watch it fail.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+......F.....
+
+Failures:
+
+  1<span class="o">)</span> Shouty::Network credits deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+     Failure/Error: expect<span class="o">(</span>sean.credits<span class="o">)</span>.to eq<span class="o">(</span>95<span class="o">)</span>
+
+       expected: 95
+            got: 100
+
+       <span class="o">(</span>compared using <span class="o">==)</span>
+     <span class="c"># ./spec/network_spec.rb:80:in `block (3 levels) in &lt;top (required)&gt;'</span>
+
+Finished <span class="k">in </span>0.01697 seconds <span class="o">(</span>files took 0.05991 seconds to load<span class="o">)</span>
+12 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:71 <span class="c"># Shouty::Network credits deducts 5 credits for mentioning the word 'buy'</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And we can actually see it fails for the right reasons: no credits has been deducted. </p>
+</div>
+<div class="paragraph">
+<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="k">def</span> <span class="nf">deduct_credits</span><span class="p">(</span><span class="n">short_enough</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">shouter</span><span class="p">)</span>
+      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="mi">2</span> <span class="k">unless</span> <span class="n">short_enough</span>
+      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="n">message</span><span class="p">.</span><span class="nf">scan</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nf">size</span> <span class="o">*</span> <span class="mi">5</span>
+    <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And run the entire suite to make sure everything&#8217;s still in place.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+............
+
+Finished <span class="k">in </span>0.00879 seconds <span class="o">(</span>files took 0.06039 seconds to load<span class="o">)</span>
+12 examples, 0 failures</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -10283,7 +10435,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-07-15 11:21:42 -0700
+Last updated 2022-08-23 11:22:59 -0300
 </div>
 </div>
 </body>

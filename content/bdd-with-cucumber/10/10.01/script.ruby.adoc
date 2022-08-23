@@ -1,39 +1,56 @@
 === Tidy up the bug report Gherkin
 
-Let's start by running our failing scenario. We have it marked with a `@todo` tag on it, so we can use that to run it in isolation:
+Let's start by running our failing scenario.shot::[1] We have it marked with a `@todo` tag on it,shot::[2] so we can use that to run it in isolation: shot::[3]
 
 [source, sh]
 ----
-bundle exec cucumber --tags @todo
+$ bundle exec cucumber --tags @todo
 ----
 
 OK. We'll work outside-in and start by tidying up the Gherkin specification.
 
-Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system. This doesn't make for very good documentation about the intended behaviour.
+Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system.shot::[4] This doesn't make for very good documentation about the intended behaviour.
+
+[source,rb]
+----
+include::../code/ruby/00-initial-commit/features/premium_shouts.feature[lines=27..31]
+----
 
 It also isn't sitting under the right rule.
 
-Let's start by moving it here, under the rule about charging for mentioning the word "buy"
+Let's start by moving it here, under the rule about charging for mentioning the word "buy" shot::[5, move scenario under first rule, run tests]
 
-shot::[1, move scenario under first rule, run tests]
+[source,rb]
+----
+include::../code/ruby/01-move-scenario-under-the-right-rule/features/premium_shouts.feature[lines=11..31]
+----
 
 Now let's find a better name for the scenario.
 
-Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"?
+Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"? shot::[6, change the scenario title]shot::[7, run tests]
 
-shot::[1, change the scenario title, run tests]
+[source,rb]
+----
+include::../code/ruby/02-rename-scenario/features/premium_shouts.feature[lines=20]
+----
 
 You might be worried about losing this bug ID. We could keep it in a comment, a tag, or in the description of the Scenario.
 
 Just like under a `Feature` keyword, you can write any arbitrary text you want beneath a `Scenario` keyword, before the first `Given`, `When` or `Then` keyword. 
 
-So let's do that.
+So let's do that. shot::[8, write the bug number in the scenario description, run tests]
 
-shot::[1, write the bug number in the scenario description, run tests]
+[source,rb]
+----
+include::../code/ruby/02-rename-scenario/features/premium_shouts.feature[lines=19..22]
+----
 
-We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits, and end him with 95, it more clearly illustrates the rule that only five credits should be deducted.
+We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits,shot::[9] and end him with 95,shot::[10] it more clearly illustrates the rule that only five credits should be deducted. shot::[11, run tests]
 
-shot::[1, changes the values in the scenario body, run tests]
+[source,rb]
+----
+include::../code/ruby/03-changed-values-in-scenario/features/premium_shouts.feature[lines=19..24]
+----
 
 OK great, so now we have a failing test we're more happy with.
 
@@ -41,29 +58,3 @@ The trouble is, although this test tells us what's wrong with the behaviour of t
 
 ... unit tests vs acceptance tests ...
 
-=== Testing ice cream cone
-
-* Go find the source of the bug
-* Look! There's hardly any unit tests for premium accounts
-* Talk about testing pyramid vs testing ice cream cone
-
-=== Retrofit unit test
-
-* Add a test
-* Watch it pass. Talk about how that gives us no confidence.
-* Make it fail. Make it pass again.
-
-=== TDD our fix with a unit test
-
-* Add a test for multiple "buy" mentions in one shout. Watch it fail.
-* Fix the bug
-* Remove @todo tag and BUG reference.
-* Discuss with Paula & Tammy; Remove the scenario altogether since we have a unit test for this now.
-
-=== Another edge case
-
-* We spotted that the regex is case sensitive - what if the word "buy" is capitalized?
-* Quick conversation with Paula - yes we should charge even if the word is capitalized. Do we need it as a scenario? No.
-* Add a unit test
-* Make it pass
-* Done

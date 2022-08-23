@@ -1,0 +1,76 @@
+=== Retrofit unit test
+
+Lets add a test where sean shouts a message using the word "buy",shot::[1] and then we assert that five credits have been deducted.shot::[2]
+
+[source,rb]
+----
+include::../code/ruby/04-retrofit-unit-test-about-mentioning-buy/spec/network_spec.rb[lines=71..82]
+----
+
+We run our unit test suite shot::[3] and ... it passes.shot::[4]
+
+[source,sh]
+----
+$ rspec
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+............
+
+Finished in 0.00854 seconds (files took 0.06116 seconds to load)
+12 examples, 0 failures
+----
+
+Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. shot::[5]
+
+[source,rb]
+----
+include::../code/ruby/05-make-buy-test-fail/lib/shouty.rb[lines=54..57]
+----
+
+Then we run the unit tests and watch it fail.shot::[6]
+
+[source,sh]
+----
+$ rspec          
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+......F.....
+
+Failures:
+
+  1) Shouty::Network credits deducts 5 credits for mentioning the word 'buy'
+     Failure/Error: expect(sean.credits).to eq(95)
+     
+       expected: 95
+            got: 100
+     
+       (compared using ==)
+     # ./spec/network_spec.rb:80:in `block (3 levels) in <top (required)>'
+
+Finished in 0.01697 seconds (files took 0.05991 seconds to load)
+12 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:71 # Shouty::Network credits deducts 5 credits for mentioning the word 'buy'
+----
+
+And we can actually see it fails for the right reasons: no credits has been deducted. shot::[7]
+
+Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[8]
+
+[source,rb]
+----
+include::../code/ruby/06-make-buy-test-pass-again/lib/shouty.rb[lines=54..57]
+----
+
+And run the entire suite to make sure everything's still in place.shot::[9]
+
+[source,sh]
+----
+$ rspec
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+............
+
+Finished in 0.00879 seconds (files took 0.06039 seconds to load)
+12 examples, 0 failures
+----
+

@@ -1,0 +1,27 @@
+=== Testing ice cream cone
+
+Now we need to find the source cause of our bug. We have a passing test suite. shot::[1]
+
+[source,sh]
+----
+$ rspec
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+...........
+
+Finished in 0.008 seconds (files took 0.06097 seconds to load)
+11 examples, 0 failures
+----
+
+Since we know there's a bug, we should have at least one test failing. So that's an indication that we might be missing a test. Lets see how we're testing the mention of the word "buy" in the lower level tests.
+
+Oh my! we have absolutely no tests for this feature on our unit test suite.shot::[2] We'll need to remedy this in order to triage our problem.
+
+// Matt: I'm not sure if what I'm showing here (in the script) is enough. Maybe show all the spec descriptions ...
+
+[source,rb]
+----
+include::../code/ruby/03-changed-values-in-scenario/spec/network_spec.rb[lines=58..70]
+----
+
+
+// Matt: Talk about testing pyramid vs testing ice cream cone .... you're the expert here
