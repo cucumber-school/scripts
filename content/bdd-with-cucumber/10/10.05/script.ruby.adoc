@@ -1,0 +1,74 @@
+=== Another edge case
+
+Let's take a look at the `deduct_credits` method.shot::[1]
+
+[source,rb]
+----
+include::../code/ruby/10-remove-scenario-from-feature-file/lib/shouty.rb[lines=54..57]
+----
+
+There's something on this method that caught our attention: the regex we're using is case sensitive.shot::[2]
+
+[source,rb]
+----
+include::../code/ruby/10-remove-scenario-from-feature-file/lib/shouty.rb[lines=56]
+----
+
+Which raises the question, what should happen if the word has a different capitalization?
+
+To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.
+
+So lets first add a test.shot::[3]
+
+We'll copy the same test we copied last time,shot::[4] and capitalize the word "Buy".shot::[5]
+
+[source,rb]
+----
+include::../code/ruby/11-add-test-for-capitalized-buy/spec/network_spec.rb[lines=95..105]
+----
+
+Now we run the spec to watch it fail.shot::[6]
+
+[source,sh]
+----
+$ rspec
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has beeell_checker)' instead.
+........F.....
+
+Failures:
+
+  1) Shouty::Network credits deducts 5 credits if the word buy is capitalized
+     Failure/Error: expect(sean.credits).to eq(25)
+     
+       expected: 25
+            got: 30
+     
+       (compared using ==)
+     # ./spec/network_spec.rb:104:in `block (3 levels) in <top (required)>'
+
+Finished in 0.15783 seconds (files took 0.0838 seconds to load)
+14 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:95 # Shouty::Network credits deducts 5 credits if t
+----
+
+Now we write the code that'll make it pass.shot::[7]
+
+[source,rb]
+----
+include::../code/ruby/12-make-capitalized-buy-test-pass/lib/shouty.rb[lines=56]
+----
+
+And finally, we run the entire test suite to watch that beautiful green.shot::[8]
+
+[source,sh]
+----
+$ rspec
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+..............
+
+Finished in 0.01407 seconds (files took 0.08364 seconds to load)
+14 examples, 0 failures
+----

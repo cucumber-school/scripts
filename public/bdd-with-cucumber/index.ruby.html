@@ -10146,7 +10146,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> @todo</code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> @todo</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10257,7 +10257,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh">rspec
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
 Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ...........
 
@@ -10391,43 +10391,248 @@ Finished <span class="k">in </span>0.00879 seconds <span class="o">(</span>files
 </div>
 <div class="sect2">
 <h3 id="_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>Add a test for multiple "buy" mentions in one shout. Watch it fail.</p>
-</li>
-<li>
-<p>Fix the bug</p>
-</li>
-<li>
-<p>Remove @todo tag and BUG reference.</p>
-</li>
-<li>
-<p>Discuss with Paula &amp; Tammy; Remove the scenario altogether since we have a unit test for this now.</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll just copy and paste the previous spec and add buy three times.</p>
+</div>
+<div class="paragraph">
+<p>The result should be the same.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="n">it</span> <span class="s2">"deducts 5 credits even if you mention the word 'buy' several times"</span> <span class="k">do</span>
+      <span class="n">message</span> <span class="o">=</span> <span class="s1">'Come buy buy buy these awesome croissants'</span>
+
+      <span class="n">sean</span>  <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Sean"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="n">laura</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Laura"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+      <span class="n">network</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="n">laura</span><span class="p">)</span>
+      <span class="n">network</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sean</span><span class="p">)</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">sean</span><span class="p">.</span><span class="nf">credits</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">95</span><span class="p">)</span>
+    <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we make sure it fails.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+.......F.....
+
+Failures:
+
+  1<span class="o">)</span> Shouty::Network credits deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+     </span>Failure/Error: expect<span class="o">(</span>sean.credits<span class="o">)</span>.to eq<span class="o">(</span>95<span class="o">)</span>
+
+       expected: 95
+            got: 85
+
+       <span class="o">(</span>compared using <span class="o">==)</span>
+     <span class="c"># ./spec/network_spec.rb:92:in `block (3 levels) in &lt;top (required)&gt;'</span>
+
+Finished <span class="k">in </span>0.01892 seconds <span class="o">(</span>files took 0.06003 seconds to load<span class="o">)</span>
+13 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:83 <span class="c"># Shouty::Network credits deducts 5 credits even if you mention the word 'buy' several times</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With this in place, we can focus on fixing the bug.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="k">def</span> <span class="nf">deduct_credits</span><span class="p">(</span><span class="n">short_enough</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">shouter</span><span class="p">)</span>
+      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="mi">2</span> <span class="k">unless</span> <span class="n">short_enough</span>
+      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="mi">5</span> <span class="k">if</span> <span class="n">message</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span>
+    <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And run the specs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+.............
+
+Finished <span class="k">in </span>0.00798 seconds <span class="o">(</span>files took 0.05958 seconds to load<span class="o">)</span>
+13 examples, 0 failures</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@todo</code> tag.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
+      <span class="nf">Given </span>Sean has bought 100 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And we can run the full test suite to make sure everything&#8217;s working as expected.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rake
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+bundle <span class="nb">exec </span>rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+.............
+
+Finished <span class="k">in </span>0.00609 seconds <span class="o">(</span>files took 0.06971 seconds to load<span class="o">)</span>
+13 examples, 0 failures
+
+bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+Using the default profile...
+.........................................
+
+7 scenarios <span class="o">(</span>7 passed<span class="o">)</span>
+41 steps <span class="o">(</span>41 passed<span class="o">)</span>
+0m0.019s
+
+Randomized with seed 42310</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And they all pass.</p>
+</div>
+<div class="paragraph">
+<p>Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there&#8217;s no need to have this edge case tested both at the unit and feature levels. Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">the</span> <span class="err">word</span> <span class="err">"buy"</span> <span class="err">and</span> <span class="err">you</span> <span class="err">lose</span> <span class="err">5</span> <span class="err">credits.</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Shout several messages containing the word “buy”
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span>
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 15 credits
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 26 credits</code></pre>
+</div>
 </div>
 </div>
 <div class="sect2">
 <h3 id="_another_edge_case">10.5. Another edge case</h3>
-<div class="ulist">
-<ul>
-<li>
-<p>We spotted that the regex is case sensitive - what if the word "buy" is capitalized?</p>
-</li>
-<li>
-<p>Quick conversation with Paula - yes we should charge even if the word is capitalized. Do we need it as a scenario? No.</p>
-</li>
-<li>
-<p>Add a unit test</p>
-</li>
-<li>
-<p>Make it pass</p>
-</li>
-<li>
-<p>Done</p>
-</li>
-</ul>
+<div class="paragraph">
+<p>Let&#8217;s take a look at the <code>deduct_credits</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="k">def</span> <span class="nf">deduct_credits</span><span class="p">(</span><span class="n">short_enough</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">shouter</span><span class="p">)</span>
+      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="mi">2</span> <span class="k">unless</span> <span class="n">short_enough</span>
+      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="mi">5</span> <span class="k">if</span> <span class="n">message</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span>
+    <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There&#8217;s something on this method that caught our attention: the regex we&#8217;re using is case sensitive.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="mi">5</span> <span class="k">if</span> <span class="n">message</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which raises the question, what should happen if the word has a different capitalization?</p>
+</div>
+<div class="paragraph">
+<p>To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.</p>
+</div>
+<div class="paragraph">
+<p>So lets first add a test.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll copy the same test we copied last time, and capitalize the word "Buy".</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">    <span class="n">it</span> <span class="s2">"deducts 5 credits if the word buy is capitalized"</span> <span class="k">do</span>
+      <span class="n">message</span> <span class="o">=</span> <span class="s1">'Come Buy these awesome croissants'</span>
+
+      <span class="n">sean</span>  <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Sean"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">30</span><span class="p">)</span>
+      <span class="n">laura</span> <span class="o">=</span> <span class="no">Shouty</span><span class="o">::</span><span class="no">Person</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="s2">"Laura"</span><span class="p">,</span> <span class="n">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+      <span class="n">network</span><span class="p">.</span><span class="nf">subscribe</span><span class="p">(</span><span class="n">laura</span><span class="p">)</span>
+      <span class="n">network</span><span class="p">.</span><span class="nf">broadcast</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">sean</span><span class="p">)</span>
+
+      <span class="n">expect</span><span class="p">(</span><span class="n">sean</span><span class="p">.</span><span class="nf">credits</span><span class="p">).</span><span class="nf">to</span> <span class="n">eq</span><span class="p">(</span><span class="mi">25</span><span class="p">)</span>
+    <span class="k">end</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we run the spec to watch it fail.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has beeell_checker)'</span> instead.
+........F.....
+
+Failures:
+
+  1<span class="o">)</span> Shouty::Network credits deducts 5 credits <span class="k">if </span>the word buy is capitalized
+     Failure/Error: expect<span class="o">(</span>sean.credits<span class="o">)</span>.to eq<span class="o">(</span>25<span class="o">)</span>
+
+       expected: 25
+            got: 30
+
+       <span class="o">(</span>compared using <span class="o">==)</span>
+     <span class="c"># ./spec/network_spec.rb:104:in `block (3 levels) in &lt;top (required)&gt;'</span>
+
+Finished <span class="k">in </span>0.15783 seconds <span class="o">(</span>files took 0.0838 seconds to load<span class="o">)</span>
+14 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:95 <span class="c"># Shouty::Network credits deducts 5 credits if t</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we write the code that&#8217;ll make it pass.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="rb">      <span class="n">shouter</span><span class="p">.</span><span class="nf">credits</span> <span class="o">-=</span> <span class="mi">5</span> <span class="k">if</span> <span class="n">message</span><span class="p">.</span><span class="nf">match</span><span class="p">(</span><span class="sr">/buy/i</span><span class="p">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And finally, we run the entire test suite to watch that beautiful green.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
+Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
+..............
+
+Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files took 0.08364 seconds to load<span class="o">)</span>
+14 examples, 0 failures</code></pre>
+</div>
 </div>
 </div>
 </div>

@@ -1,14 +1,107 @@
 === TDD our fix with a unit test
 
-* Add a test for multiple "buy" mentions in one shout. Watch it fail.
-* Fix the bug
-* Remove @todo tag and BUG reference.
-* Discuss with Paula & Tammy; Remove the scenario altogether since we have a unit test for this now.
+Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
 
-=== Another edge case
+We'll just copy and paste the previous spec and add buy three times.shot::[1]
 
-* We spotted that the regex is case sensitive - what if the word "buy" is capitalized?
-* Quick conversation with Paula - yes we should charge even if the word is capitalized. Do we need it as a scenario? No.
-* Add a unit test
-* Make it pass
-* Done
+The result should be the same.shot::[2]
+
+[source,rb]
+----
+include::../code/ruby/07-write-test-for-mentioning-the-word-buy-more-than-once/spec/network_spec.rb[lines=83..93]
+----
+
+Now we make sure it fails.shot::[3]
+
+[source,sh]
+----
+$ rspec
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+.......F.....
+
+Failures:
+
+  1) Shouty::Network credits deducts 5 credits even if you mention the word 'buy' several times
+     Failure/Error: expect(sean.credits).to eq(95)
+     
+       expected: 95
+            got: 85
+     
+       (compared using ==)
+     # ./spec/network_spec.rb:92:in `block (3 levels) in <top (required)>'
+
+Finished in 0.01892 seconds (files took 0.06003 seconds to load)
+13 examples, 1 failure
+
+Failed examples:
+
+rspec ./spec/network_spec.rb:83 # Shouty::Network credits deducts 5 credits even if you mention the word 'buy' several times
+----
+
+With this in place, we can focus on fixing the bug.shot::[4]
+
+[source,rb]
+----
+include::../code/ruby/08-fix-the-bug/lib/shouty.rb[lines=54..57]
+----
+
+And run the specs.shot::[5]
+
+[source,sh]
+----
+$ rspec
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+.............
+
+Finished in 0.00798 seconds (files took 0.05958 seconds to load)
+13 examples, 0 failures
+----
+
+With our unit test suit all green, we're confident to remove the BUG reference and the `@todo` tag.
+
+[source,gherkin]
+----
+include::../code/ruby/09-remove-todo-tag-and-bug-from-scenario/features/premium_shouts.feature[lines=19..22]
+----
+
+And we can run the full test suite to make sure everything's working as expected.shot::[6]
+
+[source,sh]
+----
+$ rake
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+bundle exec rspec
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+.............
+
+Finished in 0.00609 seconds (files took 0.06971 seconds to load)
+13 examples, 0 failures
+
+bundle exec cucumber --tags 'not @todo' --format progress
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
+. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
+Using the default profile...
+.........................................
+
+7 scenarios (7 passed)
+41 steps (41 passed)
+0m0.019s
+
+Randomized with seed 42310
+----
+
+And they all pass.
+
+Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there's no need to have this edge case tested both at the unit and feature levels. Since it's not in the happy path, we decide to remove the scenario and leave the unit test in place.shot::[7]
+
+[source,gherkin]
+----
+include::../code/ruby/10-remove-scenario-from-feature-file/features/premium_shouts.feature[lines=11..25]
+----
+
