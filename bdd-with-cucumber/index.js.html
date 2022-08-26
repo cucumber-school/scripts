@@ -738,7 +738,15 @@ pre.rouge {
 <li><a href="#_organizing_step_definitions_into_multiple_files">9.5. Organizing step definitions into multiple files</a></li>
 </ul>
 </li>
-<li><a href="#_acceptance_tests_vs_unit_tests">10. Acceptance Tests vs Unit Tests</a></li>
+<li><a href="#_acceptance_tests_vs_unit_tests">10. Acceptance Tests vs Unit Tests</a>
+<ul class="sectlevel2">
+<li><a href="#_tidy_up_the_bug_report_gherkin">10.1. Tidy up the bug report Gherkin</a></li>
+<li><a href="#_testing_ice_cream_cone">10.2. Testing ice cream cone</a></li>
+<li><a href="#_retrofit_unit_test">10.3. Retrofit unit test</a></li>
+<li><a href="#_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</a></li>
+<li><a href="#_another_edge_case">10.5. Another edge case</a></li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
@@ -10308,12 +10316,746 @@ should loosely deep-equal
 <div class="paragraph">
 <p>If you&#8217;re someone who doesn&#8217;t normally dive deep into code, try not to worry. We think you&#8217;ll find it valuable to see how different kinds of tests complement each other in helping you to build a quality product.</p>
 </div>
+<div class="sect2">
+<h3 id="_tidy_up_the_bug_report_gherkin">10.1. Tidy up the bug report Gherkin</h3>
+<div class="paragraph">
+<p>Let&#8217;s start by running our failing scenario. We have it marked with a <code>@todo</code> tag on it, so we can use that to run it in isolation: </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times</span>
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  14 passing <span class="o">(</span>21ms<span class="o">)</span>
+
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.055s <span class="o">(</span>executing steps: 0m00.005s<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>OK. We&#8217;ll work outside-in and start by tidying up the Gherkin specification.</p>
+</div>
+<div class="paragraph">
+<p>Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system. This doesn&#8217;t make for very good documentation about the intended behaviour.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">todo</span>
+    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
+      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">30</span> <span class="nx">credits</span>
+      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span>
+      <span class="nx">Then</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">25</span> <span class="nx">credits</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>It also isn&#8217;t sitting under the right rule.</p>
+</div>
+<div class="paragraph">
+<p>Let&#8217;s start by moving it here, under the rule about charging for mentioning the word "buy" </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">  <span class="nx">Rule</span><span class="p">:</span> <span class="nx">Mention</span> <span class="nx">the</span> <span class="nx">word</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">and</span> <span class="nx">you</span> <span class="nx">lose</span> <span class="mi">5</span> <span class="nx">credits</span><span class="p">.</span>
+
+    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Sean</span> <span class="nx">some</span> <span class="nx">messages</span> <span class="nx">containing</span> <span class="nx">the</span> <span class="nx">word</span> <span class="err">“</span><span class="nx">buy</span><span class="err">”</span>
+      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">30</span> <span class="nx">credits</span>
+      <span class="nx">And</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="mi">3</span> <span class="nx">messages</span> <span class="nx">containing</span> <span class="nx">the</span> <span class="nx">word</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span>
+      <span class="nx">Then</span> <span class="nx">Lucy</span> <span class="nx">hears</span> <span class="nx">all</span> <span class="nx">Sean</span><span class="dl">'</span><span class="s1">s messages
+      And Sean should have 15 credits
+
+    @todo
+    Scenario: BUG #2789
+      Given Sean has bought 30 credits
+      When Sean shouts "buy, buy buy!"
+      Then Sean should have 25 credits
+
+  Rule: Over-long messages cost 2 credits
+
+    Scenario: Sean shouts some over-long messages
+      Given Sean has bought 30 credits
+      When Sean shouts 2 over-long messages
+      Then Lucy hears all Sean</span><span class="dl">'</span><span class="nx">s</span> <span class="nx">messages</span>
+      <span class="nx">And</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">26</span> <span class="nx">credits</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now let&#8217;s find a better name for the scenario.</p>
+</div>
+<div class="paragraph">
+<p>Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"? </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Mention</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">multiple</span> <span class="nx">times</span> <span class="k">in</span> <span class="nx">one</span> <span class="nx">shout</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>You might be worried about losing this bug ID. We could keep it in a comment, a tag, or in the description of the Scenario.</p>
+</div>
+<div class="paragraph">
+<p>Just like under a <code>Feature</code> keyword, you can write any arbitrary text you want beneath a <code>Scenario</code> keyword, before the first <code>Given</code>, <code>When</code> or <code>Then</code> keyword.</p>
+</div>
+<div class="paragraph">
+<p>So let&#8217;s do that. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">todo</span>
+    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Mention</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">multiple</span> <span class="nx">times</span> <span class="k">in</span> <span class="nx">one</span> <span class="nx">shout</span>
+      <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
+      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">30</span> <span class="nx">credits</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits, and end him with 95, it more clearly illustrates the rule that only five credits should be deducted. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">todo</span>
+    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Mention</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">multiple</span> <span class="nx">times</span> <span class="k">in</span> <span class="nx">one</span> <span class="nx">shout</span>
+      <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
+      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">100</span> <span class="nx">credits</span>
+      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span>
+      <span class="nx">Then</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">95</span> <span class="nx">credits</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>OK great, so now we have a failing test we&#8217;re more happy with.</p>
+</div>
+<div class="paragraph">
+<p>The trouble is, although this test tells us what&#8217;s wrong with the behaviour of the system - the wrong number of credits are being deducted - it doesn&#8217;t give us any clues as to <strong>why</strong>.</p>
+</div>
+<div class="olist lowerroman">
+<ol class="lowerroman" type="i">
+<li>
+<p>unit tests vs acceptance tests &#8230;&#8203;</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_testing_ice_cream_cone">10.2. Testing ice cream cone</h3>
+<div class="paragraph">
+<p>Now we need to find the source cause of our bug. We have a passing test suite.  Notice specifically that the <code>mocha tests</code> are passing.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  11 passing <span class="o">(</span>25ms<span class="o">)</span>
+
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.060s <span class="o">(</span>executing steps: 0m00.006s<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Since we know there&#8217;s a bug, we should have at least one test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests.</p>
+</div>
+<div class="paragraph">
+<p>Oh my! we have absolutely no tests for this feature on our unit test suite. We&#8217;ll need to remedy this in order to triage our problem.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">  <span class="nx">context</span><span class="p">(</span><span class="dl">"</span><span class="s2">credits</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">deducts 2 credits for a shout over 180 characters</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">longMessage</span> <span class="o">=</span> <span class="dl">"</span><span class="s2">x</span><span class="dl">"</span><span class="p">.</span><span class="nx">repeat</span><span class="p">(</span><span class="mi">181</span><span class="p">)</span>
+
+      <span class="kd">const</span> <span class="nx">sean</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+      <span class="kd">const</span> <span class="nx">laura</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Laura</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+      <span class="nx">network</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="nx">laura</span><span class="p">)</span>
+      <span class="nx">network</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">(</span><span class="nx">longMessage</span><span class="p">,</span> <span class="nx">sean</span><span class="p">)</span>
+
+      <span class="nx">assertThat</span><span class="p">(</span><span class="nx">sean</span><span class="p">.</span><span class="nx">credits</span><span class="p">,</span> <span class="nx">equalTo</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">))</span>
+    <span class="p">})</span>
+  <span class="p">})</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
+<div class="paragraph">
+<p>Lets add a test where sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">deducts 5 credits for mentioning the word 'buy'</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Come buy these awesome croissants</span><span class="dl">'</span>
+
+      <span class="kd">const</span> <span class="nx">sean</span>  <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="kd">const</span> <span class="nx">laura</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Laura</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+      <span class="nx">network</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="nx">laura</span><span class="p">)</span>
+      <span class="nx">network</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">sean</span><span class="p">)</span>
+
+      <span class="nx">assertThat</span><span class="p">(</span><span class="nx">sean</span><span class="p">.</span><span class="nx">credits</span><span class="p">,</span> <span class="nx">equalTo</span><span class="p">(</span><span class="mi">95</span><span class="p">))</span>
+    <span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We run our unit test suite  and &#8230;&#8203; it passes.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  12 passing <span class="o">(</span>22ms<span class="o">)</span>
+
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.066s <span class="o">(</span>executing steps: 0m00.005s<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">  <span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="mi">2</span>
+    <span class="c1">// shouter.credits -= (message.match(/buy/g) || []).length * 5</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Then we run the unit tests and watch it fail.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  11 passing <span class="o">(</span>24ms<span class="o">)</span>
+  1 failing
+
+  1<span class="o">)</span> Network
+       credits
+         deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>:
+
+      AssertionError:
+Expected: <b class="conum">(95)</b>
+     but: was <b class="conum">(100)</b>
+      + expected - actual
+
+      <span class="nt">-100</span>
+      +95
+
+      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:98:7<span class="o">)</span>
+      at processImmediate <span class="o">(</span>node:internal/timers:466:21<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And we can actually see it fails for the right reasons: no credits has been deducted. </p>
+</div>
+<div class="paragraph">
+<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">  <span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="mi">2</span>
+    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/g</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And run the entire suite to make sure everything&#8217;s still in place.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  12 passing <span class="o">(</span>15ms<span class="o">)</span>
+
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.042s <span class="o">(</span>executing steps: 0m00.004s<span class="o">)</span></code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</h3>
+<div class="paragraph">
+<p>Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll just copy and paste the previous spec and add buy three times.</p>
+</div>
+<div class="paragraph">
+<p>The result should be the same.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">deducts 5 credits even if you mention the word 'buy' several times</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Come buy buy buy these awesome croissants</span><span class="dl">'</span>
+
+      <span class="kd">const</span> <span class="nx">sean</span>  <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="kd">const</span> <span class="nx">laura</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Laura</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+      <span class="nx">network</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="nx">laura</span><span class="p">)</span>
+      <span class="nx">network</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">sean</span><span class="p">)</span>
+
+      <span class="nx">assertThat</span><span class="p">(</span><span class="nx">sean</span><span class="p">.</span><span class="nx">credits</span><span class="p">,</span> <span class="nx">equalTo</span><span class="p">(</span><span class="mi">95</span><span class="p">))</span>
+    <span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we make sure it fails.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      1<span class="o">)</span> deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+
+  </span>Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  12 passing <span class="o">(</span>17ms<span class="o">)</span>
+  1 failing
+
+  1<span class="o">)</span> Network
+       credits
+         deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times</span>:
+
+      AssertionError:
+Expected: <b class="conum">(95)</b>
+     but: was <b class="conum">(85)</b>
+      + expected - actual
+
+      <span class="nt">-85</span>
+      +95
+
+      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:110:7<span class="o">)</span>
+      at processImmediate <span class="o">(</span>node:internal/timers:466:21<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With this in place, we can focus on fixing the bug.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">  <span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="mi">2</span>
+    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And run the specs.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+
+  </span>Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  13 passing <span class="o">(</span>16ms<span class="o">)</span>
+
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.051s <span class="o">(</span>executing steps: 0m00.004s<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@todo</code> tag.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
+      <span class="nf">Given </span>Sean has bought 100 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And we can run the full test suite to make sure everything&#8217;s working as expected.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+
+  </span>Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  13 passing <span class="o">(</span>16ms<span class="o">)</span>
+
+.........................................
+
+7 scenarios <span class="o">(</span>7 passed<span class="o">)</span>
+41 steps <span class="o">(</span>41 passed<span class="o">)</span>
+0m00.044s <span class="o">(</span>executing steps: 0m00.005s<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And they all pass.</p>
+</div>
+<div class="paragraph">
+<p>Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there&#8217;s no need to have this edge case tested both at the unit and feature levels. Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">the</span> <span class="err">word</span> <span class="err">"buy"</span> <span class="err">and</span> <span class="err">you</span> <span class="err">lose</span> <span class="err">5</span> <span class="err">credits.</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Sean some messages containing the word “buy”
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span>
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 15 credits
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 26 credits</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_another_edge_case">10.5. Another edge case</h3>
+<div class="paragraph">
+<p>Let&#8217;s take a look at the <code>deduct_credits</code> method.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">  <span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="mi">2</span>
+    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span>
+  <span class="p">}</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>There&#8217;s something on this method that caught our attention: the regex we&#8217;re using is case sensitive.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Which raises the question, what should happen if the word has a different capitalization?</p>
+</div>
+<div class="paragraph">
+<p>To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.</p>
+</div>
+<div class="paragraph">
+<p>So lets first add a test.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;ll copy the same test we copied last time, and capitalize the word "Buy".</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="nx">it</span><span class="p">(</span><span class="dl">"</span><span class="s2">deducts 5 credits for mentioning the word 'buy'</span><span class="dl">"</span><span class="p">,</span> <span class="p">()</span> <span class="o">=&gt;</span> <span class="p">{</span>
+      <span class="kd">const</span> <span class="nx">message</span> <span class="o">=</span> <span class="dl">'</span><span class="s1">Come Buy these awesome croissants</span><span class="dl">'</span>
+
+      <span class="kd">const</span> <span class="nx">sean</span>  <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Sean</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+      <span class="kd">const</span> <span class="nx">laura</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">(</span><span class="dl">"</span><span class="s2">Laura</span><span class="dl">"</span><span class="p">,</span> <span class="nx">network</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+      <span class="nx">network</span><span class="p">.</span><span class="nx">subscribe</span><span class="p">(</span><span class="nx">laura</span><span class="p">)</span>
+      <span class="nx">network</span><span class="p">.</span><span class="nx">broadcast</span><span class="p">(</span><span class="nx">message</span><span class="p">,</span> <span class="nx">sean</span><span class="p">)</span>
+
+      <span class="nx">assertThat</span><span class="p">(</span><span class="nx">sean</span><span class="p">.</span><span class="nx">credits</span><span class="p">,</span> <span class="nx">equalTo</span><span class="p">(</span><span class="mi">95</span><span class="p">))</span>
+    <span class="p">})</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we run the spec to watch it fail.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+      </span>1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  13 passing <span class="o">(</span>17ms<span class="o">)</span>
+  1 failing
+
+  1<span class="o">)</span> Network
+       credits
+         deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>:
+
+      AssertionError:
+Expected: <b class="conum">(95)</b>
+     but: was <b class="conum">(100)</b>
+      + expected - actual
+
+      <span class="nt">-100</span>
+      +95
+
+      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:122:7<span class="o">)</span>
+      at processImmediate <span class="o">(</span>node:internal/timers:466:21<span class="o">)</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now we write the code that&#8217;ll make it pass.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="js">    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/i</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>And finally, we run the entire test suite to watch that beautiful green.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
+
+<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
+<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times</span>
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  14 passing <span class="o">(</span>15ms<span class="o">)</span>
+
+...................................
+
+6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
+35 steps <span class="o">(</span>35 passed<span class="o">)</span>
+0m00.042s <span class="o">(</span>executing steps: 0m00.005s<span class="o">)</span></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-08-26 14:48:17 UTC
+Last updated 2022-08-26 15:11:26 UTC
 </div>
 </div>
 </body>
