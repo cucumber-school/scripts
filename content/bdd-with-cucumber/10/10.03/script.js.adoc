@@ -1,0 +1,149 @@
+=== Retrofit unit test
+
+Lets add a test where sean shouts a message using the word "buy",shot::[1] and then we assert that five credits have been deducted.shot::[2]
+
+[source,js]
+----
+include::../code/js/04-retrofit-unit-test-about-mentioning-buy/test/network.test.js[lines=89..99]
+----
+
+We run our unit test suite shot::[3] and ... it passes.shot::[4]
+
+[source,sh]
+----
+$ npm test  
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+      ✓ deducts 5 credits for mentioning the word 'buy'
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  12 passing (22ms)
+
+...................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m00.066s (executing steps: 0m00.005s)
+----
+
+Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. shot::[5]
+
+[source,js]
+----
+include::../code/js/05-make-buy-test-fail/src/shouty.js[lines=68..71]
+----
+
+Then we run the unit tests and watch it fail.shot::[6]
+
+[source,sh]
+----
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+      1) deducts 5 credits for mentioning the word 'buy'
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  11 passing (24ms)
+  1 failing
+
+  1) Network
+       credits
+         deducts 5 credits for mentioning the word 'buy':
+
+      AssertionError: 
+Expected: <95>
+     but: was <100>
+      + expected - actual
+
+      -100
+      +95
+      
+      at Context.<anonymous> (test/network.test.js:98:7)
+      at processImmediate (node:internal/timers:466:21)
+----
+
+And we can actually see it fails for the right reasons: no credits has been deducted. shot::[7]
+
+Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[8]
+
+[source,js]
+----
+include::../code/js/06-make-buy-test-pass-again/src/shouty.js[lines=68..71]
+----
+
+And run the entire suite to make sure everything's still in place.shot::[9]
+
+[source,sh]
+----
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+      ✓ deducts 5 credits for mentioning the word 'buy'
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  12 passing (15ms)
+
+...................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m00.042s (executing steps: 0m00.004s)
+----
+

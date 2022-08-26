@@ -1,0 +1,163 @@
+=== TDD our fix with a unit test
+
+Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
+
+We'll just copy and paste the previous spec and add buy three times.shot::[1]
+
+The result should be the same.shot::[2]
+
+[source,js]
+----
+include::../code/js/07-write-test-for-mentioning-the-word-buy-more-than-once/test/network.test.js[lines=101..111]
+----
+
+Now we make sure it fails.shot::[3]
+
+[source,sh]
+----
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+      ✓ deducts 5 credits for mentioning the word 'buy'
+      1) deducts 5 credits even if you mention the word 'buy' several times
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  12 passing (17ms)
+  1 failing
+
+  1) Network
+       credits
+         deducts 5 credits even if you mention the word 'buy' several times:
+
+      AssertionError: 
+Expected: <95>
+     but: was <85>
+      + expected - actual
+
+      -85
+      +95
+      
+      at Context.<anonymous> (test/network.test.js:110:7)
+      at processImmediate (node:internal/timers:466:21)
+----
+
+With this in place, we can focus on fixing the bug.shot::[4]
+
+[source,js]
+----
+include::../code/js/08-fix-the-bug/src/shouty.js[lines=68..71]
+----
+
+And run the specs.shot::[5]
+
+[source,sh]
+----
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+      ✓ deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 5 credits even if you mention the word 'buy' several times
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  13 passing (16ms)
+
+...................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m00.051s (executing steps: 0m00.004s)
+----
+
+With our unit test suit all green, we're confident to remove the BUG reference and the `@todo` tag.
+
+[source,gherkin]
+----
+include::../code/js/09-remove-todo-tag-and-bug-from-scenario/features/premium_shouts.feature[lines=19..22]
+----
+
+And we can run the full test suite to make sure everything's working as expected.shot::[6]
+
+[source,sh]
+----
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+      ✓ deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 5 credits even if you mention the word 'buy' several times
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  13 passing (16ms)
+
+.........................................
+
+7 scenarios (7 passed)
+41 steps (41 passed)
+0m00.044s (executing steps: 0m00.005s)
+----
+
+And they all pass.
+
+Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there's no need to have this edge case tested both at the unit and feature levels. Since it's not in the happy path, we decide to remove the scenario and leave the unit test in place.shot::[7]
+
+[source,gherkin]
+----
+include::../code/js/10-remove-scenario-from-feature-file/features/premium_shouts.feature[lines=11..25]
+----
+

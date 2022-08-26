@@ -1,0 +1,52 @@
+=== Testing ice cream cone
+
+Now we need to find the source cause of our bug. We have a passing test suite. shot::[1] Notice specifically that the `mocha tests` are passing.shot::[2]
+
+[source,sh]
+----
+$ npm test
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  11 passing (25ms)
+
+...................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m00.060s (executing steps: 0m00.006s)
+----
+
+Since we know there's a bug, we should have at least one test failing. So that's an indication that we might be missing a test. Lets see how we're testing the mention of the word "buy" in the lower level tests.
+
+Oh my! we have absolutely no tests for this feature on our unit test suite.shot::[3] We'll need to remedy this in order to triage our problem.
+
+// Matt: I'm not sure if what I'm showing here (in the script) is enough. Maybe show all the spec descriptions ...
+
+[source,js]
+----
+include::../code/js/03-changed-values-in-scenario/test/network.test.js[lines=76..88]
+----
+
+
+// Matt: Talk about testing pyramid vs testing ice cream cone .... you're the expert here

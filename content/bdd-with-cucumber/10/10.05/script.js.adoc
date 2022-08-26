@@ -1,0 +1,125 @@
+=== Another edge case
+
+Let's take a look at the `deduct_credits` method.shot::[1]
+
+[source,js]
+----
+include::../code/js/09-remove-todo-tag-and-bug-from-scenario/src/shouty.js[lines=68..71]
+----
+
+There's something on this method that caught our attention: the regex we're using is case sensitive.shot::[2]
+
+[source,js]
+----
+include::../code/js/09-remove-todo-tag-and-bug-from-scenario/src/shouty.js[lines=70]
+----
+
+Which raises the question, what should happen if the word has a different capitalization?
+
+To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.
+
+So lets first add a test.shot::[3]
+
+We'll copy the same test we copied last time,shot::[4] and capitalize the word "Buy".shot::[5]
+
+[source,js]
+----
+include::../code/js/11-add-test-for-capitalized-buy/test/network.test.js[lines=113..123]
+----
+
+Now we run the spec to watch it fail.shot::[6]
+
+[source,sh]
+----
+$ npm test 
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+      ✓ deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 5 credits even if you mention the word 'buy' several times
+      1) deducts 5 credits for mentioning the word 'buy'
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  13 passing (17ms)
+  1 failing
+
+  1) Network
+       credits
+         deducts 5 credits for mentioning the word 'buy':
+
+      AssertionError: 
+Expected: <95>
+     but: was <100>
+      + expected - actual
+
+      -100
+      +95
+      
+      at Context.<anonymous> (test/network.test.js:122:7)
+      at processImmediate (node:internal/timers:466:21)
+----
+
+Now we write the code that'll make it pass.shot::[7]
+
+[source,js]
+----
+include::../code/js/12-make-capitalized-buy-test-pass/src/shouty.js[lines=70]
+----
+
+And finally, we run the entire test suite to watch that beautiful green.shot::[8]
+
+[source,sh]
+----
+$ npm test 
+
+> shouty@1.0.0 test
+> mocha test && cucumber-js --tags 'not @todo'
+
+
+
+  Network
+    ✓ broadcasts a message to a listener within range
+    ✓ does not broadcast a message to a listener out of range
+    ✓ does not broadcast a message to a listener out of range negative distance
+    ✓ does not broadcast a message over 180 characters even if listener is in range
+    ✓ can change the range
+    credits
+      ✓ deducts 2 credits for a shout over 180 characters
+      ✓ deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 5 credits even if you mention the word 'buy' several times
+      ✓ deducts 5 credits for mentioning the word 'buy'
+
+  Person
+    ✓ subscribes to the network
+    ✓ has a location
+    ✓ broadcasts shouts to the network
+    ✓ remembers messages heard
+    ✓ can be moved to a different location
+
+
+  14 passing (15ms)
+
+...................................
+
+6 scenarios (6 passed)
+35 steps (35 passed)
+0m00.042s (executing steps: 0m00.005s)
+----

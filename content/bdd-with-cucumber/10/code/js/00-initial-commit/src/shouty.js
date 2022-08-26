@@ -1,8 +1,8 @@
 class Person {
-  constructor(name, network, location) {
+  constructor(name, network, location, credits = 0) {
     this._name = name
     this._messages = []
-    this._credits = 0
+    this._credits = credits
     this._network = network
     this._location = location
 
