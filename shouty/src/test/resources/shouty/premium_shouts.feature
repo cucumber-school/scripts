@@ -27,9 +27,9 @@ Feature: Premium account
     Scenario: Mention "buy" multiple times in one shout
       BUG #2789
 
-      Given Sean has bought 30 credits
+      Given Sean has bought 100 credits
       When Sean shouts "buy, buy buy!"
-      Then Sean should have 25 credits
+      Then Sean should have 95 credits
 
   Rule: Over-long messages cost 2 credits
 
