@@ -10157,11 +10157,11 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="rb">    <span class="vi">@todo</span>
-    <span class="no">Scenario</span><span class="p">:</span> <span class="no">BUG</span> <span class="c1">#2789</span>
-      <span class="no">Given</span> <span class="no">Sean</span> <span class="n">has</span> <span class="n">bought</span> <span class="mi">30</span> <span class="n">credits</span>
-      <span class="no">When</span> <span class="no">Sean</span> <span class="n">shouts</span> <span class="s2">"buy, buy buy!"</span>
-      <span class="no">Then</span> <span class="no">Sean</span> <span class="n">should</span> <span class="n">have</span> <span class="mi">25</span> <span class="n">credits</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
+    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 25 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10172,27 +10172,27 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="rb">  <span class="no">Rule</span><span class="p">:</span> <span class="no">Mention</span> <span class="n">the</span> <span class="n">word</span> <span class="s2">"buy"</span> <span class="n">and</span> <span class="n">you</span> <span class="n">lose</span> <span class="mi">5</span> <span class="n">credits</span><span class="o">.</span>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">the</span> <span class="err">word</span> <span class="err">"buy"</span> <span class="err">and</span> <span class="err">you</span> <span class="err">lose</span> <span class="err">5</span> <span class="err">credits.</span>
 
-    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Shout</span> <span class="n">several</span> <span class="n">messages</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">word</span> <span class="err">“</span><span class="n">buy</span><span class="err">”</span>
-      <span class="no">Given</span> <span class="no">Sean</span> <span class="n">has</span> <span class="n">bought</span> <span class="mi">30</span> <span class="n">credits</span>
-      <span class="no">And</span> <span class="no">Sean</span> <span class="n">shouts</span> <span class="mi">3</span> <span class="n">messages</span> <span class="n">containing</span> <span class="n">the</span> <span class="n">word</span> <span class="s2">"buy"</span>
-      <span class="no">Then</span> <span class="no">Lucy</span> <span class="n">hears</span> <span class="n">all</span> <span class="no">Sean</span><span class="s1">'s messages
-      And Sean should have 15 credits
+    <span class="kn">Scenario</span><span class="p">:</span> Shout several messages containing the word “buy”
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span>
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 15 credits
 
-    @todo
-    Scenario: BUG #2789
-      Given Sean has bought 30 credits
-      When Sean shouts "buy, buy buy!"
-      Then Sean should have 25 credits
+    <span class="nt">@todo</span>
+    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 25 credits
 
-  Rule: Over-long messages cost 2 credits
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
 
-    Scenario: Sean shouts some over-long messages
-      Given Sean has bought 30 credits
-      When Sean shouts 2 over-long messages
-      Then Lucy hears all Sean'</span><span class="n">s</span> <span class="n">messages</span>
-      <span class="no">And</span> <span class="no">Sean</span> <span class="n">should</span> <span class="n">have</span> <span class="mi">26</span> <span class="n">credits</span></code></pre>
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 26 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10203,7 +10203,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="rb">    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Mention</span> <span class="s2">"buy"</span> <span class="n">multiple</span> <span class="n">times</span> <span class="k">in</span> <span class="n">one</span> <span class="n">shout</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">"buy"</span> <span class="err">multiple</span> <span class="err">times</span> <span class="err">in</span> <span class="err">one</span> <span class="err">shout</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10217,10 +10217,10 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="rb">    <span class="vi">@todo</span>
-    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Mention</span> <span class="s2">"buy"</span> <span class="n">multiple</span> <span class="n">times</span> <span class="k">in</span> <span class="n">one</span> <span class="n">shout</span>
-      <span class="no">BUG</span> <span class="c1">#2789</span>
-      <span class="no">Given</span> <span class="no">Sean</span> <span class="n">has</span> <span class="n">bought</span> <span class="mi">30</span> <span class="n">credits</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
+      BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 30 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10228,12 +10228,12 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="rb">    <span class="vi">@todo</span>
-    <span class="no">Scenario</span><span class="p">:</span> <span class="no">Mention</span> <span class="s2">"buy"</span> <span class="n">multiple</span> <span class="n">times</span> <span class="k">in</span> <span class="n">one</span> <span class="n">shout</span>
-      <span class="no">BUG</span> <span class="c1">#2789</span>
-      <span class="no">Given</span> <span class="no">Sean</span> <span class="n">has</span> <span class="n">bought</span> <span class="mi">100</span> <span class="n">credits</span>
-      <span class="no">When</span> <span class="no">Sean</span> <span class="n">shouts</span> <span class="s2">"buy, buy buy!"</span>
-      <span class="no">Then</span> <span class="no">Sean</span> <span class="n">should</span> <span class="n">have</span> <span class="mi">95</span> <span class="n">credits</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
+      BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 100 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10634,13 +10634,16 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 14 examples, 0 failures</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Unresolved directive in scripts.ruby.adoc - include::11/index.adoc[]</p>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-08-26 11:42:17 -0300
+Last updated 2022-09-02 19:01:59 -0300
 </div>
 </div>
 </body>

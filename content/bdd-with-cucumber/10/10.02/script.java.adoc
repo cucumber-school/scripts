@@ -1,0 +1,21 @@
+=== Testing ice cream cone
+
+Now we need to find the source cause of our bug. We have a passing test suite. shot::[1]
+
+[source,sh]
+----
+$ mvn test
+----
+
+Since we know there's a bug, we should have at least one test failing. So that's an indication that we might be missing a test. Lets see how we're testing the mention of the word "buy" in the lower level tests.
+
+Oh my! we have absolutely no tests for this feature on our unit test suite.shot::[2] We'll need to remedy this in order to triage our problem.
+
+// Matt: I'm not sure if what I'm showing here (in the script) is enough. Maybe show all the spec descriptions ...
+
+[source,java]
+----
+include::../code/java/03-changed-values-in-scenario/shouty/src/test/java/shouty/NetworkTest.java[lines=65..79]
+----
+
+include::script.common.adoc[]

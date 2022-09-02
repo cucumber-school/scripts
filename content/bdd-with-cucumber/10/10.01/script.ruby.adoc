@@ -11,7 +11,7 @@ OK. We'll work outside-in and start by tidying up the Gherkin specification.
 
 Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system.shot::[4] This doesn't make for very good documentation about the intended behaviour.
 
-[source,rb]
+[source,gherkin]
 ----
 include::../code/ruby/00-initial-commit/features/premium_shouts.feature[lines=27..31]
 ----
@@ -20,7 +20,7 @@ It also isn't sitting under the right rule.
 
 Let's start by moving it here, under the rule about charging for mentioning the word "buy" shot::[5, move scenario under first rule, run tests]
 
-[source,rb]
+[source,gherkin]
 ----
 include::../code/ruby/01-move-scenario-under-the-right-rule/features/premium_shouts.feature[lines=11..31]
 ----
@@ -29,7 +29,7 @@ Now let's find a better name for the scenario.
 
 Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"? shot::[6, change the scenario title]shot::[7, run tests]
 
-[source,rb]
+[source,gherkin]
 ----
 include::../code/ruby/02-rename-scenario/features/premium_shouts.feature[lines=20]
 ----
@@ -40,14 +40,14 @@ Just like under a `Feature` keyword, you can write any arbitrary text you want b
 
 So let's do that. shot::[8, write the bug number in the scenario description, run tests]
 
-[source,rb]
+[source,gherkin]
 ----
 include::../code/ruby/02-rename-scenario/features/premium_shouts.feature[lines=19..22]
 ----
 
 We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits,shot::[9] and end him with 95,shot::[10] it more clearly illustrates the rule that only five credits should be deducted. shot::[11, run tests]
 
-[source,rb]
+[source,gherkin]
 ----
 include::../code/ruby/03-changed-values-in-scenario/features/premium_shouts.feature[lines=19..24]
 ----

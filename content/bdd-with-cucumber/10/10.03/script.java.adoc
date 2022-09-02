@@ -1,0 +1,46 @@
+=== Retrofit unit test
+
+Lets add a test where sean shouts a message using the word "buy",shot::[1] and then we assert that five credits have been deducted.shot::[2]
+
+[source,java]
+----
+include::../code/java/04-retrofit-unit-test-about-mentioning-buy/shouty/src/test/java/shouty/NetworkTest.java[lines=81..92]
+----
+
+We run our unit test suite shot::[3] and ... it passes.shot::[4]
+
+[source,sh]
+----
+$ mvn test
+----
+
+Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. shot::[5]
+
+[source,java]
+----
+include::../code/java/05-make-buy-test-fail/shouty/src/main/java/shouty/Network.java[lines=33..41]
+----
+
+Then we run the unit tests and watch it fail.shot::[6]
+
+[source,sh]
+----
+$ mvn test
+----
+
+And we can actually see it fails for the right reasons: no credits has been deducted. shot::[7]
+
+Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[8]
+
+[source,java]
+----
+include::../code/java/06-make-buy-test-pass-again/shouty/src/main/java/shouty/Network.java[lines=33..41]
+----
+
+And run the entire suite to make sure everything's still in place.shot::[9]
+
+[source,sh]
+----
+$ mvn test
+----
+

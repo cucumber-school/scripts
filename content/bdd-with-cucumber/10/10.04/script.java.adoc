@@ -1,0 +1,57 @@
+=== TDD our fix with a unit test
+
+Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
+
+We'll just copy and paste the previous spec and add buy three times.shot::[1]
+
+The result should be the same.shot::[2]
+
+[source,java]
+----
+include::../code/java/07-write-test-for-mentioning-the-word-buy-more-than-once/shouty/src/test/java/shouty/NetworkTest.java[lines=94..105]
+----
+
+Now we make sure it fails.shot::[3]
+
+[source,sh]
+----
+$ mvn test
+----
+
+With this in place, we can focus on fixing the bug.shot::[4]
+
+[source,java]
+----
+include::../code/java/08-fix-the-bug/shouty/src/main/java/shouty/Network.java[lines=33..43]
+----
+
+And run the specs.shot::[5]
+
+[source,sh]
+----
+$ mvn test
+----
+
+With our unit test suit all green, we're confident to remove the BUG reference and the `@todo` tag.
+
+[source,gherkin]
+----
+include::../code/java/09-remove-todo-tag-and-bug-from-scenario/shouty/src/test/resources/shouty/premium_shouts.feature[lines=19..22]
+----
+
+And we can run the full test suite to make sure everything's working as expected.shot::[6]
+
+[source,sh]
+----
+$ mvn test
+----
+
+And they all pass.
+
+Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there's no need to have this edge case tested both at the unit and feature levels. Since it's not in the happy path, we decide to remove the scenario and leave the unit test in place.shot::[7]
+
+[source,gherkin]
+----
+include::../code/java/10-remove-scenario-from-feature-file/shouty/src/test/resources/shouty/premium_shouts.feature[lines=11..25]
+----
+
