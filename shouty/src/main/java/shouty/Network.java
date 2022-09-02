@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Network {
-    public static final Pattern BUY_PATTERN = Pattern.compile("buy");
+    public static final Pattern BUY_PATTERN = Pattern.compile("buy", Pattern.CASE_INSENSITIVE);
     private final List<Person> listeners = new ArrayList<Person>();
     private final int range;
 
