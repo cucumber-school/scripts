@@ -103,4 +103,17 @@ public class NetworkTest {
 
         assertEquals(95, sean.credits);
     }
+
+    @Test
+    public void deducts_5_credits_if_the_word_buy_is_capitalized() {
+        String message = "Come Buy these awesome croissants";
+
+        Person sean = new Person("Sean", network, 0, 100);
+        Person laura = new Person("Laura", network, 0, 10);
+
+        network.subscribe(laura);
+        network.broadcast(message, sean);
+
+        assertEquals(95, sean.credits);
+    }
 }
