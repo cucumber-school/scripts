@@ -36,9 +36,8 @@ public class Network {
         }
 
         Matcher matcher = BUY_PATTERN.matcher(message);
-        while(matcher.find()) {
+        if(matcher.find()) {
             shouter.setCredits(shouter.getCredits() - 5);
-            return;
         }
     }
 }

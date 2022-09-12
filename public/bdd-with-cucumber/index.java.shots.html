@@ -10665,9 +10665,8 @@ It appears you did not register a parameter type.</pre>
         <span class="o">}</span>
 
         <span class="nc">Matcher</span> <span class="n">matcher</span> <span class="o">=</span> <span class="no">BUY_PATTERN</span><span class="o">.</span><span class="na">matcher</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
-        <span class="k">while</span><span class="o">(</span><span class="n">matcher</span><span class="o">.</span><span class="na">find</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">matcher</span><span class="o">.</span><span class="na">find</span><span class="o">())</span> <span class="o">{</span>
             <span class="n">shouter</span><span class="o">.</span><span class="na">setCredits</span><span class="o">(</span><span class="n">shouter</span><span class="o">.</span><span class="na">getCredits</span><span class="o">()</span> <span class="o">-</span> <span class="mi">5</span><span class="o">);</span>
-            <span class="k">return</span><span class="o">;</span>
         <span class="o">}</span>
     <span class="o">}</span></code></pre>
 </div>
@@ -10738,11 +10737,11 @@ It appears you did not register a parameter type.</pre>
         <span class="o">}</span>
 
         <span class="nc">Matcher</span> <span class="n">matcher</span> <span class="o">=</span> <span class="no">BUY_PATTERN</span><span class="o">.</span><span class="na">matcher</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
-        <span class="k">while</span><span class="o">(</span><span class="n">matcher</span><span class="o">.</span><span class="na">find</span><span class="o">())</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">matcher</span><span class="o">.</span><span class="na">find</span><span class="o">())</span> <span class="o">{</span>
             <span class="n">shouter</span><span class="o">.</span><span class="na">setCredits</span><span class="o">(</span><span class="n">shouter</span><span class="o">.</span><span class="na">getCredits</span><span class="o">()</span> <span class="o">-</span> <span class="mi">5</span><span class="o">);</span>
-            <span class="k">return</span><span class="o">;</span>
         <span class="o">}</span>
-    <span class="o">}</span></code></pre>
+    <span class="o">}</span>
+<span class="o">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
