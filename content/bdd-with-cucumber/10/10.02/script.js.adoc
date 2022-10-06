@@ -1,14 +1,12 @@
 === Testing ice cream cone
 
-Now we need to find the source cause of our bug. We have a passing test suite. shot::[1] Notice specifically that the `mocha tests` are passing.shot::[2]
+Now that we have tidied up the scenario, we need to find the source of our bug.
+
+We have a passing unit test suite. shot::[1] So this doesn't give us any clues as to where the problem lies in the code.
 
 [source,sh]
 ----
-$ npm test
-
-> shouty@1.0.0 test
-> mocha test && cucumber-js --tags 'not @todo'
-
+$ npx mocha
 
 
   Network
@@ -28,20 +26,12 @@ $ npm test
     ✓ can be moved to a different location
 
 
-  11 passing (25ms)
-
-...................................
-
-6 scenarios (6 passed)
-35 steps (35 passed)
-0m00.060s (executing steps: 0m00.006s)
+  11 passing (9ms)
 ----
 
-Since we know there's a bug, we should have at least one test failing. So that's an indication that we might be missing a test. Lets see how we're testing the mention of the word "buy" in the lower level tests.
+Since we know there's a bug, we should have at least one unit test failing. So that's an indication that we might be missing a test. Lets see how we're testing the mention of the word "buy" in the lower level tests.
 
-Oh my! we have absolutely no tests for this feature on our unit test suite.shot::[3] We'll need to remedy this in order to triage our problem.
-
-// Matt: I'm not sure if what I'm showing here (in the script) is enough. Maybe show all the spec descriptions ...
+Oh my! We have absolutely no tests for this feature on our unit test suite! shot::[3] The only test here about credits is this one for charging for shouts that are over 180 characters. We'll need to remedy this in order to triage our problem.
 
 [source,js]
 ----

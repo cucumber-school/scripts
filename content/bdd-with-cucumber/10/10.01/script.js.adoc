@@ -1,13 +1,20 @@
 === Tidy up the bug report Gherkin
 
-Let's start by running our failing scenario.shot::[1] We have it marked with a `@todo` tag on it,shot::[2] so we can use that to run it in isolation: shot::[3]
+Let's start by running our failing scenario.shot::[1] We have it marked with a `@todo` tag on it,shot::[2] but those scenarios are filtered out in our default `npm test` command, so let's make a new one.
+
+[source,js]
+----
+include::../code/js/00-initial-commit/package.json[lines=6..9]
+----
+
+Now we can use that to run everthing including our `@todo` scenario: shot::[3]
 
 [source, sh]
 ----
-$ npm test
+$ npm run test:all
 
-> shouty@1.0.0 test
-> mocha test && cucumber-js --tags 'not @todo'
+> shouty@1.0.0 test:all
+> mocha test && cucumber-js
 
 
 
@@ -19,9 +26,6 @@ $ npm test
     ✓ can change the range
     credits
       ✓ deducts 2 credits for a shout over 180 characters
-      ✓ deducts 5 credits for mentioning the word 'buy'
-      ✓ deducts 5 credits even if you mention the word 'buy' several times
-      ✓ deducts 5 credits for mentioning the word 'buy'
 
   Person
     ✓ subscribes to the network
@@ -31,13 +35,32 @@ $ npm test
     ✓ can be moved to a different location
 
 
-  14 passing (21ms)
+  11 passing (9ms)
 
-...................................
+........................................F
 
-6 scenarios (6 passed)
-35 steps (35 passed)
-0m00.055s (executing steps: 0m00.005s)
+Failures:
+
+1) Scenario: BUG #2789 # features/premium_shouts.feature:28
+   ✔ Given the range is 100 # features/step_definitions/steps.js:4
+   ✔ And Sean is located at 0 # features/step_definitions/steps.js:8
+   ✔ And Lucy is located at 100 # features/step_definitions/steps.js:8
+   ✔ Given Sean has bought 30 credits # features/step_definitions/steps.js:12
+   ✔ When Sean shouts "buy, buy buy!" # features/step_definitions/shout_steps.js:26
+   ✖ Then Sean should have 25 credits # features/step_definitions/steps.js:42
+       AssertionError: 
+       Expected: is <25>
+            but: was <15>
+           + expected - actual
+
+           -15
+           +25
+
+           at ShoutyWorld.<anonymous> (/Users/matt/git/github.com/cucumber-school/scripts/code.bdd-with-cucumber.10.js/features/step_definitions/steps.js:43:3)
+
+7 scenarios (1 failed, 6 passed)
+41 steps (1 failed, 40 passed)
+0m00.027s (executing steps: 0m00.002s)
 ----
 
 OK. We'll work outside-in and start by tidying up the Gherkin specification.

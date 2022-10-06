@@ -745,6 +745,7 @@ pre.rouge {
 <li><a href="#_retrofit_unit_test">10.3. Retrofit unit test</a></li>
 <li><a href="#_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</a></li>
 <li><a href="#_another_edge_case">10.5. Another edge case</a></li>
+<li><a href="#_re_balancing_our_test_suite">10.6. Re-balancing our test suite</a></li>
 </ul>
 </li>
 </ul>
@@ -10387,7 +10388,7 @@ It appears you did not register a parameter type.</pre>
 <p>We&#8217;re going to keep things technical in this chapter. Remember that bug we spotted right back at the beginning of Chapter 7, where the user was over-charged if they mentioned “buy” several times in the same message? It&#8217;s finally time to knuckle down and fix it.</p>
 </div>
 <div class="paragraph">
-<p>As we do so, you&#8217;re going to get some more experience of the inner and outer BDD loops that we first introduced you to in Chapter 5. We&#8217;ll learn about mock objects, and explore the difference between unit tests and acceptance tests, and learn the value of each.</p>
+<p>As we do so, you&#8217;re going to get some more experience of the inner and outer BDD loops that we first introduced you to in Chapter 5. We&#8217;ll explore the difference between unit tests and acceptance tests, and learn the value of each.</p>
 </div>
 <div class="paragraph">
 <p>If you&#8217;re someone who doesn&#8217;t normally dive deep into code, try not to worry. We think you&#8217;ll find it valuable to see how different kinds of tests complement each other in helping you to build a quality product.</p>
@@ -10494,12 +10495,8 @@ It appears you did not register a parameter type.</pre>
 <div class="paragraph">
 <p>The trouble is, although this test tells us what&#8217;s wrong with the behaviour of the system - the wrong number of credits are being deducted - it doesn&#8217;t give us any clues as to <strong>why</strong>.</p>
 </div>
-<div class="olist lowerroman">
-<ol class="lowerroman" type="i">
-<li>
-<p>unit tests vs acceptance tests &#8230;&#8203;</p>
-</li>
-</ol>
+<div class="paragraph">
+<p>This is why we need a balance of unit tests <em>and</em> acceptance tests: when they fail, acceptance tests tell you what is wrong with the system, but unit tests tell you where you need to go to fix it.</p>
 </div>
 </div>
 <div class="sect2">
@@ -10536,6 +10533,9 @@ It appears you did not register a parameter type.</pre>
         <span class="n">assertEquals</span><span class="o">(-</span><span class="mi">2</span><span class="o">,</span> <span class="n">sean</span><span class="o">.</span><span class="na">credits</span><span class="o">);</span>
     <span class="o">}</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>TODO: testing ice cream code sidebar</p>
 </div>
 </div>
 <div class="sect2">
@@ -10804,8 +10804,33 @@ It appears you did not register a parameter type.</pre>
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>mvn <span class="nb">test</span></code></pre>
 </div>
 </div>
+</div>
+<div class="sect2">
+<h3 id="_re_balancing_our_test_suite">10.6. Re-balancing our test suite</h3>
 <div class="paragraph">
-<p>Unresolved directive in scripts.java.adoc - include::11/index.adoc[]</p>
+<p>Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there&#8217;s no need to have this edge case tested both at the unit and feature levels. Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">the</span> <span class="err">word</span> <span class="err">"buy"</span> <span class="err">and</span> <span class="err">you</span> <span class="err">lose</span> <span class="err">5</span> <span class="err">credits.</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Sean some messages containing the word “buy”
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span>
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 15 credits
+
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 26 credits</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>TODO: sum up</p>
 </div>
 </div>
 </div>
@@ -10813,7 +10838,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-09-02 19:01:59 -0300
+Last updated 2022-07-15 12:56:38 -0700
 </div>
 </div>
 </body>
