@@ -1,2 +1,17 @@
-// Matt: Talk about testing pyramid vs testing ice cream cone .... you're the expert here
-TODO: testing ice cream code sidebar
+This is a common problem we've seen time and again in the test suties of teams who adopt Cucumber. In fact, it was a problem on Cucumber's own codebase in the early days. We were so enamoured by writing new scenarios to describe new behaviour, we used it for everything, and hardly wrote any unit tests. Gradually, we started to realise that this had some significant disadvantages:
+
+- We had a lot of scenarios, some describing quite obscure edge-cases, making the whole thing hard to read.
+- The tests were slow, because they all ran as full integration tests.
+- When something was broken, there was a lot of code to sift through to try and find the cause of the problem.
+- The design of the code wasn't very modular, because we had no design pressure from unit testing.
+
+There's a well-known model for how many different types of tests you should have, known as the _testing pyramid_. It describes this idea that, at the wide base of the pyramid, you should have a large number of unit tests. Then, as you move up the pyramid and it gets wider, you have a smaller number of integration or component tests that exercise subsystems or "chunks" of your application. Finally, at the tip of the pyramid you have a small number of full-stack integation tests.
+
+image::https://alisterbscott.com/wp-content/uploads/2018/02/ideal-automated-testing-pyramid.jpg[]
+
+What we have here is the opposite, which experienced test automation engineer Alister Scott https://alisterbscott.com/kb/testing-pyramids/[once described] as a "testing ice cream cone".
+
+image::https://alisterbscott.com/wp-content/uploads/2018/02/software-testing-icecream-cone-antipattern.jpg[]
+
+Here, in this anti-pattern, everything is the wrong way around. We have a tiny number of unit tests supporting (or rather failing to support) an excessive number of slower, full-stack integration tests. 
+

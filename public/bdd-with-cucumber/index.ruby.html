@@ -10286,7 +10286,42 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 </div>
 </div>
 <div class="paragraph">
-<p>TODO: testing ice cream code sidebar</p>
+<p>This is a common problem we&#8217;ve seen time and again in the test suties of teams who adopt Cucumber. In fact, it was a problem on Cucumber&#8217;s own codebase in the early days. We were so enamoured by writing new scenarios to describe new behaviour, we used it for everything, and hardly wrote any unit tests. Gradually, we started to realise that this had some significant disadvantages:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>We had a lot of scenarios, some describing quite obscure edge-cases, making the whole thing hard to read.</p>
+</li>
+<li>
+<p>The tests were slow, because they all ran as full integration tests.</p>
+</li>
+<li>
+<p>When something was broken, there was a lot of code to sift through to try and find the cause of the problem.</p>
+</li>
+<li>
+<p>The design of the code wasn&#8217;t very modular, because we had no design pressure from unit testing.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>There&#8217;s a well-known model for how many different types of tests you should have, known as the <em>testing pyramid</em>. It describes this idea that, at the wide base of the pyramid, you should have a large number of unit tests. Then, as you move up the pyramid and it gets wider, you have a smaller number of integration or component tests that exercise subsystems or "chunks" of your application. Finally, at the tip of the pyramid you have a small number of full-stack integation tests.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://alisterbscott.com/wp-content/uploads/2018/02/ideal-automated-testing-pyramid.jpg" alt="ideal automated testing pyramid">
+</div>
+</div>
+<div class="paragraph">
+<p>What we have here is the opposite, which experienced test automation engineer Alister Scott <a href="https://alisterbscott.com/kb/testing-pyramids/">once described</a> as a "testing ice cream cone".</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="https://alisterbscott.com/wp-content/uploads/2018/02/software-testing-icecream-cone-antipattern.jpg" alt="software testing icecream cone antipattern">
+</div>
+</div>
+<div class="paragraph">
+<p>Here, in this anti-pattern, everything is the wrong way around. We have a tiny number of unit tests supporting (or rather failing to support) an excessive number of slower, full-stack integration tests.</p>
 </div>
 </div>
 <div class="sect2">
