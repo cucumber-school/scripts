@@ -748,6 +748,7 @@ pre.rouge {
 <li><a href="#_re_balancing_our_test_suite">10.6. Re-balancing our test suite</a></li>
 </ul>
 </li>
+<li><a href="#_epilogue">11. Epilogue</a></li>
 </ul>
 </div>
 </div>
@@ -10291,7 +10292,7 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 <div class="ulist">
 <ul>
 <li>
-<p>We had a lot of scenarios, some describing quite obscure edge-cases, making the whole thing hard to read.</p>
+<p>We had a lot of scenarios, some describing quite obscure edge-cases, making for poor documentation.</p>
 </li>
 <li>
 <p>The tests were slow, because they all ran as full integration tests.</p>
@@ -10300,12 +10301,15 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 <p>When something was broken, there was a lot of code to sift through to try and find the cause of the problem.</p>
 </li>
 <li>
-<p>The design of the code wasn&#8217;t very modular, because we had no design pressure from unit testing.</p>
+<p>The internal design of the code wasn&#8217;t very modular, because we had no design pressure from unit testing.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>There&#8217;s a well-known model for how many different types of tests you should have, known as the <em>testing pyramid</em>. It describes this idea that, at the wide base of the pyramid, you should have a large number of unit tests. Then, as you move up the pyramid and it gets wider, you have a smaller number of integration or component tests that exercise subsystems or "chunks" of your application. Finally, at the tip of the pyramid you have a small number of full-stack integation tests.</p>
+</div>
+<div class="paragraph">
+<p>Floating above the pyramid here is a sweet little fluffy cloud representing the few manual <em>exploratory</em> tests that the team perform on a regular basis.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -10322,6 +10326,15 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 </div>
 <div class="paragraph">
 <p>Here, in this anti-pattern, everything is the wrong way around. We have a tiny number of unit tests supporting (or rather failing to support) an excessive number of slower, full-stack integration tests.</p>
+</div>
+<div class="paragraph">
+<p>Notice that above the ice-cream cone, we have a huge heavy blob of manual regression tests. I&#8217;d rather have a real ice-cream!</p>
+</div>
+<div class="paragraph">
+<p>Many teams find themselves in this situation when they first get into test automation, and it&#8217;s not something to get despondent about. It&#8217;s possible to shift your distribution of tests toward the pyramid, but it takes deliberate effort and discipline.</p>
+</div>
+<div class="paragraph">
+<p>In the next lesson we&#8217;ll get started on doing that.</p>
 </div>
 </div>
 <div class="sect2">
@@ -10651,7 +10664,10 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 <div class="sect2">
 <h3 id="_re_balancing_our_test_suite">10.6. Re-balancing our test suite</h3>
 <div class="paragraph">
-<p>Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there&#8217;s no need to have this edge case tested both at the unit and feature levels. Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.<a href="#shot-561" id="shot-561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>Finally, we can sit down with Paula and Tammy and discuss the fact that we have this edge-case tested both at the unit and feature levels. Do we need to keep both tests?</p>
+</div>
+<div class="paragraph">
+<p>Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.<a href="#shot-561" id="shot-561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10673,15 +10689,53 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>TODO: sum up</p>
+<p>This is a great move from the team, moving the balance back from ice-cream cone towards pyramid. It&#8217;s often not easy getting the team to let go of any of their automated tests, especially since unit tests are something that not all team members can easily see and get confidence from.</p>
 </div>
+<div class="paragraph">
+<p>But it&#8217;s the right thing to do. There&#8217;s no point wasting the computer&#8217;s time testing the same behaviour in two different ways, and it leaves behind more test automation code for the people who&#8217;ll have to maintain the system in the future.</p>
+</div>
+<div class="paragraph">
+<p>Kent Beck, who is famous for popularising test-driven development and has written some great books on it, once said that "I get paid for code that works, not for tests. My philosophy is to test as little as possible to reach a given level of confidence."</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s important to remember that while we absolutely need automated tests in order to keep our code easy and safe to change in the future, we need as few of them as possible. That means the whole team need to be involved in testing, and deciding where is the best place to connect an automated test in order to give you that confidence. Very often, a unit test will be the better choice, but you have to work together to decide that.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_epilogue">11. Epilogue</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This concludes our epic journey to get you started using Cucumber as it was intended - a tool to help you and your team decide what to build, build it, and maintain it for years to come.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ve been working with these techniques for 20 years now, and I&#8217;m still learning new stuff every day. So don&#8217;t get disheartened if it seems overwhelming sometimes.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s a great supportive community of other practitioners waiting for you in our <a href="https://cucumber.io/community#slack">Community Slack</a> and there are a wealth of great books you can pick up for further study.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s the classic Cucumber Book, which has versions in both <a href="https://pragprog.com/titles/hwcuc2/the-cucumber-book-second-edition/">Ruby</a> and <a href="https://pragprog.com/titles/srjcuc/the-cucumber-for-java-book/">Java</a>.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s John Fergusson Smart&#8217;s <a href="https://www.manning.com/books/bdd-in-action">BDD in Action</a>.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s Richard Lawrence and Paul Rayner&#8217;s book <a href="https://www.pearson.com/store/p/behavior-driven-development-with-cucumber-better-collaboration-for-better-software/P200000009515/9780321772633">Behavior-Driven Development with Cucumber</a></p>
+</div>
+<div class="paragraph">
+<p>And last but definitely not least, there&#8217;s Seb Rose and Gaspar Nagy&#8217;s series of three, <a href="https://bddbooks.com/">The BDD Books: Discovery, Formulation and Automation</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re keep to see more courses here on Cucumber School on other topics, or you&#8217;d just like to give us some feedback on this course, please come into the Slack and let us know. We&#8217;d love to hear from you.</p>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-10-17 19:35:00 UTC
+Last updated 2022-10-19 17:27:51 UTC
 </div>
 </div>
 </body>
