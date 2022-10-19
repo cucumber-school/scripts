@@ -1,6 +1,6 @@
 === Retrofit unit test
 
-Lets add a test where sean shouts a message using the word "buy",shot::[1] and then we assert that five credits have been deducted.shot::[2]
+Lets add a unit test where Sean shouts a message using the word "buy",shot::[1] and then we assert that five credits have been deducted.shot::[2]
 
 [source,js]
 ----
@@ -45,7 +45,9 @@ $ npm test
 0m00.066s (executing steps: 0m00.005s)
 ----
 
-Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. shot::[5]
+Writing a test that passes the first time it runs gives us no confidence. Remember: _Never trust an autommated test that you haven't seen fail_.
+
+We could be adding a spec that testes the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[5]
 
 [source,js]
 ----
@@ -100,7 +102,7 @@ Expected: <95>
       at processImmediate (node:internal/timers:466:21)
 ----
 
-And we can actually see it fails for the right reasons: no credits has been deducted. shot::[7]
+And we can actually see it fails for the right reasons: no credits have been deducted. shot::[7]
 
 Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[8]
 
@@ -146,4 +148,6 @@ $ npm test
 35 steps (35 passed)
 0m00.042s (executing steps: 0m00.004s)
 ----
+
+Alright, it seems we're finally in a position to be able to write a unit test to trap this bug.
 

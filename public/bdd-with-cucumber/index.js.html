@@ -748,6 +748,7 @@ pre.rouge {
 <li><a href="#_re_balancing_our_test_suite">10.6. Re-balancing our test suite</a></li>
 </ul>
 </li>
+<li><a href="#_epilogue">11. Epilogue</a></li>
 </ul>
 </div>
 </div>
@@ -10445,7 +10446,7 @@ Failures:
 </div>
 </div>
 <div class="paragraph">
-<p>You might be worried about losing this bug ID. We could keep it in a comment, a tag, or in the description of the Scenario.</p>
+<p>You might be worried about losing this bug ID. We could keep it in a comment , a tag , or in the description of the Scenario.</p>
 </div>
 <div class="paragraph">
 <p>Just like under a <code>Feature</code> keyword, you can write any arbitrary text you want beneath a <code>Scenario</code> keyword, before the first <code>Given</code>, <code>When</code> or <code>Then</code> keyword.</p>
@@ -10481,7 +10482,7 @@ Failures:
 <p>The trouble is, although this test tells us what&#8217;s wrong with the behaviour of the system - the wrong number of credits are being deducted - it doesn&#8217;t give us any clues as to <strong>why</strong>.</p>
 </div>
 <div class="paragraph">
-<p>This is why we need a balance of unit tests <em>and</em> acceptance tests: when they fail, acceptance tests tell you what is wrong with the system, but unit tests tell you where you need to go to fix it.</p>
+<p>This is why we need a balance of unit tests <em>and</em> acceptance tests: when they fail, acceptance tests tell you what is wrong with the system, but unit tests should tell you where you need to go to fix it.</p>
 </div>
 </div>
 <div class="sect2">
@@ -10546,7 +10547,7 @@ Failures:
 <div class="ulist">
 <ul>
 <li>
-<p>We had a lot of scenarios, some describing quite obscure edge-cases, making the whole thing hard to read.</p>
+<p>We had a lot of scenarios, some describing quite obscure edge-cases, making for poor documentation.</p>
 </li>
 <li>
 <p>The tests were slow, because they all ran as full integration tests.</p>
@@ -10555,12 +10556,15 @@ Failures:
 <p>When something was broken, there was a lot of code to sift through to try and find the cause of the problem.</p>
 </li>
 <li>
-<p>The design of the code wasn&#8217;t very modular, because we had no design pressure from unit testing.</p>
+<p>The internal design of the code wasn&#8217;t very modular, because we had no design pressure from unit testing.</p>
 </li>
 </ul>
 </div>
 <div class="paragraph">
 <p>There&#8217;s a well-known model for how many different types of tests you should have, known as the <em>testing pyramid</em>. It describes this idea that, at the wide base of the pyramid, you should have a large number of unit tests. Then, as you move up the pyramid and it gets wider, you have a smaller number of integration or component tests that exercise subsystems or "chunks" of your application. Finally, at the tip of the pyramid you have a small number of full-stack integation tests.</p>
+</div>
+<div class="paragraph">
+<p>Floating above the pyramid here is a sweet little fluffy cloud representing the few manual <em>exploratory</em> tests that the team perform on a regular basis.</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -10578,11 +10582,20 @@ Failures:
 <div class="paragraph">
 <p>Here, in this anti-pattern, everything is the wrong way around. We have a tiny number of unit tests supporting (or rather failing to support) an excessive number of slower, full-stack integration tests.</p>
 </div>
+<div class="paragraph">
+<p>Notice that above the ice-cream cone, we have a huge heavy blob of manual regression tests. I&#8217;d rather have a real ice-cream!</p>
+</div>
+<div class="paragraph">
+<p>Many teams find themselves in this situation when they first get into test automation, and it&#8217;s not something to get despondent about. It&#8217;s possible to shift your distribution of tests toward the pyramid, but it takes deliberate effort and discipline.</p>
+</div>
+<div class="paragraph">
+<p>In the next lesson we&#8217;ll get started on doing that.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
 <div class="paragraph">
-<p>Lets add a test where sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
+<p>Lets add a unit test where Sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10639,7 +10652,10 @@ Failures:
 </div>
 </div>
 <div class="paragraph">
-<p>Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. </p>
+<p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
+</div>
+<div class="paragraph">
+<p>We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10699,7 +10715,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can actually see it fails for the right reasons: no credits has been deducted. </p>
+<p>And we can actually see it fails for the right reasons: no credits have been deducted. </p>
 </div>
 <div class="paragraph">
 <p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>
@@ -10751,11 +10767,14 @@ Expected: <b class="conum">(95)</b>
 0m00.042s <span class="o">(</span>executing steps: 0m00.004s<span class="o">)</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Alright, it seems we&#8217;re finally in a position to be able to write a unit test to trap this bug.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</h3>
 <div class="paragraph">
-<p>Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
+<p>Now that we added a unit test for the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll just copy and paste the previous spec and add buy three times.</p>
@@ -10840,6 +10859,9 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
+<p>Adding this <code>g</code> flag means the regular expression can match "globally" - so it will return an array of all matches, rather than just the first one.</p>
+</div>
+<div class="paragraph">
 <p>And run the specs.</p>
 </div>
 <div class="listingblock">
@@ -10878,6 +10900,12 @@ Expected: <b class="conum">(95)</b>
 35 steps <span class="o">(</span>35 passed<span class="o">)</span>
 0m00.051s <span class="o">(</span>executing steps: 0m00.004s<span class="o">)</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Well look at that. One character! Just one little character was missing from the code and caused us to do so much work! Sometimes computers can be so picky!</p>
+</div>
+<div class="paragraph">
+<p>Aaannyway.</p>
 </div>
 <div class="paragraph">
 <p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@todo</code> tag.</p>
@@ -10933,9 +10961,18 @@ Expected: <b class="conum">(95)</b>
 <div class="paragraph">
 <p>And they all pass.</p>
 </div>
+<div class="paragraph">
+<p>Fantastic.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_another_edge_case">10.5. Another edge case</h3>
+<div class="paragraph">
+<p>One nice thing about working with unit tests (or microtests as Mike Hill likes to call them) is that they bring your focus down to a very narrow part of the code. Wheras a Cucumber scenario is for zooming out and thinking abou the big picture, a unit test puts a microscope on one tiny part of the system.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes that helps us to see things we hadn&#8217;t anticipated.</p>
+</div>
 <div class="paragraph">
 <p>Let&#8217;s take a look at the <code>deduct_credits</code> method.</p>
 </div>
@@ -10956,7 +10993,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>Which raises the question, what should happen if the word has a different capitalization?</p>
+<p>Which raises the question, what should happen if the word has a different capitalization? What if they literally shout "BUY" in capitals?</p>
 </div>
 <div class="paragraph">
 <p>To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.</p>
@@ -11082,11 +11119,17 @@ Expected: <b class="conum">(95)</b>
 0m00.042s <span class="o">(</span>executing steps: 0m00.005s<span class="o">)</span></code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Great. So working with unit tests here has helped us to notice and fix another small edge-case. Normally if we were doing test-driven development, we&#8217;d have spotted this at the time this code was written, especially if we were doing ensemble programming and had some other folks thinking about and reviewing the code as we wrote it.</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_re_balancing_our_test_suite">10.6. Re-balancing our test suite</h3>
 <div class="paragraph">
-<p>Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there&#8217;s no need to have this edge case tested both at the unit and feature levels. Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.</p>
+<p>Finally, we can sit down with Paula and Tammy and discuss the fact that we have this edge-case tested both at the unit and feature levels. Do we need to keep both tests?</p>
+</div>
+<div class="paragraph">
+<p>Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11108,8 +11151,46 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>TODO: sum up</p>
+<p>This is a great move from the team, moving the balance back from ice-cream cone towards pyramid. It&#8217;s often not easy getting the team to let go of any of their automated tests, especially since unit tests are something that not all team members can easily see and get confidence from.</p>
 </div>
+<div class="paragraph">
+<p>But it&#8217;s the right thing to do. There&#8217;s no point wasting the computer&#8217;s time testing the same behaviour in two different ways, and it leaves behind more test automation code for the people who&#8217;ll have to maintain the system in the future.</p>
+</div>
+<div class="paragraph">
+<p>Kent Beck, who is famous for popularising test-driven development and has written some great books on it, once said that "I get paid for code that works, not for tests. My philosophy is to test as little as possible to reach a given level of confidence."</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s important to remember that while we absolutely need automated tests in order to keep our code easy and safe to change in the future, we need as few of them as possible. That means the whole team need to be involved in testing, and deciding where is the best place to connect an automated test in order to give you that confidence. Very often, a unit test will be the better choice, but you have to work together to decide that.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_epilogue">11. Epilogue</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>This concludes our epic journey to get you started using Cucumber as it was intended - a tool to help you and your team decide what to build, build it, and maintain it for years to come.</p>
+</div>
+<div class="paragraph">
+<p>I&#8217;ve been working with these techniques for 20 years now, and I&#8217;m still learning new stuff every day. So don&#8217;t get disheartened if it seems overwhelming sometimes.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s a great supportive community of other practitioners waiting for you in our <a href="https://cucumber.io/community#slack">Community Slack</a> and there are a wealth of great books you can pick up for further study.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s the classic Cucumber Book, which has versions in both <a href="https://pragprog.com/titles/hwcuc2/the-cucumber-book-second-edition/">Ruby</a> and <a href="https://pragprog.com/titles/srjcuc/the-cucumber-for-java-book/">Java</a>.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s John Fergusson Smart&#8217;s <a href="https://www.manning.com/books/bdd-in-action">BDD in Action</a>.</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s Richard Lawrence and Paul Rayner&#8217;s book <a href="https://www.pearson.com/store/p/behavior-driven-development-with-cucumber-better-collaboration-for-better-software/P200000009515/9780321772633">Behavior-Driven Development with Cucumber</a></p>
+</div>
+<div class="paragraph">
+<p>And last but definitely not least, there&#8217;s Seb Rose and Gaspar Nagy&#8217;s series of three, <a href="https://bddbooks.com/">The BDD Books: Discovery, Formulation and Automation</a>.</p>
+</div>
+<div class="paragraph">
+<p>If you&#8217;re keep to see more courses here on Cucumber School on other topics, or you&#8217;d just like to give us some feedback on this course, please come into the Slack and let us know. We&#8217;d love to hear from you.</p>
 </div>
 </div>
 </div>

@@ -1,5 +1,9 @@
 === Another edge case
 
+One nice thing about working with unit tests (or microtests as Mike Hill likes to call them) is that they bring your focus down to a very narrow part of the code. Wheras a Cucumber scenario is for zooming out and thinking abou the big picture, a unit test puts a microscope on one tiny part of the system.
+
+Sometimes that helps us to see things we hadn't anticipated.
+
 Let's take a look at the `deduct_credits` method.shot::[1]
 
 [source,js]
@@ -14,7 +18,7 @@ There's something on this method that caught our attention: the regex we're usin
 include::../code/js/09-remove-todo-tag-and-bug-from-scenario/src/shouty.js[lines=70]
 ----
 
-Which raises the question, what should happen if the word has a different capitalization?
+Which raises the question, what should happen if the word has a different capitalization? What if they literally shout "BUY" in capitals?
 
 To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.
 
@@ -123,3 +127,5 @@ $ npm test
 35 steps (35 passed)
 0m00.042s (executing steps: 0m00.005s)
 ----
+
+Great. So working with unit tests here has helped us to notice and fix another small edge-case. Normally if we were doing test-driven development, we'd have spotted this at the time this code was written, especially if we were doing ensemble programming and had some other folks thinking about and reviewing the code as we wrote it.

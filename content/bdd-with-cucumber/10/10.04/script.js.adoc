@@ -1,6 +1,6 @@
 === TDD our fix with a unit test
 
-Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
+Now that we added a unit test for the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
 
 We'll just copy and paste the previous spec and add buy three times.shot::[1]
 
@@ -67,6 +67,8 @@ With this in place, we can focus on fixing the bug.shot::[4]
 include::../code/js/08-fix-the-bug/src/shouty.js[lines=68..71]
 ----
 
+Adding this `g` flag means the regular expression can match "globally" - so it will return an array of all matches, rather than just the first one.
+
 And run the specs.shot::[5]
 
 [source,sh]
@@ -105,6 +107,10 @@ $ npm test
 35 steps (35 passed)
 0m00.051s (executing steps: 0m00.004s)
 ----
+
+Well look at that. One character! Just one little character was missing from the code and caused us to do so much work! Sometimes computers can be so picky!
+
+Aaannyway.
 
 With our unit test suit all green, we're confident to remove the BUG reference and the `@todo` tag.
 
@@ -153,3 +159,5 @@ $ npm test
 ----
 
 And they all pass.
+
+Fantastic.

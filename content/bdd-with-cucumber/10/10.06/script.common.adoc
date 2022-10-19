@@ -1,10 +1,18 @@
 === Re-balancing our test suite
 
-Now we can sit down with Paula and Tammy with whoom we reach the conclusion that there's no need to have this edge case tested both at the unit and feature levels. Since it's not in the happy path, we decide to remove the scenario and leave the unit test in place.shot::[7]
+Finally, we can sit down with Paula and Tammy and discuss the fact that we have this edge-case tested both at the unit and feature levels. Do we need to keep both tests?
+
+Since it's not in the happy path, we decide to remove the scenario and leave the unit test in place.shot::[7]
 
 [source,gherkin]
 ----
 include::../code/js/10-remove-scenario-from-feature-file/features/premium_shouts.feature[lines=11..25]
 ----
 
-TODO: sum up
+This is a great move from the team, moving the balance back from ice-cream cone towards pyramid. It's often not easy getting the team to let go of any of their automated tests, especially since unit tests are something that not all team members can easily see and get confidence from.
+
+But it's the right thing to do. There's no point wasting the computer's time testing the same behaviour in two different ways, and it leaves behind more test automation code for the people who'll have to maintain the system in the future.
+
+Kent Beck, who is famous for popularising test-driven development and has written some great books on it, once said that "I get paid for code that works, not for tests. My philosophy is to test as little as possible to reach a given level of confidence."
+
+It's important to remember that while we absolutely need automated tests in order to keep our code easy and safe to change in the future, we need as few of them as possible. That means the whole team need to be involved in testing, and deciding where is the best place to connect an automated test in order to give you that confidence. Very often, a unit test will be the better choice, but you have to work together to decide that.
