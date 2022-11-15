@@ -1,11 +1,24 @@
 === Tidy up the bug report Gherkin
 
-Let's start by running our failing scenario.shot::[1] We have it marked with a `@todo` tag on it,shot::[2] so we can use that to run it in isolation: shot::[3]
 
-[source, sh]
+Let's start by running our failing scenario.
+
+We have it marked with a `@todo` tag on it,shot::[2] but those scenarios are filtered out by our `RunCucumber` settings.
+
+[source,gherkin]
 ----
-$ mvn test
+    @todo
+    Scenario: BUG #2789
 ----
+
+We're going to start work on the scenario now, so let's change that tag to a `@wip` to indicate that it's "Work In Progress":
+
+[source,gherkin]
+----
+include::../code/java/00-initial-commit/features/premium_shouts.feature[lines=27..31]
+----
+
+Now when we run all our tests, we should see the failing scenario: shot::[3]
 
 OK. We'll work outside-in and start by tidying up the Gherkin specification.
 
@@ -49,7 +62,7 @@ We think the values in the example could be changed to make it a little more exp
 
 [source,gherkin]
 ----
-include::../code/java/03-changed-values-in-scenario/shouty/src/test/resources/shouty/premium_shouts.feature[lines=19..24]
+include::../code/java/03-changed-values-in-scenario/shouty/src/test/resources/shouty/premium_shouts.feature[lines=19..25]
 ----
 
 OK great, so now we have a failing test we're more happy with.
@@ -58,3 +71,4 @@ The trouble is, although this test tells us what's wrong with the behaviour of t
 
 This is why we need a balance of unit tests _and_ acceptance tests: when they fail, acceptance tests tell you what is wrong with the system, but unit tests tell you where you need to go to fix it.
 
+That's what we'll look at in the next lesson.
