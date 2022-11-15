@@ -1,19 +1,29 @@
 === Tidy up the bug report Gherkin
 
-Let's start by running our failing scenario.shot::[1] We have it marked with a `@todo` tag on it,shot::[2] but those scenarios are filtered out in our default `npm test` command, so let's make a new one.
+Let's start by running our failing scenario.
 
-[source,js]
+We have it marked with a `@todo` tag on it,shot::[2] but those scenarios are filtered out in our default `npm test` command.
+
+[source,gherkin]
 ----
-include::../code/js/00-initial-commit/package.json[lines=6..9]
+    @todo
+    Scenario: BUG #2789
 ----
 
-Now we can use that to run everthing including our `@todo` scenario: shot::[3]
+We're going to start work on the scenario now, so let's change that tag to a `@wip` to indicate that it's "Work In Progress":
+
+[source,gherkin]
+----
+include::../code/js/00-initial-commit/features/premium_shouts.feature[lines=27..31]
+----
+
+Now when we run our regular `npm test` command, we should see the failing scenario: shot::[3]
 
 [source, sh]
 ----
-$ npm run test:all
+$ npm run test
 
-> shouty@1.0.0 test:all
+> shouty@1.0.0 test
 > mocha test && cucumber-js
 
 

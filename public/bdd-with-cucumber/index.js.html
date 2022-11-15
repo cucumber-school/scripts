@@ -10321,22 +10321,26 @@ should loosely deep-equal
 <div class="sect2">
 <h3 id="_tidy_up_the_bug_report_gherkin">10.1. Tidy up the bug report Gherkin</h3>
 <div class="paragraph">
-<p>Let&#8217;s start by running our failing scenario. We have it marked with a <code>@todo</code> tag on it, but those scenarios are filtered out in our default <code>npm test</code> command, so let&#8217;s make a new one.</p>
+<p>Let&#8217;s start by running our failing scenario. We have it marked with a <code>@todo</code> tag on it, but those scenarios are filtered out in our default <code>npm test</code> command.</p>
+</div>
+<div class="paragraph">
+<p>We&#8217;re going to start work on the scenario now, so let&#8217;s change that tag to a <code>@wip</code> to indicate that it&#8217;s "Work In Progress":</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">  <span class="dl">"</span><span class="s2">scripts</span><span class="dl">"</span><span class="p">:</span> <span class="p">{</span>
-    <span class="dl">"</span><span class="s2">test</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mocha test &amp;&amp; cucumber-js --tags 'not @todo'</span><span class="dl">"</span><span class="p">,</span>
-    <span class="dl">"</span><span class="s2">test:all</span><span class="dl">"</span><span class="p">:</span> <span class="dl">"</span><span class="s2">mocha test &amp;&amp; cucumber-js</span><span class="dl">"</span>
-  <span class="p">},</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">wip</span>
+    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
+      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">30</span> <span class="nx">credits</span>
+      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span>
+      <span class="nx">Then</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">25</span> <span class="nx">credits</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we can use that to run everthing including our <code>@todo</code> scenario: </p>
+<p>Now when we run our regular <code>npm test</code> command, we should see the failing scenario: </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm run <span class="nb">test</span>:all
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm run <span class="nb">test</span>
 
 <span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>:all
 <span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js
@@ -10396,7 +10400,7 @@ Failures:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">todo</span>
+<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">wip</span>
     <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
       <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">30</span> <span class="nx">credits</span>
       <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span>
@@ -10419,7 +10423,7 @@ Failures:
       <span class="nx">Then</span> <span class="nx">Lucy</span> <span class="nx">hears</span> <span class="nx">all</span> <span class="nx">Sean</span><span class="dl">'</span><span class="s1">s messages
       And Sean should have 15 credits
 
-    @todo
+    @wip
     Scenario: BUG #2789
       Given Sean has bought 30 credits
       When Sean shouts "buy, buy buy!"
@@ -10456,10 +10460,9 @@ Failures:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">todo</span>
+<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">wip</span>
     <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Mention</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">multiple</span> <span class="nx">times</span> <span class="k">in</span> <span class="nx">one</span> <span class="nx">shout</span>
-      <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
-      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">30</span> <span class="nx">credits</span></code></pre>
+      <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10467,12 +10470,12 @@ Failures:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">todo</span>
+<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">wip</span>
     <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Mention</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">multiple</span> <span class="nx">times</span> <span class="k">in</span> <span class="nx">one</span> <span class="nx">shout</span>
       <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
+
       <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">100</span> <span class="nx">credits</span>
-      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span>
-      <span class="nx">Then</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">95</span> <span class="nx">credits</span></code></pre>
+      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10912,10 +10915,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
-      <span class="nf">Given </span>Sean has bought 100 credits
-      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
-      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 10/10.04/script.js.adoc - include</span><span class="p">::</span><span class="err">../code/js/09-remove-todo-tag-and-bug-from-scenario/features/premium_shouts.feature[lines=19..22]</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10978,10 +10978,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">  <span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
-    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="mi">2</span>
-    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span>
-  <span class="p">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="mi">10</span><span class="o">/</span><span class="mf">10.05</span><span class="o">/</span><span class="nx">script</span><span class="p">.</span><span class="nx">js</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="nx">code</span><span class="o">/</span><span class="nx">js</span><span class="o">/</span><span class="mi">09</span><span class="o">-</span><span class="nx">remove</span><span class="o">-</span><span class="nx">todo</span><span class="o">-</span><span class="nx">tag</span><span class="o">-</span><span class="nx">and</span><span class="o">-</span><span class="nx">bug</span><span class="o">-</span><span class="k">from</span><span class="o">-</span><span class="nx">scenario</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">shouty</span><span class="p">.</span><span class="nx">js</span><span class="p">[</span><span class="nx">lines</span><span class="o">=</span><span class="mi">68</span><span class="p">..</span><span class="mi">71</span><span class="p">]</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10989,7 +10986,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="mi">10</span><span class="o">/</span><span class="mf">10.05</span><span class="o">/</span><span class="nx">script</span><span class="p">.</span><span class="nx">js</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="nx">code</span><span class="o">/</span><span class="nx">js</span><span class="o">/</span><span class="mi">09</span><span class="o">-</span><span class="nx">remove</span><span class="o">-</span><span class="nx">todo</span><span class="o">-</span><span class="nx">tag</span><span class="o">-</span><span class="nx">and</span><span class="o">-</span><span class="nx">bug</span><span class="o">-</span><span class="k">from</span><span class="o">-</span><span class="nx">scenario</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">shouty</span><span class="p">.</span><span class="nx">js</span><span class="p">[</span><span class="nx">lines</span><span class="o">=</span><span class="mi">70</span><span class="p">]</span></code></pre>
 </div>
 </div>
 <div class="paragraph">

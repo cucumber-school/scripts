@@ -16,9 +16,10 @@ Feature: Premium account
       Then Lucy hears all Sean's messages
       And Sean should have 15 credits
 
-    @todo
+    @wip
     Scenario: Mention "buy" multiple times in one shout
       BUG #2789
+
       Given Sean has bought 100 credits
       When Sean shouts "buy, buy buy!"
       Then Sean should have 95 credits
