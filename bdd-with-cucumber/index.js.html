@@ -10344,9 +10344,6 @@ should loosely deep-equal
       <span class="nf">Then </span>Sean should have 25 credits</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Now when we run our regular <code>npm test</code> command, we should see the failing scenario: </p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm run <span class="nb">test</span>
@@ -10924,7 +10921,10 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 10/10.04/script.js.adoc - include</span><span class="p">::</span><span class="err">../code/js/09-remove-todo-tag-and-bug-from-scenario/features/premium_shouts.feature[lines=19..22]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
+      <span class="nf">Given </span>Sean has bought 100 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10987,7 +10987,10 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="mi">10</span><span class="o">/</span><span class="mf">10.05</span><span class="o">/</span><span class="nx">script</span><span class="p">.</span><span class="nx">js</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="nx">code</span><span class="o">/</span><span class="nx">js</span><span class="o">/</span><span class="mi">09</span><span class="o">-</span><span class="nx">remove</span><span class="o">-</span><span class="nx">todo</span><span class="o">-</span><span class="nx">tag</span><span class="o">-</span><span class="nx">and</span><span class="o">-</span><span class="nx">bug</span><span class="o">-</span><span class="k">from</span><span class="o">-</span><span class="nx">scenario</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">shouty</span><span class="p">.</span><span class="nx">js</span><span class="p">[</span><span class="nx">lines</span><span class="o">=</span><span class="mi">68</span><span class="p">..</span><span class="mi">71</span><span class="p">]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js">  <span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="mi">2</span>
+    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span>
+  <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10995,7 +10998,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="mi">10</span><span class="o">/</span><span class="mf">10.05</span><span class="o">/</span><span class="nx">script</span><span class="p">.</span><span class="nx">js</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="nx">code</span><span class="o">/</span><span class="nx">js</span><span class="o">/</span><span class="mi">09</span><span class="o">-</span><span class="nx">remove</span><span class="o">-</span><span class="nx">todo</span><span class="o">-</span><span class="nx">tag</span><span class="o">-</span><span class="nx">and</span><span class="o">-</span><span class="nx">bug</span><span class="o">-</span><span class="k">from</span><span class="o">-</span><span class="nx">scenario</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">shouty</span><span class="p">.</span><span class="nx">js</span><span class="p">[</span><span class="nx">lines</span><span class="o">=</span><span class="mi">70</span><span class="p">]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js">    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11203,7 +11206,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-15 17:39:53 UTC
+Last updated 2022-11-15 17:46:50 UTC
 </div>
 </div>
 </body>

@@ -10344,9 +10344,6 @@ should loosely deep-equal
       <span class="nf">Then </span>Sean should have 25 credits</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>Now when we run our regular <code>npm test</code> command, we should see the failing scenario: <a href="#shot-1090" id="shot-1090" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
-</div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm run <span class="nb">test</span>
@@ -10405,7 +10402,7 @@ Failures:
 <p>OK. We&#8217;ll work outside-in and start by tidying up the Gherkin specification.</p>
 </div>
 <div class="paragraph">
-<p>Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system.<a href="#shot-1091" id="shot-1091" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> This doesn&#8217;t make for very good documentation about the intended behaviour.</p>
+<p>Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system.<a href="#shot-1090" id="shot-1090" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> This doesn&#8217;t make for very good documentation about the intended behaviour.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10420,7 +10417,7 @@ Failures:
 <p>It also isn&#8217;t sitting under the right rule.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start by moving it here, under the rule about charging for mentioning the word "buy" <a href="#shot-1092" id="shot-1092" title="move scenario under first rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: move scenario under first rule</a></p>
+<p>Let&#8217;s start by moving it here, under the rule about charging for mentioning the word "buy" <a href="#shot-1091" id="shot-1091" title="move scenario under first rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: move scenario under first rule</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10451,7 +10448,7 @@ Failures:
 <p>Now let&#8217;s find a better name for the scenario.</p>
 </div>
 <div class="paragraph">
-<p>Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"? <a href="#shot-1093" id="shot-1093" title="change the scenario title" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: change the scenario title</a><a href="#shot-1094" id="shot-1094" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: run tests</a></p>
+<p>Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"? <a href="#shot-1092" id="shot-1092" title="change the scenario title" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: change the scenario title</a><a href="#shot-1093" id="shot-1093" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: run tests</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10459,13 +10456,13 @@ Failures:
 </div>
 </div>
 <div class="paragraph">
-<p>You might be worried about losing this bug ID. We could keep it in a comment <a href="#shot-1095" id="shot-1095" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, a tag <a href="#shot-1096" id="shot-1096" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, or in the description of the Scenario.</p>
+<p>You might be worried about losing this bug ID. We could keep it in a comment <a href="#shot-1094" id="shot-1094" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, a tag <a href="#shot-1095" id="shot-1095" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, or in the description of the Scenario.</p>
 </div>
 <div class="paragraph">
 <p>Just like under a <code>Feature</code> keyword, you can write any arbitrary text you want beneath a <code>Scenario</code> keyword, before the first <code>Given</code>, <code>When</code> or <code>Then</code> keyword.</p>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s do that. <a href="#shot-1097" id="shot-1097" title="write the bug number in the scenario description" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: write the bug number in the scenario description</a></p>
+<p>So let&#8217;s do that. <a href="#shot-1096" id="shot-1096" title="write the bug number in the scenario description" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: write the bug number in the scenario description</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10475,7 +10472,7 @@ Failures:
 </div>
 </div>
 <div class="paragraph">
-<p>We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits,<a href="#shot-1098" id="shot-1098" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a> and end him with 95,<a href="#shot-1099" id="shot-1099" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a> it more clearly illustrates the rule that only five credits should be deducted. <a href="#shot-1100" id="shot-1100" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11: run tests</a></p>
+<p>We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits,<a href="#shot-1097" id="shot-1097" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a> and end him with 95,<a href="#shot-1098" id="shot-1098" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a> it more clearly illustrates the rule that only five credits should be deducted. <a href="#shot-1099" id="shot-1099" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11: run tests</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10503,7 +10500,7 @@ Failures:
 <p>Now that we have tidied up the scenario, we need to find the source of our bug.</p>
 </div>
 <div class="paragraph">
-<p>We have a passing unit test suite. <a href="#shot-1101" id="shot-1101" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> So this doesn&#8217;t give us any clues as to where the problem lies in the code.</p>
+<p>We have a passing unit test suite. <a href="#shot-1100" id="shot-1100" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> So this doesn&#8217;t give us any clues as to where the problem lies in the code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10534,7 +10531,7 @@ Failures:
 <p>Since we know there&#8217;s a bug, we should have at least one unit test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests.</p>
 </div>
 <div class="paragraph">
-<p>Oh my! We have absolutely no tests for this feature on our unit test suite! <a href="#shot-1102" id="shot-1102" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> The only test here about credits is this one for charging for shouts that are over 180 characters. We&#8217;ll need to remedy this in order to triage our problem.</p>
+<p>Oh my! We have absolutely no tests for this feature on our unit test suite! <a href="#shot-1101" id="shot-1101" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> The only test here about credits is this one for charging for shouts that are over 180 characters. We&#8217;ll need to remedy this in order to triage our problem.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10607,7 +10604,7 @@ Failures:
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
 <div class="paragraph">
-<p>Lets add a unit test where Sean shouts a message using the word "buy",<a href="#shot-1103" id="shot-1103" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> and then we assert that five credits have been deducted.<a href="#shot-1104" id="shot-1104" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>Lets add a unit test where Sean shouts a message using the word "buy",<a href="#shot-1102" id="shot-1102" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> and then we assert that five credits have been deducted.<a href="#shot-1103" id="shot-1103" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10625,7 +10622,7 @@ Failures:
 </div>
 </div>
 <div class="paragraph">
-<p>We run our unit test suite <a href="#shot-1105" id="shot-1105" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> and &#8230;&#8203; it passes.<a href="#shot-1106" id="shot-1106" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p>We run our unit test suite <a href="#shot-1104" id="shot-1104" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> and &#8230;&#8203; it passes.<a href="#shot-1105" id="shot-1105" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10667,7 +10664,7 @@ Failures:
 <p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
 </div>
 <div class="paragraph">
-<p>We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. <a href="#shot-1107" id="shot-1107" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. <a href="#shot-1106" id="shot-1106" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10678,7 +10675,7 @@ Failures:
 </div>
 </div>
 <div class="paragraph">
-<p>Then we run the unit tests and watch it fail.<a href="#shot-1108" id="shot-1108" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>Then we run the unit tests and watch it fail.<a href="#shot-1107" id="shot-1107" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10727,10 +10724,10 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can actually see it fails for the right reasons: no credits have been deducted. <a href="#shot-1109" id="shot-1109" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>And we can actually see it fails for the right reasons: no credits have been deducted. <a href="#shot-1108" id="shot-1108" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="paragraph">
-<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.<a href="#shot-1110" id="shot-1110" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
+<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.<a href="#shot-1109" id="shot-1109" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10741,7 +10738,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>And run the entire suite to make sure everything&#8217;s still in place.<a href="#shot-1111" id="shot-1111" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
+<p>And run the entire suite to make sure everything&#8217;s still in place.<a href="#shot-1110" id="shot-1110" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10789,10 +10786,10 @@ Expected: <b class="conum">(95)</b>
 <p>Now that we added a unit test for the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll just copy and paste the previous spec and add buy three times.<a href="#shot-1112" id="shot-1112" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>We&#8217;ll just copy and paste the previous spec and add buy three times.<a href="#shot-1111" id="shot-1111" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="paragraph">
-<p>The result should be the same.<a href="#shot-1113" id="shot-1113" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>The result should be the same.<a href="#shot-1112" id="shot-1112" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10810,7 +10807,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we make sure it fails.<a href="#shot-1114" id="shot-1114" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
+<p>Now we make sure it fails.<a href="#shot-1113" id="shot-1113" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10860,7 +10857,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>With this in place, we can focus on fixing the bug.<a href="#shot-1115" id="shot-1115" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p>With this in place, we can focus on fixing the bug.<a href="#shot-1114" id="shot-1114" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10874,7 +10871,7 @@ Expected: <b class="conum">(95)</b>
 <p>Adding this <code>g</code> flag means the regular expression can match "globally" - so it will return an array of all matches, rather than just the first one.</p>
 </div>
 <div class="paragraph">
-<p>And run the specs.<a href="#shot-1116" id="shot-1116" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>And run the specs.<a href="#shot-1115" id="shot-1115" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10924,11 +10921,14 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 10/10.04/script.js.adoc - include</span><span class="p">::</span><span class="err">../code/js/09-remove-todo-tag-and-bug-from-scenario/features/premium_shouts.feature[lines=19..22]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
+      <span class="nf">Given </span>Sean has bought 100 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can run the full test suite to make sure everything&#8217;s working as expected.<a href="#shot-1117" id="shot-1117" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>And we can run the full test suite to make sure everything&#8217;s working as expected.<a href="#shot-1116" id="shot-1116" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10983,19 +10983,22 @@ Expected: <b class="conum">(95)</b>
 <p>Sometimes that helps us to see things we hadn&#8217;t anticipated.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s take a look at the <code>deduct_credits</code> method.<a href="#shot-1118" id="shot-1118" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>Let&#8217;s take a look at the <code>deduct_credits</code> method.<a href="#shot-1117" id="shot-1117" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="mi">10</span><span class="o">/</span><span class="mf">10.05</span><span class="o">/</span><span class="nx">script</span><span class="p">.</span><span class="nx">js</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="nx">code</span><span class="o">/</span><span class="nx">js</span><span class="o">/</span><span class="mi">09</span><span class="o">-</span><span class="nx">remove</span><span class="o">-</span><span class="nx">todo</span><span class="o">-</span><span class="nx">tag</span><span class="o">-</span><span class="nx">and</span><span class="o">-</span><span class="nx">bug</span><span class="o">-</span><span class="k">from</span><span class="o">-</span><span class="nx">scenario</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">shouty</span><span class="p">.</span><span class="nx">js</span><span class="p">[</span><span class="nx">lines</span><span class="o">=</span><span class="mi">68</span><span class="p">..</span><span class="mi">71</span><span class="p">]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js">  <span class="nx">_deductCredits</span><span class="p">(</span><span class="nx">shortEnough</span><span class="p">,</span> <span class="nx">message</span><span class="p">,</span> <span class="nx">shouter</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">shortEnough</span><span class="p">)</span> <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="mi">2</span>
+    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span>
+  <span class="p">}</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>There&#8217;s something on this method that caught our attention: the regex we&#8217;re using is case sensitive.<a href="#shot-1119" id="shot-1119" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>There&#8217;s something on this method that caught our attention: the regex we&#8217;re using is case sensitive.<a href="#shot-1118" id="shot-1118" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js"><span class="nx">Unresolved</span> <span class="nx">directive</span> <span class="k">in</span> <span class="mi">10</span><span class="o">/</span><span class="mf">10.05</span><span class="o">/</span><span class="nx">script</span><span class="p">.</span><span class="nx">js</span><span class="p">.</span><span class="nx">adoc</span> <span class="o">-</span> <span class="nx">include</span><span class="p">::..</span><span class="o">/</span><span class="nx">code</span><span class="o">/</span><span class="nx">js</span><span class="o">/</span><span class="mi">09</span><span class="o">-</span><span class="nx">remove</span><span class="o">-</span><span class="nx">todo</span><span class="o">-</span><span class="nx">tag</span><span class="o">-</span><span class="nx">and</span><span class="o">-</span><span class="nx">bug</span><span class="o">-</span><span class="k">from</span><span class="o">-</span><span class="nx">scenario</span><span class="o">/</span><span class="nx">src</span><span class="o">/</span><span class="nx">shouty</span><span class="p">.</span><span class="nx">js</span><span class="p">[</span><span class="nx">lines</span><span class="o">=</span><span class="mi">70</span><span class="p">]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="js">    <span class="nx">shouter</span><span class="p">.</span><span class="nx">credits</span> <span class="o">-=</span> <span class="p">(</span><span class="nx">message</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/buy/</span><span class="p">)</span> <span class="o">||</span> <span class="p">[]).</span><span class="nx">length</span> <span class="o">*</span> <span class="mi">5</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11005,10 +11008,10 @@ Expected: <b class="conum">(95)</b>
 <p>To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.</p>
 </div>
 <div class="paragraph">
-<p>So lets first add a test.<a href="#shot-1120" id="shot-1120" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
+<p>So lets first add a test.<a href="#shot-1119" id="shot-1119" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll copy the same test we copied last time,<a href="#shot-1121" id="shot-1121" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> and capitalize the word "Buy".<a href="#shot-1122" id="shot-1122" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>We&#8217;ll copy the same test we copied last time,<a href="#shot-1120" id="shot-1120" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> and capitalize the word "Buy".<a href="#shot-1121" id="shot-1121" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11026,7 +11029,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we run the spec to watch it fail.<a href="#shot-1123" id="shot-1123" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>Now we run the spec to watch it fail.<a href="#shot-1122" id="shot-1122" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11077,7 +11080,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we write the code that&#8217;ll make it pass.<a href="#shot-1124" id="shot-1124" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>Now we write the code that&#8217;ll make it pass.<a href="#shot-1123" id="shot-1123" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11085,7 +11088,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>And finally, we run the entire test suite to watch that beautiful green.<a href="#shot-1125" id="shot-1125" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
+<p>And finally, we run the entire test suite to watch that beautiful green.<a href="#shot-1124" id="shot-1124" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11135,7 +11138,7 @@ Expected: <b class="conum">(95)</b>
 <p>Finally, we can sit down with Paula and Tammy and discuss the fact that we have this edge-case tested both at the unit and feature levels. Do we need to keep both tests?</p>
 </div>
 <div class="paragraph">
-<p>Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.<a href="#shot-1126" id="shot-1126" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.<a href="#shot-1125" id="shot-1125" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11203,7 +11206,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-15 17:39:53 UTC
+Last updated 2022-11-15 17:46:50 UTC
 </div>
 </div>
 </body>
