@@ -10344,58 +10344,12 @@ should loosely deep-equal
       <span class="nf">Then </span>Sean should have 25 credits</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Now when we run our regular <code>npm test</code> command, we should see the failing scenario: </p>
+</div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm run <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js
-
-
-
-  Network
-    ✓ broadcasts a message to a listener within range
-    ✓ does not broadcast a message to a listener out of range
-    ✓ does not broadcast a message to a listener out of range negative distance
-    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
-    ✓ can change the range
-    credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
-
-  Person
-    ✓ subscribes to the network
-    ✓ has a location
-    ✓ broadcasts shouts to the network
-    ✓ remembers messages heard
-    ✓ can be moved to a different location
-
-
-  11 passing <span class="o">(</span>9ms<span class="o">)</span>
-
-........................................F
-
-Failures:
-
-1<span class="o">)</span> Scenario: BUG <span class="c">#2789 # features/premium_shouts.feature:28</span>
-   ✔ Given the range is 100 <span class="c"># features/step_definitions/steps.js:4</span>
-   ✔ And Sean is located at 0 <span class="c"># features/step_definitions/steps.js:8</span>
-   ✔ And Lucy is located at 100 <span class="c"># features/step_definitions/steps.js:8</span>
-   ✔ Given Sean has bought 30 credits <span class="c"># features/step_definitions/steps.js:12</span>
-   ✔ When Sean shouts <span class="s2">"buy, buy buy!"</span> <span class="c"># features/step_definitions/shout_steps.js:26</span>
-   ✖ Then Sean should have 25 credits <span class="c"># features/step_definitions/steps.js:42</span>
-       AssertionError:
-       Expected: is <b class="conum">(25)</b>
-            but: was <b class="conum">(15)</b>
-           + expected - actual
-
-           <span class="nt">-15</span>
-           +25
-
-           at ShoutyWorld.&lt;anonymous&gt; <span class="o">(</span>/Users/matt/git/github.com/cucumber-school/scripts/code.bdd-with-cucumber.10.js/features/step_definitions/steps.js:43:3<span class="o">)</span>
-
-7 scenarios <span class="o">(</span>1 failed, 6 passed<span class="o">)</span>
-41 steps <span class="o">(</span>1 failed, 40 passed<span class="o">)</span>
-0m00.027s <span class="o">(</span>executing steps: 0m00.002s<span class="o">)</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10421,27 +10375,27 @@ Failures:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">  <span class="nx">Rule</span><span class="p">:</span> <span class="nx">Mention</span> <span class="nx">the</span> <span class="nx">word</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">and</span> <span class="nx">you</span> <span class="nx">lose</span> <span class="mi">5</span> <span class="nx">credits</span><span class="p">.</span>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">the</span> <span class="err">word</span> <span class="err">"buy"</span> <span class="err">and</span> <span class="err">you</span> <span class="err">lose</span> <span class="err">5</span> <span class="err">credits.</span>
 
-    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Sean</span> <span class="nx">some</span> <span class="nx">messages</span> <span class="nx">containing</span> <span class="nx">the</span> <span class="nx">word</span> <span class="err">“</span><span class="nx">buy</span><span class="err">”</span>
-      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">30</span> <span class="nx">credits</span>
-      <span class="nx">And</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="mi">3</span> <span class="nx">messages</span> <span class="nx">containing</span> <span class="nx">the</span> <span class="nx">word</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span>
-      <span class="nx">Then</span> <span class="nx">Lucy</span> <span class="nx">hears</span> <span class="nx">all</span> <span class="nx">Sean</span><span class="dl">'</span><span class="s1">s messages
-      And Sean should have 15 credits
+    <span class="kn">Scenario</span><span class="p">:</span> Sean some messages containing the word “buy”
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">And </span>Sean shouts 3 messages containing the word <span class="s">"buy"</span>
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 15 credits
 
-    @wip
-    Scenario: BUG #2789
-      Given Sean has bought 30 credits
-      When Sean shouts "buy, buy buy!"
-      Then Sean should have 25 credits
+    <span class="nt">@wip</span>
+    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 25 credits
 
-  Rule: Over-long messages cost 2 credits
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
 
-    Scenario: Sean shouts some over-long messages
-      Given Sean has bought 30 credits
-      When Sean shouts 2 over-long messages
-      Then Lucy hears all Sean</span><span class="dl">'</span><span class="nx">s</span> <span class="nx">messages</span>
-      <span class="nx">And</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">26</span> <span class="nx">credits</span></code></pre>
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 26 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10452,7 +10406,7 @@ Failures:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Mention</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">multiple</span> <span class="nx">times</span> <span class="k">in</span> <span class="nx">one</span> <span class="nx">shout</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">"buy"</span> <span class="err">multiple</span> <span class="err">times</span> <span class="err">in</span> <span class="err">one</span> <span class="err">shout</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10466,9 +10420,9 @@ Failures:
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">wip</span>
-    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Mention</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">multiple</span> <span class="nx">times</span> <span class="k">in</span> <span class="nx">one</span> <span class="nx">shout</span>
-      <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span></code></pre>
+<pre class="rouge highlight"><code data-lang="ghekrin">    @wip
+    Scenario: Mention "buy" multiple times in one shout
+      BUG #2789</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10481,7 +10435,8 @@ Failures:
       <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
 
       <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">100</span> <span class="nx">credits</span>
-      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span></code></pre>
+      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span>
+      <span class="nx">Then</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">95</span> <span class="nx">credits</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10492,6 +10447,9 @@ Failures:
 </div>
 <div class="paragraph">
 <p>This is why we need a balance of unit tests <em>and</em> acceptance tests: when they fail, acceptance tests tell you what is wrong with the system, but unit tests should tell you where you need to go to fix it.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s what we&#8217;ll look at in the next lesson.</p>
 </div>
 </div>
 <div class="sect2">
@@ -11206,7 +11164,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-15 17:46:50 UTC
+Last updated 2022-11-15 17:54:42 UTC
 </div>
 </div>
 </body>
