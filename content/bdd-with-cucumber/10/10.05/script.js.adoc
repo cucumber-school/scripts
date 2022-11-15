@@ -8,14 +8,14 @@ Let's take a look at the `deduct_credits` method.shot::[1]
 
 [source,js]
 ----
-include::../code/js/09-remove-todo-tag-and-bug-from-scenario/src/shouty.js[lines=68..71]
+include::../code/js/09-remove-wip-tag-and-bug-from-scenario/src/shouty.js[lines=68..71]
 ----
 
 There's something on this method that caught our attention: the regex we're using is case sensitive.shot::[2]
 
 [source,js]
 ----
-include::../code/js/09-remove-todo-tag-and-bug-from-scenario/src/shouty.js[lines=70]
+include::../code/js/09-remove-wip-tag-and-bug-from-scenario/src/shouty.js[lines=70]
 ----
 
 Which raises the question, what should happen if the word has a different capitalization? What if they literally shout "BUY" in capitals?

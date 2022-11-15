@@ -23,4 +23,3 @@ Feature: Premium account
       When Sean shouts 2 over-long messages
       Then Lucy hears all Sean's messages
       And Sean should have 26 credits
-

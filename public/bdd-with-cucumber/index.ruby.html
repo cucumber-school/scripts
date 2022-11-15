@@ -10144,11 +10144,35 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <div class="sect2">
 <h3 id="_tidy_up_the_bug_report_gherkin">10.1. Tidy up the bug report Gherkin</h3>
 <div class="paragraph">
-<p>Let&#8217;s start by running our failing scenario. We have it marked with a <code>@todo</code> tag on it, so we can use that to run it in isolation: </p>
+<p>Let&#8217;s start by running our failing scenario.</p>
+</div>
+<div class="paragraph">
+<p>We have it marked with a <code>@todo</code> tag on it, but those scenarios are filtered out in our default <code>bundle exec rake</code> command.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> @todo</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
+    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>We&#8217;re going to start work on the scenario now, so let&#8217;s change that tag to a <code>@wip</code> to indicate that it&#8217;s "Work In Progress":</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@wip</span>
+    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 25 credits</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when we run our regular <code>bundle exec rake</code> command, we should see the failing scenario: </p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rake</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10159,7 +10183,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@wip</span>
     <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
       <span class="nf">Given </span>Sean has bought 30 credits
       <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
@@ -10182,7 +10206,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
       <span class="nf">Then </span>Lucy hears all Sean's messages
       <span class="nf">And </span>Sean should have 15 credits
 
-    <span class="nt">@todo</span>
+    <span class="nt">@wip</span>
     <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
       <span class="nf">Given </span>Sean has bought 30 credits
       <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
@@ -10219,10 +10243,9 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@wip</span>
     <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
-      BUG <span class="c">#2789</span>
-      <span class="nf">Given </span>Sean has bought 30 credits</code></pre>
+      BUG <span class="c">#2789</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10230,12 +10253,12 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@wip</span>
     <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
       BUG <span class="c">#2789</span>
+
       <span class="nf">Given </span>Sean has bought 100 credits
-      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
-      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
