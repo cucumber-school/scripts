@@ -10360,11 +10360,11 @@ should loosely deep-equal
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">wip</span>
-    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
-      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">30</span> <span class="nx">credits</span>
-      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span>
-      <span class="nx">Then</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">25</span> <span class="nx">credits</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@wip</span>
+    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 25 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10430,13 +10430,13 @@ should loosely deep-equal
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="js">    <span class="p">@</span><span class="nd">wip</span>
-    <span class="nx">Scenario</span><span class="p">:</span> <span class="nx">Mention</span> <span class="dl">"</span><span class="s2">buy</span><span class="dl">"</span> <span class="nx">multiple</span> <span class="nx">times</span> <span class="k">in</span> <span class="nx">one</span> <span class="nx">shout</span>
-      <span class="nx">BUG</span> <span class="err">#</span><span class="mi">2789</span>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@wip</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
+      BUG <span class="c">#2789</span>
 
-      <span class="nx">Given</span> <span class="nx">Sean</span> <span class="nx">has</span> <span class="nx">bought</span> <span class="mi">100</span> <span class="nx">credits</span>
-      <span class="nx">When</span> <span class="nx">Sean</span> <span class="nx">shouts</span> <span class="dl">"</span><span class="s2">buy, buy buy!</span><span class="dl">"</span>
-      <span class="nx">Then</span> <span class="nx">Sean</span> <span class="nx">should</span> <span class="nx">have</span> <span class="mi">95</span> <span class="nx">credits</span></code></pre>
+      <span class="nf">Given </span>Sean has bought 100 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10486,7 +10486,7 @@ should loosely deep-equal
 </div>
 </div>
 <div class="paragraph">
-<p>Since we know there&#8217;s a bug, we should have at least one unit test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests.</p>
+<p>Since we know there&#8217;s a bug, we should have at least one unit test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests. </p>
 </div>
 <div class="paragraph">
 <p>Oh my! We have absolutely no tests for this feature on our unit test suite!  The only test here about credits is this one for charging for shouts that are over 180 characters. We&#8217;ll need to remedy this in order to triage our problem.</p>

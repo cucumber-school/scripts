@@ -10278,12 +10278,14 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <div class="sect2">
 <h3 id="_testing_ice_cream_cone">10.2. Testing ice cream cone</h3>
 <div class="paragraph">
-<p>Now we need to find the source cause of our bug. We have a passing test suite. </p>
+<p>Now that we have tidied up the scenario, we need to find the source of our bug.</p>
+</div>
+<div class="paragraph">
+<p>We have a passing unit test suite.  So this doesn&#8217;t give us any clues as to where the problem lies in the code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ...........
 
 Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files took 0.06097 seconds to load<span class="o">)</span>
@@ -10291,10 +10293,10 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 </div>
 </div>
 <div class="paragraph">
-<p>Since we know there&#8217;s a bug, we should have at least one test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests.</p>
+<p>Since we know there&#8217;s a bug, we should have at least one unit test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests. </p>
 </div>
 <div class="paragraph">
-<p>Oh my! we have absolutely no tests for this feature on our unit test suite. We&#8217;ll need to remedy this in order to triage our problem.</p>
+<p>Oh my! We have absolutely no tests for this feature on our unit test suite!  The only test here about credits is this one for charging for shouts that are over 180 characters. We&#8217;ll need to remedy this in order to triage our problem.</p>
 </div>
 <div class="listingblock">
 <div class="content">

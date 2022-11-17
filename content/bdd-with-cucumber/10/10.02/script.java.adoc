@@ -7,11 +7,9 @@ Now we need to find the source cause of our bug. We have a passing test suite. s
 $ mvn test
 ----
 
-Since we know there's a bug, we should have at least one test failing. So that's an indication that we might be missing a test. Lets see how we're testing the mention of the word "buy" in the lower level tests.
+Since we know there's a bug, we should have at least one unit test failing. So that's an indication that we might be missing a test. Lets see how we're testing the mention of the word "buy" in the lower level tests. shot::[2, "Scroll through all the unit tests for the Network class"]
 
-Oh my! we have absolutely no tests for this feature on our unit test suite.shot::[2] We'll need to remedy this in order to triage our problem.
-
-// Matt: I'm not sure if what I'm showing here (in the script) is enough. Maybe show all the spec descriptions ...
+Oh my! We have absolutely no tests for this feature on our unit test suite! shot::[3] The only test here about credits is this one for charging for shouts that are over 180 characters. We'll need to remedy this in order to triage our problem.
 
 [source,java]
 ----
