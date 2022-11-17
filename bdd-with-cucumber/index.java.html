@@ -10397,12 +10397,27 @@ It appears you did not register a parameter type.</pre>
 <div class="sect2">
 <h3 id="_tidy_up_the_bug_report_gherkin">10.1. Tidy up the bug report Gherkin</h3>
 <div class="paragraph">
-<p>Let&#8217;s start by running our failing scenario. We have it marked with a <code>@todo</code> tag on it, so we can use that to run it in isolation: </p>
+<p>Let&#8217;s start by running our failing scenario.</p>
+</div>
+<div class="paragraph">
+<p>We have it marked with a <code>@todo</code> tag on it, but those scenarios are filtered out by our <code>RunCucumber</code> settings.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>mvn <span class="nb">test</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
+    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>We&#8217;re going to start work on the scenario now, so let&#8217;s change that tag to a <code>@wip</code> to indicate that it&#8217;s "Work In Progress":</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 10/10.01/script.java.adoc - include</span><span class="p">::</span><span class="err">../code/java/00-initial-commit/src/test/resources/shouty/premium_shouts.feature[lines=27..31]</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Now when we run all our tests, we should see the failing scenario: </p>
 </div>
 <div class="paragraph">
 <p>OK. We&#8217;ll work outside-in and start by tidying up the Gherkin specification.</p>
@@ -10434,19 +10449,19 @@ It appears you did not register a parameter type.</pre>
       <span class="nf">Then </span>Lucy hears all Sean's messages
       <span class="nf">And </span>Sean should have 15 credits
 
-    <span class="nt">@todo</span>
-    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
-      <span class="nf">Given </span>Sean has bought 30 credits
-      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
-      <span class="nf">Then </span>Sean should have 25 credits
-
+<span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
   <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
-
     <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
       <span class="nf">Given </span>Sean has bought 30 credits
       <span class="nf">When </span>Sean shouts 2 over-long messages
       <span class="nf">Then </span>Lucy hears all Sean's messages
-      <span class="nf">And </span>Sean should have 26 credits</code></pre>
+      <span class="nf">And </span>Sean should have 26 credits
+
+    <span class="nt">@wip</span>
+    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 25 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10457,7 +10472,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Mention</span> <span class="err">"buy"</span> <span class="err">multiple</span> <span class="err">times</span> <span class="err">in</span> <span class="err">one</span> <span class="err">shout</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10471,10 +10486,10 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
-    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
-    BUG <span class="c">#2789</span>
-      <span class="nf">Given </span>Sean has bought 30 credits</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
+<span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Se</span><span class="nf">an </span>shouts some over-long messages</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10482,12 +10497,13 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="nt">@todo</span>
-    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
-    BUG <span class="c">#2789</span>
-      <span class="nf">Given </span>Sean has bought 100 credits
-      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
-      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
+<span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
+  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages
+      <span class="nf">Then </span>Lucy hears all Sean's messages</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10498,6 +10514,9 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="paragraph">
 <p>This is why we need a balance of unit tests <em>and</em> acceptance tests: when they fail, acceptance tests tell you what is wrong with the system, but unit tests tell you where you need to go to fix it.</p>
+</div>
+<div class="paragraph">
+<p>That&#8217;s what we&#8217;ll look at in the next lesson.</p>
 </div>
 </div>
 <div class="sect2">
@@ -10511,10 +10530,10 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Since we know there&#8217;s a bug, we should have at least one test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests.</p>
+<p>Since we know there&#8217;s a bug, we should have at least one unit test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests. </p>
 </div>
 <div class="paragraph">
-<p>Oh my! we have absolutely no tests for this feature on our unit test suite. We&#8217;ll need to remedy this in order to triage our problem.</p>
+<p>Oh my! We have absolutely no tests for this feature on our unit test suite!  The only test here about credits is this one for charging for shouts that are over 180 characters. We&#8217;ll need to remedy this in order to triage our problem.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10589,7 +10608,7 @@ It appears you did not register a parameter type.</pre>
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
 <div class="paragraph">
-<p>Lets add a test where sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
+<p>Lets add a unit test where Sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10616,7 +10635,10 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. </p>
+<p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
+</div>
+<div class="paragraph">
+<p>We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10640,7 +10662,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can actually see it fails for the right reasons: no credits has been deducted. </p>
+<p>And we can actually see it fails for the right reasons: no credits have been deducted. </p>
 </div>
 <div class="paragraph">
 <p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>
@@ -10732,10 +10754,10 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> Mention "buy" multiple times in one shout
-      <span class="nf">Given </span>Sean has bought 100 credits
-      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
-      <span class="nf">Then </span>Sean should have 95 credits</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10905,7 +10927,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-15 17:54:42 UTC
+Last updated 2022-11-17 19:44:24 UTC
 </div>
 </div>
 </body>

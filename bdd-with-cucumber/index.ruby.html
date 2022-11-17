@@ -10278,12 +10278,14 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <div class="sect2">
 <h3 id="_testing_ice_cream_cone">10.2. Testing ice cream cone</h3>
 <div class="paragraph">
-<p>Now we need to find the source cause of our bug. We have a passing test suite. </p>
+<p>Now that we have tidied up the scenario, we need to find the source of our bug.</p>
+</div>
+<div class="paragraph">
+<p>We have a passing unit test suite.  So this doesn&#8217;t give us any clues as to where the problem lies in the code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ...........
 
 Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files took 0.06097 seconds to load<span class="o">)</span>
@@ -10291,10 +10293,10 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 </div>
 </div>
 <div class="paragraph">
-<p>Since we know there&#8217;s a bug, we should have at least one test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests.</p>
+<p>Since we know there&#8217;s a bug, we should have at least one unit test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests. </p>
 </div>
 <div class="paragraph">
-<p>Oh my! we have absolutely no tests for this feature on our unit test suite. We&#8217;ll need to remedy this in order to triage our problem.</p>
+<p>Oh my! We have absolutely no tests for this feature on our unit test suite!  The only test here about credits is this one for charging for shouts that are over 180 characters. We&#8217;ll need to remedy this in order to triage our problem.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10367,7 +10369,7 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
 <div class="paragraph">
-<p>Lets add a test where sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
+<p>Lets add a unit test where Sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10390,7 +10392,6 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ............
 
 Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files took 0.06116 seconds to load<span class="o">)</span>
@@ -10398,7 +10399,10 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. </p>
+<p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
+</div>
+<div class="paragraph">
+<p>We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10413,31 +10417,11 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
-......F.....
-
-Failures:
-
-  1<span class="o">)</span> Shouty::Network credits deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-     Failure/Error: expect<span class="o">(</span>sean.credits<span class="o">)</span>.to eq<span class="o">(</span>95<span class="o">)</span>
-
-       expected: 95
-            got: 100
-
-       <span class="o">(</span>compared using <span class="o">==)</span>
-     <span class="c"># ./spec/network_spec.rb:80:in `block (3 levels) in &lt;top (required)&gt;'</span>
-
-Finished <span class="k">in </span>0.01697 seconds <span class="o">(</span>files took 0.05991 seconds to load<span class="o">)</span>
-12 examples, 1 failure
-
-Failed examples:
-
-rspec ./spec/network_spec.rb:71 <span class="c"># Shouty::Network credits deducts 5 credits for mentioning the word 'buy'</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rspec</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can actually see it fails for the right reasons: no credits has been deducted. </p>
+<p>And we can actually see it fails for the right reasons: no credits have been deducted. </p>
 </div>
 <div class="paragraph">
 <p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>
@@ -10762,7 +10746,7 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-15 17:54:42 UTC
+Last updated 2022-11-17 19:44:24 UTC
 </div>
 </div>
 </body>
