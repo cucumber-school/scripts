@@ -10592,6 +10592,12 @@ Randomized with seed 42310</code></pre>
 <div class="sect2">
 <h3 id="_another_edge_case">10.5. Another edge case</h3>
 <div class="paragraph">
+<p>One nice thing about working with unit tests (or microtests as Mike Hill likes to call them) is that they bring your focus down to a very narrow part of the code. Wheras a Cucumber scenario is for zooming out and thinking abou the big picture, a unit test puts a microscope on one tiny part of the system.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes that helps us to see things we hadn&#8217;t anticipated.</p>
+</div>
+<div class="paragraph">
 <p>Let&#8217;s take a look at the <code>deduct_credits</code> method.</p>
 </div>
 <div class="listingblock">
@@ -10611,16 +10617,16 @@ Randomized with seed 42310</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Which raises the question, what should happen if the word has a different capitalization?</p>
+<p>Which raises the question, what should happen if the word has a different capitalization? What if they literally shout "BUY" in capitals?</p>
 </div>
 <div class="paragraph">
 <p>To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.</p>
 </div>
 <div class="paragraph">
-<p>So lets first add a test.</p>
+<p>So lets first add a spec.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll copy the same test we copied last time, and capitalize the word "Buy".</p>
+<p>We&#8217;ll copy the same spec we copied last time, and capitalize the word "Buy".</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10685,6 +10691,9 @@ Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o
 Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files took 0.08364 seconds to load<span class="o">)</span>
 14 examples, 0 failures</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Great. So working with unit tests here has helped us to notice and fix another small edge-case. Normally if we were doing test-driven development, we&#8217;d have spotted this at the time this code was written, especially if we were doing ensemble programming and had some other folks thinking about and reviewing the code as we wrote it.</p>
 </div>
 </div>
 <div class="sect2">
