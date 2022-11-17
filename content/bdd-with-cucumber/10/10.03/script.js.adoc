@@ -59,52 +59,11 @@ Then we run the unit tests and watch it fail.shot::[6]
 [source,sh]
 ----
 $ npm test
-
-> shouty@1.0.0 test
-> mocha test && cucumber-js --tags 'not @todo'
-
-
-
-  Network
-    ✓ broadcasts a message to a listener within range
-    ✓ does not broadcast a message to a listener out of range
-    ✓ does not broadcast a message to a listener out of range negative distance
-    ✓ does not broadcast a message over 180 characters even if listener is in range
-    ✓ can change the range
-    credits
-      ✓ deducts 2 credits for a shout over 180 characters
-      1) deducts 5 credits for mentioning the word 'buy'
-
-  Person
-    ✓ subscribes to the network
-    ✓ has a location
-    ✓ broadcasts shouts to the network
-    ✓ remembers messages heard
-    ✓ can be moved to a different location
-
-
-  11 passing (24ms)
-  1 failing
-
-  1) Network
-       credits
-         deducts 5 credits for mentioning the word 'buy':
-
-      AssertionError: 
-Expected: <95>
-     but: was <100>
-      + expected - actual
-
-      -100
-      +95
-      
-      at Context.<anonymous> (test/network.test.js:98:7)
-      at processImmediate (node:internal/timers:466:21)
 ----
 
 And we can actually see it fails for the right reasons: no credits have been deducted. shot::[7]
 
-Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[8]
+Now that we\'re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[8]
 
 [source,js]
 ----

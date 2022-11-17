@@ -10637,55 +10637,14 @@ should loosely deep-equal
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
-
-
-  Network
-    ✓ broadcasts a message to a listener within range
-    ✓ does not broadcast a message to a listener out of range
-    ✓ does not broadcast a message to a listener out of range negative distance
-    ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
-    ✓ can change the range
-    credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
-      1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-
-  Person
-    ✓ subscribes to the network
-    ✓ has a location
-    ✓ broadcasts shouts to the network
-    ✓ remembers messages heard
-    ✓ can be moved to a different location
-
-
-  11 passing <span class="o">(</span>24ms<span class="o">)</span>
-  1 failing
-
-  1<span class="o">)</span> Network
-       credits
-         deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>:
-
-      AssertionError:
-Expected: <b class="conum">(95)</b>
-     but: was <b class="conum">(100)</b>
-      + expected - actual
-
-      <span class="nt">-100</span>
-      +95
-
-      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:98:7<span class="o">)</span>
-      at processImmediate <span class="o">(</span>node:internal/timers:466:21<span class="o">)</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>And we can actually see it fails for the right reasons: no credits have been deducted. </p>
 </div>
 <div class="paragraph">
-<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>
+<p>Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>
 </div>
 <div class="listingblock">
 <div class="content">

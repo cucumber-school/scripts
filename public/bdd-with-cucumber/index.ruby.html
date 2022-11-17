@@ -10369,7 +10369,7 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
 <div class="paragraph">
-<p>Lets add a test where sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
+<p>Lets add a unit test where Sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10392,7 +10392,6 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ............
 
 Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files took 0.06116 seconds to load<span class="o">)</span>
@@ -10400,7 +10399,10 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. </p>
+<p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
+</div>
+<div class="paragraph">
+<p>We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10415,31 +10417,11 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
-......F.....
-
-Failures:
-
-  1<span class="o">)</span> Shouty::Network credits deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-     Failure/Error: expect<span class="o">(</span>sean.credits<span class="o">)</span>.to eq<span class="o">(</span>95<span class="o">)</span>
-
-       expected: 95
-            got: 100
-
-       <span class="o">(</span>compared using <span class="o">==)</span>
-     <span class="c"># ./spec/network_spec.rb:80:in `block (3 levels) in &lt;top (required)&gt;'</span>
-
-Finished <span class="k">in </span>0.01697 seconds <span class="o">(</span>files took 0.05991 seconds to load<span class="o">)</span>
-12 examples, 1 failure
-
-Failed examples:
-
-rspec ./spec/network_spec.rb:71 <span class="c"># Shouty::Network credits deducts 5 credits for mentioning the word 'buy'</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>bundle <span class="nb">exec </span>rspec</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can actually see it fails for the right reasons: no credits has been deducted. </p>
+<p>And we can actually see it fails for the right reasons: no credits have been deducted. </p>
 </div>
 <div class="paragraph">
 <p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>

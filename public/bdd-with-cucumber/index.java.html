@@ -10413,7 +10413,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 10/10.01/script.java.adoc - include</span><span class="p">::</span><span class="err">../code/java/00-initial-commit/features/premium_shouts.feature[lines=27..31]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 10/10.01/script.java.adoc - include</span><span class="p">::</span><span class="err">../code/java/00-initial-commit/src/test/resources/shouty/premium_shouts.feature[lines=27..31]</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10608,7 +10608,7 @@ It appears you did not register a parameter type.</pre>
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
 <div class="paragraph">
-<p>Lets add a test where sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
+<p>Lets add a unit test where Sean shouts a message using the word "buy", and then we assert that five credits have been deducted.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10635,7 +10635,10 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Writing a test that passes the first time it runs gives us no confidence. We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line where we actually deduct the credits. </p>
+<p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
+</div>
+<div class="paragraph">
+<p>We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10659,7 +10662,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can actually see it fails for the right reasons: no credits has been deducted. </p>
+<p>And we can actually see it fails for the right reasons: no credits have been deducted. </p>
 </div>
 <div class="paragraph">
 <p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.</p>
