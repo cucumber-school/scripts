@@ -19,8 +19,7 @@ Finished in 0.00854 seconds (files took 0.06116 seconds to load)
 ----
 Writing a test that passes the first time it runs gives us no confidence. Remember: _Never trust an autommated test that you haven't seen fail_.
 
-We could be adding a spec that testes the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[5]
-
+We could be adding a spec that tests the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[5]
 
 [source,rb]
 ----
@@ -54,4 +53,6 @@ Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has bee
 Finished in 0.00879 seconds (files took 0.06039 seconds to load)
 12 examples, 0 failures
 ----
+
+Alright, it seems we're finally in a position to be able to write a unit test to trap this bug.
 

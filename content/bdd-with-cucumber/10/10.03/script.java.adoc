@@ -16,7 +16,7 @@ $ mvn test
 
 Writing a test that passes the first time it runs gives us no confidence. Remember: _Never trust an autommated test that you haven't seen fail_.
 
-We could be adding a spec that testes the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[5]
+We could be adding a spec that tests the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[5]
 
 [source,java]
 ----
@@ -46,3 +46,4 @@ And run the entire suite to make sure everything's still in place.shot::[9]
 $ mvn test
 ----
 
+Alright, it seems we're finally in a position to be able to write a unit test to trap this bug.

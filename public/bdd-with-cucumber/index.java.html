@@ -10413,7 +10413,10 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">Unresolved directive in 10/10.01/script.java.adoc - include</span><span class="p">::</span><span class="err">../code/java/00-initial-commit/src/test/resources/shouty/premium_shouts.feature[lines=27..31]</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> BUG <span class="c">#2789</span>
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts <span class="s">"buy, buy buy!"</span>
+      <span class="nf">Then </span>Sean should have 25 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10638,7 +10641,7 @@ It appears you did not register a parameter type.</pre>
 <p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
 </div>
 <div class="paragraph">
-<p>We could be adding a spec that testes the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. </p>
+<p>We could be adding a spec that tests the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. </p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10687,6 +10690,9 @@ It appears you did not register a parameter type.</pre>
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>mvn <span class="nb">test</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Alright, it seems we&#8217;re finally in a position to be able to write a unit test to trap this bug.</p>
 </div>
 </div>
 <div class="sect2">
@@ -10927,7 +10933,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-07-15 12:56:38 -0700
+Last updated 2022-11-15 15:25:05 -0300
 </div>
 </div>
 </body>
