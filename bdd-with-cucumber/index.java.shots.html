@@ -10698,10 +10698,10 @@ It appears you did not register a parameter type.</pre>
 <div class="sect2">
 <h3 id="_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</h3>
 <div class="paragraph">
-<p>Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
+<p>Now that we&#8217;ve added a unit test for charging when we mention the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll just copy and paste the previous spec and add buy three times.<a href="#shot-1711" id="shot-1711" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>We&#8217;ll just copy and paste the previous test and add buy three times.<a href="#shot-1711" id="shot-1711" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="paragraph">
 <p>The result should be the same.<a href="#shot-1712" id="shot-1712" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
@@ -10748,12 +10748,21 @@ It appears you did not register a parameter type.</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And run the specs.<a href="#shot-1715" id="shot-1715" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>By changing this <code>while</code> to an <code>if</code> we make sure we only substract 5 credits once and then continue.</p>
+</div>
+<div class="paragraph">
+<p>And run the tests.<a href="#shot-1715" id="shot-1715" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>mvn <span class="nb">test</span></code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Well look at that. One word! Just one word caused us to do so much work! Sometimes computers can be so picky!</p>
+</div>
+<div class="paragraph">
+<p>Aaannyway.</p>
 </div>
 <div class="paragraph">
 <p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@todo</code> tag.</p>
@@ -10776,6 +10785,9 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="paragraph">
 <p>And they all pass.</p>
+</div>
+<div class="paragraph">
+<p>Fantastic.</p>
 </div>
 </div>
 <div class="sect2">
@@ -10933,7 +10945,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-17 20:03:58 UTC
+Last updated 2022-11-17 20:16:04 UTC
 </div>
 </div>
 </body>
