@@ -1,6 +1,6 @@
 === TDD our fix with a unit test
 
-Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
+Now that we've added a unit test for charging when we mention the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
 
 We'll just copy and paste the previous spec and add buy three times.shot::[1]
 
@@ -45,6 +45,8 @@ With this in place, we can focus on fixing the bug.shot::[4]
 include::../code/ruby/08-fix-the-bug/lib/shouty.rb[lines=54..57]
 ----
 
+Removing this `g` flag means the regular expression won't match "globally" - so it will return just the first match, rather than all of them.
+
 And run the specs.shot::[5]
 
 [source,sh]
@@ -56,6 +58,9 @@ Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has bee
 Finished in 0.00798 seconds (files took 0.05958 seconds to load)
 13 examples, 0 failures
 ----
+Well look at that. One character! Just one little extra character caused us to do so much work! Sometimes computers can be so picky!
+
+Aaannyway.
 
 With our unit test suit all green, we're confident to remove the BUG reference and the `@todo` tag.
 
@@ -97,3 +102,5 @@ Randomized with seed 42310
 ----
 
 And they all pass.
+
+Fantastic.

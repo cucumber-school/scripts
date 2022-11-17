@@ -1,8 +1,8 @@
 === TDD our fix with a unit test
 
-Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
+Now that we've added a unit test for charging when we mention the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
 
-We'll just copy and paste the previous spec and add buy three times.shot::[1]
+We'll just copy and paste the previous test and add buy three times.shot::[1]
 
 The result should be the same.shot::[2]
 
@@ -24,13 +24,19 @@ With this in place, we can focus on fixing the bug.shot::[4]
 ----
 include::../code/java/08-fix-the-bug/shouty/src/main/java/shouty/Network.java[lines=33..42]
 ----
+By changing this `while` to an `if` we make sure we only substract 5 credits once and then continue.
 
-And run the specs.shot::[5]
+
+And run the tests.shot::[5]
 
 [source,sh]
 ----
 $ mvn test
 ----
+
+Well look at that. One word! Just one word caused us to do so much work! Sometimes computers can be so picky!
+
+Aaannyway.
 
 With our unit test suit all green, we're confident to remove the BUG reference and the `@todo` tag.
 
@@ -47,3 +53,5 @@ $ mvn test
 ----
 
 And they all pass.
+
+Fantastic.

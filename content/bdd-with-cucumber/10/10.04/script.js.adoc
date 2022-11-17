@@ -1,6 +1,6 @@
 === TDD our fix with a unit test
 
-Now that we added a unit test for the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
+Now that we've added a unit test for charging when we mention the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
 
 We'll just copy and paste the previous spec and add buy three times.shot::[1]
 
@@ -67,7 +67,7 @@ With this in place, we can focus on fixing the bug.shot::[4]
 include::../code/js/08-fix-the-bug/src/shouty.js[lines=68..71]
 ----
 
-Adding this `g` flag means the regular expression can match "globally" - so it will return an array of all matches, rather than just the first one.
+Removing this `g` flag means the regular expression won't match "globally" - so it will return just the first match, rather than all of them.
 
 And run the specs.shot::[5]
 
@@ -108,7 +108,7 @@ $ npm test
 0m00.051s (executing steps: 0m00.004s)
 ----
 
-Well look at that. One character! Just one little character was missing from the code and caused us to do so much work! Sometimes computers can be so picky!
+Well look at that. One character! Just one little extra character caused us to do so much work! Sometimes computers can be so picky!
 
 Aaannyway.
 

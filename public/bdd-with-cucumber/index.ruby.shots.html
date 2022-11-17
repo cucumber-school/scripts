@@ -10454,7 +10454,7 @@ Finished <span class="k">in </span>0.00879 seconds <span class="o">(</span>files
 <div class="sect2">
 <h3 id="_tdd_our_fix_with_a_unit_test">10.4. TDD our fix with a unit test</h3>
 <div class="paragraph">
-<p>Now that we added a test for the word "buy", we can add one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
+<p>Now that we&#8217;ve added a unit test for charging when we mention the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
 </div>
 <div class="paragraph">
 <p>We&#8217;ll just copy and paste the previous spec and add buy three times.<a href="#shot-549" id="shot-549" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
@@ -10517,6 +10517,9 @@ rspec ./spec/network_spec.rb:83 <span class="c"># Shouty::Network credits deduct
 </div>
 </div>
 <div class="paragraph">
+<p>Removing this <code>g</code> flag means the regular expression won&#8217;t match "globally" - so it will return just the first match, rather than all of them.</p>
+</div>
+<div class="paragraph">
 <p>And run the specs.<a href="#shot-553" id="shot-553" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
@@ -10528,6 +10531,12 @@ Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o
 Finished <span class="k">in </span>0.00798 seconds <span class="o">(</span>files took 0.05958 seconds to load<span class="o">)</span>
 13 examples, 0 failures</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>Well look at that. One character! Just one little extra character caused us to do so much work! Sometimes computers can be so picky!</p>
+</div>
+<div class="paragraph">
+<p>Aaannyway.</p>
 </div>
 <div class="paragraph">
 <p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@todo</code> tag.</p>
@@ -10575,6 +10584,9 @@ Randomized with seed 42310</code></pre>
 </div>
 <div class="paragraph">
 <p>And they all pass.</p>
+</div>
+<div class="paragraph">
+<p>Fantastic.</p>
 </div>
 </div>
 <div class="sect2">
