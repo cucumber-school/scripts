@@ -10511,8 +10511,106 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 </div>
 <div class="sect3">
 <h4 id="_lesson_2_questions_7">10.2.1. Lesson 2 - Questions</h4>
+<div class="sect4">
+<h5 id="_what_are_the_characteristics_of_a_test_suite_that_follows_the_testing_ice_cream_cone_anti_pattern">What are the characteristics of a test suite that follows the <strong>testing ice cream cone</strong> anti-pattern?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>There are a relatively small number of unit tests (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>All of the tests run through Cucumber</p>
+</li>
+<li>
+<p>Most of the tests run through the full application stack (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>There are almost no integration tests</p>
+</li>
+<li>
+<p>Most of the tests are low-level unit tests</p>
+</li>
+</ul>
+</div>
 <div class="paragraph">
-<p>TODO&#8230;&#8203;</p>
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The testing ice-cream-cone represents an <strong>inversion</strong> of the testing pyramid. This means that you have only a small number of unit tests,
+and most of the testing is done through full-stack integration tests. You might be using Cucumber for those integration tests, or you might
+not; that&#8217;s not important.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_which_is_better_why">Which is better? Why?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>The testing ice cream cone is better because ice cream is tasty</p>
+</li>
+<li>
+<p>The testing pyramid is better because each test is at the lowest level possible (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>The testing diamond is better because you can never have too many integration tests</p>
+</li>
+<li>
+<p>The testing hourgrlass is better because it&#8217;s more balanced, as all things should be in life</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The testing pyramid represents a model for the ideal distribution of different types of tests. The idea here is that every behaviour you have in your system should have a low-level unit
+test, and the key behaviours of bigger chunks of the system should have integration tests to check that those units wire together correctly.</p>
+</div>
+<div class="paragraph">
+<p>Unit tests tend to be fast, and when they fail they give you a good pointer to the problem because they only cover a small amount of code.</p>
+</div>
+<div class="paragraph">
+<p>But they&#8217;re not enough on their own, because you might have lots of little units that all work OK on their own, but don&#8217;t play nicely together. That&#8217;s why you need a few integration tests too.</p>
+</div>
+<div class="paragraph">
+<p>But only a few!</p>
+</div>
+<div class="paragraph">
+<p>The hourglass and diamond are not really well-known patterns in the industry. It&#8217;s certainly possible that your test suite might look like that, but we don&#8217;t recomment it!</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_what_are_the_disadvantages_of_having_a_testing_ice_cream_cone">What are the disadvantages of having a testing ice cream cone?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>You have so many scenarios, some describing quite obscure edge-cases, that they end up making poor documentation (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>The tests run too fast</p>
+</li>
+<li>
+<p>Because so many tests are full integration tests, the whole suite is slow to run (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>It&#8217;s impossible to debug a failing Cucumber scenario</p>
+</li>
+<li>
+<p>When a test fails, there&#8217;s too much code to search through to try and find the cause of the problem (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>The internal design of the code tends to be tangled like a plate of spaghetti because there was no need to make it modular for unit testing (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>It&#8217;s not impossible to debug a failling Cucumber scenario, but it&#8217;s like having a warning light on your car&#8217;s dashboard that just says "Something is wrong!". It&#8217;s useful
+for sure to know what <em>something</em> is wrong, but more more useful to have a warning light specifically that the oil is low, or the brakes are not working. Then the mechanic
+knows what they need to do to fix it.</p>
+</div>
 </div>
 </div>
 </div>
@@ -10944,7 +11042,7 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-22 17:57:05 UTC
+Last updated 2022-11-22 18:21:38 UTC
 </div>
 </div>
 </body>
