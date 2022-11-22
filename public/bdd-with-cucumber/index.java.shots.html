@@ -10452,7 +10452,6 @@ It appears you did not register a parameter type.</pre>
       <span class="nf">Then </span>Lucy hears all Sean's messages
       <span class="nf">And </span>Sean should have 15 credits
 
-<span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
   <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
     <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
       <span class="nf">Given </span>Sean has bought 30 credits
@@ -10475,7 +10474,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span></code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Se</span><span class="nf">an </span>shouts some over-long messages</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10489,10 +10488,10 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
-<span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
-  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
-    <span class="kn">Scenario</span><span class="p">:</span> <span class="err">Se</span><span class="nf">an </span>shouts some over-long messages</code></pre>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+    <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
+      <span class="nf">Given </span>Sean has bought 30 credits
+      <span class="nf">When </span>Sean shouts 2 over-long messages</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10500,13 +10499,12 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="gherkin"><span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
-<span class="err">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="err">HEAD</span>
-  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
+<pre class="rouge highlight"><code data-lang="gherkin">  <span class="err">Rule</span><span class="p">:</span> <span class="err">Over-long</span> <span class="err">messages</span> <span class="err">cost</span> <span class="err">2</span> <span class="err">credits</span>
     <span class="kn">Scenario</span><span class="p">:</span> Sean shouts some over-long messages
       <span class="nf">Given </span>Sean has bought 30 credits
       <span class="nf">When </span>Sean shouts 2 over-long messages
-      <span class="nf">Then </span>Lucy hears all Sean's messages</code></pre>
+      <span class="nf">Then </span>Lucy hears all Sean's messages
+      <span class="nf">And </span>Sean should have 26 credits</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10520,6 +10518,150 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="paragraph">
 <p>That&#8217;s what we&#8217;ll look at in the next lesson.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_1_questions_6">10.1.1. Lesson 1 - Questions</h4>
+<div class="sect4">
+<h5 id="_why_did_the_scenario_start_running_when_we_changed_the_tag_from_todo_to_wip">Why did the scenario start running when we changed the tag from <code>@todo</code> to <code>@wip</code></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><code>@wip</code> is a special tag that Cucumber always runs</p>
+</li>
+<li>
+<p>Our setup is configured to filter out scenarios tagged with <code>@todo</code> (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p><code>@wip</code> is more clear to our business stakeholders</p>
+</li>
+<li>
+<p>Cucumber has a known bug with the <code>@todo</code> tag</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Our setup was configured to filter out scenarios tagged with <code>@todo</code>. When we changed the tag (we could have changed it to anything else)
+that meant it was no longer excluded by the filter.</p>
+</div>
+<div class="paragraph">
+<p>We like using <code>@wip</code> so that you can sometimes <strong>only</strong> run the scenario you&#8217;re working on. This is especially useful when you have a lot of scenarios.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_did_we_move_the_scenario_under_the_rule_in_the_feature_file">Why did we move the scenario under the Rule in the feature file?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Each scenario must be under a Rule keyword for Cucumber to be able to run it</p>
+</li>
+<li>
+<p>It makes for better documentation to group the scenario with other scenarios that illustrate the same Rule (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>The tests will perform better if we keep the scenarios inside rules</p>
+</li>
+<li>
+<p>We didn&#8217;t like having to scroll to the bottom of the file</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The <code>Rule:</code> grouping in a feature file is just for documentation - it doesn&#8217;t affect how the scenarios are executed in any way.</p>
+</div>
+<div class="paragraph">
+<p>You can read more about the relationship between rules and examples in <a href="https://lizkeogh.com/2011/06/20/acceptance-criteria-vs-scenarios/:">Liz Keogh&#8217;s excellent blog post</a>.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_did_we_need_to_rename_the_scenario">Did we need to rename the scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>No, but it makes for better documentation (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Yes, otherwise the steps would not match</p>
+</li>
+<li>
+<p>Yes, using the word "BUG" always causes Cucumber to fail a scenario</p>
+</li>
+<li>
+<p>No, but we don&#8217;t like putting numbers in scenario descriptions (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Again, the name of a scenario has no bearing on how Cucumber will execute it, but we think it makes for better documentation to talk about the behaviour, rather than just
+referring to bug numbers or stories in an external issue tracker system.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_we_moved_the_bug_number_to_the_scenarios_description_where_else_could_we_have_put_it">We moved the bug number to the scenario&#8217;s description. Where else could we have put it?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Left it in the scenario name (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>A comment above the scenario (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>A tag (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>The first step of the scenario</p>
+</li>
+<li>
+<p>A DataTable</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>There are many different places in Gherkin we could put references like this. We like using the Description especially because some reporting tools will actually
+render links, so if you use <a href="https://daringfireball.net/projects/markdown/">Markdown</a> in the description you can click a link through to your issue tracker.</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_was_it_required_for_us_to_change_the_values_in_the_scenario">Why was it required for us to change the values in the scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It wasn&#8217;t, but we did it to make it more expressive (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>For performance</p>
+</li>
+<li>
+<p>Cucumber would not be able to afford to buy 30 credits</p>
+</li>
+<li>
+<p>To reuse existing step defintions</p>
+</li>
+<li>
+<p>30 credits was too cheap</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>This change was a minor refinement, and certainly not required. We did it because we always like to think about the person who will find this scenario
+failing many months from now, and we want to make it as easy as possible for them to grasp what&#8217;s wrong. Arbitrary values like "30" and "25" can be distracting.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -10607,6 +10749,12 @@ It appears you did not register a parameter type.</pre>
 <div class="paragraph">
 <p>In the next lesson we&#8217;ll get started on doing that.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_2_questions_8">10.2.1. Lesson 2 - Questions</h4>
+<div class="paragraph">
+<p>TODO&#8230;&#8203;</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
@@ -10693,6 +10841,12 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div class="paragraph">
 <p>Alright, it seems we&#8217;re finally in a position to be able to write a unit test to trap this bug.</p>
+</div>
+<div class="sect3">
+<h4 id="_lesson_3_questions_7">10.3.1. Lesson 3 - Questions</h4>
+<div class="paragraph">
+<p>TODO&#8230;&#8203;</p>
+</div>
 </div>
 </div>
 <div class="sect2">
@@ -10789,6 +10943,12 @@ It appears you did not register a parameter type.</pre>
 <div class="paragraph">
 <p>Fantastic.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_4_questions_7">10.4.1. Lesson 4 - Questions</h4>
+<div class="paragraph">
+<p>TODO&#8230;&#8203;</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_another_edge_case">10.5. Another edge case</h3>
@@ -10879,6 +11039,12 @@ It appears you did not register a parameter type.</pre>
 <div class="paragraph">
 <p>Great. So working with unit tests here has helped us to notice and fix another small edge-case. Normally if we were doing test-driven development, we&#8217;d have spotted this at the time this code was written, especially if we were doing ensemble programming and had some other folks thinking about and reviewing the code as we wrote it.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_5_questions_6">10.5.1. Lesson 5 - Questions</h4>
+<div class="paragraph">
+<p>TODO&#8230;&#8203;</p>
+</div>
+</div>
 </div>
 <div class="sect2">
 <h3 id="_re_balancing_our_test_suite">10.6. Re-balancing our test suite</h3>
@@ -10919,6 +11085,12 @@ It appears you did not register a parameter type.</pre>
 <div class="paragraph">
 <p>It&#8217;s important to remember that while we absolutely need automated tests in order to keep our code easy and safe to change in the future, we need as few of them as possible. That means the whole team need to be involved in testing, and deciding where is the best place to connect an automated test in order to give you that confidence. Very often, a unit test will be the better choice, but you have to work together to decide that.</p>
 </div>
+<div class="sect3">
+<h4 id="_lesson_6_questions_2">10.6.1. Lesson 6 - Questions</h4>
+<div class="paragraph">
+<p>TODO&#8230;&#8203;</p>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -10954,7 +11126,7 @@ It appears you did not register a parameter type.</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-15 15:25:05 -0300
+Last updated 2022-07-15 12:56:38 -0700
 </div>
 </div>
 </body>

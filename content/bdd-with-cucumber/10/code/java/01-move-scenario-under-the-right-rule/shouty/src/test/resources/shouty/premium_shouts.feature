@@ -16,7 +16,6 @@ Feature: Premium account
       Then Lucy hears all Sean's messages
       And Sean should have 15 credits
 
-<<<<<<< HEAD
   Rule: Over-long messages cost 2 credits
     Scenario: Sean shouts some over-long messages
       Given Sean has bought 30 credits

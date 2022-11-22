@@ -1,0 +1,66 @@
+==== Lesson 1 - Questions
+
+===== Why did the scenario start running when we changed the tag from `@todo` to `@wip`
+
+* `@wip` is a special tag that Cucumber always runs
+* Our setup is configured to filter out scenarios tagged with `@todo` (*Correct*)
+* `@wip` is more clear to our business stakeholders
+* Cucumber has a known bug with the `@todo` tag
+
+Explanation:
+
+Our setup was configured to filter out scenarios tagged with `@todo`. When we changed the tag (we could have changed it to anything else) 
+that meant it was no longer excluded by the filter.
+
+We like using `@wip` so that you can sometimes *only* run the scenario you're working on. This is especially useful when you have a lot of scenarios.
+
+===== Why did we move the scenario under the Rule in the feature file?
+
+* Each scenario must be under a Rule keyword for Cucumber to be able to run it
+* It makes for better documentation to group the scenario with other scenarios that illustrate the same Rule (*Correct*)
+* The tests will perform better if we keep the scenarios inside rules
+* We didn't like having to scroll to the bottom of the file
+
+Explanation:
+
+The `Rule:` grouping in a feature file is just for documentation - it doesn't affect how the scenarios are executed in any way.
+
+You can read more about the relationship between rules and examples in https://lizkeogh.com/2011/06/20/acceptance-criteria-vs-scenarios/:[Liz Keogh's excellent blog post].
+
+===== Did we need to rename the scenario?
+
+* No, but it makes for better documentation (*Correct*)
+* Yes, otherwise the steps would not match
+* Yes, using the word "BUG" always causes Cucumber to fail a scenario
+* No, but we don't like putting numbers in scenario descriptions (*Correct*)
+
+Explanation:
+
+Again, the name of a scenario has no bearing on how Cucumber will execute it, but we think it makes for better documentation to talk about the behaviour, rather than just 
+referring to bug numbers or stories in an external issue tracker system.
+
+===== We moved the bug number to the scenario's description. Where else could we have put it?
+
+* Left it in the scenario name (*Correct*)
+* A comment above the scenario (*Correct*)
+* A tag (*Correct*)
+* The first step of the scenario
+* A DataTable
+
+Explanation:
+
+There are many different places in Gherkin we could put references like this. We like using the Description especially because some reporting tools will actually
+render links, so if you use https://daringfireball.net/projects/markdown/[Markdown] in the description you can click a link through to your issue tracker.
+
+===== Why was it required for us to change the values in the scenario?
+
+* It wasn't, but we did it to make it more expressive (*Correct*)
+* For performance
+* Cucumber would not be able to afford to buy 30 credits
+* To reuse existing step defintions
+* 30 credits was too cheap
+
+Explanation:
+
+This change was a minor refinement, and certainly not required. We did it because we always like to think about the person who will find this scenario
+failing many months from now, and we want to make it as easy as possible for them to grasp what's wrong. Arbitrary values like "30" and "25" can be distracting.
