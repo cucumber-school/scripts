@@ -10895,8 +10895,60 @@ Randomized with seed 42310</code></pre>
 </div>
 <div class="sect3">
 <h4 id="_lesson_4_questions_6">10.4.1. Lesson 4 - Questions</h4>
-<div class="paragraph">
-<p>TODO&#8230;&#8203;</p>
+<div class="sect4">
+<h5 id="_why_did_we_add_a_test_for_mentioning_the_word_buy_many_times_if_we_already_had_that_tested_on_our_scenarios">Why did we add a test for mentioning the word <code>buy</code> many times if we already had that tested on our scenarios?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Because we don&#8217;t really trust our scenarios</p>
+</li>
+<li>
+<p>Because we want to have insurance at the unit test level that everything is workin as we expect (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_did_we_remove_the_bug_reference_from_our_scenario">Why did we remove the bug reference from our scenario?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>It&#8217;s now outdated, since the bug has been fixed (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_was_it_ok_to_remove_the_todo_tag_from_scenario_once_we_fixed_the_bug">Was it OK to remove the <code>@todo</code> tag from scenario once we fixed the bug?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>No, we should have left it in, since we want that specific test to be ignored when we run the full test suite</p>
+</li>
+<li>
+<p>Yes, since it&#8217;s not something we need to fix any more (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Yes, since we&#8217;re not using the <code>@todo</code> tag anymore in our project</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_why_did_we_run_just_unit_tests_at_first_and_later_the_whole_suite_once_we_fixed_the_bug">Why did we run just unit tests at first and  later the whole suite once we fixed the bug?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Because we wanted to make sure that the fix was working with a fast suite test first (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Because we like Ice-Cones</p>
+</li>
+<li>
+<p>Because Cucumber won&#8217;t run unless we run the unit tests before</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -11008,8 +11060,53 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 </div>
 <div class="sect3">
 <h4 id="_lesson_5_questions_5">10.5.1. Lesson 5 - Questions</h4>
-<div class="paragraph">
-<p>TODO&#8230;&#8203;</p>
+<div class="sect4">
+<h5 id="_if_we_find_an_untested_edge_case_we_didnt_expect_to_find_in_our_code_what_should_we_do">If we find an untested edge case we didn&#8217;t expect to find in our code. What should we do?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Remove the feature</p>
+</li>
+<li>
+<p>Leave the feature in</p>
+</li>
+<li>
+<p>Talk to the product owner to ensure the code is doing what&#8217;s expected (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_once_we_get_an_answer_what_do_we_do_next">Once we get an answer, what do we do next?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Refactor the code in order to make it more readable</p>
+</li>
+<li>
+<p>Add a test to ensure we don&#8217;t have regresions (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>File a complaint about the developer who came before us</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_is_it_necessary_to_run_the_whole_test_suite_once_we_know_the_unit_tests_are_passing_with_the_new_feature_in">Is it necessary to run the whole test suite once we know the unit tests are passing with the new feature in?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Yes, we always want to make sure we didn&#8217;t break something at a distance (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Nah, we only changed a small amount of code</p>
+</li>
+<li>
+<p>No, if the unit tests passed, that&#8217;s enough for us</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -11054,8 +11151,21 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 </div>
 <div class="sect3">
 <h4 id="_lesson_6_questions_2">10.6.1. Lesson 6 - Questions</h4>
-<div class="paragraph">
-<p>TODO&#8230;&#8203;</p>
+<div class="sect4">
+<h5 id="_do_we_need_to_keep_a_scenario_and_a_unit_test_that_test_the_same_code">Do we need to keep a scenario AND a unit test that test the same code?</h5>
+<div class="ulist">
+<ul>
+<li>
+<p>Yes, always. This is called double-entry testing</p>
+</li>
+<li>
+<p>No! DRY!</p>
+</li>
+<li>
+<p>We decide by talking it though with our team and assessing the pros and cons of taking or leaving it (<strong>Correct</strong>)</p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -11093,7 +11203,7 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-07-15 12:56:38 -0700
+Last updated 2022-11-15 15:25:05 -0300
 </div>
 </div>
 </body>
