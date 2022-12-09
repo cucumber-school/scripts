@@ -10947,17 +10947,17 @@ knows what they need to do to fix it.</p>
 <div class="sect3">
 <h4 id="_lesson_3_questions_7">10.3.1. Lesson 3 - Questions</h4>
 <div class="sect4">
-<h5 id="_why_did_we_write_a_test_for_behaviour_that_had_already_been_implemented">Why did we write a test for behaviour that had already been implemented?</h5>
+<h5 id="_why_did_we_write_a_unit_test_for_behaviour_that_had_already_been_implemented">Why did we write a unit test for behaviour that had already been implemented?</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>When we are going to fix the bug, we want to make sure we don&#8217;t break existing behaviour (<strong>Correct</strong>)</p>
+<p>When we fix the bug, we want to make sure we don&#8217;t break existing behaviour (<strong>Correct</strong>)</p>
 </li>
 <li>
 <p>Our manager wants us to achieve 100% test coverage</p>
 </li>
 <li>
-<p>We&#8217;re getting paid by the hour so it gives us something to do to keep busy</p>
+<p>We&#8217;re getting paid by the hour so&#8230;&#8203; might was well keep busy!</p>
 </li>
 <li>
 <p>It will help us move from ice-cream-cone to pyramid (<strong>Correct</strong>)</p>
@@ -10972,7 +10972,7 @@ knows what they need to do to fix it.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_why_did_we_force_the_test_to_fail">Why did we force the test to fail?</h5>
+<h5 id="_why_did_we_force_the_unit_test_to_fail">Why did we force the unit test to fail?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -11139,7 +11139,7 @@ Expected: <b class="conum">(95)</b>
 <p>Aaannyway.</p>
 </div>
 <div class="paragraph">
-<p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@todo</code> tag.</p>
+<p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@wip</code> tag.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11198,16 +11198,32 @@ Expected: <b class="conum">(95)</b>
 <div class="sect3">
 <h4 id="_lesson_4_questions_7">10.4.1. Lesson 4 - Questions</h4>
 <div class="sect4">
-<h5 id="_why_did_we_add_a_test_for_mentioning_the_word_buy_many_times_if_we_already_had_that_tested_on_our_scenarios">Why did we add a test for mentioning the word <code>buy</code> many times if we already had that tested on our scenarios?</h5>
+<h5 id="_why_did_we_add_a_unit_test_for_mentioning_the_word_buy_several_times_if_we_already_had_that_tested_on_our_scenarios">Why did we add a unit test for mentioning the word <code>buy</code> several times if we already had that tested on our scenarios?</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Because we don&#8217;t really trust our scenarios</p>
+<p>We don&#8217;t really trust our scenarios</p>
 </li>
 <li>
-<p>Because we want to have insurance at the unit test level that everything is workin as we expect (<strong>Correct</strong>)</p>
+<p>We want to have confidence at the unit test level that everything is working as we expect (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>If this code ever gets a bug in the future, the unit test will give a clearer pointer as to where the problem is (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>This feels like an edge-case that belongs in a unit test (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>It&#8217;s generally best to write automated tests at the lowest level possible (<strong>Correct</strong>)</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>As we&#8217;ve repeated many times in this chapter, as much as we like Cucumber scenarios,
+we want you to have a solid, comprehensive base of unit tests.</p>
 </div>
 </div>
 <div class="sect4">
@@ -11215,41 +11231,83 @@ Expected: <b class="conum">(95)</b>
 <div class="ulist">
 <ul>
 <li>
-<p>It&#8217;s now outdated, since the bug has been fixed (<strong>Correct</strong>)</p>
+<p>It&#8217;s no longer relevant, since the bug has been fixed (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Our product owner doesn&#8217;t care about bugs</p>
+</li>
+<li>
+<p>It will make our Cucumber tests run faster</p>
+</li>
+<li>
+<p>We want to exclude this scenario from the main test run</p>
 </li>
 </ul>
 </div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Our product owner does care about bugs, but they don&#8217;t care about us documenting
+an old issue tracker reference for something that&#8217;s working. Your product owner might
+be different, and it&#8217;s important to listen to their preferences and reflect them in the
+way you write your feature files.</p>
+</div>
 </div>
 <div class="sect4">
-<h5 id="_was_it_ok_to_remove_the_todo_tag_from_scenario_once_we_fixed_the_bug">Was it OK to remove the <code>@todo</code> tag from scenario once we fixed the bug?</h5>
+<h5 id="_was_it_ok_to_remove_the_wip_tag_from_scenario_once_we_fixed_the_bug">Was it OK to remove the <code>@wip</code> tag from scenario once we fixed the bug?</h5>
 <div class="ulist">
 <ul>
 <li>
 <p>No, we should have left it in, since we want that specific test to be ignored when we run the full test suite</p>
 </li>
 <li>
-<p>Yes, since it&#8217;s not something we need to fix any more (<strong>Correct</strong>)</p>
+<p>Yes, since it&#8217;s not something we&#8217;re working on anymore (<strong>Correct</strong>)</p>
 </li>
 <li>
-<p>Yes, since we&#8217;re not using the <code>@todo</code> tag anymore in our project</p>
+<p>Yes, since we&#8217;re not using the <code>@wip</code> tag anymore in our project</p>
+</li>
+<li>
+<p>Cucumber has a know bug with the <code>@wip</code> tag</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>There&#8217;s nothing magical about the <code>@wip</code> tag, it&#8217;s just a convention we like to use to
+tag the scenario we&#8217;re currently working on so we can run it in isolcation if we want to.</p>
+</div>
+<div class="paragraph">
+<p>Now that it&#8217;s no longer "Work in Progress" it could cause confusion to leave that tag on there,
+so we cleaned it off.</p>
 </div>
 </div>
 <div class="sect4">
-<h5 id="_why_did_we_run_just_unit_tests_at_first_and_later_the_whole_suite_once_we_fixed_the_bug">Why did we run just unit tests at first and  later the whole suite once we fixed the bug?</h5>
+<h5 id="_why_did_we_run_just_unit_tests_at_first_and_later_the_whole_suite_once_we_fixed_the_bug">Why did we run just unit tests at first and later the whole suite once we fixed the bug?</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Because we wanted to make sure that the fix was working with a fast suite test first (<strong>Correct</strong>)</p>
+<p>We wanted to get fast feedback from the unit tests first (<strong>Correct</strong>)</p>
 </li>
 <li>
-<p>Because we like Ice-Cones</p>
+<p>We like ice cream cones</p>
 </li>
 <li>
-<p>Because Cucumber won&#8217;t run unless we run the unit tests before</p>
+<p>Cucumber won&#8217;t run unless we run the unit tests first</p>
+</li>
+<li>
+<p>Running the whole suite might have given us confusing results. We want to focus on fixing one problem at a time (<strong>Correct</strong>)</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>The process of TDD/BDD is very patient and deliberate. It helps you to stay focussed on one
+problem at a time. We find this a relaxing way to work!</p>
 </div>
 </div>
 </div>
@@ -11414,19 +11472,29 @@ Expected: <b class="conum">(95)</b>
 <div class="sect3">
 <h4 id="_lesson_5_questions_6">10.5.1. Lesson 5 - Questions</h4>
 <div class="sect4">
-<h5 id="_if_we_find_an_untested_edge_case_we_didnt_expect_to_find_in_our_code_what_should_we_do">If we find an untested edge case we didn&#8217;t expect to find in our code. What should we do?</h5>
+<h5 id="_if_we_find_an_untested_edge_case_we_didnt_expect_in_our_code_what_should_we_do">If we find an untested edge case we didn&#8217;t expect in our code, what should we do?</h5>
 <div class="ulist">
 <ul>
 <li>
-<p>Remove the feature</p>
+<p>Remove the behaviour; it shouldn&#8217;t be there</p>
 </li>
 <li>
-<p>Leave the feature in</p>
+<p>Leave it where it is, and walk away, slowly; hope nobody notices</p>
 </li>
 <li>
-<p>Talk to the product owner to ensure the code is doing what&#8217;s expected (<strong>Correct</strong>)</p>
+<p>Talk to the product owner to find out whether the code is doing what&#8217;s expected (<strong>Correct</strong>)</p>
+</li>
+<li>
+<p>Add a unit test for the current behaviour and move on</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Ultimately, unless this code is never going to change again, we&#8217;ll probably want to retro-fit
+a new test to the behaviour, but first we need to determine what that behaviour should be.</p>
 </div>
 </div>
 <div class="sect4">
@@ -11442,7 +11510,17 @@ Expected: <b class="conum">(95)</b>
 <li>
 <p>File a complaint about the developer who came before us</p>
 </li>
+<li>
+<p>Debate with the product owner to get them to change their mind</p>
+</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Unless we&#8217;re really confident that the behaviour we&#8217;ve discovered is correct, we&#8217;d always
+want to check with our product owner first, before we make a decision what to do next.</p>
 </div>
 </div>
 <div class="sect4">
@@ -11450,7 +11528,7 @@ Expected: <b class="conum">(95)</b>
 <div class="ulist">
 <ul>
 <li>
-<p>Yes, we always want to make sure we didn&#8217;t break something at a distance (<strong>Correct</strong>)</p>
+<p>Yes, we always want to make sure we didn&#8217;t break something else by accident (<strong>Correct</strong>)</p>
 </li>
 <li>
 <p>Nah, we only changed a small amount of code</p>
@@ -11458,7 +11536,18 @@ Expected: <b class="conum">(95)</b>
 <li>
 <p>No, if the unit tests passed, that&#8217;s enough for us</p>
 </li>
+<li>
+<p>It will take too long. Better leave it to someone else to run them.</p>
+</li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>Running the whole suite of tests is a great way to give yourself a calm feeling that
+everything is working. It&#8217;s a good thing to do before you call anything done, and check
+in your code.</p>
 </div>
 </div>
 </div>
@@ -11512,12 +11601,24 @@ Expected: <b class="conum">(95)</b>
 <p>Yes, always. This is called double-entry testing</p>
 </li>
 <li>
-<p>No! DRY!</p>
+<p>No! Do Not Repeat Yourself!</p>
 </li>
 <li>
-<p>We decide by talking it though with our team and assessing the pros and cons of taking or leaving it (<strong>Correct</strong>)</p>
+<p>We decide by talking it though with our team and assessing the pros and cons of both options (<strong>Correct</strong>)</p>
 </li>
 </ul>
+</div>
+<div class="paragraph">
+<p>Explanation:</p>
+</div>
+<div class="paragraph">
+<p>This is really a subjective decision. Ideally we&#8217;d have as few scenarios as possible, but
+because not everyone can read unit tests, we need to keep enough scenarios around for
+everyone on the team to feel confident that the whole set of behaviour is being tested.</p>
+</div>
+<div class="paragraph">
+<p>Sometimes that&#8217;s a line that can change over time, as the folks on the team get comfortable
+with autoamted testing, from having seen fewer bugs appearing.</p>
 </div>
 </div>
 </div>
@@ -11556,7 +11657,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-11-15 15:25:05 -0300
+Last updated 2022-07-15 12:56:38 -0700
 </div>
 </div>
 </body>

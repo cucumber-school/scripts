@@ -3,5 +3,14 @@
 ===== Do we need to keep a scenario AND a unit test that test the same code?
 
 * Yes, always. This is called double-entry testing
-* No! DRY!
-* We decide by talking it though with our team and assessing the pros and cons of taking or leaving it (*Correct*)
+* No! Do Not Repeat Yourself!
+* We decide by talking it though with our team and assessing the pros and cons of both options (*Correct*)
+
+Explanation:
+
+This is really a subjective decision. Ideally we'd have as few scenarios as possible, but
+because not everyone can read unit tests, we need to keep enough scenarios around for
+everyone on the team to feel confident that the whole set of behaviour is being tested.
+
+Sometimes that's a line that can change over time, as the folks on the team get comfortable
+with autoamted testing, from having seen fewer bugs appearing.

@@ -1,22 +1,55 @@
 ==== Lesson 4 - Questions
 
-===== Why did we add a test for mentioning the word `buy` many times if we already had that tested on our scenarios?
+===== Why did we add a unit test for mentioning the word `buy` several times if we already had that tested on our scenarios?
 
-* Because we don't really trust our scenarios
-* Because we want to have insurance at the unit test level that everything is workin as we expect (*Correct*)
+* We don't really trust our scenarios
+* We want to have confidence at the unit test level that everything is working as we expect (*Correct*)
+* If this code ever gets a bug in the future, the unit test will give a clearer pointer as to where the problem is (*Correct*)
+* This feels like an edge-case that belongs in a unit test (*Correct*)
+* It's generally best to write automated tests at the lowest level possible (*Correct*)
+
+Explanation:
+
+As we've repeated many times in this chapter, as much as we like Cucumber scenarios,
+we want you to have a solid, comprehensive base of unit tests.
 
 ===== Why did we remove the bug reference from our scenario?
 
-* It's now outdated, since the bug has been fixed (*Correct*)
+* It's no longer relevant, since the bug has been fixed (*Correct*)
+* Our product owner doesn't care about bugs
+* It will make our Cucumber tests run faster
+* We want to exclude this scenario from the main test run
 
-===== Was it OK to remove the `@todo` tag from scenario once we fixed the bug?
+Explanation:
+
+Our product owner does care about bugs, but they don't care about us documenting
+an old issue tracker reference for something that's working. Your product owner might
+be different, and it's important to listen to their preferences and reflect them in the 
+way you write your feature files.
+
+===== Was it OK to remove the `@wip` tag from scenario once we fixed the bug?
 
 * No, we should have left it in, since we want that specific test to be ignored when we run the full test suite
-* Yes, since it's not something we need to fix any more (*Correct*)
-* Yes, since we're not using the `@todo` tag anymore in our project
+* Yes, since it's not something we're working on anymore (*Correct*)
+* Yes, since we're not using the `@wip` tag anymore in our project
+* Cucumber has a know bug with the `@wip` tag
 
-===== Why did we run just unit tests at first and  later the whole suite once we fixed the bug?
+Explanation:
 
-* Because we wanted to make sure that the fix was working with a fast suite test first (*Correct*)
-* Because we like Ice-Cones
-* Because Cucumber won't run unless we run the unit tests before
+There's nothing magical about the `@wip` tag, it's just a convention we like to use to 
+tag the scenario we're currently working on so we can run it in isolcation if we want to.
+
+Now that it's no longer "Work in Progress" it could cause confusion to leave that tag on there,
+so we cleaned it off.
+
+===== Why did we run just unit tests at first and later the whole suite once we fixed the bug?
+
+* We wanted to get fast feedback from the unit tests first (*Correct*)
+* We like ice cream cones
+* Cucumber won't run unless we run the unit tests first
+* Running the whole suite might have given us confusing results. We want to focus on fixing one problem at a time (*Correct*)
+
+Explanation:
+
+The process of TDD/BDD is very patient and deliberate. It helps you to stay focussed on one
+problem at a time. We find this a relaxing way to work!
