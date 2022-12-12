@@ -10156,7 +10156,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;re going to start work on the scenario now, so let&#8217;s change that tag to a <code>@wip</code> to indicate that it&#8217;s "Work In Progress":</p>
+<p>We&#8217;re going to start work on the scenario now, so let&#8217;s change that tag to a `@wip` to indicate that it&#8217;s "Work In Progress":</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10635,7 +10635,7 @@ knows what they need to do to fix it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We run our unit test suite  and &#8230;&#8203; it passes.</p>
+<p>We run our unit test suite and &#8230;&#8203; it passes.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10688,7 +10688,6 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ............
 
 Finished <span class="k">in </span>0.00879 seconds <span class="o">(</span>files took 0.06039 seconds to load<span class="o">)</span>
@@ -10788,7 +10787,6 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 .......F.....
 
 Failures:
@@ -10830,7 +10828,6 @@ rspec ./spec/network_spec.rb:83 <span class="c"># Shouty::Network credits deduct
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 .............
 
 Finished <span class="k">in </span>0.00798 seconds <span class="o">(</span>files took 0.05958 seconds to load<span class="o">)</span>
@@ -10860,24 +10857,13 @@ Finished <span class="k">in </span>0.00798 seconds <span class="o">(</span>files
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rake
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 bundle <span class="nb">exec </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 .............
 
 Finished <span class="k">in </span>0.00609 seconds <span class="o">(</span>files took 0.06971 seconds to load<span class="o">)</span>
 13 examples, 0 failures
 
 bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
-Using the default profile...
 .........................................
 
 7 scenarios <span class="o">(</span>7 passed<span class="o">)</span>
@@ -11070,7 +11056,6 @@ problem at a time. We find this a relaxing way to work!</p>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has beeell_checker)'</span> instead.
 ........F.....
 
 Failures:
@@ -11106,7 +11091,6 @@ rspec ./spec/network_spec.rb:95 <span class="c"># Shouty::Network credits deduct
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ..............
 
 Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files took 0.08364 seconds to load<span class="o">)</span>
@@ -11304,7 +11288,7 @@ with autoamted testing, from having seen fewer bugs appearing.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-07-15 12:56:38 -0700
+Last updated 2022-11-15 15:25:05 -0300
 </div>
 </div>
 </body>

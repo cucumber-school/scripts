@@ -10147,7 +10147,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>Let&#8217;s start by running our failing scenario.</p>
 </div>
 <div class="paragraph">
-<p>We have it marked with a <code>@todo</code> tag on it,<a href="#shot-525" id="shot-525" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a> but those scenarios are filtered out in our default <code>bundle exec rake</code> command.</p>
+<p>We have it marked with a <code>@todo</code> tag on it,<a href="#shot-525" id="shot-525" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> but those scenarios are filtered out in our default <code>bundle exec rake</code> command.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10156,7 +10156,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>We&#8217;re going to start work on the scenario now, so let&#8217;s change that tag to a <code>@wip</code> to indicate that it&#8217;s "Work In Progress":</p>
+<p>We&#8217;re going to start work on the scenario now, so let&#8217;s change that tag to a `@wip`<a href="#shot-526" id="shot-526" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a> to indicate that it&#8217;s "Work In Progress":</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10168,7 +10168,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>Now when we run our regular <code>bundle exec rake</code> command, we should see the failing scenario: <a href="#shot-526" id="shot-526" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
+<p>Now when we run our regular <code>bundle exec rake</code> command, we should see the failing scenario: <a href="#shot-527" id="shot-527" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10179,7 +10179,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>OK. We&#8217;ll work outside-in and start by tidying up the Gherkin specification.</p>
 </div>
 <div class="paragraph">
-<p>Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system.<a href="#shot-527" id="shot-527" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> This doesn&#8217;t make for very good documentation about the intended behaviour.</p>
+<p>Right now, the scenario is still in the raw form it was in when the bug was first reported, with a name that references an ID in our bug tracking system.<a href="#shot-528" id="shot-528" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> This doesn&#8217;t make for very good documentation about the intended behaviour.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10194,7 +10194,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>It also isn&#8217;t sitting under the right rule.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s start by moving it here, under the rule about charging for mentioning the word "buy" <a href="#shot-528" id="shot-528" title="move scenario under first rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: move scenario under first rule</a></p>
+<p>Let&#8217;s start by moving it here, under the rule about charging for mentioning the word "buy" <a href="#shot-529" id="shot-529" title="move scenario under first rule" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5: move scenario under first rule</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10225,7 +10225,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 <p>Now let&#8217;s find a better name for the scenario.</p>
 </div>
 <div class="paragraph">
-<p>Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"? <a href="#shot-529" id="shot-529" title="change the scenario title" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: change the scenario title</a><a href="#shot-530" id="shot-530" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: run tests</a></p>
+<p>Using our Friends Episode naming convention that we introduced in Chapter 7, we could call it something like "(the one where Sean) mentions “buy” several times in one shout"? <a href="#shot-530" id="shot-530" title="change the scenario title" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6: change the scenario title</a><a href="#shot-531" id="shot-531" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7: run tests</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10233,13 +10233,13 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>You might be worried about losing this bug ID. We could keep it in a comment <a href="#shot-531" id="shot-531" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, a tag <a href="#shot-532" id="shot-532" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 </a>, or in the description of the Scenario.</p>
+<p>You might be worried about losing this bug ID. We could keep it in a comment <a href="#shot-532" id="shot-532" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a>, a tag <a href="#shot-533" id="shot-533" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a>, or in the description of the Scenario.</p>
 </div>
 <div class="paragraph">
 <p>Just like under a <code>Feature</code> keyword, you can write any arbitrary text you want beneath a <code>Scenario</code> keyword, before the first <code>Given</code>, <code>When</code> or <code>Then</code> keyword.</p>
 </div>
 <div class="paragraph">
-<p>So let&#8217;s do that. <a href="#shot-533" id="shot-533" title="write the bug number in the scenario description" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8: write the bug number in the scenario description</a></p>
+<p>So let&#8217;s do that. <a href="#shot-534" id="shot-534" title="write the bug number in the scenario description" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10: write the bug number in the scenario description</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10249,7 +10249,7 @@ Finished <span class="k">in </span>0.00935 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits,<a href="#shot-534" id="shot-534" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a> and end him with 95,<a href="#shot-535" id="shot-535" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 10</a> it more clearly illustrates the rule that only five credits should be deducted. <a href="#shot-536" id="shot-536" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11: run tests</a></p>
+<p>We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits,<a href="#shot-535" id="shot-535" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 11</a> and end him with 95,<a href="#shot-536" id="shot-536" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 12</a> it more clearly illustrates the rule that only five credits should be deducted. <a href="#shot-537" id="shot-537" title="run tests" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 13: run tests</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10425,7 +10425,7 @@ failing many months from now, and we want to make it as easy as possible for the
 <p>Now that we have tidied up the scenario, we need to find the source of our bug.</p>
 </div>
 <div class="paragraph">
-<p>We have a passing unit test suite. <a href="#shot-537" id="shot-537" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> So this doesn&#8217;t give us any clues as to where the problem lies in the code.</p>
+<p>We have a passing unit test suite. <a href="#shot-538" id="shot-538" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> So this doesn&#8217;t give us any clues as to where the problem lies in the code.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10437,10 +10437,10 @@ Finished <span class="k">in </span>0.008 seconds <span class="o">(</span>files t
 </div>
 </div>
 <div class="paragraph">
-<p>Since we know there&#8217;s a bug, we should have at least one unit test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests. <a href="#shot-538" id="shot-538" title="Scroll through all the unit tests for the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Scroll through all the unit tests for the Network class</a></p>
+<p>Since we know there&#8217;s a bug, we should have at least one unit test failing. So that&#8217;s an indication that we might be missing a test. Lets see how we&#8217;re testing the mention of the word "buy" in the lower level tests. <a href="#shot-539" id="shot-539" title="Scroll through all the unit tests for the Network class" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2: Scroll through all the unit tests for the Network class</a></p>
 </div>
 <div class="paragraph">
-<p>Oh my! We have absolutely no tests for this feature on our unit test suite! <a href="#shot-539" id="shot-539" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> The only test here about credits is this one for charging for shouts that are over 180 characters. We&#8217;ll need to remedy this in order to triage our problem.</p>
+<p>Oh my! We have absolutely no tests for this feature on our unit test suite! <a href="#shot-540" id="shot-540" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> The only test here about credits is this one for charging for shouts that are over 180 characters. We&#8217;ll need to remedy this in order to triage our problem.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10617,7 +10617,7 @@ knows what they need to do to fix it.</p>
 <div class="sect2">
 <h3 id="_retrofit_unit_test">10.3. Retrofit unit test</h3>
 <div class="paragraph">
-<p>Lets add a unit test where Sean shouts a message using the word "buy",<a href="#shot-540" id="shot-540" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a> and then we assert that five credits have been deducted.<a href="#shot-541" id="shot-541" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>Lets add a unit test where Sean shouts a message using the word "buy",<a href="#shot-541" id="shot-541" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a><a href="#shot-542" id="shot-542" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a> and then we assert that five credits have been deducted.<a href="#shot-543" id="shot-543" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10635,7 +10635,7 @@ knows what they need to do to fix it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We run our unit test suite <a href="#shot-542" id="shot-542" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> and &#8230;&#8203; it passes.<a href="#shot-543" id="shot-543" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p>We run our unit test suite and &#8230;&#8203; it passes.<a href="#shot-544" id="shot-544" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10650,7 +10650,7 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 <p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
 </div>
 <div class="paragraph">
-<p>We could be adding a spec that tests the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. <a href="#shot-544" id="shot-544" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>We could be adding a spec that tests the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. <a href="#shot-545" id="shot-545" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10661,7 +10661,7 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>Then we run the unit tests and watch it fail.<a href="#shot-545" id="shot-545" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>Then we run the unit tests and watch it fail.<a href="#shot-546" id="shot-546" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10669,10 +10669,10 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>And we can actually see it fails for the right reasons: no credits have been deducted. <a href="#shot-546" id="shot-546" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>And we can actually see it fails for the right reasons: no credits have been deducted. <a href="#shot-547" id="shot-547" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="paragraph">
-<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.<a href="#shot-547" id="shot-547" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
+<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.<a href="#shot-548" id="shot-548" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10683,12 +10683,11 @@ Finished <span class="k">in </span>0.00854 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>And run the entire suite to make sure everything&#8217;s still in place.<a href="#shot-548" id="shot-548" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
+<p>And run the entire suite to make sure everything&#8217;s still in place.<a href="#shot-549" id="shot-549" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ............
 
 Finished <span class="k">in </span>0.00879 seconds <span class="o">(</span>files took 0.06039 seconds to load<span class="o">)</span>
@@ -10762,10 +10761,10 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
 <p>Now that we&#8217;ve added a unit test for charging when we mention the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll just copy and paste the previous spec and add buy three times.<a href="#shot-549" id="shot-549" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>We&#8217;ll just copy and paste the previous spec and add buy three times.<a href="#shot-550" id="shot-550" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="paragraph">
-<p>The result should be the same.<a href="#shot-550" id="shot-550" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>The result should be the same.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10783,12 +10782,11 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
 </div>
 </div>
 <div class="paragraph">
-<p>Now we make sure it fails.<a href="#shot-551" id="shot-551" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
+<p>Now we make sure it fails.<a href="#shot-551" id="shot-551" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 .......F.....
 
 Failures:
@@ -10811,7 +10809,7 @@ rspec ./spec/network_spec.rb:83 <span class="c"># Shouty::Network credits deduct
 </div>
 </div>
 <div class="paragraph">
-<p>With this in place, we can focus on fixing the bug.<a href="#shot-552" id="shot-552" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p>With this in place, we can focus on fixing the bug.<a href="#shot-552" id="shot-552" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10825,12 +10823,11 @@ rspec ./spec/network_spec.rb:83 <span class="c"># Shouty::Network credits deduct
 <p>Removing this <code>g</code> flag means the regular expression won&#8217;t match "globally" - so it will return just the first match, rather than all of them.</p>
 </div>
 <div class="paragraph">
-<p>And run the specs.<a href="#shot-553" id="shot-553" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>And run the specs.<a href="#shot-553" id="shot-553" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 .............
 
 Finished <span class="k">in </span>0.00798 seconds <span class="o">(</span>files took 0.05958 seconds to load<span class="o">)</span>
@@ -10844,7 +10841,7 @@ Finished <span class="k">in </span>0.00798 seconds <span class="o">(</span>files
 <p>Aaannyway.</p>
 </div>
 <div class="paragraph">
-<p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@wip</code> tag.</p>
+<p>With our unit test suit all green, we&#8217;re confident to remove the BUG reference and the <code>@wip</code> tag.<a href="#shot-554" id="shot-554" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10855,29 +10852,18 @@ Finished <span class="k">in </span>0.00798 seconds <span class="o">(</span>files
 </div>
 </div>
 <div class="paragraph">
-<p>And we can run the full test suite to make sure everything&#8217;s working as expected.<a href="#shot-554" id="shot-554" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>And we can run the full test suite to make sure everything&#8217;s working as expected.<a href="#shot-555" id="shot-555" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rake
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 bundle <span class="nb">exec </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 .............
 
 Finished <span class="k">in </span>0.00609 seconds <span class="o">(</span>files took 0.06971 seconds to load<span class="o">)</span>
 13 examples, 0 failures
 
 bundle <span class="nb">exec </span>cucumber <span class="nt">--tags</span> <span class="s1">'not @todo'</span> <span class="nt">--format</span> progress
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
-Using the default profile...
 .........................................
 
 7 scenarios <span class="o">(</span>7 passed<span class="o">)</span>
@@ -11019,7 +11005,7 @@ problem at a time. We find this a relaxing way to work!</p>
 <p>Sometimes that helps us to see things we hadn&#8217;t anticipated.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s take a look at the <code>deduct_credits</code> method.<a href="#shot-555" id="shot-555" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>Let&#8217;s take a look at the <code>deduct_credits</code> method.<a href="#shot-556" id="shot-556" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11030,7 +11016,7 @@ problem at a time. We find this a relaxing way to work!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>There&#8217;s something on this method that caught our attention: the regex we&#8217;re using is case sensitive.<a href="#shot-556" id="shot-556" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>There&#8217;s something on this method that caught our attention: the regex we&#8217;re using is case sensitive.<a href="#shot-557" id="shot-557" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11044,10 +11030,10 @@ problem at a time. We find this a relaxing way to work!</p>
 <p>To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.</p>
 </div>
 <div class="paragraph">
-<p>So lets first add a spec.<a href="#shot-557" id="shot-557" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
+<p>So lets first add a spec.<a href="#shot-558" id="shot-558" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll copy the same spec we copied last time,<a href="#shot-558" id="shot-558" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> and capitalize the word "Buy".<a href="#shot-559" id="shot-559" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>We&#8217;ll copy the same spec we copied last time,<a href="#shot-559" id="shot-559" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> and capitalize the word "Buy".<a href="#shot-560" id="shot-560" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11065,12 +11051,11 @@ problem at a time. We find this a relaxing way to work!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we run the spec to watch it fail.<a href="#shot-560" id="shot-560" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>Now we run the spec to watch it fail.<a href="#shot-561" id="shot-561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has beeell_checker)'</span> instead.
 ........F.....
 
 Failures:
@@ -11093,7 +11078,7 @@ rspec ./spec/network_spec.rb:95 <span class="c"># Shouty::Network credits deduct
 </div>
 </div>
 <div class="paragraph">
-<p>Now we write the code that&#8217;ll make it pass.<a href="#shot-561" id="shot-561" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>Now we write the code that&#8217;ll make it pass.<a href="#shot-562" id="shot-562" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11101,12 +11086,11 @@ rspec ./spec/network_spec.rb:95 <span class="c"># Shouty::Network credits deduct
 </div>
 </div>
 <div class="paragraph">
-<p>And finally, we run the entire test suite to watch that beautiful green.<a href="#shot-562" id="shot-562" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
+<p>And finally, we run the entire test suite to watch that beautiful green.<a href="#shot-563" id="shot-563" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>rspec
-Calling <span class="sb">`</span>DidYouMean::SPELL_CHECKERS.merge!<span class="o">(</span>error_name <span class="o">=&gt;</span> spell_checker<span class="o">)</span><span class="s1">' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)'</span> instead.
 ..............
 
 Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files took 0.08364 seconds to load<span class="o">)</span>
@@ -11205,7 +11189,7 @@ in your code.</p>
 <p>Finally, we can sit down with Paula and Tammy and discuss the fact that we have this edge-case tested both at the unit and feature levels. Do we need to keep both tests?</p>
 </div>
 <div class="paragraph">
-<p>Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.<a href="#shot-563" id="shot-563" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.<a href="#shot-564" id="shot-564" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11304,7 +11288,7 @@ with autoamted testing, from having seen fewer bugs appearing.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2022-07-15 12:56:38 -0700
+Last updated 2022-11-15 15:25:05 -0300
 </div>
 </div>
 </body>

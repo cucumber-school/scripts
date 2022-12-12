@@ -2,7 +2,7 @@
 
 Let's start by running our failing scenario.
 
-We have it marked with a `@todo` tag on it,shot::[2] but those scenarios are filtered out in our default `bundle exec rake` command.
+We have it marked with a `@todo` tag on it,shot::[1] but those scenarios are filtered out in our default `bundle exec rake` command.
 
 [source,gherkin]
 ----
@@ -10,7 +10,7 @@ We have it marked with a `@todo` tag on it,shot::[2] but those scenarios are fil
     Scenario: BUG #2789
 ----
 
-We're going to start work on the scenario now, so let's change that tag to a `@wip` to indicate that it's "Work In Progress":
+We're going to start work on the scenario now, so let's change that tag to a `@wip`shot::[2] to indicate that it's "Work In Progress":
 
 [source,gherkin]
 ----
@@ -51,18 +51,18 @@ Using our Friends Episode naming convention that we introduced in Chapter 7, we 
 include::../code/ruby/02-rename-scenario/features/premium_shouts.feature[lines=20]
 ----
 
-You might be worried about losing this bug ID. We could keep it in a comment shot::[], a tag shot::[], or in the description of the Scenario.
+You might be worried about losing this bug ID. We could keep it in a comment shot::[8], a tag shot::[9], or in the description of the Scenario.
 
 Just like under a `Feature` keyword, you can write any arbitrary text you want beneath a `Scenario` keyword, before the first `Given`, `When` or `Then` keyword. 
 
-So let's do that. shot::[8, write the bug number in the scenario description, run tests]
+So let's do that. shot::[10, write the bug number in the scenario description, run tests]
 
 [source,gherkin]
 ----
 include::../code/ruby/02-rename-scenario/features/premium_shouts.feature[lines=19..22]
 ----
 
-We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits,shot::[9] and end him with 95,shot::[10] it more clearly illustrates the rule that only five credits should be deducted. shot::[11, run tests]
+We think the values in the example could be changed to make it a little more expressive. If we start Sean off with 100 credits,shot::[11] and end him with 95,shot::[12] it more clearly illustrates the rule that only five credits should be deducted. shot::[13, run tests]
 
 [source,gherkin]
 ----

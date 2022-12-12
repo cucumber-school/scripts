@@ -4,19 +4,18 @@ Now that we've added a unit test for charging when we mention the word "buy", we
 
 We'll just copy and paste the previous spec and add buy three times.shot::[1]
 
-The result should be the same.shot::[2]
+The result should be the same.
 
 [source,rb]
 ----
 include::../code/ruby/07-write-test-for-mentioning-the-word-buy-more-than-once/spec/network_spec.rb[lines=83..93]
 ----
 
-Now we make sure it fails.shot::[3]
+Now we make sure it fails.shot::[2]
 
 [source,sh]
 ----
 $ rspec
-Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
 .......F.....
 
 Failures:
@@ -38,7 +37,7 @@ Failed examples:
 rspec ./spec/network_spec.rb:83 # Shouty::Network credits deducts 5 credits even if you mention the word 'buy' several times
 ----
 
-With this in place, we can focus on fixing the bug.shot::[4]
+With this in place, we can focus on fixing the bug.shot::[3]
 
 [source,rb]
 ----
@@ -47,12 +46,11 @@ include::../code/ruby/08-fix-the-bug/lib/shouty.rb[lines=54..57]
 
 Removing this `g` flag means the regular expression won't match "globally" - so it will return just the first match, rather than all of them.
 
-And run the specs.shot::[5]
+And run the specs.shot::[4]
 
 [source,sh]
 ----
 $ rspec
-Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
 .............
 
 Finished in 0.00798 seconds (files took 0.05958 seconds to load)
@@ -62,7 +60,7 @@ Well look at that. One character! Just one little extra character caused us to d
 
 Aaannyway.
 
-With our unit test suit all green, we're confident to remove the BUG reference and the `@wip` tag.
+With our unit test suit all green, we're confident to remove the BUG reference and the `@wip` tag.shot::[5]
 
 [source,gherkin]
 ----
@@ -74,24 +72,13 @@ And we can run the full test suite to make sure everything's working as expected
 [source,sh]
 ----
 $ rake
-Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
 bundle exec rspec
-Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
-Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
 .............
 
 Finished in 0.00609 seconds (files took 0.06971 seconds to load)
 13 examples, 0 failures
 
 bundle exec cucumber --tags 'not @todo' --format progress
-Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
-Calling `DidYouMean::SPELL_CHECKERS.merge!(error_name => spell_checker)' has been deprecated
-. Please call `DidYouMean.correct_error(error_name, spell_checker)' instead.
-Using the default profile...
 .........................................
 
 7 scenarios (7 passed)
