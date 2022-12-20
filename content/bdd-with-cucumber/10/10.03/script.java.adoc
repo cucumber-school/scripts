@@ -7,7 +7,7 @@ Lets add a unit test where Sean shouts a message using the word "buy",shot::[1] 
 include::../code/java/04-retrofit-unit-test-about-mentioning-buy/shouty/src/test/java/shouty/NetworkTest.java[lines=81..92]
 ----
 
-We run our unit test suite shot::[3] and ... it passes.shot::[4]
+We run our unit test suite ... it passes.shot::[3]
 
 [source,sh]
 ----
@@ -16,30 +16,30 @@ $ mvn test
 
 Writing a test that passes the first time it runs gives us no confidence. Remember: _Never trust an autommated test that you haven't seen fail_.
 
-We could be adding a spec that tests the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[5]
+We could be adding a spec that tests the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[4]
 
 [source,java]
 ----
 include::../code/java/05-make-buy-test-fail/shouty/src/main/java/shouty/Network.java[lines=33..41]
 ----
 
-Then we run the unit tests and watch it fail.shot::[6]
+Then we run the unit tests and watch it fail.shot::[5]
 
 [source,sh]
 ----
 $ mvn test
 ----
 
-And we can actually see it fails for the right reasons: no credits have been deducted. shot::[7]
+And we can actually see it fails for the right reasons: no credits have been deducted. shot::[6]
 
-Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[8]
+Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[7]
 
 [source,java]
 ----
 include::../code/java/06-make-buy-test-pass-again/shouty/src/main/java/shouty/Network.java[lines=33..41]
 ----
 
-And run the entire suite to make sure everything's still in place.shot::[9]
+And run the entire suite to make sure everything's still in place.shot::[8]
 
 [source,sh]
 ----

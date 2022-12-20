@@ -7,15 +7,11 @@ Lets add a unit test where Sean shouts a message using the word "buy",shot::[1] 
 include::../code/js/04-retrofit-unit-test-about-mentioning-buy/test/network.test.js[lines=89..99]
 ----
 
-We run our unit test suite shot::[3] and ... it passes.shot::[4]
+We run our unit test suite and ... it passes.shot::[3]
 
 [source,sh]
 ----
-$ npm test  
-
-> shouty@1.0.0 test
-> mocha test && cucumber-js --tags 'not @todo'
-
+$ npx mocha
 
 
   Network
@@ -25,8 +21,8 @@ $ npm test
     ✓ does not broadcast a message over 180 characters even if listener is in range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits for a shout over 180 characters
       ✓ deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 2 credits for a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -36,49 +32,39 @@ $ npm test
     ✓ can be moved to a different location
 
 
-  12 passing (22ms)
-
-...................................
-
-6 scenarios (6 passed)
-35 steps (35 passed)
-0m00.066s (executing steps: 0m00.005s)
+  12 passing (10ms)
 ----
 
 Writing a test that passes the first time it runs gives us no confidence. Remember: _Never trust an autommated test that you haven't seen fail_.
 
-We could be adding a spec that tests the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[5]
+We could be adding a spec that tests the wrong thing or that it tests nothing at all and we'd never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. shot::[4]
 
 [source,js]
 ----
 include::../code/js/05-make-buy-test-fail/src/shouty.js[lines=68..71]
 ----
 
-Then we run the unit tests and watch it fail.shot::[6]
+Then we run the unit tests and watch it fail.shot::[5]
 
 [source,sh]
 ----
-$ npm test
+$ npx mocha
 ----
 
-And we can actually see it fails for the right reasons: no credits have been deducted. shot::[7]
+And we can actually see it fails for the right reasons: no credits have been deducted. shot::[6]
 
-Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[8]
+Now that we're confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.shot::[7]
 
 [source,js]
 ----
 include::../code/js/06-make-buy-test-pass-again/src/shouty.js[lines=68..71]
 ----
 
-And run the entire suite to make sure everything's still in place.shot::[9]
+And run the entire suite to make sure everything's still in place.shot::[8]
 
 [source,sh]
 ----
-$ npm test
-
-> shouty@1.0.0 test
-> mocha test && cucumber-js --tags 'not @todo'
-
+$ npx mocha
 
 
   Network
@@ -88,8 +74,8 @@ $ npm test
     ✓ does not broadcast a message over 180 characters even if listener is in range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits for a shout over 180 characters
       ✓ deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 2 credits for a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -99,13 +85,7 @@ $ npm test
     ✓ can be moved to a different location
 
 
-  12 passing (15ms)
-
-...................................
-
-6 scenarios (6 passed)
-35 steps (35 passed)
-0m00.042s (executing steps: 0m00.004s)
+  12 passing (10ms)
 ----
 
 Alright, it seems we're finally in a position to be able to write a unit test to trap this bug.

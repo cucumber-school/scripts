@@ -10828,15 +10828,11 @@ knows what they need to do to fix it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We run our unit test suite  and &#8230;&#8203; it passes.</p>
+<p>We run our unit test suite and &#8230;&#8203; it passes.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -10846,8 +10842,8 @@ knows what they need to do to fix it.</p>
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -10857,13 +10853,7 @@ knows what they need to do to fix it.</p>
     ✓ can be moved to a different location
 
 
-  12 passing <span class="o">(</span>22ms<span class="o">)</span>
-
-...................................
-
-6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
-35 steps <span class="o">(</span>35 passed<span class="o">)</span>
-0m00.066s <span class="o">(</span>executing steps: 0m00.005s<span class="o">)</span></code></pre>
+  12 passing <span class="o">(</span>10ms<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10885,7 +10875,7 @@ knows what they need to do to fix it.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -10907,11 +10897,7 @@ knows what they need to do to fix it.</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -10921,8 +10907,8 @@ knows what they need to do to fix it.</p>
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -10932,13 +10918,7 @@ knows what they need to do to fix it.</p>
     ✓ can be moved to a different location
 
 
-  12 passing <span class="o">(</span>15ms<span class="o">)</span>
-
-...................................
-
-6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
-35 steps <span class="o">(</span>35 passed<span class="o">)</span>
-0m00.042s <span class="o">(</span>executing steps: 0m00.004s<span class="o">)</span></code></pre>
+  12 passing <span class="o">(</span>10ms<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11033,11 +11013,7 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -11047,11 +11023,11 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-      1<span class="o">)</span> deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+      1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
-  </span>Person
+  Person
     ✓ subscribes to the network
     ✓ has a location
     ✓ broadcasts shouts to the network
@@ -11059,12 +11035,12 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
     ✓ can be moved to a different location
 
 
-  12 passing <span class="o">(</span>17ms<span class="o">)</span>
+  12 passing <span class="o">(</span>12ms<span class="o">)</span>
   1 failing
 
   1<span class="o">)</span> Network
        credits
-         deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times</span>:
+         deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>:
 
       AssertionError:
 Expected: <b class="conum">(95)</b>
@@ -11074,8 +11050,8 @@ Expected: <b class="conum">(95)</b>
       <span class="nt">-85</span>
       +95
 
-      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:110:7<span class="o">)</span>
-      at processImmediate <span class="o">(</span>node:internal/timers:466:21<span class="o">)</span></code></pre>
+      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:98:7<span class="o">)</span>
+      at processImmediate <span class="o">(</span>internal/timers.js:456:21<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11097,11 +11073,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -11111,11 +11083,11 @@ Expected: <b class="conum">(95)</b>
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
-  </span>Person
+  Person
     ✓ subscribes to the network
     ✓ has a location
     ✓ broadcasts shouts to the network
@@ -11123,13 +11095,7 @@ Expected: <b class="conum">(95)</b>
     ✓ can be moved to a different location
 
 
-  13 passing <span class="o">(</span>16ms<span class="o">)</span>
-
-...................................
-
-6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
-35 steps <span class="o">(</span>35 passed<span class="o">)</span>
-0m00.051s <span class="o">(</span>executing steps: 0m00.004s<span class="o">)</span></code></pre>
+  13 passing <span class="o">(</span>11ms<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11371,11 +11337,7 @@ problem at a time. We find this a relaxing way to work!</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -11385,10 +11347,10 @@ problem at a time. We find this a relaxing way to work!</p>
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
-      </span>1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -11398,7 +11360,7 @@ problem at a time. We find this a relaxing way to work!</p>
     ✓ can be moved to a different location
 
 
-  13 passing <span class="o">(</span>17ms<span class="o">)</span>
+  13 passing <span class="o">(</span>13ms<span class="o">)</span>
   1 failing
 
   1<span class="o">)</span> Network
@@ -11413,8 +11375,8 @@ Expected: <b class="conum">(95)</b>
       <span class="nt">-100</span>
       +95
 
-      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:122:7<span class="o">)</span>
-      at processImmediate <span class="o">(</span>node:internal/timers:466:21<span class="o">)</span></code></pre>
+      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:110:7<span class="o">)</span>
+      at processImmediate <span class="o">(</span>internal/timers.js:456:21<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">

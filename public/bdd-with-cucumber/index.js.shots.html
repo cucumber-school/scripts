@@ -10828,15 +10828,11 @@ knows what they need to do to fix it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We run our unit test suite <a href="#shot-1110" id="shot-1110" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a> and &#8230;&#8203; it passes.<a href="#shot-1111" id="shot-1111" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p>We run our unit test suite and &#8230;&#8203; it passes.<a href="#shot-1110" id="shot-1110" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -10846,8 +10842,8 @@ knows what they need to do to fix it.</p>
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -10857,20 +10853,14 @@ knows what they need to do to fix it.</p>
     ✓ can be moved to a different location
 
 
-  12 passing <span class="o">(</span>22ms<span class="o">)</span>
-
-...................................
-
-6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
-35 steps <span class="o">(</span>35 passed<span class="o">)</span>
-0m00.066s <span class="o">(</span>executing steps: 0m00.005s<span class="o">)</span></code></pre>
+  12 passing <span class="o">(</span>10ms<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
 <p>Writing a test that passes the first time it runs gives us no confidence. Remember: <em>Never trust an autommated test that you haven&#8217;t seen fail</em>.</p>
 </div>
 <div class="paragraph">
-<p>We could be adding a spec that tests the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. <a href="#shot-1112" id="shot-1112" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>We could be adding a spec that tests the wrong thing or that it tests nothing at all and we&#8217;d never even realize it, because it "works". So lets force it to fail by commenting the line of code in the solution where we actually deduct the credits. <a href="#shot-1111" id="shot-1111" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10881,18 +10871,18 @@ knows what they need to do to fix it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Then we run the unit tests and watch it fail.<a href="#shot-1113" id="shot-1113" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>Then we run the unit tests and watch it fail.<a href="#shot-1112" id="shot-1112" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span></code></pre>
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can actually see it fails for the right reasons: no credits have been deducted. <a href="#shot-1114" id="shot-1114" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>And we can actually see it fails for the right reasons: no credits have been deducted. <a href="#shot-1113" id="shot-1113" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="paragraph">
-<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.<a href="#shot-1115" id="shot-1115" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
+<p>Now that we&#8217;re confident our unit test is testing the right thing, we can make it pass again by uncommenting the line.<a href="#shot-1114" id="shot-1114" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -10903,15 +10893,11 @@ knows what they need to do to fix it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>And run the entire suite to make sure everything&#8217;s still in place.<a href="#shot-1116" id="shot-1116" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 9</a></p>
+<p>And run the entire suite to make sure everything&#8217;s still in place.<a href="#shot-1115" id="shot-1115" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -10921,8 +10907,8 @@ knows what they need to do to fix it.</p>
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -10932,13 +10918,7 @@ knows what they need to do to fix it.</p>
     ✓ can be moved to a different location
 
 
-  12 passing <span class="o">(</span>15ms<span class="o">)</span>
-
-...................................
-
-6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
-35 steps <span class="o">(</span>35 passed<span class="o">)</span>
-0m00.042s <span class="o">(</span>executing steps: 0m00.004s<span class="o">)</span></code></pre>
+  12 passing <span class="o">(</span>10ms<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11008,10 +10988,10 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
 <p>Now that we&#8217;ve added a unit test for charging when we mention the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.</p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll just copy and paste the previous spec and add buy three times.<a href="#shot-1117" id="shot-1117" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>We&#8217;ll just copy and paste the previous spec and add buy three times.<a href="#shot-1116" id="shot-1116" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="paragraph">
-<p>The result should be the same.<a href="#shot-1118" id="shot-1118" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>The result should be the same.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11029,15 +11009,11 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
 </div>
 </div>
 <div class="paragraph">
-<p>Now we make sure it fails.<a href="#shot-1119" id="shot-1119" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
+<p>Now we make sure it fails.<a href="#shot-1117" id="shot-1117" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -11047,11 +11023,11 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-      1<span class="o">)</span> deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+      1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
-  </span>Person
+  Person
     ✓ subscribes to the network
     ✓ has a location
     ✓ broadcasts shouts to the network
@@ -11059,12 +11035,12 @@ actually save you from introducing bugs. So deliberately introduce a bug, and se
     ✓ can be moved to a different location
 
 
-  12 passing <span class="o">(</span>17ms<span class="o">)</span>
+  12 passing <span class="o">(</span>12ms<span class="o">)</span>
   1 failing
 
   1<span class="o">)</span> Network
        credits
-         deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times</span>:
+         deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>:
 
       AssertionError:
 Expected: <b class="conum">(95)</b>
@@ -11074,12 +11050,12 @@ Expected: <b class="conum">(95)</b>
       <span class="nt">-85</span>
       +95
 
-      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:110:7<span class="o">)</span>
-      at processImmediate <span class="o">(</span>node:internal/timers:466:21<span class="o">)</span></code></pre>
+      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:98:7<span class="o">)</span>
+      at processImmediate <span class="o">(</span>internal/timers.js:456:21<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>With this in place, we can focus on fixing the bug.<a href="#shot-1120" id="shot-1120" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
+<p>With this in place, we can focus on fixing the bug.<a href="#shot-1118" id="shot-1118" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a><a href="#shot-1119" id="shot-1119" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11093,15 +11069,11 @@ Expected: <b class="conum">(95)</b>
 <p>Removing this <code>g</code> flag means the regular expression won&#8217;t match "globally" - so it will return just the first match, rather than all of them.</p>
 </div>
 <div class="paragraph">
-<p>And run the specs.<a href="#shot-1121" id="shot-1121" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>And run the specs.<a href="#shot-1120" id="shot-1120" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -11111,11 +11083,11 @@ Expected: <b class="conum">(95)</b>
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
-  </span>Person
+  Person
     ✓ subscribes to the network
     ✓ has a location
     ✓ broadcasts shouts to the network
@@ -11123,13 +11095,7 @@ Expected: <b class="conum">(95)</b>
     ✓ can be moved to a different location
 
 
-  13 passing <span class="o">(</span>16ms<span class="o">)</span>
-
-...................................
-
-6 scenarios <span class="o">(</span>6 passed<span class="o">)</span>
-35 steps <span class="o">(</span>35 passed<span class="o">)</span>
-0m00.051s <span class="o">(</span>executing steps: 0m00.004s<span class="o">)</span></code></pre>
+  13 passing <span class="o">(</span>11ms<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -11150,7 +11116,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>And we can run the full test suite to make sure everything&#8217;s working as expected.<a href="#shot-1122" id="shot-1122" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>And we can run the full test suite to make sure everything&#8217;s working as expected.<a href="#shot-1121" id="shot-1121" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11321,7 +11287,7 @@ problem at a time. We find this a relaxing way to work!</p>
 <p>Sometimes that helps us to see things we hadn&#8217;t anticipated.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s take a look at the <code>deduct_credits</code> method.<a href="#shot-1123" id="shot-1123" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>Let&#8217;s take a look at the <code>deduct_credits</code> method.<a href="#shot-1122" id="shot-1122" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11332,7 +11298,7 @@ problem at a time. We find this a relaxing way to work!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>There&#8217;s something on this method that caught our attention: the regex we&#8217;re using is case sensitive.<a href="#shot-1124" id="shot-1124" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
+<p>There&#8217;s something on this method that caught our attention: the regex we&#8217;re using is case sensitive.<a href="#shot-1123" id="shot-1123" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 2</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11346,10 +11312,10 @@ problem at a time. We find this a relaxing way to work!</p>
 <p>To answer this question, we have a quick chat with Paula, who confirms that it should have the same effect as if it were lowercased: deduct 5 credits.</p>
 </div>
 <div class="paragraph">
-<p>So lets first add a spec.<a href="#shot-1125" id="shot-1125" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
+<p>So lets first add a spec.<a href="#shot-1124" id="shot-1124" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 3</a></p>
 </div>
 <div class="paragraph">
-<p>We&#8217;ll copy the same spec we copied last time,<a href="#shot-1126" id="shot-1126" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> and capitalize the word "Buy".<a href="#shot-1127" id="shot-1127" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
+<p>We&#8217;ll copy the same spec we copied last time,<a href="#shot-1125" id="shot-1125" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 4</a> and capitalize the word "Buy".<a href="#shot-1126" id="shot-1126" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 5</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11367,15 +11333,11 @@ problem at a time. We find this a relaxing way to work!</p>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we run the spec to watch it fail.<a href="#shot-1128" id="shot-1128" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
+<p>Now we run the spec to watch it fail.<a href="#shot-1127" id="shot-1127" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 6</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npm <span class="nb">test</span>
-
-<span class="o">&gt;</span> shouty@1.0.0 <span class="nb">test</span>
-<span class="o">&gt;</span> mocha <span class="nb">test</span> <span class="o">&amp;&amp;</span> cucumber-js <span class="nt">--tags</span> <span class="s1">'not @todo'</span>
-
+<pre class="rouge highlight"><code data-lang="sh"><span class="nv">$ </span>npx mocha
 
 
   Network
@@ -11385,10 +11347,10 @@ problem at a time. We find this a relaxing way to work!</p>
     ✓ does not broadcast a message over 180 characters even <span class="k">if </span>listener is <span class="k">in </span>range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
       ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
-      ✓ deducts 5 credits even <span class="k">if </span>you mention the word <span class="s1">'buy'</span> several <span class="nb">times
-      </span>1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      1<span class="o">)</span> deducts 5 credits <span class="k">for </span>mentioning the word <span class="s1">'buy'</span>
+      ✓ deducts 2 credits <span class="k">for </span>a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -11398,7 +11360,7 @@ problem at a time. We find this a relaxing way to work!</p>
     ✓ can be moved to a different location
 
 
-  13 passing <span class="o">(</span>17ms<span class="o">)</span>
+  13 passing <span class="o">(</span>13ms<span class="o">)</span>
   1 failing
 
   1<span class="o">)</span> Network
@@ -11413,12 +11375,12 @@ Expected: <b class="conum">(95)</b>
       <span class="nt">-100</span>
       +95
 
-      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:122:7<span class="o">)</span>
-      at processImmediate <span class="o">(</span>node:internal/timers:466:21<span class="o">)</span></code></pre>
+      at Context.&lt;anonymous&gt; <span class="o">(</span><span class="nb">test</span>/network.test.js:110:7<span class="o">)</span>
+      at processImmediate <span class="o">(</span>internal/timers.js:456:21<span class="o">)</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>Now we write the code that&#8217;ll make it pass.<a href="#shot-1129" id="shot-1129" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
+<p>Now we write the code that&#8217;ll make it pass.<a href="#shot-1128" id="shot-1128" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 7</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11426,7 +11388,7 @@ Expected: <b class="conum">(95)</b>
 </div>
 </div>
 <div class="paragraph">
-<p>And finally, we run the entire test suite to watch that beautiful green.<a href="#shot-1130" id="shot-1130" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
+<p>And finally, we run the entire test suite to watch that beautiful green.<a href="#shot-1129" id="shot-1129" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 8</a></p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11558,7 +11520,7 @@ in your code.</p>
 <p>Finally, we can sit down with Paula and Tammy and discuss the fact that we have this edge-case tested both at the unit and feature levels. Do we need to keep both tests?</p>
 </div>
 <div class="paragraph">
-<p>Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.<a href="#shot-1131" id="shot-1131" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
+<p>Since it&#8217;s not in the happy path, we decide to remove the scenario and leave the unit test in place.<a href="#shot-1130" id="shot-1130" title="" style="border-radius: 10px; padding: 2px 5px 2px 5px; color: white; font-weight: bold; background-color: red; font-family: sans-serif; text-decoration: none;">🎬 1</a></p>
 </div>
 <div class="listingblock">
 <div class="content">

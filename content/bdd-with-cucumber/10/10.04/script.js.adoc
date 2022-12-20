@@ -4,22 +4,18 @@ Now that we've added a unit test for charging when we mention the word "buy", we
 
 We'll just copy and paste the previous spec and add buy three times.shot::[1]
 
-The result should be the same.shot::[2]
+The result should be the same.
 
 [source,js]
 ----
 include::../code/js/07-write-test-for-mentioning-the-word-buy-more-than-once/test/network.test.js[lines=101..111]
 ----
 
-Now we make sure it fails.shot::[3]
+Now we make sure it fails.shot::[2]
 
 [source,sh]
 ----
-$ npm test
-
-> shouty@1.0.0 test
-> mocha test && cucumber-js --tags 'not @todo'
-
+$ npx mocha
 
 
   Network
@@ -29,9 +25,9 @@ $ npm test
     ✓ does not broadcast a message over 180 characters even if listener is in range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits for a shout over 180 characters
       ✓ deducts 5 credits for mentioning the word 'buy'
-      1) deducts 5 credits even if you mention the word 'buy' several times
+      1) deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 2 credits for a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -41,12 +37,12 @@ $ npm test
     ✓ can be moved to a different location
 
 
-  12 passing (17ms)
+  12 passing (12ms)
   1 failing
 
   1) Network
        credits
-         deducts 5 credits even if you mention the word 'buy' several times:
+         deducts 5 credits for mentioning the word 'buy':
 
       AssertionError: 
 Expected: <95>
@@ -56,11 +52,11 @@ Expected: <95>
       -85
       +95
       
-      at Context.<anonymous> (test/network.test.js:110:7)
-      at processImmediate (node:internal/timers:466:21)
+      at Context.<anonymous> (test/network.test.js:98:7)
+      at processImmediate (internal/timers.js:456:21)
 ----
 
-With this in place, we can focus on fixing the bug.shot::[4]
+With this in place, we can focus on fixing the bug.shot::[3]shot::[4]
 
 [source,js]
 ----
@@ -73,11 +69,7 @@ And run the specs.shot::[5]
 
 [source,sh]
 ----
-$ npm test
-
-> shouty@1.0.0 test
-> mocha test && cucumber-js --tags 'not @todo'
-
+$ npx mocha
 
 
   Network
@@ -87,9 +79,9 @@ $ npm test
     ✓ does not broadcast a message over 180 characters even if listener is in range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits for a shout over 180 characters
       ✓ deducts 5 credits for mentioning the word 'buy'
-      ✓ deducts 5 credits even if you mention the word 'buy' several times
+      ✓ deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 2 credits for a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -99,13 +91,7 @@ $ npm test
     ✓ can be moved to a different location
 
 
-  13 passing (16ms)
-
-...................................
-
-6 scenarios (6 passed)
-35 steps (35 passed)
-0m00.051s (executing steps: 0m00.004s)
+  13 passing (11ms)
 ----
 
 Well look at that. One character! Just one little extra character caused us to do so much work! Sometimes computers can be so picky!

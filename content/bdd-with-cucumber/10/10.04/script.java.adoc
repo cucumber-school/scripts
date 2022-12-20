@@ -2,23 +2,23 @@
 
 Now that we've added a unit test for charging when we mention the word "buy", we can add another one for when we mention it multiple times, which is the bug we were trying to solve in the first place.
 
-We'll just copy and paste the previous test and add buy three times.shot::[1]
+We'll just copy and paste the previous test and add buy three times.
 
-The result should be the same.shot::[2]
+The result should be the same.shot::[1]
 
 [source,java]
 ----
 include::../code/java/07-write-test-for-mentioning-the-word-buy-more-than-once/shouty/src/test/java/shouty/NetworkTest.java[lines=94..105]
 ----
 
-Now we make sure it fails.shot::[3]
+Now we make sure it fails.shot::[2]
 
 [source,sh]
 ----
 $ mvn test
 ----
 
-With this in place, we can focus on fixing the bug.shot::[4]
+With this in place, we can focus on fixing the bug.shot::[3]
 
 [source,java]
 ----
@@ -27,7 +27,7 @@ include::../code/java/08-fix-the-bug/shouty/src/main/java/shouty/Network.java[li
 By changing this `while` to an `if` we make sure we only substract 5 credits once and then continue.
 
 
-And run the tests.shot::[5]
+And run the tests.shot::[4]
 
 [source,sh]
 ----
@@ -45,7 +45,7 @@ With our unit test suit all green, we're confident to remove the BUG reference a
 include::../code/java/09-remove-todo-tag-and-bug-from-scenario/shouty/src/test/resources/shouty/premium_shouts.feature[lines=19..22]
 ----
 
-And we can run the full test suite to make sure everything's working as expected.shot::[6]
+And we can run the full test suite to make sure everything's working as expected.shot::[5]
 
 [source,sh]
 ----

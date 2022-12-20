@@ -10876,7 +10876,7 @@ knows what they need to do to fix it.</p>
 </div>
 </div>
 <div class="paragraph">
-<p>We run our unit test suite  and &#8230;&#8203; it passes.</p>
+<p>We run our unit test suite &#8230;&#8203; it passes.</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -11218,21 +11218,12 @@ problem at a time. We find this a relaxing way to work!</p>
 <p>Sometimes that helps us to see things we hadn&#8217;t anticipated.</p>
 </div>
 <div class="paragraph">
-<p>Let&#8217;s take a look at the <code>deduct_credits</code> method. </p>
+<p>Let&#8217;s take a look at the <code>Network</code> class. </p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="rouge highlight"><code data-lang="java">    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">deductCredits</span><span class="o">(</span><span class="kt">boolean</span> <span class="n">shortEnough</span><span class="o">,</span> <span class="nc">String</span> <span class="n">message</span><span class="o">,</span> <span class="nc">Person</span> <span class="n">shouter</span><span class="o">)</span> <span class="o">{</span>
-        <span class="k">if</span> <span class="o">(!</span><span class="n">shortEnough</span><span class="o">)</span> <span class="o">{</span>
-            <span class="n">shouter</span><span class="o">.</span><span class="na">setCredits</span><span class="o">(</span><span class="n">shouter</span><span class="o">.</span><span class="na">getCredits</span><span class="o">()</span> <span class="o">-</span> <span class="mi">2</span><span class="o">);</span>
-        <span class="o">}</span>
-
-        <span class="nc">Matcher</span> <span class="n">matcher</span> <span class="o">=</span> <span class="no">BUY_PATTERN</span><span class="o">.</span><span class="na">matcher</span><span class="o">(</span><span class="n">message</span><span class="o">);</span>
-        <span class="k">if</span><span class="o">(</span><span class="n">matcher</span><span class="o">.</span><span class="na">find</span><span class="o">())</span> <span class="o">{</span>
-            <span class="n">shouter</span><span class="o">.</span><span class="na">setCredits</span><span class="o">(</span><span class="n">shouter</span><span class="o">.</span><span class="na">getCredits</span><span class="o">()</span> <span class="o">-</span> <span class="mi">5</span><span class="o">);</span>
-        <span class="o">}</span>
-    <span class="o">}</span>
-<span class="o">}</span></code></pre>
+<pre class="rouge highlight"><code data-lang="java"><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Network</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kd">final</span> <span class="nc">Pattern</span> <span class="no">BUY_PATTERN</span> <span class="o">=</span> <span class="nc">Pattern</span><span class="o">.</span><span class="na">compile</span><span class="o">(</span><span class="s">"buy"</span><span class="o">);</span></code></pre>
 </div>
 </div>
 <div class="paragraph">

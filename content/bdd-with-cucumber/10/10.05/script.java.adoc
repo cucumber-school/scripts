@@ -4,11 +4,11 @@ One nice thing about working with unit tests (or microtests as Mike Hill likes t
 
 Sometimes that helps us to see things we hadn't anticipated.
 
-Let's take a look at the `deduct_credits` method. shot::[1]
+Let's take a look at the `Network` class. shot::[1]
 
 [source,java]
 ----
-include::../code/java/10-remove-scenario-from-feature-file/shouty/src/main/java/shouty/Network.java[lines=33..43]
+include::../code/java/10-remove-scenario-from-feature-file/shouty/src/main/java/shouty/Network.java[lines=8..9]
 ----
 
 There's something on this method that caught our attention: the regex we're using is case sensitive.shot::[2]

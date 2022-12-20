@@ -35,11 +35,7 @@ Now we run the spec to watch it fail.shot::[6]
 
 [source,sh]
 ----
-$ npm test 
-
-> shouty@1.0.0 test
-> mocha test && cucumber-js --tags 'not @todo'
-
+$ npx mocha
 
 
   Network
@@ -49,10 +45,10 @@ $ npm test
     ✓ does not broadcast a message over 180 characters even if listener is in range
     ✓ can change the range
     credits
-      ✓ deducts 2 credits for a shout over 180 characters
       ✓ deducts 5 credits for mentioning the word 'buy'
-      ✓ deducts 5 credits even if you mention the word 'buy' several times
+      ✓ deducts 5 credits for mentioning the word 'buy'
       1) deducts 5 credits for mentioning the word 'buy'
+      ✓ deducts 2 credits for a shout over 180 characters
 
   Person
     ✓ subscribes to the network
@@ -62,7 +58,7 @@ $ npm test
     ✓ can be moved to a different location
 
 
-  13 passing (17ms)
+  13 passing (13ms)
   1 failing
 
   1) Network
@@ -77,8 +73,8 @@ Expected: <95>
       -100
       +95
       
-      at Context.<anonymous> (test/network.test.js:122:7)
-      at processImmediate (node:internal/timers:466:21)
+      at Context.<anonymous> (test/network.test.js:110:7)
+      at processImmediate (internal/timers.js:456:21)
 ----
 
 Now we write the code that'll make it pass.shot::[7]
