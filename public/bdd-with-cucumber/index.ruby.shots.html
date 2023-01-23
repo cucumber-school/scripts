@@ -10952,7 +10952,7 @@ way you write your feature files.</p>
 <p>Yes, since we&#8217;re not using the <code>@wip</code> tag anymore in our project</p>
 </li>
 <li>
-<p>Cucumber has a know bug with the <code>@wip</code> tag</p>
+<p>Cucumber has a known bug with the <code>@wip</code> tag</p>
 </li>
 </ul>
 </div>
@@ -11103,7 +11103,7 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 <div class="sect3">
 <h4 id="_lesson_5_questions_5">10.5.1. Lesson 5 - Questions</h4>
 <div class="sect4">
-<h5 id="_if_we_find_an_untested_edge_case_we_didnt_expect_in_our_code_what_should_we_do">If we find an untested edge case we didn&#8217;t expect in our code, what should we do?</h5>
+<h5 id="_if_we_find_an_untested_edge_case_we_didnt_expect_in_our_code_whats_the_first_thing_we_should_do">If we find an untested edge case we didn&#8217;t expect in our code, what&#8217;s the first thing we should do?</h5>
 <div class="ulist">
 <ul>
 <li>
@@ -11113,10 +11113,10 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 <p>Leave it where it is, and walk away, slowly; hope nobody notices</p>
 </li>
 <li>
-<p>Talk to the product owner to find out whether the code is doing what&#8217;s expected (<strong>Correct</strong>)</p>
+<p>Talk to the product owner about what the code <strong>should</strong> do (<strong>Correct</strong>)</p>
 </li>
 <li>
-<p>Add a unit test for the current behaviour and move on</p>
+<p>Add unit test(s) for whatever the current behaviour is, and move on</p>
 </li>
 </ul>
 </div>
@@ -11124,8 +11124,8 @@ Finished <span class="k">in </span>0.01407 seconds <span class="o">(</span>files
 <p>Explanation:</p>
 </div>
 <div class="paragraph">
-<p>Ultimately, unless this code is never going to change again, we&#8217;ll probably want to retro-fit
-a new test to the behaviour, but first we need to determine what that behaviour should be.</p>
+<p>Before adding any tests, we should check with our product owner what the behaviour
+should be.</p>
 </div>
 </div>
 <div class="sect4">
@@ -11153,6 +11153,10 @@ a new test to the behaviour, but first we need to determine what that behaviour 
 <p>Unless we&#8217;re really confident that the behaviour we&#8217;ve discovered is correct, we&#8217;d always
 want to check with our product owner first, before we make a decision what to do next.</p>
 </div>
+<div class="paragraph">
+<p>We want behaviour we&#8217;ve chosen to be covered with a test, so that we&#8217;ll find out about it if
+anyone accidentally breaks that behaviour in the future.</p>
+</div>
 </div>
 <div class="sect4">
 <h5 id="_is_it_necessary_to_run_the_whole_test_suite_once_we_know_the_unit_tests_are_passing_with_the_new_feature_in">Is it necessary to run the whole test suite once we know the unit tests are passing with the new feature in?</h5>
@@ -11179,6 +11183,10 @@ want to check with our product owner first, before we make a decision what to do
 <p>Running the whole suite of tests is a great way to give yourself a calm feeling that
 everything is working. It&#8217;s a good thing to do before you call anything done, and check
 in your code.</p>
+</div>
+<div class="paragraph">
+<p>This also avoids you slowing down your team-mates, by pushing code to them
+that has failing tests in it.</p>
 </div>
 </div>
 </div>

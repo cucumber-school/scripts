@@ -1,16 +1,16 @@
 ==== Lesson 5 - Questions
 
-===== If we find an untested edge case we didn't expect in our code, what should we do?
+===== If we find an untested edge case we didn't expect in our code, what's the first thing we should do?
 
 * Remove the behaviour; it shouldn't be there
 * Leave it where it is, and walk away, slowly; hope nobody notices
-* Talk to the product owner to find out whether the code is doing what's expected (*Correct*)
-* Add a unit test for the current behaviour and move on
+* Talk to the product owner about what the code *should* do (*Correct*)
+* Add unit test(s) for whatever the current behaviour is, and move on
 
 Explanation:
 
-Ultimately, unless this code is never going to change again, we'll probably want to retro-fit 
-a new test to the behaviour, but first we need to determine what that behaviour should be.
+Before adding any tests, we should check with our product owner what the behaviour 
+should be.
 
 ===== Once we get an answer, what do we do next?
 
@@ -24,6 +24,9 @@ Explanation:
 Unless we're really confident that the behaviour we've discovered is correct, we'd always
 want to check with our product owner first, before we make a decision what to do next.
 
+We want behaviour we've chosen to be covered with a test, so that we'll find out about it if
+anyone accidentally breaks that behaviour in the future.
+
 ===== Is it necessary to run the whole test suite once we know the unit tests are passing with the new feature in?
 
 * Yes, we always want to make sure we didn't break something else by accident (*Correct*)
@@ -36,3 +39,6 @@ Explanation:
 Running the whole suite of tests is a great way to give yourself a calm feeling that
 everything is working. It's a good thing to do before you call anything done, and check
 in your code.
+
+This also avoids you slowing down your team-mates, by pushing code to them
+that has failing tests in it.
